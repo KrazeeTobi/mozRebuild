@@ -1,0 +1,359 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Process management</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../source-code.html"><B> Source Code</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Getting It</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bugs</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+
+<H2>
+10 NSPR 2.0: Processes</H2>
+<FONT SIZE=-1>[5/16/97]</FONT>
+
+<P>A process is an instance of a program. NSPR 2.0 provides routines to
+create a new process and to wait for the termination of another process.
+NSPR 2.0 does not provide an equivalent of the Unix <TT>fork()</TT>. The
+newly-created process starts its execution from the beginning of its program.
+
+<P>A new process can inherit specified file descriptors from its parent,
+and the parent can redirect the standard IO streams of the child process
+to specified file descriptors.
+
+<P><B>Quick summary:</B>
+<UL>
+<LI>
+Types: <TT>PRProcess</TT>, <TT>PRProcessAttr</TT></LI>
+
+<LI>
+Functions: <TT>PR_NewProcessAttr</TT>, <TT>PR_ResetProcessAttr</TT>, <TT>PR_DestroyProcessAttr</TT>,
+<TT>PR_SetStdioRedirect</TT>, <TT>PR_SetInheritableFileDesc</TT>, <TT>PR_CreateProcess</TT>,
+<TT>PR_DetachProcess</TT>, <TT>PR_WaitProcess</TT>, <TT>PR_KillProcess</TT>,
+<TT>PR_GetInheritedFileDesc</TT>.</LI>
+</UL>
+
+<H3>
+10.1 Types and constants</H3>
+<TT>#include "prinit.h"</TT>
+
+<P><TT>typedef struct PRProcess PRProcess;</TT>
+
+<P>A process is identified by a pointer to the opaque <TT>PRProcess</TT>
+structure.
+
+<P><TT>typedef struct PRProcessAttr PRProcessAttr;</TT>
+
+<P>The attributes of a process to be created is described by the opaque
+<TT>PRProcessAttr</TT> structure. A pointer to <TT>PRProcessAttr</TT> is
+passed into <TT>PR_CreateProcess</TT> when a new process is created, specifying
+information such as input/output redirection and file descriptor inheritance.
+<H3>
+10.2 Functions</H3>
+
+<H4>
+10.2.1 Specifying the attributes of a new process</H4>
+When creating a process, one can use a <TT>PRProcessAttr</TT> structure
+to specify the attributes of the new process.
+
+<P><TT>PRProcessAttr *PR_NewProcessAttr(void);</TT>
+
+<P><TT>PR_NewProcessAttr</TT> creates a new <TT>PRProcessAttr</TT> structure
+and returns a pointer to it. The new <TT>PRProcessAttr</TT> structure is
+initialized to the default attributes listed below:
+<UL>
+<LI>
+The standard IO streams 0-2 (standard input, standard output, and standard
+error) are not redirected</LI>
+
+<LI>
+No file descriptors are inherited by the new process.</LI>
+</UL>
+<TT>void PR_ResetProcessAttr(PRProcessAttr *attr);</TT>
+
+<P><TT>PR_ResetProcessAttr</TT> initializes the <TT>PRProcessAttr</TT>
+structure pointed to by <TT>attr</TT> to the default attributes. A <TT>PRProcessAttr</TT>
+structure can be reused to create many new processes. Before creating a
+different process, one has to re-initialize the <TT>PRProcessAttr</TT>
+structure with a call to <TT>PR_ResetProcessAttr</TT>.
+
+<P><TT>void PR_DestroyProcessAttr(PRProcessAttr *attr);</TT>
+
+<P><TT>PR_DestroyProcessAttr</TT> destroys the <TT>PRProcessAttr</TT> structure
+pointed to by <TT>attr</TT>. On return, the value of <TT>attr</TT> becomes
+an invalid pointer and should not be passed to other functions.
+
+<P><TT>void PR_SetStdioRedirect(PRProcessAttr *attr, PRInt32 stdioFd, PRFileDesc
+*redirectFd);</TT>
+
+<P>The standard IO stream <TT>stdioFd</TT> (must be 0, 1, or 2) of the
+new process will be redirected to the file descriptor <TT>redirectFd</TT>.
+
+<P><TT>void PR_SetInheritableFileDesc(PRProcess *attr, PRFileDesc *fd,
+const char *name);</TT>
+
+<P>The new process will inherit the file descriptor <TT>fd</TT>, which
+is given the string name <TT>name</TT>. The new process can get the inherited
+file descriptor by specifying the string <TT>name</TT> to <TT>PR_GetInheritedFileDesc</TT>.
+<H4>
+10.2.2 Creating a new process</H4>
+
+<P><UL><PRE>
+PRProcess *PR_CreateProcess(
+    const char *path,
+    char *const *argv,
+    char *const *envp,
+    const PRProcessAttr *attr
+);
+</PRE></UL><P>
+
+<BR>
+<TABLE CELLSPACING=0 CELLPADDING=0 >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="20%"><B><TT>path</TT></B></TD>
+
+<TD WIDTH="80%">pathname of the executable file</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>argv</TT></B></TD>
+
+<TD>a null-terminated array of character strings (the command-line arguments)</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>envp</TT></B></TD>
+
+<TD>a null-terminated array of character strings (the environment strings).
+Each string in the <TT>envp</TT> array is of the form:
+<TT>name=value</TT>
+<BR><TT>envp</TT> can be <TT>NULL</TT>.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>attr</TT></B></TD>
+
+<TD>a pointer to a <TT>PRProcessAttr</TT> structure that describes the
+attributes of the new process. <TT>attr</TT> can be <TT>NULL</TT>, which
+means the new process will have the default attributes.</TD>
+</TR>
+</TABLE>
+<TT>PR_CreateProcess()</TT> creates a new process that executes the program
+<TT>path</TT>, passing it the command-line arguments <TT>argv</TT> and
+environment <TT>envp</TT>. If <TT>envp</TT> is <TT>NULL</TT>, the new process
+inherits the environment of the parent process. The <TT>PRPRocessAttr</TT>
+structure <TT>attr</TT> specifies the IO redirection and file descriptor
+inheritance of the new process.
+
+<P>The newly-created process must be either detached (<TT>PR_DetachProcess</TT>)
+or reaped (<TT>PR_WaitProcess</TT>), otherwise the memory for its <TT>PRProcess</TT>
+structure is not reclaimed and results in memory leaks.
+
+<P>On success, <TT>PR_CreateProcess</TT> returns a pointer to a <TT>PRProcess</TT>
+structure representing the new process. On failure, <TT>PR_CreateProcess</TT>
+returns <TT>NULL</TT>. Call <TT>PR_GetError()</TT> to retrieve error information.
+<H4>
+10.2.3 Detaching a child process</H4>
+<TT>PRStatus PR_DetachProcess(PRProcess *process);</TT>
+
+<P><TT>PR_DetachProcess</TT> detaches the specified process. A detached
+process does not need to (and cannot) be reaped. On return, the value of
+<TT>process</TT> becomes an invalid pointer and should not be passed to
+other functions.
+<H4>
+10.2.3 Waiting for a process to terminate</H4>
+
+<P><UL><PRE>
+PRStatus PR_WaitProcess(
+    PRProcess *process,
+    PRInt32 *exitCode);
+</PRE></UL><P>
+
+<TABLE CELLSPACING=0 CELLPADDING=0 >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="20%"><B><TT>process</TT></B></TD>
+
+<TD>the identifier for the non-detached process whose termination we want
+to wait for</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>exitCode</TT></B></TD>
+
+<TD WIDTH="80%">a pointer to a <TT>PRInt32</TT> variable for holding the
+exit code of the process. Can be <TT>NULL</TT>.</TD>
+</TR>
+</TABLE>
+<TT>PR_WaitProcess()</TT> blocks the calling thread until the non-detached
+process identified by <TT>process</TT> has terminated. On a successful
+completion, <TT>PR_WaitProcess()</TT> returns <TT>PR_SUCCESS</TT>. If <TT>exitCode</TT>
+is not <TT>NULL</TT>, <TT>*exitCode</TT> contains the exit status code
+of <TT>process</TT>. On failure, <TT>PR_WaitProcess()</TT> returns <TT>PR_FAILURE</TT>.
+Call <TT>PR_GetError()</TT> to retrieve error information.
+<H4>
+10.2.4 Killing a process</H4>
+<TT>PRStatus PR_KillProcess(PRProcess *process);</TT>
+
+<P>It is not clear whether this function is useful or it can be implemented
+everywhere.
+<H4>
+10.2.5 Obtaining inherited file descriptors</H4>
+<TT>PRFileDesc * PR_GetInheritedFileDesc(const char *name);</TT>
+
+<P>The newly created process can use <TT>PR_GetInheritedFileDesc</TT> to
+get the inherited file descriptor with the name <TT>name</TT>. The name
+is given by its parent process. The parent and child must have some prearranged
+agreement on the names of inherited file descriptors.
+<DIV ALIGN=right><BR>
+<BR>
+
+<HR WIDTH="100%"></DIV>
+
+<DIV ALIGN=right><I><FONT SIZE=-1>Last Updated: Tue Jul 14 18:56:06 PDT 1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright © 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+<ADDRESS>
+</ADDRESS>
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 Netscape Communications Corporation.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

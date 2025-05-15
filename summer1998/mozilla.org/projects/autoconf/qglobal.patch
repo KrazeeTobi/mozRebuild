@@ -1,0 +1,14 @@
+--- ./qglobal.h.cls	Mon Jul 13 15:48:33 1998
++++ ./qglobal.h	Tue Aug 25 14:33:03 1998
+@@ -336,8 +336,9 @@
+ #define CHECK_MATH				// check math functions
+ #endif
+ 
+-#if !defined(NO_DEBUG) && !defined(DEBUG)
+-#define DEBUG					// display debug messages
++#if !defined(NO_DEBUG) && !defined(QT_INTERNAL_DEBUG)
++// Modified to avoid setting DEBUG in qt apps that don't want it set - cls@seawood.org
++#define QT_INTERNAL_DEBUG			// display debug messages
+ #endif
+ 
+ //

@@ -1,0 +1,186 @@
+<HTML>
+<HEAD>
+<TITLE>Atomic Operations
+</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<A HREF="contents.htm">[Contents]</A> <A HREF="prntdb.htm">[Previous]</A> <A HREF="prinrvl.htm">[Next]</A> <A HREF="prerr.htm">[Last]</A>
+<HR>
+<A NAME="1018510">
+<P></A><CENTER><H2>Chapter 12<BR><A NAME="1018543">
+Atomic Operations</H2>
+</A></CENTER>
+<A NAME="1019245">
+This chapter describes the global functions you use to perform atomic operations. The functions define a portable API that may be reliably used in any environment. Since not all operating environments provide access to such functions, their performance may vary considerably. <P></A>
+
+<A NAME="Atomic Operations Functions"></A>
+<A NAME="1019079">
+<H2> Atomic Operations Functions</H2>
+</A>
+<A NAME="1019878">
+The API defined for the atomic functions is consistent across all supported platforms. However, the implementation may vary greatly, and hence the performance. On systems that do not provide direct access to atomic operators, NSPR emulates the capabilities by using its own locking mechanisms. For such systems, NSPR performs atomic operations just as efficiently as the client could. Therefore, to preserve portability, it is recommended that clients use the NSPR API for atomic operations.<P></A>
+<A NAME="1019941">
+<A HREF="pratom.htm#1007459"><CODE>PR_AtomicIncrement</CODE></A><br><A HREF="pratom.htm#1018921"><CODE>PR_AtomicDecrement</CODE></A><br><A HREF="pratom.htm#1018974"><CODE>PR_AtomicSet</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1007459">
+<H4> PR_AtomicIncrement</H4>
+</A>
+
+<A NAME="1007460">
+Atomically increments a 32-bit value.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1007471">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1018719">
+<PRE>#include &lt;pratom.h&gt; </PRE></A><A NAME="1018720">
+<PRE>PRInt32 PR_AtomicIncrement(PRInt32 *val);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1018721">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="1009456">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1009798">
+<PRE>val</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1009800">
+A pointer to the value to increment.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1009457">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1019495">
+The function returns a value that has the same <I>sign</I> as the <I>result</I> of the increment.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1007477">
+<H5> Description</H5>
+</A>
+
+<A NAME="1019770">
+The referenced variable is incremented by one. The result of the function is the same sign (or zero) as the memory <I>after</I> it was updated. The writing of the memory is unconditional.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018921">
+<H4> PR_AtomicDecrement</H4>
+</A>
+
+<A NAME="1018922">
+Atomically decrements a 32-bit value.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018924">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1018925">
+<PRE>#include &lt;pratom.h&gt; </PRE></A><A NAME="1018926">
+<PRE>PRInt32 PR_AtomicDecrement(PRInt32 *val);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1018927">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="1018933">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1018930">
+<PRE>val</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1018932">
+A pointer to the value to decrement.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018934">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1018935">
+The function returns a value that has the same <I>sign</I> as the <I>result</I> of the decrement.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018936">
+<H5> Description</H5>
+</A>
+
+<A NAME="1019589">
+<CODE>PR_AtomicDecrement</CODE> first decrements the referenced variable by one, then tests the new value to see if the result is less than, equal to, or greater than zero. The value returned by the function has the same sign (or zero) as the referenced variable's final value.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018974">
+<H4> PR_AtomicSet</H4>
+</A>
+
+<A NAME="1019660">
+Atomically sets a 32-bit value and return its previous contents.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018977">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1018978">
+<PRE>#include &lt;pratom.h&gt; </PRE></A><A NAME="1018979">
+<PRE>PRInt32 PR_AtomicSet(<br>&nbsp;&nbsp;&nbsp;PRInt32 *val,<br>&nbsp;&nbsp;&nbsp;PRInt32 newval);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1018980">
+<H5> Parameters</H5>
+</A>
+
+<A NAME="1018986">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1018983">
+<PRE>val</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1018985">
+A pointer to the value to be set.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1019020">
+<PRE>newval</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1019022">
+The new value to assign to the <CODE>val</CODE> parameter.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018987">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1018988">
+The function returns the prior value of the referenced variable.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018989">
+<H5> Description</H5>
+</A>
+
+<A NAME="1019736">
+<CODE>PR_AtomicSet</CODE> first reads the value of var, then updates it with the supplied value. The returned value is the value that was read <I>before</I> memory was updated. The memory modification is unconditional--that is, it isn't a test and set operation.<P></A>
+
+<P><HR>
+<A HREF="contents.htm">[Contents]</A> <A HREF="prntdb.htm">[Previous]</A> <A HREF="prinrvl.htm">[Next]</A> <A HREF="prerr.htm">[Last]</A>
+<P ALIGN=right>
+
+<FONT SIZE=-2><I>Last Updated:  03/09/98  20:29:20
+</I></FONT>
+
+<HR SIZE=4>
+
+<P> <CENTER>Copyright © 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html"
+TARGET=_top>Netscape Communications Corporation</A></FONT>
+</CENTER>
+<P>
+<P>
+</BODY>
+</HTML>
+
+

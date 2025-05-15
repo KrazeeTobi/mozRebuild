@@ -1,0 +1,820 @@
+<HTML>
+<HEAD>
+<TITLE>mozilla.org crypto faq</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="284,5,424,54" HREF="http://www.mozilla.org/">
+<AREA SHAPE=RECT COORDS="447,13,563,29"
+HREF="http://developer.netscape.com/index_moz.html">
+<AREA SHAPE=RECT COORDS="447,29,590,188"
+HREF="http://developer.netscape.com/index_moz.html">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="/"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="projects.html"><B> Projects</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="newlayout/"> New Layout</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="mailnews/"> Mail/News</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="other-projects.html"> Other</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="source-code.html"><B> Source Code</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="source.html"> Getting It</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="bugs/"> Bugs</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="feedback.html"><B> Feedback</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="http://developer.netscape.com/index_moz.html"><B> DevEdge Online</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+<P ALIGN=CENTER><FONT SIZE="+3"><B>mozilla.org crypto faq</B></FONT>
+<BR><FONT SIZE="+1"><B>version 0.4</B></FONT>
+</B></FONT>
+<BR>by <a href="mailto:hecker@netscape.com">Frank Hecker</A>
+<BR>25 March 1998
+</P>
+
+<P>
+
+<P>This document attempts to answer some frequently asked questions about
+the Mozilla source release and its support (or lack thereof) for SSL, S/MIME,
+and related Netscape Communicator features based on cryptographic technology. 
+This document is for informational purposes only and is not intended as
+legal advice.  If you wish to develop and distribute cryptographic
+software then you should consult an attorney with expertise in the particular
+laws and regulations that apply in your jurisdiction.
+<BR>
+<HR WIDTH="100%">
+
+<!--
+
+<H3>
+Mozilla cryptographic code</H3>
+-->
+
+<OL>
+<LI>
+<A HREF="#1-1">Will mozilla.org be releasing cryptographic source code
+for general distribution as part of the Mozilla source release?</A></LI>
+
+<LI>
+<A HREF="#1-2">Why couldn't mozilla.org release just the cryptographic
+source code for the "40-bit" version of Netscape Communicator currently
+being exported from the US?</A></LI>
+
+<LI>
+<A HREF="#1-3">Even if mozilla.org can't release the cryptographic source
+code itself, will it release source code for SSL and S/MIME along with
+appropriate APIs, so that people outside the US could add the necessary
+cryptographic code?</A></LI>
+
+<LI>
+<A HREF="#1-4">Isn't Microsoft's CryptoAPI implementation an example of
+exportable code that invokes cryptographic functions through an API? 
+Why couldn't mozilla.org do the same with the Communicator SSL and S/MIME
+code?</A></LI>
+
+<LI>
+<A HREF="#1-5">Aren't TCP/IP socket calls and other comparable APIs examples
+of "hooks" by which cryptographic functionality can be added?  If
+TCP/IP source code can be exported from the US, why couldn't mozilla.org
+do the same with the SSL and S/MIME source code?</A></LI>
+
+<LI>
+<A HREF="#1-6">Why couldn't mozilla.org export the cryptographic code in
+Communicator as a printed book, as was done with PGP?</A></LI>
+
+<LI>
+<A HREF="#1-7">Wasn't John Gilmore able to export cryptographic source
+code?  Why couldn't mozilla.org follow his example?</A></LI>
+
+<LI>
+<A HREF="#1-8">I've read that people can take the US version of Netscape
+Communicator out of the US on their laptops.  If they are able to
+do this without US government interference, why can't mozilla.org export
+Mozilla source cryptographic source code without interference?</A></LI>
+
+<LI>
+<A HREF="#1-9">What about people who send the "RSA in Perl" code in their
+signature files or in other forms?  If they are able to do this without
+US government interference, why can't mozilla.org export Mozilla cryptographic
+source code without interference?</A></LI>
+
+<LI>
+<A HREF="#1-10">If I develop cryptographic code outside the US, will mozilla.org
+accept it for inclusion in the standard Mozilla distribution?</A></LI>
+
+<LI>
+<A HREF="#1-11">Will mozilla.org release information on the format of the
+Netscape Communicator key and certificate database, so that third-party
+cryptographic code can reuse existing user keys and certificates?</A></LI>
+
+<LI>
+<A HREF="#1-12">Why is this even a problem for mozilla.org?  Haven't
+US export controls on cryptographic software already been ruled unconstitutional?</A></LI>
+</OL>
+
+<!--
+
+<H3>
+US government export control of cryptographic software</H3>
+
+<OL>
+<LI>
+<A HREF="#2-1">What are the relevant US government laws and regulations
+governing export from the US of cryptographic software?</A></LI>
+
+<LI>
+<A HREF="#2-2">I thought export of cryptographic software from the US was
+governed by the International Traffic in Arms Regulations.  What happened
+to the ITAR?</A></LI>
+
+<LI>
+<A HREF="#2-3">What is the Bureau of Export Administration, and what is
+its role in US export control of cryptographic software?</A></LI>
+
+<LI>
+<A HREF="#2-4">What is the Defense Technology Security Administration,
+and what is its role in US export control of cryptographic software?</A></LI>
+
+<LI>
+<A HREF="#2-5">What is the National Security Agency, and what is its role
+in US export control of cryptographic software?</A></LI>
+
+<LI>
+<A HREF="#2-6">What is the Federal Bureau of Investigation, and what is
+its role in US export control of cryptographic software?</A></LI>
+</OL>
+
+<H3>
+History, technology, and politics of cryptography</H3>
+
+<OL>
+<LI>
+<A HREF="#3-1">Where can I learn more about cryptography and how it works?</A></LI>
+
+<LI>
+<A HREF="#3-2">Where can I learn more about the political history and present
+political environment around US export controls and related restrictions
+on cryptography?</A></LI>
+
+<LI>
+<A HREF="#3-3">How can I seek to influence US policy on cryptography?</A></LI>
+
+<LI>
+<A HREF="#3-4">Where can I find more information on restrictions on cryptography
+in other countries around the world?</A></LI>
+</OL>
+
+-->
+
+<HR WIDTH="100%">
+
+<!--
+
+<H2>
+Mozilla cryptographic code</H2>
+
+-->
+
+<OL>
+<P><LI>
+<A NAME="1-1"></A><B>Will mozilla.org be releasing cryptographic source
+code for general distribution as part of the Mozilla source release?</B></LI>
+
+<BR>No.  mozilla.org cannot legally release the cryptographic source
+code included in Netscape Communicator for general distribution as part
+of the Mozilla source release, for the following reasons:<BR>
+<BR>
+<UL>
+<P><LI>
+Export from the US of cryptographic source code, including making such
+code available for general download over the Internet, is controlled and
+restricted by the US government (except in the special case of export to
+Canada).  Under existing regulations the US government would not grant
+mozilla.org the export license needed to release the cryptographic source
+code included in Netscape Communicator.</LI>
+
+<P><LI>
+The cryptographic source code in Netscape Communicator includes code licensed
+from third parties, most notably RSA Data Security.  mozilla.org does
+not have rights to redistribute that code in source form, even in a situation
+where export from the US is not an issue (for example, allowing downloads
+only from within the US).</LI>
+</UL>
+<BR>
+For more information see the US <A HREF="http://jya.com/eartoc.htm">Export
+Administration Regulations</A>, particularly <A HREF="http://jya.com/734.htm">15
+CFR Part 734</A>, <A HREF="http://jya.com/742.htm">742</A>, and <A HREF="http://jya.com/774-ccl05.htm">774,
+Supplement No. 1, Category 5</A>.<BR>
+<BR>
+<P><LI>
+<A NAME="1-2"></A><B>Why couldn't mozilla.org release just the cryptographic
+source code for the "40-bit" version of Netscape Communicator currently
+being exported from the US?</B></LI>
+
+<BR>Under existing US government regulations US-based companies, organizations,
+and individuals must obtain an export license for <I>any</I> software implementing
+cryptographic functionality, regardless of the strength of the encryption
+used.  Netscape currently distributes the exportable ("40-bit") version
+of Netscape Communicator under a special export license granted to mass-market
+software products that a) implement only RC4 and/or RC2 encryption using
+a 40-bit key and b) are available in executable form only.
+
+<P>However distribution of such a "40-bit" product in source form (including
+cryptographic source code) would require a separate export license, and
+under existing regulations the US government would not grant such a license,
+at least for the unmodified source code.  (The presumed justification
+for this is that it would be almost trivially easy to change such source
+code to enable encryption with key lengths longer than 40 bits.)
+
+<P>For more information see the US <A HREF="http://jya.com/eartoc.htm">Export
+Administration Regulations</A>, particularly <A HREF="http://jya.com/742.htm#742.15">15
+CFR Part 742.15 paragraph (b)(1)</A>, <A HREF="http://jya.com/742.htm#742s6">742,
+Supplement 6</A>, and <A HREF="http://jya.com/748.htm#748.3">748.3 paragraph
+(b)(3)</A>.
+<BR> 
+<P><LI>
+<A NAME="1-3"></A><B>Even if mozilla.org can't release the cryptographic
+source code itself, will it release source code for SSL and S/MIME along
+with appropriate APIs, so that people outside the US could add the necessary
+cryptographic code?</B></LI>
+
+<BR>Netscape Communicator does in fact use a standard API to invoke cryptographic
+functions, namely the PKCS#11 (or "Cryptoki") API defined by RSA Data Security,
+and also allows those cryptographic functions to be supplied by a separate
+PKCS#11-compliant module developed by a third party.  However the
+US government has traditionally considered software that calls cryptographic
+functions to be subject to cryptographic export controls, even if the software
+itself contains no cryptographic code but rather just calls external cryptographic
+libraries through a defined API.  (This is sometimes referred to as
+"crypto with a hole".)
+
+<P>In particular, distribution of Communicator source code implementing
+SSL or S/MIME and calling separate cryptographic functions through an API
+would require an export license even in the absence of code implementing
+any such cryptographic functions, and under existing regulations the US
+government would not grant such a license, at least for the source code
+as it currently exists.  (The presumed justification for this is that
+it would be almost trivially easy to link such source code with an external
+cryptographic library developed outside the US.)
+
+<P>For more information on export control of mass market software invoking
+cryptographic functions see the US <A HREF="http://jya.com/eartoc.htm">Export
+Administration Regulations</A>, particularly <A HREF="http://jya.com/742.htm#742s6">15
+CFR Part 742, Supplement 6</A> concerning export licenses for mass market
+software such as Netscape Communicator; note in particular paragraph (b)(3)(v)(E),
+which addresses how source code for mass market software calling cryptographic
+functions must be modified for export from the US (e.g., by removing all
+cryptographic code and calls to such code).  For more information
+on the PKCS#11 API and Netscape's PKCS#11 support in Communicator, see
+the <A HREF="http://www.rsa.com/rsalabs/pubs/PKCS/html/pkcs-11.html">PKCS#11
+specification</A>, Netscape's <A HREF="http://developer.netscape.com/library/documentation/security/pkcs/">PKCS#11
+documentation</A>, and Netscape's <A HREF="http://developer.netscape.com/support/faqs/pkcs_11.html">PKCS#11
+FAQ</A>. <BR>
+<BR>
+<P><LI>
+<A NAME="1-4"></A><B>Isn't Microsoft's CryptoAPI implementation an example
+of exportable code that invokes cryptographic functions through an API? 
+Why couldn't mozilla.org do the same with the Communicator SSL and S/MIME
+code?</B></LI>
+
+<BR>It is in fact possible under certain circumstances to obtain an export
+license for software invoking cryptographic functions through an API. 
+For example, Microsoft's implementation of the Microsoft Cryptographic
+API (CryptoAPI) specification was approved for export from the US, even
+though it implements an API by which third parties, including third parties
+outside the US, can add separate modules ("Cryptographic Service Providers"
+or CSPs) implementing cryptographic functionality.  This export approval
+was presumably made possible because a) the CryptoAPI implementation requires
+third party CSPs to be digitally signed by Microsoft and rejects attempts
+to call CSPs not so signed; b) through this signing process Microsoft can
+ensure compliance with the relevant US export control regulations (e.g.,
+they presumably would not sign a CSP developed outside the US that implements
+strong cryptography); and c) Microsoft's CryptoAPI implementation is available
+only in executable form, and thus is presumed to be reasonably resistant
+to user tampering to disable the CSP digital signature check.
+
+<P>This last reason is the most important with respect to distribution
+of the Mozilla code; since the Mozilla distribution will be in the form
+of source code mozilla.org cannot follow the CryptoAPI example in this
+case.  US export regulations do in fact provide a procedure by which
+such source code can be exported; however it essentially requires the removal
+of any and all source code references involving the invocation of cryptographic
+functions.  (This happens to be what Netscape is doing to prepare
+the Mozilla source release for general distribution.)
+
+<P>For more information on export control of mass market software invoking
+cryptographic functions see the <A HREF="#1-3">question</A> above. 
+For more information on Microsoft's CryptoAPI and export control see the
+<A HREF="http://www.microsoft.com/msdn/join/">Microsoft Developer Network
+Online</A>. <BR>
+<BR>
+<P><LI>
+<A NAME="1-5"></A><B>Aren't TCP/IP socket calls and other comparable APIs
+examples of "hooks" by which cryptographic functionality can be added? 
+If TCP/IP source code can be exported from the US, why couldn't mozilla.org
+do the same with the SSL and S/MIME source code?</B></LI>
+
+<BR>There are multiple mechanisms by which software can transform data
+or communicate data over networks, and often these mechanisms are invoked
+using defined APIs resulting in calls to code in separate modules. 
+For purposes of US export control how are mechanisms like SSL and S/MIME
+(and their associated APIs) to be distinguished from mechanisms like socket
+calls and MIME-type handlers (and <I>their</I> associated APIs)?  
+The US export regulations are not explicit on this point, but one possible
+guide may be the definitions in the regulations of the terms "cryptography"
+and "encryption software".
+
+<P>The regulations define "cryptography" as "the discipline that embodies
+principles, means and methods for the transformation of data in order to
+hide its information content, prevent its undetected modification or prevent
+its unauthorized use", and go on to say that "'cryptography' is limited
+to the transformation of information using one or more 'secret parameters'
+(e.g., crypto variables) and/or associated key management", where a "secret
+parameter" is in turn defined as "a constant or key kept from the knowledge
+of others or shared only within a group".  Similarly, the regulations
+define "encryption software" as "computer programs that provide capability
+of encryption functions or confidentiality of information or information
+systems".
+
+<P>So the distinction between sockets and SSL and between MIME-type handlers
+and S/MIME can presumably be made as follows:  Both SSL and S/MIME
+were explicitly designed and have as one of their main functions to "hide
+... information content" and "provide ... confidentiality of data"; therefore
+software implementing SSL and S/MIME is considered to be "encryption software"
+using "cryptography" and thus subject to the relevant export control regulations. 
+However mechanisms such as sockets and MIME-type handlers communicate and/or
+transform data only in a general sense, and in particular do not (necessarily)
+require using "secret parameters" or "key management"; thus software implementing
+APIs to such mechanisms is not considered "encryption software" in the
+context of US export control regulations.  Such software may still
+require an US export license, but under less restrictive terms; if it is
+mass market commercial software it would typically be exportable under
+the "TSU" license exemption (for "Technology and Software -- Unrestricted"),
+and if it is "published" software (as most free software would be) it may
+not be subject to US export control regulations at all.
+
+<P>For more information see the US <A HREF="http://jya.com/eartoc.htm">Export
+Administration Regulations</A>, particularly <A HREF="http://jya.com/772.htm">15
+CFR Part 772</A> (definitions of "cryptography" and "encryption software"),
+<A HREF="http://jya.com/740.htm#740.13">740.13</A> (the "TSU" license exemption),
+and <A HREF="http://jya.com/734.htm#734.3">734.3 paragraph (b)</A> and
+<A HREF="http://jya.com/734.htm#734.7">734.7</A> ("published" software). <BR>
+<BR>
+<P><LI>
+<A NAME="1-6"></A><B>Why couldn't mozilla.org export the cryptographic
+source code in Communicator as a printed book, as was done with PGP?</B></LI>
+
+<BR>US export control regulations dealing with cryptographic software exempt
+material published in printed form, presumably to minimize the possibility
+of legal challenges to those regulations under the First Amendment to the
+US constitution.  In 1995 MIT Press published the source code for
+PGP in book form; presumably it was and is legal to export this from the
+US, taking advantage of the relevant exemption.  In any case, copies
+were indeed obtained by people outside the US, who proceeded to convert
+the printed source code to electronic form by scanning it using optical
+character recognition (OCR) software.  Recently Network Associates
+(the current developer of the commercial US version of PGP) announced that
+a full-strength commercial version of PGP was being made available outside
+the US based on work done at a non-US company; that work was presumably
+based on the PGP source code previously legally exported.  (In essence
+Network Associates' business model for selling commercial versions of PGP
+worldwide does not depend on their obtaining a US export license; in this
+they differ from Netscape and other US software companies.)
+
+<P>At this time mozilla.org has no plans to distribute Mozilla cryptographic
+code in this manner, for a variety of reasons; one major reason is that
+the cryptographic source code in Netscape Communicator includes code licensed
+from third parties, most notably RSA Data Security, and mozilla.org does
+not have rights to redistribute that code in source form, whether printed
+or not.
+
+<P>For more information see the following:
+<UL>
+<P><LI>
+US <A HREF="http://jya.com/eartoc.htm">Export Administration Regulations</A>,
+particularly <A HREF="http://jya.com/734.htm#734.3">15 CFR Part 734.3 paragraphs
+(b)(2) and (b)(3) and accompanying note</A> on US export control of cryptographic
+source code in printed form vs. electronic form</LI>
+
+<P><LI>
+the book <I><A HREF="http://mitpress.mit.edu/book-home.tcl?isbn=0262240394">PGP
+Source Code and Internals</A></I> (now out of print) and <A HREF="http://www.pgp.com/phil/phil-src-intro.cgi">Philip
+R. Zimmermann's preface</A> to it</LI>
+
+<P><LI>
+a description of the <A HREF="http://www.pgpi.com/project/">PGP scanning
+project</A></LI>
+
+<P><LI>
+the <A HREF="http://www.nai.com/about/news/press/1998/032098.asp">Network
+Associates press release</A> on the commercial availability of PGP outside
+the US</LI>
+
+<BR>the <A HREF="http://www.law.cornell.edu/constitution/constitution.billofrights.html#amendmenti">First
+Amendment</A> to the <A HREF="http://www.law.cornell.edu/constitution/constitution.overview.html">US
+constitution</A></UL>
+ 
+<P><LI>
+<A NAME="1-7"></A><B>Wasn't John Gilmore able to export cryptographic source
+code in electronic form?  Why couldn't mozilla.org follow his example?</B></LI>
+
+<BR>John Gilmore recently announced that he was releasing for general distribution
+cryptographic source code intended to be used in providing enhanced security
+for the Internet Domain Name System (DNS).  In doing this Gilmore
+took advantage of a provision in the US government export control regulations
+that specifically exempted from export control cryptographic code designed
+to be used only to provide authentication (e.g., using digital signature
+techniques) and <I>not</I> to provide privacy (i.e., using encryption). 
+The provision in question did not distinguish between the cases where such
+code was released in object form vs. source form; hence Gilmore chose to
+release the DNS security software in source form.
+
+<P>mozilla.org cannot make use of this particular exemption because the
+Communicator source code as it exists today, particularly the implementation
+of SSL and S/MIME, is explicitly designed to provide privacy through encryption.
+
+<P>For more information see John Gilmore's <A HREF="http://www.toad.com/dnssec/pressrel1.txt">press
+release</A> and <A HREF="http://www.toad.com/dnssec/pressrel1.background.txt">press
+backgrounder</A>; although this is not explicitly stated in Gilmore's materials,
+the provisions in the US <A HREF="http://jya.com/eartoc.htm">Export Administration
+Regulations</A> which Gilmore used as justification were presumably <A HREF="http://jya.com/774-ccl05.htm">15
+CFR Part 774, Supplement No. 1, Category 5, Advisory Notes 1 and 2</A>.
+<BR> 
+<P><LI>
+<A NAME="1-8"></A><B>I've read that people can legally take the US version
+of Netscape Communicator out of the US on their laptops.  If they
+are able to do this without US government interference, why can't mozilla.org
+export Mozilla cryptographic source code without interference?</B></LI>
+
+<BR>It is in fact true that US-based individuals can take cryptographic
+software (including the US version of Netscape Communicator) out of the
+US pre-loaded on laptops or other computer systems without getting an export
+license.  This is possible under a special export license exemption
+in which cryptographic software is considered to be a "tool of trade" used
+by the US-based individual in the course of their business; such software
+may be taken out of the US temporarily, but must remain under the control
+of the person exporting it and must be returned to the US when the person
+returns (more or less -- it might be shipped back separately).  The
+regulations allow a maximum time out of the US of one year.
+
+<P>This particular license exemption has no relevance to mozilla.org since
+it does not permit true export in the sense that would be required for
+general distribution of cryptographic software outside the US.
+
+<P>For more information see the US <A HREF="http://jya.com/eartoc.htm">Export
+Administration Regulations</A>, particularly <A HREF="http://jya.com/740.htm#740.9">15
+CFR Part 740.9, paragraph (a)(2)(i)</A> (license exemption for "tools of
+trade"). <BR>
+<BR>
+<P><LI>
+<A NAME="1-9"></A><B>What about people who send the "RSA in Perl" code
+in their signature files or in other forms?  If they are able to do
+this without US government interference, why can't mozilla.org export Mozilla
+cryptographic source code without interference?</B></LI>
+
+<BR>Many people in the US and elsewhere have taken to including in their
+email signature files a short program in Perl implementing the RSA public
+key algorithm.  The program is also available on T-shirts, and at
+least one person has it as a tattoo.  Apparently none of these people
+have encountered US government interference in their sending email messages
+around the world with the RSA Perl code, traveling outside the US wearing
+the T-shirts, and so on.
+
+<P>However this has little direct relevance to the problem of mozilla.org
+exporting cryptographic code as part of the general Mozilla distribution. 
+RSA Perl code on T-shirts, tattoos, etc., is considered printed material
+in the context of the export control regulations, and is therefore exempt
+from those regulations.  RSA Perl code in an email signature file
+is considered to be cryptographic software under the export regulations
+(and in fact is in the same export control category as programs like Netscape
+Communicator and PGP), but the situation of an individual sending a 3-line
+cryptographic program as part of an email message is not comparable to
+that of a company or organization distributing millions of lines of source
+code for a mass market software product with extensive cryptographic capabilities.
+
+<P>It is often the case that those enforcing government regulations could
+potentially find many more violations of those regulations than could reasonably
+be investigated in depth, let alone be referred for prosecution by law
+enforcement agencies; government regulators would presumably be advised
+therefore to devote relatively more attention to cases which have higher
+visibility and a higher priority from the standpoint of preventing the
+perceived potential problems that the regulations were written to address. 
+In the case of export control regulations for cryptography, presumably
+a major potential problem as perceived by US government regulators is the
+possibility of widespread or even universal availability and use worldwide
+of mass market desktop software implementing strong cryptography for common
+operations such as electronic mail and web browsing.  It is therefore
+reasonable to assume that a much higher priority would be placed on enforcing
+export regulations in the case of such products than in the case of "RSA
+in Perl" or similar programs, and that the chance of prosecution of an
+organization distributing such mass market software contrary to US export
+regulations would be significantly higher than the chance of prosecution
+of individuals sending RSA Perl code in their signature files.  Whether
+this is actually true or not, mozilla.org has chosen not to test the proposition.
+
+<P>For more information see <A HREF="http://dcs.ex.ac.uk/~aba/rsa/">Adam
+Back's discussion of "RSA in Perl"</A> in various incarnations; of special
+interest is the <A HREF="http://samsara.law.cwru.edu/comp_law/jvd/pdj-bxa-gjs070397.htm">Bureau
+of Export Administration ruling</A> on the exportability of RSA in Perl
+in electronic form, which among other things is an excellent real-world
+example of how software is categorized and regulated as part of the export
+approval process.   And of course, Richard White's
+<A HREF="http://www.dcs.ex.ac.uk/~aba/rsa/tattoo.html">tattoo</A>.
+<BR>
+<BR>
+<P><LI>
+<A NAME="1-10"></A><B>If I develop cryptographic code outside the US, will
+mozilla.org accept it for inclusion in the standard Mozilla distribution?</B></LI>
+
+<BR>mozilla.org is still considering this issue.  The potential problem
+here is that even though individuals outside the US may be free to develop
+cryptographic code (depending on the laws and regulations of the country
+you're in), and that code may be legally imported into the US with no restrictions
+whatsoever, reexport of that code from the US, even unmodified, requires
+an export license exactly as if the code had been developed in the US originally. 
+Thus if mozilla.org accepted contributions of cryptographic code from non-US
+developers it would be unable to release that code for general distribution.
+
+<P>It would be possible for mozilla.org to accept that code and to distribute
+it (as a separate release) only to users based in the US and Canada. 
+However this would require additional controls on downloading over and
+above what mozilla.org is setting up for distribution of the general source
+release.  There would also be the problem that US developers (including
+developers at Netscape) who made modifications to the cryptographic code
+would not be able to export those modifications back to the original developers
+outside the US.  For these and related reasons mozilla.org has not
+yet decided whether it will accept or distribute any cryptographic source
+code at all, whether developed outside the US or not.
+
+<P>For more information see the US <A HREF="http://jya.com/eartoc.htm">Export
+Administration Regulations</A>, particularly <A HREF="http://jya.com/734.htm#734.4">15
+CFR Part 734.4 paragraph (b)(2)</A>  (reexport of foreign-origin encryption
+software) and <A HREF="http://jya.com/734.htm#734.2">734.2 paragraph (b)(9)</A>
+(controls required for electronic distribution of cryptographic software). 
+Incidentally, the phrase "there is no de minimis level for reexport..."
+in 734.4 is a bit confusing.  The reference is to the succeeding paragraphs,
+which exempt from the EAR reexport of  products that have less than
+a certain percentage of US content, say 10% or 25%; this percentage is
+the "de minimis level".  There is no such applicable percentage for
+reexport of cryptographic software; even software with zero US content
+may not be (re)exported from the US without an export license. <BR>
+<BR>
+<P><LI>
+<A NAME="1-11"></A><B>Will mozilla.org release information on the format
+of the Netscape Communicator key and certificate database, so that third-party
+cryptographic code can reuse existing user keys and certificates?</B></LI>
+
+<BR>mozilla.org is still considering this issue.  Note that US export
+regulations require that US based individuals and organizations obtain
+an export license in order to provide "technical assistance" to persons
+outside the US, even in cases where no software is actually exported. 
+The prohibition on such assistance is fairly broad, covering a range of
+activities intended to "aid a foreign person in the development or manufacture
+outside the United States of encryption commodities and software"; the
+regulations explicitly exempt from this prohibition only "mere teaching
+or discussion of information about cryptography" (presumably because prohibiting
+these activities would likely be held unconstitutional on the basis of
+the First Amendment to the US constitution).
+
+<P>For more information see the US <A HREF="http://jya.com/eartoc.htm">Export
+Administration Regulations</A>, particularly <A HREF="http://jya.com/734.htm#734.5">15
+CFR 734.5 paragraph (c)</A>, <A HREF="http://jya.com/736.htm#736.2">736.2
+paragraph (b)(7)(ii)</A>, and <A HREF="http://jya.com/744.htm#744.9">744.9</A>.
+<BR> 
+<P><LI>
+<A NAME="1-12"></A><B>Why is this even a problem for mozilla.org? 
+Haven't US export controls on cryptographic software already been ruled
+unconstitutional?<BR>
+</B>For several years Professor Daniel Bernstein (of the University of
+California at Berkeley) pursued a lawsuit against the US government essentially
+claiming that US export control regulations on cryptographic software and
+related conduct with regard to cryptography (e.g., "technical assistance"
+as previously discussed) were unconstitutional.  (Bernstein's suit
+was originally directed at the ITAR and related regulations, since at the
+time the suit was filed the current Export Administration Regulations were
+not yet in effect with respect to cryptographic software.)  On 25
+August 1997 the US District Court for the Northern District of California
+issued a final ruling (written by Judge Marilyn Hall Patel) that "the [US
+government] encryption regulations are an unconstitutional prior restraint
+in violation of the First Amendment."<BR>
+<BR>
+However this ruling does not settle the issue of the constitutionality
+of US export control regulations, for two reasons.  First, the ruling
+was effective only within the juridiction of the US District Court for
+the Northern District of California.  Second, immediately after the
+ruling the government requested and the District Court approved that the
+ruling apply only to Professor Bernstein (and his original cryptographic
+software, "Snuffle"), pending completion of the appeals process. 
+The case is now being appealed by the US government to the 9th Circuit
+Court of Appeals.  Until the appeals process is completed (with the
+case perhaps going all the way to the US Supreme Court) the current US
+export regulations continue to apply to all other individuals and organizations
+in the US, including mozilla.org.<BR>
+<BR>
+For more information see the <A HREF="http://www.eff.org/pub/Legal/Cases/Bernstein_v_DoS/">archives
+on the Bernstein case</A> maintained by the <A HREF="http://www.eff.org/">Electronic
+Frontier Foundation</A>, particularly Judge Patel's <A HREF="http://www.eff.org/pub/Legal/Cases/Bernstein_v_DoS/Legal/970825_decision.html">final
+ruling</A> and her <A HREF="http://www.eff.org/pub/Legal/Cases/Bernstein_v_DoS/Legal/970909_stay_order.images/page-images.html">"stay
+order"</A> halting general enforcement of the ruling pending appeal.</LI>
+</OL>
+
+<HR WIDTH="100%">
+
+<!--
+
+<H2>
+US government export control of cryptographic software</H2>
+
+<OL>
+<P><LI>
+<A NAME="2-1"></A><B>What are the relevant US government laws and regulations
+governing export from the US of cryptographic software?</B></LI>
+
+<BR>To be written. <BR>
+<BR>
+<P><LI>
+<A NAME="2-2"></A><B>I thought export of cryptographic software from the
+US was governed by the International Traffic in Arms Regulations. 
+What happened to the ITAR?</B></LI>
+
+<BR>To be written.
+<BR> 
+<P><LI>
+<A NAME="2-3"></A><B>What is the Bureau of Export Administration, and what
+is its role in US export control of cryptographic software?</B></LI>
+
+<BR>To be written. <BR>
+<BR>
+<P><LI>
+<A NAME="2-4"></A><B>What is the Defense Technology Security Administration,
+and what is its role in US export control of cryptographic software?</B></LI>
+
+<BR>To be written. <BR>
+<BR>
+<P><LI>
+<A NAME="2-5"></A><B>What is the National Security Agency, and what is
+its role in US export control of cryptographic software?</B></LI>
+
+<BR>To be written. <BR>
+<BR>
+<P><LI>
+<A NAME="2-6"></A><B>What is the Federal Bureau of Investigation, and what
+is its role in US export control of cryptographic software?</B></LI>
+
+<BR>To be written.</OL>
+
+<HR WIDTH="100%">
+<H2>
+History, technology, and politics of cryptography</H2>
+
+<OL>
+<P><LI>
+<A NAME="3-1"></A><B>Where can I learn more about cryptography and how
+it works?</B></LI>
+
+<BR>To be written.<BR>
+<BR>
+<P><LI>
+<A NAME="3-2"></A><B>Where can I learn more about the political history
+and present political environment around US export controls and related
+restrictions on cryptography?</B></LI>
+
+<BR>To be written. <BR>
+<BR>
+<P><LI>
+<A NAME="3-3"></A><B>How can I seek to influence US policy on cryptography?</B></LI>
+
+<BR>To be written. <BR>
+<BR>
+<P><LI>
+<A NAME="3-4"></A><B>Where can I find more information on restrictions
+on cryptography in other countries around the world?</B></LI>
+
+<BR>To be written.</OL>
+
+-->
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 Netscape Communications Corporation.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

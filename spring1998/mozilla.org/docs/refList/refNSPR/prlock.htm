@@ -1,0 +1,263 @@
+<HTML>
+<HEAD>
+<TITLE>Locks
+</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<A HREF="contents.htm">[Contents]</A> <A HREF="prinit.htm">[Previous]</A> <A HREF="prcvar.htm">[Next]</A> <A HREF="prerr.htm">[Last]</A>
+<HR>
+<A NAME="1007162">
+<P></A><CENTER><H2>Chapter 5<BR><A NAME="1007115">
+Locks</H2>
+</A></CENTER>
+<A NAME="1019522">
+This chapter describes the NSPR API for creation and manipulation of a mutex of type <A HREF="prlock.htm#1018659"><CODE>PRLock</CODE></A>.<P></A>
+<A NAME="1019529">
+<A HREF="prlock.htm#1018633">Lock Type</A><br><A HREF="prlock.htm#1018718">Lock Functions</A><P></A>
+<A NAME="1018526">
+In NSPR, a mutex of type <A HREF="prlock.htm#1018659"><CODE>PRLock</CODE></A> controls locking, and associated condition variables communicate changes in state among threads. When a programmer associates a mutex with an arbitrary collection of data, the mutex provides a protective monitor around the data. <P></A>
+<A NAME="1018984">
+In general, a monitor is a conceptual entity composed of a mutex, one or more condition variables, and the monitored data. Monitors in this generic sense should not be confused with monitors used in Java programming. In addition to <A HREF="prlock.htm#1018659"><CODE>PRLock</CODE></A>, NSPR provides another mutex type, <A HREF="prmon.htm#421412"><CODE>PRMonitor</CODE></A>, which is reentrant and can have only one associated condition variable. <CODE>PRMonitor</CODE> is intended for use with Java and reflects the Java approach to thread synchronization. <P></A>
+<A NAME="1018405">
+For an introduction to NSPR thread synchronization, including locks and condition variables, see <A HREF="printro.htm#1015494">Chapter&nbsp;1, "Introduction to NSPR."</A><P></A>
+<A NAME="1019344">
+For reference information on NSPR condition variables, see <A HREF="prcvar.htm#1007115">Chapter&nbsp;6, "Condition Variables."</A><P></A>
+
+<A NAME="Lock Type"></A>
+<A NAME="1018633">
+<H2> Lock Type</H2>
+</A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018659">
+<H4> PRLock</H4>
+</A>
+
+<A NAME="1018673">
+A mutual exclusion lock.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018660">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1018671">
+<PRE>#include &lt;prlock.h&gt;</PRE></A><A NAME="1018681">
+<PRE>typedef struct PRLock PRLock;</PRE></A><A NAME="Head4;"></A>
+<A NAME="1018675">
+<H5> Description</H5>
+</A>
+
+<a name="1018677">
+NSPR represents a lock as an opaque entity to clients of the functions described in this 
+chapter. Functions that operate on locks do not have timeouts and are not interruptible.
+</blockquote>
+</a>
+
+<A NAME="Lock Functions"></A>
+<A NAME="1018718">
+<H2> Lock Functions</H2>
+</A>
+<ul><P>
+<A NAME="1019665">
+<LI><A HREF="prlock.htm#1018661"><CODE>PR_NewLock</CODE></A> creates a new lock object.</LI>
+</A><P>
+<A NAME="1019676">
+<LI><A HREF="prlock.htm#1018626"><CODE>PR_DestroyLock</CODE></A> destroys a specified lock object.</LI>
+</A><P>
+<A NAME="1019672">
+<LI><A HREF="prlock.htm#1018627"><CODE>PR_Lock</CODE></A> locks a specified lock object.</LI>
+</A><P>
+<A NAME="1018789">
+<LI><A HREF="prlock.htm#1018630"><CODE>PR_Unlock</CODE></A> unlocks a specified lock object.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="1018661">
+<H4> PR_NewLock</H4>
+</A>
+
+<A NAME="1018707">
+Creates a new lock.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018686">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1018696">
+<PRE>#include &lt;prlock.h&gt;</PRE></A><A NAME="1018689">
+<PRE>PRLock* PR_NewLock(void);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1019728">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="1019729">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1019735">
+<LI>If successful, a pointer to the new lock object.</LI>
+</A><P>
+<A NAME="1019747">
+<LI>If unsuccessful (for example, the lock cannot be created because of resource constraints), <CODE>NULL</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="1018690">
+<H5> Description</H5>
+</A>
+
+<a name="1018702">
+<CODE>PR_NewLock</CODE> creates a new opaque lock 
+</blockquote>
+</a>
+
+<A NAME="Head3;"></A>
+<A NAME="1018626">
+<H4> PR_DestroyLock</H4>
+</A>
+
+<A NAME="1018870">
+Destroys a specified lock object.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018842">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1018843">
+<PRE>#include &lt;prlock.h&gt;</PRE></A><A NAME="1018849">
+<PRE>void PR_DestroyLock(PRLock *lock);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1019844">
+<H5> Parameter</H5>
+</A>
+
+<a name="1019850">
+<CODE>PR_DestroyLock</CODE> has one parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1019847">
+<PRE>lock</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1019849">
+A pointer to a lock object.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+
+</blockquote>
+</a>
+<A NAME="Head4;"></A>
+<A NAME="1019851">
+<H5> Caution</H5>
+</A>
+
+<A NAME="1019596">
+The caller must ensure that no thread is currently in a lock-specific function. Locks do not provide self-referential protection against deletion.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018627">
+<H4> PR_Lock</H4>
+</A>
+
+<A NAME="1018878">
+Locks a specified lock object.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018881">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1018889">
+<PRE>#include &lt;prlock.h&gt;</PRE></A><A NAME="1018882">
+<PRE>void PR_Lock(PRLock *lock);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1018883">
+<H5> Parameter</H5>
+</A>
+
+<a name="1018901">
+<CODE>PR_Lock</CODE> has one parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1018898">
+<PRE>lock</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1018900">
+A pointer to the lock object to be locked.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+
+</blockquote>
+</a>
+<A NAME="Head4;"></A>
+<A NAME="1019617">
+<H5> Description</H5>
+</A>
+
+<A NAME="1019638">
+When <CODE>PR_Lock</CODE> returns, the calling thread is "in the monitor," also called "holding the monitor's lock." Any thread that attempts to acquire the same lock blocks until the holder of the lock exits the monitor. Acquiring the lock is not an interruptible operation, nor is there any timeout mechanism.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018630">
+<H4> PR_Unlock</H4>
+</A>
+
+<A NAME="1018909">
+Releases a specified lock object. Releasing an unlocked lock results in an error.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018910">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1018911">
+<PRE>#include &lt;prlock.h&gt;</PRE></A><A NAME="1018912">
+<PRE>PRStatus PR_UnLock(PRLock *lock);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1018913">
+<H5> Parameter</H5>
+</A>
+
+<a name="1018919">
+<CODE>PR_UnLock</CODE> has one parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1018916">
+<PRE>lock</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1018918">
+A pointer to the lock object to be released.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+
+</blockquote>
+</a>
+<A NAME="Head4;"></A>
+<A NAME="1018906">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1018932">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1018933">
+<LI>If successful, <CODE>PR_Success</CODE>.</LI>
+</A><P>
+<A NAME="1018934">
+<LI>If unsuccessful (for example, if the caller does not own the lock), <CODE>PR_FAILURE</CODE>. </LI>
+</A><a name="1018927">
+
+</blockquote>
+</a>
+</ul>
+<P><HR>
+<A HREF="contents.htm">[Contents]</A> <A HREF="prinit.htm">[Previous]</A> <A HREF="prcvar.htm">[Next]</A> <A HREF="prerr.htm">[Last]</A>
+<P ALIGN=right>
+
+<FONT SIZE=-2><I>Last Updated:  03/09/98  20:28:49
+</I></FONT>
+
+<HR SIZE=4>
+
+<P> <CENTER>Copyright © 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html"
+TARGET=_top>Netscape Communications Corporation</A></FONT>
+</CENTER>
+<P>
+<P>
+</BODY>
+</HTML>
+
+

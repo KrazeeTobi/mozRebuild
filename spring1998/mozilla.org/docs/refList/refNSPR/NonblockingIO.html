@@ -1,0 +1,174 @@
+<HTML>
+<HEAD>
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; IRIX 6.2 IP22) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H1>
+Nonblocking IO in NSPR</H1>
+
+<ADDRESS>
+[10/30/97, Wan-Teh Chang, <A HREF="mailto:wtc@netscape.com">wtc@netscape.com]</A></ADDRESS>
+
+<BR>
+<LI>
+<A HREF="#Introduction">Introduction</A></LI>
+
+<LI>
+<A HREF="#Creating a nonblocking socket">Creating a nonblocking socket</A></LI>
+
+<LI>
+<A HREF="#Programming constraints">Programming constraints</A></LI>
+
+<LI>
+<A HREF="#Differences from blocking IO">Differences from blocking IO</A></LI>
+
+<LI>
+<A HREF="#PR_Poll() or PR_Select()?">PR_Poll() or PR_Select()?</A></LI>
+
+<LI>
+<A HREF="#PR_Available()">PR_Available()</A></LI>
+
+<LI>
+<A HREF="#Current status">Current status</A></LI>
+
+<H2>
+<A NAME="Introduction"></A>Introduction</H2>
+Previously, all I/O in NSPR was <I>blocking</I> (or <I>synchronous</I>).
+A thread invoking an io function is blocked until the io operation is finished.
+The blocking io model encourages the use of multiple threads as a programming
+model.  A thread is typically created to attend to one of the simultaneous
+I/O operations that may potentially block.
+
+<P>In the <I>nonblocking</I> io model, a file descriptor may be marked
+as nonblocking.  An io function on a nonblocking file descriptor either
+succeeds immediately or fails immediately with <TT>PR_WOULD_BLOCK_ERROR</TT>.
+A single thread is sufficient to attend to multiple nonblocking file descriptors
+simultaneously.  Typically, this central thread invokes <TT>PR_Poll()</TT>
+on a set of nonblocking file descriptors.  (Note: <TT>PR_Poll()</TT>
+also works with blocking file descriptors, although it is less useful in
+the blocking io model.)  When <TT>PR_Poll()</TT> reports that a file
+descriptor is ready for some io operation, the central thread invokes that
+io function on the file descriptor.
+<H2>
+<A NAME="Creating a nonblocking socket"></A>Creating a Nonblocking Socket</H2>
+<I>Only sockets can be made nonblocking</I>.  Regular files always
+operate in blocking mode.  This is not  a serious constraint
+as one can assume that disk I/O never blocks.  Fundamentally, this
+constraint is due to the fact that nonblocking I/O and <TT>select()</TT>
+are only available to sockets on some platforms (e.g., Winsock).
+
+<P>In NSPR, a new socket returned by <TT>PR_NewTCPSocket()</TT> or <TT>PR_NewUDPSocket()</TT>
+is always created in blocking mode.  One can make the new socket nonblocking
+by using <TT>PR_SetSockOpt()</TT> as in the example below (error checking
+is omitted for clarity):
+
+<P><UL><PRE>
+    PRFileDesc *sock;
+    <B>PRIntn optval = 1;</B>
+    sock = PR_NewTCPSocket();
+    /* <I>Make the socket nonblocking</I> */
+    <B>PR_SetSockOpt(sock, PR_SockOpt_Nonblocking,
+                  &amp;optval, sizeof(optval));</B>
+</PRE></UL><P>
+
+<H2>
+<A NAME="Programming constraints"></A><B>Programming Constraints</B></H2>
+There are some constraints due to the use of NT asynchronous I/O in the
+NSPR.  In NSPR, blocking sockets on NT are associated with an I/O
+completion port.  Once associated with an I/O completion port, we
+can't disassociate the socket from  the I/O completion port.
+I have seen some strange problems with using a nonblocking socket associated
+with an I/O completion port.  So the first constraint is:
+<UL><B>The blocking/nonblocking io mode of a new socket  is committed
+the first time a <I>potentially-blocking io function</I> is  invoked
+on the socket.   Once the  io mode of a socket  is
+committed, it cannot be changed.</B></UL>
+The potentially-blocking io functions include <TT>PR_Connect()</TT>, <TT>PR_Accept()</TT>,
+<TT>PR_AcceptRead()</TT>, <TT>PR_Read()</TT>, <TT>PR_Write()</TT>, <TT>PR_Writev()</TT>,
+<TT>PR_Recv()</TT>, <TT>PR_Send()</TT>, <TT>PR_RecvFrom()</TT>, <TT>PR_SendTo()</TT>,
+and <TT>PR_TransmitFile(),</TT> and do not include <TT>PR_Bind()</TT> and
+<TT>PR_Listen()</TT>.
+
+<P>In blocking mode, any of these potentially-blocking functions requires
+the use of the NT I/O completion port.  So at that point we must determine
+whether to associate the socket with the I/O completion or not, and that
+decision cannot be changed later.
+
+<P>There is a second constraint, due to the use of NT asynchronous I/O
+and the recycling of used sockets:
+<UL><B>The new socket returned by <TT>PR_Accept()</TT> or <TT>PR_AcceptRead()</TT>
+inherits the blocking/nonblocking io mode of the listening socket and this
+cannot be changed.</B></UL>
+The socket returned by <TT>PR_Accept()</TT> or <TT>PR_AcceptRead()</TT>
+on a blocking, listening socket may be a recycled socket previously used
+in a <TT>PR_TransmitFile()</TT> call.  Since <TT>PR_TransmitFile()</TT>
+only operates in blocking mode  (see Section "<A HREF="#AcceptRead and TransmitFile blocking mode only">Differences
+from Blocking IO</A>" below), this recycled socket can only be reused in
+blocking mode, hence the above constraint.
+
+<P>Because these constraints only apply to NT, it is advised that you test
+your cross-platform code that uses nonblocking io  on NT early in
+the development cycle.  These constraints are enforced in the debug
+NSPR library by assertions.
+<H2>
+<A NAME="Differences from blocking IO"></A>Differences from Blocking IO</H2>
+
+<LI>
+In nonblocking mode, the timeout argument for the io functions is ignored.</LI>
+
+<LI>
+<A NAME="AcceptRead and TransmitFile blocking mode only"></A><TT>PR_AcceptRead()</TT>
+and <TT>PR_TransmitFile()</TT> only work on blocking sockets.  They
+do not make sense in nonblocking mode.</LI>
+
+<LI>
+<TT>PR_Write()</TT>, <TT>PR_Send()</TT>, <TT>PR_Writev()</TT> in blocking
+mode block until the entire buffer is sent.  In nonblocking mode,
+they cannot block, so they may return with just sending part of the buffer.</LI>
+
+<H2>
+<A NAME="PR_Poll() or PR_Select()?"></A>PR_Poll() or PR_Select()?</H2>
+<TT>PR_Select()</TT> is deprecated, now declared in <TT>private/pprio.h</TT>.
+Use <TT>PR_Poll()</TT> instead.
+
+<P>The current implementation of <TT>PR_Select()</TT>  simply calls
+<TT>PR_Poll()</TT>, so it is sure to have worse performance.  Also,
+native file descriptors (socket handles) cannot be added to <TT>PR_fd_set</TT>,
+i.e.,  the functions <TT>PR_FD_NSET</TT>, <TT>PR_FD_NCLR</TT>, <TT>PR_FD_NISSET</TT>
+do not work.
+<H2>
+<A NAME="PR_Available()"></A>PR_Available()</H2>
+When <TT>PR_Available()</TT> returns 0, it may mean one of two things:
+<LI>
+There is no data available for reading on that socket.  I.e., <TT>PR_Recv()</TT>
+would block (a blocking socket) or fail with <TT>PR_WOULD_BLOCK_ERROR</TT>
+(a nonblocking socket).</LI>
+
+<LI>
+The TCP connection on that socket has been closed (end of stream).</LI>
+
+
+<P>These two cases can be distinguished by <TT>PR_Poll()</TT>.  If
+<TT>PR_Poll()</TT> reports that the socket is readable (i.e., <TT>PR_POLL_READ</TT>
+is set in <TT>out_flags</TT>), and <TT>PR_Available()</TT> returns 0, this
+means that the socket connection is closed.
+<H2>
+<A NAME="Current status"></A>Current Status</H2>
+As of 10/28/97, nonblocking socket io and <TT>PR_Poll()</TT> has been implemented
+for Unix and Win32.  Their Win16 and Mac implementations are under
+way.
+<DIV ALIGN=right> </DIV>
+
+<DIV ALIGN=right>
+<HR WIDTH="100%"></DIV>
+
+<DIV ALIGN=right><I><FONT SIZE=-1>Last updated: Tue Mar 10 10:07:54 PST
+1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+</BODY>
+</HTML>

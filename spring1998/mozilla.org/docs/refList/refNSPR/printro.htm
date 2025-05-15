@@ -1,0 +1,1785 @@
+<HTML>
+<HEAD>
+<TITLE>Introduction to NSPR
+</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<A HREF="contents.htm">[Contents]</A> <A HREF="contents.htm">[Previous]</A> <A HREF="prtyp.htm">[Next]</A> <A HREF="prerr.htm">[Last]</A>
+<HR>
+<A NAME="1003024">
+<P></A><CENTER><H2>Chapter 1<BR><A NAME="1015494">
+Introduction to NSPR</H2>
+</A></CENTER>
+<A NAME="1039908">
+The Netscape Portable Runtime (NSPR) API allows compliant applications to use system facilities such as threads, thread synchronization, I/O, interval timing, atomic operations, and several other low-level services in a platform-independent manner. This chapter introduces key NSPR programming concepts and illustrates them with sample code.<P></A>
+<A NAME="1038804">
+The current implementation of NSPR allows developers to compile a single source code base on Macintosh (PPC), Win32 (NT 3.51, NT 4.0, WIN'95), and over twenty versions of Unix. <P></A>
+<A NAME="1038966">
+NSPR does not provide a platform for porting existing code. It must be used from the beginning of a software project.<P></A>
+<A NAME="1035918">
+<A HREF="printro.htm#1039783">NSPR Naming Conventions</A><br><A HREF="printro.htm#1035921">NSPR Threads</A><br><A HREF="printro.htm#1035718">NSPR Thread Synchronization</A><br><A HREF="printro.htm#1039835">NSPR Sample Code</A><P></A>
+
+<A NAME="NSPR Naming Conventions"></A>
+<A NAME="1039783">
+<H2> NSPR Naming Conventions</H2>
+</A>
+<A NAME="1039804">
+Naming of NSPR types, functions, and macros follows the following conventions:<P></A>
+<ul><P>
+<A NAME="1039805">
+<LI>Types exported by NSPR begin with <CODE>PR</CODE> and are followed by intercap-style declarations, like this:</LI>
+</A><A NAME="1039806">
+<BLOCKQUOTE><CODE>PRInt</CODE>, <CODE>PRFileDesc</CODE> 
+</BLOCKQUOTE></A>
+
+<P>
+<A NAME="1039807">
+<LI>Function definitions begin with <CODE>PR_</CODE> and are followed by intercap-style declarations, like this:</LI>
+</A><A NAME="1039808">
+<BLOCKQUOTE><CODE>PR_Read</CODE>, <CODE>PR_JoinThread</CODE> 
+</BLOCKQUOTE></A>
+
+<P>
+<A NAME="1039967">
+<LI>Preprocessor macros begin with the letters <CODE>PR</CODE> and are followed by all uppercase characters separated with the underscore character (<CODE>_</CODE>), like this:</LI>
+</A><A NAME="1039968">
+<BLOCKQUOTE><CODE>PR_BYTES_PER_SHORT</CODE>, <CODE>PR_EXTERN
+</CODE></BLOCKQUOTE></A>
+
+</ul>
+<A NAME="NSPR Threads"></A>
+<A NAME="1035921">
+<H2> NSPR Threads</H2>
+</A>
+<A NAME="1035615">
+NSPR provides an execution environment that promotes the use of lightweight threads. Each thread is an execution entity that is scheduled independently from other threads in the same process. A thread has a limited number of resources that it truly owns. These resources include the thread stack and the CPU register set (including PC). <P></A>
+<A NAME="1035616">
+To an NSPR client, a thread is represented by a pointer to an opaque structure of type <A HREF="prthrd.htm#1015580"><CODE>PRThread</CODE></A>. A thread is created by an explicit client request and remains a valid, independent execution entity until it returns from its root function or the process abnormally terminates. (<CODE>PRThread</CODE> and functions for creating and manipulating threads are described in detail in <A HREF="prthrd.htm#1015494">Chapter&nbsp;3, "Threads."</A>)<P></A>
+<A NAME="1035620">
+NSPR threads are lightweight in the sense that they are cheaper than full-blown processes, but they are not free. They achieve the cost reduction by relying on their containing process to manage most of the resources that they access. This, and the fact that threads share an address space with other threads in the same process, makes it important to remember that <I>threads are not processes.</I> <P></A>
+<A NAME="1035621">
+NSPR threads are scheduled in two separate domains:<P></A>
+<ul><P>
+<A NAME="1035622">
+<LI><B>Local threads</B> are scheduled within a process only and are handled entirely by NSPR, either by completely emulating threads on each host operating system (OS) that doesn't support threads, or by using the threading facilities of each host OS that does support threads to emulate a relatively large number of local threads by using a relatively small number of native threads.</LI>
+</A><P>
+<A NAME="1039925">
+<LI><B>Global threads</B> are scheduled by the host OS--not by NSPR--either within a process or across processes on the entire host. Global threads correspond to native threads on the host OS.</LI>
+</A></ul><A NAME="1035627">
+NSPR threads can also be either user threads or system threads. NSPR provides a function, <A HREF="prinit.htm#1019243"><CODE>PR_Cleanup</CODE></A>, that synchronizes process termination. <CODE>PR_Cleanup</CODE> waits for the last user thread to exit before returning, whereas it ignores system threads when determining when a process should exit. This arrangement implies that a system thread should not have volatile data that needs to be safely stored away. <P></A>
+<A NAME="1037808">
+Priorities for NSPR threads are based loosely on hints provided by the client and sometimes constrained by the underlying operating system. Therefore, priorities are not rigidly defined. For more information, see <A HREF="printro.htm#1035635">Thread Scheduling</A>.<P></A>
+<A NAME="1035632">
+In general, it's preferable to create local user threads with normal priority and let NSPR take care of the details as appropriate for each host OS. It's usually not necessary to create a global thread explicitly unless you are planning to port your code only to platforms that provide threading services with which you are familiar or unless the thread will be executing code that might directly call blocking OS functions.<P></A>
+<A NAME="1038309">
+Threads can also have "per-thread-data" attached to them. Each thread has a built-in per-thread error number and error string that are updated when NSPR operations fail. It's also possible for NSPR clients to define their own per-thread-data. For details, see <A HREF="prthrd.htm#1026179">Controlling Per-Thread Private Data</A>.<P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1035635">
+<H3> Thread Scheduling</H3>
+</A>
+
+<A NAME="1035636">
+NSPR threads are scheduled by priority and can be preempted or interrupted. The sections that follow briefly introduce the NSPR approach to these three aspects of thread scheduling.<P></A>
+<A NAME="1035640">
+<A HREF="printro.htm#1035650">Setting Thread Priorities</A> <br><A HREF="printro.htm#1035658">Preempting Threads</A> <br><A HREF="printro.htm#1035662">Interrupting Threads</A> <P></A>
+<A NAME="1036013">
+For reference information on the NSPR API used for thread scheduling, see <A HREF="prthrd.htm#1015494">Chapter&nbsp;3, "Threads."</A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1035650">
+<H4> Setting Thread Priorities</H4>
+</A>
+
+<A NAME="1035651">
+The host operating systems supported by NSPR differ widely in the mechanisms they use to support thread priorities. In general, an NSPR thread of higher priority has a statistically better chance of running relative to threads of lower priority. However, because of the multiple strategies to provide execution vehicles for threads on various host platforms, priorities are not a clearly defined abstraction in NSPR. At best they are intended to specify a preference with respect to the amount of CPU time that a higher-priority thread might expect relative to a lower-priority thread. This preference is still subject to resource availability, and must not be used in place of proper synchronization. For more information on thread synchronization, see <A HREF="printro.htm#1035718">NSPR Thread Synchronization</A>.<P></A>
+<A NAME="1035655">
+The issue is further muddied by inconsistent offerings from OS vendors regarding the priority of their kernel-supported threads. NSPR assumes that the priorities of global threads are not manageable, but that the host OS will perform some sort of fair scheduling. It's usually preferable to create local user threads with normal priority and let NSPR and the host take care of the details.<P></A>
+<A NAME="1038347">
+In some NSPR configurations, there may be an arbitrary (and perhaps large) number of local threads being supported by a more limited number of <B>virtual processors</B> (an internal application of global threads). In such situations, each virtual processor will have some number of local threads associated with it, though exactly which local threads and how many may vary over time. NSPR guarantees that for each virtual processor the highest-priority, schedulable local thread is the one executing. This thread implementation strategy is referred to as the <B>M x N model.</B> <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1035658">
+<H4> Preempting Threads</H4>
+</A>
+
+<A NAME="1035659">
+Preemption is the act of taking control away from a ready thread at an arbitrary point and giving control to another appropriate thread. It might be viewed as taking the executing thread and adding it to the end of the ready queue for its appropriate priority, then simply running the scheduling algorithm to find the most appropriate thread. The chosen thread may be of higher priority, of the same priority, or even the same thread. It will not be a thread of lower priority. <P></A>
+<A NAME="1035660">
+Some operating systems cannot be made preemptable (for example, Mac OS and Win 16). This puts them at some risk in supporting arbitrary code, even if the code is interpreted (Java). Other systems are not thread-aware, and their runtime libraries not thread-safe (most versions of Unix). These systems can support local level thread abstractions that can be made preemptable, but run the risk of library corruption (<CODE>libc</CODE>). Still other operating systems have a native notion of threads, and their libraries are thread-aware and support locking. However, if local threads are also present, and they are preemptable, they are subject to deadlock. At this time, the only safe solutions are to turn off preemption (a runtime decision) or to preempt global threads only. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1035662">
+<H4> Interrupting Threads</H4>
+</A>
+
+<A NAME="1035663">
+NSPR threads are interruptable, with some constraints and inconsistencies. <P></A>
+<A NAME="1035667">
+To interrupt a thread, the caller of <A HREF="prthrd.htm#1015726">PR_Interrupt</A> must have the NSPR reference to the target thread (<A HREF="prthrd.htm#1015580">PRThread</A><CODE>*</CODE>). When the target is interrupted, it is rescheduled from the point at which it was blocked, with a status error indicating that it was interrupted. NSPR recognizes only two areas where a thread may be interrupted: waiting on a condition variable and waiting on I/O. In the latter case, interruption does cancel the I/O operation. In neither case does being interrupted imply the demise of the thread. <P></A>
+
+<A NAME="NSPR Thread Synchronization"></A>
+<A NAME="1035718">
+<H2> NSPR Thread Synchronization</H2>
+</A>
+<A NAME="1035694">
+Thread synchronization has two aspects: locking and notification. Locking prevents access to some resource, such as a piece of shared data: that is, it enforces mutual exclusion. Notification involves passing synchronization information among cooperating threads. <P></A>
+<A NAME="1037827">
+In NSPR, a <B>mutual exclusion lock </B>(or <B>mutex</B>) of type <A HREF="prlock.htm#1018659"><CODE>PRLock</CODE></A> controls locking, and associated <B>condition variables</B> of type <A HREF="prcvar.htm#1019073"><CODE>PRCondVar</CODE></A> communicate changes in state among threads. When a programmer associates a mutex with an arbitrary collection of data, the mutex provides a protective <B>monitor</B> around the data. <P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1035807">
+<H3> Locks and Monitors</H3>
+</A>
+
+<A NAME="1035699">
+In general, a monitor is a conceptual entity composed of a mutex, one or more condition variables, and the monitored data. Monitors in this generic sense should not be confused with the monitor type used in Java programming. In addition to <A HREF="prlock.htm#1018659"><CODE>PRLock</CODE></A>, NSPR provides another mutex type, <A HREF="prmon.htm#421412"><CODE>PRMonitor</CODE></A>, which is reentrant and can have only one associated condition variable. <CODE>PRMonitor</CODE> is intended for use with Java and reflects the Java approach to thread synchronization. <P></A>
+<A NAME="1037843">
+To access the data in the monitor, the thread performing the access must hold the mutex, also described as being "in the monitor." Mutual exclusion guarantees that only one thread can be in the monitor at a time and that no thread may observe or modify the monitored data without being in the monitor.<P></A>
+<A NAME="1035707">
+Monitoring is about protecting data, not code. A <B>monitored invariant</B> is a Boolean expression over the monitored data. The expression may be false only when a thread is in the monitor (holding the monitor's mutex). This requirement implies that when a thread first enters the monitor, an evaluation of the invariant expression must yield a <CODE>true</CODE>. The thread must also reinstate the monitored invariant before exiting the monitor. Therefore, evaluation of the expression must also yield a true at that point in execution.<P></A>
+<A NAME="1037867">
+A trivial example might be as follows. Suppose an object has three values, <CODE>v1</CODE>, <CODE>v2</CODE>, and <CODE>sum</CODE>. The invariant is that the third value is the sum of the other two. Expressed mathematically, the invariant is <CODE>sum = v1 + v2</CODE>. Any modification of <CODE>v1</CODE> or <CODE>v2</CODE> requires modification of <CODE>sum</CODE>. Since that is a <I>complex</I> operation, it must be monitored. Furthermore, any type of access to <CODE>sum</CODE> must also be monitored to ensure that neither <CODE>v1 n</CODE>or <CODE>v2</CODE> are in flux. <P></A>
+<BLOCKQUOTE><B>NOTE: </B><a name="1035710">
+Evaluation of the invariant expression is a conceptual requirement and is rarely done in 
+practice. It is valuable to formally define the expression during design, write it down, and 
+adhere to it. It is also useful to implement the expression during development and test it 
+where appropriate. The thread makes an absolute assertion of the expression's evaluation 
+both on entering and on exiting the monitor. 
+</blockquote>
+</a>
+<A NAME="1035711">
+Acquiring a lock is a synchronous operation. Once the lock primitive is called, the thread returns only when it has acquired the lock. Should another thread (or the same thread) already have the lock held, the calling thread blocks, waiting for the situation to improve. That blocked state is not interruptible, nor is it timed. <P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1035612">
+<H3> Condition Variables</H3>
+</A>
+
+<A NAME="1035725">
+Condition variables facilitate communication between threads. The communication available is a semantic-free notification whose context must be supplied by the programmer. Conditions are closely associated with a single monitor. <P></A>
+<A NAME="1037930">
+The association between a condition and a monitor is established when a condition variable is created, and the association persists for the life of the condition variable. In addition, a static association exists between the condition and some data within the monitor. This data is what will be manipulated by the program under the protection of the monitor. A thread may wait on notification of a condition that signals changes in the state of the associated data. Other threads may notify the condition when changes occur. <P></A>
+<A NAME="1035730">
+Condition variables are always monitored. The relevant operations on conditions are always performed from within the monitor. They are used to communicate changes in the state of the monitored data (though still preserving the monitored invariant). Condition variables allow one or more threads to wait for a predetermined condition to exist, and they allow another thread to notify them when the condition occurs. Condition variables themselves do not carry the semantics of the state change, but simply provide a mechanism for indicating that something has changed. It is the programmer's responsibility to associate a condition with the state of the data. <P></A>
+<A NAME="1035731">
+A thread may be designed to wait for a particular situation to exist in some monitored data. Since the nature of the situation is not an attribute of the condition, the program must test that itself. Since this testing involves the monitored data, it must be done from within the monitor. The wait operation atomically exits the monitor and blocks the calling thread in a waiting condition state. When the thread is resumed after the wait, it will have reentered the monitor, making operations on the data safe.<P></A>
+<A NAME="1038355">
+There is a subtle interaction between the thread(s) waiting on a condition and those notifying it. The notification must take place within a monitor--the same monitor that protects the data being manipulated by the notifier. In pseudocode, the sequence looks like this: <P></A>
+<A NAME="1038358">
+<PRE>enter(monitor); <br>... manipulate the monitored data <br>notify(condition); <br>exit(monitor);</PRE></A><A NAME="1038362">
+Notifications to a condition do not accumulate. Nor is it required that any thread be waiting on a condition when the notification occurs. The design of the code that waits on a condition must take these facts into account. Therefore, the pseudocode for the waiting thread might look like this: <P></A>
+<A NAME="1038365">
+<PRE>enter(monitor) <br>while (!expression) wait(condition); <br>... manipulate monitored data <br>exit(monitor);</PRE></A><A NAME="1038614">
+The need to evaluate the Boolean expression again after rescheduling from a wait may appear unnecessary, but it is vital to the correct execution of the program. The notification promotes a thread waiting on a condition to a ready state. When that thread actually gets scheduled is determined by the thread scheduler and cannot be predicted. If multiple threads are actually processing the notifications, one or more of them could be scheduled ahead of the one explicitly promoted by the notification. One such thread could enter the monitor and perform the work indicated by the notification, and exit. In this case the thread would resume from the wait only to find that there's nothing to do. <P></A>
+<A NAME="1038615">
+For example, suppose the defined rule of a function is that it should wait until there is an object available and that it should return a reference to that object. Writing the code as follows could potentially return a null reference, violating the invariant of the function: <P></A>
+<A NAME="1038379">
+<PRE>void *dequeue() <br>{ <br>&nbsp;&nbsp;&nbsp;void *db; <br>&nbsp;&nbsp;&nbsp;enter(monitor); <br>&nbsp;&nbsp;&nbsp;if ((db = delink()) == null) <br>&nbsp;&nbsp;&nbsp;{ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(condition); <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;db = delink(); <br>&nbsp;&nbsp;&nbsp;} <br>&nbsp;&nbsp;&nbsp;exit(monitor); <br>&nbsp;&nbsp;&nbsp;return db; <br>}</PRE></A><A NAME="1038391">
+The same function would be more appropriately written as follows: <P></A>
+<A NAME="1038393">
+<PRE>void *dequeue() <br>{ <br>&nbsp;&nbsp;&nbsp;void *db; <br>&nbsp;&nbsp;&nbsp;enter(monitor); <br>&nbsp;&nbsp;&nbsp;while ((db = delink()) == null) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(condition); <br>&nbsp;&nbsp;&nbsp;exit(monitor); <br>&nbsp;&nbsp;&nbsp;return db; <br>}</PRE></A><BLOCKQUOTE><A NAME="1035732"><B>Caution
+ </B></A>
+<a name="1035736">
+The semantics of <CODE><A HREF="prcvar.htm#1018626">PR_WaitCondVar</A></CODE> assume that the monitor is about to be exited. This 
+assumption implies that the monitored invariant must be reinstated before calling 
+<CODE>PR_WaitCondVar</CODE>. Failure to do this will cause subtle but painful bugs. 
+</blockquote>
+</a>
+<A NAME="1037977">
+To modify monitored data safely, a thread must be in the monitor. Since no other thread may modify or (in most cases) even observe the protected data from outside the monitor, the thread can safely make any modifications needed. When the changes have been completed, the thread notifies the condition associated with the data and exits the monitor using <A HREF="prcvar.htm#1018946"><CODE>PR_NotifyCondVar</CODE></A>. Logically, each such notification promotes one thread that was waiting on the condition to a ready state. An alternate form of notification (<A HREF="prcvar.htm#1018977"><CODE>PR_NotifyAllCondVar</CODE></A>) promotes all threads waiting on a condition to the ready state. If no threads were waiting, the notification is a no-op. <P></A>
+<A NAME="1035738">
+Waiting on a condition variable is an interruptible operation. Another thread could target the waiting thread and issue a <A HREF="prthrd.htm#1015726"><CODE>PR_Interrupt</CODE></A>, causing a waiting thread to resume. In such cases the return from the wait operation indicates a failure and definitively indicates that the cause of the failure is an interrupt. <P></A>
+<A NAME="1035745">
+A call to <CODE><A HREF="prcvar.htm#1018626">PR_WaitCondVar</A></CODE> may also resume because the interval specified on the wait call has expired. However, this fact cannot be unambiguously delivered, so no attempt is made to do so. If the logic of a program allows for timing of waits on conditions, then the clock must be treated as part of the monitored data and the amount of time elapsed re-asserted when the call returns. Philosophically, timeouts should be treated as explicit notifications, and therefore require the testing of the monitored data upon resumption.<P></A>
+
+<A NAME="NSPR Sample Code"></A>
+<A NAME="1039835">
+<H2> NSPR Sample Code</H2>
+</A>
+<A NAME="1039836">
+The sections that follow present two sample programs, <CODE>layer.c</CODE> and <CODE>switch.c</CODE>. In addition to being presented here as a series of listings separated by detailed descriptions, these samples are available as in the <A HREF="./samples/" TARGET="_blank">Samples</A> directory.<P></A>
+<A NAME="1039844">
+<A HREF="printro.htm#1035863">I/O Layering Sample</A><br><A HREF="printro.htm#1035064">Thread Synchronization Sample</A><P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1035863">
+<H3> I/O Layering Sample</H3>
+</A>
+
+<A NAME="1036158">
+<A HREF="printro.htm#1040206">Listing 1.1</A> through <A HREF="printro.htm#1035592">Listing 1.5</A> show a single sample program, <CODE>layer.c</CODE>, that shows how to use NSPR to create a layered client and a layered server. This program is also available in the <A HREF="./samples/" TARGET="_blank">Samples</A> directory.<P></A>
+<A NAME="1036549">
+The server consists of a thread that creates a TCP listener with a dummy layer pushed on top, then listens for incoming connections. Each request for connection is layered as well. The server thread accepts one request, echoes it back, and closes.<P></A>
+<P><A NAME="1040206">
+<B>Listing 1.1&nbsp;&nbsp;&nbsp; Declarations and <CODE>main</CODE> function for layering I/O sample
+</B></A></P>
+<A NAME="1040210">
+<CODE><B>1&nbsp;&nbsp;&nbsp;</B> /* Copyright &#169; 1998 Netscape Communications Corporation */<br>
+
+</CODE></A>
+<A NAME="1040222">
+<CODE><B>2&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1040221">
+<CODE><B>3&nbsp;&nbsp;&nbsp;</B> #include "prio.h"<br>
+
+</CODE></A>
+<A NAME="1036129">
+<CODE><B>4&nbsp;&nbsp;&nbsp;</B> #include "prprf.h"<br>
+
+</CODE></A>
+<A NAME="1036141">
+<CODE><B>5&nbsp;&nbsp;&nbsp;</B> #include "prlog.h"<br>
+
+</CODE></A>
+<A NAME="1036142">
+<CODE><B>6&nbsp;&nbsp;&nbsp;</B> #include "prnetdb.h"<br>
+
+</CODE></A>
+<A NAME="1036143">
+<CODE><B>7&nbsp;&nbsp;&nbsp;</B> #include "prthread.h"<br>
+
+</CODE></A>
+<A NAME="1036144">
+<CODE><B>8&nbsp;&nbsp;&nbsp;</B> #include "prinit.h"<br>
+
+</CODE></A>
+<A NAME="1035476">
+<CODE><B>9&nbsp;&nbsp;&nbsp;</B> typedef enum Verbosity {silent, quiet, chatty, noisy} Verbosity;<br>
+
+</CODE></A>
+<A NAME="1036171">
+<CODE><B>10&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036172">
+<CODE><B>11&nbsp;&nbsp;&nbsp;</B> static PRFileDesc *logFile;<br>
+
+</CODE></A>
+<A NAME="1036173">
+<CODE><B>12&nbsp;&nbsp;&nbsp;</B> static PRDescIdentity identity;<br>
+
+</CODE></A>
+<A NAME="1036174">
+<CODE><B>13&nbsp;&nbsp;&nbsp;</B> static PRNetAddr server_address;<br>
+
+</CODE></A>
+<A NAME="1036175">
+<CODE><B>14&nbsp;&nbsp;&nbsp;</B> static Verbosity verbosity = chatty;<br>
+
+</CODE></A>
+<A NAME="1036176">
+<CODE><B>15&nbsp;&nbsp;&nbsp;</B> static PRUint16 default_port = 12273;<br>
+
+</CODE></A>
+<A NAME="1036177">
+<CODE><B>16&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036178">
+<CODE><B>17&nbsp;&nbsp;&nbsp;</B> static void PR_CALLBACK Client(void *arg);<br>
+
+</CODE></A>
+<A NAME="1036179">
+<CODE><B>18&nbsp;&nbsp;&nbsp;</B> static void PR_CALLBACK Server(void *arg);<br>
+
+</CODE></A>
+<A NAME="1036180">
+<CODE><B>19&nbsp;&nbsp;&nbsp;</B> static PRFileDesc *PopLayer(PRFileDesc *stack);<br>
+
+</CODE></A>
+<A NAME="1036181">
+<CODE><B>20&nbsp;&nbsp;&nbsp;</B> static PRFileDesc *PushLayer(PRFileDesc *stack);<br>
+
+</CODE></A>
+<A NAME="1035488">
+<CODE><B>21&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036188">
+<CODE><B>22&nbsp;&nbsp;&nbsp;</B> PRIntn main(PRIntn argc, char **argv)<br>
+
+</CODE></A>
+<A NAME="1036189">
+<CODE><B>23&nbsp;&nbsp;&nbsp;</B> {<br>
+
+</CODE></A>
+<A NAME="1036190">
+<CODE><B>24&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRStatus rv;<br>
+
+</CODE></A>
+<A NAME="1036192">
+<CODE><B>25&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRFileDesc *client, *service;<br>
+
+</CODE></A>
+<A NAME="1036193">
+<CODE><B>26&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;const char *server_name = NULL;<br>
+
+</CODE></A>
+<A NAME="1036194">
+<CODE><B>27&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRThread *client_thread, *server_thread;<br>
+
+</CODE></A>
+<A NAME="1036195">
+<CODE><B>28&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRThreadScope thread_scope = PR_LOCAL_THREAD;<br>
+
+</CODE></A>
+<A NAME="1036610">
+<CODE><B>29&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036607">
+<CODE><B>30&nbsp;&nbsp;&nbsp;</B> /* The PR_SDIO_INIT() macro handles differences between systems */<br>
+
+</CODE></A>
+<A NAME="1040229">
+<CODE><B>31&nbsp;&nbsp;&nbsp;</B> /* that define a console I/O facility and those that don't. */<br>
+
+</CODE></A>
+<A NAME="1036286">
+<CODE><B>32&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_STDIO_INIT();<br>
+
+</CODE></A>
+<A NAME="1036296">
+<CODE><B>33&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;logFile = PR_GetSpecialFD(PR_StandardError);<br>
+
+</CODE></A>
+<A NAME="1036297">
+<CODE><B>34&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036298">
+<CODE><B>35&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;identity = PR_GetUniqueIdentity("Dummy");<br>
+
+</CODE></A>
+<A NAME="1036301">
+<CODE><B>36&nbsp;&nbsp;&nbsp;</B> /* Following lines isolate code from differences between IPv4 and 
+IPv6. */<br>
+
+</CODE></A>
+<A NAME="1036302">
+<CODE><B>37&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (NULL == server_name)<br>
+
+</CODE></A>
+<A NAME="1036306">
+<CODE><B>38&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rv = PR_InitializeNetAddr(<br>
+
+</CODE></A>
+<A NAME="1036307">
+<CODE><B>39&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_IpAddrLoopback, default_port, &amp;server_address);<br>
+
+</CODE></A>
+<A NAME="1036308">
+<CODE><B>40&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;else<br>
+
+</CODE></A>
+<A NAME="1036309">
+<CODE><B>41&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1036310">
+<CODE><B>42&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rv = PR_StringToNetAddr(server_name, &amp;server_address);<br>
+
+</CODE></A>
+<A NAME="1036311">
+<CODE><B>43&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1036312">
+<CODE><B>44&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rv = PR_InitializeNetAddr(<br>
+
+</CODE></A>
+<A NAME="1036313">
+<CODE><B>45&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_IpAddrNull, default_port, &amp;server_address);<br>
+
+</CODE></A>
+<A NAME="1036314">
+<CODE><B>46&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1036315">
+<CODE><B>47&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1036317">
+<CODE><B>48&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036357">
+<CODE><B>49&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (verbosity &gt; silent)<br>
+
+</CODE></A>
+<A NAME="1036374">
+<CODE><B>50&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Beginning layered test\n");<br>
+
+</CODE></A>
+<A NAME="1036396">
+<CODE><B>51&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036684">
+<CODE><B>52&nbsp;&nbsp;&nbsp;</B> /* Create new network file descriptors. */<br>
+
+</CODE></A>
+<A NAME="1036410">
+<CODE><B>53&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;client = PR_NewTCPSocket(); PR_ASSERT(NULL != client);<br>
+
+</CODE></A>
+<A NAME="1036424">
+<CODE><B>54&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;service = PR_NewTCPSocket(); PR_ASSERT(NULL != service);<br>
+
+</CODE></A>
+<A NAME="1036438">
+<CODE><B>55&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036995">
+<CODE><B>56&nbsp;&nbsp;&nbsp;</B> /* Create new server and client threads */<br>
+
+</CODE></A>
+<A NAME="1036425">
+<CODE><B>57&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;server_thread = PR_CreateThread(<br>
+
+</CODE></A>
+<A NAME="1036439">
+<CODE><B>58&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_USER_THREAD, Server, PushLayer(service),<br>
+
+</CODE></A>
+<A NAME="1036440">
+<CODE><B>59&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_PRIORITY_HIGH, thread_scope,<br>
+
+</CODE></A>
+<A NAME="1036441">
+<CODE><B>60&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_JOINABLE_THREAD, 16 * 1024);<br>
+
+</CODE></A>
+<A NAME="1036442">
+<CODE><B>61&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(NULL != server_thread);<br>
+
+</CODE></A>
+<A NAME="1036443">
+<CODE><B>62&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;client_thread = PR_CreateThread(<br>
+
+</CODE></A>
+<A NAME="1036444">
+<CODE><B>63&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_USER_THREAD, Client, PushLayer(client),<br>
+
+</CODE></A>
+<A NAME="1036445">
+<CODE><B>64&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_PRIORITY_NORMAL, thread_scope,<br>
+
+</CODE></A>
+<A NAME="1036446">
+<CODE><B>65&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_JOINABLE_THREAD, 16 * 1024);<br>
+
+</CODE></A>
+<A NAME="1036447">
+<CODE><B>66&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(NULL != client_thread);<br>
+
+</CODE></A>
+<A NAME="1036448">
+<CODE><B>67&nbsp;&nbsp;&nbsp;</B> /* Synchronize termination of calling thread with the termination of 
+client and server threads */<br>
+
+</CODE></A>
+<A NAME="1036451">
+<CODE><B>68&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_JoinThread(client_thread);<br>
+
+</CODE></A>
+<A NAME="1036475">
+<CODE><B>69&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1036476">
+<CODE><B>70&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_JoinThread(server_thread);<br>
+
+</CODE></A>
+<A NAME="1036477">
+<CODE><B>71&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1036478">
+<CODE><B>72&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036485">
+<CODE><B>73&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_Close(PopLayer(client)); PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1036505">
+<CODE><B>74&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_Close(PopLayer(service)); PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1036506">
+<CODE><B>75&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (verbosity &gt; silent)<br>
+
+</CODE></A>
+<A NAME="1036507">
+<CODE><B>76&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Ending layered test\n");<br>
+
+</CODE></A>
+<A NAME="1036508">
+<CODE><B>77&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;return 0;<br>
+
+</CODE></A>
+<A NAME="1036509">
+<CODE><B>78&nbsp;&nbsp;&nbsp;</B> }  /* main */<br>
+
+</CODE></A>
+<A NAME="1040157">
+<CODE><B>79&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1036612">
+<P></A>
+<A NAME="1037996">
+The <CODE>PR_STDIO_INIT</CODE> macro in line <A HREF="printro.htm#1036286">32</A> of <A HREF="printro.htm#1040206">Listing 1.1</A> handles some of the differences between systems that define a convenient console I/O facility and systems that don't. (<CODE>PR_STDIO_Init</CODE> and other WIN-16-specific macros are defined in <CODE>prwin16.h</CODE>.) The macro must be invoked before any attempt to use the special I/O functions, including getting the file descriptor to access the console I/O. <I>Special</I> I/O functions are those that locate "special" file descriptors. At the present time, those are the Unix equivalents of <CODE>stdin</CODE>, <CODE>stdout</CODE>, and <CODE>stderr</CODE>. They are all console I/O devices, unique to Unix and therefore special. <P></A>
+<A NAME="1036620">
+It is strongly recommended that clients do not assume the makeup of network addresses. Even though Internet Protocol version 4 (IPv4) is the most popular protocol at this time, IPv6 is looming on the horizon. Using the API provided by NSPR rather than accessing the address fields directly isolates your code from the transition. Lines <A HREF="printro.htm#1036301">36</A> through <A HREF="printro.htm#1036315">47</A> of <A HREF="printro.htm#1040206">Listing 1.1</A> illustrate the use of this API. For more information, see <A HREF="priotyp.htm#497214">Network Address Types</A> and <A HREF="prntdb.htm#1032482">Initializing a Network Address</A>.<P></A>
+<A NAME="1036413">
+Lines <A HREF="printro.htm#1036684">52</A> through <A HREF="printro.htm#1036424">54</A> illustrate the use of <A HREF="priofnc.htm#436251"><CODE>PR_NewTCPSocket</CODE></A> to create new network file descriptors. These sockets are bound to the IP/TCP protocol family, but not to a specific address. To create a UDP file descriptor, use <A HREF="priofnc.htm#436153"><CODE>PR_NewUDPSocket</CODE></A>. <P></A>
+<A NAME="1036459">
+Lines <A HREF="printro.htm#1036995">56</A> through <A HREF="printro.htm#1036447">66</A> illustrate the use of <A HREF="prthrd.htm#1015609"><CODE>PR_CreateThread</CODE></A> to create a new thread that runs parallel to its parent. NSPR threads have no hierarchy. Once created, they have no defined relationship to their creator. Any thread can create another thread, and the life expectancy of the two threads is afterwards unrelated. This is true of all threads except the primordial thread (the thread that calls <CODE>main</CODE>). Should the primordial thread exit its root function--that is, <CODE>main</CODE>--all threads in the process will be abruptly terminated. Facilities are available to synchronize the termination of the other threads in a process (see <A HREF="printro.htm#1035064"></A><A HREF="printro.htm#1035064">Thread Synchronization Sample</A>).<P></A>
+<A NAME="1036797">
+The newly created thread begins execution at the entry to the function noted in the <CODE>start</CODE> parameter of <A HREF="prthrd.htm#1015609"><CODE>PR_CreateThread</CODE></A>--in this example, <CODE>Server</CODE> and <CODE>Client</CODE>. NSPR does not define when that root function is actually entered relative to <A HREF="prthrd.htm#1015609"><CODE>PR_CreateThread</CODE></A> returning. <P></A>
+<A NAME="1038633">
+Lines <A HREF="printro.htm#1036448">67</A> through <A HREF="printro.htm#1036477">71</A> illustrate the use of <A HREF="prthrd.htm#1017185"><CODE>PR_JoinThread</CODE></A> to synchronize the termination of the calling thread with the termination of some other thread. The caller of <CODE>PR_JoinThread</CODE> is blocked until the target of the join operation terminates (actually, until it returns from the root function). Once <CODE>PR_JoinThread</CODE> returns, all references to the joined thread (the argument of <CODE>PR_JoinThread</CODE>) are no longer valid.<P></A>
+<A NAME="1036980">
+Lines <A HREF="printro.htm#1036485">73</A> and <A HREF="printro.htm#1036505">74</A> call <A HREF="priofnc.htm#622644"><CODE>PR_Close</CODE></A> to close the sockets opened earlier with <A HREF="priofnc.htm#436251"><CODE>PR_NewTCPSocket</CODE></A>. This operation ensures that all resources associated with the file descriptor are released. Once the call to <CODE>PR_Close</CODE> returns, the file descriptor is no longer valid. <P></A>
+<A NAME="1037034">
+<A HREF="printro.htm#1036984">Listing 1.2</A> shows the <CODE>PushLayer</CODE> function called from the <CODE>main</CODE> function in <A HREF="printro.htm#1040206">Listing 1.1</A>. This function pushes a "default" layer onto the stack. Logically, the new layer is placed on the stack just "above" the referenced layer, which may or may not be the stack's current top. If it is the top, care is taken to preserve the stack's "top" address, since it is assumed that is the how the stack is identified, regardless of its layering.<P></A>
+<A NAME="1037066">
+The default layer results in no change in I/O behavior. This program is simply a test to make sure that no change occurs. In real applications, the object returned by <CODE>PR_CreateIOLayerStub</CODE> would be modified (by replacing some of the entries in the methods table) to change the behavior of the protocol instance.<P></A>
+<P><A NAME="1036984">
+<B>Listing 1.2&nbsp;&nbsp;&nbsp; <CODE>PushLayer</CODE> function<br>
+
+</B></A></P>
+<A NAME="1035549">
+<CODE><B>80&nbsp;&nbsp;&nbsp;</B> static PRFileDesc *PushLayer(PRFileDesc *stack)<br>
+
+</CODE></A>
+<A NAME="1037136">
+<CODE><B>81&nbsp;&nbsp;&nbsp;</B> {<br>
+
+</CODE></A>
+<A NAME="1036512">
+<CODE><B>82&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRFileDesc *layer = PR_CreateIOLayerStub(identity, 
+PR_GetDefaultIOMethods());<br>
+
+</CODE></A>
+<A NAME="1037092">
+<CODE><B>83&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRStatus rv = PR_PushIOLayer(stack, PR_GetLayersIdentity(stack), 
+layer);<br>
+
+</CODE></A>
+<A NAME="1037093">
+<CODE><B>84&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037094">
+<CODE><B>85&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (verbosity &gt; quiet)<br>
+
+</CODE></A>
+<A NAME="1037095">
+<CODE><B>86&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Pushed layer(0x%x) onto stack(0x%x)\n", 
+layer, stack);<br>
+
+</CODE></A>
+<A NAME="1037096">
+<CODE><B>87&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1037097">
+<CODE><B>88&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;return layer;<br>
+
+</CODE></A>
+<A NAME="1037098">
+<CODE><B>89&nbsp;&nbsp;&nbsp;</B> }  /* PushLayer */<br>
+
+</CODE></A>
+<A NAME="1040158">
+<CODE><B>90&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037099">
+<P></A>
+<A NAME="1037678">
+<A HREF="printro.htm#1035589">Listing 1.3</A> shows the <CODE>PopLayer</CODE> function called from the <CODE>main</CODE> function in <A HREF="printro.htm#1040206">Listing 1.1</A>. This function undoes the effect of the <CODE>PushLayer()</CODE> funciton shown in <A HREF="printro.htm#1036984">Listing 1.2</A>. It removes the layer from the stack and calls the removed layer's destructor.<P></A>
+<P><A NAME="1035589">
+<B>Listing 1.3&nbsp;&nbsp;&nbsp; <CODE>PopLayer</CODE> function<br>
+
+</B></A></P>
+<A NAME="1035588">
+<CODE><B>91&nbsp;&nbsp;&nbsp;</B> static PRFileDesc *PopLayer(PRFileDesc *stack)<br>
+
+</CODE></A>
+<A NAME="1037140">
+<CODE><B>92&nbsp;&nbsp;&nbsp;</B> {<br>
+
+</CODE></A>
+<A NAME="1037139">
+<CODE><B>93&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRFileDesc *popped = PR_PopIOLayer(stack, identity);<br>
+
+</CODE></A>
+<A NAME="1037141">
+<CODE><B>94&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037142">
+<CODE><B>95&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (verbosity &gt; quiet)<br>
+
+</CODE></A>
+<A NAME="1037143">
+<CODE><B>96&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Popped layer(0x%x) from stack(0x%x)\n", 
+popped, stack);<br>
+
+</CODE></A>
+<A NAME="1037144">
+<CODE><B>97&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;popped-&gt;dtor(popped);<br>
+
+</CODE></A>
+<A NAME="1037145">
+<CODE><B>98&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037146">
+<CODE><B>99&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;return stack;<br>
+
+</CODE></A>
+<A NAME="1038728">
+<CODE><B>100&nbsp;&nbsp;&nbsp;</B> }  /* PopLayer */<br>
+
+</CODE></A>
+<A NAME="1040159">
+<CODE><B>101&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037147">
+<P></A>
+<A NAME="1037679">
+<A HREF="printro.htm#1035590">Listing 1.4</A> shows the <CODE>Client</CODE> function called from the <CODE>main</CODE> function in <A HREF="printro.htm#1040206">Listing 1.1</A>. This function actively connects to the server, then exchanges a short message with the server before shutting down the connection.<P></A>
+<P><A NAME="1035590">
+<B>Listing 1.4&nbsp;&nbsp;&nbsp; <CODE>Client</CODE> function<br>
+
+</B></A></P>
+<A NAME="1035591">
+<CODE><B>102&nbsp;&nbsp;&nbsp;</B> static void PR_CALLBACK Client(void *arg)<br>
+
+</CODE></A>
+<A NAME="1037187">
+<CODE><B>103&nbsp;&nbsp;&nbsp;</B> {<br>
+
+</CODE></A>
+<A NAME="1037188">
+<CODE><B>104&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRStatus rv;<br>
+
+</CODE></A>
+<A NAME="1037189">
+<CODE><B>105&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRUint8 buffer[100];<br>
+
+</CODE></A>
+<A NAME="1037190">
+<CODE><B>106&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRIntn empty_flags = 0;<br>
+
+</CODE></A>
+<A NAME="1037191">
+<CODE><B>107&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRIntn bytes_read, bytes_sent;<br>
+
+</CODE></A>
+<A NAME="1037192">
+<CODE><B>108&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRFileDesc *stack = (PRFileDesc*)arg;<br>
+
+</CODE></A>
+<A NAME="1037193">
+<CODE><B>109&nbsp;&nbsp;&nbsp;</B> /* Bind the address to the connection and establish the virtual 
+circuit to the peer. */<br>
+
+</CODE></A>
+<A NAME="1037206">
+<CODE><B>110&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_Connect(stack, &amp;server_address, PR_INTERVAL_NO_TIMEOUT);<br>
+
+</CODE></A>
+<A NAME="1037212">
+<CODE><B>111&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1037213">
+<CODE><B>112&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037256">
+<CODE><B>113&nbsp;&nbsp;&nbsp;</B> /* Send operations either transmit all the data or fail before 
+returning. */<br>
+
+</CODE></A>
+<A NAME="1037267">
+<CODE><B>114&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;bytes_sent = PR_Send(<br>
+
+</CODE></A>
+<A NAME="1037272">
+<CODE><B>115&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stack, buffer, sizeof(buffer), empty_flags, 
+PR_INTERVAL_NO_TIMEOUT);<br>
+
+</CODE></A>
+<A NAME="1037277">
+<CODE><B>116&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(sizeof(buffer) == bytes_sent);<br>
+
+</CODE></A>
+<A NAME="1037278">
+<CODE><B>117&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037279">
+<CODE><B>118&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (verbosity &gt; chatty)<br>
+
+</CODE></A>
+<A NAME="1037283">
+<CODE><B>119&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Client sending %d bytes\n", bytes_sent);<br>
+
+</CODE></A>
+<A NAME="1037309">
+<CODE><B>120&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037312">
+<CODE><B>121&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;bytes_read = PR_Recv(<br>
+
+</CODE></A>
+<A NAME="1037313">
+<CODE><B>122&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stack, buffer, bytes_sent, empty_flags, 
+PR_INTERVAL_NO_TIMEOUT);<br>
+
+</CODE></A>
+<A NAME="1037314">
+<CODE><B>123&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (verbosity &gt; chatty)<br>
+
+</CODE></A>
+<A NAME="1037315">
+<CODE><B>124&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Client receiving %d bytes\n", 
+bytes_read);<br>
+
+</CODE></A>
+<A NAME="1037316">
+<CODE><B>125&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(bytes_read == bytes_sent);<br>
+
+</CODE></A>
+<A NAME="1037317">
+<CODE><B>126&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (verbosity &gt; quiet)<br>
+
+</CODE></A>
+<A NAME="1037318">
+<CODE><B>127&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Client shutting down stack\n");<br>
+
+</CODE></A>
+<A NAME="1037327">
+<CODE><B>128&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037319">
+<CODE><B>129&nbsp;&nbsp;&nbsp;</B> /* Once the exchange has been accomplished, the transport is shut 
+down. */<br>
+
+</CODE></A>
+<A NAME="1037330">
+<CODE><B>130&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_Shutdown(stack, PR_SHUTDOWN_BOTH); PR_ASSERT(PR_SUCCESS 
+== rv);<br>
+
+</CODE></A>
+<A NAME="1037331">
+<CODE><B>131&nbsp;&nbsp;&nbsp;</B> }  /* Client */<br>
+
+</CODE></A>
+<A NAME="1040160">
+<CODE><B>132&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037214">
+<P></A>
+<A NAME="1037680">
+The call to <A HREF="priofnc.htm#436330"><CODE>PR_Connect</CODE></A> in line <A HREF="printro.htm#1037206">110</A> of <A HREF="printro.htm#1035590">Listing 1.4</A> binds the address the connection and establishes the virtual circuit to the peer. The use of <CODE>PR_INTERVAL_NO_TIMEOUT</CODE> as the second parameter to <CODE>PR_Connect</CODE> is risky. It indicates that the operation will either succeed or die trying.<P></A>
+<A NAME="1037233">
+Send operations like that shown in lines <A HREF="printro.htm#1037256">113</A> through <A HREF="printro.htm#1037272">115</A> either complete (transmit all the data) or fail before returning. The use of <CODE>PR_INTERVAL_NO_TIMEOUT</CODE> here is also risky, though not as risky as in the call to <CODE>PR_Connect</CODE>. A transport may fail for a number of reasons. The timeout interval (had it been used) would apply to the interval allowed to send the entire buffer (<CODE>sizeof(buffer)</CODE> in this case).<P></A>
+<A NAME="1037298">
+Read operations like that shown in lines <A HREF="printro.htm#1037312">121</A> and <A HREF="printro.htm#1037313">122</A> may actually return with fewer bytes than were asked for, thus requiring resubmission of the request. This is a reflection of the TCP and BSD approach to sockets. The call to <A HREF="priofnc.htm#437899"><CODE>PR_Recv</CODE></A> is also using an infinite timeout. Since the <CODE>PR_Recv</CODE> function will return with one or more bytes, the timeout would be applied to the reception of the first byte of an arbitrary number of bytes.<P></A>
+<A NAME="1037498">
+Once the exchange has been accomplished, the transport is shut down with a call to <A HREF="priofnc.htm#436793"><CODE>PR_Shutdown</CODE></A>, as shown in line <A HREF="printro.htm#1037330">130</A>. This operation effectively disables any further use of the file descriptor for anything other than closing it. The call to <CODE>PR_Shutdown</CODE> does not, however, eliminate the need to close the descriptor. The call to <A HREF="priofnc.htm#622644"><CODE>PR_Close</CODE></A> in line <A HREF="printro.htm#1036485">73</A> of <A HREF="printro.htm#1040206">Listing 1.1</A> reclaims the resources used by the runtime to support the connection.<P></A>
+<A NAME="1037564">
+<A HREF="printro.htm#1035592">Listing 1.5</A> shows the <CODE>Server</CODE> function called from the <CODE>main</CODE> function in <A HREF="printro.htm#1040206">Listing 1.1</A>. <P></A>
+<P><A NAME="1035592">
+<B>Listing 1.5&nbsp;&nbsp;&nbsp; <CODE>Server</CODE> function<br>
+
+</B></A></P>
+<A NAME="1035593">
+<CODE><B>133&nbsp;&nbsp;&nbsp;</B> static void PR_CALLBACK Server(void *arg)<br>
+
+</CODE></A>
+<A NAME="1037579">
+<CODE><B>134&nbsp;&nbsp;&nbsp;</B> {<br>
+
+</CODE></A>
+<A NAME="1037580">
+<CODE><B>135&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRStatus rv;<br>
+
+</CODE></A>
+<A NAME="1037581">
+<CODE><B>136&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRUint8 buffer[100];<br>
+
+</CODE></A>
+<A NAME="1037582">
+<CODE><B>137&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRFileDesc *service;<br>
+
+</CODE></A>
+<A NAME="1037583">
+<CODE><B>138&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRUintn empty_flags = 0;<br>
+
+</CODE></A>
+<A NAME="1037584">
+<CODE><B>139&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRIntn bytes_read, bytes_sent;<br>
+
+</CODE></A>
+<A NAME="1037585">
+<CODE><B>140&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRFileDesc *stack = (PRFileDesc*)arg;<br>
+
+</CODE></A>
+<A NAME="1037586">
+<CODE><B>141&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRNetAddr any_address, client_address;<br>
+
+</CODE></A>
+<A NAME="1037588">
+<CODE><B>142&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037589">
+<CODE><B>143&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_InitializeNetAddr(PR_IpAddrAny, default_port, 
+&amp;any_address);<br>
+
+</CODE></A>
+<A NAME="1037590">
+<CODE><B>144&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1037591">
+<CODE><B>145&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_Bind(stack, &amp;any_address); PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1037592">
+<CODE><B>146&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_Listen(stack, 10); PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1037599">
+<CODE><B>147&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;service = PR_Accept(stack, &amp;client_address, 
+PR_INTERVAL_NO_TIMEOUT);<br>
+
+</CODE></A>
+<A NAME="1037602">
+<CODE><B>148&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (verbosity &gt; quiet)<br>
+
+</CODE></A>
+<A NAME="1037603">
+<CODE><B>149&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Server accepting connection\n");<br>
+
+</CODE></A>
+<A NAME="1037604">
+<CODE><B>150&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037605">
+<CODE><B>151&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;do<br>
+
+</CODE></A>
+<A NAME="1037606">
+<CODE><B>152&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1037607">
+<CODE><B>153&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bytes_read = PR_Recv(<br>
+
+</CODE></A>
+<A NAME="1037608">
+<CODE><B>154&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;service, buffer, sizeof(buffer), empty_flags, 
+PR_INTERVAL_NO_TIMEOUT);<br>
+
+</CODE></A>
+<A NAME="1037609">
+<CODE><B>155&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (0 != bytes_read)<br>
+
+</CODE></A>
+<A NAME="1037610">
+<CODE><B>156&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1037611">
+<CODE><B>157&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (verbosity &gt; chatty)<br>
+
+</CODE></A>
+<A NAME="1037612">
+<CODE><B>158&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Server receiving %d bytes\n", 
+bytes_read);<br>
+
+</CODE></A>
+<A NAME="1037613">
+<CODE><B>159&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_ASSERT(bytes_read &gt; 0);<br>
+
+</CODE></A>
+<A NAME="1037614">
+<CODE><B>160&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bytes_sent = PR_Send(<br>
+
+</CODE></A>
+<A NAME="1037615">
+<CODE><B>161&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;service, buffer, bytes_read, empty_flags, 
+PR_INTERVAL_NO_TIMEOUT);<br>
+
+</CODE></A>
+<A NAME="1037616">
+<CODE><B>162&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (verbosity &gt; chatty)<br>
+
+</CODE></A>
+<A NAME="1037622">
+<CODE><B>163&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Server sending %d bytes\n", 
+bytes_sent);<br>
+
+</CODE></A>
+<A NAME="1037631">
+<CODE><B>164&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_ASSERT(bytes_read == bytes_sent);<br>
+
+</CODE></A>
+<A NAME="1037640">
+<CODE><B>165&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1037645">
+<CODE><B>166&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;} while (0 != bytes_read);<br>
+
+</CODE></A>
+<A NAME="1037650">
+<CODE><B>167&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037655">
+<CODE><B>168&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (verbosity &gt; quiet)<br>
+
+</CODE></A>
+<A NAME="1037660">
+<CODE><B>169&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(logFile, "Server shutting down and closing 
+stack\n");<br>
+
+</CODE></A>
+<A NAME="1037664">
+<CODE><B>170&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_Shutdown(service, PR_SHUTDOWN_BOTH); <br>
+
+</CODE></A>
+<A NAME="1037665">
+<CODE><B>171&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1037666">
+<CODE><B>172&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;rv = PR_Close(service); PR_ASSERT(PR_SUCCESS == rv);<br>
+
+</CODE></A>
+<A NAME="1037667">
+<CODE><B>173&nbsp;&nbsp;&nbsp;</B> }  /* Server */<br>
+
+</CODE></A>
+<A NAME="1040179">
+<CODE><B>174&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1037668">
+<CODE><B>175&nbsp;&nbsp;&nbsp;</B> /* layer.c */<br>
+
+</CODE></A>
+<A NAME="1037681">
+<P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1035064">
+<H3> Thread Synchronization Sample</H3>
+</A>
+
+<A NAME="1039232">
+<A HREF="printro.htm#1035066">Listing 1.6</A> and <A HREF="printro.htm#1039404">Listing 1.7</A> show a single sample program, <CODE>switch.c</CODE>, that illustrates basic techniques of NSPR thread synchronization. This program is also available in the <A HREF="./samples/" TARGET="_blank">Samples</A> directory.<P></A>
+<P><A NAME="1035066">
+<B>Listing 1.6&nbsp;&nbsp;&nbsp; Declarations and Notified function
+</B></A></P>
+<A NAME="1040224">
+<CODE><B>1&nbsp;&nbsp;&nbsp;</B> /* Copyright &#169; 1998 Netscape Communications Corporation */<br>
+
+</CODE></A>
+<A NAME="1040225">
+<CODE><B>2&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1035067">
+<CODE><B>3&nbsp;&nbsp;&nbsp;</B> #include "prinit.h"<br>
+
+</CODE></A>
+<A NAME="1038037">
+<CODE><B>4&nbsp;&nbsp;&nbsp;</B> #include "prlock.h"<br>
+
+</CODE></A>
+<A NAME="1038038">
+<CODE><B>5&nbsp;&nbsp;&nbsp;</B> #include "prcvar.h"<br>
+
+</CODE></A>
+<A NAME="1038039">
+<CODE><B>6&nbsp;&nbsp;&nbsp;</B> #include "prmem.h"<br>
+
+</CODE></A>
+<A NAME="1038040">
+<CODE><B>7&nbsp;&nbsp;&nbsp;</B> #include "prinrval.h"<br>
+
+</CODE></A>
+<A NAME="1038041">
+<CODE><B>8&nbsp;&nbsp;&nbsp;</B> #include "prlog.h"<br>
+
+</CODE></A>
+<A NAME="1038042">
+<CODE><B>9&nbsp;&nbsp;&nbsp;</B> #include "prthread.h"<br>
+
+</CODE></A>
+<A NAME="1038043">
+<CODE><B>10&nbsp;&nbsp;&nbsp;</B> #include "prprf.h"<br>
+
+</CODE></A>
+<A NAME="1040183">
+<CODE><B>11&nbsp;&nbsp;&nbsp;</B> #include "plerror.h"<br>
+
+</CODE></A>
+<A NAME="1038046">
+<CODE><B>12&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038047">
+<CODE><B>13&nbsp;&nbsp;&nbsp;</B> #define INNER_LOOPS 100<br>
+
+</CODE></A>
+<A NAME="1038048">
+<CODE><B>14&nbsp;&nbsp;&nbsp;</B> #define DEFAULT_LOOPS 100<br>
+
+</CODE></A>
+<A NAME="1038049">
+<CODE><B>15&nbsp;&nbsp;&nbsp;</B> #define DEFAULT_THREADS 10<br>
+
+</CODE></A>
+<A NAME="1038050">
+<CODE><B>16&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038051">
+<CODE><B>17&nbsp;&nbsp;&nbsp;</B> typedef struct Shared<br>
+
+</CODE></A>
+<A NAME="1038052">
+<CODE><B>18&nbsp;&nbsp;&nbsp;</B> {<br>
+
+</CODE></A>
+<A NAME="1038053">
+<CODE><B>19&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRLock *ml;<br>
+
+</CODE></A>
+<A NAME="1038054">
+<CODE><B>20&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRCondVar *cv;<br>
+
+</CODE></A>
+<A NAME="1038055">
+<CODE><B>21&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRBool twiddle;<br>
+
+</CODE></A>
+<A NAME="1038056">
+<CODE><B>22&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRThread *thread;<br>
+
+</CODE></A>
+<A NAME="1038057">
+<CODE><B>23&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;struct Shared *next;<br>
+
+</CODE></A>
+<A NAME="1038058">
+<CODE><B>24&nbsp;&nbsp;&nbsp;</B> } Shared;<br>
+
+</CODE></A>
+<A NAME="1038059">
+<CODE><B>25&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038060">
+<CODE><B>26&nbsp;&nbsp;&nbsp;</B> static PRFileDesc *debug_out = NULL;<br>
+
+</CODE></A>
+<A NAME="1038061">
+<CODE><B>27&nbsp;&nbsp;&nbsp;</B> static PRBool debug_mode = PR_TRUE, verbosity = PR_FALSE, failed = 
+PR_FALSE;<br>
+
+</CODE></A>
+<A NAME="1038063">
+<CODE><B>28&nbsp;&nbsp;&nbsp;</B> static Shared home;<br>
+
+</CODE></A>
+<A NAME="1038064">
+<CODE><B>29&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038065">
+<CODE><B>30&nbsp;&nbsp;&nbsp;</B> static void Help(void);<br>
+
+</CODE></A>
+<A NAME="1038066">
+<CODE><B>31&nbsp;&nbsp;&nbsp;</B> static void PR_CALLBACK Notified(void *arg);<br>
+
+</CODE></A>
+<A NAME="1038067">
+<CODE><B>32&nbsp;&nbsp;&nbsp;</B> static PRIntn PR_CALLBACK Switch(PRIntn argc, char **argv);<br>
+
+</CODE></A>
+<A NAME="1038773">
+<CODE><B>33&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038775">
+<CODE><B>34&nbsp;&nbsp;&nbsp;</B> /* Root function for the threads in this sample (except primordial 
+thread, which runs main) */<br>
+
+</CODE></A>
+<A NAME="1038071">
+<CODE><B>35&nbsp;&nbsp;&nbsp;</B> static void PR_CALLBACK Notified(void *arg)<br>
+
+</CODE></A>
+<A NAME="1038072">
+<CODE><B>36&nbsp;&nbsp;&nbsp;</B> {<br>
+
+</CODE></A>
+<A NAME="1038073">
+<CODE><B>37&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;Shared *shared = arg;<br>
+
+</CODE></A>
+<A NAME="1038074">
+<CODE><B>38&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRStatus status = PR_SUCCESS;<br>
+
+</CODE></A>
+<A NAME="1038075">
+<CODE><B>39&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;while (PR_SUCCESS == status)<br>
+
+</CODE></A>
+<A NAME="1038076">
+<CODE><B>40&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038077">
+<CODE><B>41&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_Lock(shared-&gt;ml);<br>
+
+</CODE></A>
+<A NAME="1038078">
+<CODE><B>42&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (shared-&gt;twiddle &amp;&amp; (PR_SUCCESS == status))<br>
+
+</CODE></A>
+<A NAME="1038079">
+<CODE><B>43&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = PR_WaitCondVar(shared-&gt;cv, 
+PR_INTERVAL_NO_TIMEOUT);<br>
+
+</CODE></A>
+<A NAME="1038080">
+<CODE><B>44&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (verbosity) PR_fprintf(debug_out, "+");<br>
+
+</CODE></A>
+<A NAME="1038081">
+<CODE><B>45&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared-&gt;twiddle = PR_TRUE;<br>
+
+</CODE></A>
+<A NAME="1038082">
+<CODE><B>46&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared-&gt;next-&gt;twiddle = PR_FALSE;<br>
+
+</CODE></A>
+<A NAME="1038083">
+<CODE><B>47&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_NotifyCondVar(shared-&gt;next-&gt;cv);<br>
+
+</CODE></A>
+<A NAME="1038084">
+<CODE><B>48&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_Unlock(shared-&gt;ml);<br>
+
+</CODE></A>
+<A NAME="1038085">
+<CODE><B>49&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038086">
+<CODE><B>50&nbsp;&nbsp;&nbsp;</B> }  /* Notified */<br>
+
+</CODE></A>
+<A NAME="1040169">
+<CODE><B>51&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1039332">
+<P></A>
+<A NAME="1039346">
+The root function, <CODE>Notified</CODE>, for the threads in this sample (except for the primordial thread, which runs <CODE>main</CODE>) starts after line <A HREF="printro.htm#1038775">34</A> of <A HREF="printro.htm#1035066">Listing 1.6</A>. The threads are chained together, with the primordial thread at the end of the chain.<P></A>
+<A NAME="1039339">
+Each thread blocks on a condition variable (<CODE>shared-cv</CODE>), waiting for the Boolean expression <CODE>shared-&gt;twiddle</CODE> to become <CODE>PR_FALSE</CODE>. Notice that the condition variable wait is repeated while the Boolean expression <CODE>shared-&gt;twiddle</CODE> is <CODE>PR_TRUE</CODE>. This <CODE>while</CODE> loop around a condition variable wait is a common idiom.<P></A>
+<A NAME="1039333">
+The condition variable wait fails with <CODE>PR_PENDING_INTERRRUPT_ERROR</CODE> if the thread is interrupted, in which case the thread breaks out of the nested <CODE>while</CODE> loops and exits.<P></A>
+<A NAME="1039334">
+When the thread is notified and <CODE>shared-&gt;twiddle</CODE> has become <CODE>PR_FALSE</CODE>, it sets <CODE>shared-&gt;next-&gt;twiddle</CODE> to <CODE>PR_FALSE</CODE> and notifies the next thread down in the chain. It also sets its own <CODE>shared-&gt;twiddle</CODE> back to <CODE>PR_TRUE</CODE>, in preparation for the next iteration.<P></A>
+<A NAME="1039400">
+The <CODE>Switch</CODE> function shown in <A HREF="printro.htm#1039404">Listing 1.7</A> is really the <CODE>main</CODE> function of this program. The <CODE>main</CODE> function simply passes <CODE>Switch</CODE> to <CODE>PR_Initialize</CODE>.<P></A>
+<P><A NAME="1039404">
+<B>Listing 1.7&nbsp;&nbsp;&nbsp; <CODE>Switch</CODE> and <CODE>main</CODE> functions
+</B></A></P>
+<A NAME="1038110">
+<CODE><B>52&nbsp;&nbsp;&nbsp;</B> static PRIntn PR_CALLBACK Switch(PRIntn argc, char **argv)<br>
+
+</CODE></A>
+<A NAME="1038111">
+<CODE><B>53&nbsp;&nbsp;&nbsp;</B> {<br>
+
+</CODE></A>
+<A NAME="1038113">
+<CODE><B>54&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRStatus status;<br>
+
+</CODE></A>
+<A NAME="1038114">
+<CODE><B>55&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRBool help = PR_FALSE;<br>
+
+</CODE></A>
+<A NAME="1038115">
+<CODE><B>56&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRUintn concurrency = 1;<br>
+
+</CODE></A>
+<A NAME="1038116">
+<CODE><B>57&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;Shared *shared, *link;<br>
+
+</CODE></A>
+<A NAME="1038117">
+<CODE><B>58&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRIntervalTime timein, timeout;<br>
+
+</CODE></A>
+<A NAME="1038118">
+<CODE><B>59&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRBool global_threads = PR_FALSE;<br>
+
+</CODE></A>
+<A NAME="1038119">
+<CODE><B>60&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRThreadScope thread_scope = PR_LOCAL_THREAD;<br>
+
+</CODE></A>
+<A NAME="1038120">
+<CODE><B>61&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRUintn thread_count, inner_count, loop_count, average;<br>
+
+</CODE></A>
+<A NAME="1038121">
+<CODE><B>62&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRUintn thread_limit = DEFAULT_THREADS, loop_limit = 
+DEFAULT_LOOPS;<br>
+
+</CODE></A>
+<A NAME="1038158">
+<CODE><B>63&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038159">
+<CODE><B>64&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (help) return -1;<br>
+
+</CODE></A>
+<A NAME="1038160">
+<CODE><B>65&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038161">
+<CODE><B>66&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (PR_TRUE == debug_mode)<br>
+
+</CODE></A>
+<A NAME="1038162">
+<CODE><B>67&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038163">
+<CODE><B>68&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;debug_out = PR_STDOUT;<br>
+
+</CODE></A>
+<A NAME="1038164">
+<CODE><B>69&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(debug_out, "Test parameters\n");<br>
+
+</CODE></A>
+<A NAME="1038165">
+<CODE><B>70&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(debug_out, "\tThreads involved: %d\n", 
+thread_limit);<br>
+
+</CODE></A>
+<A NAME="1038166">
+<CODE><B>71&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(debug_out, "\tIteration limit: %d\n", loop_limit);<br>
+
+</CODE></A>
+<A NAME="1038167">
+<CODE><B>72&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(debug_out, "\tConcurrency: %d\n", concurrency);<br>
+
+</CODE></A>
+<A NAME="1038168">
+<CODE><B>73&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(<br>
+
+</CODE></A>
+<A NAME="1038169">
+<CODE><B>74&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;debug_out, "\tThread type: %s\n",<br>
+
+</CODE></A>
+<A NAME="1038170">
+<CODE><B>75&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PR_GLOBAL_THREAD == thread_scope) ? "GLOBAL" : "LOCAL");<br>
+
+</CODE></A>
+<A NAME="1038171">
+<CODE><B>76&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038172">
+<CODE><B>77&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038173">
+<CODE><B>78&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_SetConcurrency(concurrency);<br>
+
+</CODE></A>
+<A NAME="1038174">
+<CODE><B>79&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038175">
+<CODE><B>80&nbsp;&nbsp;&nbsp;</B> /* "home" is "Shared" object for the primordial thread, at the end of 
+the chain. */<br>
+
+</CODE></A>
+<A NAME="1038177">
+<CODE><B>81&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;link = &amp;home;<br>
+
+</CODE></A>
+<A NAME="1038178">
+<CODE><B>82&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;home.ml = PR_NewLock();<br>
+
+</CODE></A>
+<A NAME="1038179">
+<CODE><B>83&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;home.cv = PR_NewCondVar(home.ml);<br>
+
+</CODE></A>
+<A NAME="1038180">
+<CODE><B>84&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;home.twiddle = PR_TRUE;<br>
+
+</CODE></A>
+<A NAME="1038181">
+<CODE><B>85&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;home.next = NULL;<br>
+
+</CODE></A>
+<A NAME="1038183">
+<CODE><B>86&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;timeout = 0;<br>
+
+</CODE></A>
+<A NAME="1038188">
+<CODE><B>87&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038189">
+<CODE><B>88&nbsp;&nbsp;&nbsp;</B> /* Create "thread_limit" number of additional threads, each with its 
+own "Shared" object. */<br>
+
+</CODE></A>
+<A NAME="1038191">
+<CODE><B>89&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;for (thread_count = 1; thread_count &lt;= thread_limit; 
+++thread_count)<br>
+
+</CODE></A>
+<A NAME="1038192">
+<CODE><B>90&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038193">
+<CODE><B>91&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared = PR_NEWZAP(Shared);<br>
+
+</CODE></A>
+<A NAME="1038195">
+<CODE><B>92&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared-&gt;ml = home.ml;<br>
+
+</CODE></A>
+<A NAME="1038196">
+<CODE><B>93&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared-&gt;cv = PR_NewCondVar(home.ml);<br>
+
+</CODE></A>
+<A NAME="1038197">
+<CODE><B>94&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared-&gt;twiddle = PR_TRUE;<br>
+
+</CODE></A>
+<A NAME="1038198">
+<CODE><B>95&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared-&gt;next = link;<br>
+
+</CODE></A>
+<A NAME="1038199">
+<CODE><B>96&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link = shared;<br>
+
+</CODE></A>
+<A NAME="1038201">
+<CODE><B>97&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared-&gt;thread = PR_CreateThread(<br>
+
+</CODE></A>
+<A NAME="1038202">
+<CODE><B>98&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_USER_THREAD, Notified, shared,<br>
+
+</CODE></A>
+<A NAME="1038203">
+<CODE><B>99&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_PRIORITY_HIGH, thread_scope,<br>
+
+</CODE></A>
+<A NAME="1038204">
+<CODE><B>100&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_JOINABLE_THREAD, 0);<br>
+
+</CODE></A>
+<A NAME="1038205">
+<CODE><B>101&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_ASSERT(shared-&gt;thread != NULL);<br>
+
+</CODE></A>
+<A NAME="1038206">
+<CODE><B>102&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (NULL == shared-&gt;thread)<br>
+
+</CODE></A>
+<A NAME="1038207">
+<CODE><B>103&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failed = PR_TRUE;<br>
+
+</CODE></A>
+<A NAME="1038208">
+<CODE><B>104&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038209">
+<CODE><B>105&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038210">
+<CODE><B>106&nbsp;&nbsp;&nbsp;</B> /* "Shared" now points to the head of the chain, and "home" is the 
+tail of the chain. */<br>
+
+</CODE></A>
+<A NAME="1038212">
+<CODE><B>107&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;for (loop_count = 1; loop_count &lt;= loop_limit; ++loop_count)<br>
+
+</CODE></A>
+<A NAME="1038213">
+<CODE><B>108&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038214">
+<CODE><B>109&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timein = PR_IntervalNow();<br>
+
+</CODE></A>
+<A NAME="1038215">
+<CODE><B>110&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (inner_count = 0; inner_count &lt; INNER_LOOPS; ++inner_count)<br>
+
+</CODE></A>
+<A NAME="1038216">
+<CODE><B>111&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038217">
+<CODE><B>112&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_Lock(home.ml);<br>
+
+</CODE></A>
+<A NAME="1038218">
+<CODE><B>113&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;home.twiddle = PR_TRUE;<br>
+
+</CODE></A>
+<A NAME="1038219">
+<CODE><B>114&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared-&gt;twiddle = PR_FALSE;<br>
+
+</CODE></A>
+<A NAME="1038220">
+<CODE><B>115&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_NotifyCondVar(shared-&gt;cv);<br>
+
+</CODE></A>
+<A NAME="1038221">
+<CODE><B>116&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (home.twiddle)<br>
+
+</CODE></A>
+<A NAME="1038222">
+<CODE><B>117&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038223">
+<CODE><B>118&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = PR_WaitCondVar(home.cv, 
+PR_INTERVAL_NO_TIMEOUT);<br>
+
+</CODE></A>
+<A NAME="1038228">
+<CODE><B>119&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (PR_FAILURE == status)<br>
+
+</CODE></A>
+<A NAME="1038229">
+<CODE><B>120&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failed = PR_TRUE;<br>
+
+</CODE></A>
+<A NAME="1038230">
+<CODE><B>121&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038231">
+<CODE><B>122&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_Unlock(home.ml);<br>
+
+</CODE></A>
+<A NAME="1038232">
+<CODE><B>123&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038233">
+<CODE><B>124&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeout += (PR_IntervalNow() - timein);<br>
+
+</CODE></A>
+<A NAME="1038234">
+<CODE><B>125&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038235">
+<CODE><B>126&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038236">
+<CODE><B>127&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;if (debug_mode)<br>
+
+</CODE></A>
+<A NAME="1038237">
+<CODE><B>128&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038238">
+<CODE><B>129&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;average = PR_IntervalToMicroseconds(timeout)<br>
+
+</CODE></A>
+<A NAME="1038239">
+<CODE><B>130&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ (INNER_LOOPS * loop_limit * thread_count);<br>
+
+</CODE></A>
+<A NAME="1038240">
+<CODE><B>131&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_fprintf(<br>
+
+</CODE></A>
+<A NAME="1038241">
+<CODE><B>132&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;debug_out, "Average switch times %d usecs for %d threads\n",<br>
+
+</CODE></A>
+<A NAME="1038242">
+<CODE><B>133&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;average, thread_limit);<br>
+
+</CODE></A>
+<A NAME="1038243">
+<CODE><B>134&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038244">
+<CODE><B>135&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;/* Test completed. Remainder of sample cleanly shuts down the 
+test. */<br>
+
+</CODE></A>
+<A NAME="1038246">
+<CODE><B>136&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;link = shared;<br>
+
+</CODE></A>
+<A NAME="1038247">
+<CODE><B>137&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;for (thread_count = 1; thread_count &lt;= thread_limit; 
+++thread_count)<br>
+
+</CODE></A>
+<A NAME="1038248">
+<CODE><B>138&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038249">
+<CODE><B>139&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (&amp;home == link) break;<br>
+
+</CODE></A>
+<A NAME="1038250">
+<CODE><B>140&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = PR_Interrupt(link-&gt;thread);<br>
+
+</CODE></A>
+<A NAME="1038251">
+<CODE><B>141&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (PR_SUCCESS != status)<br>
+
+</CODE></A>
+<A NAME="1038252">
+<CODE><B>142&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038253">
+<CODE><B>143&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failed = PR_TRUE;<br>
+
+</CODE></A>
+<A NAME="1038254">
+<CODE><B>144&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (debug_mode)<br>
+
+</CODE></A>
+<A NAME="1038255">
+<CODE><B>145&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PL_FPrintError(debug_out, "Failed to interrupt");<br>
+
+</CODE></A>
+<A NAME="1038256">
+<CODE><B>146&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038257">
+<CODE><B>147&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link = link-&gt;next; <br>
+
+</CODE></A>
+<A NAME="1038258">
+<CODE><B>148&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038259">
+<CODE><B>149&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038260">
+<CODE><B>150&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;for (thread_count = 1; thread_count &lt;= thread_limit; 
+++thread_count)<br>
+
+</CODE></A>
+<A NAME="1038261">
+<CODE><B>151&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038262">
+<CODE><B>152&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link = shared-&gt;next;<br>
+
+</CODE></A>
+<A NAME="1038263">
+<CODE><B>153&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = PR_JoinThread(shared-&gt;thread);<br>
+
+</CODE></A>
+<A NAME="1038264">
+<CODE><B>154&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (PR_SUCCESS != status)<br>
+
+</CODE></A>
+<A NAME="1038265">
+<CODE><B>155&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+
+</CODE></A>
+<A NAME="1038266">
+<CODE><B>156&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failed = PR_TRUE;<br>
+
+</CODE></A>
+<A NAME="1038267">
+<CODE><B>157&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (debug_mode)<br>
+
+</CODE></A>
+<A NAME="1038268">
+<CODE><B>158&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PL_FPrintError(debug_out, "Failed to join");<br>
+
+</CODE></A>
+<A NAME="1038269">
+<CODE><B>159&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038270">
+<CODE><B>160&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_DestroyCondVar(shared-&gt;cv);<br>
+
+</CODE></A>
+<A NAME="1038271">
+<CODE><B>161&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR_DELETE(shared);<br>
+
+</CODE></A>
+<A NAME="1038272">
+<CODE><B>162&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (&amp;home == link) break;<br>
+
+</CODE></A>
+<A NAME="1038273">
+<CODE><B>163&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared = link;<br>
+
+</CODE></A>
+<A NAME="1038274">
+<CODE><B>164&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;}<br>
+
+</CODE></A>
+<A NAME="1038275">
+<CODE><B>165&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_DestroyCondVar(home.cv);<br>
+
+</CODE></A>
+<A NAME="1038276">
+<CODE><B>166&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_DestroyLock(home.ml);<br>
+
+</CODE></A>
+<A NAME="1038277">
+<CODE><B>167&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1038278">
+<CODE><B>168&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_fprintf(PR_STDOUT, ((failed) ? "FAILED\n" : "PASSED\n"));<br>
+
+</CODE></A>
+<A NAME="1038279">
+<CODE><B>169&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;return ((failed) ? 1 : 0);<br>
+
+</CODE></A>
+<A NAME="1038280">
+<CODE><B>170&nbsp;&nbsp;&nbsp;</B> }  /* Switch */<br>
+
+</CODE></A>
+<A NAME="1039679">
+<CODE><B>171&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1039666">
+<CODE><B>172&nbsp;&nbsp;&nbsp;</B> PRIntn main(PRIntn argc, char **argv)<br>
+
+</CODE></A>
+<A NAME="1039667">
+<CODE><B>173&nbsp;&nbsp;&nbsp;</B> {<br>
+
+</CODE></A>
+<A NAME="1039668">
+<CODE><B>174&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PRIntn result;<br>
+
+</CODE></A>
+<A NAME="1039669">
+<CODE><B>175&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;PR_STDIO_INIT();<br>
+
+</CODE></A>
+<A NAME="1039670">
+<CODE><B>176&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;result = PR_Initialize(Switch, argc, argv, 0);<br>
+
+</CODE></A>
+<A NAME="1039671">
+<CODE><B>177&nbsp;&nbsp;&nbsp;</B> &nbsp;&nbsp;&nbsp;return result;<br>
+
+</CODE></A>
+<A NAME="1039672">
+<CODE><B>178&nbsp;&nbsp;&nbsp;</B> }  /* main */<br>
+
+</CODE></A>
+<A NAME="1039673">
+<CODE><B>179&nbsp;&nbsp;&nbsp;</B> <br>
+
+</CODE></A>
+<A NAME="1039674">
+<CODE><B>180&nbsp;&nbsp;&nbsp;</B> /* switch.c */<br>
+
+</CODE></A>
+<A NAME="1039634">
+<P></A>
+<A NAME="1039661">
+The <CODE>home</CODE> object defined after line <A HREF="printro.htm#1038175">80</A> in <A HREF="printro.htm#1039404">Listing 1.7</A> is the <CODE>Shared</CODE> object for the primordial thread. It is at the end of the chain.<P></A>
+<A NAME="1039635">
+The <CODE>Switch</CODE> function creates <CODE>thread_limit</CODE> number of additional threads after line <A HREF="printro.htm#1038188">87</A>, each with its own <CODE>Shared</CODE> object. The <CODE>Shared</CODE> objects are chained together. The <CODE>shared-&gt;twiddle</CODE> value for these objects is initialized to <CODE>PR_TRUE</CODE>, so that the threads are all blocked initially.<P></A>
+<A NAME="1039642">
+By line <A HREF="printro.htm#1038210">106</A>, <CODE>Shared</CODE> points to the head of the chain, and <CODE>home</CODE> is the tail of the chain. The primordial thread then sets <CODE>shared-&gt;twiddle</CODE> to <CODE>PR_FALSE</CODE> and notifies <CODE>shared-&gt;cv</CODE> to kick off the domino effect. The primordial thread then blocks on its own condition variable <CODE>home.cv</CODE> at the end of the chain. This process is repeated by a nested <CODE>for</CODE> loop.<P></A>
+<A NAME="1039413">
+By line <A HREF="printro.htm#1038244">135</A>, the test is finished. The code that follows cleanly shuts down the test. The primordial thread interrupts all the threads so that they know it's time to exit. Then the primordial thread joins all the threads to synchronize with their termination.<P></A>
+
+<P><HR>
+<A HREF="contents.htm">[Contents]</A> <A HREF="contents.htm">[Previous]</A> <A HREF="prtyp.htm">[Next]</A> <A HREF="prerr.htm">[Last]</A>
+<P ALIGN=right>
+
+<FONT SIZE=-2><I>Last Updated:  03/11/98  09:51:05
+</I></FONT>
+
+<HR SIZE=4>
+
+<P> <CENTER>Copyright © 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html"
+TARGET=_top>Netscape Communications Corporation</A></FONT>
+</CENTER>
+<P>
+<P>
+</BODY>
+</HTML>
+
+

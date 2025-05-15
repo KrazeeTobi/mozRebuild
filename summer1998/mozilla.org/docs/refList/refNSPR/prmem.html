@@ -1,0 +1,781 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Memory management</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../source-code.html"><B> Source Code</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Getting It</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bugs</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A><A HREF="prclist.html">[Previous]</A>
+<A HREF="prtime.html">[Next]</A><A HREF="last.html">[Last]</A>
+<HR>
+<CENTER>
+<H2>
+<A NAME="Logging"></A>Chapter 23<BR>
+Memory Management</H2></CENTER>
+This chapter describes the global functions you use to perform memory management.
+NSPR provides two types of memory management capabilities: Heap Based Memory
+Management; Segment Based Memory Management. Heap based memory management
+functions map to familiar malloc(), calloc(), realloc(), and free(). Segment
+based memory management functions resemble mmap(), as implemented in Unix.
+
+<H3>
+<A NAME="HeapFuncionsAndMacros"></A>Heap Functions and Macros</H3>
+The functions PR_Malloc, PR_Calloc, PR_Realloc, PR_Free have the same function
+signatures as do the LIBC functions malloc, calloc, realloc, free respectively.
+They function similarly.
+<H4>
+<A NAME="PR_Malloc"></A>PR_Malloc</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+PR_EXTERN(void *) PR_Malloc(PRUint32 size);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>size</B></TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The size memory to be allocated.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer to the allocated memory, or if the allocation attempt fails:
+<TT>NULL</TT>.
+<H5>
+Description</H5>
+<TT>PR_Malloc()</TT> allocates memory of the requested size from the heap.
+<H4>
+<A NAME="PR_Calloc"></A>PR_Calloc</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void *PR_Calloc(PRUint32 nelem, PRUint32 elsize);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>nelem</B></TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The number of elements of size elsize to
+be allocated.</TD>
+</TR>
+
+<TR>
+<TD>
+<TT><B>elsize</B></TT>
+</TD>
+
+<TD>The size of an individual element.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer to the allocated memory, or if the allocation attempt fails:
+<TT>NULL</TT>.
+<H5>
+Description</H5>
+<TT>PR_Calloc()</TT> allocates nelem objects of size elsize. The all bytes in the
+allocated memory are cleared.
+<H4>
+<A NAME="PR_Realloc"></A>PR_Realloc</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void *PR_Realloc(void *ptr, PRUint32 size);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>ptr</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Pointer to the existing memory object
+being resized.</TD>
+</TR>
+
+<TR>
+<TD>
+<TT><B>size</B></TT>
+</TD>
+
+<TD>The size of the new memory object.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer to the allocated memory, or if the resize attempt fails: <TT>NULL</TT>.
+<H5>
+Description</H5>
+<TT>PR_Realloc()</TT> attempts to enlarge or shrink the memory element addressed by
+ptr to a new size. The contents of the memory addressed by ptr will be
+the same up to the lesser of its old size or new size unless the new memory
+object's address is different than the original address.
+<H4>
+<A NAME="PR_Free"></A>PR_Free</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void PR_Free(void *ptr);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>ptr</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The address of the memory to be freed.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+The memory addressed by <TT>ptr</TT> is returned to the heap.
+<H4>
+<A NAME="PR_MALLOC"></A>PR_MALLOC</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void * PR_MALLOC(_bytes)</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>_bytes</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Size of the requested memory object.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer to an allocated memory object or <TT>NULL</TT> in case of error.
+<H5>
+Description</H5>
+Allocated memory from the heap.
+<H4>
+<A NAME="PR_NEW"></A>PR_NEW</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+(_struct *) PR_NEW(_struct)</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>_struct</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The name of a structure type.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer of type _struct *. or <TT>NULL</TT> on error.
+<H5>
+Description</H5>
+PR_NEW allocates memory whose size is <TT>SIZEOF(_struct)</TT> and returns a pointer
+to that memory.
+<H4>
+<A NAME="PR_REALLOC"></A>PR_REALLOC</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void * PR_REALLOC(_ptr, _size)</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>_ptr</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>pointer of memory to be re-sized.</TD>
+</TR>
+
+<TR>
+<TD>
+<B><TT>_size</TT></B>
+</TD>
+
+<TD>The requested new size.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer to re-sized memory or <TT>NULL</TT> on error.
+<H5>
+Description</H5>
+<TT>PR_REALLOC()</TT> re-allocates memory: _ptr and sets its size to _size. See
+also <A HREF="#PR_Realloc">PR_Realloc()</A>
+<H4>
+<A NAME="PR_CALLOC"></A>PR_CALLOC</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void * PR_CALLOC(_size)</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>_size</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The size of memory to be allocated.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer to the newly allocated memory or <TT>NULL</TT> on error.
+<H5>
+Description</H5>
+<TT>PR_CALLOC()</TT> allocates a single object of size _size from the heap and clears
+the memory.
+<H4>
+<A NAME="PR_NEWZAP"></A>PR_NEWZAP</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+(_struct *) PR_NEWZAP(_struct)</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>_struct</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The name of a structure.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer to memory of size <TT>SIZEOF(_struct)</TT> whose contents are set to zero
+or <TT>NULL</TT> on error.
+<H5>
+Description</H5>
+<TT>PR_NEWZAP()</TT> allocates an element of memory from the heap and sets the content
+of that memory to zero.
+<H4>
+<A NAME="PR_DELETE"></A>PR_DELETE</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void PR_DELETE(_ptr)</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>_ptr</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The address of memory to be returned
+to the heap.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+<TT>PR_FREE()</TT> returns memory to the heap.
+<H4>
+<A NAME="PR_FREEIF"></A>PR_FREEIF</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+#define PR_FREEIF(_ptr)</PRE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+<TT>PR_FREEIF()</TT> conditionally returns memory to the heap. When <TT>_ptr</TT>
+is not <TT>NULL</TT>, memory is returned.
+<H3>
+<A NAME="SegmentTypes"></A>Segment Memory Types</H3>
+
+<H4>
+<A NAME="PRSegment"></A>PRSegment</H4>
+
+<H4>
+Syntax</H4>
+<PRE>#include &lt;prmem.h>
+
+typedef struct PRSegment PRSegment;</PRE>
+<H4>
+Description</H4>
+<TT>PRSegment</TT> is an opaque type. Don't mess with it.
+<H4>
+<A NAME="PRSegmentAccess"></A>PRSegmentAccess</H4>
+
+<H4>
+Syntax</H4>
+<PRE>#include &lt;prmem.h>
+
+typedef enum {
+    PR_SEGMENT_NONE,
+    PR_SEGMENT_RDONLY,
+    PR_SEGMENT_RDWR
+} PRSegmentAccess;
+</PRE>
+
+<H4>
+Description</H4>
+<TT>PRSegmentAccess</TT> a list of access rights to segment memory.
+<H3>
+<A NAME="SegmentFunctions"></A>Segment Functions</H3>
+
+<H4>
+<A NAME="PR_NewSegment"></A>PR_NewSegment</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h><
+
+PRSegment *PR_NewSegment(PRUint32 size, void *vaddr);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>name</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The name to be assigned to the PRLogModuleInfo
+structure.</TD>
+</TR>
+
+<TR>
+<TD>
+<B>?<TT>vaddr</TT></B>
+</TD>
+
+<TD>The virtual address the memory segment is to be mapped to.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer to a <TT>PRSegment</TT> structure or <TT>NULL</TT> on error.
+<H5>
+Description</H5>
+<TT>PR_NewSegment()</TT> allocates a <TT>PRSegment</TT> structure and 
+interacts with the
+host operating system to obtain virtual memory for the segment.
+
+<P><B>Note:</B> Some platforms do not support virtual memory segments.
+<H4>
+<A NAME="PR_DestroySegment"></A>PR_DestroySegment</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void PR_DestroySegment(PRSegment *seg);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>seg</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A pointer to a <TT>PRSegment</TT> structure.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+</TT>PR_DestroySegment()</TT> interacts with the host operating system to un-map
+a virtual memory segment and release the </TT>PRSegment</TT> structure.
+<H4>
+<A NAME="PR_GrowSegment"></A>PR_GrowSegment</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+PRUint32 PR_GrowSegment(PRSegment *seg, PRInt32 deltaBytes);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>seg</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A pointer to a <TT>PRSegment</TT> structure
+whose virtual segment is to be resized.</TD>
+</TR>
+
+<TR>
+<TD>
+<B><TT>deltaBytes</TT></B>
+</TD>
+
+<TD>The difference between the current size of the virtual segment and
+its desired new size. Use a negative number to resize the segment to a
+smaller size.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+An untyped pointer where the memory is mapped.
+<H5>
+Description</H5>
+<TT>PR_GrowSegment()</TT> resizes the segment represented by the referenced
+<TT>PRSegment</TT> structure.
+<H4>
+<A NAME="PR_GetSegmentVaddr"></A>PR_GetSegmentVaddr</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void *PR_GetSegmentVaddr(PRSegment *seg);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>seg</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The address of a <TT>PRSegment</TT> structure.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+The virtual address of the mapped segment.
+<H5>
+Description</H5>
+<TT>PR_GetSegmentVaddr()</TT> extracts the virtual address of the memory segment
+represented by <TT>PRSegment</TT>.
+<H4>
+<A NAME="PR_GetSegmentSize"></A>PR_GetSegmentSize</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+PRSize PR_GetSegmentSize(PRSegment *seg);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>seg</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The address of a <TT>PRSegment</TT> structure.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+The size of the virtual storage segment represented by the
+referenced <TT>PRSegment</TT>.
+<H5>
+Description</H5>
+<TT>PR_GetSegmentSize()</TT> extracts the size of the virtual memory
+segment represented by <TT>PRSegment</TT>.
+<H4>
+<A NAME="PR_MapSegment"></A>PR_MapSegment</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+void PR_MapSegment(PRSegment *seg, PRSegmentAccess how);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>seg</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The address of a <TT>PRSegment</TT> structure.</TD>
+</TR>
+
+<TR>
+<TD>
+<B><TT>how</TT></B>
+</TD>
+
+<TD>How to map the virtual memory.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+The virtual memory segment represented by the <TT>PRSegment</TT> structure is mapped
+according to how.
+<H4>
+<A NAME="PR_GetSegmentAccess"></A>PR_GetSegmentAccess</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prmem.h>
+
+PRSegmentAccess PR_GetSegmentAccess(PRSegment *seg);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>seg</TT></B>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A <TT>PRSegment</TT> structure.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+How the memory associated with <TT>PRSegment</TT> is mapped.
+<H5>
+Description</H5>
+<TT>PR_GetSegmentAccess()</TT> extracts the mapping characteristics associated with
+the virtual memory segment represented by <TT>PRSegment</TT>.
+
+<P>
+<HR WIDTH="100%">
+<BR><A HREF="contents.html">[Contents]</A><A HREF="prclist.html">[Previous]</A>
+<A HREF="prtime.html">[Next]</A><A HREF="last.html">[Last]</A>
+<DIV ALIGN=right><I><FONT SIZE=-2>Last Updated: Tue Jul 14 17:52:23 PDT 1998</FONT></I>
+<HR SIZE=4></DIV>
+
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html" TARGET="_top">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 Netscape Communications Corporation.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

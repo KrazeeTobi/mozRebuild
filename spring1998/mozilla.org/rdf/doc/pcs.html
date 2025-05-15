@@ -1,0 +1,44 @@
+<html>
+<title>super cookies</title>
+<body bgcolor="#ffffff" text="#000000"
+      link="#0000ee" vlink="#551a8b" alink="#ff0000">
+
+<h3>Persistent Client Store</h3>
+
+The NavCenter related stores are all for the user
+and are used to store personal information such
+as bookmarks and history. A website cannot easily
+gain access to these datastores (and most likely,
+the user would not like the website to be able
+to read his/her bookmarks etc.)
+
+<P>
+
+The technology can be repurposed to provide the
+website a client side persistent store. The website
+can read/write to this store using a javascript
+reflection of the RDF APIs. 
+
+<P>
+
+The user sets size and longevity constraints on
+these databases on a per domain basis. Each domain
+can ask for its own database. A domain cannot read
+the database of another domain. However, a domain
+can explicitly give read/write permission (of its
+PCS) to another domain. E.g., cnet.com might give
+access to snap.com.
+
+<P>
+This feature can also be used to implement off-line
+forms and other such applications. The database
+is stored as an RDF file (one per domain). So, it
+can easily be uploaded, etc. At this point, there
+is no facility to store binary data into PCS, but
+this can easily be added.
+<P>
+Most of the work to enable this feature has already
+been done. The big remaining part is javascript reflection
+of the RDF APIs.
+</body>
+</html>

@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; IRIX 6.2 IP22) [Netscape]">
+   <META NAME="Author" CONTENT="A. Freier">
+   <TITLE>NSPR 2.0 Version and dependency discovery</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H2>
+Dependent version checking</H2>
+<I>[last edited 30-May-1997 by A. <A HREF="mailto:freier@netscape.com">Freier</A>.
+Supersedes version.html]</I>
+
+<P>This memo is a proposal for a mechanism that allows cooperating components
+to divulge their own versioning information and compare that to their import
+requirements. In order for this to be effective, all cooperating component
+libraries have to include certain capabilities (defined below).
+
+<P>This mechanism's goal is to provide definitive proof that the product
+environment (made up of one or more shared libraries) is consistent within
+itself. It does not provide static checking that might cause ungraceful
+termination of an application. Nor does it provide early detection of inconsistencies
+such that might be used to drive selective loading of shared libraries.
+<H3>
+Version information</H3>
+Software components can be identified generically by name (regrettably
+I don't know anything better than ASCII). For simplicity the version of
+the software component may also be identified by an ASCII string. The string's
+content is not significant since (as will be described later) only the
+component presenting the version string need understand its makeup.
+<H3>
+Discovering a component's identity and version</H3>
+A component will advertise it identity and version through use of static
+defines in a well-know header. Using NSPR as an example, these constants
+might show up in a header named <B>prvrsion.h</B> and look like:
+<UL><TT>#define PR_NAME     "NSPR 2.0"</TT>
+<BR><TT>#define PR_VERSION  "199770530"</TT></UL>
+<B>Note: </B>It would be expected that the name of the component ("NSPR
+2.0" in this example) would not change for the lifetime of the product.
+
+<P><B>Note: </B>The value of the version string must be such that the component
+can parse it and determine compatibility. The example uses a form being
+suggested by the Hardcore Build Process (see Annalee's document) as the
+way to take various versions of the distribution.
+
+<P>Along with these two constants, each component must provide a function
+capable of returning a boolean answer indicating that available library
+is compatible with the expectations of the caller. That function has a
+signature as follows:
+<UL><TT>typedef PRBool (*version_check)(const char *imported_version);</TT></UL>
+The importer would literally code this call as (using NSPR as an example):
+<UL><PRE>
+if (!PR_VersionCheck(PR_VERSION))
+{
+    ...version check fails...
+}</PRE></UL>
+At the time a version check routine is called the code should evaluate
+the string passed in as the argument with the version the library is exporting.
+This string will contain the literal value that was defined by environment
+in which the importing component was built. The called function will compare
+the string to the value known to it, which represents the value caputured
+at its build time. During the execution of the version check function is
+the opportunity for the called component to verify its dependencies as
+well. The answer returned will be the logical union of all the responses.
+
+<P><B>Caution:</B> Circular dependencies could be a problem.
+<DIV ALIGN=right><BR>
+<BR>
+
+<HR WIDTH="100%"></DIV>
+
+<DIV ALIGN=right><I><FONT SIZE=-1>Last updated: Tue Mar 10 09:44:49 PST
+1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+</BODY>
+</HTML>

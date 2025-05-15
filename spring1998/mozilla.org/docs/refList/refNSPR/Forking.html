@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+   <META NAME="Author" CONTENT="Srinivas, Freier">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; IRIX 6.2 IP22) [Netscape]">
+   <TITLE>NSPR 2.0: Process forking</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H2>
+NSPR 2.0: Process forking</H2>
+The threads provided in NSPR 2.0 are implemented using different mechanisms
+on the various platforms. On some platforms, nspr threads directly map
+one-to-one to the threads provided by the platform vendor, on other platforms
+nspr threads are basically user-level threads within a single process (with
+no kernel threads) and on still others nspr threads are user-level threads
+implemented on top of one or more kernel threads within single address
+space.
+
+<P>NSPR 2.0 does not override the fork function and so, when fork is called
+from the nspr thread the results are different on the various platforms.
+All the threads  present in the parent process may be replicated in
+the child process, only the calling thread may be replicated in the child
+process or only the calling kernel thread may be replicated.
+
+<P>So, to be consistent across all platforms, it is suggested that when
+using fork in a nspr thread;
+
+<P>1. The exec function should be called in the child process.
+<BR>2. No nspr functions should be called in the child process before the
+exec call is made.
+<DIV ALIGN=right><BR>
+<BR>
+
+<HR WIDTH="100%"></DIV>
+
+<DIV ALIGN=right><I><FONT SIZE=-1>Last updated: Tue Mar 10 09:44:49 PST
+1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+</BODY>
+</HTML>

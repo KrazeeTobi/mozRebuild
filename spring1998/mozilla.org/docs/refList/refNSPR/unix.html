@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; IRIX 6.2 IP22) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H1>
+Building NSPR 2.0 on Unix</H1>
+
+<ADDRESS>
+<FONT SIZE=-1>4 March 1998 by Wan-Teh Chang (<A HREF="mailto:wtc@netscape.com">wtc@netscape.com</A>)</FONT></ADDRESS>
+
+
+<P>First, set your <TT>CVSROOT</TT> environment variable to the appropriate
+CVS repository and check out the <TT>ns/nspr20</TT> module.
+<UL><TT>% cvs co ns/nspr20</TT></UL>
+NSPR is now self-contained in the <TT>ns/nspr20</TT> module. It does not
+depend on any other directories under <TT>ns</TT>, including <TT>ns/config.</TT>
+
+<P><B>Note</B>: If you want to build on Unixware, you also need to check
+out <TT>ns/build</TT>, because we need the <TT>hcc</TT> shell script there.
+<UL><TT>% cvs co ns/build</TT></UL>
+Now you can build nspr20 from the root of the <TT>ns/nspr20</TT> module.
+<UL><TT>% cd ns/nspr20</TT>
+<BR><TT>% gmake export</TT></UL>
+The first time you do <TT>gmake export</TT>, <TT>ns/dist</TT> will be created.
+Header files and libraries are copied into the platform-specific object
+directory under <TT>ns/dist</TT>.
+<BR>
+<DIV ALIGN=right> </DIV>
+
+<DIV ALIGN=right>
+<HR WIDTH="100%"></DIV>
+
+<DIV ALIGN=right><I><FONT SIZE=-1>Last updated: Tue Mar 10 10:06:55 PST
+1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+<ADDRESS>
+</ADDRESS>
+
+</BODY>
+</HTML>

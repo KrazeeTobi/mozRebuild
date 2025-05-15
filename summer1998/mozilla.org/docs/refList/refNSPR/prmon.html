@@ -1,0 +1,578 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Monitors</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../source-code.html"><B> Source Code</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Getting It</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bugs</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prcvar.html">[Previous]</A> <A HREF="prcmon.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<HR>
+<A NAME="418218">
+<P></A><CENTER><H2>Chapter 7<BR><A NAME="418222">
+Monitors</H2>
+</A></CENTER>
+<A NAME="420359">
+In addition to the mutex type <A HREF="prlock.html#1018659"><CODE>PRLock</CODE></A>, NSPR provides a special type, <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>, for use in Java programming. This chapter describes the NSPR API for creation and manipulation of a mutex of type <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>. <P></A>
+<A NAME="423046">
+<A HREF="prmon.html#418326">Monitor Type</A><br><A HREF="prmon.html#418224">Monitor Functions</A><P></A>
+<A NAME="425679">
+With a mutex of type <CODE>PRLock</CODE>, a single thread may enter the monitor only once before it exits, and the mutex can have multiple associated condition variables. <P></A>
+<A NAME="425693">
+With a mutex of type <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>, a single thread may re-enter a monitor as many times as it sees fit. The first time the thread enters a monitor, it acquires the monitor's lock and the thread's entry count is incremented to 1. Each subsequent time the thread successfully enters the same monitor, the thread's entry count is incremented again, and each time the thread exits the monitor, the thread's entry count is decremented. When the entry count for a thread reaches zero, the thread releases the monitor's lock, and other threads that were blocked while trying to enter the monitor will be rescheduled.<P></A>
+<A NAME="425605">
+A call to <CODE>PR_Wait</CODE> temporarily returns the entry count to zero. When the calling thread resumes, it has the same entry count it had before the wait operation.<P></A>
+<A NAME="424476">
+Unlike a mutex of type <CODE>PRLock</CODE>, a mutex of type <CODE>PRMonitor</CODE> has a single, implicitly associated condition variable that may be used to facilitate synchronization of threads with the change in state of monitored data.<P></A>
+<A NAME="424258">
+For an introduction to NSPR thread synchronization, including locks and condition variables, see <A HREF="printro.html#1015494">Chapter 1, "Introduction to NSPR."</A><P></A>
+
+<A NAME="Monitor Type"></A>
+<A NAME="418326">
+<H2> Monitor Type</H2>
+</A>
+<A NAME="421407">
+With the exception of <A HREF="prmon.html#418226"><CODE>PR_NewMonitor</CODE></A>, which creates a new monitor object, all monitor functions require a pointer to an opaque object of type <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="421412">
+<H4> PRMonitor</H4>
+</A>
+
+<A NAME="424590">
+A <CODE>PRMonitor</CODE> object is an opaque structure managed entirely by the client. Clients create them when needed and must destroy them when no longer needed. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="421359">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="418398">
+<PRE>#include &lt;prmon.h&gt;</PRE></A><A NAME="418399">
+<PRE>typedef struct PRMonitor PRMonitor;</PRE></A>
+<A NAME="Monitor Functions"></A>
+<A NAME="418224">
+<H2> Monitor Functions</H2>
+</A>
+<A NAME="421570">
+All monitor functions are thread-safe. However, this safety does not extend to protecting the monitor object from deletion.<P></A>
+<ul><P>
+<A NAME="418225">
+<LI><A HREF="prmon.html#418226"><CODE>PR_NewMonitor</CODE></A> creates a new monitor. </LI>
+</A><P>
+<A NAME="421515">
+<LI><A HREF="prmon.html#421859"><CODE>PR_DestroyMonitor</CODE></A> destroys a monitor object.</LI>
+</A><P>
+<A NAME="421692">
+<LI><A HREF="prmon.html#418627"><CODE>PR_EnterMonitor</CODE></A> enters the lock associated with a specified monitor. </LI>
+</A><P>
+<A NAME="421712">
+<LI><A HREF="prmon.html#418712"><CODE>PR_ExitMonitor</CODE></A> decrements the entry count associated with a specified monitor.</LI>
+</A><P>
+<A NAME="421730">
+<LI><A HREF="prmon.html#418794"><CODE>PR_Wait</CODE></A> waits for a notify on a specified monitor's condition variable.</LI>
+</A><P>
+<A NAME="421745">
+<LI><A HREF="prmon.html#418917"><CODE>PR_Notify</CODE></A> notifies a thread waiting on a specified monitor's condition variable. </LI>
+</A><P>
+<A NAME="421756">
+<LI><A HREF="prmon.html#419025"><CODE>PR_NotifyAll</CODE></A> notifies all threads waiting on a specified monitor's condition variable.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="418226">
+<H4> PR_NewMonitor</H4>
+</A>
+
+<A NAME="418227">
+Creates a new monitor object. The caller is responsible for the object and is expected to destroy it when appropriate.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418229">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418230">
+<PRE>#include &lt;prmon.h&gt; </PRE></A><A NAME="418231">
+<PRE>PRMonitor* PR_NewMonitor(void);</PRE></A><A NAME="Head4;"></A>
+<A NAME="418239">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="418240">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="418241">
+<LI>If successful, a pointer to a <CODE>PRMonitor</CODE> object. This pointer is required for all subsequent monitor function calls.</LI>
+</A><P>
+<A NAME="421855">
+<LI>If unsuccessful (for example, if some operating system resource is unavailable), <CODE>NULL</CODE>. </LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="424604">
+<H5> Description</H5>
+</A>
+
+<A NAME="424661">
+A newly created monitor has an entry count of zero.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="421859">
+<H4> PR_DestroyMonitor</H4>
+</A>
+
+<A NAME="418550">
+Destroys a monitor object.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418552">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418553">
+<PRE>#include &lt;prmon.h&gt; </PRE></A><A NAME="418554">
+<PRE>void PR_DestroyMonitor(PRMonitor *mon);</PRE></A><A NAME="Head4;"></A>
+<A NAME="418582">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="418592">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418585">
+<PRE>mon</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418587">
+A reference to an existing structure of type <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418559">
+<H5> Description</H5>
+</A>
+
+<A NAME="424689">
+The caller is responsible for guaranteeing that the monitor is no longer in use before calling <CODE>PR_DestroyMonitor</CODE>. There must be no thread (including the calling thread) in the monitor or waiting on the monitor.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="418627">
+<H4> PR_EnterMonitor</H4>
+</A>
+
+<A NAME="418628">
+Enters the lock associated with a specified monitor.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418630">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418631">
+<PRE>#include &lt;prmon.h&gt; </PRE></A><A NAME="418632">
+<PRE>void PR_EnterMonitor(PRMonitor *mon);</PRE></A><A NAME="Head4;"></A>
+<A NAME="418633">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="418639">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418636">
+<PRE>mon</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418638">
+A reference to an existing structure of type <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418695">
+<H5> Description</H5>
+</A>
+
+<A NAME="423248">
+When the calling thread returns, it will have acquired the monitor's lock. Attempts to acquire the lock for a monitor that is held by some other thread will result in the caller blocking. The operation is neither timed nor interruptible. <P></A>
+<A NAME="424710">
+If the monitor's entry count is greater than zero and the calling thread is recognized as the holder of the lock, <CODE>PR_EnterMonitor</CODE> increments the entry count by one and returns. If the entry count is greater than zero and the calling thread is not recognized as the holder of the lock, the thread is blocked until the entry count reaches zero. When the entry count reaches zero (or if it is already zero), the entry count is incremented by one and the calling thread is recorded as the lock's holder.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="418712">
+<H4> PR_ExitMonitor</H4>
+</A>
+
+<A NAME="418713">
+Decrements the entry count associated with a specified monitor and, if the entry count reaches zero, releases the monitor's lock.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418715">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418716">
+<PRE>#include &lt;prmon.h&gt; </PRE></A><A NAME="418717">
+<PRE>PRStatus PR_ExitMonitor(PRMonitor *mon);</PRE></A><A NAME="Head4;"></A>
+<A NAME="418718">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="418724">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418721">
+<PRE>mon</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418723">
+A reference to an existing structure of type <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>. The monitor object referenced must be one for which the calling thread currently holds the lock.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418766">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="418767">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="418768">
+<LI>If successful, <CODE>PR_Success</CODE>.</LI>
+</A><P>
+<A NAME="418778">
+<LI>If unsuccessful (the calling thread has not entered the monitor), <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="418725">
+<H5> Description</H5>
+</A>
+
+<A NAME="424797">
+If the decremented entry count is zero, <CODE>PR_ExitMonitor</CODE> releases the monitor's lock. Threads that were blocked trying to enter the monitor will be rescheduled. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="418794">
+<H4> PR_Wait</H4>
+</A>
+
+<A NAME="423530">
+Waits for an application-defined state of the monitored data to exist.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418797">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418798">
+<PRE>#include &lt;prmon.h&gt; </PRE></A><A NAME="418799">
+<PRE>
+PRStatus PR_Wait(
+    PRMonitor *mon,
+    PRIntervalTime ticks);
+</PRE></A><A NAME="Head4;"></A>
+<A NAME="418800">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="418806">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418803">
+<PRE>mon</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418805">
+A reference to an existing structure of type <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418874">
+<PRE>ticks</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418876">
+The amount of time (in <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> units) that the thread is willing to wait for an explicit notification before being rescheduled. </A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418807">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="418808">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="418809">
+<LI><CODE>PR_SUCCESS</CODE> means the thread is being resumed from the <CODE>PR_Wait</CODE> call either because it was explicitly notified or because the time specified by the parameter <CODE>ticks</CODE> has expired.</LI>
+</A><P>
+<A NAME="418810">
+<LI><CODE>PR_FAILURE</CODE> means <CODE>PR_Wait</CODE> encountered a system error (such as an invalid monitor reference) or the thread was interrupted by another thread.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="423522">
+<H5> Description</H5>
+</A>
+
+<A NAME="424854">
+A call to <CODE>PR_Wait</CODE> causes the thread to release the monitor's lock, just as if it had called <A HREF="prmon.html#418712"><CODE>PR_ExitMonitor</CODE></A> as many times as it had called <A HREF="prmon.html#418627"><CODE>PR_EnterMonitor</CODE></A>. This has the effect of making the monitor available to other threads. When the wait is over, the thread regains control of the monitor's lock with the same entry count it had before the wait began.<P></A>
+<A NAME="424987">
+A thread waiting on the monitor resumes when the monitor is notified or when the timeout specified by the <CODE>ticks</CODE> parameter elapses. The resumption from the wait is merely a hint that a change of state has occurred. It is the responsibility of the programmer to evaluate the data and act accordingly. This is usually done by evaluating a Boolean expression involving the monitored data. While the Boolean expression is false, the thread should wait. The thread should act on the data only when the expression is true. The boolean expression must be evaluated while in the monitor and within a loop. <P></A>
+<A NAME="425030">
+In pseudo-code, the sequence is as follows: <P></A>
+<A NAME="425045">
+<PRE>PR_EnterMonitor(&amp;ml);<br>while (!expression) wait;<br>... act on the state change ... <br>PR_ExitMonitor(&amp;ml);</PRE></A><A NAME="425071">
+A thread can be resumed from a wait for a variety of reasons. The most obvious is that it was notified by another thread. If the value of timeout is not <CODE>PR_INTERVAL_NO_TIMEOUT</CODE>, <CODE>PR_Wait</CODE> resumes execution after the specified interval has expired. If a timeout value is used, the Boolean expression must include elapsed time as part of the monitored data. <P></A>
+<A NAME="425136">
+Resuming from the wait is merely an opportunity to evaluate the expression, not an assertion that the expression is true. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="418917">
+<H4> PR_Notify</H4>
+</A>
+
+<A NAME="425144">
+Notifies a monitor that a change in state of the monitored data has occurred.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418920">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418921">
+<PRE>#include &lt;prmon.h&gt; </PRE></A><A NAME="418922">
+<PRE>PRStatus PR_Notify(PRMonitor *mon);</PRE></A><A NAME="Head4;"></A>
+<A NAME="418923">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="418933">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418926">
+<PRE>mon</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418928">
+A reference to an existing structure of type <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418934">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="418935">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="418936">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A><P>
+<A NAME="422245">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="422246">
+<H5> Description</H5>
+</A>
+
+<A NAME="425188">
+Notification of a monitor signals the change of state of some monitored data. The changing of that data and the notification must all be performed while in the monitor. When the notification occurs, the runtime promotes a thread that is waiting on the monitor to a ready state. If more than one thread is waiting, the selection of which thread gets promoted cannot be determined in advance. This implies that all threads waiting on a single monitor must have the same semantics. If no thread is waiting on the monitor, the notify operation is a no-op. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="419025">
+<H4> PR_NotifyAll</H4>
+</A>
+
+<A NAME="423805">
+Promotes all threads waiting on a specified monitor to a ready state. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="419028">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="419029">
+<PRE>#include &lt;prmon.h&gt; </PRE></A><A NAME="419030">
+<PRE>PRStatus PR_NotifyAll(PRMonitor *mon);</PRE></A><A NAME="Head4;"></A>
+<A NAME="419031">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="419037">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="419034">
+<PRE>mon</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="419036">
+A reference to an existing structure of type <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="419038">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="419039">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="422281">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A><P>
+<A NAME="422282">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="419042">
+<H5> Description</H5>
+</A>
+
+<A NAME="425221">
+A call to <CODE>PR_NotifyAll</CODE> causes all of the threads waiting on the monitor to be scheduled to be promoted to a ready state. If no threads are waiting, the operation is no-op. <P></A>
+<A NAME="425232">
+<CODE>PR_NotifyAll</CODE> should be used with some care. The expense of scheduling multiple threads increases dramatically as the number of threads increases.<P></A>
+
+<P><HR>
+<A HREF="contents.html">[Contents]</A> <A HREF="prcvar.html">[Previous]</A> <A HREF="prcmon.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<P ALIGN=right>
+
+<FONT SIZE=-2><I>Last Updated: Mon Jul 13 17:37:18 PDT 1998</I></FONT>
+
+<HR SIZE=4>
+
+<P> <CENTER>Copyright © 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html"
+TARGET=_top>Netscape Communications Corporation</A></FONT>
+</CENTER>
+<P>
+<P>
+
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 Netscape Communications Corporation.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>
