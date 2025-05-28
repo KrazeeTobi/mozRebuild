@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE> : Data Structures</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<A HREF="debugger-3.html"><IMG SRC="prev.gif" ALT="Previous"></A>
+<A HREF="debugger-5.html"><IMG SRC="next.gif" ALT="Next"></A>
+<A HREF="debugger.html#toc4"><IMG SRC="toc.gif" ALT="Contents"></A>
+<HR>
+<H2><A NAME="s4">4. Data Structures</A></H2>
+
+
+<P>The existing LineNumberTable and LocalVariableTable data structures
+will be used. A few lookup routines are yet to be written.</P>
+<P>Proposal:</P>
+<P>
+<UL>
+<LI> Add a boolean value indicating whether the variable is in a
+register or stack and another (possibly a byte) to hold the register
+number if in a register.
+
+<LI> Associate local variable names with primitive graph nodes 
+
+</UL>
+</P>
+<P><B>Possible problems:</B> </P>
+
+<P>A single variable assigned in more than one place,
+which gives rise to several different variables in the SSA form and
+the register allocator allocates a different register to these
+copies. Then finding the value of a local variable at runtime requires
+us to figure out exactly what register the variable is in, at that
+point in time.</P>
+
+<P><B>Proposed Solution:</B></P>
+
+<P>See section 
+<A HREF="debugger-9.html#lookup-local">Finding the values of local variables</A></P>
+
+<H2><A NAME="ss4.1">4.1 Debugger object</A></H2>
+
+
+<P>A debugger object will be implemented and shall be used to hold the
+state of the debugger, including the set of breakpoints set and the
+active/passive ones.</P>
+
+<H2><A NAME="ss4.2">4.2 PC to byte code mapping</A></H2>
+
+
+<P>See section 
+<A HREF="debugger-9.html#lookup-local">Finding the values of local variables</A></P>
+
+<H2><A NAME="ss4.3">4.3 Bytecode, local varible name -> location mapping</A></H2>
+
+
+<P>See section 
+<A HREF="debugger-9.html#lookup-local">Finding the values of local variables</A></P>
+
+<HR>
+<A HREF="debugger-3.html"><IMG SRC="prev.gif" ALT="Previous"></A>
+<A HREF="debugger-5.html"><IMG SRC="next.gif" ALT="Next"></A>
+<A HREF="debugger.html#toc4"><IMG SRC="toc.gif" ALT="Contents"></A>
+</BODY>
+</HTML>

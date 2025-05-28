@@ -1,0 +1,1140 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: I/O Types</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prcmon.html">[Previous]</A> <A HREF="priofnc.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<HR>
+<A NAME="419866">
+<P></A><CENTER><H2>Chapter 9<BR><A NAME="419870">
+I/O Types</H2>
+</A></CENTER>
+<A NAME="419871">
+This chapter describes the most common NSPR types, enumerations, and structures used with the functions described in <A HREF="priofnc.html#419870">Chapter 10, "I/O Functions"</A> and <A HREF="prntdb.html#1025514">Chapter 11, "Network Addresses."</A> These include the types used for system access, normal file I/O, and socket (network) I/O. <P></A>
+<A NAME="592145">
+Types unique to a particular function are described with the function itself.<P></A>
+<A NAME="591730">
+For sample code that illustrates basic I/O operations, see <A HREF="printro.html#1015494">Introduction to NSPR</A>.<P></A>
+<A NAME="591735">
+<A HREF="priotyp.html#497114">Directory Type</A><br><A HREF="priotyp.html#497143">File Descriptor Types</A><br><A HREF="priotyp.html#497197">File Info Types</A><br><A HREF="priotyp.html#497214">Network Address Types</A><br><A HREF="priotyp.html#501119">Types Used with Socket Options Functions</A><br><A HREF="priotyp.html#502201">Type Used with Memory-Mapped I/O</A><br><A HREF="priotyp.html#514885">Offset Interpretation for Seek Functions</A><P></A>
+
+<A NAME="Directory Type"></A>
+<A NAME="497114">
+<H2> Directory Type</H2>
+</A>
+
+<A NAME="Head3;"></A>
+<A NAME="496480">
+<H4> PRDir</H4>
+</A>
+
+<A NAME="496481">
+Directory structure used with <A HREF="priofnc.html#488787">Directory I/O Functions</A>.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="496482">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="496483">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="496484">
+<PRE>typedef struct PRDir PRDir;</PRE></A><A NAME="Head4;"></A>
+<A NAME="496485">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="582860">
+The opaque structure <CODE>PRDir</CODE> represents an open directory in the file system. The function <A HREF="priofnc.html#548334"><CODE>PR_OpenDir</CODE></A> opens a specified directory and returns a pointer to a <CODE>PRDir</CODE> structure, which can be passed to <A HREF="priofnc.html#548416"><CODE>PR_ReadDir</CODE></A> repeatedly to obtain successive entries (files or subdirectories in the open directory). To close the directory, pass the <CODE>PRDir</CODE> pointer to <A HREF="priofnc.html#606809"><CODE>PR_CloseDir</CODE></A>. <P></A>
+
+<A NAME="File Descriptor Types"></A>
+<A NAME="497143">
+<H2> File Descriptor Types</H2>
+</A>
+<A NAME="529156">
+NSPR represents I/O objects, such as open files and sockets, by file descriptors of type <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A>. This section introduces <CODE>PRFileDesc</CODE> and related types.<P></A>
+<A NAME="574485">
+<A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A><br><A HREF="priotyp.html#520509"><CODE>PRIOMethods</CODE></A><br><A HREF="priotyp.html#500914"><CODE>PRFilePrivate</CODE></A><br><A HREF="priotyp.html#502006"><CODE>PRDescIdentity</CODE></A><P></A>
+<A NAME="583703">
+Note that the NSPR documentation follows the Unix convention of using the term <I>files</I> to refer to many kinds of I/O objects. To refer specifically to the files in a file system (that is, disk files), this documentation uses the term <I>normal files.</I> <P></A>
+<A NAME="584562">
+<CODE>PRFileDesc</CODE> has an object-oriented flavor. An I/O function on a <CODE>PRFileDesc</CODE> structure is carried out by invoking the corresponding "method" in the I/O methods table (a structure of type <A HREF="priotyp.html#520509"><CODE>PRIOMethods</CODE></A>) of the <CODE>PRFileDesc</CODE> structure (the "object"). Different kinds of I/O objects (such as files and sockets) have different I/O methods tables, thus implementing different behavior in response to the same I/O function call.<P></A>
+<A NAME="586131">
+NSPR supports the implementation of layered I/O. Each layer is represented by a <CODE>PRFileDesc</CODE> structure, and the <CODE>PRFileDesc</CODE> structures for the layers are chained together. Each <CODE>PRFileDesc</CODE> structure has a field (of type <A HREF="priotyp.html#502006"><CODE>PRDescIdentity</CODE></A>) to identify itself in the layers. For example, the Netscape implementation of the Secure Sockets Layer (SSL) protocol is implemented as an I/O layer on top of NSPR's socket layer.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="420111">
+<H4> PRFileDesc</H4>
+</A>
+
+<A NAME="587101">
+A file descriptor used to represent any open file, such as a normal file, an end point of a pipe, or a socket (end point of network communication). <P></A>
+<A NAME="Head4;"></A>
+<A NAME="528661">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="420114">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="420150">
+<PRE>
+struct PRFileDesc {
+    PRIOMethods *methods;
+    PRFilePrivate *secret;
+    PRFileDesc *lower, *higher;
+    void (*dtor)(PRFileDesc *fd);
+    PRDescIdentity identity;<br>};</PRE></A><A NAME="420116">
+<PRE>typedef struct PRFileDesc PRFileDesc;</PRE></A><A NAME="Head4;"></A>
+<A NAME="420117">
+<H5> Fields<br></H5>
+</A>
+
+<A NAME="420123">
+The structure has the following fields: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420120">
+<PRE>methods</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420122">
+The I/O methods table. See <A HREF="priotyp.html#520509"><CODE>PRIOMethods</CODE></A>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420215">
+<PRE>secret</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420217">
+Layer-dependent implementation data. See <A HREF="priotyp.html#500914"><CODE>PRFilePrivate</CODE></A>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420227">
+<PRE>lower</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420229">
+Pointer to lower layer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420239">
+<PRE>higher</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420241">
+Pointer to higher layer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420251">
+<PRE>dtor</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420253">
+A destructor function for the layer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420263">
+<PRE>identity</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420265">
+Identity of this particular layer. See <A HREF="priotyp.html#502006"><CODE>PRDescIdentity</CODE></A>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="420124">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="420125">
+The fields of this structure are significant only if you are implementing a layer on top of NSPR, such as SSL. Otherwise, you use functions such as <A HREF="priofnc.html#426710"><CODE>PR_Open</CODE></A> and <A HREF="priofnc.html#436251"><CODE>PR_NewTCPSocket</CODE></A> to obtain a file descriptor, which you should treat as an opaque structure.<P></A>
+<A NAME="587177">
+For more details about the use of <CODE>PRFileDesc</CODE><VAR> and related structures</VAR>, see <A HREF="priotyp.html#497143">File Descriptor Types</A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="520509">
+<H4> PRIOMethods</H4>
+</A>
+
+<A NAME="520510">
+The table of I/O methods used in a file descriptor.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="520511">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="520512">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="520513">
+<PRE>struct PRIOMethods {
+    PRDescType file_type;
+    PRCloseFN close;
+    PRReadFN read;
+    PRWriteFN write;
+    PRAvailableFN available;
+    PRAvailable64FN available64;
+    PRFsyncFN fsync;
+    PRSeekFN seek;
+    PRSeek64FN seek64;
+    PRFileInfoFN fileInfo;
+    PRFileInfo64FN fileInfo64;
+    PRWritevFN writev;
+    PRConnectFN connect;
+    PRAcceptFN accept;
+    PRBindFN bind;
+    PRListenFN listen;
+    PRShutdownFN shutdown;
+    PRRecvFN recv;
+    PRSendFN send;
+    PRRecvfromFN recvfrom;
+    PRSendtoFN sendto;
+    PRPollFN poll;
+    PRAcceptreadFN acceptread;
+    PRTransmitfileFN transmitfile;
+    PRGetsocknameFN getsockname;
+    PRGetpeernameFN getpeername;
+    PRGetsockoptFN getsockopt;
+    PRSetsockoptFN setsockopt;<br>};</PRE></A><A NAME="520514">
+<PRE>typedef struct PRIOMethods PRIOMethods;</PRE></A><A NAME="Head4;"></A>
+<A NAME="520515">
+<H5> Fields<br></H5>
+</A>
+
+<A NAME="520629">
+The structure has the following fields: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520518">
+<PRE>file_type</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520520">
+Type of file represented (tos). </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520522">
+<PRE>close</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520524">
+Close file and destroy descriptor.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520526">
+<PRE>read</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520528">
+Read up to the specified number of bytes into buffer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520530">
+<PRE>write</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520532">
+Write specified number of bytes from buffer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520534">
+<PRE>available</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520536">
+Determine number of bytes available for reading.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520538">
+<PRE>available64</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520540">
+Same as previous field, except 64-bit.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520542">
+<PRE>fsync</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520544">
+Flush all in-memory buffers of file to permanent store.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520546">
+<PRE>seek</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520548">
+Position the file pointer to the desired place.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520550">
+<PRE>seek64</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520552">
+Same as previous field, except 64-bit.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520554">
+<PRE>fileInfo</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520556">
+Get information about an open file.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520558">
+<PRE>fileInfo64</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520560">
+Same as previous field, except 64-bit.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520562">
+<PRE>writev</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520564">
+Write from a vector of buffers. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520566">
+<PRE>connect</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520568">
+Connect to the specified network address.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520570">
+<PRE>accept</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520572">
+Accept a connection from a network peer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520574">
+<PRE>bind</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520576">
+Associate a network address with the file descriptor.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520578">
+<PRE>listen</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520580">
+Prepare to listen for network connections.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520582">
+<PRE>shutdown</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520584">
+Shut down a network connection.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520586">
+<PRE>recv</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520588">
+Receive up to the specified number of bytes. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520590">
+<PRE>send</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520592">
+Send all the bytes specified.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520594">
+<PRE>recvfrom</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520596">
+Receive up to the specified number of bytes and report network source.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520598">
+<PRE>sendto</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520600">
+Send bytes to specified network address.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520602">
+<PRE>poll</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520604">
+Test the file descriptor to see if it is ready for I/O.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520606">
+<PRE>acceptread</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520608">
+Accept and read from a new network file descriptor. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520610">
+<PRE>transmitfile</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520612">
+Transmit an entire file to the specified socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520614">
+<PRE>getsockname</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520616">
+Get network address associated with a file descriptor.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520618">
+<PRE>getpeername</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520620">
+Get peer's network address.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520622">
+<PRE>getsockopt</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520624">
+Get current setting of specified socket option.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="520626">
+<PRE>setsockopt</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="520628">
+Set value of specified socket option.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="520630">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="587679">
+You don't need to know the type declaration for each function listed in the method table unless you are implementing a layer. For information about each function, see the corresponding function description in this document. For example, the <CODE>write</CODE> method in <CODE>PRIOMethods</CODE> implements the <A HREF="priofnc.html#431166"><CODE>PR_Write</CODE></A> function. For type definition details, see <CODE>prio.h</CODE>.<P></A>
+<A NAME="587704">
+The I/O methods table provides procedural access to the functions of the file descriptor. It is the responsibility of a layer implementor to provide suitable functions at every entry point (that is, for every function in the I/O methods table). If a layer provides no functionality, it should call the next lower (higher) function of the same name (for example, the "close" method would return <CODE>fd-&gt;lower-&gt;method-&gt;close(fd-&gt;lower)</CODE>).<P></A>
+<A NAME="587718">
+Not all functions in the methods table are implemented for all types of files. For example, the <CODE>seek</CODE> method is implemented for normal files but not for sockets. In cases where this partial implementation occurs, the function returns an error indication with an error code of <CODE>PR_INVALID_METHOD_ERROR</CODE>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="500914">
+<H4> PRFilePrivate</H4>
+</A>
+
+<A NAME="500915">
+Layer-dependent implementation data.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="500916">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="500917">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="500918">
+<PRE>typedef struct PRFilePrivate PRFilePrivate;</PRE></A><A NAME="Head4;"></A>
+<A NAME="500919">
+<H5> Description</H5>
+</A>
+
+<A NAME="587783">
+A layer implementor should collect all the private data of the layer in the <CODE>PRFilePrivate</CODE> structure. Each layer has its own definition of <CODE>PRFilePrivate</CODE>, which is hidden from other layers as well as from the users of the layer. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="502006">
+<H4> PRDescIdentity</H4>
+</A>
+
+<A NAME="502007">
+The identity of a file descriptor's layer.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="502008">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="502009">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="502010">
+<PRE>typedef PRUintn PRDescIdentity;</PRE></A><A NAME="Head4;"></A>
+<A NAME="502011">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="502012">
+File descriptors may be layered. Each layer has it own identity. Identities are allocated by the runtime and are to be associated (by the layer implementor) with all file descriptors of that layer. It is then possible to scan the chain of layers and find a layer that one recognizes, then predict that it will implement a desired protocol.<P></A>
+<A NAME="574031">
+A string may be associated with a layer when the layer is created. The string is copied by the runtime, and <A HREF="priofnc.html#628281"><CODE>PR_GetNameForIdentity</CODE></A> returns a reference to that copy. There is no way to delete a layer's identity after the layer is created.<P></A>
+
+<A NAME="File Info Types"></A>
+<A NAME="497197">
+<H2> File Info Types</H2>
+</A>
+<A NAME="574724">
+<A HREF="priotyp.html#529530"><CODE>PRFileInfo</CODE></A><br><A HREF="priotyp.html#420420"><CODE>PRFileInfo64</CODE></A><br><A HREF="priotyp.html#506630"><CODE>PRFileType</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="529530">
+<H4> PRFileInfo</H4>
+</A>
+
+<A NAME="529534">
+File information structure used with <A HREF="priofnc.html#599816"><CODE>PR_GetFileInfo</CODE></A> and <A HREF="priofnc.html#433149"><CODE>PR_GetOpenFileInfo</CODE></A>.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="529535">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="420336">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="420391">
+<PRE>struct PRFileInfo {
+    PRFileType type;
+    PRUint32 size;
+    PRTime creationTime;
+    PRTime modifyTime;<br>};</PRE></A><A NAME="420338">
+<PRE>typedef struct PRFileInfo PRFileInfo;</PRE></A><A NAME="Head4;"></A>
+<A NAME="420339">
+<H5> Fields<br></H5>
+</A>
+
+<A NAME="420365">
+The structure has the following fields: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420342">
+<PRE>type</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420344">
+Type of file. See <A HREF="priotyp.html#506630"><CODE>PRFileType</CODE></A>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420346">
+<PRE>size</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420348">
+Size, in bytes, of file's contents. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420350">
+<PRE>creationTime</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420352">
+Creation time per definition of <CODE>PRTime</CODE>. See <CODE>prtime.h</CODE>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420354">
+<PRE>modifyTime</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420356">
+Last modification time per definition of <CODE>PRTime</CODE>. See <CODE>prtime.h</CODE>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="420366">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="420367">
+The <CODE>PRFileInfo</CODE> structure provides information about a file, a directory, or some other kind of file system object, as specified by the <CODE>type</CODE> field. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="420420">
+<H4> PRFileInfo64</H4>
+</A>
+
+<A NAME="529494">
+File information structure used with <A HREF="priofnc.html#486650"><CODE>PR_GetFileInfo64</CODE></A> and <A HREF="priofnc.html#433238"><CODE>PR_GetOpenFileInfo64</CODE></A>.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="420422">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="420423">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="420479">
+<PRE>struct PRFileInfo64 {
+    PRFileType type;
+    PRUint64 size;
+    PRTime creationTime;
+    PRTime modifyTime;<br>};</PRE></A><A NAME="420425">
+<PRE>typedef struct PRFileInfo64 PRFileInfo64;</PRE></A><A NAME="Head4;"></A>
+<A NAME="420426">
+<H5> Fields<br></H5>
+</A>
+
+<A NAME="420444">
+The structure has the following fields: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420429">
+<PRE>type</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420431">
+Type of file. See <A HREF="priotyp.html#506630"><CODE>PRFileType</CODE></A>. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420433">
+<PRE>size</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420435">
+64-bit size, in bytes, of file's contents.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420437">
+<PRE>creationTime</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420439">
+Creation time per definition of <CODE>PRTime</CODE>. See <CODE>prtime.h</CODE>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420441">
+<PRE>modifyTime</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420443">
+Last modification time per definition of <CODE>PRTime</CODE>. See <CODE>prtime.h</CODE>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="420445">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="420446">
+The <CODE>PRFileInfo64</CODE> structure provides information about a file, a directory, or some other kind of file system object, as specified by the <CODE>type</CODE> field. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="506630">
+<H4> PRFileType</H4>
+</A>
+
+<A NAME="506631">
+Type for enumerators used in the <CODE>type</CODE> field of the <A HREF="priotyp.html#529530"><CODE>PRFileInfo</CODE></A> and <A HREF="priotyp.html#420420"><CODE>PRFileInfo64</CODE></A> structures.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="506632">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="506633">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="506634">
+<PRE>typedef enum PRFileType{
+    PR_FILE_FILE = 1,
+    PR_FILE_DIRECTORY = 2,
+    PR_FILE_OTHER = 3<br>} PRFileType;</PRE></A><A NAME="Head4;"></A>
+<A NAME="506635">
+<H5> Enumerators<br></H5>
+</A>
+
+<A NAME="506649">
+The enumeration has the following enumerators: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="506638">
+<PRE>PR_FILE_FILE</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="506640">
+The information in the structure describes a file.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="506642">
+<PRE>PR_FILE_DIRECTORY</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="506644">
+The information in the structure describes a directory.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="506646">
+<PRE>PR_FILE_OTHER</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="506648">
+The information in the structure describes some other kind of file system object.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+
+<A NAME="Network Address Types"></A>
+<A NAME="497214">
+<H2> Network Address Types</H2>
+</A>
+<A NAME="574749">
+<A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A><br><A HREF="priotyp.html#524913"><CODE>PRIPv6Addr</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="420490">
+<H4> PRNetAddr</H4>
+</A>
+
+<A NAME="420491">
+Type used with <A HREF="priofnc.html#488828">Socket Manipulation Functions</A> to specify a network address.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="420492">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="420493">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="420548">
+<PRE>union PRNetAddr {
+    struct {
+        PRUint16 family;
+        char data[14];
+        } raw;
+    struct {
+        PRUint16 family;
+        PRUint16 port;
+        PRUint32 ip;
+        char pad[8];
+    } inet;
+#if defined(_PR_INET6)
+    struct {
+        PRUint16 family;
+        PRUint16 port;
+        PRUint32 flowinfo;
+        PRIPv6Addr ip;
+        } ipv6;
+#endif /* defined(_PR_INET6) */
+#if defined(XP_UNIX)
+    struct {
+        PRUint16 family;
+        char path[104];
+    } local;
+};
+</PRE></A><A NAME="420495">
+<PRE>typedef union PRNetAddr PRNetAddr;</PRE></A><A NAME="Head4;"></A>
+<A NAME="420496">
+<H5> Fields<br></H5>
+</A>
+
+<A NAME="420514">
+The structure has the following fields: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420499">
+<PRE>family</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420501">
+Address family: <CODE>AF_INET|AF_INET6</CODE> for <CODE>raw.family</CODE>, <CODE>AF_INET</CODE> for i<CODE>net.family</CODE>, <CODE>AF_INET6</CODE> for <CODE>ipv6.family</CODE>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420503">
+<PRE>data</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420505">
+Raw address data.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420507">
+<PRE>port</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420509">
+Port number of TCP or UDP, in network byte order.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420511">
+<PRE>ip</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420513">
+The actual 32 (for <CODE>inet.ip</CODE>) or 128 (for <CODE>ipv6.ip</CODE>) bits of IP address. The <CODE>inet.ip</CODE> field is in network byte order. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420644">
+<PRE>pad</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420646">
+Unused. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="420648">
+<PRE>flowinfo</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="420650">
+Routing information.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="420515">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="588063">
+The union <CODE>PRNetAddr</CODE> represents a network address. NSPR supports only the Internet address family. By default, NSPR is built to support only IPv4, but it's possible to build the NSPR library to support both IPv4 and IPv6. Therefore, the <CODE>family</CODE> field can be <CODE>AF_INET</CODE> only for default NSPR, and can also be <CODE>AF_INET6</CODE> if the binary supports <CODE>IPv6</CODE>. <P></A>
+<A NAME="590974">
+<CODE>PRNetAddr</CODE> is binary-compatible with the socket address structures in the familiar Berkeley socket interface, although this fact should not be relied upon. The <CODE>raw</CODE> member of the union is equivalent to <CODE>struct sockaddr</CODE>, the <CODE>inet</CODE> member is equivalent to <CODE>struct sockaddr_in</CODE>, and if the binary is built with <CODE>IPv6</CODE> support, the <CODE>ipv6</CODE> member is equivalent to <CODE>struct sockaddr_in6</CODE>. (Note that <CODE>PRNetAddr</CODE> does not have the <CODE>length</CODE> field that is present in <CODE>struct sockaddr_in</CODE> on some Unix platforms.) <P></A>
+<A NAME="591040">
+The macros <CODE>AF_INET</CODE>, <CODE>AF_INET6</CODE>, <CODE>INADDR_ANY</CODE>, <CODE>INADDR_LOOPBACK</CODE> are defined if <CODE>prio.h</CODE> is included. <CODE>INADDR_ANY</CODE> and <CODE>INADDR_LOOPBACK</CODE> are special IPv4 addresses in host byte order, so they must be converted to network byte order before being assigned to the <CODE>inet.ip</CODE> field.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="524913">
+<H4> PRIPv6Addr</H4>
+</A>
+
+<A NAME="524914">
+Type used in the <CODE>ipv6.ip</CODE> field of the <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A> structure.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="524915">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="524916">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="524917">
+<PRE>#if defined(_PR_INET6)
+    typedef struct in6_addr PRIPv6Addr;<br>#endif /* defined(_PR_INET6) */</PRE></A><A NAME="Head4;"></A>
+<A NAME="524918">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="592564">
+<CODE>PRIPv6Addr</CODE> represents a 128-bit IPv6 address. It is equivalent to <CODE>struct in6_addr</CODE> in the Berkeley socket interface. <CODE>PRIPv6Addr</CODE> is always manipulated as a byte array. Unlike the IPv4 address (a 4-byte unsigned integer) or the port number (a 2-byte unsigned integer), it has no network or host byte order. <P></A>
+
+<A NAME="Types Used with Socket Options Functions"></A>
+<A NAME="501119">
+<H2> Types Used with Socket Options Functions</H2>
+</A>
+<A NAME="575127">
+<A HREF="priotyp.html#597568"><CODE>PRSocketOptionData</CODE></A><br><A HREF="priotyp.html#513294"><CODE>PRSockOption</CODE></A><br><A HREF="priotyp.html#513368"><CODE>PRLinger</CODE></A><br><A HREF="priotyp.html#566648"><CODE>PRMcastRequest</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="597568">
+<H4> PRSocketOptionData</H4>
+</A>
+
+<A NAME="597575">
+Type for structure used with <A HREF="priofnc.html#439735"><CODE>PR_GetSocketOption</CODE></A> and <A HREF="priofnc.html#439826"><CODE>PR_SetSocketOption</CODE></A> to specify options for file descriptors that represent sockets.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="554632">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="597726">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="562961">
+<PRE>
+typedef struct PRSocketOptionData<br>{
+    PRSockOption option;
+    union
+    {
+        PRUintn ip_ttl;
+        PRUintn mcast_ttl;
+        PRUintn tos;
+        PRBool non_blocking;
+        PRBool reuse_addr;
+        PRBool keep_alive;
+        PRBool mcast_loopback;
+        PRBool no_delay;
+        PRSize max_segment;
+        PRSize recv_buffer_size;
+        PRSize send_buffer_size;
+        PRLinger linger;
+        PRMcastRequest add_member;
+        PRMcastRequest drop_member; 
+        PRNetAddr mcast_if;         
+    } value;
+} PRSocketOptionData;
+</PRE></A><A NAME="Head4;"></A>
+<A NAME="561645">
+<H5> Fields<br></H5>
+</A>
+
+<A NAME="561711">
+The structure has the following fields: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561648">
+<PRE>ip_ttl</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561650">
+IP time-to-live.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561652">
+<PRE>mcast_ttl</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561654">
+IP multicast time-to-live.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561656">
+<PRE>tos</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561658">
+IP type-of-service and precedence.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561660">
+<PRE>non_blocking</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561662">
+Nonblocking (network) I/O.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561664">
+<PRE>reuse_addr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561666">
+Allow local address reuse.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561668">
+<PRE>keep_alive</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561670">
+Periodically test whether connection is still alive.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561672">
+<PRE>mcast_loopback</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561674">
+IP multicast loopback.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561676">
+<PRE>no_delay</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561678">
+Disable Nagle algorithm. Don't delay send to coalesce packets.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561680">
+<PRE>max_segment</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561682">
+TCP maximum segment size.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561684">
+<PRE>recv_buffer_size</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561686">
+Receive buffer size.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561688">
+<PRE>send_buffer_size</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561690">
+Send buffer size.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561692">
+<PRE>linger</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561694">
+Time to linger on close if data are present in socket send buffer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561696">
+<PRE>add_member</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561698">
+Join an IP multicast group.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561700">
+<PRE>drop_member</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561702">
+Leave an IP multicast group.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="561704">
+<PRE>mcast_if</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="561706">
+IP multicast interface address.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="564051">
+<H5> Description</H5>
+</A>
+
+<A NAME="592684">
+<CODE>PRSocketOptionData</CODE> is a name-value pair for a socket option. The <CODE>option</CODE> field (of enumeration type <CODE>PRSockOption</CODE>) specifies the name of the socket option, and the <CODE>value</CODE> field (a union of all possible values) specifies the value of the option. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="513294">
+<H4> PRSockOption</H4>
+</A>
+
+<A NAME="513295">
+Enumeration type used in the <CODE>option</CODE> field of <A HREF="priotyp.html#597568"><CODE>PRSocketOptionData</CODE></A> to form the name portion of a name-value pair. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="513296">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="513297">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="513298">
+<PRE>typedef enum PRSockOption {
+    PR_SockOpt_Nonblocking,
+    PR_SockOpt_Linger,
+    PR_SockOpt_Reuseaddr,
+    PR_SockOpt_Keepalive,
+    PR_SockOpt_RecvBufferSize,
+    PR_SockOpt_SendBufferSize,
+    PR_SockOpt_IpTimeToLive,
+    PR_SockOpt_IpTypeOfService,
+    PR_SockOpt_AddMember,
+    PR_SockOpt_DropMember,
+    PR_SockOpt_McastInterface,
+    PR_SockOpt_McastTimeToLive,
+    PR_SockOpt_McastLoopback,
+    PR_SockOpt_NoDelay,
+    PR_SockOpt_MaxSegment,
+    PR_SockOpt_Last<br>} PRSockOption;</PRE></A><A NAME="Head4;"></A>
+<A NAME="513299">
+<H5> Enumerators<br></H5>
+</A>
+
+<A NAME="513365">
+The enumeration has the following enumerators: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513302">
+<PRE>PR_SockOpt_Nonblocking</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513304">
+Nonblocking I/O.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513306">
+<PRE>PR_SockOpt_Linger</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513308">
+Time to linger on close if data is present in the socket send buffer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513310">
+<PRE>PR_SockOpt_Reuseaddr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513312">
+Allow local address reuse.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513314">
+<PRE>PR_SockOpt_Keepalive</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513316">
+Periodically test whether connection is still alive.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513318">
+<PRE>PR_SockOpt_RecvBufferSize</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513320">
+Receive buffer size.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513322">
+<PRE>PR_SockOpt_SendBufferSize</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513324">
+Send buffer size.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513326">
+<PRE>PR_SockOpt_IpTimeToLive</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513328">
+IP time-to-live.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513330">
+<PRE>PR_SockOpt_IpTypeOfService</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513332">
+IP type-of-service and precedence.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513334">
+<PRE>PR_SockOpt_AddMember</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513336">
+Join an IP multicast group.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513338">
+<PRE>PR_SockOpt_DropMember</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513340">
+Leave an IP multicast group.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513342">
+<PRE>PR_SockOpt_McastInterface</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513344">
+IP multicast interface address.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513346">
+<PRE>PR_SockOpt_McastTimeToLive</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513348">
+IP multicast time-to-live.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513350">
+<PRE>PR_SockOpt_McastLoopback</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513352">
+IP multicast loopback.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513354">
+<PRE>PR_SockOpt_NoDelay</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513356">
+Disable Nagle algorithm. Don't delay send to coalesce packets.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513358">
+<PRE>PR_SockOpt_MaxSegment</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513360">
+Maximum segment size.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513362">
+<PRE>PR_SockOpt_Last</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513364">
+Always one greater than the maximum valid socket option numerator.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="513366">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="593223">
+The <CODE>PRSockOption</CODE> enumeration consists of all the socket options supported by NSPR. The <CODE>option</CODE> field of <CODE>PRSocketOptionData</CODE> should be set to an enumerator of type <CODE>PRSockOption</CODE>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="513368">
+<H4> PRLinger</H4>
+</A>
+
+<A NAME="564291">
+Structure used with the <A HREF="priotyp.html#513365"><CODE>PR_SockOpt_Linger</CODE></A> socket option to specify the time interval (in <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> units) to linger on closing a socket if any data remain in the socket send buffer.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="513370">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="513371">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="513372">
+<PRE>typedef struct PRLinger {
+    PRBool polarity;
+    PRIntervalTime linger;<br>} PRLinger;</PRE></A><A NAME="Head4;"></A>
+<A NAME="513373">
+<H5> Fields<br></H5>
+</A>
+
+<A NAME="513383">
+The structure has the following fields: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513376">
+<PRE>polarity</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="575803">
+Polarity of the option's setting: <CODE>PR_FALSE</CODE> means the option is off, in which case the value of <CODE>linger</CODE> is ignored. <CODE>PR_TRUE</CODE> means the option is on, and the value of <CODE>linger</CODE> will be used to determine how long <A HREF="priofnc.html#622644"><CODE>PR_Close</CODE></A> waits before returning.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="513380">
+<PRE>linger</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="513382">
+Time (in <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> units) to linger before closing if any data remain in the socket send buffer.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="513384">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="593686">
+By default, <A HREF="priofnc.html#622644"><CODE>PR_Close</CODE></A> returns immediately, but if there are any data remaining in the socket send buffer, the system attempts to deliver the data to the peer. The <A HREF="priotyp.html#513365"><CODE>PR_SockOpt_Linger</CODE></A> socket option, with a value represented by a structure of type <CODE>PRLinger</CODE>, makes it possible to change this default as follows: <P></A>
+<ul><P>
+<A NAME="575866">
+<LI>If <CODE>polarity</CODE> is set to <CODE>PR_FALSE</CODE>, <CODE>PR_Close</CODE> returns immediately, but if there are any data remaining in the socket send buffer, the runtime attempts to deliver the data to the peer.</LI>
+</A><P>
+<A NAME="575912">
+<LI>If <CODE>polarity</CODE> is set to <CODE>PR_TRUE</CODE> and <CODE>linger</CODE> is set to 0 (<CODE>PR_INTERVAL_NO_WAIT</CODE>), the runtime aborts the connection when it is closed and discards any data remaining in the socket send buffer.</LI>
+</A><P>
+<A NAME="575979">
+<LI>If <CODE>polarity</CODE> is set to <CODE>PR_TRUE</CODE> and <CODE>linger</CODE> is nonzero, the runtime <I>lingers</I> when the socket is closed. That is, if any data remains in the socket send buffer, <CODE>PR_Close</CODE> blocks until either all the data is sent and acknowledged by the peer or the interval specified by <CODE>linger</CODE> expires.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="566648">
+<H4> PRMcastRequest</H4>
+</A>
+
+<A NAME="566652">
+Structure used to specify values for the <A HREF="priotyp.html#513365"><CODE>PR_SockOpt_AddMember</CODE></A> and <A HREF="priotyp.html#513365"><CODE>PR_SockOpt_DropMember</CODE></A> socket options that define a request to join or leave a multicast group.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="566653">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="566654">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="566655">
+<PRE>struct PRMcastRequest {
+    PRNetAddr mcaddr;
+    PRNetAddr ifaddr;<br>};</PRE></A><A NAME="566656">
+<PRE>typedef struct PRMcastRequest PRMcastRequest;</PRE></A><A NAME="Head4;"></A>
+<A NAME="566657">
+<H5> Fields<br></H5>
+</A>
+
+<A NAME="566667">
+The structure has the following fields: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="566660">
+<PRE>mcaddr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="566662">
+IP multicast address of group.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="566664">
+<PRE>ifaddr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="566666">
+Local IP address of interface.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="566668">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="596001">
+The <CODE>mcaddr</CODE> and <CODE>ifaddr</CODE> fields are of the type <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A>, but their <CODE>port</CODE> fields are ignored. Only the IP address (<CODE>inet.ip</CODE>) fields are used. <P></A>
+
+<A NAME="Type Used with Memory-Mapped I/O"></A>
+<A NAME="502201">
+<H2> Type Used with Memory-Mapped I/O</H2>
+</A>
+
+<A NAME="Head3;"></A>
+<A NAME="440689">
+<H4> PRFileMap</H4>
+</A>
+
+<A NAME="532678">
+Type returned by <A HREF="priofnc.html#442174"><CODE>PR_CreateFileMap</CODE></A> and passed to <A HREF="priofnc.html#442246"><CODE>PR_MemMap</CODE></A> and <A HREF="priofnc.html#442363"><CODE>PR_CloseFileMap</CODE></A>.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="440691">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="440692">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="441257">
+<PRE>typedef struct PRFileMap PRFileMap;</PRE></A><A NAME="Head4;"></A>
+<A NAME="440694">
+<H5> Description<br></H5>
+</A>
+
+<A NAME="596508">
+The opaque structure <CODE>PRFileMap</CODE> represents a memory-mapped file object. Before actually mapping a file to memory, you must create a memory-mapped file object by calling <A HREF="priofnc.html#442174"><CODE>PR_CreateFileMap</CODE></A>, which returns a pointer to <CODE>PRFileMap</CODE>. Then sections of the file can be mapped into memory by passing the <CODE>PRFileMap</CODE> pointer to <A HREF="priofnc.html#442246"><CODE>PR_MemMap</CODE></A>. The memory-mapped file object is closed by passing the <CODE>PRFileMap</CODE> pointer to <A HREF="priofnc.html#442363"><CODE>PR_CloseFileMap</CODE></A>. <P></A>
+
+<A NAME="Offset Interpretation for Seek Functions"></A>
+<A NAME="514885">
+<H2> Offset Interpretation for Seek Functions</H2>
+</A>
+
+<A NAME="Head3;"></A>
+<A NAME="421972">
+<H4> PRSeekWhence</H4>
+</A>
+
+<A NAME="421973">
+Specifies how to interpret the <CODE>offset</CODE> parameter in setting the file pointer associated with the <CODE>fd</CODE> parameter for the <A HREF="priofnc.html#434006"><CODE>PR_Seek</CODE></A> and <A HREF="priofnc.html#434193"><CODE>PR_Seek64</CODE></A> functions.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="421974">
+<H5> Syntax<br></H5>
+</A>
+
+<A NAME="421975">
+<PRE>#include &lt;prio.h&gt;</PRE></A><A NAME="422030">
+<PRE>typedef PRSeekWhence {
+    PR_SEEK_SET = 0,
+    PR_SEEK_CUR = 1,
+    PR_SEEK_END = 2<br>} PRSeekWhence;</PRE></A><A NAME="Head4;"></A>
+<A NAME="421977">
+<H5> Enumerators<br></H5>
+</A>
+
+<A NAME="421995">
+The enumeration has the following enumerators: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="421980">
+<PRE>PR_SEEK_SET</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="421982">
+Sets the file pointer to the value of the <CODE>offset</CODE> parameter.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="421984">
+<PRE>PR_SEEK_CUR</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="421986">
+Sets the file pointer to its current location plus the value of the <CODE>offset</CODE> parameter.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="421988">
+<PRE>PR_SEEK_END</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="421990">
+Sets the file pointer to the size of the file plus the value of the <CODE>offset</CODE> parameter.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="539600">
+<P></A>
+
+<P><HR>
+<A HREF="contents.html">[Contents]</A> <A HREF="prcmon.html">[Previous]</A> <A HREF="priofnc.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<P ALIGN=right>
+
+<FONT SIZE=-2><I>Last Updated: Mon Jul 13 17:41:32 PDT 1998</I></FONT>
+
+<HR SIZE=4>
+
+<P> <CENTER>Copyright © 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html"
+TARGET=_top>Netscape Communications Corporation</A></FONT>
+</CENTER>
+<P>
+<P>
+
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

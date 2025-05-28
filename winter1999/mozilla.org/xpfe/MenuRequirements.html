@@ -1,0 +1,140 @@
+<HTML>
+<!--This file created 2/23/99 11:33 AM by Claris Home Page version 3.0 30 Day Trial-->
+<HEAD>
+   <TITLE>Menu Requirements</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 3.0 30 Day Trial">
+   <X-CLARIS-WINDOW TOP=61 BOTTOM=747 LEFT=1032 RIGHT=1562>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B">
+<H1>XPToolkit Menu Requirements</H1>
+
+<P><I>Written by Chris Saari</I><BR>
+<I>Last Modified: 2/23/99</I></P>
+
+<H2>Overview</H2>
+
+<P>This document covers the menu bar, menu lists, and menu items.
+This does not cover context menus, although they should be very
+similar. This does not cover popup menus, those are a seperate
+widget. This does not cover keyboard equivalents or accelerators for
+menus, pending more work in that area. This lightly touches
+menu/command merging, but that is very preliminary.</P>
+
+<P>A <I>menu item</I> is a line item in a visible UI menu. It has
+text (displayed visually) and may contain a shortcut key (cmd-Q for
+example). A menu item can be enabled or disabled separately from the
+other items around it. A special kind of menu item, called a
+<I>separator</I>, is visually represented as a disabled horizontal
+line with no text.</P>
+
+<P>A <I>menu list</I> corresponds to an entire UI menu, and is a
+sequential ordered list of menu items. A menu list may be
+hierarchical and have sub-menu lists hanging off of items.</P>
+
+<P>A <I>menu bar</I> is an ordered collection of menu lists. Menu
+bars are used to present several menus, usually in a non-transient
+way. Context menus, for example, would not use a menu bar since they
+are only displaying a single transient menu.</P>
+
+<H2>Requirements</H2>
+
+<UL>
+   <LI>Internationalization support. Dependent upon each OS's
+   support?</LI>
+   
+   <LI>Keyboard navigation, both keyboard accelerators and
+   equivalents</LI>
+</UL>
+
+<H4>Menu Bars</H4>
+
+<UL>
+   <LI>create a menu bar</LI>
+   
+   <LI>destroy a menu bar</LI>
+   
+   <LI>draw a menu bar</LI>
+   
+   <LI>get menu bar of a window</LI>
+   
+   <LI>set menu bar of a window</LI>
+   
+   <LI>set default menu bar for app (Mac apps can have menu bars with
+   no windows)</LI>
+   
+   <LI>highlight a menu bar item (needed?)</LI>
+</UL>
+
+<H4>Menu List</H4>
+
+<UL>
+   <LI>create a menu list (menu)</LI>
+   
+   <LI>destroy a menu list (menu)</LI>
+   
+   <LI>add a menu list (menu) to menu bar</LI>
+   
+   <LI>insert a menu list (menu) in a menu bar</LI>
+   
+   <LI>remove a menu list (menu) from a menu bar</LI>
+   
+   <LI>set a menu list's (menu's) icon</LI>
+   
+   <LI>get a menu list's (menu's) icon</LI>
+   
+   <LI>enable/disable a menu list</LI>
+</UL>
+
+<H4>Menu Items</H4>
+
+<UL>
+   <LI>create a menu item</LI>
+   
+   <LI>destroy a menu item</LI>
+   
+   <LI>add a menu item to a menu list (menu)</LI>
+   
+   <LI>remove a menu item from a menu list (menu)</LI>
+   
+   <LI>add a separator to a menu list (menu)</LI>
+   
+   <LI>get a menu item's text</LI>
+   
+   <LI>set a menu item's text</LI>
+   
+   <LI>check/uncheck a menu item</LI>
+   
+   <LI>enable/disable a menu item</LI>
+   
+   <LI>query if menu item is checked</LI>
+   
+   <LI>query if menu item is enabled</LI>
+   
+   <LI>query if menu item has a submenu</LI>
+   
+   <LI>assign a submenu to an menu item</LI>
+   
+   <LI>remove a submenu from a menu item</LI>
+   
+   <LI>set a menu item's Command Node (abstract command
+   node)<FONT COLOR="#0033FF"> &#91;is this still
+   relevant?&#93;</FONT></LI>
+   
+   <LI>get a menu item's Command Node (abstract command node)
+   <FONT COLOR="#0033FF">&#91;is this still
+   relevant?&#93;</FONT></LI>
+</UL>
+
+<H4><B>Menu Item Arbitration / Merging</B></H4>
+
+<P>We are unclear at this time if Menu Merging is a requirement.</P>
+
+<P>
+
+<HR>
+
+Questions, comments, or concerns about this document should go to<B>
+</B><A HREF="news://news.mozilla.org/netscape.public.mozilla.xpfe">netscape.public.mozilla.xpfe</A></P>
+</BODY>
+</HTML>

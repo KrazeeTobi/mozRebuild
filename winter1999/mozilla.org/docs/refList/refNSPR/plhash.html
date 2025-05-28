@@ -1,0 +1,516 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Hash Tables</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+<CENTER>
+<H2>Hash Tables</H2></CENTER>
+This chapter describes the hash table functions in the <TT>plds</TT> (portable
+library -- data structures) library of NSPR. The hash table library
+functions are declared in the header file <TT>plhash.h</TT>.
+<P>
+<B>Warning:</B>
+The NSPR hash table library functions are not thread safe.
+
+<P>A hash table lookup may change the internal organization of the hash
+table (to speed up future lookups).
+<BR>
+
+<H2>
+<A NAME="Hash Table Types and Constants"></A>Hash Table Types and Constants</H2>
+
+<H4>
+<A NAME="PLHashEntry"></A>PLHashEntry</H4>
+
+<H5>
+Syntax</H5>
+<TT>typedef struct PLHashEntry PLHashEntry;</TT>
+<H5>
+Description</H5>
+<TT>PLHashEntry</TT> is a structure that represents an entry in the hash
+table. An entry has a <I>key</I> and a <I>value</I>, represented
+by the following fields in the <TT>PLHashEntry</TT> structure.
+
+<PRE>
+    const void *key;
+    void *value;
+</PRE>
+
+The <TT>key</TT> field is a pointer to an opaque key. The <TT>value</TT>
+field is a pointer to an opaque value. If the key of an entry is
+an integral value that can fit into a <TT>void *</TT> pointer, you can
+just cast the key itself to <TT>void *</TT> and store it in the <TT>key</TT>
+field. Similarly, if the value of an entry is an integral value that
+can fit into a <TT>void *</TT> pointer, you can cast the value itself to
+<TT>void *</TT> and store it in the <TT>value</TT> field..
+<P><B>
+Warning:</B>
+There are other fields in the <TT>PLHashEntry</TT> structure besides <TT>key</TT>
+and <TT>value</TT>. These fields are for use by the hash table library
+functions and the user should not tamper with them.
+<H4>
+<A NAME="PLHashTable"></A>PLHashTable</H4>
+
+<H5>
+Syntax</H5>
+<TT>typedef struct PLHashTable PLHashTable;</TT>
+<H5>
+Description</H5>
+The opaque <TT>PLHashTable</TT> structure represents a hash table.
+Entries in the table have the type <TT>PLHashEntry</TT> and are organized
+into buckets. The number of buckets in a hash table may be changed
+by the library functions during the lifetime of the table to optimize speed
+and space.
+
+<P>A new hash table is created by the <TT><A HREF="#PL_NewHashTable">PL_NewHashTable</A></TT>
+function, and destroyed by the <TT><A HREF="#PL_HashTableDestroy">PL_HashTableDestroy</A></TT>
+function.
+<H4>
+<A NAME="PLHashNumber"></A>PLHashNumber</H4>
+
+<H5>
+Syntax</H5>
+<TT>typedef PRUint32 PLHashNumber;</TT>
+
+<P><TT>#define PL_HASH_BITS 32</TT>
+<H5>
+Description</H5>
+<TT>PLHashNumber</TT> is an unsigned 32-bit integer. <TT>PLHashNumber</TT>
+is the data type of the return value of a hash function. A
+hash function maps a key to a hash number, which is then used to compute
+the index of the bucket.
+
+<P>The macro <TT>PL_HASH_BITS</TT> is the size (in bits) of the <TT>PLHashNumber</TT>
+datatype and has the value of 32.
+<H5>
+See Also</H5>
+<TT><A HREF="#PLHashFunction">PLHashFunction</A></TT>.
+<H4>
+<A NAME="PLHashFunction"></A>PLHashFunction</H4>
+
+<H5>
+Syntax</H5>
+<TT>typedef PLHashNumber (PR_CALLBACK *PLHashFunction)(const void *key);</TT>
+<H5>
+Description</H5>
+<TT>PLHashNumber</TT> is a function type that maps the key of a hash table
+entry to a hash number.
+<H5>
+See Also</H5>
+<TT><A HREF="#PL_HashString">PL_HashString</A></TT>.
+<H4>
+<A NAME="PLHashComparator"></A>PLHashComparator</H4>
+
+<H5>
+Syntax</H5>
+<TT>typedef PRIntn (PR_CALLBACK *PLHashComparator)(const void *v1, const
+void *v2);</TT>
+<H5>
+Description</H5>
+<TT>PLHashComparator</TT> is a function type that compares two values of
+an unspecified type. It returns a nonzero value if the two values
+are equal, and 0 if the two values are not equal. <TT>PLHashComparator</TT>
+defines the meaning of equality for the unspecified type.
+
+<P>For convenience, two comparator functions are provided. <TT>PL_CompareStrings</TT>
+compare two character strings using <TT>strcmp</TT>. <TT>PL_CompareValues</TT>
+compares the values of the arguments <TT>v1</TT> and <TT>v2</TT> numerically.
+<H5>
+Remark</H5>
+The return value of <TT>PLHashComparator</TT> functions should be of type
+<TT>PRBool</TT>.
+<H5>
+See Also</H5>
+<TT><A HREF="#PL_CompareStrings">PL_CompareStrings</A></TT>, <TT><A HREF="#PL_CompareValues">PL_CompareValues</A></TT>.
+<H4>
+<A NAME="PLHashEnumerator"></A>PLHashEnumerator</H4>
+
+<H5>
+Syntax</H5>
+<PRE>
+typedef PRIntn (PR_CALLBACK *PLHashEnumerator)(PLHashEntry *he, PRIntn index, void *arg);
+
+/* Return value */
+#define HT_ENUMERATE_NEXT       0   /* continue enumerating entries */
+#define HT_ENUMERATE_STOP       1   /* stop enumerating entries */
+#define HT_ENUMERATE_REMOVE     2   /* remove and free the current entry */
+#define HT_ENUMERATE_UNHASH     4   /* just unhash the current entry */
+</PRE>
+
+<H5>
+Description</H5>
+<TT>PLHashEnumerator</TT> is a function type used in the enumerating a
+hash table. When all the table entries are enumerated, each entry
+is passed to a user-specified function of type <TT>PLHashEnumerator</TT>
+with the hash table entry, an integer index, and an arbitrary piece of
+user data as argument.
+<H5>
+Remark</H5>
+It is not clear what the meaning of <TT>HT_ENUMERATE_UNHASH</TT> is.
+In the current implementation, it will leave the hash table in an inconsistent
+state (the entries are unlinked from the table, they are not freed, but
+the entry count (the <TT>nentries</TT> field of the <TT>PLHashTable</TT>
+structure) is not decremented).
+<H5>
+See Also</H5>
+<TT><A HREF="#PL_HashTableEnumerateEntries">PL_HashTableEnumerateEntries</A></TT>.
+<H4>
+<A NAME="PLHashAllocOps"></A>PLHashAllocOps</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>
+typedef struct PLHashAllocOps {
+    void *(PR_CALLBACK *allocTable)(void *pool, PRSize size);
+    void (PR_CALLBACK *freeTable)(void *pool, void *item);
+    PLHashEntry *(PR_CALLBACK *allocEntry)(void *pool, const void *key);
+    void (PR_CALLBACK *freeEntry)(void *pool, PLHashEntry *he, PRUintn flag);
+} PLHashAllocOps;
+
+#define HT_FREE_VALUE 0 /* just free the entry's value */
+#define HT_FREE_ENTRY 1 /* free value and entire entry */
+</PRE>
+
+<H5>
+Description</H5>
+A user of the hash table functions can provide his own memory allocation
+functions. A pair of functions is used to allocate and tree the table,
+and another pair of functions is used to allocate and free the table entries.
+
+<P>The first argument, <TT>pool</TT>, for all four functions is a
+<TT>void *</TT> pointer that is a piece of data for the memory allocator.
+Typically pool points to a memory pool used by the memory allocator.
+
+<P>The <TT>freeEntry</TT> function does not need to free the value of the
+entry. If flag is <TT>HT_FREE_ENTRY</TT>, the
+<BR>function frees the entry.
+<H5>
+Remark</H5>
+The <TT>key</TT> argument for the <TT>allocEntry</TT> function does not
+seem to be useful. It is unused in the default <TT>allocEntry</TT>
+function.
+<H2>
+<A NAME="Hash Table Functions"></A>Hash Table Functions</H2>
+
+
+<H4>
+<A NAME="PL_NewHashTable"></A>PL_NewHashTable</H4>
+Create a new hash table.
+<H5>
+Syntax</H5>
+
+<PRE>
+PLHashTable *PL_NewHashTable(
+    PRUint32 numBuckets,
+    PLHashFunction keyHash,
+    PLHashComparator keyCompare,
+    PLHashComparator valueCompare,
+    const PLHashAllocOps *allocOps,
+    void *allocPriv
+);
+</PRE>
+
+<H5>
+Description</H5>
+<TT>PL_NewHashTable</TT> creates a new hash table. The argument <TT>numBuckets</TT>
+is the number of buckets in the hash table. The table has at least
+16 buckets. You can pass a value of 0 as <TT>numBuckets</TT> to create
+the default number of buckets in the new table. The argument <TT>keyHash</TT>
+is a hash function pointer of type <TT>PLHashFunction</TT>. The arguments
+<TT>keyCompare</TT> and <TT>valueCompare</TT> are functions of type <TT>PLHashComparator</TT>
+that the hash table library functions use to compare the keys and the values
+of entries.
+
+<P>The argument <TT>allocOps</TT> points to a <TT>PLHashAllocOps</TT> structure
+that must exist throughout the lifetime of the new hash table. The
+hash table library functions do not make a copy of this structure.
+When the allocation functions in <TT>allocOps</TT> are invoked, the allocation
+private data <TT>allocPriv</TT> is passed as the first argument (<TT>pool</TT>).
+You can specify a <TT>NULL</TT> value for <TT>allocOps</TT> to use the
+default allocation functions. If <TT>allocOps</TT> is <TT>NULL</TT>,
+<TT>allocPriv</TT> is ignored. Note that the default <TT>freeEntry</TT>
+function does not free the value of the entry.
+<H4>
+<A NAME="PL_HashTableDestroy"></A>PL_HashTableDestroy</H4>
+Free the table and all the entries.
+<H5>
+Syntax</H5>
+<TT>void PL_HashTableDestroy(PLHashTable *ht);</TT>
+<H5>
+Description</H5>
+<TT>PL_HashTableDestroy</TT> frees all the entries in the table and the
+table itself. The entries are freed by the <TT>freeEntry</TT> function
+(with the <TT>HT_FREE_ENTRY flag</TT>) in the <TT>allocOps</TT> structure
+supplied when the table was created.
+<H4>
+<A NAME="PL_HashTableAdd"></A>PL_HashTableAdd</H4>
+Add a new entry with the specified key and value to the hash table.
+<H5>
+Syntax</H5>
+
+<PRE>
+PLHashEntry *PL_HashTableAdd(PLHashTable *ht, const void *key, void *value);
+</PRE>
+
+<H5>
+Description</H5>
+Add a new entry with the specified key and value to the hash table.
+A pointer to the new entry is returned.
+
+<P>If an entry with the same key already exists in the table, the <TT>freeEntry</TT>
+function is invoked with the <TT>HT_FREE_VALUE</TT> flag. You can
+write your <TT>freeEntry</TT> function to free the value of the specified
+entry if the old value should be freed. The default <TT>freeEntry</TT>
+function does not free the value of the entry.
+
+<P><TT>PL_HashTableAdd</TT> returns <TT>NULL</TT> if there is not enough
+memory to create a new entry.
+
+<P>It doubles the number of buckets if the table is overloaded.
+<H4>
+<A NAME="PL_HashTableRemove"></A>PL_HashTableRemove</H4>
+Remove the entry with the specified key from the hash table.
+<H5>
+Syntax</H5>
+<TT>PRBool PL_HashTableRemove(PLHashTable *ht, const void *key);</TT>
+<H5>
+Description</H5>
+<TT>PL_HashTableRemove</TT> removes the entry with the specified key from
+the hash table. If there is no entry in the table with the specified
+key, <TT>PL_HashTableRemove</TT> returns <TT>PR_FALSE</TT>. If the
+entry exists, <TT>PL_HashTableRemove</TT> removes the entry from the table,
+invokes <TT>freeEntry</TT> with the <TT>HT_FREE_ENTRY</TT> flag to frees
+the entry, and returns <TT>PR_TRUE</TT>.
+
+<P>If the table is underloaded, <TT>PL_HashTableRemove</TT> also shrinks
+the number of buckets by half.
+<H5>
+Remark</H5>
+This function should return <TT>PRStatus</TT>.
+<H4>
+<A NAME="PL_HashTableLookup"></A>PL_HashTableLookup</H4>
+Look up the entry with the specified key and return its value.
+<H5>
+Syntax</H5>
+
+<TT>void *PL_HashTableLookup(PLHashTable *ht, const void *key);</TT>
+
+<H5>
+Description</H5>
+<TT>PL_HashTableLookup</TT> looks up the entry with the specified key in
+the hash table and returns its value. If there is no entry with the
+specified key, <TT>PL_HashTableLookup</TT> returns <TT>NULL</TT>.
+This means that one cannot tell whether a <TT>NULL</TT> return value means
+the entry does not exist or the value of the entry is <TT>NULL</TT>.
+Keep this ambiguity in mind if you want to store <TT>NULL</TT> values in
+a hash table.
+<H4>
+<A NAME="PL_HashTableEnumerateEntries"></A>PL_HashTableEnumerateEntries</H4>
+Enumerate all the entries in the hash table, invoking the specified function
+on each entry.
+<H5>
+Syntax</H5>
+
+<TT>
+PRIntn PL_HashTableEnumerateEntries(PLHashTable *ht, PLHashEnumerator f, void *arg);
+</TT>
+
+<H5>
+Description</H5>
+The entries are enumerated in an unspecified order. For each entry,
+the enumerator function is invoked with the entry, the index (in the sequence
+of enumeration, starting from 0) of the entry, and <TT>arg</TT> as arguments.
+<H4>
+<A NAME="PL_HashString"></A>PL_HashString</H4>
+A general-purpose hash function for character strings.
+<H5>
+Syntax</H5>
+<TT>PLHashNumber PL_HashString(const void *key);</TT>
+<H5>
+Description</H5>
+<TT>PL_HashString</TT> can be used as the key hash function for a hash
+table if the key is a character string.
+<H4>
+<A NAME="PL_CompareStrings"></A>PL_CompareStrings</H4>
+Compare two character strings.
+<H5>
+Syntax</H5>
+<TT>PRIntn PL_CompareStrings(const void *v1, const void *v2);</TT>
+<H5>
+Description</H5>
+PL_CompareStrings compares v1 and v2 as character strings using strcmp.
+If the two strings are equal, it returns 1. If the two strings are
+not equal, it returns 0.
+
+<P><TT>PL_CompareStrings</TT> can be used as the comparator function for
+string-valued key or entry value.
+<H4>
+<A NAME="PL_CompareValues"></A>PL_CompareValues</H4>
+Compare two void * values numerically.
+<H5>
+Syntax</H5>
+<TT>PRIntn PL_CompareValues(const void *v1, const void *v2);</TT>
+<H5>
+Description</H5>
+<TT>PL_CompareValues</TT> compares the two <TT>void *</TT> values <TT>v1</TT>
+and <TT>v2</TT> numerically, i.e., it returns the value of
+the expression <TT>v1 == v2</TT>.
+
+<P><TT>PL_CompareValues</TT> can be used as the comparator function for
+integer or pointer-valued key or entry value.
+<BR>
+<HR WIDTH="100%">
+<DIV ALIGN=right><I><FONT SIZE=-2>Last updated: Wed Jul 15 11:41:15 PDT 1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html" TARGET="_top">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

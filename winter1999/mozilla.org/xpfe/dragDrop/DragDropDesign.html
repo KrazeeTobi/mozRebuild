@@ -1,0 +1,301 @@
+<html>
+
+<head>
+<title>DragSource - Interface (Pure virtual class)</title>
+
+</head>
+
+<body BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B">
+
+<h2 align="center">XPToolkit drag and drop</h2>
+
+<p align="center">Written by <a href="mailto:evaughan@netscape.com">Eric Vaughan</a><br>
+Modified by <a href="mailto:mcafee@netscape.com">Chris McAfee</a><br>
+Mon Feb  8 16:08:03 PST 1999</p>
+
+<h2>Simple Use cases</h2>
+
+<ul>
+  <li>Drag messages around mail folders and newsgroups </li>
+  <li>Drag folders and newsgroups around </li>
+  <li>Dragging a message, folder, newsgroup, or news host to the Trash folder deletes it </li>
+  <li>Drag address book cards around address books and mailing lists </li>
+  <li>Drag mailing lists to address books </li>
+  <li>Drag files from the desktop to the message composition window to attach it. </li>
+  <li>Drag addresses from the message display pane into mailing lists (we should also create
+    cards that </li>
+  <li>way but we don't). </li>
+  <li>Drag newsgroups and address books to reorder them in the list. </li>
+  <li>Dragging bookmarks and placing them in folders</li>
+  <li>Drag and drop my &quot;address info&quot; into a form and it &quot;pre fills&quot; the
+    address<br>
+    info (in IE 5 beta)</li>
+  <li>Drag a link from a web page into addressbook</li>
+  <li>Drag an image from web to paint program (photoshop?)</li>
+  <li>Drag a thumbnail version of a site into main window and back (visual<br>
+    bookmarks)</li>
+  <li>Drag a url to the personal taskbar - into subfolders (PC 4.0 only ..)</li>
+</ul>
+
+<h2>NGLayout requirements </h2>
+
+<ul>
+  <li>Drag and drop of HTML elements within a document area (supported today in 4.x) </li>
+  <li>Drag and drop of HTML elements between two document areas in different frames in the
+    same top-level window (not supported in 4.x) </li>
+  <li>Drag and drop of HTML elements between two independent raptor windows (not supported in
+    4.x) </li>
+  <li>Drag and drop from the native desktop onto a raptor content area (supported in 4.x via
+    onDragDrop) </li>
+  <li>Drag and drop of HTML elements from raptor document area into another application (i.e.
+    Word) </li>
+  <li>Drag and drop of HTML elements onto the desktop (limited support for this in 4. for IMG
+    and A elements) </li>
+</ul>
+
+<h2>High Level Design</h2>
+
+<h2><font size="3">This is a very preliminary design for drag and drop within NGLayout.</font></h2>
+
+<h2>Design goals:</h2>
+
+<ol>
+  <li><font size="3">Simple. Simple. Simple. It must be simple enough so it can be implemented
+    in a reasonable amount of time. Yet powerful enough not to paint us in a corner.</font><big>
+    </big></li>
+  <li><font size="3">Compatible. It can't be completely on another planet. It should have a
+    familiar API that is easy to use and learn. And should mesh well with other systems we may
+    want to talk to. One obvious one is JAVA. In all likelyhood there is a good chance we will
+    be interfacing with java applets. </font></li>
+  <li><font size="3">Take advantage of other people's work. Sun has already written a lot of
+    platform specific code to deal with Transferables and DataFlavors. While we may not be
+    able to use this code directly we do have access to and can see how it was implemented.</font><big>
+    </big></li>
+</ol>
+
+<p><font size="3">With this in mind here is my first cut. For simplicity it is shown in a
+java like syntax.</font><big> </big></p>
+
+<h2>DragSource - Interface </h2>
+
+<p><font size="3">The drag source is an interface representing the source of a drag
+operation. Its responsible for supplying a object that can get the data in differing
+formats called DataFlavors. During the drag it receives events when the dragged object
+enters or leaves a drop location (DragDestination). It is also responsible for telling the
+drag session what kind of actions it can do such as move, copy, link. </font>
+
+<ul>
+  <li><font size="3"><b>Transferable getTransferable() </b>- Returns an object that can be
+    used to retrieve the data.</font><big> </big></li>
+  <li><font size="3"><b>int dragEnteredDestination(DraggedObject o)</b> - Called when a
+    DraggedObject is dragged into a dragDestination. Returns and integer describing possible
+    actions.</font><big> </big></li>
+  <li><font size="3"><b>void dragExitedDestination(DraggedObject o)</b> - Called when a
+    draggedObject is dragged out of a dragDestination. </font></li>
+  <li><font size="3"><b>void dragStopped(DraggedObject o, int action)</b> - Called when a drag
+    session has finished with the action that occured.</font><big> </big></li>
+</ul>
+
+<h2>DragDestination - Interface</h2>
+
+<p>The destination represents a target of drop events. It is notified when a dragged
+object enters, leaves, or is dropped on it.
+
+<ul>
+  <li><font size="3"><b>int dragEnter(DraggedObject o, int x, int y)</b> - Called when a
+    draggedObject is dragged into this destination. X and y are the coordinates in the
+    destination Frame. Returns the actions that can be performed.</font><big> </big></li>
+  <li><font size="3"><b>int dragOver(DraggedObject o, int x, int y)</b> - Called when a
+    draggedObject is dragged inside this destination. X and y are the coordinates in the
+    destination Frame. Returns the actions that can be performed.</font><big> </big></li>
+  <li><font size="3"><b>void dragExit(DraggedObject o, int x, int y)</b> - Called when a
+    draggedObject is dragged outside this destination. X and y are the coordinates in the
+    destination Frame. </font></li>
+  <li><font size="3"><b>boolean dragDrop(DraggedObject o , int actions)</b> - Called when a
+    drop occurs with the current set of actions. Returns true if sucessfull.</font><big> </big></li>
+</ul>
+
+<h2>DraggedObject - Interface </h2>
+
+<p>This represent the dragged object during a drag session. It knows the source and
+destination as well as managing when the user changes the current action by pressing ctrl,
+shift, alt, ect.
+
+<ul>
+  <li><font size="3"><b>Image getImage()</b> - Returns the image that represents the dragged
+    data. This is uses extensively on the NeXT by drag destinations to show the user what
+    things might look like if the object were dropped.</font><big> </big></li>
+  <li><font size="3"><b>Point getDragOffset()</b> - Returns the x,y offset of the dragged
+    image from the cursor.</font><big> </big></li>
+  <li><font size="3"><b>Transferable getTransferable() </b>- Returns an object that can be
+    used to retrieve the data.</font><big> </big></li>
+  <li><font size="3"><b>DragSource getSource()</b>- Returns the DragSource if the drag session
+    occured in the same address space. If it source is not in the same address NULL is
+    returned.</font><big> </big></li>
+  <li><font size="3"><b>DragDestination getDestination()</b>- Returns the DragDestination the
+    dragged object is currently over. Returns NULL if the destination is not in the same
+    address space.</font><big> </big></li>
+  <li><font size="3"><b>Frame getDestinationFrame()</b>- Returns the Frame we are dragging
+    into. Returns NULL if the Frame is not in our address space.</font><big> </big></li>
+</ul>
+
+<h2>DragService - Global</h2>
+
+<p><font size="3">This is a global object that is called whenever a drag session needs to
+be started.</font>
+
+<ul>
+  <li><font size="3"><b>startDragSession (DragSource, Point startLocation, Point imageOffset,
+    Image image, boolean flyback)</b> - Starts a modal drags session. </font><ul>
+      <li><b>DragSource </b>- the source of the drag. </li>
+      <li><b>StartLocation</b> - the x,y starting location. </li>
+      <li><b>ImageOffset </b>- the offset the image should be from the cursor </li>
+      <li><b>Image</b> - the image to drag (Gif) </li>
+      <li><b>flyback </b>- if true when the drop fails the image will fly back to the source.<br>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Transferable - Interface </h2>
+
+<p><font size="3">An object that can get the data from the source in different types
+(Flavors)</font><big> </big>
+
+<ul>
+  <li><font size="3"><b>DataFlavor[] getTransferDataFlavors() </b>- Get the list of data
+    flavors that this transferable supports.</font><big> </big></li>
+  <li><font size="3"><b>boolean isDataFlavorSupported(DataFlavor f) - </b>See if the given
+    flavor is supported</font><big> </big></li>
+  <li><font size="3"><b>Object getTransferData(DataFlavor f)</b> - Given a flavor retrieve the
+    data.</font><big> </big></li>
+</ul>
+
+<h2>DataFlavor </h2>
+
+<p><font size="3">A particular type of Data.</font><big> </big>
+
+<ul>
+  <li><font size="3"><b>DataFlavor(String mimeType, String humanPresentableName) </b></font></li>
+  <li><font size="3"><b>String getMimeType()</b></font><big> </big></li>
+  <li><font size="3"><b>Sting getHumanPresentableName()</b></font><big> </big></li>
+  <li><font size="3"><b>public static Flavor PLAIN_TEXT</b> - A basic flavor representing
+    plain text in UNICODE.</font><big> </big></li>
+  <li><font size="3"><b>public static Flavor HTML</b> - A flavor representing HTML source in
+    UNICODE.</font><big> </big></li>
+</ul>
+
+<h2><font SIZE="5">Actions</font> </h2>
+
+<p><font size="3">Types of actions that can be done on the drag.</font> </p>
+
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="50%">1. none</td>
+    <td width="50%">0</td>
+  </tr>
+  <tr>
+    <td width="50%">2. copy</td>
+    <td width="50%">1</td>
+  </tr>
+  <tr>
+    <td width="50%">2. move</td>
+    <td width="50%">2</td>
+  </tr>
+  <tr>
+    <td width="50%">3. link</td>
+    <td width="50%">4</td>
+  </tr>
+  <tr>
+    <td width="50%">4. custom </td>
+    <td width="50%">8</td>
+  </tr>
+</table>
+
+<h2><font SIZE="5">Use Case</font></h2>
+
+<p><font SIZE="2">User drags a file from a source to a destination </font>
+
+<ol>
+  <li><font SIZE="2">User clicks on the drag source and begins dragging</font> </li>
+  <li><font SIZE="2">Drag enters the drag destination</font> </li>
+  <li><font SIZE="2">User drops</font> </li>
+</ol>
+
+<h2><font SIZE="5">Event trace</font></h2>
+
+<p><img src="eventTrace.gif" alt="eventTrace.gif (2990 bytes)" WIDTH="598" HEIGHT="440"> 
+
+<ol>
+  <li><font size="3">When the user begins dragging <b>startDrag</b> is called on the global
+    drag service. StartDrag is called with several arguments. </font><ul>
+      <li><font size="3"><b>dragSource</b> - The source of the data. </font></li>
+      <li><font size="3"><b>startLocation</b> - The starting x,y location.</font><big> </big></li>
+      <li><font size="3"><b>Image</b> - The image that will be displayed next to the cursor when
+        dragging. The third is the </font></li>
+      <li><font size="3"><b>imageOffset</b> - This is the offset in pixels the image will be from
+        the cursor. Very important so the image isn't over the cursor or something. </font></li>
+      <li><font size="3"><b>flyback</b> - This allows the image to flyback to the source if the
+        drop fails (NeXt like).</font><big> </big></li>
+    </ul>
+  </li>
+  <li><font size="3">When the drag target is entered <b>dragEnter</b> is called on the
+    dragDestination by the dragService with the dragged object. dragEntered must return an
+    integer representing the possible actions this destination can accept. Such as copy, move,
+    or link. This is done by OR values together. In this example it returns copy|move.</font><big>
+    </big></li>
+  <li><font size="3"><b>dragEnteredDestination</b> is called on the dragSource. Who returns
+    what operations it supports in this case it only return copy. At this point we can
+    determine what actions are possible by ANDING the result of dragEnter on the
+    DragDestination and the DragSource. The result is only copy is possible.</font><big> </big></li>
+  <li><font size="3"><b>dragOver</b> is called on the dragDestination. It returns <i>copy|move</i>.
+    Notice we are again returning what what is possible again. This it very usefull if our
+    DragDestination implements its own hotspots and manages them itself.</font><big> </big></li>
+  <li><font size="3">The user releases the mouse. The only possible action is <i>copy</i>
+    (Result of ANDING the source and destintation actions). </font></li>
+  <li><font size="3">The dragDestination gets the Transferable from the draggedObject and
+    calls <b>getTransferData</b> to get the dragged data.</font><big> </big></li>
+  <li><font size="3"><b>dragStopped</b> is called on the dragSource with the ANDED actions.<br>
+    </font></li>
+</ol>
+
+<h2>Some ideas on how to use this in NGLayout </h2>
+
+<p><font size="3">Here are 2 different ways this architecture can be implemented in
+NGLayout. I'm not an expert on NGLayout so if I'm completely off base let me know. </font>
+
+<ol>
+  <li><font size="3">Any frame that wanted to implement drag and drop could implement the
+    DragSource or DragDestination appropriately. The advanage to this is Frame would not have
+    to be changed. The disadvantage is subclassing would be required for drag and drop. </font></li>
+  <li><font size="3">All frames would have a method setDragSource() and setDragDestination().
+    The advantage of this is if a user wanted to make a text field on a web page receive drop
+    events all they would have to do is call setDragSource() on the button in javaScript
+    rather that subclassing. </font></li>
+</ol>
+
+<h2>Owners</h2>
+
+<p>NGLayout only work - Eric Vaughan<br>
+PC - ????<br>
+MAC - Steve Dagley<br>
+Unix&nbsp;&nbsp; - Chris McAfee</p>
+
+<h2>Schedule</h2>
+
+<table BORDERCOLOR="#000000" BORDER="1">
+  <tr>
+    <td WIDTH="53">Tasks</td>
+    <td WIDTH="110">Duration in days </td>
+  </tr>
+  <tr>
+    <td WIDTH="53">TBD</td>
+    <td WIDTH="110">&nbsp;</td>
+  </tr>
+</table>
+
+<h2>Dependencies</h2>
+
+<p>TBD</p>
+</body>
+</html>

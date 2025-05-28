@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Optimizations</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000" SIZE=+4>Electrical Fire</FONT></H2>
+
+
+<H2><FONT SIZE=+4>Optimizations</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC="../electricalfire.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A>  <A HREF=
+"monitors_64.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM" WIDTH="37"
+HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="../design.html"><IMG SRC="../arrows/up.gif"
+WIDTH="37" HEIGHT="37" ALIGN="BOTTOM" NATURALSIZEFLAG="3"></A><A HREF="../examples.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>We are considering including the following kinds of optimizations in
+ElectricalFire:</P>
+
+<H4>Initial</H4>
+
+
+<UL>
+  <LI>Straight-line dataflow analysis (mainly there to speed up the compiler
+  by folding the most common optimizations into the compiler's primitive
+  graph generation)
+  <LI>Constant propagation and folding
+  <LI>Dead code elimination
+  <LI>Strength reduction
+  <LI>Rudimentary register allocation
+  <LI>Method dispatch optimizations
+</UL>
+
+<H4>Near term</H4>
+
+
+<UL>
+  <LI>Iterative dataflow analysis
+  <LI>Better phi-node assignment strategy
+  <LI>Better constant propagation and strength reduction
+  <LI>Null pointer check elimination
+</UL>
+
+<H4>Medium term</H4>
+
+
+<UL>
+  <LI>Common subexpression elimination (CSE) or partial redundancy elimination
+  <LI>Partial redundancy elimination in branches of if statements
+  <LI>Global code motion or one of its variants
+  <LI>Undoing some CSE optimization for x86 code generation to relieve register
+  pressure
+  <LI>Value range analysis for eliminating array bounds checks
+  <LI>Better register allocation
+  <LI>Better instruction scheduling
+  <LI>Better interface dispatching
+</UL>
+
+<H4>After first release</H4>
+
+
+<UL>
+  <LI>Function inlining together with the decision-making process of when
+  to inline
+  <LI>Duplicating and specializing code within a function to handle common
+  cases faster (i.e. combining all array bounds checks into one conservative
+  one at the beginning of a loop, with a backup loop to execute if the conservative
+  check fails)
+  <LI>Specialized library optimizations for things like string and vector
+  operations
+</UL>
+
+<H4>Farther future</H4>
+
+
+<UL>
+  <LI>Limited interprocedural dataflow analysis
+  <LI>Alias analysis of memory locations (hard because of Java's concurrency
+  semantics)
+  <LI>Synchronization point (monitorenter/exit) elimination or motion
+  <LI>Object lifetime analysis
+  <LI>Interprocedural object lifetime analysis
+</UL>
+
+<P></P>
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

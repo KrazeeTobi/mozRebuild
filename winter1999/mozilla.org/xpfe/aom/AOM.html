@@ -1,0 +1,1100 @@
+<HTML>
+<!--This file created 2/25/99 12:34 PM by Claris Home Page version 3.0 30 Day Trial-->
+<HEAD>
+   <TITLE>XPToolkit Architecture</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 3.0 30 Day Trial">
+   <X-CLARIS-WINDOW TOP=44 BOTTOM=730 LEFT=4 RIGHT=534>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><link REL=StyleSheet HREF="Standard.css" TYPE="text/css">
+</HEAD>
+<BODY>
+<P><!-- ....|.........|.........|.........|.........|.........|.........|.........| --><!-- prologue --></P>
+
+<H1>XPToolkit Architecture</H1>
+
+<P><div class=author-note>by <A HREF="http://www.meer.net/ScottCollins/">Scott
+Collins</A></P>
+
+<P>last modified 2/9/99 by Peter Trudelle</div> <div class="document-label"><A NAME=abstract></A><B>Abstract:</B>
+This document presents our current thinking about the design goals,
+and architecture of the XPToolkit. A major focus of the XPToolkit is
+the Application Object Model (AOM), the forest in which many hunks of
+content, each represented by the DOM, cooperate. This is the
+environment in which the pieces of the XPToolkit play.</div> <div class="document-label"><B>Document
+Status:</B> Draft. Specific APIs will be added as they are suggested,
+developed, and refined. Change to the document is expected as
+discussions dictate.</div> The latest version of this document is
+available at</P>
+
+<UL>
+   <LI><A HREF="http://www.mozilla.org/xpfe/aom/AOM.html">www.mozilla.org/xpfe/aom/AOM.html</A></LI>
+</UL>
+
+<P>Please direct all comments and contributions to <A HREF="news://news.mcom.com/netscape.public.mozilla.xpfe">news:netscape.public.mozilla.xpfe</A>.
+<div class="contents"></P>
+
+<H2>Contents</H2>
+
+<UL>
+   <LI><A HREF="#introduction">Introduction</A></LI>
+   
+   <LI><A HREF="#vision">Vision</A></LI>
+   
+   <LI><A HREF="#goals">Goals</A></LI>
+   
+   <LI><A HREF="#parts_intro">Introduction to the Parts</A>
+   
+   <UL>
+      <LI><A HREF="#aom_intro">The Application Object Model
+      (AOM)</A></LI>
+      
+      <LI><A HREF="#widgets_intro">Widgets</A></LI>
+      
+      <LI><A HREF="#services_intro">Services</A></LI>
+      
+      <LI><A HREF="#packages_intro">Packages</A></LI>
+      
+      <LI><A HREF="#xul_intro">XUL</A></LI>
+      
+      <LI><A HREF="#intro_summary">Summary</A></LI>
+   </UL>
+   </LI>
+   
+   <LI><A HREF="#parts_depth">An In-Depth Look at the Parts</A>
+   
+   <UL>
+      <LI><A HREF="#gecko_depth">How the XPToolkit Relates to
+      Gecko</A></LI>
+      
+      <LI><A HREF="#xpcom_depth">Componentized Software</A></LI>
+      
+      <LI><A HREF="#messages_depth">Messages, Events, and
+      Commands</A></LI>
+      
+      <LI><A HREF="#widgets_depth">Widgets</A></LI>
+      
+      <LI><A HREF="#services_depth">Services</A></LI>
+      
+      <LI><A HREF="#aom_depth">AOM</A></LI>
+      
+      <LI><A HREF="#packages_depth">Packages</A></LI>
+   </UL>
+   </LI>
+   
+   <LI><A HREF="#big_picture">The Big Picture: the Life-Cycle of a
+   Package</A></LI>
+   
+   <LI><A HREF="#ui_building">Building a User Interface</A></LI>
+   
+   <LI><A HREF="#ui_changing">Possibilities for a Mutable User
+   Interface</A></LI>
+   
+   <LI><A HREF="#example_app">An Example XPToolkit App</A></LI>
+   
+   <LI><A HREF="#porting">Possibilities for Porting to the
+   XPToolkit</A></LI>
+   
+   <LI><A HREF="#xptoolkit_in">What the XPToolkit Provides</A></LI>
+   
+   <LI><A HREF="#xptoolkit_out">What the XPToolkit Doesn't
+   Provide</A></LI>
+   
+   <LI><A HREF="#glossary">Glossary</A></LI>
+</UL>
+
+<P></div> <!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME=introduction></A>Introduction</H2>
+
+<P>This document is all about the XPToolkit. It describes the
+motivations, design goals, architecture and some of the plans for its
+implementation. It is a living document (no matter how much I hate
+that phrase); it will be continually updated as we make decisions and
+learn more. There's <A HREF="http://www.mozilla.org/xpfe/">more
+information about the XPToolkit</A> at <A HREF="http://www.mozilla.org/">mozilla.org</A>.</P>
+
+<P>The XPToolkit is a collection of loosely related facilities, from
+which application writers can pick and choose, which provide a
+platform independent API to some commonly exploited platform-specific
+machinery, e.g., bringing up a dialog. Not all platform independent
+facilities fall under the XPToolkit. JavaScript, for example, is a
+distinct service. Not all the platform specific implementation
+details can be forced into the XPToolkit. Applications will still
+contain platform specific code; though they can minimize the amount
+by exploiting the XPToolkit.</P>
+
+<P>One of the facilities we will provide is that of instantiating
+windows, dialogs, menus, or other hunks of user interface machinery
+from an <A HREF="http://www.mozilla.org/xpfe/languageSpec.html">XML
+description</A>. The description will, hopefully, offer equivalent
+and broader power over the UI than currently supplied by HTML.
+Allowing UIs to be constructed entirely from XML and JavaScript
+significantly lowers the bar for UI builders. An application built on
+this service has the choice to expose it to end-users. This opens up
+many possibilities including, e.g., `downloadable chrome', personal
+customization, etc.</P>
+
+<P>Making UIs as easy to construct as web pages will open up UI
+evolution to the same massively parallel development that has so
+richly benefitted open source <I>code</I>.</P>
+
+<P>A client that doesn't overlap the services provided by the toolkit
+will have a (hopefully, itself portable) kernel of code that does all
+the non-UI things the app does (like speak http, or implement a
+database). Along side it, or wrapped around it will be a scriptable
+interface, e.g., as defined with the XPIDL and XPCOM. The script
+support provided by this interface will be sufficient to query and
+set any parameter, or issue any command, that the UI traditionally
+would have viewed, changed, or issued.</P>
+
+<P>Somewhere accessible, stored in an application specific form, are
+hunks of UI description---streams of XML---corresponding to hunks of
+UI machinery. The app might store these descriptions as individual
+files; as resources; as database entries; or even remotely to be
+accessed through URLs. Whenever some piece of UI machinery must be
+instantiated, the app serves up a stream of XML to the toolkits UI
+poser; and the UI machinery comes into being.</P>
+
+<P>This separation is, of course, older than the hills. It is the
+Model-View-Controller paradigm touted since Smalltalk days, and in
+many application frameworks since. Because the app kernel has
+<I>no</I> knowledge of any particular dialog, window, or menu, it is
+totally uneffected when the UI designer moves facilities from one
+dialog to another, or changes their form completely.</P>
+
+<P>This facility alone, helps us build applications faster because
+our UI builders don't have to wait for our application engineers. We
+can do even more, however, if we don't `harden' the interface into
+the built application. The application can expose its interface
+descriptions to end-users at any level from selecting pre-built
+alternative `themes', installing entirely new facilities (e.g., from
+Netcenter), downloadable chrome, locally customizable chrome, right
+down to giving the user ultimate power over every pixel of the UI.
+What level to expose is entirely up the application.<BR>
+<!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME=vision></A>Vision</H2>
+
+<P>We will make UIs as easy to build as web pages, making
+applications easier to write and more customizable along the way.<BR>
+<!-- DIV class="editor-note">
+	<P>
+		[[There's some discussion about whether the word `cross-platform' should be inserted in this statement.
+		  I, however, think that is implied by the comparison with web pages, which are cross-platform by nature.
+		  Why complicate the statement?]]
+	</P>
+</DIV --><!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME=goals></A>Goals</H2>
+
+<P>The XPToolkit has two intertwined major goals, in order of
+precedence</P>
+
+<UL>
+   <LI>Make UIs easier to build</LI>
+   
+   <LI>Make cross-platform applications easier to build</LI>
+</UL>
+
+<P><div class="editor-note">&#91;&#91;Add a link here to the `one
+true goals document', when it exists.&#93;&#93;</div> <!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME="parts_intro"></A>Introduction to the Parts</H2>
+
+<P>This section is a brief introduction to the parts that make up the
+XPToolkit. The parts and roles are intertwined, so an in-depth
+discussion is postponed until all the introductions have been
+made.</P>
+
+<H3><A NAME="aom_intro"></A>The Application Object Model (AOM)</H3>
+
+<P>The XPToolkit is a collection of facilities that cooperate through
+a shared model of their environment. Much as the <A HREF="http://www.w3c.org/DOM/">Document
+Object Model</A> defines a shared environment that can be assumed by
+any script or service that wants to work with a document, the
+Application Object Model (AOM) defines the environment assumed by
+components of the XPToolkit. This is a major part of the overall
+XPToolkit architecture.</P>
+
+<P>The AOM defines (some of) the objects and relationships that
+compose the UI and related services of an application built on the
+XPToolkit. This object model is a super-set of the DOM, as a running
+app is expected to have one or more documents whose content is
+accessed through a strictly DOM compliant API. In the same way that
+we provide access to the DOM API both internally, e.g., to compiled C
+or C++, and externally, e.g., to a Java applet or to a hunk of
+JavaScript, the AOM will be the universal way to work with the
+XPToolkit, for both compiled code and scripts.<BR>
+<IMG SRC="dialog_tree.gif" ALT="A dialog has a (DOM) content tree" WIDTH=572 HEIGHT=286 BORDER=0 ALIGN=bottom></P>
+
+<P>It is key to the success of the XPToolkit that its components
+communicate with each other using only the common knowledge of the
+AOM. Requiring special access methods beyond the AOM will stifle
+cooperation among components, and may well rule out externally
+developed services. The strength of the AOM echoes that of the DOM: a
+well known public standard ensures broad cooperation.</P>
+
+<P>The primary goal is of the AOM is to provide just enough structure
+for the components of the XPToolkit to find each other, and cooperate
+in providing a flexible UI. The AOM must expand on the DOM, but as
+little as possible. The simpler it is, the easier it will be to
+understand, to implement, and to use.</P>
+
+<H3><A NAME="widgets_intro"></A>Widgets</H3>
+
+<P>Widgets own pixels (and other presentation facilities, e.g., sound
+channels). They are the building blocks from which user interfaces
+are constructed. A radio-button is a widget, as is a menu, or a
+scrollbar. Widgets hook into the underlying object model (the AOM) to
+display and or control services. E.g., a button (which is a widget)
+labeled "Print", might be configured to send a "Print-Page" message
+to an underlying Browser-service.</P>
+
+<P>Widgets can be simple or complex. They can even be composed of
+other widgets. A toolbar-widget, for example, might be a palette
+widget containing several button widgets.<BR>
+<IMG SRC="two_layers.gif" ALT="Widgets are a `layer' above content tree" WIDTH=563 HEIGHT=462 BORDER=0 ALIGN=bottom></P>
+
+<H3><A NAME="services_intro"></A>Services</H3>
+
+<P>Services are the work-horses of an application. Services perform
+actual application-specific tasks, such as printing, fetching a the
+data at the other end of a URL, or sequencing some DNA. Services are
+controlled and directed with messages, usually sent by widgets, e.g.,
+when the user pushes the "Print" button.</P>
+
+<P>The implementation of a service is typically ignorant of the
+details of its own user interface, if it even has one (e.g., it might
+be `faceless'). It merely responds to messages. In fact, the same
+service may be exploited by different UIs, even at the same time.<BR>
+<IMG SRC="all_layers.gif" ALT="Services are a layer code below the content tree" WIDTH=565 HEIGHT=535 BORDER=0 ALIGN=bottom></P>
+
+<H3><A NAME="packages_intro"></A>Packages</H3>
+
+<P>A package wraps it all up. A package is a complete facility: a
+user interface built from any number of widgets, and zero or more
+services to provide the functionality underlying that UI. There is a
+run-time object that represents the package. The package object
+`owns' the UI, and shares the services with other packages. That is,
+when a package goes away, for whatever reason, all the widgets that
+make up its UI also go away, and it releases its hold on any services
+it used. If those services are otherwise unused (i.e., no other
+packages share them), then they too are unloaded.</P>
+
+<H3><A NAME="xul_intro"></A>XUL</H3>
+
+<P>XUL (pronounced /zool/) is an XML description of a package. Given
+a stream of XUL (and implementations for the required widgets and
+services) the XPToolkit can instantiate a package into the running
+app. The application might store XUL descriptions anywhere, e.g., in
+files, database entries, static strings, or at the other other end of
+a URL.</P>
+
+<P>XUL is discussed in depth in the mis-named and slightly dated
+documents <A HREF="http://www.mozilla.org/xpfe/languageSpec.html">XUI
+Language Spec</A>, and <A HREF="http://www.mozilla.org/xpfe/dialogs.html">XUI
+Window Language</A>.</P>
+
+<H3><A NAME="intro_summary"></A>Summary</H3>
+
+<P>Widgets provide the pixels and feedback that make up a UI.
+Services provide the functionality that is controlled and displayed
+by that UI. Widgets and services communicate and cooperate through a
+shared underlying object model, the AOM. A package is a complete
+facility with a UI comprising any number of widgets, and
+functionality supplied by services. A package can be can be
+constructed from, or distilled into, a XUL description. A running
+application comprises many packages, each typically instantiated
+through XUL.<BR>
+<!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME="parts_depth"></A>An In-Depth Look at the Parts</H2>
+
+<P>Now that we've met the primary cast of characters, we can delve
+deeper into their tangled relationships.</P>
+
+<H3><A NAME="gecko_depth"></A>How the XPToolkit Relates to Gecko</H3>
+
+<P><A HREF="http://www.mozilla.org/newlayout/">Gecko</A> is the
+layout engine at the heart many of our new applications. These
+applications involve presenting XML and HTML documents. Gecko is the
+engine behind all our page-layout widgets. To that end, Gecko
+provides facilities for parsing XML and instantiating the
+corresponding object hierarchies. This is a key facility that the
+XPToolkit exploits to instantiate XUL-specified packages. The
+XPToolkit will, where possible, not duplicate facilities already
+available in Gecko. <div class="editor-note">&#91;&#91;list
+appropriate requirements the XPToolkit has on Gecko&#93;&#93;</div></P>
+
+<H3><A NAME="xpcom_depth"></A>Componentized Software</H3>
+
+<P>A key notion of the XPToolkit is that any particular widget or
+service might be unknown to the application, i.e., not linked in.
+Such software components must be discoverable and loadable at
+runtime. And where possible, we want to write them only once.</P>
+
+<P>This is where XPCOM comes in. Widgets and services implement XPCOM
+interfaces, allowing them to be discovered, loaded, and unloaded,
+arbitrarily at runtime. XUL descriptions may name particular widgets
+or services specifically (e.g., by CID), generically (e.g., by IID),
+or by some category scheme in between the two. <div class="editor-note">&#91;&#91;list
+appropriate requirements the XPToolkit has on XPCOM&#93;&#93;</div></P>
+
+<H3><A NAME="messages_depth"></A>Messages, Events, and Commands</H3>
+
+<P>A message is the means by which objects in the AOM, and the
+attached services and widgets pass around information. We use the
+term message instead of, e.g., `function-call' in the tradition of
+OOP texts, because we don't presume what means the objects use to get
+the information across. Typically, for one object to call a function
+of another, they must be linked together, and the first object must
+know the API of the second. Certainly, calling a specific function is
+one way, probably even the primary way, that one object sends a
+message to another. Eventually, a message almost always comes down to
+calling a function specific to that message. Before that point,
+however, a message might, itself, be an object passed into a
+universal `handle-message' function. It could be a script function,
+or a function whose interface was discovered through XPCOM. On the
+way from one place to another, a message may assume any or all of
+these forms.</P>
+
+<P>Two distinct categories of messages are 'events' and 'commands'.
+An event is notification that something has happened, typically,
+input from the user or external hardware. A command is a directive to
+perform some action. For instance, the user presses the mouse button
+while the cursor is over button-widget (e.g., labeled "Print") on the
+screen. The OS generates a mouse-down event and sends it into the
+application. This event message traverses the application until,
+eventually, it reaches the button-widget, which reacts by redrawing
+itself appropriately. Similarly when the user releases the mouse
+button. At this point, the on-screen button-widget sends a message of
+its own: a command to the underlying service to perform some task, in
+this case to print.</P>
+
+<P>A message, once sent, traverses the object tree until it is
+handled or it `falls off'. Many messages go directly from one object
+to another, e.g., a widget may directly send a command to a service.
+Sometimes, the sender doesn't know exactly who will actually handle a
+message. In these cases, messages trickle through the tree.</P>
+
+<P>The document <A HREF="http://www.mozilla.org/xpfe/commands.html">XPFE/App
+Command Architecture</A> is a key resource to understanding the
+commands under the XPToolkit.<BR>
+<!-- DIV class="editor-note">[[
+	<UL>
+		<LI>show how messages travel `up' from the specific widget to the service at the root
+			e.g., events in particular</LI>
+		<LI>show how messages fan out from an internal node to all its children</LI>
+		<LI>show how messages are directed to specific `active' handlers</LI>
+	</UL>
+]]</DIV --></P>
+
+<H3><A NAME="widgets_depth"></A>Widgets</H3>
+
+<P><div class="editor-note">&#91;&#91;</P>
+
+<UL>
+   <LI>send messages to services or other widgets</LI>
+   
+   <LI>is always `owned' by a package or some other widget</LI>
+   
+   <LI>how a widget gets values and effects change
+   
+   <UL>
+      <LI>by examining and altering the underlying object tree</LI>
+      
+      <LI>by observing and sending messages to services</LI>
+   </UL>
+   </LI>
+   
+   <LI>examples: some specific widgets
+   
+   <UL>
+      <LI>a push button (sends a message)</LI>
+      
+      <LI>a check box (examines and alters the underlying tree)</LI>
+      
+      <LI>a list (looks at multiple nodes of the tree)</LI>
+      
+      <LI>a menu (looks at multiple nodes of the tree, sends a
+      message)</LI>
+      
+      <LI>a complete dialog</LI>
+   </UL>
+   </LI>
+   
+   <LI>where widgets come from, where their code lives
+   
+   <UL>
+      <LI>in Gecko</LI>
+      
+      <LI>in an XPCOM object</LI>
+      
+      <LI>rolled into the app somewhere</LI>
+   </UL>
+   </LI>
+</UL>
+
+<P>&#93;&#93;</div> Note: some widgets aren't actually traditional
+Widget objects, e.g., menus and menu items. Though they are
+constructed in the same (or nearby) phase, and conceptually exist in
+the same layer. See <A HREF="http://www.mozilla.org/xpfe/MenusSpec.html">XPToolkit
+Menu Facilities</A> for further details of menus.</P>
+
+<H3><A NAME="services_depth"></A>Services</H3>
+
+<P>Services are the engines of the application. They are centers of
+functionality and scriptability. A service is a software component,
+typically implemented as an XPCOM object. If this is not feasible,
+e.g., when porting an extant app to the XPToolkit, you can provide an
+XPCOM interface that leads to functionality actually rolled into the
+app's primary code-body.</P>
+
+<P>Services can always be shared by packages. When the last package
+using a particular service releases it, that service is unloaded.
+This is the default relationship encouraged by XPCOM, and
+particularly appropriate to this setting. Alternatively, some
+services (particularly, `stateful' services) may be multiply
+instantiated. For example, a browser service connected to a window.
+One instance of a browser might be instantiated for each open window,
+if the browser service needed to maintain instance-specific state. <div class="editor-note">&#91;&#91;provide
+some specific examples of services here&#93;&#93;</div> Scriptability
+is a key attribute of services. It is only the fact that they are
+scriptable, and/or have discoverable APIs, that allows arbitrary user
+interfaces to be attached to them. The better a service exposes its
+functionality through a scriptable API, the more flexibility app
+builders have in constructing a UI for that service.</P>
+
+<P>Services will often provide `observable' attributes. For instance,
+a browser service might provide an observable `busy' attribute. As
+the UI is instantiated, a particular widget, in this case the
+throbber, may hook itself into this attribute, observing it. When the
+browser service becomes busy, it notifies all observers, including
+the throbber. The throbber starts animating. When the browser service
+is no longer busy, it again notifies all observers; and the throbber
+stops its animation. <div class="editor-note">&#91;&#91;list
+appropriate requirements the XPToolkit has on XPCOMConnect&#93;&#93;</div></P>
+
+<H3><A NAME="aom_depth"></A>AOM</H3>
+
+<P>So, given our new knowledge of the other components in the
+XPToolkit, the AOM is simply the sum of the central layer (the
+content tree), sandwiched between frames, widgets, and other UI
+components above, and face-less services below, and the links of
+observation and communication between them.<BR>
+<IMG SRC="communication.gif" ALT="Communication between the layers" WIDTH=574 HEIGHT=534 BORDER=0 ALIGN=bottom></P>
+
+<H3><A NAME="packages_depth"></A>Packages</H3>
+
+<P>Packages are adequately described in the related sections. However
+it should be noted that some packages will come in a more degenerate
+form, that of a `native' package. A native package is a facility,
+invoked in the same way as the packages you are already familiar
+with, that lacks one or more of the elements normal packages have.
+For instance, an application will typically provide a native package
+that presents a print dialog. This print dialog is usually
+constructed from OS provided components, and doesn't naturally
+communicate through the AOM. The native print package provides an
+adaptor that renders the print dialogs results into a content tree
+for examination by the app or underlying service that provides the
+printing functionality.<BR>
+<!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H3><A NAME=tension></A>The tension between `model' and 'view'</H3>
+
+<P>In the initial implementation of this architecture, there is a
+tension that must be understood. XML is a scheme for constructing
+languages that are good at representing structure. In theory, the
+middle layer of the AOM is `the content layer'. That is, it is the
+layer that really contains the data, hopefully structured according
+to its true nature. HTML, is a language that, unfortunately, often
+mixes the `view' of the data (e.g., is it a menu or a scrolling list
+box) in with the content. This innappropriately unifies the model and
+the view; often severely limiting options. Because in our initial
+implementation, we use embedded HTML elements in our content to help
+us construct the right interface elements, we have brought this
+tension between model and view close to the surface for XPToolkit
+clients</P>
+
+<P>The theory is that one can expect the content layer to provide a
+structure that is true to the data. However, because of the way we
+use HTML elements, this is not true globally. It is true `through the
+peephole'. One can expect to know that some particular node with a
+well known name or id exists, though its exact type may be unknown,
+and irrelevant. That node has direct children, and its direct
+children are the set of nodes that are interesting for some
+particular application.</P>
+
+<P>The current layout and view system and our parser provide us with
+some challenges in making the right thing happen. For now, we face
+this by using the content layer for content to every extent that is
+affordable. When we have to squint and narrow our expectations, or
+step outside the bounds a little to make it work, we do so;
+remembering that focusing on providing a common API is what makes our
+toolkit `plug and play'.</P>
+
+<H2><A NAME="big_picture"></A>The Big Picture: the Life-Cycle of a
+Package</H2>
+
+<P>As the `big picture', this section deserves to be first; however,
+it will make more sense if you are already familiar with the various
+components of the XPToolkit. Therefore, the best place for this
+section is right where you found it, following the discussions of the
+parts.</P>
+
+<H3>Construction</H3>
+
+<P>Before a package is born, it exists only as a XUL specification.
+This specification comprises an actual XUL content file and myriad
+associated CSS style sheets. When a package is needed, the
+application fetches the XUL specification and pumps it into the
+XPToolkit. The XPToolkit, in turn, uses Gecko's XML parser to
+instantiate the underlying content tree.</P>
+
+<P>Before the package is ready to go, however, the associated widgets
+and services must be instantiated, according to the information in
+the content nodes and ultimately controlled by the CIDs and IIDs
+provided in the corresponding style sheets. As the objects are
+instantiated, they make the inter-layer connections for observing and
+message sending.<BR>
+<IMG SRC="instantiation.gif" ALT="Instantiating a Package" WIDTH=675 HEIGHT=300 BORDER=0 ALIGN=bottom></P>
+
+<P>At last, all the objects have been created and connected. Now the
+application and/or underlying services get one last opportunity to
+modify the content tree (impacting widgets and services) before the
+UI is made visible.</P>
+
+<H3>A Running Package</H3>
+
+<P>In a running package, much state is held in the content tree, and
+some in the underlying services. As particular user-level commands
+become available, command nodes in the content model who have
+registered an interest with the service are notified. Widgets that
+represent those commands are, in turn, listeners on those content
+nodes and thus, receive their notification, allowing them to dim or
+highlight accordingly. Some widgets may observe state in the
+underlying service directly, e.g., the throbber observers the `busy'
+attribute in the underlying browser service, starting and stopping
+its animation with notification from the service.</P>
+
+<P>Users interact with widgets, causing changes to the content tree,
+e.g., setting the value of a radio group, or actually issuing
+commands to the underlying service, e.g., to print or re-load.</P>
+
+<P>In the meantime, other packages are being instantiated, running,
+and going away. The same package may be instantiated more than once
+simultaneously. The same package may be instantiated with a different
+XUL specification, providing a distinctly different UI. Some packages
+may work together, sending messages between themselves, e.g., a
+floating toolbar (package) might provide buttons that issue commands
+to the front window, which is actually owned by a different
+package.</P>
+
+<H3>Destruction</H3>
+
+<P>For most dialogs, before the package is destroyed, the
+user-interface will be hidden (or released) and the application
+and/or underlying services get one last opportunity to examine the
+content tree, i.e., the results of the users input, and act on the
+findings. Now, and in all other cases, the package itself is
+released, which releases the UI (widgets, frames, et al) if it hasn't
+been already, the content tree, and underlying services. The UI and
+content tree are destroyed. Services, however, may have been shared
+by other packages. Such services are only unloaded when the last
+interested package releases them.</P>
+
+<H3>A Community of Packages</H3>
+
+<P>The application is no more than a collection of packages with
+overlapping lives. The functionality of the app is sliced into
+managable, scriptable, hunks called services. The UI is sliced into
+pieces, and facilities are presented by attaching the right piece of
+UI to the right services. The better componentized the services, and
+the more scriptable they are, the more flexible the UI can be. <div class="editor-note">&#91;&#91;The
+following sections provide (or will provide) examples, possibilities,
+and suggestions. They don't actually introduce any <I>new</I>
+features of the architecture; they merely provide deeper explanations
+and explorations of the details. Unfortunately, they're not done.
+Rest assured, the key themes of the architecture are presented above
+and in the cited external documents.&#93;&#93;</div> <!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME="ui_building"></A>Building a User Interface</H2>
+
+<P><div class="editor-note">&#91;&#91;</P>
+
+<UL>
+   <LI>widgets provided by the XPToolkit</LI>
+   
+   <LI>writing your own widgets</LI>
+   
+   <LI>getting the right widget for the job (cascading)</LI>
+   
+   <LI>hooking the widget up to a service (sending the right message)
+   
+   <UL>
+      <LI>with scripting</LI>
+      
+      <LI>with code</LI>
+   </UL>
+   </LI>
+</UL>
+
+<P>&#93;&#93;</div> <!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME="ui_changing"></A>Possibilities for a Mutable User
+Interface</H2>
+
+<P><span class="editor-note">&#91;&#91; explain the possibilities for
+altering the UI &#93;&#93;</span> <div class="editor-note">&#91;&#91;</P>
+
+<UL>
+   <LI>reiterate how UI is distinct from services, or content</LI>
+   
+   <LI>why specifying an apps composition with XUL is good
+   
+   <UL>
+      <LI>gives more flexibility in changing UI without changing the
+      code</LI>
+      
+      <LI>allows UI design to be done by non-programmers</LI>
+   </UL>
+   </LI>
+   
+   <LI>possible application configurations, e.g.,
+   
+   <UL>
+      <LI>hardening the UI XUL into the app</LI>
+      
+      <LI>not hardening the XUL, for upgradeability,
+      internationization</LI>
+      
+      <LI>making the XUL available to users for user-configurable
+      chrome</LI>
+      
+      <LI>finding new XUL at runtime allowing more dynamic UI
+      changes</LI>
+      
+      <LI>getting XUL from other sources, e.g., the net, for
+      downloadable chrome</LI>
+   </UL>
+   </LI>
+   
+   <LI>reiterate that these possibilities and others come from the
+   fact that the XPToolkit doesn't store or transport XUL itself</LI>
+</UL>
+
+<P>&#93;&#93;</div> <!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME="example_app"></A>An Example XPToolkit App</H2>
+
+<P>walk through bringing an XPToolkit-based app to life&nbsp;<span class="editor-note">&#91;&#91;describe
+a simple text editing app&#93;&#93;</span> <div class="editor-note"></P>
+
+<UL>
+   <LI>parts of the (sample) app
+   
+   <UL>
+      <LI>the text editing service</LI>
+      
+      <LI>the text editing widget</LI>
+      
+      <LI>a toolbar with buttons like "cut", "copy", "bold"</LI>
+      
+      <LI>menus</LI>
+      
+      <LI>the new text editor service provided by the XPToolkit (for
+      services installed in the `document' role)</LI>
+   </UL>
+   </LI>
+   
+   <LI>startup time instantiate initial services</LI>
+   
+   <LI>bringing up an application window
+   
+   <UL>
+      <LI>a window is a service and a (big) widget; getting them
+      instantiated</LI>
+      
+      <LI>what happens when widgets in the window are
+      manipulated</LI>
+   </UL>
+   </LI>
+   
+   <LI>bringing up a dialog</LI>
+   
+   <LI>quitting the app</LI>
+</UL>
+
+<P></div> <!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME=porting></A>Possibilities for Porting to the
+XPToolkit</H2>
+
+<P>explain the possibilities for porting to the XPToolkit, i.e.,
+partial adoption <div class="editor-note"></P>
+
+<UL>
+   <LI>opaque widgets (i.e., widgets that don't communicate through
+   an object tree) still send messages to services</LI>
+   
+   <LI>opaque packages (i.e., services and widgets fused
+   together)</LI>
+   
+   <LI>an application owned rectangle, and related to opaque or fake
+   widgets</LI>
+   
+   <LI>the application on top, instead of the XPToolkit, i.e., app is
+   not actually a service</LI>
+   
+   <LI>not pulling individual services out of the app</LI>
+   
+   <LI>describe a minimal use scenario
+   
+   <UL>
+      <LI>XPToolkit just instantiates certain dialogs and windows
+      where you want to be able to specify the chrome as late in the
+      development cycle as possible</LI>
+      
+      <LI>widgets are carved out of existing app code and the app is
+      the only service</LI>
+      
+      <LI>widgets have specific knowledge of the app and don't
+      communicate genericly</LI>
+   </UL>
+   </LI>
+   
+   <LI>discuss issues of embedding XPToolkit services into
+   non-XPToolkit aware apps</LI>
+   
+   <LI>lack of scriptability impact</LI>
+   
+   <LI>compare
+   
+   <UL>
+      <LI>what provides the most flexibility ---
+      
+      <UL>
+         <LI>separating services from widgets</LI>
+         
+         <LI>making widgets stupid (always and only work on the
+         AOM)</LI>
+         
+         <LI>building big widgets out of little widgets</LI>
+         
+         <LI>separating services from each other</LI>
+         
+         <LI>making services as specific as possible</LI>
+         
+         <LI>making services know as little about their UI as
+         possible</LI>
+         
+         <LI>exposing services functionality through a scriptable
+         interface</LI>
+      </UL>
+      </LI>
+      
+      <LI>with what provides the scenario most like what we have now
+      
+      <UL>
+         <LI>smart widgets (aren't re-usable, know too much about
+         each other, and the app)</LI>
+         
+         <LI>not using the AOM (requires smart widgets)</LI>
+         
+         <LI>services and widgets in one (aren't re-usable)</LI>
+         
+         <LI>services glommed together into the app (can't change the
+         UI for that)</LI>
+         
+         <LI>not scriptable</LI>
+      </UL>
+      </LI>
+   </UL>
+   </LI>
+</UL>
+
+<P></div> <!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME="xptoolkit_in"></A>What the XPToolkit Provides</H2>
+
+<H3>An API for Services</H3>
+
+<P><div class="editor-note">&#91;&#91;to be determined&#93;&#93;</div></P>
+
+<H3>An API for Widgets</H3>
+
+<P><div class="editor-note">&#91;&#91;to be determined&#93;&#93;</div></P>
+
+<H3>An API for Packages</H3>
+
+<P><div class="editor-note">&#91;&#91;to be determined&#93;&#93;</div></P>
+
+<H3>Particular Widgets</H3>
+
+<P>The XPToolkit will supply a base set of widgets --- some or all of
+which may actually be implemented in Gecko, as part of Gecko's form
+requirements. The list currently includes at least the following (as
+specified in the <A HREF="http://www.mozilla.org/xpfe/neededWidgets.html">"Required
+Widgets"</A> document)</P>
+
+<UL>
+   <LI>Form Widgets
+   
+   <UL>
+      <LI>push button</LI>
+      
+      <LI>radio button/group</LI>
+      
+      <LI>checkbox</LI>
+      
+      <LI>text edit field</LI>
+      
+      <LI>scrolling text edit field</LI>
+      
+      <LI>combo-box/pop-up menu</LI>
+      
+      <LI>list box</LI>
+      
+      <LI>file picker</LI>
+   </UL>
+   </LI>
+   
+   <LI>Additional Dialog Widgets
+   
+   <UL>
+      <LI>scroll bar</LI>
+      
+      <LI>image</LI>
+   </UL>
+   </LI>
+   
+   <LI>Miscellaneous Widgets
+   
+   <UL>
+      <LI>disclosure triangle</LI>
+      
+      <LI>grippy pane</LI>
+      
+      <LI>progress bar</LI>
+      
+      <LI>slider</LI>
+      
+      <LI>separator</LI>
+      
+      <LI>static text label</LI>
+      
+      <LI>tree control</LI>
+      
+      <LI>tab control</LI>
+      
+      <LI>color picker</LI>
+      
+      <LI>image button/image button with pop-up menu</LI>
+      
+      <LI>up/down arrows</LI>
+      
+      <LI>animation (e.g., throbber)</LI>
+   </UL>
+   </LI>
+   
+   <LI>Composite Widgets
+   
+   <UL>
+      <LI>toolbar</LI>
+      
+      <LI>group box</LI>
+      
+      <LI>status bar</LI>
+      
+      <LI>font picker</LI>
+      
+      <LI>date/time control</LI>
+   </UL>
+   </LI>
+</UL>
+
+<H3>Particular Services</H3>
+
+<H4>Clipboard</H4>
+
+<P>The clipboard service integrates the platform specific clipboard
+facility, if there is one, into the AOM. This gives other services,
+scripts, and widgets, full shared access to the OS clipboard. It is
+available even where the OS does not provide a clipboard
+facility.</P>
+
+<H4>Keyboard Mapping</H4>
+
+<P>The keyboard mapping service gives applications the power to
+arbitrarily map given keys to other keys, key-sequences, or messages.
+It's a reasonably straight-forward macro-like facility that can be
+exploited by applications, and at the applications discretion, by end
+users. <div class="editor-note">&#91;&#91;questionable, given time
+constraints&#93;&#93;</div></P>
+
+<H3>Package, Service, and Widget Discovery Utilities</H3>
+
+<H3>Additional Facilities</H3>
+
+<H4>Drag and Drop</H4>
+
+<P><!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME="xptoolkit_out"></A>What the XPToolkit Doesn't
+Provide</H2>
+
+<P>There are several things that, at first blush, you might think the
+XPToolkit should provide and were surprised to find it didn't. This
+section describes those things, and why the XPToolkit doesn't give
+them to you.</P>
+
+<H3>A Mechanism for Storing or Transporting XUL</H3>
+
+<H3>Security</H3>
+
+<H3>An Ultimate Plug-in Solution</H3>
+
+<H3>Some Snazzy Widget</H3>
+
+<P><!-- ....|.........|.........|.........|.........|.........|.........|.........| --></P>
+
+<H2><A NAME=glossary></A>Glossary</H2>
+
+<P>Abbreviations refer to their expanded form, unless the
+abbreviation is preferred.</P>
+
+<DL>
+   <DT>AOM, the</DT>
+   
+   <DD>See: the Application Object Model</DD>
+   
+   <DT>Application Object Model, the</DT>
+   
+   <DD>Aka: the AOM.</DD>
+   
+   <P><BR>
+   The set of objects and relationships that are assumed by services
+   and widgets provided by the XPToolkit. Some trees (or the branches
+   of some trees) in the AOM forest will adhere strictly to the DOM
+   API. The AOM provides for the entire application environment what
+   the DOM provides for a single document: a navigable, scriptable,
+   well-known interface.<BR>
+   See also: the Document Object Model.</P>
+   
+   <DT>COM</DT>
+   
+   <DD>An abbreviation for (Microsoft's) Component Object Model.</DD>
+   
+   <P><BR>
+   A scheme, predominantly under the Windows OSs, for building
+   discrete software components.<BR>
+   See also: <A HREF="http://www.microsoft.com/oledev/olecom/title.htm">The
+   Component Object Model Specification</A>.</P>
+   
+   <DT>command</DT>
+   
+   <DD>...</DD>
+   
+   <P><BR>
+   See also: message.</P>
+   
+   <DT>Component Object Model, Microsoft's</DT>
+   
+   <DD>Better known as COM.</DD>
+   
+   <P><BR>
+   See: COM.</P>
+   
+   <DT>Document Object Model, the</DT>
+   
+   <DD>Aka: the DOM.</DD>
+   
+   <P><BR>
+   ...<BR>
+   See also: <A HREF="http://w3c.org/DOM/">the W3C DOM page</A>.</P>
+   
+   <DT>DOM, the</DT>
+   
+   <DD>See: the Document Object Model.</DD>
+   
+   <DT>event</DT>
+   
+   <DT>eXtensible Markup Language</DT>
+   
+   <DD>Better known as XML.</DD>
+   
+   <P><BR>
+   See: XML</P>
+   
+   <DT>message</DT>
+   
+   <DT>package</DT>
+   
+   <DT>service</DT>
+   
+   <DT>widget</DT>
+   
+   <DT>XML</DT>
+   
+   <DD>An abbreviation for eXtensible Markup Language.</DD>
+   
+   <P><BR>
+   ...<BR>
+   See also: <A HREF="http://w3c.org/XML/">the W3C XML page</A>.</P>
+   
+   <DT>XPCOM</DT>
+   
+   <DD>Mozilla's cross-platform scheme for turning objects into
+   discrete components.</DD>
+   
+   <P><BR>
+   See also: COM<BR>
+   See also: <A HREF="http://www.mozilla.org/projects/xpcom/">the
+   XPCOM page</A> at mozilla.org.</P>
+   
+   <DT>XPFE, the</DT>
+   
+   <DD>See: the XPToolkit.</DD>
+   
+   <DT>XPToolkit, the</DT>
+   
+   <DT>&nbsp;</DT>
+   
+   <DD>An abbreviation for the Cross-Platform Toolkit.</DD>
+   
+   <P><BR>
+   Formerly known as the XPFE.<BR>
+   A collection of facilities to aid in writing cross-platform
+   applications. Chief among these facilities is a platform
+   independent mechanism for describing and instantiating a
+   user-interface.<BR>
+   See also: <A HREF="http://www.mozilla.org/xpfe/">the XPToolkit
+   page</A> at mozilla.org.</P>
+   
+   <DT>XUL</DT>
+   
+   <DD>Pronounced /zool/.</DD>
+   
+   <P><BR>
+   An abbreviation for Xml-based User-interface description
+   Language.<BR>
+   An XML for describing the set of widgets and services, and the
+   relationships between them, that make up a running
+   application.<BR>
+   See also: eXtensible Markup Language.<BR>
+   See also:&nbsp;<span class="editor-note">&#91;&#91;link to the
+   primary XUL document here&#93;&#93;</span></P>
+</DL>
+
+<P><!-- ....|.........|.........|.........|.........|.........|.........|.........| --><!-- epilogue -->
+<div class=author-note>
+
+<HR>
+
+<!-- A HREF="http://validator.w3.org/">
+			<IMG BORDER=0 align=left SRC="http://validator.w3.org/images/vh40.gif" ALT="Valid HTML 4.0!" HEIGHT=31 WIDTH=88>
+		</A --><A HREF="http://www.w3.org/Style/CSS/Buttons"><IMG SRC="cssos" ALT="CSS" WIDTH=88 HEIGHT=31 BORDER=0 ALIGN=left>
+</A>Copyright&copy; 1998 by Netscape; use is undoubtably subject to
+the <A HREF="http://www.mozilla.org/NPL/">NPL</A>.</div></P>
+</BODY>
+</HTML>

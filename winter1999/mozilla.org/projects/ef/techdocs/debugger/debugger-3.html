@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE> : Design Issues</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<A HREF="debugger-2.html"><IMG SRC="prev.gif" ALT="Previous"></A>
+<A HREF="debugger-4.html"><IMG SRC="next.gif" ALT="Next"></A>
+<A HREF="debugger.html#toc3"><IMG SRC="toc.gif" ALT="Contents"></A>
+<HR>
+<H2><A NAME="s3">3. Design Issues</A></H2>
+
+
+<H2><A NAME="ss3.1">3.1 Native breakpoints or bytecode mechanism</A></H2>
+
+
+<H3>Pros for native breakpoints</H3>
+
+
+<P>Native breakpoints make it easy to implement "runtime" breakpoints,
+i.e. setting breakpoints when the debuggee is in execution.</P>
+<P>Moreover, since the bytecodes are translated to native code on a per
+Method basis, it will not be possible to set a breakpoint in the
+current method with the bytecode mechanism.</P>
+
+<H3>Pros for bytecode mechanism</H3>
+
+
+<P>JVMDI specification has APIs to put breakpoints at a given bytecode
+index. In CISC architectures, a single native instruction could
+subsume many bytecode entries, which makes it impossible to stop the
+debugger at a particular index. In other words, single stepping
+through the bytecode becomes difficult.</P>
+
+<H2><A NAME="ss3.2">3.2 Debugger thread Vs Event driven model</A></H2>
+
+
+<P>Using NSPR threads might add a runtime overhead associated with thread
+scheduling. The alternative would be to use an event driven model,
+where the VM responds to asynchronous debugger events. But using NSPR
+threads seems to be the most portable way of doing it.</P>
+
+<HR>
+<A HREF="debugger-2.html"><IMG SRC="prev.gif" ALT="Previous"></A>
+<A HREF="debugger-4.html"><IMG SRC="next.gif" ALT="Next"></A>
+<A HREF="debugger.html#toc3"><IMG SRC="toc.gif" ALT="Contents"></A>
+</BODY>
+</HTML>

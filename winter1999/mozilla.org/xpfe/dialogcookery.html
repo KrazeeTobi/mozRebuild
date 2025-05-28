@@ -1,0 +1,313 @@
+<html>
+<head>
+<title>Dialog Cookbook</title>
+<style type="text/css">
+<!--
+.deftable { background-color: EEEEEE }
+.change { color: #6600FF }
+.history { text-indent: -3em; margin-left: 3em}
+-->
+</style></head>
+
+<body bgcolor="#FFFFFF">
+<h1 align="center">Window and Dialog Cookbook</h1>
+<p align="right"><b>The Early Beginnings</b><br>
+  25 Feb 99<br>
+<a href="mailto:danm@netscape.com">contact</a></p>
+<p>Dialogs are alive and somewhat well in Mozilla, and this document attempts 
+  to explain their current status.</p>
+<p><b>Change history</b></p>
+<p class="history">25 Feb 99 - More careful about case sensitivity in the examples. 
+  Updated example of creating a dialog from C++.</p>
+<p class="history">24 Feb 99 - More careful about namespaces in the examples. 
+  Added a note about XUL Document method getElementByID</p>
+<p class="history">23 Feb 99 - AppCoresManager name changed to XPAppCoresManager</p>
+<p class="history">18 Feb 99 - Updated to new command architecture and initialization 
+  code. </p>
+<p class="history">17 Feb 99 - Revised JavaScript for debriefing dialog elements 
+  at dismissal time. Added note about DOM interfaces available to XUL widgets 
+  (also in the Examples section).</p>
+<p class="history">16 Feb 99 - Revised JavaScript for initializing dialog elements 
+  at window load time</p>
+<h2>Scope</h2>
+<p>This document is not intended to be a comprehensive syntax or reference manual. 
+  At the moment it's an apology for the current state of things, and a design 
+  document. With care and time, it should grow into a useful starting place for 
+  making windows and writing dialogs. The <a href="mailto:danm@netscape.com">author</a> 
+  thinks that feedback on what's missing from the document would help build a 
+  better document, so the quality of this thing is in the reader's hands. Keep 
+  that in mind while you're cursing me.</p>
+<p>In the meantime, this document also serves as a roadmap of XPFE's dialog story. 
+  Interested parties would please review it to determine whether the package we 
+  plan to deliver will meet their needs.</p>
+<h2>Direction</h2>
+<p>Current XPFE design goals state that dialogs get no special treatment; they're 
+  just windows like any other. Windows can have parent windows, and be displayed 
+  modally, and have control callbacks, and so behave like dialogs. But our goal 
+  is that the same application code that instantiates a browser window will serve 
+  equally to instantiate a dialog window. The difference lies in the window content, 
+  and a couple of parameters controlling modality and that sort of thing.</p>
+<h2>JavaScript vs C++</h2>
+<p>Currently, all window control mechanisms flow through JavaScript. That is, 
+  any capabilities a window may have besides taking up space on the desktop are 
+  specified in the XUL describing the window, and the binding between the window 
+  content and the application is done through JavaScript in the XUL. That binding 
+  can be very short: it can fall through to application C code very quickly, but 
+  JavaScript will be part of the process. (Note that we have not yet run into 
+  any threading problems with this model, but we kind of expect to.)</p>
+<p>JavaScript is easily added to a window: just include it in the XUL window description 
+  and follow a short but peculiar dance to hook it up. Hooking up C code involves 
+  writing a C++/JavaScript interface, and calling it from JavaScript. That interface 
+  is an AppCore, and there's a separate and much more impressive <a href="http://www.mozilla.org/xpfe/appCore/appcores.html">document</a> 
+  describing them and explaining how to build them.</p>
+<h2>Make a Window</h2>
+<p>So, there are two ways to make a window or dialog: directly through C++ and 
+  from JavaScript. The resulting window is an instance of <code>nsWebShellWindow</code>. 
+  This means it currently contains a hulking bunch of hackery for hooking up browser-window 
+  specific contents. This will be cleaned up in the future.</p>
+<p>Note there is currently no way to make a modal dialog or alert. We are limited 
+  to simply bringing up new XUL windows at this time. Also note that windows are 
+  not sized to content. These are merely somewhat glorified browser windows, to 
+  which automatically sizing themselves to match their content is something of 
+  an eyebrow-furrowing concept. Specifying the size of a dialog is another future 
+  enhancement. </p>
+<h3>C++</h3>
+<p>The C++ interface is <code>nsIAppShellService::CreateDialogWindow()</code>. 
+  It's currently very clunky and will change (you'll see that statement many times 
+  in this document). But at time of writing, you create a new window like this:</p>
+<pre><code>
+  nsresult              rv;
+  nsString              controllerCID;
+  nsIAppShellService    *appShell;
+  nsIURL                *url;
+  nsIWidget             *parent, *window;
+  nsIStreamObserver     *observer;
+  nsIXULWindowCallbacks *callbacks;
+  PRInt32               width, height;
+
+  window = nsnull;
+  rv = nsServiceManager::GetService(kAppShellServiceCID,
+         kIAppShellServiceIID,
+         (nsISupports**) &appShell);
+  if (NS_SUCCEEDED(rv)) {
+    controllerCID = "43147b80-8a39-11d2-9938-0080c7cb1081";
+    appShell->CreateTopLevelWindow(parent, url, controllerCID,
+                window, observer, callbacks, width, height);
+    nsServiceManager::ReleaseService(kAppShellServiceCID,
+                appShell);
+  }
+  if (window != nsnull)
+    window->Show(PR_TRUE);</code></pre>
+<p>At time of writing, only <code>url</code>, <code>window</code>, <code>observer</code> 
+  and <code>callbacks</code> are actually used. <code>url</code> is an URL describing 
+  the contents of the window. <code>window</code> is set to the created window. 
+  See the code for descriptions of the other parameters. As I write this I become 
+  all embarrassed and want to encourage people to wait for a cleaner interface.</p>
+<p>There is another very similar method <code>nsIAppShellService::CreateDialogWindow()</code>. 
+  It takes the same parameters and currently functions exactly the same. These 
+  methods will differ only in the kind of border used on the window created. At 
+  time of writing, this decision is made (the window is created) before any instructions 
+  in the URL could be read and used to help make the decision.</p>
+<p>At this time, window descriptions must be loaded from an URL. There will additionally 
+  be methods for loading windows from a stream. In fact, XPFE want to say the 
+  stream will be the preferred method, though the URL method will probably remain. 
+  Streams will disengage the toolkit further from the source of the window description, 
+  and will be our method for creating windows whose XUL is calculated at runtime, 
+  rather than being distributed as a file.</p>
+<h3>JavaScript</h3>
+<p>The JavaScript interface is an AppCore named <code>ToolkitCore</code>. It behaves 
+  much like the standard JavaScript <code>window.open()</code> method. In fact, 
+  one might wonder why we aren't using <code>window.open()</code> directly, and 
+  one would have a point. At the moment, <code>window.open()</code> doesn't seem 
+  to work, and probably doesn't make an <code>nsWebShellWindow</code>. XPFE are 
+  anxious to get something working, and also expect to need closer control over 
+  the window-opening process. We also paled at the prospect of stepping on the 
+  JavaScript windowing code. But before we're done, we will need to reconcile 
+  these two rather equivalent ways of opening a window.</p>
+<p>So <i>today</i>, instantiating the Toolkit AppCore in the standard way and 
+  executing its window-opening method (its only method at this time) will open 
+  a new <code>nsWebShellWindow</code>.</p>
+<pre><code>
+ function MakeDialog() {
+    var toolkitCore = XPAppCoresManager.Find("ToolkitCore");
+    if (!toolkitCore) {
+      toolkitCore = new ToolkitCore();
+      if (toolkitCore)
+        toolkitCore.Init("ToolkitCore");
+    }
+    if (toolkitCore)
+      toolkitCore.ShowWindow("resource:/res/samples/madedialog.xml",
+          window);
+  }</code></pre>
+<p>An <code>XPAppCoresManager</code> is pre-constructed; you can access it without 
+  any more preparation than shown above. <code>ToolkitCore</code> is not; it requires 
+  that small bit of preparation.</p>
+<h2>Load a Window</h2>
+<p>Between making and showing the window, there is a callback The resulting <code>nsWebShellWindow</code> 
+  comes with an associated DOM content model. Any initial control settings or 
+  content changes which must be made before the window is actually shown can be 
+  done at this time.</p>
+<p>This callback is any JavaScript specified as the value of the <code>onConstruction</code> 
+  attribute of the <code>&lt;window&gt;</code> element. In the example below, 
+  the window start tag is declared</p>
+<code>&lt;window ... onconstruction=&quot;Startup()&quot;&gt;</code> 
+<p>During the <code>onconstruction</code> callback, dialog authors are free to 
+  alter control settings from JavaScript:</p>
+<pre><code>
+  function Startup() {
+    // yellowize and check the "ow" button
+    document.bgColor = "yellow";
+    var checkbox = ElementByID("ow"); // homespun function
+    if (checkbox)
+      checkbox.checked = true;
+  }</code></pre>
+<p>Except that not all properties are hooked up yet. The change to background 
+  color in the example won't do anything. But the important example does work!</p>
+<p>When creating a window from C code (not JavaScript), the Toolkit Appcore need 
+  not be used. Additional opportunities to perform dialog preprocessing are afforded 
+  by the callbacks parameter to <code>CreateTopLevelWindow</code>. Dialog preprocessing 
+  can also (theoretically) be done in C by defining an AppCore, loading and calling 
+  it from the <code>Startup()</code> method, as the <code>ToolkitCore</code> AppCore 
+  was called to create the window. This hasn't actually been tried yet, but it 
+  &quot;should be straightforward.&quot;</p>
+<h2>Debrief a Window</h2>
+<p>After the dialog has run -- a dismissal button has been clicked, say -- dialog 
+  users will need a callback in which to query the current control settings. As 
+  always, this will be done by walking the DOM content model, and accessed through 
+  a JavaScript hook.</p>
+<p>We are uncertain whether a specific callback need be added: the event handler 
+  for the dismissal buttons may be entirely sufficient. But as the reader has 
+  no doubt guessed, there is no specific debriefing hook implemented at this time.</p>
+<h2>Examples</h2>
+<p>The following XUL describes a browser window with a simple toolbar containing 
+  a single button which will open another window: a nonmodal dialog, with a bit 
+  of imagination.</p>
+<pre><code>
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;?xml-stylesheet href=&quot;xul.css&quot; type=&quot;text/css&quot;?&gt; <br>&lt;!DOCTYPE window&gt;
+&lt;xul:window
+    xmlns:html=&quot;http://www.w3.org/TR/REC-html40&quot;
+    xmlns:xul =&quot;http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul&quot;&gt;
+  &lt;html:script&gt;
+    function MakeDialog() {
+      var toolkitCore = XPAppCoresManager.Find("ToolkitCore");
+      if (!toolkitCore) {
+        toolkitCore = new ToolkitCore();
+        if (toolkitCore)
+          toolkitCore.Init("ToolkitCore");
+      }
+      if (toolkitCore)
+        toolkitCore.ShowWindow("resource:/res/samples/madedialog.xml",
+            window);
+    }
+  &lt;/html:script&gt;
+
+  &lt;xul:toolbox&gt;
+    &lt;xul:toolbar&gt;
+      &lt;html:button html:onclick=&quot;MakeDialog()&quot;
+                   html:style=&quot;background-color:rgb(192,192,192);&quot;&gt;
+        Make Dialog
+      &lt;/html:button&gt;
+    &lt;/xul:toolbar&gt;
+  &lt;/xul:toolbox&gt;
+&lt;/xul:window&gt;</code></pre>
+<p>Note that only html widgets will have the expected html-specific DOM attributes 
+  like &quot;checked&quot; for checkboxes. XUL buttons will respond to their own 
+  APIs (to be documented in separate, dedicated papers), as well as to the core 
+  DOM interfaces.</p>
+<p>The above code will produce a live window with a functional button if placed 
+  in a file named, perhaps, <code>makedialog.xml</code> in the <code>res/samples</code> 
+  subdirectory within the directory containing <code>apprunner</code>. (Placing 
+  it in that directory allows it to find the stylesheet <code>xul.css</code> mentioned 
+  in the stylesheet processing instruction.) Launch <code>apprunner</code> pointing 
+  at that URL to load it into the main window.</p>
+<p><code>apprunner -url resource:/res/samples/makedialog.xml</code></p>
+<p>A suitable dialog description XUL file (named <code>madedialog.xml</code> in 
+  the above code) will be loaded when the <code>Make Dialog</code> button is pressed. 
+  The following example contains the linkup code mentioned in the main body of 
+  this document and has been seen to work in recent builds of the application.</p>
+<p>The authors have turned a jaundiced eye toward any sense of aesthetics in the 
+  design of this dialog. It's ugly. It will show up directly on top of the main 
+  &quot;browser&quot; window. I plan to rely on the estimable work of a colleague 
+  to provide some documentation for what sorts of visual effects can be accomplished 
+  with dialog controls and provide a link to a separate document with prettier 
+  samples.</p>
+<pre><code>
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;?xml-stylesheet href=&quot;xul.css&quot; type=&quot;text/css&quot;?&gt; 
+&lt;!DOCTYPE window&gt;
+&lt;xul:window
+    xmlns:html=&quot;http://www.w3.org/TR/REC-html40&quot;
+    xmlns:xul =&quot;http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul&quot;
+    xul:onconstruction = &quot;Startup()&quot;&gt;
+
+  &lt;html:script&gt;
+    // dialog initialization code
+    function Startup() {
+      var checkbox = ElementByID(&quot;remind&quot;);
+      if (checkbox)
+        checkbox.checked = true;
+    }
+
+    // OK button handler
+    function DoOK() {
+      // get checkbox
+      // (using a document method available on HTML and XUL
+      // documents, but not on XML documents)
+      var checkbox = document.getElementByID(&quot;remind&quot;);
+      if (checkbox) {
+        // load some hypothetical appcore interested in
+        // the outcome of this dialog
+        var donationsCore = XPAppCoresManager.Find(&quot;DonationsCore&quot;);
+        if (!donationsCore) {
+          donationsCore = new DonationsCore();
+          if (donationsCore)
+            donationsCore.Init(&quot;DonationsCore&quot;);
+        }
+        // tell the appcore about the new setting
+        if (donationsCore)
+          donationsCore.SetRemindFlag(checkbox.checked);
+      }
+    }
+
+    // find and return the DOM element with the given ID
+    // the equivalent of document.getElementByID(), but also
+    // works for XML documents (unused in the example)
+    function ElementByID(id) {
+      var element;
+      var ctr;
+      var taglist = document.getElementsByTagName(&quot;*&quot;);
+
+      element = null;
+      for (ctr = 0; ctr < taglist.length; ctr++)
+        if (taglist[ctr].getAttribute(&quot;id&quot;) == id) {
+          element = taglist[ctr];
+          break;
+        }
+      return element;
+    }
+  &lt;/html:script&gt;
+
+  &lt;table xmlns=&quot;http://www.w3.org/TR/REC-html40&quot;&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Give me your money&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;remind&quot;/&gt;Remind me
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;button onClick=&quot;DoOK()&quot;&gt;OK&lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+
+&lt;/xul:window&gt;
+</code></pre>
+<p>Note the window will not be dismissed when the OK button is pressed. The current 
+  state of the code will require that you hit &quot;OK&quot; and then the window 
+  close box.</p>
+</body>
+</html>

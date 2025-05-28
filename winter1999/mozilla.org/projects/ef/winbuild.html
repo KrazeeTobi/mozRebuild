@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+   <META NAME="Author" CONTENT="Scott Furman">
+   <TITLE>Building ElectricFire on Windows</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER><B>ElectricalFire Compiler</B></CENTER>
+
+<H1 ALIGN=CENTER>Windows Build Instructions</H1>
+
+<CENTER>Author: <A HREF="mailto:Scott Furman <fur@netscape.com>">Scott
+Furman</A>
+<BR>Last Modified:<SCRIPT>document.write(document.lastModified);</SCRIPT>
+
+<BR>
+<HR WIDTH="30%"></CENTER>
+
+<H2>Requirements</H2>
+
+
+<BLOCKQUOTE>The canonical development environment for Windows platforms is NT 
+  4.0, though Win95/98 can also be made to work.&nbsp; You'll need approximately 
+  175M of disk space. The following tools need to be installed: 
+  <UL>
+    <LI> MSVC 5.0<BR>
+      <BR>
+    <LI> GNU Tools for Microsoft Windows, downloaded from <A HREF="http://www.cygnus.com/misc/gnu-win32">Cygnus</A> 
+      . (You'll probably want to download and install the full.exe file.)<BR>
+      <BR>
+      Specifically, you'll need: 
+      <UL>
+        <TT>cp.exe</TT> <BR>
+        <TT>rm.exe</TT> <BR>
+        <TT>uname.exe</TT> <BR>
+        <TT>flex.exe</TT> <BR>
+        <TT>bison.exe</TT><BR>
+        <BR>
+      </UL>
+    <LI> Netscape has internally modified version of gmake, shmsdos and win32gnu 
+      that we use to get around some problems we were having keeping in sync with 
+      the Unix version of gmake. This version of gmake can be found in the Windows 
+      Build Tools package, which can be ftp'd from <A HREF="http://www.mozilla.org/download-mozilla.html">the 
+      Mozilla Download page</A>. The three files you will need are: 
+      <UL>
+        <TT>gmake.exe</TT> <BR>
+        <TT>shmsdos.exe</TT> <BR>
+        <TT>uname.exe</TT><BR>
+        <BR>
+      </UL>
+    <LI>Perl5 (<A HREF="http://www.activestate.com/ActivePerl/download.htm">download</A>)</LI>
+  </UL>
+</BLOCKQUOTE>
+
+<H2>Get the code</H2>
+
+
+<BLOCKQUOTE>Download the code using <A HREF="http://www.mozilla.org/cvs.html">CVS</A>:</BLOCKQUOTE>
+
+<BLOCKQUOTE>
+<BLOCKQUOTE><TT>cvs co mozilla/ef</TT>
+<BR><TT>cvs co mozilla/nsprpub</TT></BLOCKQUOTE>
+</BLOCKQUOTE>
+
+<H2>Setup the Build Environment</H2>
+
+
+<BLOCKQUOTE> 
+  <LI> Set your <TT>MOZ_TOOLS</TT> environment variable to point to the parent 
+    directory of the GNU tools 'bin' directory. The build looks for <TT>%MOZ_TOOLS%\bin\gmake.exe</TT>, 
+    so make sure that the gmake.exe from the Windows Build Tools package resides 
+    there, e.g. 
+    <UL>
+      <TT>set MOZ_TOOLS=C:\moztools</TT> 
+    </UL>
+  <LI>Install perl5 in <TT>%MOZ_TOOLS%/perl5/perl.exe<BR>
+    <BR>
+    </TT></LI>
+  <LI> Create a <TT>\tmp</TT> directory for temporary files in the root of the 
+    drive which you are using to build, e.g. <TT>D:\tmp</TT>.&nbsp; (You must 
+    do this even if you have <TT>TEMP</TT> or <TT>TMP</TT> environment variables 
+    that point to a different directory, as <TT>bison</TT> apparently ignores 
+    these variables).<BR>
+    <BR>
+  <LI> Add the <TT>mozilla\dist\$(OBJDIR)\bin</TT> directory to your <TT>PATH</TT><BR>
+    <BR>
+  <LI> <A HREF="http://java.sun.com/products/jdk/1.2/">Download</A> Sun's JDK1.2 
+    and install it.&nbsp; Copy the <TT>rt.jar</TT> file into your <TT>mozilla/ef/Package</TT> 
+    directory. 
+</BLOCKQUOTE>
+<H2>Build ElectricalFire</H2>
+
+
+<UL>
+  <LI> Build the NSPR library: 
+    <UL>
+      <LI> <TT>cd mozilla\nsprpub;gmake</TT><BR>
+        <BR>
+      <LI> If you're building on Win95, rename the NSPR output directory in mozilla/dist 
+        from <TT>WIN95_DBG.OBJ</TT> to <TT>WINNT40_DBG.OBJ</TT><BR>
+        <BR>
+      <LI> Once NSPR20 is built, you will need to add the NSPR DLL directory to 
+        the search path for Executable files in MSVC 5.0.&nbsp; Open the Options 
+        Dialog from the Tools Menu in MSVC 5.0 and select the Directories tab. 
+        Add the path to the NSPR DLLs, e.g. <TT>D:\fur\mozilla\dist\WINNT4.0_DBG.OBJ\bin</TT> 
+        <BR>
+        &nbsp; 
+    </UL>
+  <LI> Start MSVC 5.0 and load the following workspace: 
+    <UL>
+      <PRE><TT>mozilla\ef\Driver\StandAloneJava\winbuild\ElectricalFire.dsw</TT></PRE>
+    </UL>
+  <LI>Under MSVC's Build menu, select "Build sajava.exe"<BR>
+  
+</UL>
+
+</BODY>
+</HTML>

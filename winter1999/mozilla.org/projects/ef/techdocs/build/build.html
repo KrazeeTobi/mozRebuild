@@ -1,0 +1,146 @@
+<HTML>
+<HEAD>
+  <TITLE>Building Electrical Fire</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000" SIZE=+4>Electrical Fire</FONT></H2>
+
+
+<H2><FONT SIZE=+4>Building Electrical Fire</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE>
+<A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" NATURALSIZEFLAG="3" WIDTH="37"
+HEIGHT="37"></A>  <A HREF="../test_schedule.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM"
+NATURALSIZEFLAG="3" WIDTH="37" HEIGHT="37"></A><A HREF="../index.html"><IMG SRC=
+"../arrows/up_dark.gif" ALIGN="BOTTOM" NATURALSIZEFLAG="3" WIDTH="37" HEIGHT=
+"37"></A><A HREF="../qa.html"><IMG SRC="../arrows/right.gif" ALIGN="BOTTOM"
+NATURALSIZEFLAG="3" WIDTH="37" HEIGHT="37"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H2><A NAME="Macintosh"></A>Macintosh</H2>
+
+
+<UL>
+  <P><P><LI>The following tools need to be installed on your Macintosh before you
+  can begin building Electrical Fire:
+    <UL>
+      <P><LI>CodeWarrior with IDE 2.0 
+      <P><LI>MacCVS
+      <P><LI>Perl 5.1.0, install Perl in the same location as your Metrowerks folder. 
+      <P><LI>ToolFrontEnd, put it in 
+        <P><TT>Metrowerks:Metrowerks CodeWarrior:CodeWarrior Plugins:Compilers</TT> 
+      <P><LI>ToolFrontFrontEnd Panel, put it in 
+        <P><TT>Metrowerks:Metrowerks CodeWarrior:CodeWarrior Plugins:V2 Preference 
+          Panels</TT> 
+      <P><LI>BURG, put it in 
+        <P><TT>Metrowerks:CodeWarrior MPW:MPW:Tools</TT> 
+      <P><LI>UserStartupTS, place the file in 
+        <P><TT>Metrowerks:CodeWarrior MPW:MPW</TT> 
+        <P><B>Note: You will need to open the file and modify the MOZ_SRC variable 
+          to point to where the ns folder will be stored.</B> 
+    </UL>
+  <P><LI>You can get the files from MacDev.
+  <P><LI>The source files for the Electrical Fire project need to be checked
+  out of the CVS repository to your local Macintosh
+  <UL>
+    <P><LI>Create a local source directory. For the example here, we have created
+    a directory called ef on the volume Purpose.
+    <P><LI>Launch MacCVS and create a new session.
+    <P><LI>MacCVS needs to be configured for the Electrical Fire. Set the MacCVS
+    preferences like this:
+    <P><IMG SRC="MacCVSPrefs.gif" ALIGN="BOTTOM" NATURALSIZEFLAG="3" WIDTH=
+    "508" HEIGHT="465"><BR CLEAR="ALL">
+    <P><LI>Use the Action menu to checkout the default module.
+  </UL>
+  <P><LI>Once ElectricalFire is checked out, open ElectricalFire.prj2 in Purpose:
+  ef: ns: electricalfire: Driver: StandAloneJava: macbuild.
+  <P><LI>Build ElectricalFire by selecting Project and then Make.
+</UL>
+
+<P><HR ALIGN=LEFT><P></P>
+
+<H2><A NAME="Unix"></A>Unix</H2>
+
+
+<OL>
+  <P><LI>Create source directory
+  <P><LI>Checkout sources
+  <P><LI>Build NSPR
+  <P><LI>Build Electrical Fire<BR CLEAR="ALL">
+</OL>
+
+<P><HR ALIGN=LEFT><P></P>
+
+<H2><A NAME="windows"></A>Windows</H2>
+
+
+<P>The canonical development environment for Windows platforms is NT 4.0,
+using MSVC 5.0.</P>
+
+<UL>
+  <P><LI>First, you must obtain the required build tools for the Windows platform.
+  Note: If you have not already installed MSVC 5.0, you must be install it
+  separately.
+  <UL>
+    <P><LI>Check-out the nstools directory
+    <P><TT>cvs co nstools</TT>
+    <P>It is not necessary that nstools and the Electrical Fire sources reside
+    in related directory trees, i.e. you can create <TT>C:\nstools</TT> to
+    contain your build tools and <TT>D:\ns\electricalfire</TT> for ef sources.
+    <P><LI>Set your <TT>NSTOOLS</TT> environment variable to point to your nstools
+    directory
+    <P><TT>set NSTOOLS=C:\nstools</TT>
+    <P><LI>Prepend the location of your nstools <TT>bin</TT> directory to your
+    <TT>PATH</TT> environment variable
+    <P><TT>set PATH = C:\nstools\bin;%PATH%</TT>
+    <P><B>Note: It is important that the nstools directory appear before any
+    other possibly conflicting directories in the <TT>PATH</TT> variable. For
+    example, the gmake and uname supplied in the MKS toolkit is not compatible
+    with the versions of these tools in the nstools directory.</B> <BR>
+    
+  </UL>
+  <P><LI>Second, check out the Electrical Fire module:
+  <P><TT>cvs co ns\electricalfire</TT><BR>
+  
+  <P><LI>Build the NSPR library
+  <P><TT>cvs co -r b19970926 ns\nspr20</TT> <BR>
+  <TT>cd ns\nspr20</TT> <BR>
+  <TT>gmake export</TT> 
+<P><B>Note: The current revision tag pulls the NSPR20 libraries that EF
+  uses. This will be regulary updated as needed.</B>
+  <P><LI>Once NSPR20 is built, you will need to add the NSPR lib directory to
+  Executable files in MSVC 5.0. Open the Options Dialog from the Tools Menu
+  in MSVC 5.0. There add the path to the directory.
+  <P><IMG SRC="Win32Options.gif" ALIGN="BOTTOM" NATURALSIZEFLAG="3" WIDTH=
+  "598" HEIGHT="322"><BR CLEAR="ALL">
+  <P><LI>Create a <TT>\tmp</TT> directory for temporary files in the root of
+  the drive which you are using to build, e.g. <TT>D:\tmp</TT>. (You must
+  do this even if you have <TT>TEMP</TT> or <TT>TMP</TT> environment variables
+  that point to another directory, as <TT>yacc</TT> ignores these variables).
+  <P><LI>To build Electrical Fire using the MSVC 5.0 IDE:
+  <UL>
+    <P><LI>Start MSVC 5.0 and load the following workspace
+    <P><TT>ns\electricalfire\Driver\StandAloneJava\winbuild\ElectricalFire.dsw</TT>
+    <P><LI>Select sajava as the active configuration.
+    <P><LI>Under MSVC's Build menu, select &quot;Build sajava.exe&quot;
+    <P><LI>Right-click on the Package project and choose &quot;Build&quot;. This
+    will build and install the neccessary native-code support.
+  </UL>
+</UL>
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

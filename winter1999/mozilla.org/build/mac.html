@@ -1,0 +1,934 @@
+<HTML>
+<HEAD>
+<TITLE>Building Mac Mozilla</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+<STYLE
+TYPE="text/css">
+<!--
+
+BODY {
+  color: #000;
+  background: #FFF;
+
+margin-left: 5%;
+  font-family: arial,helvetica,sans-serif, arial,
+helvetica, sans-serif; 
+  }
+
+P {  font-size: small}
+
+ADDRESS {  font-size:
+small} 
+
+-->
+</STYLE>
+
+
+
+
+
+<CENTER><H1>Building Mac Mozilla</H1></CENTER>
+
+This page aims to be the complete source of information
+for people building Mozilla on the Macintosh.  Please report deficiencies to
+<A HREF="mailto:mcmullen@netscape.com">mcmullen@netscape.com</A>.
+Please do <FONT COLOR="#FF0000"><BLINK><STRONG>not</STRONG></BLINK></FONT> email
+me with questions about how to do stuff, or suggestions for improving the build
+process, or anything else that does not concern information on this page itself.  Such
+questions should be posted to the newsgroup
+<A HREF="news://news.mozilla.org/netscape.public.mozilla.mac">
+<STRONG>netscape.public.mozilla.mac</STRONG>
+</A>
+
+<P>If you are a programmer on another platform, and you need
+information to make your changes Macintosh-friendly, there
+is a page just for you
+<A HREF="mac-for-xp-folk.html">here</A>.
+
+<H4>How it works now</H4>
+
+<P>The build system is fully automated.
+You have to set up a build environment by assembling pieces from
+here or there, but after that,
+you can check out and build all the projects with a single perl script.
+The build system is still rapidly evolving, 
+and is not idiot-proof, but should be usable.
+
+<H4>Recent changes</H4>
+
+To find recently-added information quickly, click on the links
+below, and look for this symbol: <IMG SRC="new3.gif" ALIGN=top>
+<UL>
+<LI><A HREF="#new990204">99/02/04</A>
+<LI><A HREF="#new990203">99/02/03</A>
+<LI><A HREF="#new990129">99/01/29</A>
+<LI><A HREF="#new990128">99/01/28</A>
+<LI><A HREF="#new990120">99/01/20</A>
+<LI><A HREF="#new990119">99/01/19</A>
+</UL>
+
+<H4>Future changes</H4>
+
+We may be requiring an upgrade to CodeWarrior Pro 4.1 soon.  If you want to do
+this now, you can.  The upgrades have been posted by MetroWerks on the web, and
+are free. To find out how to do this, read
+<A HREF="news://news.mozilla.org/sfraser-2801992250160001%40h-208-12-39-165.mcom.com">
+this news posting
+</A>
+
+<P>The perl scripts may be going away soon, in favor of a master "Cluster" project.
+It will be easier, faster, and better in oh, so many ways.
+
+<P>How do I know these things?  I read the newsgroup
+<A HREF="news://news.mozilla.org/netscape.public.mozilla.mac">
+<STRONG>netscape.public.mozilla.mac</STRONG>
+</A>
+ daily.  It's good for you, and tastes good, too.
+
+<P>
+<HR WIDTH = 50% SIZE = 6>
+
+<H4>Tools and resources</H4>
+<P>To build MacMoz, you'll need the 
+<A HREF="http://www.metrowerks.com">MetroWerks</A> 
+	CodeWarrior Pro 4 development environment.
+	Choose the <B>Full MacOS Install</B> option when
+	you install. This option requires about 250MB of free disk space.
+
+<P>Next, you'll need to install some additonal tools.
+
+<P><TABLE noborder>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P><A NAME = "new990128"><IMG SRC="new3.gif" ALIGN=top></A>
+			MacOS 8.5.
+			</TD>
+		<TD><P>Without this, the application will not run, because it requires
+			Appearance 1.1 and the FontManager library from this OS version.
+			</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P><A NAME = "new990119"><IMG SRC="new3.gif" ALIGN=top></A> <A HREF=
+		"ftp://ftp.apple.com/developer/Development_Kits/CIncludes-Libraries.3.2.sit.hqx">
+			Universal Headers 3.2</A></TD>
+		<TD><P>From Apple Computer, Inc.  The
+			"CodeWarrior users ReadMe" that comes with the apple download says that if you
+			have CW PR4, you don't have to install anything. It lies! You have to.
+			<P>Uncompress and install these files in the
+			CodeWarrior folder, in 
+			<TT>':MacOS Support:Headers:Universal Headers:'</TT>
+			<TT>':MacOS Support:Libraries:MacOS Common:'</TT>
+			<TT>':MacOS Support:Libraries:MacOS PPC:'</TT>
+			as appropriate.</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P>Obsolete GA classes</TD>
+		<TD><P>From the CodeWarrior Pro Reference CD
+			<P>Uncompress and install these classes in the
+			CodeWarrior folder, in 
+			<TT>':MacOS Support:PowerPlant:_Will Be Obsolete:'</TT></TD>
+	</TR>
+	<TR VALIGN=top>
+
+		<TD ALIGN=right><P>ToolServer</TD>
+		<TD><P>From the CodeWarrior Pro CD.
+
+			<P>Uncompress the StuffIt Archive for ToolServer.  
+
+	The goal is to let ToolServer and MPW share the same Tools 
+
+	directory so you don't need to have multiple versions of tools.  
+
+		Do the following: 
+			<OL>
+				<LI>Open ToolServer's Tools folder.  
+					There should be one file called "RMetrowerks".
+				<LI>Move RMetrowerks to the Tools folder of MPW.  
+					The MPW folder should be at "Metrowerks:Codewarrior MPW:MPW" 
+					if you installed Codewarrior correctly.
+				<LI>Remove ToolServer's Tools folder.
+
+				<LI>Now create an alias of Tools folder in "CodeWarrior MPW" 
+					and move it to your ToolServer folder.  Rename the alias 
+					(probably called "Tools alias") as "Tools".
+
+			<LI>IMPORTANT: Make sure you only have one instance of 
+
+				ToolServer on your machine.  If the build script finds 
+
+					the wrong one, the correct tools will not be found and
+
+					strange things will happen.  
+			</OL>
+
+	</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P><A
+HREF="ftp://ftp.boingo.com//dan/WASTE/waste-13.hqx">
+			WASTE
+1.3</A></TD>
+		<TD><P>Decompress and then drag the entire folder to
+the
+			MacOS Support folder in your CodeWarrior folder.
+
+	</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P><A
+HREF="ftp://www.bact.wisc.edu//Bact%20Web/Public/CWASTEEdit.sit.hqx">
+
+	CWASTE 1.6.2</A></TD>
+		<TD><P>Decompress and then drag the entire
+folder to the
+			MacOS Support folder in your CodeWarrior folder.
+
+		</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P>
+			<A
+HREF="ftp://ftp.scripting.com/userland/menuSharingToolkit4.1.sit.hqx">
+
+		Menu Sharing Toolkit</A></TD>
+		<TD><!-- tk not sure if we
+still need this... -->
+			<P>Decompress and then drag the entire
+folder to the
+			MacOS Support folder in your CodeWarrior folder.
+
+		</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P>
+			<A
+HREF="ftp://ftp.share.com/pub/internet-configuration/ICProgKit1.4.sit">
+
+			Internet Config 1.4 SDK</A></TD>
+		<TD><P>Decompress and
+then drag the entire folder to the
+			MacOS Support folder in your
+CodeWarrior folder.
+		</TD>
+	</TR>
+	<TR VALIGN=top>
+
+	<TD ALIGN=right><P><A HREF="http://www.mooseyard.com/Jens/Software/AEGizmos/AEGizmos%201.4.2.sit.hqx">
+
+	AEGizmos 1.4.2</A></TD>
+		<TD><P>Decompress and then drag the
+entire folder to the
+			MacOS Support folder in your CodeWarrior
+folder.
+		</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P>
+
+	<A HREF="http://www.perl.com/CPAN/ports/mac/Mac_Perl_520r4_appl.bin">
+
+			MacPerl5 5.20r4 (Application)</A></TD>
+		<TD><P>Download,
+decompress, and install.
+			<P>You can install this anywhere, but
+it is recommended that 
+			you install it inside of your
+CodeWarrior folder for easy reference.
+			After installation, you
+will need to set a preference to 
+			enable double-click launch of
+the perl scripts.
+			This preference is set by selecting "Preferences..."
+			from the Edit Menu.  
+			Click on the "Script" button and hit the
+radio button 
+			"Run Scripts opened from Finder"
+		</TD>
+
+	</TR>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P>
+			<A
+HREF="http://www.perl.com/CPAN/ports/mac/Mac_Perl_520r4_tool.bin">
+
+	MacPerl5 5.20r4 (MPW Tool)</A></TD>
+		<TD><P>Run the installer
+			application.
+			In the MacPerl folder, there will be an MPW tool
+			named "perl".
+			Install this in the MPW tools folder.
+		</TD>
+
+	</TR>
+	<TR VALIGN=top>
+		<TD ALIGN=right><P>
+			<A NAME = "new990204"><IMG SRC="new3.gif" ALIGN=top></A>
+			<A
+HREF="http://www.perl.com/CPAN/modules/by-category/04_Operating_System_Interfaces/Mac/Mac-AppleEvents-Simple-0.60.tgz">
+
+			Mac::AppleEvents::Simple</A></TD>
+		<TD><P>Download, decompress,
+			and install in your MacPerl folder
+			in
+			<TT>:lib:Mac:AppleEvents:</TT>.
+			<A HREF="mac-gzip-tar.html">How do I decode these tar/gzip files?</A>
+		</TD>
+	</TR>
+	<TR VALIGN=top>
+
+	<TD ALIGN=right><P>
+			<A
+HREF="http://www.perl.com/CPAN/modules/by-category/04_Operating_System_Interfaces/Mac/Mac-Apps-Launch-1.60.tar.gz">
+			Mac::Apps::Launch</A></TD>
+
+		<TD><P>Download, decompress, and install in your MacPerl folder
+			in <TT>:lib:Mac:Apps:</TT>.
+			<A HREF="mac-gzip-tar.html">How do I decode these tar/gzip files?</A>
+		</TD>
+	</TR>
+	<TR
+VALIGN=top>
+		<TD ALIGN=right><P>
+			<A NAME = "new990203"><IMG SRC="new3.gif" ALIGN=top></A>
+			<A
+HREF="ftp://sunsite.cnlab-switch.ch/software/platform/macos/src/mpw_c/Patch_21.sit.bin">
+			GNU patch 2.1</A></TD>
+		<TD><P>Install the MPW patch
+tool into your MPW Tools folder.</TD>
+	</TR>
+</TABLE>
+
+<!--
+tk Mercutio
+url? Decompress and then drag the entire folder to the
+			MacOS
+Support folder in your CodeWarrior folder.
+
+tk NewAlias url? Install the
+"NewAlias" Tool in the MPW Tools folder.
+-->
+
+<P>Note: if you are thinking
+of integrating NGLayout into another
+product, you will not need all the 3rd
+party libraries Mozilla requires.
+
+<CENTER><H3>Obtaining the source
+code and building it</H3></CENTER>
+
+<P>Using the <A HREF="http://www.maccvs.org">MacCVS client</A>,
+
+create a new CVS session file. 
+Set your preferences from <TT>Edit |
+Session Settings</TT>:
+
+<P><TABLE border>
+	<TR VALIGN=top>
+		<TH
+COLSPAN=2><P>Checkout and Update Options</TD>
+	</TR>
+	<TR VALIGN=top>
+
+		<TD><P>Local Tree Directory</TD>
+		<TD><P>Wherever you'd like
+			the source code to be kept.
+			Make sure that you have at least
+			500MB free on that volume
+			(right now the source only needs about
+			300MB, but it's
+			a good idea to leave some free space for
+			growth).
+		</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD><P>Merge
+Policy</TD>
+		<TD><P><TT>Auto Merge Text Files and Update Binary
+Files</TT></TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD><P>Default
+Module</TD>
+		<TD><P><TT>mozilla/build/mac</TT></TD>
+	</TR>
+	<TR
+VALIGN=top>
+		<TD><P>Default Revision</TD>
+
+	<TD><P><TT>(LEAVE BLANK)</TT></TD>
+	</TR>
+	<TR VALIGN=top>
+		<TH
+COLSPAN=2><P>Remote Host Information</TD>
+	</TR>
+	<TR VALIGN=top>
+
+	<TD><P>Server Hostname</TD>
+
+	<TD><P><TT>cvs-mirror.mozilla.org</TT></TD>
+	</TR>
+	<TR
+VALIGN=top>
+		<TD><P>CVS User Name</TD>
+
+	<TD><P><TT>anonymous</TT></TD>
+	</TR>
+	<TR VALIGN=top>
+
+	<TD><P>CVS Password</TD>
+		<TD><P><TT>anonymous</TT></TD>
+	</TR>
+
+	<TR VALIGN=top>
+		<TD><P>CVS Root</TD>
+
+	<TD><P><TT>/cvsroot</TT></TD>
+	</TR>
+	<TR VALIGN=top>
+
+	<TD><P>Network Time Out</TD>
+		<TD><P><TT>10 Minutes</TT></TD>
+
+	</TR>
+	<TR VALIGN=top>
+		<TH COLSPAN=2><P>Encoding and File
+Mappings</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD><P>Add</TD>
+
+	<TD><P>You may want to map the .pl extension to MacPerl, so that
+
+		you can double-click on the build scripts from the Finder.
+
+	Click <TT>Add</TT> and enter 
+			<PRE>Suffix <TT>.pl</TT>, Type
+<TT>TEXT</TT>, Creator <TT>McPL</TT></PRE>
+			<P>Be sure to use
+Macintosh linefeeds!
+		</TD>
+	</TR>
+</TABLE>
+
+<P>Next, check out the module
+<TT>mozilla/build/mac</TT>. 
+If you've followed the instructions above, you
+can 
+just select the menu
+<BR><TT>Action | Check Out Default
+Module</TT>.
+
+<P>Once CVS is done checking out the build directory,
+go to
+your local tree directory and open it.
+Drill down to the
+<TT>:mozilla:build:mac:</TT> folder, and
+you should see several build
+scripts waiting for you.
+
+<P>You should also see the <TT>RunTSScript</TT>
+MPW compiler.
+You'll need to place a copy of this in your 
+CodeWarrior
+Pro 4
+folder, in 
+<TT>Metrowerks CodeWarrior:CodeWarrior
+Plugins:Compilers:</TT>.
+
+<P>Use <TT>PullNGlayout.pl</TT> to download
+to
+rest of the source. Just drag that file onto MacPerl, or
+run it in MacPerl
+whatever other way you prefer.
+
+<P>Some folks use BBEdit and BBEdit perl
+extensions as their build environment. 
+This allows you to edit the build
+scripts inside BBEdit, 
+and use the extensions to run it inside
+MacPerl.
+You can also use Alpha and its Perl mode to do the same
+thing.
+
+<P>You can even try to run the build scripts
+from MPW, but some
+have reported that MPW perl tool often crashes.
+
+<P>The first time you run
+<TT>PullNGlayout.pl</TT>, 
+it will prompt you for the location of your CVS
+session file. 
+This file will be used to check out the rest of the tree.
+
+
+<H4>Building Mac Mozilla the first time</H4>
+
+<P><STRONG>Warning:</STRONG> You will be downloading tens of megabytes of source code.
+If you are using a 33.6 connection, be prepared for hours and hours of download time.
+
+<P>Before pulling the source code, always make sure the Macintosh build column
+on <A HREF="http://cvs-mirror.mozilla.org/webtools/tinderbox/showbuilds.cgi?tree=SeaMonkey&hours=4&nocrap=1">
+tinderbox</A> is green.  Redness on tinderbox presages a pull that will not build.  If the
+Macintosh build is showing red, You might as well go to a movie and try later.  You should add
+this tinderbox link to your bookmarks, even to your personal toolbar.
+
+<P>Run <TT>BuildNGLayoutDebug.pl</TT> from
+MacPerl. 
+This script will build all the projects and 
+create a Macintosh
+application directory in <TT>:mozilla:dist:viewer_debug:</TT>
+within your source
+tree.  Note: by default it may pull the tree too. Open the file
+(it's just text) modify it, and set the "pull all" flag to 0 if it is 1.
+There is no reason why you cannot make minor modifications like this
+to the scripts, to suit your own nefarious purposes.
+
+<H4>Updating and Building Mac Mozilla on subsequent occasions</H4>
+
+<P>The following steps are highly recommended:
+<OL>
+
+<LI><A NAME = "new990129"><IMG SRC="new3.gif" ALIGN=top></A>
+Before pulling the source code, always make sure the Macintosh build
+on <A HREF="http://cvs-mirror.mozilla.org/webtools/tinderbox/showbuilds.cgi?tree=SeaMonkey&hours=4&nocrap=1">
+tinderbox</A> is green.  Redness on tinderbox presages a pull that will not build.
+If the Macintosh build is showing red, You might as well go to a movie and try later.  
+
+<LI>Delete the files in <TT>:mozilla:dist:</TT>.
+While this may not always be necessary,
+it occasionally is, especially when a header has become obsolete.
+<LI>Check out <TT>:mozilla:build:mac:</TT> again. This is because the scripts you
+use to pull and build the tree themselves reside in the tree. Therefore, if
+somebody has checked in changes to these scripts,
+you need to ensure that you are pulling and building with the latest version of the scripts.
+<LI>Run <TT>BuildNGLayoutDebug.pl</TT> from
+MacPerl. 
+This script will build all the projects and create a Macintosh
+application directory in <TT>:mozilla:dist:viewer_debug:</TT>
+within your source tree.
+</OL>
+
+<CENTER><H3>More about the build system</H3></CENTER>
+
+<P>The build system uses MacPerl
+to drive various Mac applications
+with AppleScript and AppleEvents. 
+It
+consists of 3 perl scripts:
+<TABLE border>
+	<TR VALIGN=top>
+		<TD
+ALIGN=right><P><TT>NGLayoutBuildList.pm</TT></TH>
+		<TD>
+
+	<P>Contains the list of directories to check out, 
+			manifest
+files to be processed for inclusion in <TT>:mozilla:dist:</TT>, 
+			and projects to
+built. It builds both debug and optimized versions. 
+			Has 3 main
+functions: 
+			<TT>Checkout</TT>, <TT>BuildDist</TT>, and
+<TT>BuildProjects</TT>. 
+			When run for the first time, it will
+prompt you for the location 
+			of the CVS session file, and store
+the location in 
+			<TT>nglayout.cvsloc</TT> above your source
+tree.
+		</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD
+ALIGN=right><P><TT>PullNGLayout.pl</TT></TH>
+		<TD>
+
+	<P>Pulls the source tree required to build NGLayout. 
+			To use
+the script, double-click on it and it will start executing. 
+			An
+open-file dialog box will come up. 
+			Direct it to the MacCVS
+Session file that you used 
+			to check out the script. Open the
+session, and the perl script 
+			will then send a series of checkout
+commands to MacCVS 
+			and pull the required sources.
+		</TD>
+
+	</TR>
+	<TR VALIGN=top>
+		<TD
+ALIGN=right><P><TT>BuildNGLayoutDebug.pl</TT></TH>
+		<TD>
+
+	<P>Configures various build options and starts a build of NGLayout.
+
+
+			<P>Mac build scripts have an annoying problem:
+			there
+is no way to specify command-line options to MacPerl.
+			This means
+that you can't specify different make options 
+			to the build system
+without editing the scripts.
+			
+			<P>To customize your
+builds 
+			(<TT>build_all</TT>, <TT>pull_layout</TT>, etc.),
+
+		make a copy of the build script (<TT>BuildNGLayoutDebug.pl</TT>) 
+
+			and name it whatever you like.
+			Then edit the
+<TT>%pull</TT> and <TT>%build</TT> 
+			variables inside the
+script. 
+			To build optimized binary, set <TT>$DEBUG = 0</TT>.
+		
+		</TD>
+	</TR>
+</TABLE>
+
+<P><b>Hack alert</b>: 
+To create
+NGLayout-specific #defines that span all the projects, 
+the build scripts
+use a hack. 
+All Mac projects we care about include
+
+<TT>mozilla/config/mac/MacConfigInclude.h</TT>. 
+By default, an alias to
+this file is exported to <TT>:mozilla:dist:</TT>. 
+The NGLayout build script replaces this
+alias with a new one, 
+pointing to NGLayoutConfigInclude.h, but the alias
+is still named 
+<TT>MacConfigInclude.h</TT>.
+
+<CENTER><H3>FAQ about building Mozilla</H3></CENTER>
+
+<H5>Something in this document
+is wrong</H5>
+<P>Please inform the 
+<A
+HREF="http://www.mozilla.org/owners.html">MacFE project owners</A> 
+of the
+error, and (ideally) recommend a solution. 
+Answers to additional problems
+not yet in the FAQ are also welcome.
+
+<H5>Where else can I go for
+answers?</H5>
+<P>Point your newsreader at the Mozilla newsgroups
+or
+subscribe to the mailing lists:
+<A
+HREF="http://www.mozilla.org/community.html">
+http://www.mozilla.org/community.h
+tml</A>.
+<P>Also, check out 
+    <A HREF="making-additions.html">So you want to add something
+    (and not break the build) ..."</a>, a guide to adding files and
+    directories without breaking any of the three platforms.
+
+<H5>Can I build with older versions of
+CodeWarrior?</H5>
+<P>Currently, the answer is, "No." 
+We make use of
+several classes in PowerPlant which
+recently appeared in Pro4. Time to
+upgrade, I'm afraid. 
+Don't even try opening the projects
+with Pro2 because
+you will get data loss and have to throw the project away 
+(it won't even
+prompt you!).
+
+<H5>I can't build MemAllocatorStubs</H5>
+<P>It sounds as though
+your ToolServer environment is not set up correctly. 
+Make sure you follow
+the directions to the letter.  You could also be 
+seeing this if you have
+multiple versions of ToolServer on your computer 
+and the Finder lauches
+the wrong one.  This is very common, as the Carbon 
+Dater app from Apple
+DTS contains a copy of ToolServer.  Either remove all 
+the other versions
+of ToolServer or make sure you launch the appropriate 
+version before you start building.
+
+<P><A NAME = "new990120"><IMG SRC="new3.gif" ALIGN=top></A>
+Other thoughts: if ToolServer is not on your boot disk,
+you may have to launch it by hand before starting your
+build.  The symptom in this case will be a "freeze" in
+which CodeWarrior is waiting for the Finder to finish launching
+ToolServer.
+
+<H5>MacPerl is giving me grief.</H5>
+<P>If you're seeing
+AppleEvents errors, you probably need to give
+MacPerl more RAM to play
+with. If you're still using the
+default RAM size, increase it by
+1MB.
+
+<P>If MacPerl appears to be freezing, patience is the first
+approach
+- especially if you're on a slow Mac.
+
+<P>If you're sure that MacPerl is
+frozen, maybe the build
+script can't find or launch CodeWarrior.
+The
+CodeWarriorLib.pm tries its
+best to find CodeWarrior without bothering you,
+but sometimes
+this doesn't work. Try opening the
+CodeWarrior IDE
+<B>before</B> you run whatever Perl script
+you're trying to run.
+
+<H5>How
+can I stop a build in progress?</H5>
+<P>The most reliable way is to quit
+the CW IDE. Just switch
+to CodeWarrior and press command-Q. CodeWarrior may
+ask you
+to confirm the action, and it may complete the current job
+before
+quitting. MacPerl should error out; sometimes,
+MacPerl will also relaunch
+CodeWarrior.
+
+<H5>How much RAM does CodeWarrior need</H5>
+<P>The IDE in
+CodeWarrior Pro 4 appears to use temprorary
+system memory as needed. So
+while you need to have about 
+35MB RAM free to compile the largest Mozilla
+projects,
+it needn't be contiguous. CodeWarrior itself starts with
+about
+10MB, and that seems to be sufficient.
+
+<P>In theory, running virtual
+memory will allow CodeWarrior
+to run with only 6MB RAM. However, virtual
+memory is
+known to slow down application launching, and will
+certainly slow
+down your build process in general, as well.
+Since building MozMac is slow
+enough already, and RAM
+is cheap, we do not recommend VM.
+
+<P>If <TT>PowerPlant.mcp</TT> is failing to compile, you may
+have a
+memory shortage. Try quitting other applications,
+so the system can give
+that memory to CodeWarrior.
+
+<H5>Why won't JavaScript build?</H5>
+<P>If
+<TT>JavaScriptPPC.mcp</TT> (<TT>mozilla/js/macbuild</TT>) 
+is failing to
+compile, you may be 
+building the wrong target. Make sure you're
+building
+the <TT>JavaScriptNoJSJ</TT> or <TT>JavaScriptNoJSJDebug</TT>
+target.
+This shouldn't happen if you're using the build scripts
+in
+<TT>mozilla/build/mac</TT>.
+
+<P>Also, a bug in CodeWarrior seems to
+keep
+<TT>jsinterp.c</TT> from compiling properly in non-debug mode.
+If
+you're seeing this problem, try compiling
+<TT>jsinterp.c</TT> by itself:
+select the file in the 
+<TT>JavaScriptPPC.mcp</TT>
+project window, and
+press <TT>command-K</TT> to compile it.
+
+
+<CENTER><H3>Version History</H3></CENTER>
+
+<UL>
+<LI>Version 1.2. Tuesday, January 19, 1999. 
+Fixed some small bugs.  Added the "rebuild" tips.  Seems that I, 
+<A HREF="mailto:mcmullen@netscape.com">mcmullen@netscape.com</A>
+am now the pagemaster for this page.
+
+<LI>Version 1.1. 5 December 1998. 
+Edits and new FAQ section.
+Added CVS session settings.
+Updated build system architecture.
+Michael Blakeley, 
+<A HREF="mailto:mike@blakeley.com">mike@blakeley.com</A>.
+
+<LI>Version 1.0.
+Date unknown. Aleks Totic
+<A
+HREF="mailto:atotic@netscape.com">atotic@netscape.com</A>
+</UL>
+
+<P>
+<CENTER>
+    <A HREF="http://the-tech.mit.edu/Macmade/">
+    <IMG SRC= macmade2.gif ALT="MacMade" WIDTH=88 HEIGHT=31 BORDER=0>
+    </A>
+</CENTER>
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

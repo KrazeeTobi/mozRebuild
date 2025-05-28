@@ -1,0 +1,262 @@
+<HTML>
+<HEAD>
+  <TITLE>Primitive Graph Control Scheduling Example</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Primitive Graph Format</H2>
+
+
+<H2>Control Layer</H2>
+
+
+<H2>Control Scheduling</H2>
+
+
+<H2><FONT SIZE=+4>Example</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="control_schedule.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"><IMG SRC="../arrows/up.gif" 
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="control_schedule_proof.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Example</H3>
+
+
+<P>Let us continue scheduling the <A HREF="control_schedule.html#figure4">example</A>
+graph. We schedule loops in depth-first order of the <A HREF="control_schedule.html#figure4">loop
+hierarchy tree</A>.</P>
+
+<H3>Loop 4</H3>
+
+
+<P>The first loop we schedule is loop 4. In <A HREF="control_schedule.html#phase3b">phase
+3b</A> we identify the initial long edges, which in this case happen to
+be the edges incoming to node 4 and the exception edges leaving nodes 4
+and 7. The result is illustrated in <A HREF="#figure1">Figure 1</A>, in
+which long edges are thick and short edges thin.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD>
+<A NAME="figure1"></A><IMG SRC="graphics/control_example_loop4.gif" ALIGN=
+"BOTTOM" WIDTH="190" HEIGHT="123" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TH>Figure 1</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<DL>
+  <DT>Node 4 is the header, and we schedule it first. Following <A HREF=
+  "control_schedule.html#alternative1">alternative 1</A> of the linear scheduling
+  algorithm of <A HREF="control_schedule.html#phase3d">phase 3d</A>, node
+  5 becomes ready with respect to node 4, and we schedule it next, followed
+  by node 6 and then node 7. Our schedule becomes:
+  <DD>S<FONT SIZE=-2>4</FONT> = [[4, 5, 6, 7]]
+  <DT>Since our region is a loop, <A HREF="control_schedule.html#phase3e">phase
+  3e</A> applies. The last node 7 of our only clique satisfies the conditions
+  in <A HREF="control_schedule.html#phase3e">phase 3e</A> (the exception
+  edge out of 7 leaves R but it is a long edge), so we move it before the
+  header:
+  <DD>S<FONT SIZE=-2>4</FONT> = [[7, 4, 5, 6]]
+  <DT>We do not move node 6 to the front of the clique because node 6 has
+  a short edge that leaves the region.
+</DL>
+
+<H3>Loops 12 and 16</H3>
+
+
+<P>We next schedule loops 12 and 16 to obtain the schedules illustrated
+in <A HREF="#figure2">Figure 2</A>. Note that node 17 is a switch node (it
+has three outgoing edges), so all of its outgoing edges are long.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" HEIGHT="82" WIDTH=
+"80%">
+ <TR>
+  <TH NOWRAP WIDTH="222%"><A NAME="figure2"></A>Loop</TH>
+  <TH NOWRAP WIDTH="158%">Linear schedule (<A HREF="control_schedule.html#phase3d">phase 3d</A>)&nbsp;</TH>
+  <TH NOWRAP WIDTH="149%">Loop schedule (<A HREF="control_schedule.html#phase3e">phase 3e</A>)</TH>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/control_example_loop12.gif" ALIGN="BOTTOM" WIDTH="208"
+HEIGHT="96" NATURALSIZEFLAG="3">
+  </TD>
+  <TD ALIGN="CENTER" NOWRAP>[[12, 13, 14]]</TD>
+  <TD ALIGN="CENTER" NOWRAP>[[12, 13, 14]]</TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/control_example_loop16.gif" ALIGN="BOTTOM" WIDTH="208"
+HEIGHT="96" NATURALSIZEFLAG="3">
+  </TD>
+  <TD ALIGN="CENTER" NOWRAP>[[16, 17, 20]]</TD>
+  <TD ALIGN="CENTER" NOWRAP>[[16, 17, 20]]</TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="3" NOWRAP>Figure 2</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Loop 9</H3>
+
+
+<P>Having scheduled loops 12 and 16, we can now schedule loop 9. At this
+point we calculate long and short edges anew, without regard to what they
+were when scheduling loops 12 and 16. As stated in <A HREF="control_schedule.html#phase3a">phase
+3a</A>, when scheduling loop 9 our set R does not include the non-header
+nodes of its immediate subloops.</P>
+
+<P><A HREF="#figure3">Figure 3</A> illustrates loop 9 with nodes outside
+the set R greyed out. The edges entirely within the subloops are black to
+indicate that we no longer need to consider them. Note that edge 13-&gt;15
+is long because it originates from a node that is not the end node in any
+clique of subloop 12's schedule.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD>
+<A NAME="figure3"></A><IMG SRC="graphics/control_example_loop9.gif" ALIGN=
+"BOTTOM" WIDTH="307" HEIGHT="280" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TH>Figure 3</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>We schedule starting from the header, node 9. We repeatedly apply <A
+HREF="control_schedule.html#alternative1">alternative 1</A> of the linear
+scheduling algorithm of <A HREF="control_schedule.html#phase3d">phase 3d</A>,
+producing one clique [9, 10, 11, 18, 19]. At this point we can apply <A
+HREF="control_schedule.html#alternative3">alternative 3</A> to either node
+12 or node 15 -- neither has any incoming short edges. We arbitrarily apply
+it to node 12, producing a second clique [12, 13, 14] and then to node 15,
+producing the third clique [15, 16, 17, 20, 21]. This takes care of all
+the nodes, and our linear schedule is:</P>
+
+<BLOCKQUOTE>
+  <P>[[9, 10, 11, 18, 19], [12, 13, 14], [15, 16, 17, 20, 21]].</P>
+</BLOCKQUOTE>
+
+<P>We apply the loop scheduler from <A HREF="control_schedule.html#phase3e">phase
+3e</A>. There is no clique C<FONT SIZE=-2>k</FONT> that satisfies the conditions,
+so we keep the linear schedule.</P>
+
+<H3>Loop 2</H3>
+
+
+<P>Having scheduled loop 9, we can now schedule loop 2. <A HREF="#figure4">Figure
+4</A> illustrates loop 2 with nodes outside the set R greyed out; these
+nodes are outside R either because they are internal nodes of subloops 4
+or 9 or because they are outside the main body of the function. The edges
+entirely within the subloops and the edges originating from nodes outside
+the main body of the function are black to indicate that do not need to
+consider them at this stage. Note the following:</P>
+
+<UL>
+  <LI>Edge 3-&gt;4 is long because node 4 is not the first node in subloop
+  4's schedule.
+  <LI>Edges 6-&gt;9 and 8-&gt;9 are short because node 9 is the first node
+  in subloop 9's schedule. Edge 6-&gt;9 is short also because node 6 is the
+  last node in a clique of subloop 4's schedule.
+  <LI>Edge 17-&gt;out is long because node 17 is not the last node in a clique
+  of subloop 9's schedule; edge 19-&gt;out is short because node 19 is the
+  last node in a clique.
+</UL>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD>
+<A NAME="figure4"></A><IMG SRC="graphics/control_example_loop2.gif" WIDTH=
+"420" HEIGHT="424" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TH>Figure 4</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>We schedule starting from the header, node 2. We repeatedly apply <A
+HREF="control_schedule.html#alternative1">alternative 1</A> of the linear
+scheduling algorithm of <A HREF="control_schedule.html#phase3d">phase 3d</A>,
+producing the first clique [2, 3, 8]. At this point we must apply <A HREF=
+"control_schedule.html#alternative3">alternative 3</A> to emit loop 4's
+schedule, producing the second clique [7, 4, 5, 6]. Now we can apply <A
+HREF="control_schedule.html#alternative1">alternative 1</A> to add node
+9 to the end of the second clique, which automatically pulls in the rest
+of loop 9's first clique: [7, 4, 5, 6, 9, 10, 11, 18, 19] and pushes loop
+9's other cliques onto the stack T. At this point we apply <A HREF="control_schedule.html#alternative2">alternative
+2</A> to pop these cliques from the stack T, yielding the following linear
+schedule:</P>
+
+<BLOCKQUOTE>
+  <P>[[2, 3, 8], [7, 4, 5, 6, 9, 10, 11, 18, 19], [12, 13, 14], [15, 16,
+  17, 20, 21]]</P>
+</BLOCKQUOTE>
+
+<P>We apply the loop scheduler from <A HREF="control_schedule.html#phase3e">phase
+3e</A>. There is no clique C<FONT SIZE=-2>k</FONT> that satisfies the conditions,
+so we keep the linear schedule.</P>
+
+<H3>Loop 25</H3>
+
+
+<P>The last loop in the main body of our function is loop 25, as illustrated
+in <A HREF="#figure5">Figure 5</A>. This loop is very simple, has no short
+edges, and yields the trivial schedule [[25]].</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD>
+<A NAME="figure5"></A><IMG SRC="graphics/control_example_loop25.gif" WIDTH=
+"96" HEIGHT="96" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TH>Figure 5</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Main Body</H3>
+
+
+<H3>Exception Handlers</H3>
+
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

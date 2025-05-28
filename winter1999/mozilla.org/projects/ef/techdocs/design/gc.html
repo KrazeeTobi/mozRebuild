@@ -1,0 +1,497 @@
+<HTML>
+<HEAD>
+   <META NAME="Author" CONTENT="Warren Harris">
+   <META NAME="Description" CONTENT="The Design and Implementation of the Sport Model Garbage Collector">
+   <META NAME="KeyWords" CONTENT="garbage collection">
+   <TITLE>Design and Implementation of Sport Model</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H1 ALIGN=CENTER>The Design and Implementation of the&nbsp;<BR>
+Sport Model Garbage Collector</H1>
+
+<CENTER>Warren Harris
+<BR>Netscape Communications, Corp.
+<BR>1/19/98</CENTER>
+
+<BR>
+<H2>1. Introduction</H2>
+
+The Sport Model garbage collector was designed to support the memory management
+requirements of the Java language. Sport Model is packaged as a library
+with a C-language API that supports a wide range of garbage collection
+and memory management needs, and is more widely applicable than to just
+Java virtual machine implementations. This paper describes Sport Model's
+design and implementation, and illustrates how it can be integrated into
+C and C++ applications.
+
+<P>In garbage collector parlance, Sport Model can be described as a hybrid
+generational, mark and deferred sweep, mostly copying garbage collector
+with an integrated malloc/free system. However it goes farther than that
+in that numerous subtle and interacting details factor into a coherent
+and efficient system. The design goals of Sport Model, simply stated, are:
+<UL>
+<LI>
+to support the features required by Java,
+
+<LI>
+minimize garbage collection pause times,
+
+<LI>
+minimize object allocation time,
+
+<LI>
+minimize heap size,
+
+<LI>
+interoperability with native code (JIT) compilers,
+
+<LI>
+interoperability with C and C++,
+
+<LI>
+debuggability of client programs, and
+
+<LI>
+portability.
+</UL>
+Each of these will be discussed in detail in the next section, along with
+the supporting rationale.
+<H2>2. Design</H2>
+
+
+<H3>2.1 Features required by Java</H3>
+
+The Java language requires features to be supported by the garbage collector
+that go beyond the basic automatic reclamation of objects:
+
+<P><B>Circular references</B>: The Java language requires all objects not
+reachable from a set of VM roots to be automatically freed. Some garbage
+collection schemes, notably reference counting, cannot reclaim circular
+chains of otherwise unreferenced objects. We can rule out this class of
+garbage collection algorithms.
+
+<P><B>Finalization</B>: An object's <TT>finalize</TT> method must be run
+whenever no more references to the object can be found, but before the
+object's memory is freed. In addition to basic object finalization, the
+Java VM requires the ability to finalize all remaining finalizable objects
+on system shut-down.
+
+<P><B>Weak references</B>: The <TT>sun.misc.WeakRef</TT> class requires
+weak reference support. <I>Weak references</I> are like normal references
+to objects, except they do not factor into liveness considerations. If
+no other reference to an object can be found except a weak reference, the
+Java language requires the weak reference to be set to <TT>null</TT>. Weak
+references are useful in implementing caches.
+
+<P><B>Support for JNI</B>: The Java Native Method Interface (JNI) allows
+for code written in C and C++ to interact with the Java VM. JNI specifies
+that all <I>local</I> object references given out to native code and held
+on the C runtime stack must be retained and not garbage collected. This
+may be implemented by either employing a <I>conservative</I> garbage collection
+technique, retaining any objects that are potentially referred to by ambiguous
+stack references, or by introducing a level of indirection between local
+references and the objects to which they refer.
+
+<P>Although conservative garbage collection is not strictly required by
+JNI, the way in which array elements are manipulated also factors into
+whether it is an appropriate implementation technique. The <TT>GetArrayElements</TT>
+operation must be called to obtain a native vector of elements, and the
+<TT>ReleaseArrayElements</TT>
+operation must be called when the native code is done manipulating the
+contents. One of two implementation strategies may be used for these operations:
+<OL>
+<LI>
+Return a direct pointer to the array's contents. This requires the object
+to not relocate in memory throughout the duration of its manipulation.
+If a copying collection strategy is used, the object must be <I>pinned</I>
+(forced to not be copied or otherwised moved). Also this requires the object
+to remain live even if the only reference to it is the native code's pointer
+to the array's interior.
+
+<LI>
+Make a copy of the array's contents, and commit changes made to the copy
+when released. Although commiting the copy can become troublesome if multiple
+threads are involved, the main drawback of this strategy is that memory
+must be available for potentially large copies of arrays, and the time
+spent making the copy and then copying it back can become prohibitive.
+</OL>
+These JNI considerations caused the first major design decision for Sport
+Model -- that it should support conservative collection. By supporting
+conservative collection, copies of array contents need not be made. Also,
+conservative collection simplifies the JNI logic which would otherwise
+have to keep track of which object references were currently in use by
+native code. Direct pointers to objects can be given out to native code
+provided that the native code doesn't store them directly in the heap (a
+requirement of JNI).
+
+<P>If copying collection is employed, the garbage collector would need
+the ability to pin array objects when their contents are given out to native
+code. Sport Model does indeed support copying (for reasons described below)
+and consequently it also supports pinning.
+
+<P><B>Per-object hash-codes and monitors</B>: Java requires all objects
+to support <I>hash-codes</I> (per-object unique IDs used for hashing purposes)
+and to support monitor operations. These can be supported by storage extrinsic
+to the object (e.g. a monitor cache) or by allocating fields for them within
+the object itself.
+
+<P>Adding fields to every object for these seldom-used operations can be
+very costly in terms of space. Data was taken in Communicator while visiting
+numerous pages containing applets, and the following graph of numbers of
+objects distributed by size was produced:
+<CENTER>
+    <IMG SRC="graphics/Sizes.gif" ALT="Object Size Distribution" BORDER=0 HEIGHT=360 WIDTH=636>
+</CENTER>
+
+<P>From this graph we can see that most objects are small, and the percentage
+cost of per-object fields is high (moreover, this graph shows skewed results
+due to the 2 word (8 bytes on a 32-bit machine) object-handle overhead
+used by our current VM). A <A HREF="http://warp/java/ElectricalFire/design/monitors.html">clever
+design</A> by the Electrical Fire team can reduce both the monitor and
+hash-code overhead to a single word per object. Nevertheless, this can
+be all be handled external to the garbage collector and is therefore not
+dealt with directly by Sport Model.
+<H3>2.2 Minimizing garbage collection pause times</H3>
+
+Reducing the pause time incurred by garbage collection was the number one
+goal after supporting the Java language. Although pause time hasn't been
+a significant problem in the interactive client (applet) environment, it
+is a particular problem for the web server environment where it is critical
+that we not pause all threads while some particular thread forces a garbage
+collection.
+<H4>Generation scavenging</H4>
+
+The following graphs illustrate data accumulated during the same run of
+Communicator as the previous graph and show the accumulated lifetimes of
+objects broken out by size. Units of lifetime are in number of collections
+-- a collection was forced after every object allocation:
+<CENTER>
+  <IMG SRC="graphics/Lifetimes.gif" ALT="Object Lifetime Distribution" BORDER=0 HEIGHT=397 WIDTH=637> 
+  <BR>
+  <IMG SRC="graphics/LifetimesCloseup.gif" ALT="Object Lifetime Distribution (closeup)" BORDER=0 HEIGHT=373 WIDTH=637>
+</CENTER>
+
+<P>From these graphs we can see that a very large percentage of objects
+become garbage almost immediately -- indeed before the next object is created.
+This data supports the <I>generational hypothesis</I> which states that
+the probability that an object will become garbage is inversely proportional
+to the number of collections it has survived, i.e. that newly created objects
+are highly likely to be temporary.
+
+<P>A technique known as <I>generation scavenging</I> attempts to exploit
+this statistic by partitioning the heap into a series of <I>generations</I>,
+and promoting objects from generation to generation as they survive some
+number of collections. This allows long-lived objects to be examined much
+less frequently by the collector, minimizing the working set of objects
+which must be examined by the collector, and thereby minimizing the amount
+of time spent collecting. The organization of generations can be depicted
+as follows:
+<CENTER>
+    <IMG SRC="graphics/Generations.gif" ALT="Generations" BORDER=0 HEIGHT=197 WIDTH=361>
+</CENTER>
+Sport Model uses a copying style generation scavenging technique to factor
+long-lived objects from those newly created. Objects are <I>promoted</I>
+by copying them into sub-heaps associated with a generation after they
+have survived some number of collections. Since conservative scanning of
+C runtime stacks is also performed, a <I>mostly-copying</I> technique is
+used in which only those objects that are not referred to by ambiguous
+roots may be copied.
+
+<P>Although copying garbage collection is a simple and effective technique
+for both partitioning the heap into sub-heaps, and maintaining the set
+of visited objects which must be retained for a collection, it has the
+negative effect of requiring additional heap space during the course of
+a collection. The set of old objects must be retained until the copying
+is complete as well as enough space for the newly made copies. Generation
+scavenging minimizes this impact by usually focusing on a single generation,
+but in the worse-case scenario as much as twice as much heap space is required.
+Obviously this can fail for data-intensive applications running under low-memory
+conditions.
+
+<P>For Sport Model, the hybrid nature of its collector comes to the rescue
+during these low-memory conditions. Objects which cannot be copied are
+simply left in place and marked instead, just as are objects referred to
+by conservative roots. This allows for near-100% memory utilization, modulo
+fragmentation concerns which will be discussed below.
+<H4>Object promotion</H4>
+
+A key concern when using generation scavenging is the premature promotion
+of objects. By requiring objects to survive some number of collections
+before promoting them to the next generation, we can be assured of a lower-bound
+on their lifetime, and have a good indication that examining them less
+frequently will not lead to excessive amounts of garbage being retained
+for long periods of time. One technique for measuring the number of survivals
+is to actually place a counter in the object that is incremented for each
+collection.
+
+<P>When the counter exceeds some predetermined value, the object may be
+promoted. However, this leads to additional storage in the object for the
+counter, and is more expensive during the collection process. The counter
+must be incremented and tested for each live object.
+
+<P>Sport Model uses a low-overhead technique to determine when an object
+should be promoted. Two versions of the collection algorithm are used:
+a mark-and-sweep version that is performed most frequently, and a copying
+version that is used far less frequently. The mark-and-sweep algorithm
+has no concern for whether it is time to promote an object or not. It is
+fast and low-overhead. After N uses of the mark-and-sweep algorithm, a
+<I>copy
+cycle</I> takes place. The copying algorithm is then used which will promote
+some objects to the next generation.
+
+<P>In order to not promote objects which were created just before the copying
+algorithm is run, a bit is used in the object header to indicate that at
+least one copying cycle has already transpired for the object. When it
+is time to copy the object, if that bit is not set, it sets it and leaves
+the object in place in the current generation. If the bit is set, the object
+is copied and the bit is cleared in the copy in the new generation. This
+ensures that the object has lived between N and 2N collections, a sufficient
+criterion for promotion to the next generation. The parameter N may be
+tuned dynamically by the system (although currently fixed at 4 for the
+current implementation).
+<H4>Level-two cache concerns</H4>
+
+In addition to minimizing the cost associated with promoting an object,
+use of the mark-and-sweep algorithm has excellent characteristics with
+respect to minimizing level-two cache miss rates experienced during collection.
+Mark-and-sweep far outperforms copying in this regard because it minimizes
+the working set of pages which must be visited during the collection process
+<A HREF="ftp://ftp.cs.colorado.edu/pub/cs/techreports/zorn/CU-CS-528-91.ps.Z">[Zorn
+91]</A>. Copying requires both the old page to be read and updated with
+a forwarding pointer as well as the page containing the new copy. In contrast,
+mark-and-sweep only requires an object's mark-bit to be set.
+
+<P>Sport Model is further optimized for level-two cache concerns in that
+it stores all object headers together on pages wholly dedicated to object
+headers, and minimizes them to one byte per object. Objects are associated
+with their corresponding headers by calculating the index of an object
+on its containing page (pages contain objects all of the same size). The
+index is used to obtain the object header in the object header array associated
+with a page descriptor for that page. Although the cost of looking up the
+object header is greater than just accessing the first word of the object
+as is done in most systems, it is relatively inexpensive as the division
+is performed by a table-lookup algorithm, and saving occurs because of
+the effects of increased locality of reference on the level-two cache.
+<H4>Multiprocessor considerations</H4>
+
+A primary concern in a multiprocessor environment is that garbage collection
+not suspend all threads while a collection takes place, particularly those
+threads that are not participating in computations involving garbage collected
+objects. For a web server environment, hundreds of threads may be servicing
+requests a given instance, while only a very small number are executing
+Java code in response to a request.
+
+<P>Although Sport Model currently makes no provision for multiprocessor
+environments, it is possible with some minor rearchitecting to allow for
+multiple youngest generation sub-heaps, one per processor. This would allow
+Java threads assigned to different processors to allocate objects independently,
+without sharing a global lock on the sub-heap, and allow the youngest generation
+for each processor to be collected independently. Only when a copying collection
+occurs (which is far less frequent) would a lock need to be obtained on
+the globally shared second generation sub-heap.
+<CENTER>
+    <IMG SRC="graphics/Multiprocessor.gif" ALT="Multiprocessor Organization" BORDER=0 HEIGHT=233 WIDTH=420>
+</CENTER>
+
+<P>One consideration with this sort of architecture is that additional
+rules would come into play about passing pointers between threads running
+on different processors. Because the write barrier works by recording modified
+pages and then uses this information to search for older objects that point
+to younger ones, modifications would have to be made to accommodate pointers
+made between youngest generations associated with different processors.
+This should be doable with only a minor additional penalty at garbage collection
+time.
+
+<P>This multiprocessor work has not been done due to lack of support for
+multiple processors in the low-level thread runtime system (NSPR).
+<H3>2.3 Minimizing object allocation time</H3>
+
+
+<UL>
+<LI>
+lazy sweeping
+
+<LI>
+minimizing collect time
+</UL>
+
+<H3>2.4 Minimizing heap size</H3>
+
+
+<UL>
+<LI>
+per-object overhead
+
+<UL>
+<LI>
+power-of-2 + buddy-system allocation
+
+<LI>
+discontiguous object headers
+
+<UL>
+<LI>
+division algorithms
+</UL>
+</UL>
+
+<LI>
+fragmentation
+
+<UL>
+<LI>
+copying to compact heap
+</UL>
+</UL>
+
+<H3>2.5 Interoperability with native code (JIT) compilers</H3>
+
+
+<UL>
+<LI>
+scavenging stack frames
+
+<LI>
+scavenging registers
+
+<LI>
+pausing threads at safe points
+</UL>
+
+<H3>2.6 Interoperability with C and C++</H3>
+
+
+<UL>
+<LI>
+integral malloc/free implementation
+
+<LI>
+write barrier macros
+</UL>
+
+<H3>2.7 Debuggability of client programs</H3>
+
+
+<UL>
+<LI>
+debugging write barrier
+
+<LI>
+memory visualization and analysis tools
+
+<LI>
+memory dumping/object traversal tools
+</UL>
+
+<H3>2.8 Portability</H3>
+
+
+<H2>3. Implementation</H2>
+
+
+<CENTER>
+  <IMG SRC="graphics/Architecture.gif" ALT="Architecture Diagram" BORDER=0 HEIGHT=313 WIDTH=205> 
+  <P><IMG SRC="graphics/SMGens.gif" ALT="Organization of Generations" BORDER=0 HEIGHT=305 WIDTH=261>
+</CENTER>
+
+<LI>
+&nbsp;architecture
+
+<UL>
+<LI>
+low-level page manager
+
+<LI>
+high-level heap manager
+
+<LI>
+application program
+
+<UL>
+<LI>
+responsible for locking, roots, write barrier, etc.
+</UL>
+</UL>
+
+<LI>
+implementation
+
+<UL>
+<LI>
+data structures
+
+<UL>
+<LI>
+pages
+
+<LI>
+page descriptors
+
+<UL>
+<LI>
+large objects
+</UL>
+
+<LI>
+pools
+
+<UL>
+<LI>
+malloc pool
+</UL>
+
+<LI>
+generations
+
+<LI>
+heap
+
+<LI>
+classes
+
+<UL>
+<LI>
+object classes
+
+<LI>
+array classes
+
+<LI>
+primitive classes
+</UL>
+
+<LI>
+objects and arrays
+
+<LI>
+object descriptors
+
+<LI>
+card descriptors
+</UL>
+
+<LI>
+collection algorithm
+
+<UL>
+<LI>
+collection triggered by amount allocated or allocation failure
+
+<LI>
+some number of mark-and-sweep collections
+
+<LI>
+followed by less-frequent promoting copying collections
+
+<LI>
+collection steps
+</UL>
+</UL>
+
+<H2>4. The Sport Model API</H2>
+
+<I>later</I>
+</BODY>
+</HTML>

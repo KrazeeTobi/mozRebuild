@@ -1,0 +1,467 @@
+<HTML>
+<HEAD>
+<TITLE>Unix build instructions</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+  
+
+<H1>Building the Mozilla client on Unix platforms</H1>
+
+<H2>
+Daniel Nunes, <TT><A HREF="mailto:leaf@mozilla.org">leaf@mozilla.org</A></TT></H2>
+<!-- hhmts start -->
+Last modified: Tue Feb 16 12:03:19 PST 1999
+<!-- hhmts end -->
+<P>
+1. <A HREF="#s1">Introduction</A>
+<BR>
+2. <A HREF="#s2">Other Unix Build pages </A>
+<BR>
+3. <A HREF="#s3">Requirements</A>
+<BR>
+4. <A HREF="#s4">Get the Code </A>
+<BR>
+5. <A HREF="#s5">Build the Lizard</A>
+<BR>
+6. <A HREF="#s6">After the Build</A>
+<BR>
+7. <A HREF="#s7">Common Problems </A>
+</p>
+<br>
+<H2><A NAME="s1">1. Introduction</A></H2>
+
+<P>
+Perhaps you are interested in building classic Mozilla, before the 
+fall of the old layout engine, and the rise of the new. If so, the
+<B><A HREF="../docs/tplist/catBuild/classic-unix.html">Classic Mozilla Build document</A></B> 
+is what you're looking for.
+
+<P>
+ 
+<P>
+What this document is: A guide to building the Mozilla application.
+<BR>
+This includes:
+<OL>
+<LI> A listing of the development tools you will need to build Mozilla. </LI>
+<LI> A sample set of commands to build Mozilla using the Autoconf 
+build system. </LI>
+</OL>
+<P>
+If you're looking for documentation on developing features or fixing bugs,
+the Mozilla
+<A HREF="../docs/tplist/tplist.html">Technical Documents</A> or 
+<A HREF="../library.html"> Library </A>
+are probably what you're looking for.
+<P>
+<HR>
+<H2><A NAME="s2">2. Other Unix Build pages</A></H2>
+<UL>
+<li>Redhat on Intel <a href="./redhat-on-intel.html">build instructions</a>, 
+	intended for making life easy through rpms.
+	</li>
+<LI><A HREF="making-additions.html">"So you want to add something
+    (and not break the build) ..."</a> A guide to adding files and
+    directories without breaking any of the three platforms.</LI>
+<LI><A HREF="../unix/irix.html">Irix build foibles</A> (may be helpful
+for those porting to other Unix platforms as well; unfortunately it's
+out of date)</LI>
+</UL>
+
+<HR>
+<H2><A NAME="s3">3. Requirements</A></H2>
+Your hardware should be equal to, or better than:
+<UL>
+32 MB RAM, 128 MB swap (64 MB RAM recommended)
+</UL>
+<P>
+
+The following software should be installed:
+<UL>
+<LI>
+<A HREF="http://egcs.cygnus.com"><B>egcs</B></A> 
+version ? 1.0.3 (<I>recommended</I>), 
+<A HREF="http://www.gnu.org/software/gcc/gcc.html"><B>gcc</B></A>
+ version 2.7.2.x (2.8.x still has some bugs),<br>
+or your platform's native C/C++ compiler.
+
+<LI>Perl 5
+
+<LI>GNU make 3.74 or higher.<br>
+3.77 seems to have shipped a ($wildcard) bug which you'll need to build NSPR;<br>
+revert to 3.76.1 until this is fixed.
+
+<LI><A HREF="../projects/autoconf/">Autoconf</A> 2.12 (which
+    requires GNU <A HREF="http://www.seindal.dk/rene/gnu">m4</A>).
+    <UL>
+    Download gcc, gmake and autoconf from
+    <A HREF="ftp://prep.ai.mit.edu/pub/gnu/">prep.ai.mit.edu</A>
+    </UL>
+<P>
+<LI><B><A HREF="../cvs.html">CVS</A> 1.9 or higher.</B><BR>
+    Anonymous cvs checkout from mozilla.org:<br>
+    <CODE>setenv CVSROOT :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot</CODE>
+<P>
+    Log in to the server with: <CODE>cvs login</CODE>,
+    using the password <tt>anonymous</tt>. 
+    You only need to do this once.<P>
+<P>
+<LI><B><A HREF="http://www.gtk.org/download.html">GTK+</A> and GLib 1.1.13 or higher.</b>
+Earlier versions may cause startup crashes or other odd behavior.<BR>
+<ul>
+    <li>For <b>Debian</b> Packages, try looking in:<BR>
+    <UL>
+    <LI><A HREF="http://www.debian.org/Packages/unstable/libs/">
+	      http://www.debian.org/Packages/unstable/libs/</A></LI>
+    </UL></li><br>
+    <li><b>Red Hat:</b> RPMs for 1.1.13 for intel can be found at 
+    <a href="ftp://ftp.gtk.org/pub/gtk/binary/devel/RPMS/">the official
+    gtk site</a>, or at
+    <A HREF="http://www.productivity.org/~bryner/">http://www.productivity.org/~bryner/</A><BR>
+    Remove any old
+    glib-devel and gtk+-devel packages already installed on your machine.
+    <UL>
+    <CODE>rpm -e glib-devel<BR>
+    rpm -e gtk+-devel</CODE>
+    </UL>
+    Download new glib, glib-devel, gtk+, and gtk+-devel packages into the
+    same directory and install them with one commmand.
+    <UL>
+    <CODE>rpm -i *.rpm</CODE>
+    </UL></li><br>
+    <li><b>CVS:</b> Download the glib & gtk+ source from gnome.org:<br>
+    <ul>
+	<code>setenv CVSROOT :pserver:anonymous@anoncvs.gnome.org:/cvs/gnome<br>
+          cvs -z3 co glib gtk+
+    </code>
+    </ul></li>
+    <br>
+    <li><b>Solaris:</b>
+    <ul>
+	<li> You currently have to configure with
+	  "<b><code>--enable-xim=no</code></b>" (see <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=2128">bug #2128</a>)
+	<li> GTK+ requires X11R6. Solaris 2.6 has X11R6. Some versions
+	  of 2.5.1 have it. Otherwise, you may be able to get a patch or 
+	  install your own.
+    </ul>
+    
+</ul>
+
+<P>
+<LI><B><A HREF="../docs/refList/refNSPR/">NSPR</A> Library</B> (Netscape Portable Runtime)<BR>
+There are several ways to get <b>NSPR</b> onto your system:<br>
+<br>
+<ul>
+<li>
+<A HREF="ftp://ftp.mozilla.org/pub/mozilla/libraries/RPMS/i386/">NSPR rpms</A>
+, get both the rpms prefixed with 'nspr'.<br><br>
+</li>
+<li><b>Manually</b> pull the NSPR source and build it.<br><br>
+    <CODE>
+	# Get NSPR code<br>
+    setenv CVSROOT :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot<br>
+    cvs co NSPR<br>
+<BR>
+    # Then build it:<BR>
+    # See <a href="http://www.mozilla.org/docs/refList/refNSPR/platforms.html">the NSPR docs</a> for thread support for your particular platform.<br>
+    # Redhat Linux seems to be working well with USE_PTHREADS=1 here,<br>
+    # and a corresponding --with-pthreads options to <a href="#s4">configure</a>.<br>
+    cd mozilla <BR>
+    gmake -C nsprpub DIST=/usr/local/nspr NSDISTMODE=copy NS_USE_GCC=1 \<BR>
+    MOZILLA_CLIENT=1 NO_MDUPDATE=1 NS_USE_NATIVE= USE_PTHREADS=1 export <BR>
+    </CODE>
+    <BR>    
+    Your <CODE>LD_LIBRARY_PATH</CODE> must include the path to the NSPR
+    shared objects.
+    For the above <CODE>DIST</CODE> specification, this means adding 
+    <CODE>/usr/local/nspr/lib</CODE> to <CODE>LD_LIBRARY_PATH</CODE> 
+    (either:
+     <BR>
+<NOBR> 
+    <CODE>setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/usr/local/nspr/lib</CODE>
+</NOBR> 
+     <BR>
+      or 
+     <BR>
+<NOBR> 
+    <CODE>export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/nspr/lib</CODE>
+</NOBR> 
+     .<BR>
+     If you get an error like "No such variable" then omit the 
+     <CODE>${LD_LIBRARY_PATH}:</CODE> part
+   )<BR> <BR>
+</li>
+<li>Use <b>client.mk</b>.  This automates the manual step described above.<br>
+Note: client.mk seems to be falling behind, try the manual steps first.<br>
+<br>
+<code># Pull NSPR source and build it<br>
+gmake -f mozilla/client.mk nspr</code>
+</li>
+</ul>
+</UL>
+
+<HR>
+<H2><A NAME="s4">4. Get the Code</A></H2>
+<P>
+
+There are two principal ways of manually getting the code,
+<A HREF="../download.html"> ftp</A> and
+<A HREF="../cvs.html"> CVS</A>.
+CVS will provide the most current code for building, but is
+slower than ftp. Ftp drops are generally produced once per month,
+and are known to compile on some machine, somewhere.
+<BR><BR>
+<CODE># Manually pull the right source<br>
+setenv CVSROOT :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot<br>
+cvs co SeaMonkeyEditor<BR></CODE>
+<br>
+or<br>
+<br>
+<CODE># Automagically do the pull; this will pull branches if needed.<br>
+setenv CVSROOT :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot<br>
+cvs co mozilla/client.mk<BR>
+gmake -f mozilla/client.mk checkout</CODE>
+<br>
+<BR>
+This should pull all the right source for building the viewer and apprunner.
+<P>
+<HR>
+<H2><A NAME="s5">5. Build the Lizard</A></H2>
+<h3>5.1 Manually drive the build</h3>
+<CODE>
+<ul>
+cd mozilla<br>
+<br>
+# Configure the build, putting objects in the source tree.<br>
+#<br>
+# For configure options, run "<b>./configure --help</b>".<br>
+# The level of <a href="http://www.mozilla.org/docs/refList/refNSPR/platforms.html">nspr and thread support</a> will depend on the OS.<br>
+# If you specified USE_PTHREADS when building NSPR, you'll<br>
+# need to add "--with-pthreads"; we continue with the<br>
+# Redhat/Linux example below:<br>
+<br>
+./configure --with-nspr=/usr/local/nspr --with-pthreads --enable-editor --enable-debug<br>
+<br>
+
+# Building on more than one OS? Create an external object tree:<br>
+#<br>
+# mkdir obj-`./build/autoconf/config.guess`<BR>
+# cd obj-`./build/autoconf/config.guess`<BR>
+#<br>
+# ../configure --with-nspr=/usr/local/nspr --with-pthreads --enable-editor --enable-debug<BR>
+<br>
+gmake depend<BR>
+gmake<BR>
+</ul>
+</CODE>
+<P>
+Once you have configured, you only have to run 
+<b><code>configure</code></b> if you add
+or remove Makefile.in files (cvs update can do this! beware!). The list
+of makefiles is in <b><code>mozilla/allmakefiles.sh</code></b>
+<P>
+If a Makefile.in file is changed (not added or deleted), you only have
+to run <b><code>./config.status</code></b>.
+<p>
+If you change configure.in, cd to mozilla, and run 
+<b><code>autoconf</code></b>.
+This generates a new configure script. (When
+you checkin configure.in, cvs will run autoconf and check in a new
+configure script for you).
+
+<h3>5.2 Automated build</h3>
+<code># (this should find the client.mk-built NSPR libraries).<br>
+# One-liner for the above manual step.<br>
+# Note: client.mk seems to be falling behind, try manual steps above first.<br>
+<br>
+gmake -f mozilla/client.mk build<br>
+</code>
+
+<br>
+<HR>
+<H2><A NAME="s6">6. After the build </A></H2>
+<UL>
+<LI> <CODE>cd obj*/dist/bin</CODE> and you should see links to the objects you
+      need to run: <CODE>viewer</CODE> and <CODE>apprunner</CODE>. 
+
+<LI>On most unixen <CODE>LD_LIBRARY_PATH</CODE> must be set to wherever 
+the necessary libraries are (the same directory as the executables, in this
+case).
+
+<UL>
+<LI>On HP-UX, the equivalent environment variable is <CODE>SHLIB_PATH</CODE>.
+<LI>On AIX, the equivalent environment variable is <CODE>LIBPATH</CODE>.
+</UL>
+<LI>Set <CODE>MOZILLA_HOME</CODE> to the directory the binary resides in 
+   (the absolute, not relative, path) as well.
+<LI>Update your tree by re-checking out the source, e.g. repeating the initial checkout process.
+</UL>
+<HR>
+<H2><A NAME="s7">7. Common Sticking Points</A></H2>
+<UL>
+<LI>Make sure <CODE>$LD_LIBRARY_PATH</CODE> includes the
+paths to your NSPR and GTK libraries.
+(For instance, you might set it to <CODE>.:../../nspr/lib</CODE>).
+<P>
+<LI>Having more than one installation of gtk can cause problems
+(i.e. if you compile one version yourself and upgrade by
+installing an rpm). You'll probably need to remove the older libraries
+and gtk-config script.
+<P>
+<LI>Not setting <CODE>MOZILLA_HOME</CODE> causes a crash upon startup. 
+If you run the executables from anywhere
+other than obj*/dist/bin, you must set the environment variable
+<CODE>MOZILLA_HOME</CODE>
+to point to the <I>absolute path</I> of the dist/bin directory.
+<P>
+<LI>I'm sure there are bound to be others. Send 
+<A HREF="mailto:leaf@mozilla.org"> me</A> mail. 
+</UL>
+<HR>
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>
