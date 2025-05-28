@@ -1,0 +1,1743 @@
+<HTML>
+<HEAD>
+<TITLE>SeaMonkey Message Compose UE Spec</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+<!--This file created 5:24 PM  4/16/99 by Claris Home Page version 3.0-->
+
+   
+   <X-CLARIS-WINDOW TOP=25 BOTTOM=596 LEFT=7 RIGHT=735>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+
+
+<P>&nbsp; <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=2 WIDTH="100%">
+   <TR>
+      <TD VALIGN=bottom>
+         <P><FONT SIZE="+1">Sea-Monkey Messenger</FONT></P>
+      </TD>
+      <TD VALIGN=bottom>
+         <P><DIV ALIGN=right><FONT SIZE="+1">UI Specification</FONT></DIV></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#66CCCC">
+      <TD>
+         <P><FONT SIZE="+3"><B>Message Compose</B></FONT></P>
+      </TD>
+      <TD>
+         <P><DIV ALIGN=right><FONT SIZE="-1"><B><I>Last Modification:
+         <SCRIPT LANGUAGE=JavaScript>document.write(document.lastModified);</SCRIPT>
+         </I></B></FONT></DIV></P>
+      </TD>
+   </TR>
+</TABLE>
+ <TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0 WIDTH="100%">
+   <TR>
+      <TD VALIGN=top WIDTH="49%">
+         <P><B>Author:</B> Jennifer Glick&nbsp;<BR>
+         <B>Creation Date:</B> 12 Feb 1999<BR>
+         <B>Last Modified:</B> 16 April 1999</P>
+      </TD>
+      <TD VALIGN=top>
+         <P><B>Status:</B> UE3. Overall direction clear, most major
+         issues resolved but a few minor issues still pending.</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD VALIGN=top WIDTH="49%">
+         <P><B>Quicklinks:</B></P>
+         
+         <BLOCKQUOTE><A HREF="#Compose">Compose Message
+            Window</A><BR>
+            <A HREF="#ToolbarButtons">Toolbar Buttons</A><BR>
+            <A HREF="#Security">Security</A><BR>
+            <A HREF="#Attachments">Attachments</A><BR>
+            <A HREF="#FCC">Fcc</A><BR>
+            <A HREF="#Ender">Ender Toolbar</A></BLOCKQUOTE>
+      </TD>
+      <TD VALIGN=top>
+         <P><B>Feature Team</B></P>
+         
+         <BLOCKQUOTE><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0>
+               <TR>
+                  <TD VALIGN=top>
+                     <P><FONT SIZE="-1">Engineering</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><FONT SIZE="-1">Jean-Francois &amp; Phil
+                     Peterson</FONT></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">Marketing</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><FONT SIZE="-1">Sol Goldfarb</FONT></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">QA</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><FONT SIZE="-1">Peter Mock</FONT></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">Docs</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><FONT SIZE="-1">Simone Cox</FONT></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">Usability</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><FONT SIZE="-1">Lake Roca</FONT></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">UE</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><FONT SIZE="-1">Jennifer Glick</FONT></P>
+                  </TD>
+               </TR>
+            </TABLE>
+         </BLOCKQUOTE>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<H2>
+
+<HR SIZE=4 WIDTH="40%" ALIGN=left NOSHADE color="#66cccc">
+
+Open Issues</H2>
+
+<H2>
+
+<HR SIZE=4 WIDTH="40%" ALIGN=left NOSHADE color="#66cccc">
+
+Summary</H2>
+
+<P>This document covers the new features and changes to the Mail
+Compose window for SeaMonkey (5.0). Changes and clarifications from
+the <A HREF="http://gooey/client/nova/specs/mailnews/compose/">Nova
+Compose Message</A> UI specification are discussed.</P>
+
+<P>For specific details regarding the UI of the Address Book
+components, please see the <A HREF="http://gooey/client/5.0/specs/mail/AddressBook/AddressBook.shtml">Address
+Book UE spec</A>.</P>
+
+<P>For specific details regarding the UI of the Ender components,
+please see the <A HREF="http://gooey/client/5.0/specs/composer/Ender.shtml">Ender
+UE spec</A>.</P>
+
+<H3>Goals</H3>
+
+<P>UE goals for 5.0 include:</P>
+
+<UL>
+   <LI>integrate new features into the UI</LI>
+   
+   <LI>modifying some of the areas in the current 4.5 release which
+   users found confusing</LI>
+   
+   <LI>update the UI to reflect the new cross platform look and feel
+   
+   <H4>Modified Features</H4>
+   
+   <UL>
+      <LI>Rework the "Tabs" area (Addressing, Attachments and
+      Options) on the Mail Compose window. Users are often unaware of
+      the functionality in the hidden tabs (Attachments and Options).
+      The Tabs also create more steps for the user.
+      
+      <P><IMG SRC="images/tabs.gif" WIDTH=485 HEIGHT=79 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P></LI>
+      
+      <LI>Rework the way Attachments are currently added and
+      displayed in a mail message being composed. There should be
+      more consistency between how attachments are handled when a
+      user is composing a mail message and when a user is reading a
+      mail message.</LI>
+      
+      <LI>Rework the items currently in the "Options" tab.</LI>
+      
+      <LI>Make it easier to attach a web page by letting users select
+      from their bookmarks.</LI>
+      
+      <LI>Update the way security issues (encryption/signing) are
+      displayed in the UI.</LI>
+   </UL>
+   
+   <H4>New Features</H4>
+   
+   <UL>
+      <LI>Users will have the ability to have multiple accounts in
+      5.0. There needs to be a way for users to select which account
+      the message is "From". The user can change the "From" account
+      at send time.</LI>
+      
+      <LI>The ability to change the Signature file on a per message
+      basis.</LI>
+   </UL>
+   </LI>
+</UL>
+
+<H3>Definitions</H3>
+
+<BLOCKQUOTE><DL>
+      <DT><B>Address Panel</B></DT>
+      
+      <DD>The pane exposed at the top of the Compose window which
+      allows users to enter recipients to the email message&nbsp;and
+      to set other per message properties.</DD>
+      
+      <DT><B>Completion Picker</B></DT>
+      
+      <DD>The small popup dialog that displays the list of ambiguous
+      names for completion. Based off of the matches from pinpoint
+      addressing.</DD>
+      
+      <DT><B>Recipient Type</B></DT>
+      
+      <DD>One of the following addressing designations: To, Cc, Bcc,
+      Group, Reply-to, Follow-up, or Newsgroup.</DD>
+   </DL>
+</BLOCKQUOTE>
+
+<H3>&nbsp;</H3>
+
+<H3>User Tasks</H3>
+
+<BLOCKQUOTE><TABLE BORDER=2>
+      <TR>
+         <TD BGCOLOR="#66CCCC">
+            <P><B>Basic Tasks</B></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <UL>
+               <LI>Compose a message in Plain text</LI>
+               
+               <LI>Compose a message in HTML</LI>
+               
+               <LI>Reply to a mail message</LI>
+               
+               <LI>Forward a mail message</LI>
+               
+               <LI>Add a Subject line</LI>
+               
+               <LI>Addressing a message to a raw email address</LI>
+               
+               <LI>Addressing a message to an Address Book entry
+               using auto-complete</LI>
+               
+               <LI>Use the completion picker to select a unique email
+               address from a list of matches</LI>
+               
+               <LI>Send a message as: To, cc, bcc, Group, Reply-to,
+               Follow-up, Newsgroup, (or Fax ?)</LI>
+               
+               <LI>Spell check</LI>
+               
+               <LI>Set Priority of message</LI>
+               
+               <LI>Add recipient from the Address Book</LI>
+               
+               <LI>Print a message</LI>
+            </UL>
+         </TD>
+      </TR>
+      <TR>
+         <TD BGCOLOR="#66CCCC">
+            <P><B>Intermediate Tasks</B></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <UL>
+               <LI>Save a message as a Template</LI>
+               
+               <LI>Save a copy of a sent message in a user specified
+               folder</LI>
+               
+               <LI>Use the "Quote" feature when Replying or
+               Forwarding (even though Quoting for Forwarding is not
+               a Preference or included in the Forward drop down
+               menu, uses can quote a message being forwarded by
+               clicking on the "Quote" button once they have started
+               a Forward message).</LI>
+               
+               <LI>Attach a local file</LI>
+               
+               <LI>Attach/send a web page</LI>
+               
+               <LI>Attach a signature file</LI>
+               
+               <LI>Attach a VCard</LI>
+               
+               <LI>Save a message as a file</LI>
+               
+               <LI>Save a message as a draft</LI>
+               
+               <LI>Request Return Receipt</LI>
+               
+               <LI>If multiple accounts, specify who the message is
+               "From"</LI>
+               
+               <LI>Set Basic Mail Preferences (Default reply
+               behavior, etc.) (in the Preferences area)</LI>
+            </UL>
+         </TD>
+      </TR>
+      <TR>
+         <TD BGCOLOR="#66CCCC">
+            <P><B>Advanced Tasks</B></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <UL>
+               <LI>Edit the HTML source code?</LI>
+               
+               <LI>Encrypt a message</LI>
+               
+               <LI>Sign a message</LI>
+               
+               <LI>Determine which SMTP server to use (if we decide
+               to use multiple SMTP servers)</LI>
+               
+               <LI>Set Advanced Mail Preferences</LI>
+            </UL>
+         </TD>
+      </TR>
+   </TABLE>
+</BLOCKQUOTE>
+
+<H2>
+
+<HR SIZE=4 WIDTH="40%" ALIGN=left NOSHADE color="#66cccc">
+
+Design Cheatsheet</H2>
+
+<H3>Main Window Access</H3>
+
+<BLOCKQUOTE>Access points in the <B>Main Messenger Mail</B> window
+   for the<B> Compose Message </B>window:
+   
+   <P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=4>
+      <TR BGCOLOR="#CCCCCC">
+         <TD VALIGN=top>
+            <P><B>Toolbar</B></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><B>Menu</B></P>
+         </TD>
+         <TD>
+            <P><B>Msg Context Menu</B></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P>New Message</P>
+         </TD>
+         <TD VALIGN=top>
+            <P><B>Message Menu</B></P>
+            
+            <P>New Message<BR>
+            Reply<BR>
+            Reply to all<BR>
+            Forward<BR>
+            Forward As ( Inline, Attachment)<BR>
+            Edit Message as New</P>
+         </TD>
+         <TD VALIGN=top>
+            <P><B>Folder selected:</B><BR>
+            - New Message</P>
+            
+            <P><B>Message selected:</B><BR>
+            - Reply to Sender Only<BR>
+            - Reply to Sender and All Recipients<BR>
+            - Forward as Inline<BR>
+            - Forwarded as Attachment</P>
+         </TD>
+      </TR>
+   </TABLE>
+   </P>
+   
+   <P>Access points in the <B>Compose Message</B> window for
+   <B>Compose Message</B>:</P>
+   
+   <P><TABLE BORDER=1 CELLSPACING=0 CELLPADDING=4>
+      <TR BGCOLOR="#CCCCCC">
+         <TD VALIGN=top>
+            <P><B>Toolbar</B></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><B>Menu</B></P>
+         </TD>
+         <TD>
+            <P><B>Msg Context Menu</B></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P>None</P>
+         </TD>
+         <TD VALIGN=top>
+            <P><B>File Menu</B></P>
+            
+            <P>New _-&gt; Message</P>
+         </TD>
+         <TD VALIGN=top>
+            <P>None</P>
+         </TD>
+      </TR>
+   </TABLE>
+   </P></BLOCKQUOTE>
+
+<H2>
+
+<HR SIZE=4 WIDTH="40%" ALIGN=left NOSHADE color="#66cccc">
+
+Design Details</H2>
+
+<H3><A NAME=Compose></A>Compose Message Window</H3>
+
+<BLOCKQUOTE>General changes to the Compose Message window are
+   described here.
+   
+   <P><TABLE BORDER=1>
+      <TR>
+         <TD VALIGN=top>
+            <P><B>Current Window (4.5):</B></P>
+            
+            <P><IMG SRC="images/PCcompose.jpg" WIDTH=599 HEIGHT=404 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><B>Proposed Window (5.0):</B></P>
+            
+            <P><B><IMG SRC="images/Compose1e.gif" WIDTH=612 HEIGHT=454 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></B></P>
+            
+            <P><B>Other Variations -1</B></P>
+            
+            <P><IMG SRC="images/Compose1a.gif" WIDTH=612 HEIGHT=454 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+            
+            <P><B>Other Variations -2</B></P>
+            
+            <P><IMG SRC="images/Compose1c.gif" WIDTH=612 HEIGHT=454 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+            
+            <P><B>Other Variations -3</B></P>
+            
+            <P><IMG SRC="images/Compose1b.gif" WIDTH=612 HEIGHT=454 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+            
+            <P><B>Other Variations - 4</B></P>
+            
+            <P><IMG SRC="images/Compose1d.gif" WIDTH=612 HEIGHT=454 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><B>General Changes:</B></P>
+            
+            <UL>
+               <LI>Incorporation the new cross platform look and
+               feel.</LI>
+               
+               <LI>Tabs (Address, Attachment, Options) are removed.
+               Most users are not aware of the purpose of the tabs or
+               what kinds of features they contain.</LI>
+               
+               <LI>"Options" button is removed from the Toolbar (This
+               button brought the Options tab to the front). There
+               will no longer be an "Options" tab. Items currently on
+               the "Options" tab will be exposed to the user in other
+               ways.</LI>
+               
+               <LI>"Communicator" menu is changed to "Tasks". Surveys
+               have shown the majority of users have no idea what is
+               "Communicator".</LI>
+               
+               <LI>Remove the "Tools" menu. Items currently in this
+               menu are moved to other menus.</LI>
+               
+               <LI>Add a "Message" menu. All options related to the
+               current message will be grouped here, such as
+               Priority, Return Receipt, Fcc, Signature, etc.</LI>
+               
+               <LI>"From" non-editable dropdown list is added. If a
+               user has multiple accounts, they can choose from which
+               account the message will be show as from. This drop
+               down menu will display a list of multiple accounts for
+               the current user. If no other accounts are available,
+               there are no other options in the list. The user
+               defined account name is not displayed as part of the
+               message header when messages are sent (i.e., "Netscape
+               Work Account").</LI>
+               
+               <LI>Format" editable drop down list is removed from
+               the Options tab and moved to the "Format" menu. The
+               default action set by the user in preferences is
+               displayed, but users can change this on a per message
+               basis. For example, I normally have it set to ask me,
+               but I know for this particular message that the person
+               can only read plain text, so I change to format to
+               plain text right here. <B>Note:</B> If the drop down
+               is changed to "Plain Text only" the Ender Toolbar is
+               disabled.</LI>
+               
+               <LI>"Priority" editable drop down list moved to the
+               "Message" menu.</LI>
+               
+               <LI>"Security" button is removed from the Toolbar.
+               Digital Signature and Encryption are displayed as drop
+               down menus in the status bar area (see "<A HREF="#Security">Security</A>"
+               below). Note: the majority of users currently do Not
+               use these features.</LI>
+               
+               <LI>"On-line" is displayed as a drop down list in the
+               status bar area instead of an icon. Users can use the
+               drop down list to toggle between on-line and off-line
+               as well as get information/help about this feature.
+               There is a push for 5.0 to convert current icons to
+               text where appropriate.</LI>
+               
+               <LI>Attachments drop area is moved from the hidden tab
+               to the Addressing area. This gives better feedback to
+               users when attachments are included. Attachments
+               button remains on the Toolbar OR is moved above the
+               attachments drop area (tbd).</LI>
+               
+               <LI>"Return Receipt" is moved to the "Message" menu OR
+               the Address Panel (previously in the Options
+               tab).</LI>
+            </UL>
+         </TD>
+      </TR>
+   </TABLE>
+   </P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<H2><A NAME=ToolbarButtons></A>Toolbar Buttons</H2>
+
+<P>Buttons that will be displayed on the Toolbar for 5.0 and their
+order are as follows:</P>
+
+<BLOCKQUOTE><TABLE BORDER=1>
+      <TR>
+         <TD>
+            <P><B>Current (4.5):</B></P>
+            
+            <P><IMG SRC="images/Toolbar.jpg" WIDTH=528 HEIGHT=45 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><B>Proposed (5.0):</B></P>
+            
+            <P><IMG SRC="images/Toolbar1.gif" WIDTH=380 HEIGHT=50 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+            
+            <P>Note: "Attach" maybe removed and relocated to the
+            right side of the window (see above).</P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><B>Changes:</B></P>
+            
+            <UL>
+               <LI>New look and feel.</LI>
+               
+               <LI>New ordering and grouping based on functionality
+               and frequency of use.</LI>
+               
+               <LI>Separate icons into groupings of related
+               functionality and importance.</LI>
+               
+               <LI>"Options" (used to bring the Options tab of the
+               Address Panel to the front) is removed since this tab
+               is no longer used.</LI>
+               
+               <LI>"Security" is removed. See the "<A HREF="#Security">Security</A>"
+               section.</LI>
+            </UL>
+         </TD>
+      </TR>
+   </TABLE>
+</BLOCKQUOTE>
+
+<H3>&nbsp;</H3>
+
+<H2><A NAME=Security></A>Security</H2>
+
+<BLOCKQUOTE>Changes to security features are discussed below.
+   
+   <P><TABLE BORDER=1>
+      <TR>
+         <TD>
+            <P><B>Current (4.5):</B></P>
+            
+            <P>&nbsp;<IMG SRC="images/Security.jpg" WIDTH=454 HEIGHT=334 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+            
+            <UL>
+               <LI>Security features are displayed in the Toolbar and
+               in the Status bar.</LI>
+               
+               <LI>Security icons (the open lock) are displayed to
+               users whether or not they even have security option
+               properties set up. In addition, the majority of user
+               currently do not use (or really understand) the
+               security features.</LI>
+               
+               <LI>If the message is Encrypted, the Lock icon is
+               shown as closed, otherwise it is show as open. <U>This
+               is inconsistent with the browser, for which the lock
+               indicates a secure/non-secure server (not
+               encryption).</U></LI>
+               
+               <LI>If the message is Signed, the Sign icon is
+               displayed, otherwise, it is not shown at all.</LI>
+            </UL>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><B>Proposed (5.0):</B></P>
+            
+            <P>&nbsp;<IMG SRC="images/Security1.gif" WIDTH=612 HEIGHT=454 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+            
+            <P><B>Changes:</B></P>
+            
+            <UL>
+               <LI>There is no "Security" button in the Toolbar.</LI>
+               
+               <LI>The open lock does not appear in the status
+               bar.</LI>
+               
+               <LI>Security features are show as drop down list boxes
+               on the right side of the status bar. (Icons included,
+               TBD. Please see the <A HREF="http://gooey/client/5.0/specs/status/">Status
+               Bar</A> UI Spec.)</LI>
+               
+               <LI>Commercial builds will always show the security
+               features menus (digital signature and encryption).
+               Users can use the drop down security menus to access
+               information about each feature, set up these features,
+               or download these features if they currently are not
+               included in their version of Messenger.</LI>
+               
+               <LI>Once users have the security features set up, they
+               can use the drop down menus to access the different
+               security features on a per message basis (turn
+               encryption on/off, use different certificates).</LI>
+               
+               <LI>Mozilla.org builds will not contain the security
+               features.</LI>
+            </UL>
+         </TD>
+      </TR>
+   </TABLE>
+   </P></BLOCKQUOTE>
+
+<H2><A NAME=Attachments></A>Attachments</H2>
+
+<BLOCKQUOTE>This section outlines the resulting actions when files
+   are included, either attached or inline, in mail messages.
+   
+   <P>Attached files are displayed within the attachment area (and
+   not displayed in-line). Files can be attached using several
+   methods.</P>
+   
+   <UL>
+      <LI>Using the "Attach" button on the Toolbar.</LI>
+      
+      <LI>Using the "File, Attach" menu item.</LI>
+      
+      <LI>Dragging and dropping onto the attachment area.</LI>
+   </UL>
+   
+   <P>Files included in-line are displayed in-line within the message
+   body during compose (and not displayed in the attachment area).
+   Files can be attached using several methods:</P>
+   
+   <UL>
+      <LI>Using the "Insert" menu (Image and Link).</LI>
+      
+      <LI>Using the Ender Toolbar, "Insert Image" and "Insert
+      Link".</LI>
+      
+      <LI>Dragging and dropping onto the message compose area
+      
+      <UL>
+         <LI>If the file is not native, this is <B>not</B> allowed
+         (accept with special key combinations, see table
+         below).</LI>
+         
+         <LI>If the file is a native graphic file, the file is
+         displayed inline.</LI>
+         
+         <LI>If the file is native and is an html file, the file is
+         displayed inline (or as a link with special key
+         combinations, see table below).</LI>
+      </UL>
+      </LI>
+      
+      <LI>Right mouse click within the compose area, "Insert new
+      link".</LI>
+   </UL>
+   
+   <H3><B>A Graphic</B></H3>
+   
+   <P>To implement the recommendations, the Message Compose window
+   would be modified as follows (or one of the variations listed
+   above):</P>
+   
+   <P><IMG SRC="images/Compose1e.gif" WIDTH=612 HEIGHT=454 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+   
+   <H3><B>Global Preferences</B></H3>
+   
+   <P>With in the global preferences area, users can select how they
+   want attachments to behave at viewing time.</P>
+   
+   <UL>
+      <LI>"When viewing mail messages, show attachments inline when
+      possible". This is the same as currently implemented in
+      4.5.</LI>
+   </UL>
+   
+   <H3>Per Message Preferences</H3>
+   
+   <P>Users would also be able to override their global preference on
+   a per message basis by using the "View" menu.</P>
+   
+   <UL>
+      <LI>When viewing a message: "Show attachments inline"
+      
+      <P>&nbsp;</P></LI>
+   </UL>
+   
+   <H3>Plain Text Compose</H3>
+   
+   <P>In plain text message composition, files can be included as
+   attachments but in-line inclusions of files are not available.</P>
+   
+   <P>&nbsp;</P>
+   
+   <H3>Table</H3>
+   
+   <P>The following table outlines the resulting actions:</P>
+   
+   <P><TABLE BORDER=1>
+      <TR BGCOLOR="#66CCCC">
+         <TD>
+            <P><FONT SIZE="-1"><B>File Type</B></FONT></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1"><B>Action</B></FONT></P>
+         </TD>
+         <TD WIDTH=111>
+            <P><FONT SIZE="-1"><B>Show in Attachment
+            Pane</B></FONT></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1"><B>Show Inline</B></FONT></P>
+         </TD>
+         <TD WIDTH=101>
+            <P><FONT SIZE="-1"><B>Show as Link</B></FONT></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1"><B>Alternate Method or
+            Behavior</B></FONT></P>
+         </TD>
+         <TD ALIGN=center>
+            <P ALIGN=left><FONT SIZE="-1"><B>Comments</B></FONT></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Native Graphic File (jpg,
+            gif)</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto attachment area.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">"File -&gt; Attach" menu, or "Attach"
+            button.</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Native Graphic File (jpg,
+            gif)</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto message body.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">"Insert -&gt; Image" menu, or "Insert
+            -&gt; Image" from Ender toolbar.</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Native Graphic File (jpg,
+            gif)</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Special Key + drag and drop onto
+            message body.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Native Graphic File (jpg,
+            gif)</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Right Mouse drag &amp; drop</FONT>
+            <FONT SIZE="-1">onto message body.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">Maybe</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Maybe</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">Maybe</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">A popup menu with options is
+            displayed. (Insert as attachment, Insert inline, Insert
+            as link, Cancel)</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">HTML File</FONT>
+            <FONT SIZE="-1">(local or networked)</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto attachment area.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">"File -&gt; Attach" menu, or "Attach"
+            button.</FONT></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1">Relative graphic links included.
+            Absolute graphic links not included.</FONT></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">HTML File</FONT>
+            <FONT SIZE="-1">(local or networked)</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto message body.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Relative graphic links included.
+            Absolute graphic links not included.</FONT></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">HTML File</FONT>
+            <FONT SIZE="-1">(local or networked)</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Special Key + drag and drop onto
+            message body.</FONT></P>
+            
+            <P></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">"Insert -&gt; Link" menu, or Ender
+            Toolbar<BR>
+            "Insert Link"</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">HTML File</FONT>
+            <FONT SIZE="-1">(local or networked)</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Right Mouse drag &amp; drop</FONT>
+            <FONT SIZE="-1">onto message body.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">Maybe</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Maybe</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">Maybe</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">A popup menu with options is
+            displayed. (Insert as attachment, Insert inline, Insert
+            as link, Cancel)</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><FONT SIZE="-1">Bookmark</FONT></P>
+            
+            <P></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto attachment area.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto message body not
+            allowed.</FONT></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><FONT SIZE="-1">Page Proxy Icon</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto attachment area.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1">Drop onto message body not
+            allowed.</FONT></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Non-Native File (Word, Excel,
+            etc.)</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto attachment area.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1">Drop onto message body not
+            allowed.</FONT></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><FONT SIZE="-1">Non-Native File (Word, Excel,
+            etc.)</FONT></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1">Special Key + drag and drop onto
+            message body.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><FONT SIZE="-1">Non-Native File (Word, Excel,
+            etc.)</FONT></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1">Right Mouse drag &amp; drop</FONT>
+            <FONT SIZE="-1">onto message body.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">Maybe</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">Maybe</FONT></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1">A popup menu with options is
+            displayed. (Insert as attachment, Insert as link,
+            Cancel)</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><FONT SIZE="-1">Address Book Entry Icon</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto attachment area.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">Yes - Attach vCard</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1">Drop onto message body not
+            allowed.</FONT></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><FONT SIZE="-1">Address Book</FONT></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1">Drop onto attachment area.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">Yes</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><FONT SIZE="-1">Message or Thread Icon</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">Drop onto attachment area.</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=111>
+            <P><FONT SIZE="-1">Yes - attach message</FONT></P>
+         </TD>
+         <TD VALIGN=top>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD VALIGN=top WIDTH=101>
+            <P><FONT SIZE="-1">No</FONT></P>
+         </TD>
+         <TD>
+            <P></P>
+         </TD>
+         <TD>
+            <P><FONT SIZE="-1">Drop onto message body not
+            allowed.</FONT></P>
+         </TD>
+      </TR>
+   </TABLE>
+   </P></BLOCKQUOTE>
+
+<P>&nbsp;</P>
+
+<BLOCKQUOTE>Attachment specific changes are described here.
+   
+   <P><TABLE BORDER=1>
+      <TR>
+         <TD VALIGN=top>
+            <P><B>Current (4.5):</B></P>
+            
+            <P><IMG SRC="images/PCattach.gif" WIDTH=592 HEIGHT=167 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><B>Proposed (5.0):</B></P>
+            
+            <P><IMG SRC="images/Compose1eAtt.gif" WIDTH=684 HEIGHT=220 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom><IMG SRC="images/Compose1aAtt.gif" WIDTH=609 HEIGHT=220 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><B>Attachment Changes:</B></P>
+            
+            <UL>
+               <LI>Attachments Tab is removed. Attachments drop area
+               is moved from the hidden tab to the Addressing area.
+               This gives better feedback to users when attachments
+               are included. Attachments button remains on the
+               Toolbar OR is moved above the attachments drop area
+               (tbd).</LI>
+               
+               <LI>"Uuencode instead of MIME"&nbsp;is moved from the
+               <A HREF="#OptionsSecurity">"Options" Tab</A> onto the
+               "Attach" Toolbar button drop down menu. Similar to the
+               currently implementation of vCard, users can turn this
+               feature on or off on a per message basis. When a new
+               message is launched, the default is always what the
+               user specified in their Preferences. Since this item
+               is directly related to attachments, it is suggested it
+               be relocated here.</LI>
+               
+               <LI>As for 4.5, clicking on the "Attach" button
+               performs the default action of attaching a File (as
+               opposed to a Web Page).</LI>
+            </UL>
+         </TD>
+      </TR>
+   </TABLE>
+   </P>
+   
+   <H4>Attaching a File</H4>
+   
+   <P><TABLE BORDER=1>
+      <TR>
+         <TD VALIGN=top WIDTH="25%">
+            <P>Attaching a file to a mail message stays the same as
+            for 4.5</P>
+            
+            <P>Select the "Attach" button from the Toolbar and then
+            "File..." from the drop down menu. The "Enter file to
+            attach" dialog is opened.</P>
+            
+            <P>OR, from the "File" menu, select "Attach --&gt;
+            File...".</P>
+         </TD>
+         <TD>
+            <P><IMG SRC="images/AttFile.jpg" WIDTH=426 HEIGHT=264 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+         </TD>
+      </TR>
+   </TABLE>
+   </P>
+   
+   <H4>Attaching a Web page</H4>
+   
+   <P>The "Please Specify a Location to Attach" dialog is opened
+   by:</P></BLOCKQUOTE>
+
+<UL>
+   <LI>Selecting the "Attach" button from the Toolbar (and then "Web
+   Page..." from the drop down menu.</LI>
+   
+   <LI>From the "File" menu, select "Attach --&gt; Web Page...".
+   
+   <P><TABLE BORDER=1>
+      <TR>
+         <TD>
+            <P><B>Current (4.5):</B></P>
+            
+            <P><IMG SRC="images/AttWeb.jpg" WIDTH=443 HEIGHT=132 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><B>Proposed (5.0):</B></P>
+            
+            <P><IMG SRC="images/AttWeb1.gif" WIDTH=539 HEIGHT=333 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+            
+            <UL>
+               <LI>The user selects the bookmark directly from the
+               dropdown menu.</LI>
+               
+               <LI>Selection of a folder is NOT allowed (the dropdown
+               stays open with menu fly outs until the user selects a
+               bookmark or clicks off of the dropdown menu.</LI>
+            </UL>
+         </TD>
+      </TR>
+      <TR>
+         <TD>
+            <P><B>Changes:</B></P>
+            
+            <UL>
+               <LI>The text label "Web Page (URL): " is moved on top
+               of the text entry field to allow for more horizontal
+               space.</LI>
+               
+               <LI>"Bookmarks" button is added. This make it easier
+               for users since they don't have to try and recall a
+               URL. Recognition is faster than recall.</LI>
+               
+               <LI>Place "http://" as the default text in the "Web
+               Page (URL):" text entry field. This will give users a
+               better idea what is expected in this text field and it
+               is also very likely that the desired URL will start
+               this way, so it saves them some time.</LI>
+               
+               <LI>The URL box inside the attach web page features
+               the same auto complete that the URL box in the browser
+               does. In addition, a user can drag and drop a file
+               onto the URL box to attach the file.</LI>
+            </UL>
+         </TD>
+      </TR>
+   </TABLE>
+   </P></LI>
+</UL>
+
+<H2><A NAME=FCC></A>FCC (File Carbon Copy)</H2>
+
+<P>This feature allows users to save a copy of a message being sent
+to a user specified folder on a per message basis. Since this is a
+feature intended for more advanced users, it is accessible via a menu
+dropdown only. A "Message" menu drop down will be added for the
+Message Compose window.</P>
+
+<P>Basic functionality:</P>
+
+<OL>
+   <LI>From the "Message" menu dropdown, the user selects "Fcc"</LI>
+   
+   <LI>The "Fcc" selection activates a method to select a desired
+   folder (TBD)</LI>
+   
+   <LI>The user selects a message folder</LI>
+   
+   <LI>When the message is sent, a copy of the message is placed in
+   the specified message folder</LI>
+</OL>
+
+<P>This feature raises the complex issue of how to select a desired
+folder in the world of multiple accounts.</P>
+
+<P><B>NOTE: How we decide to implement the folder selection portion
+of this feature also affects features that work similarly, including:
+"File", "Move Message" and "Copy Message". Even if we decide to not
+implement Fcc, how we deal with folder selection in the world of
+multiple accounts needs to be solved.</B></P>
+
+<P><TABLE BORDER=1>
+   <TR>
+      <TD>
+         <P><B>Option 1: </B></P>
+         
+         <UL>
+            <LI>A Fcc option is available from a "Message" menu.</LI>
+            
+            <LI>A flyout menu displays available accounts and each
+            account is a flyout menu which displays it associated
+            folders</LI>
+            
+            <LI>Issue: Since "Inbox" is the top level for an account,
+            how do we represent this?</LI>
+            
+            <LI>Issue: Are Universal Folders displayed here? No?</LI>
+            
+            <LI>Can you move things to the "Inbox" folder for each
+            account?</LI>
+         </UL>
+         
+         <P><IMG SRC="images/Fcc1.gif" WIDTH=522 HEIGHT=439 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><B>Option 2:</B></P>
+         
+         <UL>
+            <LI>A "Fcc ..." option is available from a "Message"
+            menu.</LI>
+            
+            <LI>A dialog is opened</LI>
+            
+            <LI>User uses the dialog to select the desired folder
+            (SAME account/folder representation as in the Mail
+            Navigator window).</LI>
+            
+            <LI>User selects "OK" to complete selection.</LI>
+         </UL>
+         
+         <P><IMG SRC="images/Fcc2.gif" WIDTH=334 HEIGHT=273 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<H2>Forward</H2>
+
+<H2><TABLE BORDER=1>
+   <TR>
+      <TD>
+         <P><B>Current (4.5):</B></P>
+         
+         <P><IMG SRC="images/Forward.gif" WIDTH=591 HEIGHT=504 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+         
+         <P>Currently, when forwarding a mail message:</P>
+         
+         <UL>
+            <LI>the table which is used to organize the header
+            information is displayed to users</LI>
+            
+            <LI>Headers displayed are based on the view the user has
+            set (all, normal, brief)</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><B>Proposed (5.0):</B></P>
+         
+         <P><IMG SRC="images/Forward1.gif" WIDTH=591 HEIGHT=470 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><B>Changes:</B></P>
+         
+         <UL>
+            <LI>Do not show the table used to organize the header
+            information (for a much cleaner look)</LI>
+            
+            <LI>Limit the number of headers forwarded to a brief
+            subset <B>(this one is open for debate, can we do
+            this?)</B></LI>
+         </UL>
+      </TD>
+   </TR>
+</TABLE>
+</H2>
+
+<H2>Reply</H2>
+
+<P>No specific changes to the Reply window except those applied to
+the Message Compose window.</P>
+
+<P><IMG SRC="images/Reply1.gif" WIDTH=612 HEIGHT=454 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<H2><A NAME=Ender></A>Ender Toolbar Components within Mail
+Compose</H2>
+
+<P>The Ender Toolbar component is an important part of the Message
+Compose window. It is important that this toolbar not be overwhelming
+with features, but be clear and provide easy access to the most
+commonly used HTML editing features.</P>
+
+<P>Please see the complete <A HREF="http://gooey/client/5.0/specs/composer/Ender.shtml">Ender
+UE&nbsp;Spec</A> for more details.</P>
+
+<H3><TABLE BORDER=1>
+   <TR>
+      <TD>
+         <P><IMG SRC="images/ToolbarLong.jpg" WIDTH=585 HEIGHT=350 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><IMG SRC="images/ToolbarLong1.gif" WIDTH=603 HEIGHT=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>Users currently have problems understanding the items in
+         the Ender Toolbar "Insert" drop down menu. One possibility
+         would be to change this menu to include text.</P>
+         
+         <P><IMG SRC="images/Insert.gif" WIDTH=167 HEIGHT=203 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+         
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><B>Changes:</B></P>
+         
+         <UL>
+            <LI>"Remove all Styles" icon is removed. The Toolbar has
+            limited space and should be reserved for the most
+            frequently used features. This is not a frequently used
+            feature.</LI>
+         </UL>
+      </TD>
+   </TR>
+</TABLE>
+</H3>
+
+<H3>Compose Menus and Context Specific Menus</H3>
+
+<BLOCKQUOTE>Not yet complete.
+   
+   <P>Please see the <A HREF="http://gooey/client/5.0/specs/mail/Compose/Comp_Menus.shtml">Message
+   Compose Menus UE&nbsp;spec</A>.</P></BLOCKQUOTE>
+
+<H2>
+
+<HR SIZE=4 WIDTH="40%" ALIGN=left NOSHADE color="#66cccc">
+
+Closed Issues</H2>
+
+<UL>
+   <LI><B>Clicking on the "Address Book Card" within in the Address
+   Panel opens the Address Book? Currently (4.5), nothing happens
+   when you click on this icon. Some issues, currently this icon can
+   be used to reorder recipients (by dragging and dropping them in
+   the Address Panel) and it can also be used to change the "To" type
+   of multiple recipients (by Shift clicking to select multiple
+   recipients and then changing the "To" type). If we implement as
+   described above, these features would go away. </B>No changes,
+   leave this feature as it currently is for 4.5. Mail Issues meeting
+   3/18/99.</LI>
+   
+   <LI><B>Will "New Message" be accessible from the Task Bar?
+   </B>Probably yes from TaskBar under Mail pull down, but not from
+   QuickAccess. Mail Issues meeting 3/18/99.</LI>
+   
+   <LI><B>What items do we want to appear in the addressing area
+   (Priority, Attach, Format, Save a copy, Return Receipt).</B> For
+   now (!), Format, Return Receipt and Priority. Mail Issues meeting
+   3/18/99.</LI>
+   
+   <LI><B>Currently we have six different "To" options in the Address
+   Panel, To, Cc, Bcc, Group, Reply to and Followup to. Do we need
+   "Reply to" and "Followup to"? Do people use these?</B> Yes, keep
+   them. Mail Issues meeting 3/18/99.</LI>
+   
+   <LI><B>&nbsp;Order of Toolbar buttons. </B>Send | Address, Attach,
+   Quote, Spelling | Save Print Stop. 4/15/99 - Mail Issue's
+   meeting.</LI>
+   
+   <LI><B>The "Format" editable drop down list. Does this belong on
+   the Address Panel? It was previous only the Options tab (which is
+   going away). </B>"Format" will not be on the chrome but will
+   appear in the "Message" menu. 4/15/99 - Mail Issue's meeting.</LI>
+   
+   <LI>&nbsp;</LI>
+</UL>
+
+<H2>
+
+<HR SIZE=4 WIDTH="40%" ALIGN=left NOSHADE color="#66cccc">
+
+Archived Documents</H2>
+
+<BLOCKQUOTE><H3>Change History</H3>
+   
+   <UL>
+      <LI><A HREF="http://gooey/client/5.0/specs/mail/Compose/archive/Apr_15_99/Apr_15_99.shtml">April
+      15, 1999</A></LI>
+      
+      <LI><A HREF="http://gooey/client/5.0/specs/mail/Compose/archive/Mar_10_99/Mar_10_99.shtml">March
+      10, 1999</A>&nbsp;</LI>
+   </UL>
+</BLOCKQUOTE>
+
+<P><A HREF="http://gooey/client/nova/specs/mailnews/compose/">Nova's
+Compose Message UI Spec</A></P>
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

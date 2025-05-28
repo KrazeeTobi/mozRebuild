@@ -1,0 +1,364 @@
+<HTML>
+<!--This file created 7/6/99 1:47 PM by Claris Home Page version 3.0 30 Day Trial-->
+<HEAD>
+   <TITLE>Popup Content (Context Menus and Tooltips)</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 3.0 30 Day Trial">
+   <X-CLARIS-WINDOW TOP=42 BOTTOM=763 LEFT=4 RIGHT=694>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+</HEAD>
+<BODY>
+<P><TABLE CELLSPACING=0 WIDTH="100%">
+   <TR>
+      <TD BGCOLOR="#6699FF">
+         <P><FONT SIZE="+1" FACE="Century Gothic" COLOR="#FFFFFF">Popup
+         Content (Context Menus and Tooltips)</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;<A HREF="index.html">Table of Contents</A>&#93;
+         &#91;<A HREF="keys.html">Previous: Key Binding</A>&#93;
+         &#91;<A HREF="fragments.html">Next: XUL
+         Overlays</A>&#93;</P>
+         
+         <P><B>Feature Owners:</B><BR>
+         <A HREF="mailto:hyatt@netscape.com">Dave Hyatt</A> (Content
+         Model Work, Arbitrary XUL Popups)<BR>
+         <A HREF="mailto:saari@netscape.com">Chris Saari</A> (Popup
+         Menus and Context Menus)<BR>
+         <A HREF="mailto:pinkerton@netscape.com">Mike Pinkerton</A>
+         (Tooltips, Making Things Suck Less)<BR>
+         </P>
+         
+         <P>The XUL language provides a way for developers to declare
+         that a XUL subtree is <I>popup content</I>, meaning that the
+         content is displayed in its own window when a certain event
+         occurs (e.g., a right mouse click to bring up a context
+         menu, or a left click to bring up a popup color picker on a
+         toolbar).</P>
+         
+         <P>There are two kinds of popup content: menus and windows.
+         Popup menus use the native menus on each platform and are
+         described using <FONT COLOR="#008000">menu</FONT> and
+         <FONT COLOR="#008000">menuitem</FONT> elements (See
+         <A HREF="menus.html">Menus and Menu Bars</A> for details).
+         Popup windows can contain arbitrary XUL, and are
+         full-fledged XUL windows, declared using the
+         <FONT COLOR="#008000">window</FONT> tag (See <A HREF="windows.html">Windows
+         and Dialogs</A> for details).</P>
+         
+         <P>Popup content is placed inside a
+         <FONT COLOR="#008000">popup</FONT> tag, which prevents it
+         from being displayed in the main document. The popup tag
+         always has an identifier attached to it (using the
+         <FONT COLOR="#FF0000">id</FONT> attribute) that is used when
+         attaching the popup content to a UI element.</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>&lt;popup id="replyMenu"&gt;
+  &lt;menu&gt;
+    &lt;menuitem name="Reply to Sender"&gt;
+    &lt;menuitem name="Reply to All"&gt;
+  &lt;/menu&gt;
+&lt;/popup&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>There are three different ways of automatically attaching
+         a popup to content. All three methods involve setting
+         attributes on the content node that should have the popup
+         content attached to it. The attributes are
+         <FONT COLOR="#FF0000">popup</FONT>,
+         <FONT COLOR="#FF0000">context</FONT>, and
+         <FONT COLOR="#FF0000">tooltip</FONT>. The value of one of
+         these attributes is the <FONT COLOR="#FF0000">id</FONT> of
+         the popup element that should be used to build the popup
+         content.</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>&lt;titledbutton value="Reply" popup="replyMenu"/&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>The <FONT COLOR="#FF0000">popup</FONT> attribute is used
+         to attach popup content that will be invoked on a
+         <FONT COLOR="#800080">left mouse down</FONT>. The
+         <FONT COLOR="#FF0000">context</FONT> attribute is used to
+         attach popup content that will be invoked on a context menu
+         event (with the cross-platform abstraction being taken care
+         of for you). The <FONT COLOR="#FF0000">tooltip</FONT>
+         attribute is used to attach popup content that will be
+         invoked after a time-delay hover over the node that has the
+         popup content attached. (Note that tooltips may only be used
+         with popup window content and never with popup menu
+         content.)</P>
+         
+         <P>By default the popup content appears with its top left
+         point located directly underneath the point at which the
+         user's mouse goes down (on tooltips the content is displaced
+         by the height of the mouse cursor). This placement can be
+         controlled using the
+         <FONT COLOR="#FF0000">popupanchor</FONT> and
+         <FONT COLOR="#FF0000">popupalign</FONT> attributes.</P>
+         
+         <P>The <FONT COLOR="#FF0000">popupanchor</FONT> and
+         <FONT COLOR="#FF0000">popupalign</FONT> attributes have four
+         possible values: topleft, topright, bottomleft and
+         bottomright. The <FONT COLOR="#FF0000">popupanchor</FONT>
+         attribute can be used to specify that the popup content
+         should come up anchored to one of the four corners of the
+         content object (e.g., the button popping up the content). If
+         omitted, no anchoring occurs. Instead the popup content
+         comes up directly underneath the mouse event coordinates.
+         This point (either directly under the mouse or attached to
+         one of the four corners) is called the <I>originating
+         point</I>.</P>
+         
+         <P>The <FONT COLOR="#FF0000">popupalign</FONT> attribute can
+         be used to specify which corner of the popup content is tied
+         to the originating point. If omitted, the default is
+         topleft. The example below shows how to create the
+         traditional buttons with attached left mouse menus that
+         exist in the 4.x Communicator product.</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>&lt;titledbutton value="Reply" popup="replyMenu" popupanchor="bottomleft"/&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>On Windows 98, anchored menus will animate (unless the
+         property is turned off) to the opposite corner of the value
+         specified in the <FONT COLOR="#FF0000">popupalign</FONT>
+         attribute. In the above example, since the attribute is
+         omitted, the default is topleft, and the menu will therefore
+         animate to the bottomright corner.</P>
+         
+         <P>The popup content can have attached event handlers just
+         as regular content might. In these event handlers, the
+         element that the popup was invoked upon can be retrieved by
+         examining the <FONT COLOR="#800080">popupElement</FONT>
+         property of the document. This property is set only when the
+         popup is currently open.</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>&lt;popup id="toolbarContextMenu"&gt;
+  &lt;menu&gt;
+	...
+    &lt;menuitem name="Delete" onclick="mailNewsCore.deleteButton(document.popupElement)"&gt;
+	...
+  &lt;/menu&gt;
+&lt;/popup&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>A similar property,
+         <FONT COLOR="#800080">tooltipElement</FONT>, is set for the
+         element that has a tooltip displayed over it.</P>
+         
+         <P>Arbitrary XUL windows that are created as popups have
+         their own document, and any namespaces must be declared
+         again on the new window tag. Style sheets, however, are
+         inherited from the parent document. A popup XUL window is
+         linked to the parent window that spawned it using the
+         <FONT COLOR="#800080">opener</FONT> property, and thus can
+         get back to the originating document to invoke functions or
+         to examine data.</P>
+         
+         <P>Arbitrary XUL popups can be closed or repositioned just
+         as normal windows can using the methods of the
+         <FONT COLOR="#800080">window</FONT> object. The most
+         relevant method is
+         <FONT COLOR="#800080">window.close()</FONT>, which can be
+         used to discard the popup.</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="90%" align=center>
+            <TR>
+               <TD>
+                  <PRE>&lt;popup id="justifierPopup"&gt;
+  &lt;window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    width="40" height="100"&gt;
+     &lt;titledbutton id="left" 
+       onclick="opener.setJustification('left'); window.close();"/&gt;
+     &lt;titledbutton id="center"
+       onclick="opener.setJustification('center'); window.close();"/&gt;
+     &lt;titledbutton id="right" 
+       onclick="opener.setJustification('right'); window.close();"/&gt;
+  &lt;/window&gt;
+&lt;/popup&gt;
+...
+&lt;titledbutton popup="justifierPopup" popupanchor="bottomleft"/&gt;
+...
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>Popup content can also be created in response to any
+         event (and not just the predefined
+         <FONT COLOR="#FF0000">popup</FONT>,
+         <FONT COLOR="#FF0000">context</FONT> and
+         <FONT COLOR="#FF0000">tooltip</FONT> events. There are two
+         new methods on the <FONT COLOR="#800080">window</FONT>
+         object that allow popup content to be instantiated
+         programmatically.</P>
+         
+         <P><FONT COLOR="#0000FF">createPopup</FONT> takes six
+         arguments: the DOM element to attach the popup to, the DOM
+         element that represents the popup content, the x screen
+         coordinate of the popup, the y screen coordinate of the
+         popup, the popup type (context, popup, or tooltip), and the
+         popup alignment (topleft, bottomright, bottomleft,
+         topright).</P>
+         
+         <P>The <FONT COLOR="#0000FF">createAnchoredPopup</FONT>
+         method can be used to create popup content at a specific
+         anchor point on a content object. It takes five arguments:
+         the element to attach the popup to, the popup content
+         element, the anchor position for the content (topleft,
+         bottomright, bottomleft, topright), the popup type, and the
+         popup alignment.</P>
+         
+         <P>Using these methods, fine-grained control of popup
+         instantiation is possible, e.g., a popup can be brought up
+         after a time-delay or in response to keyboard events.</P>
+         
+         <P>Popups can also be built dynamically or be modified just
+         prior to being displayed. The
+         <FONT COLOR="#800080">create</FONT> and
+         <FONT COLOR="#800080">destroy</FONT> events are fired on a
+         popup element just prior to it being displayed and just
+         after it has lost the focus, respectively. Event listeners
+         can be attached using the
+         <FONT COLOR="#FF0000">oncreate</FONT> and
+         <FONT COLOR="#FF0000">ondestroy</FONT> attributes or by
+         using the DOM <FONT COLOR="#0000FF">addEventListener</FONT>
+         function.</P>
+         
+         <H3>Tooltips</H3>
+         
+         <P>Tooltips are basically timed xul popups. You have full
+         control over the appearance of these popups, or you may use
+         a combination of JS and a standard "template" tooltip to get
+         up and running quickly.</P>
+         
+         <P>The easy way:</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="90%" align=center>
+            <TR>
+               <TD>
+                  <PRE>&lt;html:script language="javascript" src="tooltip.js" /&gt;
+                  
+&lt;popup id="aTooltip" oncreate="return FillInTooltip(document.tooltipElement);"&gt;
+ &lt;window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+   width="200" height="20" style="border: thin solid black"&gt; 
+	&lt;titledbutton id = "replaceMe" align="left" class="borderless paneltitle"/&gt;
+ &lt;/window&gt;
+&lt;/popup&gt;
+                  
+...
+&lt;toolbar tooltip="aTooltip"&gt;
+  &lt;titledbutton tooltiptext="Tip for Button One"/&gt;
+  &lt;titledbutton tooltiptext="Tip for Button Two"/&gt;
+  &lt;titledbutton tooltiptext="Tip for Button Three"/&gt;
+&lt;/toolbar&gt;
+...
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>The <FONT COLOR="#FF0000">tooltiptext</FONT> attribute
+         specifies the text displayed in the tooltip for this item.
+         If you need more control over the tooltip for a particular
+         button, you can specify the
+         <FONT COLOR="#FF0000">tooltip</FONT> attribute directly on
+         that item and set its id to a different popup where the new
+         content lives.</P>
+         
+         <P>You can use the JS convenience routine
+         <FONT COLOR="#FF0000">FillInTooltip()</FONT> anywhere you
+         want as long as you have one node within the popup whose
+         name is "replaceMe". This way you keep the convenience of
+         only having to specify the tooltip text on the button but
+         can use any popup you like.</P>
+         
+         <P>To prevent tooltips from showing up based on content,
+         return false from the <FONT COLOR="#FF0000">oncreate</FONT>
+         event handler. Actually, this is true for any xul popup, but
+         most useful for tooltips.</P>
+         
+         <P><FONT COLOR="#FF0000">Known Issues</FONT></P>
+         
+         <UL>
+            <LI>HTML Elements - Popups can only be attached to XUL
+            elements right now and not to HTML elements.</LI>
+            
+            <LI>Positioning - Right now, because the screenx and
+            screeny properties of the event object are not yet
+            implemented, all popups come up at (50,50). (Hey, it's a
+            feature. You'll always know where to find your context
+            menus.)</LI>
+            
+            <LI>Anchoring - Don't try to use the popupanchor
+            attribute yet. It will cause the popups to not even show
+            up at all. Also, the createAnchoredPopup method doesn't
+            do anything yet.</LI>
+            
+            <LI>Arbitrary XUL Popup Issues
+            
+            <UL>
+               <LI>The popups don't close automatically, since blur
+               events aren't being sent to windows.</LI>
+               
+               <LI>The popups have borders and a title bar (need a
+               way to make them borderless cross-platform).</LI>
+               
+               <LI>The destruct event doesn't fire when an arbitrary
+               XUL popup is closed.</LI>
+            </UL>
+            </LI>
+         </UL>
+         
+         <P>
+         
+         <HR SIZE=1 solid>
+         
+         &#91;<A HREF="index.html">Table of Contents</A>&#93;
+         &#91;<A HREF="keys.html">Previous: Key Binding</A>&#93;
+         &#91;<A HREF="fragments.html">Next: XUL Overlays</A>&#93;
+         
+         <HR SIZE=1 solid>
+         
+         Contact us at <A HREF="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</A>.
+         Want to complain about the new documentation? Email
+         <A HREF="mailto:hyatt@netscape.com">Dave Hyatt</A>.</P>
+         
+         <P></P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+</BODY>
+</HTML>

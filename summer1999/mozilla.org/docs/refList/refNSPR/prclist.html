@@ -1,0 +1,607 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Linked lists</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prenv.html">[Previous]</A>
+<A HREF="prmem.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<HR>
+<BR><A NAME="LinkedLists"></A>
+<CENTER>
+<H2>
+Chapter 22<BR>
+Linked Lists</H2></CENTER>
+This chapter describes the NSPR API for managing linked lists. The API
+is a set of macros for initializing a circular (doubly linked) list, inserting
+and removing elements from the list. The macros are not thread safe and
+the caller has to provide to mutually-exclusive access to the list and
+the nodes being added/removed from the list.
+
+<H2>
+<A NAME="Types"></A>Types</H2>
+
+<H4>
+<A NAME="PRCList"></A>PRCList</H4>
+A circular linked list.
+<H5>
+Syntax</H5>
+
+<PRE>
+#include &lt;prclist.h>
+
+typedef struct PRCListStr PRCList;
+
+struct PRCListStr {
+    PRCList *next;
+    PRCList *prev;
+};
+</PRE>
+
+<H5>
+Description</H5>
+PRClist defines a node in a circular linked list. It can be used as the
+anchor of a list and can be embedded in data structures that are maintained
+in a linked list.
+<H2>
+<A NAME="Macros"></A>Macros</H2>
+
+<H4>
+<A NAME="PR_INIT_CLIST"></A>PR_INIT_CLIST</H4>
+Initialize a circular list.
+<H5>
+Syntax</H5>
+
+<PRE>
+#include &lt;prclist.h>
+
+PR_INIT_CLIST(PRCList *listp);
+</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>listp</TT></B></TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Pointer to the anchor of the linked
+list.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_INIT_CLIST </TT>initializes the list pointed to by listp to be an
+empty list.
+<H4>
+<A NAME="PR_INIT_STATIC_CLIST"></A>PR_INIT_STATIC_CLIST</H4>
+Statically Initialize a circular list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_INIT_STATIC_CLIST(PRCList *listp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>listp</TT></B></TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Pointer to the anchor of the linked
+list.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_INIT_STATIC_CLIST </TT>statically initializes the list pointed to
+by <TT>listp</TT> to be an empty list. For example,
+
+<PRE>
+PRCList free_object_list = PR_INIT_STATIC_CLIST(&amp;free_object_list);
+</PRE>
+
+<H4>
+<A NAME="PR_APPEND_LINK"></A>PR_APPEND_LINK</H4>
+Append an element to the end of the list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_APPEND_LINK(PRCList *elemp, PRCList *listp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>elemp</TT></B></TD>
+
+<TD>Pointer to the element to be inserted.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>listp</TT></B></TD>
+
+<TD>Pointer to the list.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_APPEND_LINK </TT>adds the element pointed to by elemp to the end
+of the list pointed to by <TT>listp</TT>.
+<H4>
+<A NAME="PR_INSERT_LINK"></A>PR_INSERT_LINK</H4>
+Insert an element at the head of the list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_INSERT_LINK(PRCList *elemp, PRCList *listp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>elemp</TT></B></TD>
+
+<TD>Pointer to the element to be inserted.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>listp</B></TT></TD>
+
+<TD>Pointer to the list.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_INSERT_LINK </TT>inserts the element pointed to by elemp at the
+head of the list pointed to by listp.
+<H4>
+<A NAME="PR_NEXT_LINK"></A>PR_NEXT_LINK</H4>
+Return the next element in the list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_NEXT_LINK(PRCList *elemp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>elemp</TT></B></TD>
+
+<TD>Pointer to the element.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_NEXT_LINK </TT>returns a pointer to the element following the one
+pointed to by elemp and can be used to traverse the list. The following
+element is not removed from the list.
+<BR>
+<H4>
+<A NAME="PR_PREV_LINK"></A>PR_PREV_LINK</H4>
+Return the preceding element in the list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_PREV_LINK(PRCList *elemp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>elemp</TT></B></TD>
+
+<TD>Pointer to the element.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_NEXT_LINK </TT>returns a pointer to the element preceding the one
+pointed to by elemp and can be used to traverse the list. The preceding
+element is not removed from the list.
+<BR>
+<H4>
+<A NAME="PR_REMOVE_LINK"></A>PR_REMOVE_LINK</H4>
+Remove an element from the circular list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_REMOVE_LINK(PRCList *elemp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>elemp</TT></B></TD>
+
+<TD>Pointer to the element.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_REMOVE_LINK </TT>removes the element pointed to by elemp from it's
+circular list.
+<BR>
+<H4>
+<A NAME="PR_REMOVE_AND_INIT_LINK"></A>PR_REMOVE_AND_INIT_LINK</H4>
+Remove an element from the circular list and initialize the linkage.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_REMOVE_AND_INIT_LINK(PRCList *elemp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>elemp</TT></B></TD>
+
+<TD>Pointer to the element.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_REMOVE_AND_INIT_LINK </TT>removes the element pointed to by elemp
+from it's circular list and initializes the links of the element to point
+to itself.
+<BR>
+<H4>
+<A NAME="PR_INSERT_BEFORE"></A>PR_INSERT_BEFORE</H4>
+Insert an element before another element in the circular list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_INSERT_BEFORE(PRCList *elemp1, PRCList *elemp2);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>elemp1</TT></B></TD>
+
+<TD>Pointer to the element to be inserted.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>elemp2</TT><B></TD>
+
+<TD>Pointer to the element before which <TT>elemp2</TT> is to be inserted.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_INSERT_BEFORE </TT>inserts elemp1 into the circular list, before
+elemp2.
+<BR>
+<H4>
+<A NAME="PR_INSERT_AFTER"></A>PR_INSERT_AFTER</H4>
+Insert an element after another element in the circular list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_INSERT_AFTER(PRCList *elemp1, PRCList *elemp2);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>elemp1</TT></B></TD>
+
+<TD>Pointer to the element to be inserted.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>elemp2</TT></B></TD>
+
+<TD>Pointer to the element after which elemp2 is to be inserted.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_INSERT_AFTER </TT>inserts elemp1 into the circular list, after elemp2.
+<BR>
+<H4>
+<A NAME="PR_CLIST_IS_EMPTY"></A>PR_CLIST_IS_EMPTY</H4>
+Check for an empty circular list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_CLIST_IS_EMPTY(PRCList *listp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>listp</TT></B></TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>pointer to the linked list.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_CLIST_IS_EMPTY </TT>returns a non-zero value if the list pointed
+to by listp is an empty list, otherwise returns zero.
+<BR><A NAME="PR_LIST_HEAD"></A>
+<H4>
+PR_LIST_HEAD</H4>
+Return the head of the circular list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_LIST_HEAD(PRCList *listp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>listp</TT></B></TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Pointer to the linked list.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_LIST_HEAD </TT>returns the head of the circular list.
+<BR>
+<H4>
+<A NAME="PR_LIST_TAIL"></A>PR_LIST_TAIL</H4>
+Return the tail of the circular list.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prclist.h>
+
+PR_LIST_TAIL(PRCList *listp);</PRE>
+
+<H5>
+Parameters</H5>
+The macro has the following parameters:
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>listp</TT></B></TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Pointer to the linked list.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Description</H5>
+<TT>PR_LIST_TAIL </TT>returns the tail of the circular list.
+<BR>
+<HR WIDTH="100%">
+<BR><A HREF="contents.html">[Contents]</A> <A HREF="prenv.html">[Previous]</A>
+<A HREF="prmem.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<DIV ALIGN=right><I><FONT SIZE=-2>Last Updated: Tue Jul 14 17:31:16 PDT 1998</FONT></I>
+<HR SIZE=4></DIV>
+
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html" TARGET="_top">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

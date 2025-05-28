@@ -1,0 +1,529 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Cached Monitors</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prmon.html">[Previous]</A> <A HREF="priotyp.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<HR>
+<A NAME="421079">
+<P></A><CENTER><H2>Chapter 8<BR><A NAME="421083">
+Cached Monitors</H2>
+</A></CENTER>
+<A NAME="421631">
+This chapter describes the functions you use when you work with cached monitors. Unlike a plain monitor, a cached monitor is associated with the address of a protected object, and the association is maintained only while the protection is needed. This arrangement allows a cached monitor to be associated with another object without preallocating a monitor for all objects. A hash table is used to quickly map addresses to their respective monitors. The system automatically enlarges the hash table as needed.<P></A>
+<BLOCKQUOTE><A NAME="421632"><B>Important
+ </B></A>
+<a name="421645">
+Cached monitors are slower to use than their uncached counterparts.
+</blockquote>
+</a>
+<A NAME="421636">
+See <A HREF="prmon.html#418222">Chapter 7, "Monitors,"</A> for information about uncached monitors.<P></A>
+
+<A NAME="Cached Monitors Functions"></A>
+<A NAME="418224">
+<H2> Cached Monitors Functions</H2>
+</A>
+<A NAME="418225">
+Cached monitors allow the client to associate monitoring protection and state change synchronization in a lazy fashion. The monitoring capability is associated with the protected object only during the time it is required, allowing the monitor object to be reused. This additional flexibility comes at the cost of a small loss in performance.<P></A>
+<ul><P>
+<A NAME="421839">
+<LI><A HREF="prcmon.html#418627"><CODE>PR_CEnterMonitor</CODE></A> enters the lock associated with a cached monitor.</LI>
+</A><P>
+<A NAME="421950">
+<LI><A HREF="prcmon.html#418712"><CODE>PR_CExitMonitor</CODE></A> decrements the entry count associated with a cached monitor.</LI>
+</A><P>
+<A NAME="421959">
+<LI><A HREF="prcmon.html#418794"><CODE>PR_CWait</CODE></A> waits for a notification that a monitor's state has changed.</LI>
+</A><P>
+<A NAME="421968">
+<LI><A HREF="prcmon.html#418917"><CODE>PR_CNotify</CODE></A> notifies a thread waiting for a change in the state of monitored data.</LI>
+</A><P>
+<A NAME="421982">
+<LI><A HREF="prcmon.html#419025"><CODE>PR_CNotifyAll</CODE></A> notifies all the threads waiting for a change in the state of monitored data.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="418627">
+<H4> PR_CEnterMonitor</H4>
+</A>
+
+<A NAME="418628">
+Enters the lock associated with a cached monitor.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418630">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418631">
+<PRE>#include &lt;prcmon.h&gt; </PRE></A><A NAME="418632">
+<PRE>PRMonitor* PR_CEnterMonitor(void *address);</PRE></A><A NAME="Head4;"></A>
+<A NAME="418633">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="418639">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418636">
+<PRE>address</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418638">
+A reference to the data that is to be protected by the monitor. This reference must remain valid as long as there are monitoring operations being performed.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="420195">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="420357">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="420358">
+<LI>If successful, the <CODE>function</CODE> returns a pointer to the <A HREF="prmon.html#421412"><CODE>PRMonitor</CODE></A> associated with the value specified in the <CODE>address</CODE> parameter.</LI>
+</A><P>
+<A NAME="420359">
+<LI>If unsuccessful (the monitor cache needs to be expanded and the system is out of memory), the function returns <CODE>NULL</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="418695">
+<H5> Description</H5>
+</A>
+
+<A NAME="422058">
+<CODE>PR_CEnterMonitor</CODE> uses the value specified in the <CODE>address</CODE> parameter to find a monitor in the monitor cache, then enters the lock associated with the monitor. If no match is found, an available monitor is associated with the address and the monitor's entry count is incremented (so it has a value of one). If a match is found, then either the calling thread is already in the monitor (and this is a reentrant call) or another thread is holding the monitor's mutex. In the former case, the entry count is simply incremented and the function returns. In the latter case, the calling thread is likely to find the monitor locked by another thread and waits for that thread to exit before continuing.<P></A>
+<BLOCKQUOTE><B>NOTE: </B><a name="420401">
+<CODE>PR_CEnterMonitor</CODE> and <CODE>PR_CExitMonitor</CODE> must be paired--that is, there must be an 
+exit for every entry--or the object will never become available for any other thread.
+</blockquote>
+</a>
+
+<A NAME="Head3;"></A>
+<A NAME="418712">
+<H4> PR_CExitMonitor</H4>
+</A>
+
+<A NAME="418713">
+Decrement the entry count associated with a cached monitor.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418715">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418716">
+<PRE>#include &lt;prcmon.h&gt; </PRE></A><A NAME="418717">
+<PRE>PRStatus PR_CExitMonitor(void *address);</PRE></A><A NAME="Head4;"></A>
+<A NAME="418718">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="418724">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418721">
+<PRE>address</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418723">
+The address of the protected object--the same address previously passed to <A HREF="prcmon.html#418627"><CODE>PR_CEnterMonitor</CODE></A>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="420804">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="420805">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="420806">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A><P>
+<A NAME="420807">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. This may indicate that the address parameter is invalid or that the calling thread is not in the monitor.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="418725">
+<H5> Description</H5>
+</A>
+
+<A NAME="418757">
+Using the value specified in the <CODE>address</CODE> parameter to find a monitor in the monitor cache, <CODE>PR_CExitMonitor</CODE> decrements the entry count associated with the monitor. If the decremented entry count is zero, the monitor is exited.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="418794">
+<H4> PR_CWait</H4>
+</A>
+
+<A NAME="418795">
+Wait for a notification that a monitor's state has changed.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418797">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418798">
+<PRE>#include &lt;prcmon.h&gt; </PRE></A><A NAME="418799">
+<PRE>
+PRStatus PR_CWait(
+    void *address,
+    PRIntervalTime timeout);
+</PRE></A><A NAME="Head4;"></A>
+<A NAME="418800">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="418806">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418803">
+<PRE>address</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418805">
+The address of the protected object--the same address previously passed to <A HREF="prcmon.html#418627"><CODE>PR_CEnterMonitor</CODE></A>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="422462">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418876">
+The amount of time (in<A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> units) that the thread is willing to wait for an explicit notification before being rescheduled. If you specify <CODE>PR_INTERVAL_NO_TIMEOUT</CODE>, the function returns if and only if the object is notified. <B></B></A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418807">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="418808">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="418809">
+<LI><CODE>PR_SUCCESS</CODE> indicates either that the monitored object has been notified or that the interval specified in the <CODE>timeout</CODE> parameter has been exceeded.</LI>
+</A><P>
+<A NAME="418810">
+<LI><CODE>PR_FAILURE</CODE> indicates either that the monitor could not be located in the cache or that the monitor was located and the calling thread was not the thread that held the monitor's mutex.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="418811">
+<H5> Description</H5>
+</A>
+
+<A NAME="418812">
+Using the value specified in the <CODE>address</CODE> parameter to find a monitor in the monitor cache, <CODE>PR_CWait</CODE> waits for a notification that the monitor's state has changed. While the thread is waiting, it exits the monitor (just as if it had called <A HREF="prcmon.html#418712"><CODE>PR_CExitMonitor</CODE></A> as many times as it had called <A HREF="prcmon.html#418627"><CODE>PR_CEnterMonitor</CODE></A>). When the wait has finished, the thread regains control of the monitor's lock with the same entry count as before the wait began.<P></A>
+<A NAME="417991">
+The thread waiting on the monitor resumes execution when the monitor is notified (assuming the thread is the next in line to receive the notify) or when the interval specified in the <CODE>timeout</CODE> parameter has been exceeded. When the thread resumes execution, it is the caller's responsibility to test the state of the monitored data to determine the appropriate action.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="418917">
+<H4> PR_CNotify</H4>
+</A>
+
+<A NAME="418918">
+Notify a thread waiting on a change in the state of monitored data.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418920">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="418921">
+<PRE>#include &lt;prcmon.h&gt; </PRE></A><A NAME="418922">
+<PRE>PRStatus PR_CNotify(void *address);</PRE></A><A NAME="Head4;"></A>
+<A NAME="418923">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="418933">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="418926">
+<PRE>address</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="418928">
+The address of the monitored object. The calling thread must be in the monitor defined by the value of the address.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="418934">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="418935">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="418936">
+<LI><CODE>PR_SUCCESS</CODE> indicates that the calling thread is the holder of the mutex for the monitor referred to by the <CODE>address</CODE> parameter.</LI>
+</A><P>
+<A NAME="418937">
+<LI><CODE>PR_FAILURE</CODE> indicates that the monitor has not been entered by the calling thread.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="418938">
+<H5> Description</H5>
+</A>
+
+<a name="419017">
+Using the value specified in the <CODE>address</CODE> parameter to find a monitor in the monitor 
+cache, <CODE>PR_CNotify</CODE> notifies single a thread waiting for the monitor's state to change. If 
+a thread is waiting on the monitor (having called <A HREF="prcmon.html#418794"><CODE>PR_CWait</CODE></A>), then that thread is made 
+ready. As soon as the thread is scheduled, it attempts to reenter the monitor.
+</blockquote>
+</a>
+
+<A NAME="Head3;"></A>
+<A NAME="419025">
+<H4> PR_CNotifyAll</H4>
+</A>
+
+<A NAME="419026">
+Notifies all the threads waiting for a change in the state of monitored data.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="419028">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="419029">
+<PRE>#include &lt;prcmon.h&gt; </PRE></A><A NAME="419030">
+<PRE>PRStatus PR_CNotifyAll(void *address);</PRE></A><A NAME="Head4;"></A>
+<A NAME="419031">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="419037">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="419034">
+<PRE>address</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="419036">
+The address of the monitored object. The calling thread must be in the monitor at the time <CODE>PR_CNotifyAll</CODE> is called.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="419038">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="419039">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="419040">
+<LI><CODE>PR_SUCCESS</CODE> indicates that the referenced monitor was located and the calling thread was in the monitor.</LI>
+</A><P>
+<A NAME="419041">
+<LI><CODE>PR_FAILURE</CODE> indicates that the referenced monitor could not be located or that the calling thread was not in the monitor</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="419042">
+<H5> Description</H5>
+</A>
+
+<a name="422784">
+Using the value specified in the <CODE>address</CODE> parameter to find a monitor in the monitor 
+cache, <CODE>PR_CNotifyAll</CODE> notifies all threads waiting for the monitor's state to change. All 
+of the threads waiting on the state change are then scheduled to reenter the monitor.
+</blockquote>
+</a>
+
+<P><HR>
+<A HREF="contents.html">[Contents]</A> <A HREF="prmon.html">[Previous]</A> <A HREF="priotyp.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<P ALIGN=right>
+
+<FONT SIZE=-2><I>Last Updated: Mon Jul 13 17:39:24 PDT 1998</I></FONT>
+
+<HR SIZE=4>
+
+<P> <CENTER>Copyright © 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html"
+TARGET=_top>Netscape Communications Corporation</A></FONT>
+</CENTER>
+<P>
+<P>
+
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

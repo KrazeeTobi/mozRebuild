@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<TITLE>The Tab Widget</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">The Tab Widget</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="trees.html">Previous: The Tree Widget</a>]
+[<a href="meters.html">Next: Progress Meter</a>]
+<p>
+<b>Feature Owner:</b> <a href="mailto:evaughan@netscape.com">Eric Vaughan</a><br>
+<p>
+A tab widget provides the user with a facility for switching
+between different views using tabs.  The tab is declared using the 
+<font color=green>tabcontrol</font> tag.  The tabcontrol is an
+extension of the <font color=green>box</font> tag 
+(See <a href="boxes.html">The Box System</a> for details.)
+<p>
+A tab widget can have a <font color=orange>horizontal</font>
+or <font color=orange>vertical</font> alignment, which can be
+specified using the <font color=red>align</font> attribute on the 
+<font color=green>tabcontrol</font> element. 
+The tab widget consists of two components: a tab box that contains the
+tabs themselves, and a tab panel, which contains the contents that are
+switched in and out of view when different tabs are selected.
+<p>
+The tab box is specified using the <font color=green>tabbox</font> tag.
+This tag is also an extension of the <font color=green>box</font>, and
+it can also align its children horizontally or vertically using the
+<font color=red>align</font> attribute.  Use horizontal alignment to
+place the tabs on the left or right of the tab panel and vertical
+alignment to place the tabs above or below the tab panel.
+<p>
+The tab box has individual tabs as its children, and these are declared
+using the <font color=green>tab</font> tag.  A tab is also a box, and it
+can contain arbitrary content, thus allowing the designer to create
+everything from simple tab text labels to complex graphical tabs.
+<p>
+The tab panel is declared using the <font color=green>tabpanel</font>
+tag.  Each child of this element is considered to be a unique view.  
+There is a one-to-one correspondence between the tabs in the tab box,
+and the views in the tab panel.  For example, clicking on the third
+tab (as specified in the tab box) results in the third view 
+(as specified in the tab panel) being made visible.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;tabcontrol align="vertical"&gt; 
+   &lt;tabbox align="horizontal"&gt; 
+      &lt;tab&gt;Tab One&lt;/tab&gt; 
+      &lt;tab&gt;Tab Two&lt;/tab&gt; 
+      &lt;tab&gt;Tab Three&lt;/tab&gt; 
+   &lt;/tabbox&gt; 
+  
+   &lt;tabpanel flex="100%"&gt; 
+      &lt;titledbutton value="View One"/&gt; 
+      &lt;titledbutton value="View Two"/&gt; 
+      &lt;titledbutton value="View Three"/&gt; 
+   &lt;/tabpanel&gt; 
+&lt;/tabcontrol&gt; 
+</table>
+<p>
+The selected item in the tab panel is reflected in the content model using the
+<font color=red>index</font> attribute. <font color=red>[Right now, an attribute called
+value is being used instead. This should change any day now.]</font>  This index is
+zero-based.
+<p>
+If the tab widget's width and height are not constrained, the widget will size itself
+to fit its largest view (regardless of whether or not that view is initially visible).
+All views will be flowed in order to determine the tab's width and height (unless the
+widget's width and height are constrained already).
+<p>
+The tab panel can be used independently of the tab control by using the <font color=green>deck
+</font> tag.  It can track selection and size itself to its largest view just as the tab
+panel can.
+<p>
+Border styles can be applied to tabs, and they will be automatically drawn around the view with
+a gap between the edge of the tab that is flush with the view.
+<p>
+<font color=red>Open Issues:
+<ul>
+<li>There are visibility issues with native widgets that prevent the tab control from working
+well with them.
+<li>There are issues with tabs wrapping to multiple rows.
+</ul>
+</font>
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="trees.html">Previous: The Tree Widget</a>]
+[<a href="meters.html">Next: Progress Meter</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>JavaScript 2.0 Notation</TITLE>
+<LINK rel=stylesheet href="../styles.css">
+<LINK rel=Start href="index.html">
+<LINK rel=Contents href="index.html">
+<LINK rel=Prev href="motivation.html">
+<LINK rel=Next href="execution-model.html">
+<SCRIPT type="text/javascript" language="JavaScript1.2" src="../unicodeCompatibility.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+<TR>
+  <TD valign=TOP nowrap>
+    <DIV class=title2><SPAN class=top-title>JavaScript 2.0</SPAN></DIV>
+    <DIV class=title1>Notation</DIV>
+  </TD>
+  <TD valign=TOP nowrap align=RIGHT><A href="motivation.html"><IMG src="../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="index.html"><IMG src="../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="execution-model.html"><IMG src="../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+</TR>
+</TABLE>
+
+<P class=mod-date>Wednesday, May 12, 1999</P>
+
+<H2>Informal Syntax</H2>
+
+<P>The main body of this proposal uses an informal syntax to describe language constructs. An example is the following:</P>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>VersionsAndRenames</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;[<CODE class=terminal-keyword>&lt;</CODE>&nbsp;<VAR class=nonterminal>VersionRange</VAR>&nbsp;[<CODE class=terminal-keyword>:</CODE>&nbsp;<VAR class=nonterminal>Identifier</VAR>]&nbsp;<CODE class=terminal-keyword>,</CODE>&nbsp;...&nbsp;<CODE class=terminal-keyword>,</CODE>&nbsp;<VAR class=nonterminal>VersionRange</VAR>&nbsp;[<CODE class=terminal-keyword>:</CODE>&nbsp;<VAR class=nonterminal>Identifier</VAR>]&nbsp;<CODE class=terminal-keyword>&gt;</CODE>]</DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>VersionRange</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal>Version</VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;[<VAR class=nonterminal>Version</VAR>]&nbsp;<CODE class=terminal-keyword>..</CODE>&nbsp;[<VAR class=nonterminal>Version</VAR>]</DIV>
+</DIV>
+<P><VAR class=nonterminal>VersionsAndRenames</VAR> and <VAR class=nonterminal>VersionRange</VAR> are the names of the grammar
+rules. The black square brackets represent optional items, and the black ... together with its neighbors represents optional
+repetition of zero or more items, so a <VAR class=nonterminal>VersionsAndRenames</VAR> can have zero or more sets of <VAR class=nonterminal>VersionRange</VAR>&nbsp;[<CODE class=terminal-keyword>:</CODE>&nbsp;<VAR class=nonterminal>Identifier</VAR>]
+separated by commas. A black | indicates that either its left or right alternative may be present, but not both; |'s have
+the lowest metasymbol precedence. Syntactic tokens to be typed literally are in a <CODE class=terminal-keyword>bold blue
+monospaced font</CODE>. Grammar nonterminals are in <VAR class=nonterminal>green italic</VAR> and correspond to the nonterminals
+in the <A href="parser-grammar.html">parser grammar</A> or <A href="lexer-grammar.html">lexer grammar</A>.</P>
+
+<P>The informal syntax descriptions sometimes list only the general or simplified syntax. Please refer to the <A href="parser-grammar.html">parser
+grammar</A>, <A href="lexer-grammar.html">lexer grammar</A>, and their <A href="notation-grammar.html">notation</A> for the
+actual syntax.</P>
+
+<H2><A name="character-notation"></A>Character Notation</H2>
+
+<P>This proposal uses the following conventions to denote literal characters:</P>
+
+<P>Printable ASCII literal characters (values 20 through 7E hexadecimal) are in a <CODE>blue monospaced font</CODE>. Other
+characters are denoted by enclosing their four-digit hexadecimal Unicode value between <CODE><SPAN class=control>&#171;u</SPAN></CODE>
+and <CODE><SPAN class=control>&#187;</SPAN></CODE>. For example, the non-breakable space character would be denoted in this
+document as <CODE><SPAN class=control>&#171;u00A0&#187;</SPAN></CODE>. A few of the common control characters are represented
+by name:</P>
+
+<DIV class=indent>
+  <TABLE border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Abbreviation&nbsp;&nbsp;</TH>
+    <TH valign=TOP nowrap align=LEFT>Unicode Value</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;NUL&#187;</SPAN></CODE></TD>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;u0000&#187;</SPAN></CODE></TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;BS&#187;</SPAN></CODE></TD>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;u0008&#187;</SPAN></CODE></TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;TAB&#187;</SPAN></CODE></TD>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;u0009&#187;</SPAN></CODE></TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;LF&#187;</SPAN></CODE></TD>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;u000A&#187;</SPAN></CODE></TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;VT&#187;</SPAN></CODE></TD>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;u000B&#187;</SPAN></CODE></TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;FF&#187;</SPAN></CODE></TD>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;u000C&#187;</SPAN></CODE></TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;CR&#187;</SPAN></CODE></TD>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;u000D&#187;</SPAN></CODE></TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;SP&#187;</SPAN></CODE></TD>
+    <TD valign=TOP nowrap><CODE><SPAN class=control>&#171;u0020&#187;</SPAN></CODE></TD>
+  </TR>
+  </TABLE>
+
+</DIV>
+<P>A space character is denoted in this document either by a blank space where it's obvious from the context or by <CODE><SPAN class=control>&#171;SP&#187;</SPAN></CODE>
+where the space might be confused with some other notation.</P>
+
+<HR>
+<ADDRESS><A href="mailto:waldemar@netscape.com">Waldemar Horwat</A><BR>
+Last modified Wednesday, May 12, 1999</ADDRESS>
+</BODY>
+</HTML>

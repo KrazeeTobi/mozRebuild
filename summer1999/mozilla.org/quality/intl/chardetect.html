@@ -1,0 +1,996 @@
+<HTML>
+<HEAD>
+<TITLE>Charset Detection Algorithms</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+
+
+
+   
+
+   
+
+   
+
+
+
+
+
+
+
+
+<center>
+
+<h2>
+
+Usage Notes for Charset Auto-detection modules</h2></center>
+
+
+
+<p><br>Document prepared by: <a href="mailto:momoi@netscape.com">Katsuhiko
+
+Momoi</a>
+
+<br>Direct all technical comments to: <a href="mailto:ftang@netscape.com">Frank
+
+Tang</a>
+
+<br>Last Update: 8/26/99
+
+<p><b>At M9 and later, we now have two ways to use the auto-charset modules:</b>
+
+<ul>
+
+<li>
+
+<b>Method 1 (available in M9 builds only starting 7/15/99) :</b> Insert
+
+the following line into <b>prefs.js </b>(prefs50.js if you're using a pre-M9
+
+build) file. Mozilla will use the auto-detector at all times regardless
+
+of the encoding menu choice.<br>
+
+<br>
+
+user_pref("intl.charset.detector", "<b>chardet_name</b>");<br>
+
+<br>
+
+where <b>chardet_name</b> is one of {japsm, kopsm, cjkpsm, zhpsm, zhtwpsm,
+
+zhcnpsm, ruprob, ukprob} -- (see also <a href="#detectormodules">below</a>
+
+for what they detect.)</li>
+
+
+
+<li>
+
+<b>Method 2:</b> Use the "Detectch" or "Detectcharset" utility which is
+
+found in the same directory as your "apprunner" file.</li>
+
+
+
+<ul>
+
+<li>
+
+<b>Purpose of the utility: </b>To test charset detection modules Frank
+
+Tang has checked in for <b>M8 and later</b>. These detection modules are
+
+not meant for all charsets but rather for useful groups of encodings, e.g.
+
+Japanese encodings, Traditional Chinese encodings, etc.</li>
+
+
+
+<li>
+
+<b>Where: </b>The utility is called <b>DetectCh.exe or DetectCharset.exe
+
+</b>and distributed with the Windows build. On Unix, it won't build by
+
+default, but you build it by (1) add "intl/chardet/tests/" to mozilla/allmakefiles.sh
+
+file and (2) cd intl/chardet/tests and gmake to build it).</li>
+
+
+
+<li>
+
+<b>How:</b></li>
+
+
+
+<ul>
+
+<li>
+
+Please test against REAL language pages - which do not have undefined code
+
+point (for example, undefined Shift_JIS). For example,</li>
+
+
+
+<ul>
+
+<li>
+
+First, download a web page into the same directory as your <b>apprunner.exe</b>
+
+file, and</li>
+
+
+
+<li>
+
+Type the following line:</li>
+
+
+
+<ul>
+
+<li>
+
+type file_name | DetectCh(arset) japsm1024</li>
+
+
+
+<ul>
+
+<li>
+
+... where file_name is the name of the file you downloaded for testing
+
+, japsm is the <a href="#detectormodules">detector name</a>, and the 1024
+
+is the size of the block.</li>
+
+</ul>
+
+</ul>
+
+
+
+<li>
+
+Sometime, the detector won't report any charset, which&nbsp; means it cannot
+
+figure out the charset.</li>
+
+
+
+<ul>
+
+<li>
+
+For example, it cannot figure out what charset is for <a href="http://home.netscape.com/index.html">http://home.netscape.com/index.html</a>.&nbsp;
+
+However it can figure out it is windows-1252 in <a href="http://home.netscape.com/da/index.html">http://home.netscape.com/da/index.html</a>
+
+(or sv)</li>
+
+</ul>
+
+</ul>
+
+
+
+<li>
+
+If you don't want to download pages to test, then you can use a Perl Script
+
+to fetch URLs to test.</li>
+
+
+
+<ul>
+
+<li>
+
+First, install Perl 5.004 w/ LWP- for example - ActivePerl -&nbsp; <a href="http://www.ActiveState.com/ActivePerl/">ActiveState
+
+Tool Corp. - ActivePerl</a></li>
+
+
+
+<li>
+
+Then, type the following line- (in the directory which have DetectCh(arset))</li>
+
+
+
+<ul>
+
+<li>
+
+<tt><font color="#000000">perl -MLWP::Simple -e "getprint '<u><a href="http://home.netscape.com/it/index.html">http://home.netscape.com/it/index.html</a></u>'"
+
+|DetectCh(arset) japsm 1024</font></tt></li>
+
+</ul>
+
+</ul>
+
+</ul>
+
+</ul>
+
+</ul>
+
+<b><font color="#000000">Sample output -- illustration of Method 2:</font></b>
+
+<blockquote>
+
+<li>
+
+<font color="#000000">Here are some sample output using the Perl Script
+
+method:</font></li>
+
+
+
+<blockquote>
+
+<li>
+
+<font color="#FF0000">Z:\mozilla\dist\WIN32_D.OBJ\bin>perl -MLWP::Simple
+
+-e "getprint '<a href="http://home.netscape.com/it/index.html">http://home.netscape.com/it/index.html</a>'"|DetectCh
+
+japsm 1024</font></li>
+
+
+
+<br>&nbsp;
+
+<p>&nbsp;
+
+<p><font color="#000000">It cannot find the charset.</font>
+
+<br>&nbsp;
+
+<li>
+
+<font color="#000000">Z:\mozilla\dist\WIN32_D.OBJ\bin>perl -MLWP::Simple
+
+-e "getprint '<a href="http://home.netscape.com/da/index.html">http://home.netscape.com/da/index.html</a>'"|DetectCh
+
+japsm 1024</font></li>
+
+
+
+<p><br><font color="#000000">It's NOT ISO-2022-JP- byte 4021</font>
+
+<br><font color="#000000">It's NOT EUC-JP- byte 4022</font>
+
+<br><font color="#000000">It's NOT UTF-8- byte 4022</font>
+
+<br><font color="#000000">It's NOT Shift_JIS- byte 4026</font>
+
+<br><font color="#000000">It's windows-1252- byte 4026. The only left</font>
+
+<br><font color="#000000">windows-1252</font></blockquote>
+
+</blockquote>
+
+<a NAME="detectormodules"></a><b>Available detectors:</b> <font color="#FF0000">Red</font><font color="#000000">
+
+indicates that the charset was not&nbsp; implemented in the module at <b>M8</b>.
+
+</font><font color="#FF0000">On
+
+M9 builds starting with 7/15/99, all the red-marked charsets below are
+
+working. </font><font color="#000000">Though they are checked in, </font><b>zhpsm</b>
+
+and <b>cjkpsm</b> are not yet finished. Please don't use them at this time.
+
+<ul>
+
+<li>
+
+japsm - detect charset among</li>
+
+
+
+<ul>
+
+<li>
+
+ISO-2022-JP</li>
+
+
+
+<li>
+
+EUC-JP</li>
+
+
+
+<li>
+
+Shift_JIS</li>
+
+
+
+<li>
+
+UTF-8</li>
+
+
+
+<li>
+
+Windows-1252</li>
+
+
+
+<li>
+
+UCS2 (Big Endian and Little Endian)</li>
+
+</ul>
+
+
+
+<li>
+
+kopsm - detect charset among</li>
+
+
+
+<ul>
+
+<li>
+
+EUC-KR</li>
+
+
+
+<li>
+
+<font color="#FF0000">ISO-2022-KR</font></li>
+
+
+
+<li>
+
+UTF-8</li>
+
+
+
+<li>
+
+windows-1252</li>
+
+
+
+<li>
+
+UCS2 (Big Endian and Little Endian)</li>
+
+</ul>
+
+
+
+<li>
+
+zhtwpsm - detect charset among</li>
+
+
+
+<ul>
+
+<li>
+
+BIG5</li>
+
+
+
+<li>
+
+x-euc-tw</li>
+
+
+
+<li>
+
+<font color="#FF0000">ISO-2022-CN</font></li>
+
+
+
+<li>
+
+UTF-8</li>
+
+
+
+<li>
+
+windows-1252</li>
+
+
+
+<li>
+
+UCS2 (Big Endian and Little Endian)</li>
+
+</ul>
+
+
+
+<li>
+
+zhcnpsm - detect charset among</li>
+
+
+
+<ul>
+
+<li>
+
+GB2312</li>
+
+
+
+<li>
+
+<font color="#FF0000">HZ</font></li>
+
+
+
+<li>
+
+<font color="#FF0000">ISO-2022-CN</font></li>
+
+
+
+<li>
+
+UTF-8</li>
+
+
+
+<li>
+
+windows-1252</li>
+
+
+
+<li>
+
+UCS2 (Big Endian and Little Endian)</li>
+
+</ul>
+
+
+
+<li>
+
+zhpsm <font color="#FF0000">(Not fully ready yet)</font> - detect charset
+
+among</li>
+
+
+
+<ul>
+
+<li>
+
+BIG5</li>
+
+
+
+<li>
+
+x-euc-twGB2312</li>
+
+
+
+<li>
+
+<font color="#FF0000">HZ</font></li>
+
+
+
+<li>
+
+<font color="#FF0000">ISO-2022-CN</font></li>
+
+
+
+<li>
+
+UTF-8</li>
+
+
+
+<li>
+
+windows-1252</li>
+
+
+
+<li>
+
+UCS2 (Big Endian and Little Endian)</li>
+
+</ul>
+
+
+
+<li>
+
+cjkpsm <font color="#FF0000">(Not fully ready yet)</font>&nbsp; - detect
+
+charset among</li>
+
+
+
+<ul>
+
+<li>
+
+Shift_JIS</li>
+
+
+
+<li>
+
+EUC-JP</li>
+
+
+
+<li>
+
+ISO-2022-JP</li>
+
+
+
+<li>
+
+EUC-KR</li>
+
+
+
+<li>
+
+<font color="#FF0000">ISO-2022-KR</font></li>
+
+
+
+<li>
+
+BIG5</li>
+
+
+
+<li>
+
+x-euc-twGB2312</li>
+
+
+
+<li>
+
+<font color="#CC0000">HZ</font></li>
+
+
+
+<li>
+
+<font color="#CC0000">ISO-2022-CN</font></li>
+
+
+
+<li>
+
+UTF-8</li>
+
+
+
+<li>
+
+windows-1252</li>
+
+
+
+<li>
+
+UCS2 (Big Endian and Little Endian)</li>
+
+</ul>
+
+</ul>
+
+<b><font color="#FF0000">[The following modules are available only for
+
+M9 or later builds starting on 7/15/99]</font></b>
+
+<ul>
+
+<li>
+
+<b><font color="#FF0000">&nbsp;</font><font color="#000000">Based on "<a href="http://www.neystadt.org/cyrillic/">The
+
+Cyrillic Software Suite</a>" perl package developed by <a href="mailto:John_Neystadt@icomverse.com">John
+
+Neystadt</a></font></b>. Read more about this in <a href="news://news.mozilla.org/378CD639.CD614A16%40netscape.com">this
+
+news article</a> posted by Frank Tang: 7/14/99.</li>
+
+
+
+<ul>
+
+<li>
+
+ruprob -- detects among</li>
+
+
+
+<ul>
+
+<li>
+
+KOI8-R</li>
+
+
+
+<li>
+
+windows-1251</li>
+
+
+
+<li>
+
+ISO-8859-5</li>
+
+
+
+<li>
+
+x-mac-cyrillic</li>
+
+
+
+<li>
+
+IBM866</li>
+
+</ul>
+
+
+
+<li>
+
+ukprob - detects among</li>
+
+
+
+<ul>
+
+<li>
+
+KOI8-U</li>
+
+
+
+<li>
+
+windows-1251</li>
+
+
+
+<li>
+
+ISO-8859-5</li>
+
+
+
+<li>
+
+x-mac-ukrainian</li>
+
+
+
+<li>
+
+IBM866</li>
+
+</ul>
+
+</ul>
+
+</ul>
+
+<b>Unfinished Work at M8 but were completed for M9: </b><font color="#FF0000">[All
+
+of the tasks below were completed and checked in on 7/14/99 after M8. Use
+
+7/15/99 or later M9 builds to see the fixes.]</font>
+
+<p>1. Need to add verifier for ISO-2022-KR, ISO-2022-CN and HZ:
+
+<br>&nbsp;(Note- although we can detect these three charset now (M9: starting
+
+with 7/15/99 build), we have not implemented the Unicode converters for
+
+them yet.) Any one want to help? Write to: <a href="mailto:ftang@netscape.com">Frank
+
+Tang</a>.
+
+<br>2. Need to add ISO-2022-KR verifier to kopsm, cjkpsm
+
+<br>3. Need to add ISO-2022-CN verifier to zhtwpsm, zhpsm and cjkpsm
+
+<br>4. Need to add HZ verifier to zhpsm, zhcnpsm and cjkpsm
+
+<br>5. Need to rewrite ISO-2022-JP Verifier to make it work properly w/
+
+ISO-2022-CN and ISO-2022-KR
+
+<p><b>Known problems/requests:</b>
+
+<p>1. The UTF-8 verifier has some problem. It might non-UTF-8 pages as
+
+UTF-8 sometimes. Investigating this problem .... <font color="#FF0000">[Fix
+
+checked in on 7/14/99. Use 7/15/99 or later M9 builds to see the fix.]</font>
+
+<br>2. zhtwpsm will only&nbsp; work as an x-euc-tw detector if it contains
+
+characters from&nbsp; CNS 11643 plane 2
+
+<br>3. zhpsm and cjkpsm won't detect correctly due to similar code ranges
+
+among EUC-KR, GB2312, x-euc-tw, Big5, EUC-JP, and Shift_JIS. We may eventually
+
+remove these two detectors. But for now, we've included them in the builds
+
+so that we can learn how good/bad they are.&nbsp; <font color="#FF0000">It
+
+is a known issue that detector 'cjkpsm' and 'zhpsm' won't report in some
+
+cases. And 'zhtwpsm' won't report "x-euc-tw' correctly. We need a 2nd path
+
+probability analysis for 'cjkpsm', 'zhpsm' and 'zhtwpsm'. Don't report
+
+bug for them please. They are incomplete for now</font>.
+
+<br>4. Is there some Vietnamese software which can detect charset between
+
+VIQR, VNI, VPS, and VISCII ?&nbsp; Write to: <a href="mailto:ftang@netscape.com">Frank
+
+Tang</a>.
+
+<p><b>Bug reporting procedures: </b>File your bug at <a href="http://bugzilla.mozilla.org/">this
+
+web page (Bugzilla)</a>. File it against the <b>Browser</b>. Assign the
+
+bug to <b>ftang@netscape.com</b>, and choose the <b>Component</b> to be
+
+"<b>International</b>".
+
+<p>1. Please test against japsm, kopsm, zhcnpsm and zhtwpsm, but not zhpsm
+
+and cjkpsm. These two detectors are not finished yet and need additional
+
+work. <font color="#FF0000">[If you use M9 build later than 7/14/99, then
+
+you can also use ruprob and ukprob. ]</font>
+
+<br>2. When you report a bug, please include the DOS/prompt window output.
+
+You can attach it by
+
+<br>&nbsp;&nbsp; a. click the upper-left DOS icon in the dos window, and
+
+click control-k control-e
+
+<br>&nbsp;&nbsp; b. high light the portion of output text by using mouse
+
+to click and click again
+
+<br>&nbsp;&nbsp; c. click the upper-left DOS icon in the dos window, and
+
+click control-k control-y
+
+<br>&nbsp;&nbsp; d. Paste into your Bugzilla report.
+
+<br>&nbsp;&nbsp; e. That will help us a lot since the dos output tell me
+
+which byte it go into error states for a particular charset.
+
+<br>&nbsp;
+
+
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

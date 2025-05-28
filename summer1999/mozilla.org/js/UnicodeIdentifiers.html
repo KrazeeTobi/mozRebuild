@@ -1,0 +1,409 @@
+<HTML>
+<HEAD>
+<TITLE>Proposal for extending the use of Unicode in ECMAScript identifiers</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+  
+  
+
+  
+    <b><font size="+3">Proposal for extending the use of Unicode in ECMAScript identifiers</font>
+    <br>Written by Michael Ang &lt;<a href="mailto:mang@subcarrier.org">mang@subcarrier.org</a>&gt;<br>
+      Comments to Norris Boyd &lt;<a href="mailto:norris@netscape.com">norris@netscape.com</a>&gt;</b>
+  </p>
+
+    <h2>I. Background</h2>
+    <ul>
+      <p>
+	  ECMAScript identifiers are currently specified as being Unicode.  However,
+	  only the first 128 Unicode characters are allowed, effectively restricting
+	  identifiers to ASCII.
+	</p>
+	<p>
+	  Implementations of ECMAScript are currently in use around the world.  Developers
+	  whose native language is not English should be able to have identifiers that
+	  make sense to them. Although arbitrary strings can be used for named property
+	  lookup, allowing ideographs and other Unicode characters in identifiers
+	  will make it easier for global developers to write scripts.
+	</p>
+
+	<p>Since implementations must currently accept Unicode characters,
+	  extending the range of characters allowed to that of the Unicode identifier
+	  class should not be an undue burden.
+	</p>
+	<p>
+	  Java guarantees that escaped Unicode characters occurring in source code
+	  (in the form \uNNNN) will be unescaped before compilation.  This can
+	  lead to problems in dynamic languages, for example when a newline
+	  character is escaped:
+	</p>
+	<p>
+	  Program 1 (note that \u000A is the newline character): <br>
+	  <code>
+	    int foo = 5;\u000Aint bar =6;
+	  </code></p>
+	<p>
+	  Program 2 (equivalent in Java, but not ECMAScript): <br>
+	  <code>
+	    int foo = 5;<br>
+	    int bar = 6;
+	  </code>
+	</p>
+	<p>
+	  Because allowing Unicode escapes in identifiers would complicate interpreter
+	  implementations, this is forbidden.  Note that Unicode escapes are still allowed
+	  in comments and literal strings, but are not decoded.
+	</p>
+	<p>
+	  Section 5.14 of the Unicode Standard v2.0 gives implementation guidelines
+	  for identifiers. Most identifiers legal under these guidelines are
+	  legal in ECMAScript. ECMAScript differs in that no provisions are
+	  given for ignoring formatting characters (which are forbidden).
+	</p>
+    </ul>
+    <h2>II. Recommendations</h2>
+    <ul>
+      <p>
+	  These recommendations are made against the April 22 ECMAScript draft.
+	  Specific changes to the document appear in <b>bold</b> type.
+	</p>
+	<p>
+	  <b>&sect;6 Source Text</b>
+	</p>
+	<ul>
+	  <p>
+	      <i>Amend the first section as follows:</i><br>
+	      &quot;However, non-ASCII Unicode characters may appear
+	      only within <b>identifiers</b>, comments, and string literals.
+	      <b>In identifiers, the exact set of Unicode characters allowed is
+		specified in Section 7.5 and corresponds to those Unicode
+		characters with the property of alphabetic, decimal digit,
+		combining mark,	or ideographic.</b> In string literals, any
+	      Unicode character may also be expressed as a Unicode escape sequence
+	      consisting of six ASCII characters, namely \u plus four hexadecimal
+	      digits. Within a comment, such an escape sequence is effectively ignored
+	      as part of the comment. Within a string literal, the Unicode
+	      escape sequence contributes one character to the string value of the literal.&quot;
+	    </p>
+	</ul>
+	<p>
+	  <b>&sect;7.5 Identifiers</b>
+	</p>
+	<ul>
+	    <p>
+	      <i>Amend the first section as follows:</i><br>
+	      &quot;An identifier is a character sequence of unlimited length, where each character
+	      in the sequence must be a <b>Unicode character with the property of
+		alphabetic (category "L"), decimal digit (category "Nd"), ideographic, or combining.
+		For historical reasons, the underscore (_) character and dollar sign ($) are also supported.
+		The first character may not be a Unicode decimal digit.</b>
+	    </p>
+	    <p>
+	      <b>Two ECMAScript identifiers are the same only if they have the same sequence of Unicode
+		characters (as defined by their Unicode code points). This means that two identifiers
+		with the same
+		external appearance may not be identical.  Composite Unicode characters are treated as distinct
+		from their decomposed equivalents.  For example, LATIN CAPITAL LETTER A (\u0061) followed by
+		COMBINING RING ABOVE (\u030A) is distinct from LATIN CAPITAL LETTER A WITH RING ABOVE (\u00C5).&quot;
+	      </b>
+	    </p>
+	    <p>
+	      <b>The Unicode Standard v2.0 specifies implementation guidlines for identifiers
+		(&sect;5.14 Identifiers).  These significant differences between ECMAScript
+		and these guidelines should be noted:
+	    <ul>
+	      <li>since identifiers are compared based on the sequence of their code points,
+		identifiers that appear identical may not be
+	      <li>no provision is made for ignoring layout and format control characters
+	    </ul>
+	  </b>
+	  </p>
+
+	    <p>
+	      <i>Amend the BNF as follows:</i><br>
+	      <p>
+	      &quot;IdentifierName ::<br>
+	      <ul>
+		IdentifierLetter<br>
+		<b>IdeographicCharacter</b><br>
+		<b>IdentifierName CombiningCharacter</b></br>
+		<b>IdentifierName Extender</b><br>
+		<b>IdentifierName IdeographicCharacter</b><br>
+		IdentifierName IdentifierLetter<br>
+		IdentifierName DecimalDigit<br>
+	      </ul>
+	    </p>
+	    
+	    <p>
+	      <b>CombiningCharacter</b><br>
+	    </p>
+	    <p>
+	      <ul>
+	      <b>A CombiningCharacter is a Unicode character with the normative
+		combining property.</b>
+	    </ul>
+	    </p>
+
+	    <p>
+	      <b>Extender</b><br>
+	    </p>
+	    <p>
+	    <ul>
+		<b>An Extender is a a Unicode character in a set defined
+		  in &sect;5.14 of the Unicode Standard 2.0. (XXX should
+		expand this reference.)</b>
+		</ul>
+	    </p>
+
+	    <p>IdentifierLetter :: one of</p>
+	    <ul>
+		<p>
+		  [ASCII table with _ and $]
+		</p>
+		<p>
+		  <b>Additionally, an IdentifierLetter may be a member of the
+		    Unicode letter class (those Unicode
+		    characters in category "L"), or the Unicode character
+		  FULLWIDTH LOW LINE (U+FF3F).</b>
+		</p>
+	    </ul>
+	    <p>
+
+	      <b>IdeographicCharacter ::</b>
+	    </p>
+	    <p>
+	      <ul>
+	      <b>An IdentifierIdeographic may be a Unicode character with the ideographic property.
+		The ideographic property is an informative property of the Compatibility Han
+		characters, the Unified Han Set, and Hangzhou-style numerals, and the IDEOGRAPHIC
+		NUMBER ZERO.</b>
+	     </ul>
+	    </p>
+
+	    <p>
+	      DecimalDigit :: one of<br>
+	      <ul>
+	      0 1 2 3 4 5 6 7 8 9
+	    </ul>
+	    </p>
+	    <p>
+	      <ul>
+	      <b>Additionally, a DecimalDigit may be a member of the Unicode decimal
+		number class (those Unicode
+		characters in category "Nd".</b>&quot;
+	    </ul>
+	    </p>
+	</ul>
+	<p>
+	  <b>&sect;15.9.1 Regular Expression Pattern Matching</b>
+	</p>
+	<ul>
+	  <p>
+	      The textual descriptions of the \w and \W character classes do not match with the character
+	      ranges given.  The ranges given are what is intended (for historical reasons).
+	    </p>
+	    <p>
+	      <i>Amend the descriptions of \w and \W character classes:</i><br>
+	      <table>
+		<tr>
+		  <td>\w</td><td><b>ASCII letters, digits, and underscore</b>;
+		    equivalent to "[a-zA-Z0-9_]".</td>
+		</tr>
+		<tr>
+		  <td>\w</td><td><b>Any character not an ASCII letter, digit, or
+		      underscore</b>; equivalent to "[<b>^</b>a-zA-Z0-9_]".</td>
+		</tr>
+	      </table>
+	    </p>
+	</ul></li>
+    </ul>
+    <hr>
+    Written by <a href="mailto:mang@subcarrier.org">Michael Ang &lt;mang@subcarrier.org&gt;</a><br>
+    Comments to <a href="mailto:norris@netscape.com">Norris Boyd &lt;norris@netscape.com&gt;</a><br>
+
+    <!-- Created: Mon Nov 16 21:37:49 PST 1998 -->
+    <!-- hhmts start -->
+Last modified: Fri Dec 18 18:58:34 PST 1998
+<!-- hhmts end -->
+  
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

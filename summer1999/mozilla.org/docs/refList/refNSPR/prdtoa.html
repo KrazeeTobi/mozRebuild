@@ -1,0 +1,440 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Floating point number to string conversion</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A>
+<A HREF="prproces.html">[Previous]</A> <A HREF="prmwait.html">[Next]</A>
+<A HREF="last.html">[Last]</A>
+<BR>
+<HR WIDTH="100%">
+<CENTER>
+<H2>
+Chapter 26<BR>
+Floating Point Number to String Conversion</H2></CENTER>
+NSPR provides functions that convert double-precision floating point numbers
+to and from their character string representations. The header file
+<TT>prdtoa.h</TT> declares these functions.
+
+<P>These conversion functions were originally written by David M. Gay of
+AT&amp;T. They use IEEE double-precision (not IEEE double-extended)
+arithmetic.
+<H4>
+<A NAME="PR_strtod"></A>PR_strtod</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prdtoa.h>
+
+PRFloat64 PR_strtod(const char *s00, char **se);</PRE>
+
+<H5>
+Parameters</H5>
+The function has the following parameters:
+<BR>
+<TABLE WIDTH="100%" NOSAVE >
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%" NOSAVE><B><TT>s00</TT></B></TD>
+
+<TD>The input string to be scanned.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>se</TT></B></TD>
+
+<TD>A pointer that, if not <TT>NULL</TT>, will be assigned the address
+of the last character scanned in the input string.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+The result of the conversion is a <TT>PRFloat64</TT> value representative
+of the input string. If the parameter <TT>se</TT> is not <TT>NULL</TT>
+the location it references will also be set.
+<H5>
+Description</H5>
+<TT>PR_strtod</TT> converts the prefix of the input decimal string pointed
+to by <TT>s00</TT> to a nearest double-precision floating point number.
+Ties are broken by the IEEE round-even rule. The string is scanned
+up to the first unrecognized character. If the value of <TT>se</TT>
+is not <TT>(char **) NULL</TT>, <TT>PR_strtod</TT> stores a pointer to
+the character terminating the scan in <TT>*endptr</TT>. If the answer
+would overflow, a properly signed <TT>HUGE_VAL</TT> (infinity) is returned.
+If the answer would underflow, a properly signed 0 is returned. In
+both cases, <TT>PR_GetError()</TT> returns the error code <TT>PR_RANGE_ERROR</TT>.
+If no number can be formed, <TT>se</TT> is set to <TT>s00</TT>, and 0 is
+returned.
+<H4>
+<A NAME="PR_dtoa"></A>PR_dtoa</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prdtoa.h>
+
+PRStatus PR_dtoa(
+    PRFloat64 d,
+    PRIntn mode,
+    PRIntn ndigits,
+    PRIntn *decpt,
+    PRIntn *sign,
+    char **rve,
+    char *buf,
+    PRSize bufsz);</PRE>
+
+<H5>
+Parameters</H5>
+<TT>PR_dtoa</TT> takes the following parameters:
+<BR>
+<TABLE COLS=2 WIDTH="100%" NOSAVE >
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%" NOSAVE><B><TT>d</TT></B></TD>
+
+<TD>The floating point number to be converted to ASCII.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>mode</TT></B></TD>
+
+<TD>The type of conversion to employ.
+<BR>
+<TABLE COLS=2 WIDTH="100%" NOSAVE >
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="5%" NOSAVE><B><TT>0</TT></B></TD>
+
+<TD>Shortest string that yields <TT>d</TT> when read in and rounded to
+nearest.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>1</TT></B></TD>
+
+<TD>Like 0, but with Steele &amp; White stopping rule <A HREF="#Steele and White Print Paper">[2]</A>;
+e.g., with IEEE P754 arithmetic, mode 0 gives 1e23 whereas mode 1 gives
+9.999999999999999e22.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>2</TT></B></TD>
+
+<TD><TT>max(1, ndigits)</TT> significant digits. This gives a return
+value similar to that of <TT>ecvt</TT>, except that trailing zeros are
+suppressed.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>3</TT></B></TD>
+
+<TD>Through <TT>ndights</TT> past the decimal point. This gives a
+return value similar to that from <TT>fcvt</TT>, except that trailing zeros
+are suppressed, and <TT>ndigits</TT> can be negative.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>4,5,8,9</TT></B></TD>
+
+<TD>Same as modes [2..3] but using <I>left to right</I> digit generation.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>6-9</TT></B></TD>
+
+<TD>Same as modes [2..3] but don't try fast floating-point estimate (if
+applicable).</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>all others</TT></B></TD>
+
+<TD>Treated as mode 2.</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>ndigits</TT></B></TD>
+
+<TD>The number of digits desired in the output string.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>decpt</TT></B></TD>
+
+<TD>A pointer to a memory location where the runtime will store the offset,
+relative to the beginning of the output string, of the conversion's decimal
+point.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>sign</TT></B></TD>
+
+<TD>A location where the runtime can store an indication that the conversion
+was of a negative value.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>rve</TT></B></TD>
+
+<TD>If not <TT>NULL</TT> this location is set to the address of the end
+of the result.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>buf</TT></B></TD>
+
+<TD>The address of the buffer in which to store the result.</TD>
+</TR>
+
+<TR NOSAVE>
+<TD ALIGN=LEFT VALIGN=TOP NOSAVE><B><TT>bufsz</TT></B></TD>
+
+<TD>The size of the buffer provided to hold the result.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Results</H5>
+The principle output is the null-terminated string stored in <TT>buf</TT>.
+Trailing zeros are suppressed.
+
+<P>If <TT>rve</TT> is not <TT>NULL, *rve</TT> is set to point to the end
+of the returned value.
+
+<P>If the input parameter, <TT>d</TT>, is <I>+infinity,</I> <I>-infinity</I>
+or <I>NAN<TT>, </TT>*decpt </I>is set to 9999.
+<H5>
+Description</H5>
+Sufficient space is allocated to the return value to hold the suppressed
+trailing zeros.
+<H4>
+<A NAME="PR_cnvtf"></A>PR_cnvtf</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prdtoa.h></PRE>
+
+<PRE>void PR_cnvtf(char *buf, PRIntn bufsz, PRIntn prcsn, PRFloat64 fval);</PRE>
+
+<H5>
+Description</H5>
+<TT>PR_cnvtf</TT> is a simpler interface to convert a floating point number
+to a string. In fact, it is written to conform to the ECMA standard
+of Javascript (ECMAScript).
+
+<P>The input argument <TT>fval</TT> is the double-precision floating point
+number to be converted, and <TT>prcsn</TT> is the number of digits of precision
+to generate floating point value. On return, the result is written
+to the buffer pointed to by <TT>buf</TT> of size <TT>bufsz</TT>.
+<H3>
+References</H3>
+Gay's implementation is inspired by these two papers.
+
+<P><A NAME="Clinger Read Paper"></A>[1] William D. Clinger, "How to Read
+Floating Point Numbers Accurately," <I>Proc. ACM SIGPLAN '90</I>, pp. 92-101.
+
+<P><A NAME="Steele and White Print Paper"></A>[2] Guy L. Steele, Jr. and
+Jon L. White, "How to Print Floating-Point Numbers Accurately," <I>Proc.
+ACM SIGPLAN '90</I>, pp. 92-101.
+<BR>
+
+<P>
+<HR WIDTH="100%">
+<BR><A HREF="contents.html">[Contents]</A> [<A HREF="prproces.html">Previous]</A>
+<A HREF="prmwait.html">[Next]</A> [<A HREF="last.html">Last]</A>
+<DIV ALIGN=right><I><FONT SIZE=-2>Last updated: Wed Jul 15 09:53:03 PDT
+1998</FONT></I></DIV>
+
+<DIV ALIGN=right>
+<HR WIDTH="100%"></DIV>
+
+<CENTER>Copyright © 1998 <A HREF="http://home.netscape.com/misc/contact_info.html" TARGET="_top">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

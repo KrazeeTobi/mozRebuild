@@ -1,0 +1,501 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Condition Variables</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prlock.html">[Previous]</A> <A HREF="prmon.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<HR>
+<A NAME="1007162">
+<P></A><CENTER><H2>Chapter 6<BR><A NAME="1007115">
+Condition Variables</H2>
+</A></CENTER>
+<A NAME="1018478">
+This chapter describes the API for creating and destroying condition variables, notifying condition variables of changes in monitored data, and making a thread wait on such notification.<P></A>
+<A NAME="1019127">
+<A HREF="prcvar.html#1018581">Condition Variable Type</A><br><A HREF="prcvar.html#1018746">Condition Variable Functions</A><P></A>
+<A NAME="1020391">
+Conditions are closely associated with a single monitor, which typically consists of a mutex, one or more condition variables, and the monitored data. The association between a condition and a monitor is established when a condition variable is created, and the association persists for its life. In addition, a static association exists between the condition and some data within the monitor. This data is what will be manipulated by the program under the protection of the monitor. <P></A>
+<A NAME="1021118">
+A call to <A HREF="prcvar.html#1018626"><CODE>PR_WaitCondVar</CODE></A> causes a thread to block until a specified condition variable receives notification of a change of state in its associated monitored data. Other threads may notify the condition variable when changes occur.<P></A>
+<A NAME="1019319">
+For an introduction to NSPR thread synchronization, including locks and condition variables, see <A HREF="printro.html#1015494">Chapter 1, "Introduction to NSPR."</A><P></A>
+<A NAME="1019345">
+For reference information on NSPR locks, see <A HREF="prlock.html#1007115">Chapter 5, "Locks."</A><P></A>
+<A NAME="1021465">
+NSPR provides a special type, <CODE><A HREF="prmon.html#421412">PRMonitor</A></CODE>, for use with Java. Unlike a mutex of type <A HREF="prlock.html#1018659"><CODE>PRLock</CODE></A>, which can have multiple associated condition variables of type <A HREF="prcvar.html#1019073"><CODE>PRCondVar</CODE></A>, a mutex of type <CODE>PRMonitor</CODE> has a single, implicitly associated condition variable. For information about <CODE>PRMonitor</CODE>, see <A HREF="prmon.html#418222">Chapter 7, "Monitors."</A><P></A>
+
+<A NAME="Condition Variable Type"></A>
+<A NAME="1018581">
+<H2> Condition Variable Type</H2>
+</A>
+
+<A NAME="Head3;"></A>
+<A NAME="1019073">
+<H4> PRCondVar</H4>
+</A>
+
+<A NAME="1019425">
+Structure for a condition variable.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018783">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1018604">
+<PRE>#include &lt;prcvar.h&gt;</PRE></A><A NAME="1022054">
+<PRE>typedef struct PRCondVar PRCondVar;</PRE></A><A NAME="Head4;"></A>
+<A NAME="1019465">
+<H5> Description</H5>
+</A>
+
+<A NAME="1019493">
+An NSPR condition variable is an opaque object identified by a pointer.<P></A>
+
+<A NAME="Condition Variable Functions"></A>
+<A NAME="1018746">
+<H2> Condition Variable Functions</H2>
+</A>
+<A NAME="1019873">
+<A HREF="prcvar.html#1018606"><CODE>PR_NewCondVar</CODE></A><br><A HREF="prcvar.html#1018835"><CODE>PR_DestroyCondVar</CODE></A><br><A HREF="prcvar.html#1018626"><CODE>PR_WaitCondVar</CODE></A><br><A HREF="prcvar.html#1018946"><CODE>PR_NotifyCondVar</CODE></A><br><A HREF="prcvar.html#1018977"><CODE>PR_NotifyAllCondVar</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018606">
+<H4> PR_NewCondVar</H4>
+</A>
+
+<A NAME="1018607">
+Creates a new condition variable.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018616">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1022064">
+<PRE>#include &lt;prcvar.h&gt;</PRE></A><A NAME="1018617">
+<PRE>PRCondVar* PR_NewCondVar(PRLock *lock);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1018737">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="1018724">
+<CODE>PR_NewCondVar</CODE> has one parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1019996">
+<PRE><CODE>lock</CODE></PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1019998">
+The identity of the mutex that protects the monitored data, including this condition variable.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018729">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1020013">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1021533">
+<LI>If successful, a pointer to the new condition variable object.</LI>
+</A><P>
+<A NAME="1021541">
+<LI>If unsuccessful (for example, if system resources are unavailable), <CODE>NULL</CODE>.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="1018835">
+<H4> PR_DestroyCondVar</H4>
+</A>
+
+<A NAME="1018620">
+Destroys a condition variable.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018832">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1022077">
+<PRE>#include &lt;prcvar.h&gt;</PRE></A><A NAME="1018625">
+<PRE>void PR_DestroyCondVar(PRCondVar *cvar);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1021543">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="1021549">
+<CODE>PR_DestroyCondVar</CODE> has one parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1021546">
+<PRE>cvar<CODE></CODE></PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1021548">
+A pointer to the condition variable object to be destroyed.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1020139">
+<H5> Description</H5>
+</A>
+
+<A NAME="1020140">
+Before calling <CODE>PR_DestroyCondVar</CODE>, the caller is responsible for ensuring that the condition variable is no longer in use. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018626">
+<H4> PR_WaitCondVar</H4>
+</A>
+
+<A NAME="1018889">
+Waits on a condition.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018895">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1022079">
+<PRE>#include &lt;prcvar.h&gt;</PRE></A><A NAME="1018884">
+<PRE>
+PRStatus PR_WaitCondVar(
+    PRCondVar *cvar,
+    PRIntervalTime timeout);
+</PRE></A><A NAME="Head4;"></A>
+<A NAME="1020926">
+<H5> Parameters</H5>
+</A>
+
+<A NAME="1020936">
+<CODE>PR_WaitCondVar</CODE> has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1020929">
+<PRE>cvar<CODE></CODE></PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1020931">
+The condition variable on which to wait.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1020933">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1020935">
+The value <CODE>PR_INTERVAL_NO_TIMEOUT</CODE> requires that a condition be notified (or the thread interrupted) before it will resume from the wait. The value <CODE>PR_INTERVAL_NO_WAIT</CODE> causes the thread to release the lock, possibly causing a rescheduling within the runtime, then immediately attempt to reacquire the lock and resume.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1020937">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1020553">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1021588">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>. </LI>
+</A><P>
+<A NAME="1021756">
+<LI>If unsuccessful (for example, if the caller has not locked the lock associated with the condition variable or the thread was interrupted with <A HREF="prthrd.html#1015726"><CODE>PR_Interrupt</CODE></A>), <CODE>PR_FAILURE.</CODE> The details can be determined with <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="1020205">
+<H5> Description</H5>
+</A>
+
+<A NAME="1020206">
+Before the call to <CODE>PR_WaitCondVar</CODE>, the lock associated with the condition variable must be held by the calling thread. After a call to PR_WaitCondVar, the lock is released and the thread is blocked in a "waiting on condition" state until another thread notifies the condition or a caller-specified amount of time expires.<P></A>
+<A NAME="1018634">
+When the condition variable is notified, a thread waiting on that condition moves from the "waiting on condition" state to the "ready" state. When scheduled, the thread attempts to reacquire the lock that it held when <CODE>PR_WaitCondVar</CODE> was called. <P></A>
+<A NAME="1018645">
+Any value other than <CODE>PR_INTERVAL_NO_TIMEOUT</CODE> or <CODE>PR_INTERVAL_NO_WAIT</CODE> for the timeout parameter will cause the thread to be rescheduled due to either explicit notification or the expiration of the specified interval. The latter must be determined by treating time as one part of the monitored data being protected by the lock and tested explicitly for an expired interval.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018946">
+<H4> PR_NotifyCondVar</H4>
+</A>
+
+<A NAME="1021006">
+Notifies a condition variable of a change in its associated monitored data.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1021008">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1022081">
+<PRE>#include &lt;prcvar.h&gt;</PRE></A><A NAME="1020982">
+<PRE>PRStatus PR_NotifyCondVar(PRCondVar *cvar);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1021036">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="1021778">
+<CODE>PR_NotifyCondVar</CODE> has one parameter: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1021033">
+<PRE>cvar<CODE></CODE></PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1021035">
+The condition variable to notify.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1021053">
+<H5> Returns </H5>
+</A>
+
+<A NAME="1021836">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1021841">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A><P>
+<A NAME="1021054">
+<LI>If unsuccessful (for example, if the caller has not locked the lock associated with the condition variable), <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="1021037">
+<H5> Description</H5>
+</A>
+
+<A NAME="1018663">
+The calling thread must hold the lock that protects the condition, as well as the invariants that are tightly bound to the condition.<P></A>
+<A NAME="1021059">
+Notification of a condition variable signals a change of state in some monitored data. When the notification occurs, the runtime promotes a thread that is waiting on the condition variable to a ready state. If more than one thread is waiting, the selection of which thread gets promoted cannot be predicted. This implies that all threads waiting on a single condition variable must have the same semantics. If no thread is waiting on the condition variable, the notify operation is a no-op.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018977">
+<H4> PR_NotifyAllCondVar</H4>
+</A>
+
+<A NAME="1018673">
+Notifies all of the threads waiting on a specified condition variable. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="1019016">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1022083">
+<PRE>#include &lt;prcvar.h&gt;</PRE></A><A NAME="1018999">
+<PRE>PRStatus PR_NotifyAllCondVar(PRCondVar *cvar);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1021876">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1021880">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1021881">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A><P>
+<A NAME="1021877">
+<LI>If unsuccessful (for example, if the caller has not locked the lock associated with the condition variable), <CODE>PR_FAILURE</CODE> </LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="1021878">
+<H5> Description</H5>
+</A>
+
+<A NAME="1021093">
+The calling thread must hold the lock that protects the condition, as well as the invariants that are tightly bound to the condition.<P></A>
+<A NAME="1021084">
+A call to <CODE>PR_NotifyAllCondVar</CODE> causes all of the threads waiting on the specified condition variable to be promoted to a ready state. If no threads are waiting, the operation is no-op.<P></A>
+
+<P><HR>
+<A HREF="contents.html">[Contents]</A> <A HREF="prlock.html">[Previous]</A> <A HREF="prmon.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<P ALIGN=right>
+
+<FONT SIZE=-2><I>Last Updated: Mon Jul 13 17:34:35 PDT 1998
+</I></FONT>
+
+<HR SIZE=4>
+
+<P> <CENTER>Copyright © 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html"
+TARGET=_top>Netscape Communications Corporation</A></FONT>
+</CENTER>
+<P>
+<P>
+
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

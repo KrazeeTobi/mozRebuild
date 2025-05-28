@@ -1,0 +1,221 @@
+<HTML>
+<HEAD>
+<TITLE>Broadcasters and Observers</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Broadcasters and Observers</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="boxes.html">Previous: The Box System</a>]
+[<a href="events.html">Next: Focus and Command Dispatching</a>]
+<p>
+<b>Feature Owners:</b> <a href="mailto:hyatt@netscape.com">David Hyatt</a>
+<p>
+<b>Change History</b><br>
+<ul>
+<li>8/22/99 - Added description of command nodes and simplified observes strategy.
+</ul>
+<p>
+In many cases user interface elements actually represent the same object.  For example, a 
+<font color=purple>Cut</font> menu item represents the same command as a
+<font color=purple>Cut</font> toolbar button.  The two elements should both be
+enabled or disabled at the same time, and the actions they perform should also be
+identical.  
+<p>
+<i>Broadcasters and observers</i> provide a mechanism for allowing multiple elements to
+observe a single element that can broadcast state and event information to its
+observers.
+<p>
+<font color=red>Broadcasters and observers should ONLY be used when attribute or event
+information must be communicated to multiple observers simultaneously.  Broadcasters
+and observers should NOT be used simply to transmit information from one element to
+another element.  The relationship should be one-to-many.</font>
+<p>
+Any element in a XUL document can be a broadcaster or observer.  This relationship is
+completely arbitrary and can exist between any two elements, although typically this
+relationship will exist between an invisible element (used simply for storing common
+state and event handlers) and multiple user interface elements (usually key bindings,
+menus, and toolbar buttons).
+<p>
+An element can become an observer of another element either programmatically or
+through the use of <font color=green>observes</font> nodes.  An 
+<font color=green>observes</font> node can be
+attached as a child of the node that will become the observer.  The observes node
+can have several attributes.  
+<p>
+The <font color=red>element</font> 
+attribute points to the node that
+represents the broadcaster.  Its value is the <font color=purple>id</font> of the
+broadcaster.  <font color=blue>getElementById</font> is used to retrieve the broadcaster
+and to attach it to the observer. 
+<p>
+The <font color=red>attribute</font> attribute indicates an attribute of the
+broadcaster that the
+observer is watching.  For example, a toolbar button could observe the <font color=red>
+disabled</font> attribute of the broadcaster.  If the attribute is set or unset
+on the broadcaster,
+it will automatically be set or unset in the observer.  
+If this attribute has a value of <font color=orange>*</font>, then the observer will
+pick up all of the broadcaster's attributes (except for <font color=red>id</font>).
+<font color=red>[The * functionality is not yet implemented.]</font>
+<P>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="cut"/&gt;
+...
+&lt;menuitem name="Cut"&gt;
+  &lt;observes element="cut" attribute="disabled"/&gt;
+&lt;/menuitem&gt;
+...
+&lt;titledbutton value="Cut"&gt;
+  &lt;observes element="cut" attribute="disabled"/&gt;
+&lt;/titledbutton&gt;
+...
+</table>
+<p>
+There is also a simpler syntax that can be used when one node simply wishes to observe
+all the attributes on a broadcaster node.  Instead of having to use an <font color=green>
+observes</font> node, an <font color=red>observes</font> attribute can be placed on the
+observer instead.  Its value is the id of the broadcaster being observed.  When this is done
+all attributes on the observer
+(with the exception of id) will be picked up from the broadcaster.
+<p>
+<font color=red>[Not yet implemented, probably won't be]</font>
+The <font color=red>mapto</font> attribute can be used to select a different attribute
+to set/unset in the observer when the attribute specified by the <font color=red>attribute</font>
+is set/unset in the broadcaster.  For example, an <font color=red>action</font> 
+attribute in the broadcaster might be mapped to an <font color=red>onclick</font>
+attribute in a menu item and to an <font color=red>onkeydown</font> attribute in a
+key binding.
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="cut" action="performCut()"/&gt;
+...
+&lt;menuitem name="Cut"&gt;
+  &lt;observes element="cut" attribute="action" mapto="onclick"/&gt;
+&lt;/menuitem&gt;
+...
+</table>
+<P>
+<font color=red>[Not yet implemented, probably won't be]</font>
+The <font color=red>event</font> attribute can be used to indicate that an observer
+wants to observe a particular event, such as a mouse click.  The value of this
+attribute corresponds
+to the event that would be specified using the <font color=blue>addEventListener</font>
+AOM API.  (See <a href="events.html">Event Observation</a> for details.)
+When this attribute is used, then any event handlers that are added or removed from
+the broadcaster will also be added or removed from the observer. 
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="cut"/&gt;
+...
+&lt;menuitem name="Cut"&gt;
+  &lt;observes element="cut" event="click"/&gt;
+&lt;/menuitem&gt;
+...
+document.getElementById('cut').addEventListener('click', performCut);
+...
+function performCut() {
+  ...
+}
+</table>
+<p>
+The <font color=green>observes</font> node can also have a <font color=purple>change</font>
+event handler placed on it, either through script or by placing an <font color=red>onchange</font>
+attribute on the <font color=green>observes</font> node.  This handler is invoked whenever
+an attribute changes. <font color=red>[Currently the handler is only invoked when an attribute
+is set, but not when it is unset.  This is a known problem.]</font>  The code in the handler
+executes in the context of the element that is the observer, i.e., the parent of the
+<font color=green>observes</font> element.
+<p>
+<font color=red>[Implemented, but the map argument hasn't been added yet.]</font>
+In addition to <font color=green>observes</font> nodes, the broadcaster/observer
+relationship can be set up programmatically using the <font color=blue>addBroadcastListener</font>,
+<font color=blue>removeBroadcastListener</font>, <font color=blue>addBroadcastEventListener</font>,
+and <font color=blue>removeBroadcastEventListener</font> AOM methods.
+<p>
+<font color=blue>addBroadcastListener</font> takes a <font color=red>DOM element</font>,
+an <font color=red>attribute</font>, and a <font color=red>mapto</font>.
+<font color=blue>removeBroadcastListener</font> takes a <font color=red>DOM element</font> and
+an <font color=red>attribute</font>.
+<p>
+The event listener versions of the methods have the same set of arguments, with the 
+<font color=red>event</font>
+in place of the <font color=red>attribute</font> argument.
+<p>
+<font color=red>[Not yet implemented.]</font> 
+The <font color=blue>addBroadcastChangeListener</font> and 
+<font color=blue>removeBroadcastChangeListener</font> methods
+can be used to programmatically add and remove 
+<font color=purple>change</font> handlers.  They take the same 
+arguments as <font color=blue>addBroadcastListener</font> and <font color=blue>removeBroadcastListener</font>,
+except that the <font color=red>mapto</font> argument is a function that will be invoked
+when the attribute changes instead.
+<p>
+All of these methods are invoked on the elements that will be the broadcasters.
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="cut"/&gt;
+...
+&lt;menuitem id="cutMenu" name="Cut"/&gt;
+...
+&lt;titledbutton id="cutButton" value="Cut"/&gt;
+...
+var cutMenu = document.getElementById('cutMenu');
+var cutButton = document.getElementById('cutButton');
+document.getElementById('cut').addBroadcastListener(cutMenu, 'disabled', 'disabled');
+document.getElementById('cut').addBroadcastListener(cutButton, 'disabled', 'disabled');
+...
+</table>
+<p>
+Finally it is worth noting that a broadcaster must be in the XUL namespace.  An HTML element
+cannot function as a broadcaster.  Any element, however, can be an observer.
+<p>
+<b>Command Nodes</b>
+<p>
+Broadcasters are typically used to represent command nodes that communicate state and/or the
+appropriate command execution code to multiple UI elements.  The three common UI elements that
+observe command broadcasters are menu items, toolbar buttons, and key bindings.
+<p>
+For example, imagine a "save" broadcaster.  That broadcaster can have an
+<font color=red>oncommand</font>
+handler hooked up to it that contains the JS code that should be
+executed when the command is invoked.  You can also place the display
+text of the command in the <font color=red>value</font> attribute and poke the 
+<font color=red>disabled</font>
+attribute on the broadcaster to enable or disable the command.
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="saveCommand" value="Save" oncommand="PerformSave()"
+  disabled="true"/&gt;
+...
+&lt;menuitem id="saveMenu" key="saveKey" observes="saveCommand"/&gt;
+...
+&lt;titledbutton id="saveButton" observes="saveCommand"/&gt;
+...
+&lt;key id="saveKey" control="true" key="s" observes="saveCommand"/&gt;
+</pre>
+</table>
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="boxes.html">Previous: The Box System</a>]
+[<a href="events.html">Next: Focus and Command Dispatching</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

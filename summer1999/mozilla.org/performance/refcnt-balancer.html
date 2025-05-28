@@ -1,0 +1,622 @@
+<HTML>
+<HEAD>
+<TITLE>refcount balancer</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+
+
+<center>
+<h1>refcount balancer</h1>
+</center>
+
+Contact:
+<a href="mailto:waterson@netscape.com">Chris Waterson</a> (waterson@netscape.com)<br>
+
+<h2>overview</h2>
+
+<p>
+One of the things that sucks about XPCOM is that you have to deal with
+reference counting. It's hard and prone to errors, and Mozilla leaks
+like a sieve because of it. Unlike the good old fashioned
+<tt>malloc()</tt> and <tt>free()</tt> model where memory gets
+allocated in exactly one place and freed in exactly one other place,
+reference counting is distributed all over. There may be twenty
+different spots in the code where a single object is
+<tt>AddRef()</tt>-ed. And if just one of those <tt>AddRef()</tt>-ers
+forgets to <tt>Release()</tt>, well, you're screwed.
+</p>
+
+<p>
+Traditional leak tracking tools like
+
+<a href="http://www.rational.com/products/purify_unix/index.jtmpl?borschtid=30142038831761639304">Purify</a>
+
+don't help much either. They'll tell you that you leaked an object,
+but they won't help you track down the twenty different clients that
+<tt>AddRef()</tt>-ed it, let alone the joker that forgot to
+<tt>Release()</tt> it.
+</p>
+
+<p>
+This crude set of tools attempts to address that problem. It's not a
+panacea, but it at least gives some insight into who is
+<tt>AddRef()</tt>-ing whom.
+</p>
+
+<p>
+From 50,000 feet, here's what happens.
+</p>
+
+<ul>
+<li>
+<p>
+You discover that your <tt>FooImpl</tt> object is leaking, maybe Bruce
+Mitchener tells you, maybe you notice on your own because your
+destructor is never called.  You cringe and moan and later the bug for
+3 or 4 milestones. But since you know about this tool, you eventually
+roll up your sleeves and start working on it.
+</p>
+</li>
+
+<li>
+<p>
+First you add a <tt>#define</tt> to the top of your
+<tt>FooImpl.cpp</tt> file. Behind the scenes, this changes how the
+<tt>NS_IMPL_ADDREF</tt> and <tt>NS_IMPL_RELEASE</tt> macros are
+implemented.
+</p>
+</li>
+
+<li>
+<p>
+You recompile <tt>FooImpl.cpp</tt> and re-link its DLL (that's it!),
+set an environment flag, and run. (N.B., you <i>don't</i> need to
+rebuild the entire tree, just the files that contain object you want
+to track.)
+</p>
+</li>
+
+<li>
+<p>
+As you run, you notice piles and piles of information will start to
+spew out to the console. Specifically, as your object is
+<tt>AddRef()</tt>-ed and <tt>Release()</tt>-ed, a <i>stack trace</i>
+is generated, along with the operation (<b>AddRef</b> or
+<b>Release</b>), <tt>this</tt> (i.e., the object that just got
+operated on), and the current reference count of your object.  This
+mountain of information, although impressive, is useless in its
+current form. So, you re-run and redirect your output to a file.
+</p>
+</li>
+
+<li>
+<p>
+You next run Perl script #1 over the resulting log file. This Perl
+script will pick out the instances of objects that leaked. You choose
+one of the objects that's particularly interesting to you.
+</p>
+</li>
+
+<li>
+<p>
+You now run Perl script #2 over the log file. This script is the Fancy
+Magic. It takes each stack trace and strings it together into a call
+graph. Each node in the graph represents a call site, and has a
+"balance factor" which is the total number of <tt>AddRef()</tt>
+operations that it has been included in <i>minus</i> the total number
+of <tt>Release()</tt> operations that it has been included in. (I told
+you it was Fancy Magic.)
+</p>
+</li>
+
+</ul>
+
+<p>
+So what does all that mean? The cool part -- you were waiting for the
+cool part -- is that you can look at this graph and see what subtrees
+are "balanced"; i.e., total number of <tt>AddRef()</tt>s equals total
+number of <tt>Release()</tt>-es. You <i>know</i> you don't need to
+worry about those trees because no evil leakage happened there.
+</p>
+
+<p>
+For trees that are <i>out of balance</i>, you need to dig a little bit
+deeper. Subtrees get out of balance when one code path
+<tt>AddRef()</tt>s the object, and a code path somewhere else does the
+corresponding <tt>Release()</tt>.
+</p>
+
+<p>
+Like I said, it's not a panacea, but you can start to play Mah Jongg
+with the out-of-balance trees, proving to yourself in each case that
+the <tt>AddRef()</tt> from one tree matches with the
+<tt>Release()</tt> in another. In short, it does a decent job of
+directing you to the places you need to verify in your code.
+</p>
+
+<h2>details</h2>
+
+<p>
+<b>Instrumentation</b>. The instrumentation is pretty painless. You
+pick the object that you want to "spy" on, and add the following line
+<i>before</i> including any header files:
+</p>
+
+<ul>
+<pre>
+#define MOZ_LOG_REFCNT
+</pre>
+</ul>
+
+<p>
+For those of you interested in the details, this alters the
+<tt>NS_IMPL_ADDREF</tt> and <tt>NS_IMPL_RELEASE</tt> macro
+declarations that are <tt>#define</tt>-d in
+
+<a href="http://lxr.mozilla.org/seamonkey/source/xpcom/base/nsISupportsUtils.h"><tt>nsISupportsUtils.h</tt></a>.
+
+Specifically, it inserts calls to <tt>nsTraceRefcnt::LogAddRef()</tt>
+and <tt>nsTraceRefcnt::LogRelease()</tt>, whose implementations live in
+
+<a href="http://lxr.mozilla.org/seamonkey/source/xpcom/base/nsISupportsUtils.h"><tt>nsTraceRefcnt.cpp</tt></a>.
+
+Note that this scheme is similar to, but not the same as, the scheme
+that Kipp (?) and others used for
+<tt>MOZ_TRACE_XPCOM_REFCNT</tt>. Their scheme altered the
+<tt>NS_ADDREF()</tt> and <tt>NS_RELEASE()</tt> macros, which required
+a full recompile to use, and generated <i>way</i> more information
+than would ever be useful at this point [<a href="#1">1</a>].
+</p>
+
+<p>
+<b>Enabling Runtime Logging</b>. Even though you've recompiled your
+file with <tt>#define MOZ_LOG_REFCNT</tt>, you still need to set a
+runtime environment variable to produce output. (This is mostly
+because it produces a boat-load of information, and slows stuff to a
+crawl if your objects see a lot of action. Being able to turn it off
+without having to recompile is nice.)
+</p>
+
+<p>
+It uses the <tt>PR_LOG_TEST()</tt> macros to determine when to print,
+so do whatever is appropriate for your platform to set
+<tt>NSPR_LOG_MODULES</tt> to <tt>xpcomrefcnt:5</tt>. Yes, case is
+important.
+</p>
+
+<p>
+Now when you run, you should see lots of information printed to the
+console when your objects are <tt>AddRef()</tt>-ed and
+<tt>Release()</tt>-ed. Since you probably <i>don't</i> want to pick
+through it by hand, redirect it to a log file. Don't worry about the
+other cruft that <tt>apprunner</tt> or <tt>viewer</tt> prints out. The
+post-processing scripts can deal.
+</p>
+
+<p>
+<b>Postprocessing Step 1: Finding the Leakers</b>. First you have to
+figure out which objects leaked. There's a Perl script that does this
+[<a href="#2">2</a>]. It grovels through the log file, and figures out
+which objects got allocated (it knows because they were just allocated
+because they got <tt>AddRef()</tt>-ed and their refcount became
+<b>1</b>). It adds them to a list. When it finds an object that got
+freed (it knows because its refcount goes to <b>0</b>), it removes it
+from the list. Anything left over is leaked.
+</p>
+
+<p>
+The script is called 
+
+<a href="find-leakers.pl"><tt>find-leakers.pl</tt></a>.
+
+ So, depending on your platform, do something like:
+</p>
+
+<ul>
+<pre>
+% perl -w find-leakers.pl my-leaks.log
+</pre>
+</ul>
+
+<p>
+(Replace <tt>my-leaks.log</tt> with your logfile.) This will print out
+a list of pointers:
+</p>
+
+<ul>
+<pre>
+0x00253ab0 (1)
+0x00253ae0 (2)
+0x00253bd0 (4)
+</pre>
+</ul>
+
+<p>
+The number in parenthesis is the order in which it was allocated, if
+you care. Pick one for use with Step 2.
+</p>
+
+<p>
+<b>Postprocessing Step 2: Building the Balance Tree</b>. Now that
+you've picked an object that leaked, you can build a "balance tree"
+(anyone who can think of a better name feel free to let me know). This
+process takes all the stack <tt>AddRef()</tt> and <tt>Release()</tt>
+stack traces and munges them into a call graph. Each node in the graph
+represents a call site. Each call site has a "balance factor", which
+is positive if more <tt>AddRef()</tt>s than <tt>Release()</tt>-es have
+happened at the site, zero if the number of <tt>AddRef()</tt>s and
+<tt>Release()</tt>-es are equal, and negative if more
+<tt>Release()</tt>-es than <tt>AddRef()</tt>s have happened at the
+site.
+</p>
+
+<p>
+To build the balance tree, run 
+
+<a href="make-tree.pl"><tt>make-tree.pl</tt></a>; e.g.,
+</p>
+
+<ul>
+<pre>
+% perl -w make-tree.pl --object 0x00253ab0 my-leak.log
+</pre>
+</ul>
+
+<p>
+Note that you specify the object that you want <tt>make-tree.pl</tt>
+to examine. This will build an indented tree that looks something like
+this (except probably a lot larger and leafier):
+</p>
+
+<ul>
+<pre>
+.root: bal=1
+  main: bal=1
+    DoSomethingWithFooAndReturnItToo: bal=2
+      NS_NewFoo: bal=1
+</pre>
+</ul>
+
+<p>
+Let's pretend in our toy example that <tt>NS_NewFoo()</tt> is a
+factory method that makes a new foo and returns
+it. <tt>DoSomethingWithFooAndReturnItToo()</tt> is a method that
+munges the foo before returning it to <tt>main()</tt>, the main
+program.
+</p>
+
+<p>
+What this little tree is telling you is that you leak <i>one
+refcount</i> overall on object <tt>0x00253ab0</tt>. But, more
+specifically, it shows you that:
+
+<ul>
+
+<li>
+<tt>NS_NewFoo()</tt> "leaks" a refcount. This is probably "okay"
+because it's a factory method that creates an <tt>AddRef()</tt>-ed
+object.
+</li>
+
+<li>
+<tt>DoSomethingWithFooAndReturnItToo()</tt> leaks <i>two</i>
+refcounts. Hmm...this probably isn't okay, especially because...
+</li>
+
+<li>
+<tt>main()</tt> is back down to leaking <i>one</i> refcount.
+</li>
+
+</ul>
+
+<p>
+So from this, we can deduce that <tt>main()</tt> is correctly
+releasing the refcount that it got on the object returned from
+DoSomethingWithFooAndReturnItToo(), so the leak <i>must</i> be
+somewhere in that function.
+</p>
+
+<p>
+So now say we go fix the leak in
+<tt>DoSomethingWithFooAndReturnItToo()</tt>, re-run our trace, grovel
+through the log "by hand" to find the object that corresponds to
+<tt>0x00253ab0</tt> in the new run, and run
+<tt>make-tree.pl</tt>. What we'd hope to see is a tree that looks
+like:
+</p>
+
+<ul>
+<pre>
+.root: bal=0
+  main: bal=0
+    DoSomethingWithFooAndReturnItToo: bal=1
+      NS_NewFoo: bal=1
+</pre>
+</ul>
+
+<p>
+That is, <tt>NS_NewFoo()</tt> "leaks" a single reference count; this
+leak is "inherited" by <tt>DoSomethingWithFooAndReturnItToo()</tt>;
+but is finally balanced by a <tt>Release()</tt> in <tt>main()</tt>.
+</p>
+
+<h2>hints</h2>
+
+<p>
+Clearly, this is an iterative and analytical process. Maybe somebody
+smarter than me can figure out ways to automate parts of it. To date,
+I've figured out some tricks.
+</p>
+
+<p>
+<b>Ignoring balanced trees</b>. The <tt>make-tree.pl</tt> script
+accepts an option <tt>--ignore-balanced</tt>, which tells it
+<i>not</i> to bother printing out the children of a node whose balance
+factor is zero. This can help remove some of the clutter from an
+otherwise noisy tree.
+</p>
+
+<p>
+<b>Playing Mah Jongg</b>. An unbalanced tree is not necessarily an
+evil thing. More likely, it indicates that one <tt>AddRef()</tt> is
+cancelled by another <tt>Release()</tt> somewhere else in the code. So
+the game is to try to match them with one another.
+</p>
+
+<p>
+<b>Excluding Functions</b> To aid in this process, you can create an
+"excludes file", that lists the name of functions that you want to
+exclude from the tree building process (presumably because you've
+matched them). <tt>make-tree.pl</tt> accepts the option <tt>--exlude
+[file]</tt>, where <tt>[file]</tt> is a newline-separated list of
+function names that will be <i>excluded</i> from consideration while
+building the tree. Specifically, any call stack that contains that
+call site will not contribute to the computation of balance factors in
+the tree. [<a href="#3">3</a>].
+
+<h2>pricing & availability</h2>
+
+<p>
+As of this writing, the stack tracing code is implemented for Win32
+and i386 Linux (compiled with <tt>egcs</tt> and glibc 2.0 and
+2.1). Dontations gladly accepted; Bourbon preferred over other
+currencies.
+</p>
+
+<p>
+The Perl scripts, of course, require only Larry Wall's finest (5.00504
+seems to work for me).
+</p>
+
+<br><a href="find-leakers.pl">find-leakers.pl</a>
+<br><a href="make-tree.pl">make-tree.pl</a>
+
+<h2>credits</h2>
+
+<p>
+I stole the stack walking code from
+
+<a href="mailto:kipp@netscape.com">Kipp Hickman</a>
+
+and Matt Pietrek (see
+
+<a href="http://msdn.microsoft.com/library/periodic/period97/F1/D3/S245C6.htm">this article</a>).
+
+For Linux,
+
+<a href="mailto:shaver@netscape.com">Mike Shaver</a>,
+<a href="mailto:bruce@cybersight.com">Bruce Mitchener</a>, and
+<a href="mailto:ramiro@netscape.com">Ramiro Estrugo</a>
+
+all helped me get things right. Mucho gusto.
+
+<h2>notes</h2>
+
+<p>
+<a name="1">1.</a> Since I've done all this while Kipp and Troy are
+away, I've left their stuff in the tree. I'm sure when they return
+from sabattical, they will see the error in their ways and promptly
+embrace the New Way.
+</p>
+
+<p>
+<a name="2">2.</a> No, <tt>grep</tt> won't work. It has a maximum line
+length of 2Kb or something like that, and the stack crawls regularly
+get up to about 4-5Kb per trace.
+</p>
+
+<p>
+<a name="3">3.</a> Using the <tt>--excludes</tt> option is a black art
+that I don't fully understand. I've often gotten myself <i>way</i>
+confused with it. So be careful.
+</p>
+
+<hr>
+
+<small>
+$Id: refcnt-balancer.html,v 1.2 1999/06/16 09:05:38 waterson%netscape.com Exp $
+</small>
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

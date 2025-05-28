@@ -1,0 +1,513 @@
+<HTML>
+<HEAD>
+<TITLE>IDL Author's Guide - Rules and Syntax</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+  
+    <style>
+      .code { whitespace:pre; font-family:monospace }
+    </style>
+  
+
+  
+    <center><h1>IDL Author's Guide - Rules and Syntax</h1></center>
+    
+    XPIDL (<b>XP<a href="#foot1"><sup>1</sup></a></b> <b>I</b>nterface
+    <b>D</b>escription <b>L</b>anguage) is based on the OMG IDL
+    specification, which is used to describe CORBA interfaces.  XPIDL
+    is neither a strict superset nor a strict subset of OMG IDL, since 
+    we introduce some XPCOM-specific syntax but don't support all
+    elements of OMG IDL syntax.  This section describes the rules for
+    describing interfaces in XPIDL.  To see the C++ code generated for 
+    a given sample, click the <img alt="[C++]" src="dot.gif">.
+    <p></p>
+    <b><a name="interfaces">Interfaces</a></b>
+    <ul>
+	An interface is declared with the <tt>interface</tt> keyword,
+	and the simplest possible interface is as follows<a
+	  href="generated-header.html#simple-interface"><img
+	    src="dot.gif" border=0></a>:<br>
+	<ul><pre>
+interface nsIFoo {
+};
+	</pre></ul>
+	To specify an interface's parent, follow the interface name
+	with a colon and the parent name<a
+	  href="generated-header.html#interface-parent"><img
+	    src="dot.gif" border=0></a>:<br>
+	<ul><pre>
+interface nsIFoo : nsIParent {
+};
+	</pre></ul>
+	In XPCOM, all interfaces have an associated IID. Use the
+	<a href="#identifier-attrs">identifier attribute</a> syntax to 
+	specify the <tt>uuid</tt> attribute:<a
+	  href="generated-header.html#interface-iid"><img
+	    src="dot.gif" border=0></a><br> 
+	<ul><pre>
+[
+    uuid(00000000-0000-0000-c000-000000000046)
+]
+interface nsIFoo : nsIParent {
+};
+	</pre></ul>
+	If you wish to have a forward declaration for an interface,
+	simply omit the interface definition and all parent and
+	attribute data:<a
+	  href="generated-header.html#forward-decl"><img src="dot.gif"
+	    border=0></a><br>
+	<ul><pre>
+interface nsIForward;
+        </pre></ul>
+    </ul>    
+    <b><a name="methods-and-attrs">Methods and Attributes</a></b>
+    <ul>
+      An interface can have both methods and attributes.  Attributes
+      are properties of interface objects, which can be read and
+      optionally set.  The following is an interface with one method
+      (no return value, no parameters) named <tt>fun</tt> and an
+      integer-valued attribute named <tt>attr</tt><a
+	  href="generated-header.html#method-and-attr"><img
+	    src="dot.gif" border=0></a>:
+	
+      <ul><pre>
+interface nsIFoo {
+    attribute long attr;
+    void fun();
+};
+      </pre></ul>
+	Methods can have any number of <tt>in</tt>, <tt>out</tt> or
+	<tt>inout</tt> parameters, with a variety of
+	<a href="#types">types</a>.  The following interface
+	shows parameters of different types and
+	``in-out-ness''<a href="#foot2"><sup>2</sup></a><a
+	  href="generated-header.html#method-types"><img src="dot.gif"
+	    border=0></a>:<br>
+	<ul><pre>
+interface nsIStringStuff {
+  void FindStringLength(in string str, out long l);
+  void ConcatenateStrings(in string str1, in string str2,
+                          out string result);
+  void ReplaceChar(inout string str, in char from, in char to,
+                   in boolean foldCase);
+};
+       </pre></ul>
+	You can specify a non-<tt>void</tt> return type for your
+	method, but you should be aware of the code-generation rules.
+	A non-<tt>void</tt> return type is converted to a trailing
+	<tt>out</tt> parameter when the C++ is generated <a
+	  href="generated-header.html#non-void-return"><img border=0
+	    src="dot.gif"></a>:<br>
+	<ul><pre>
+interface nsINonVoidReturn {
+  string GimmeString(in string str, in long count);
+  long GimmeLong(in boolean prime);
+};
+        </pre></ul>
+	Attributes can be made read-only, by prepending the
+	<tt>readonly</tt> keyword to the definition <a
+	  href="generated-header.html#readonly-attrs"><img
+	    src="dot.gif" border=0></a>:<br>
+	<ul><pre>
+interface nsIThing {
+  readonly attribute string LookButDontTouch;
+};
+        </pre></ul>
+
+	<p>
+	  C++ get and set methods for attributes are automatically
+	  declared for attributes in the interface.  An attribute
+	  name <tt>foo</tt> generates accessor methods <tt>GetFoo</tt>
+	  and <tt>SetFoo</tt>.  Notice that the first letter of the
+	  attribute is changed to uppercase for the accessor method.
+	</p>
+	<p>
+	  <table cellpadding=2 border=1>
+	    <tr bgcolor="lightblue">
+	      <th>XPIDL code</th><th>Generated C++ header</th>
+	    </tr>
+	    <tr>
+	      <td valign="top">
+<pre>
+interface nsIBar {
+  attribute short foo;
+}
+</pre>
+	      </td>
+	      <td valign="top">
+<pre>
+/* starting interface:    nsIBar */
+class nsIBar :  {
+ public:
+
+  /* attribute short foo; */
+  NS_IMETHOD GetFoo(PRInt16 *aFoo) = 0;
+  NS_IMETHOD SetFoo(PRInt16 aFoo) = 0;
+};          
+</pre>
+	      </td>
+	    </tr>
+	  </table>
+    </ul>
+
+    <b><a name="types">Built-in Types</a></b>
+    <p>
+      XPIDL provides several built-in types.  The use of <a href="native-types">native types</a>
+      is also possible, though this may limit scriptability.
+    </p>
+    <ul>
+      <table border=1 cellpadding=2>
+	<tr bgcolor="lightblue">
+	  <th>Type</th><th>C++ mapping</th>
+	</tr>
+	<tr>
+	  <td valign="top">void                </td><td valign="top">void</td></tr>
+	<tr>
+	  <td valign="top">boolean             </td><td valign="top">PRBool</td></tr>
+	<tr>
+	  <td valign="top">octet               </td><td valign="top">PRUint8</td></tr>
+	<tr>
+	  <td valign="top">short               </td><td valign="top">PRInt16</td></tr>
+	<tr>
+	  <td valign="top">long                </td><td valign="top">PRInt32</td></tr>
+	<tr>
+	  <td valign="top">long long           </td><td valign="top">PRInt64</td></tr>
+	<tr>
+	  <td valign="top">unsigned short      </td><td valign="top">PRUint16</td></tr>
+	<tr>
+	  <td valign="top">unsigned long       </td><td valign="top">PRUint32</td></tr>
+	<tr>
+	  <td valign="top">unsigned long long  </td><td valign="top">PRUint64</td></tr>
+	<tr>
+	  <td valign="top">float               </td><td valign="top">float</td></tr>
+	<tr>
+	  <td valign="top">double              </td><td valign="top">double</td></tr>
+	<tr>
+	  <td valign="top">char                </td><td valign="top">char</td></tr>
+	<tr>
+	  <td valign="top">wchar               </td><td valign="top">PRUnichar</td></tr>
+	<tr>
+	  <td valign="top">string              </td><td valign="top">char*</td></tr>
+	<tr>
+	  <td valign="top">wstring             </td><td valign="top">PRUnichar*</td></tr>
+      </table>
+    </ul>
+   
+    <b><a name="native-types">Using native types</a></b>
+    <ul>
+	<p>
+	  It is possible to use native types in XPIDL by declaring
+	  then using the <tt>native</tt> declaration syntax which
+	  works similar to a typedef in C++.
+	</p>
+	<p>
+	  A native type can be given a name using the following syntax:
+	  <br>
+	  <tt>native</tt> <i>name</i>(<i>native_type</i>);
+	</p>
+	<p>
+	  It is also possible to define reference and pointer
+	  types by combining <tt>[ref]</tt> or <tt>[ptr]</tt>
+	  with <tt>native</tt>:
+	<p>
+	  <table border=1 cellpadding=2>
+	    <tr bgcolor="lightblue">
+	      <th>XPIDL code</th><th>Generated C++</th>
+	    </tr>
+	    <tr>
+	      <td valign="top">
+<pre>
+native nsNativeFile(nsFileSpec);
+[ref] native nsNativeFilePtr(nsFileSpec);
+[ptr] native nsNativeFileRef(nsFileSpec);
+
+interface foo {
+  void Open(in nsNativeFile aFileSpec);
+  void OpenByRef(in nsNativeFileRef aFileSpecRef);
+  void OpenByPtr(in nsNativeFilePtr aFileSpecPtr);
+};      
+</pre>
+	      </td>
+	      <td valign="top">
+
+<pre>
+/* starting interface:    foo */
+class foo {
+ public:
+
+  /* void Open (in nsNativeFile aFileSpec); */
+  NS_IMETHOD Open(nsFileSpec aFileSpec) = 0;
+
+  /* void OpenByRef (in nsNativeFileRef aFileSpecRef); */
+  NS_IMETHOD OpenByRef(nsFileSpec * aFileSpecRef) = 0;
+
+  /* void OpenByPtr (in nsNativeFilePtr aFileSpecPtr); */
+  NS_IMETHOD OpenByPtr(nsFileSpec & aFileSpecPtr) = 0;
+};                                  
+</pre>
+	      </td>
+	    </tr>
+	  </table>
+	</p>
+	<p>
+	  Using native types in your code can be a good way to
+	  migrate existing interfaces.  However, using
+	  native types in a method
+	  <a href="best-practices.html#natives">may mean that method is
+	  not scriptable.</a>
+	</p>
+    </ul>
+
+    <b><a name="include">#include</a></b>
+    <ul>
+	When referencing interfaces defined in other files, you must
+	<tt>#include "filename.idl"</tt>
+	In XPIDL, <tt>#include</tt> only includes the file once, so
+	the <tt>#include</tt> statement does not need to be protected
+	by <tt>ifdef</tt>s as with the C preprocessor.
+    </ul>
+
+    <b><a name="enum-and-const">Enumerations and Constants</a></b>
+    <ul>
+	<p>
+	  C-style enumerations are not supported, since the size of enums can
+	  be compiler-specific.  Instead XPIDL supports defining constants
+	  that appear in the C++ and JavaScript mappings.  Constants
+	  must be of type <tt>short</tt> or <tt>long</tt>, and must appear
+	  inside an interface declaration.
+	</p>
+	<p>
+	  Other types
+	  are not supported for constants since they do not map into
+	  all languages or have memory management issues.
+	  To define a "constant" that is not a short or long, 
+	  write a method that returns the value, or put the value
+	  into an attribute.
+	</p>
+	<p>
+	  <table border=1 cellpadding=2>
+	    <tr bgcolor="lightblue">
+	      <th>XPIDL code</th><th>C++ code</th>
+	    </tr>
+	    <tr>
+	      <td valign="top"><tt>const short c1 = 1+1;</tt></td><td valign="top"><tt>enum { c1 = 2 };</tt></td>
+	    </tr>
+	    <tr>
+	      <td valign="top"><tt>const short c2 = c1 * 5;</tt></td><td valign="top"><tt>enum { c2 = 10 };</tt></td>
+	    </tr>
+	    <tr>
+	      <td valign="top"><tt>const long flag = 1 << 5;</tt></td><td valign="top"><tt>enum { flag = 32 };</tt></td>
+	    </tr>
+	    <tr>
+	      <td valign="top"><tt>const float invalid_constant = 6.0;</tt></td><td valign="top">Warning: const
+		decl 'invalid_constant' was not of type short or long, ignored</td>
+	    </tr>
+
+	  </table>
+	</p>
+	  
+    </ul>
+
+<!--
+    <b><a name="misc">Miscellany</a></b>
+    <ul>
+      XXX content goes here.
+    </ul>
+-->
+
+    <p>
+    [Rules and Syntax] [<a href="best-practices.html">Best Practices</a>]
+    [<a href="keywords.html">Keywords</a>]
+
+    <hr>
+    <a name="foot1"><i>1</i>: ``XP'' stands for
+    ``cross-platform'', of course.</a><br>
+    <a name="foot2"><i>2</i>: I crave a better name for this.</a><br>
+    <hr>
+    <address><a href="mailto:shaver@netscape.com,mang@subcarrier.org">Mike Shaver and Mike Ang</a></address>
+<!-- Created: Mon Feb 15 12:17:10 EST 1999 -->
+<!-- hhmts start -->
+Last modified: Fri Aug 27 19:26:12 PDT 1999
+<!-- hhmts end -->
+  
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

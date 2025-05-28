@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+  <HEAD>
+    <TITLE>A Reference Implementation of QueryInterface</TITLE>
+    <!-- LINK REL=StyleSheet HREF="http://www.meer.net/ScottCollins/xpfe/Standard.css" TYPE="text/css" -->
+    <LINK REL=StyleSheet HREF="Standard.css" TYPE="text/css">
+  </HEAD>
+
+  <BODY>
+    <H1>A Reference Implementation of <SPAN class="source-code">QueryInterface</SPAN></H1>
+
+<DIV class=author-note>
+  <P>by <A HREF="http://www.meer.net/ScottCollins/">Scott Collins</A><!-- /P -->
+  <P>last modified 25 August 1999</P>
+</DIV>
+
+<DIV class="document-label">
+  <A name="abstract">
+    <STRONG>Abstract:</STRONG>
+    The right way to write <SPAN class="source-code">QueryInterface()</SPAN>.
+  </A>
+</DIV>
+
+<DIV class="document-label">
+  <P>
+    <STRONG>Document Status:</STRONG> Reasonably complete.
+    We'll add more as we learn more.
+  </P>
+</DIV>
+
+
+<H2>The Implementation</H2>
+
+<DIV class="source-code">
+<PRE class="source-code">
+NS_IMETHODIMP
+nsMyImplementation::QueryInterface( REFNSIID aIID, void** aInstancePtr )
+  {
+    NS_ASSERTION(aInstancePtr, "QueryInterface requires a non-NULL destination!");
+      <SPAN class="comment">// It's a logic error, not a runtime error, to call me without any place to put my answer!</SPAN>
+
+      <SPAN class="comment">// ...but that won't matter when someone calls me wrongly in a non-debug build.</SPAN>
+    if ( !aInstancePtr )
+      return NS_ERROR_NULL_POINTER;
+
+    nsISupports* foundInterface;
+
+    if ( aIID.Equals(nsCOMTypeInfo&lt;nsIX&gt;::GetIID()) )
+      foundInterface = NS_STATIC_CAST(nsIX*, this);
+    else if ( aIID.Equals(nsCOMTypeInfo&lt;nsIY&gt;::GetIID()) )
+      foundInterface = NS_STATIC_CAST(nsIY*, this);
+
+    <SPAN class="comment">// ...as many cases as needed...</SPAN>
+
+    else if ( aIID.Equals(nsCOMTypeInfo&lt;nsISupports&gt;::GetIID()) )
+      foundInterface = NS_STATIC_CAST(nsISupports*, NS_STATIC_CAST(nsIX*, this));
+        <SPAN class="comment">// I (may) have multiple |nsISupports| in me,
+        //  so first I cast to a specific base to avoid ambiguity</SPAN>
+    else
+      foundInterface = 0;
+
+
+    nsresult status;
+    if ( !foundInterface )
+      status = NS_NOINTERFACE;
+    else
+      {
+        NS_ADDREF(foundInterface);
+        status = NS_OK;
+      }
+
+    *aInstancePtr = foundInterface;
+    return status;
+  }
+</PRE>
+</DIV>
+
+<H2>What's So Good About It?</H2>
+
+<UL>
+  <LI>It's clear and simple.</LI>
+
+  <LI>
+    OK.  It has more than one <SPAN class="source-code">return</SPAN>, but the primary <SPAN class="source-code">return</SPAN> is at the end of the function as expected;
+    and the additional <SPAN class="source-code">return</SPAN> is clear and alone at the top of the function.
+  </LI>
+
+  <LI>It only has one <SPAN class="source-code">AddRef</SPAN>.</LI>
+  <LI>It <SPAN class="source-code">AddRef</SPAN>s the resulting interface, not <SPAN class="source-code">this</SPAN>, thus following the COM-correct way (particularly important in aggregation)</LI>
+  <LI>It uses <SPAN class="source-code">nsCOMTypeInfo&lt;T&gt;::GetIID()</SPAN> instead of <SPAN class="source-code">kTIID</SPAN> thus saving a global declaration and global space</LI>
+  <LI>
+    It uses C++'s <SPAN class="source-code">static_cast</SPAN>, via <SPAN class="source-code">NS_STATIC_CAST</SPAN>,
+      which detects errors when you can't really get to the desired interface.
+  </LI>
+  <LI>It avoids repeated uses of and assignments to <SPAN class="source-code">*aInstancePtr</SPAN>, which compilers have trouble optimizing.</LI>
+  <LI>It clears the result, <SPAN class="source-code">*aInstancePtr</SPAN>, when returning an error.</LI>
+  <LI>It generates less code than the typical implementation of <SPAN class="source-code">QueryInterface</SPAN>.</LI>
+  <LI>It tests for bad input with an <SPAN class="source-code">NS_ASSERTION</SPAN>, to find logic errors immediately in debug builds.</LI>
+</UL>
+
+<H2>Some Alternatives</H2>
+
+<H3>The <SPAN class="source-code">NS_IMPL_QUERY_INTERFACE</SPAN>[<SPAN class="source-code">012</SPAN>] macros</H3>
+<P>
+  The sample above implements two [XP]COM interfaces in addition to <SPAN class="source-code">nsISupports</SPAN>.
+  The <SPAN class="source-code">NS_IMPL_QUERY_INTERFACE2</SPAN> macro can write this function for you (though it pains me to recommend macros), e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+NS_IMPL_QUERY_INTERFACE2(nsMyImplementation, nsIX, nsIY)
+                                          <SPAN class="comment">// implements |nsMyImplementation::QueryInterface| as above</SPAN>
+
+NS_IMPL_QUERY_INTERFACE1(nsFoo, nsIFoo)   <SPAN class="comment">// |nsFoo::QueryInterface| provides |nsIFoo| and |nsISupports|</SPAN>
+NS_IMPL_QUERY_INTERFACE0(nsBar)           <SPAN class="comment">// |nsBar::QueryInterface| can only provide an |nsISupports|</SPAN>
+</PRE>
+</DIV>
+<P>
+Similarly, you can use the macro <SPAN class="source-code">NS_IMPL_QUERY_INTERFACE1</SPAN> when you implement only one additional interface;
+	and <SPAN class="source-code">NS_IMPL_QUERY_INTERFACE0</SPAN> when you only implement <SPAN class="source-code">nsISupports</SPAN>.
+These macros will be invoked for you if you use the <SPAN class="source-code">NS_IMPL_ISUPPORTS</SPAN>[<SPAN class="source-code">012</SPAN>] macros,
+	which give the corresponding <SPAN class="source-code">QueryInterface</SPAN> implementation, plus an <SPAN class="source-code">AddRef</SPAN> and a <SPAN class="source-code">Release</SPAN>.
+</P>
+
+
+<H3>Calling an inherited <SPAN class="source-code">QueryInterface</SPAN></H3>
+<P>
+  Sometimes you are just adding one or two new interfaces to an implementation that already supports many other interfaces.
+  In such cases, you'll probably want to call through to the underlying implementation, after you've tested for the particular
+    <SPAN class="source-code">IID</SPAN>s that you care about.
+  This saves code-space and reduces complexity.
+  The differences are highlighted in the following code.
+</P>
+<DIV class="source-code">
+<PRE class="source-code">
+class nsMyImplmentation : public nsBaseImplementation, public nsIX, public nsIY { ... };
+
+NS_IMETHODIMP
+nsMyImplementation::QueryInterface( REFNSIID aIID, void** aInstancePtr )
+    <SPAN class="comment">/*
+      I just add the interfaces |nsIX| and |nsIY|.
+      My base class |nsBaseImplementation| provides all the rest.
+    */</SPAN>
+  {
+    NS_ASSERTION(aInstancePtr, "QueryInterface requires a non-NULL destination!");
+
+    if ( !aInstancePtr )
+      return NS_ERROR_NULL_POINTER;
+
+    nsISupports* foundInterface;
+
+    if ( aIID.Equals(nsCOMTypeInfo&lt;nsIX&gt;::GetIID()) )
+      foundInterface = NS_STATIC_CAST(nsIX*, this);
+    else if ( aIID.Equals(nsCOMTypeInfo&lt;nsIY&gt;::GetIID()) )
+      foundInterface = NS_STATIC_CAST(nsIY*, this);
+    <SPAN class="warning">// Note: Don't check for |nsISupports|; |nsBaseImplementation| will do that for me.</SPAN>
+    else
+      foundInterface = 0;
+
+
+    nsresult status;
+    if ( !foundInterface )
+        <SPAN class="comment">// OK, _I_ didn't find an interface.  Maybe my base class can.</SPAN>
+      <SPAN class="warning">status = nsBaseImplementation::QueryInterface(aIID, &foundInterface);</SPAN>
+    else
+      {
+        NS_ADDREF(foundInterface);
+        status = NS_OK;
+      }
+
+    *aInstancePtr = foundInterface;
+    return status;
+  }
+</PRE>
+</DIV>
+
+<P>
+  Note that if the base implementation's <SPAN class="source-code">QueryInterface</SPAN> finds an appropriate interface,
+    your <SPAN class="source-code">QueryInterface</SPAN> must not <SPAN class="source-code">AddRef</SPAN> it.
+  This is reflected in the code above.
+</P>
+
+<P>
+  This technique works because <SPAN class="source-code">nsBaseImplementation</SPAN> is already a complete class that could have been used on its own.
+  This technique is less appropriate when you derive from several complete classes;
+    but it can still be used if you are sensitive to the order, e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+    <SPAN class="comment">// ...</SPAN>
+    nsresult status;
+    if ( !foundInterface )
+      {
+        <SPAN class="comment">// OK, ask |nsBase1Imp| first, because I want _it_ to be the one true |nsISupports|.</SPAN>
+        status = nsBase1Imp::QueryInterface(aIID, &amp;foundInterface);
+
+        if ( !foundInterface )
+          status = nsBase2Imp::QueryInterface(aIID, &amp;foundInterface);
+
+        if ( !foundInterface )
+          status = nsBase3Imp::QueryInterface(aIID, &amp;foundInterface);
+      }
+    else
+      {
+        NS_ADDREF(foundInterface);
+        status = NS_OK;
+      }
+    <SPAN class="comment">// ...</SPAN>
+</PRE>
+</DIV>
+
+<P>
+  It will be difficult, if not impossible, to get the right thing to happen if any of your base classes participate in true aggregation.
+  You won't be able to catch calls to <SPAN class="source-code">QueryInterface</SPAN> on the aggregated objects, which may then return wrong interfaces.
+  One more reason to avoid aggregation specifically, and complicated hierarchies in general.
+</P>
+
+<H3>The <SPAN class="source-code">NS_GET_IID</SPAN> macro</H3>
+<P>
+  You can use the <SPAN class="source-code">NS_GET_IID</SPAN> macro instead of typing out the full <SPAN class="source-code">GetIID</SPAN> expression.
+  In general, I disapprove of macros except in cases where the macro must expand to different text in different situations,
+    e.g., different platforms, debugging vs. non-debugging, et al.
+  In such cases macros are indispensible.
+  In other cases macros may help some people but often cloud the issues for others.
+  They always make the program source more fragile.
+  In this case the macro is for convenience only, so I don't recommend it, but I do offer it up as an alternative.
+<!-- /P -->
+
+<DIV class="source-code">
+<PRE class="source-code">
+    <SPAN class="comment">// ...</SPAN>
+    if ( aIID.Equals(<SPAN class="warning">NS_GET_IID(</SPAN>nsIX<SPAN class="warning">)</SPAN>) )
+      foundInterface = NS_STATIC_CAST(nsIX*, this);
+    else if ( aIID.Equals(<SPAN class="warning">NS_GET_IID(</SPAN>nsIY<SPAN class="warning">)</SPAN>) )
+      foundInterface = NS_STATIC_CAST(nsIY*, this);
+
+    <SPAN class="comment">// ...as many cases as needed...</SPAN>
+
+    else if ( aIID.Equals(<SPAN class="warning">NS_GET_IID(</SPAN>nsISupports<SPAN class="warning">)</SPAN>) )
+    <SPAN class="comment">// ...</SPAN>
+</PRE>
+</DIV>
+
+<H2>Thanks</H2>
+<P>
+Special thanks to
+	<A HREF="mailto:heikki@citec.fi">Heikki Toivonen</A>,
+	<A HREF="mailto:waterson@netscape.com">Chris Waterson</A>,
+	and <A HREF="mailto:jband@netscape.com">John Bandhauer</A>
+	for valuable feedback that significantly improved the implementations presented here.
+</P>
+
+
+
+<DIV class="author-note">
+  <HR>
+    <A HREF="http://validator.w3.org/check?uri=http://www.mozilla.org/projects/xpcom/QI.html">
+      <IMG BORDER=0 align=left SRC="http://validator.w3.org/images/vh40.gif" ALT="Valid HTML 4.0!" HEIGHT=31 WIDTH=88>
+    </A>
+    <A HREF="http://www.w3.org/Style/CSS/Buttons">
+      <IMG BORDER=0 align=left SRC="http://www.w3.org/Style/CSS/Buttons/cssos" ALT="CSS" HEIGHT=31 WIDTH=88>
+    </A>
+    Copyright&copy; 1999 by Netscape; use is subject to the <A HREF="http://www.mozilla.org/NPL/">NPL</A>.
+</DIV>
+  </BODY>
+</HTML>

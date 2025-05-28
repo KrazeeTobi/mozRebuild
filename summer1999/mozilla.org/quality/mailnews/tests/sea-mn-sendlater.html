@@ -1,0 +1,520 @@
+<HTML>
+<HEAD>
+<TITLE>Send Later Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+   
+   
+   
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.0 Project (Seamonkey)</b>
+<br><b><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </i>Mail and News
+Component</b>
+<br><b><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </i>Send Later</b>
+<p>Written by: <a href="mailto:esther@netscape.com">Esther Goes</a>
+<br>Original spec by Peter Mock
+<p><b>History:</b>
+<br>121698 Started updating original spec from Nova
+<br>012299 Finished first draft
+<br>020299 Updates based on first draft review
+<br>071499 Updated based on more UI information
+<p><b>Reviewed By:&nbsp; </b><a href="mailto:pmock@netscape.com">Peter
+Mock</a>
+<p><b>References:</b>
+<br>UI Specification:&nbsp; No spec yet
+<br>Other:&nbsp; <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-basfunc-mail-notify.html">NS
+Notify test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-basfunc-return-receipt.html">Return
+Receipt test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-basfunc-intelligent.html">Format
+test spec</a>,
+<a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-attachment.html">Attachments
+test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-draft.html">Drafts
+test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-templates.html">Templates
+test spec</a>, (note: all links may not be active yet)
+<br>&nbsp;
+<p>
+<hr WIDTH="100%">
+<br>Description: <b>Perform these tests in both HTML &amp; Plain text modes.
+<i>Send
+Later both a new Mail message and a new News message for each below unless
+specifically noted.&nbsp; NOTE: "Unsent Messages"&nbsp; folder will be
+titled "Outbox" if user already had "Outbox" when upgrading-Outbox was
+the name in earlier versions.</i></b>
+<p><b>Send Later using Toolbars and Menus</b>
+<ol TYPE=A>
+<li>
+Verify you can Send Later a New Message</li>
+
+<ol>
+<li>
+Using Menu Item "Send Later"</li>
+
+<ol TYPE=a>
+<li>
+verify the message went to the "Unsent Messages" folder (for the account
+you are sending from), double-click message to verify it opens in a Composition
+window for editing</li>
+</ol>
+
+<li>
+Using Toolbar button "Send" w/clock icon (you have to be offline to have
+the button toggle to Send Later represented by a picture of a clock above
+the word Send on the button)</li>
+
+<ol TYPE=a>
+<li>
+verify the message went to the "Unsent Messages" folder (for the account
+you are sending from)</li>
+</ol>
+</ol>
+
+<li>
+Verify you can Send Later a Reply.&nbsp; Note: Reply is not available from
+the 3-Pane window if you are Offline and&nbsp; haven't synchronized your
+folders.&nbsp;&nbsp; You must click Reply to bring up a message in a Composition
+window first then go Offline to see the Send button change.</li>
+
+<ol>
+<li>
+Using Menu Item "Send Later"</li>
+
+<ol TYPE=a>
+<li>
+verify the message went to the "Unsent Messages" folder (for the account
+you are sending from)</li>
+</ol>
+
+<li>
+Using Toolbar button "Send" w/clock icon</li>
+
+<ol TYPE=a>
+<li>
+verify the message went to the "Unsent Messages" folder (for the account
+you are sending from)</li>
+</ol>
+</ol>
+
+<li>
+Verify you can Send Later a Message that will be forwarded. Note: Forward
+is not available from the 3-Pane window if you are Offline, you must click
+Forward first then go Offline.</li>
+
+<ol>
+<li>
+Using Menu Item "Send Later"</li>
+
+<ol TYPE=a>
+<li>
+verify the message went to the "Unsent Messages" folder (for the account
+you are sending from)</li>
+</ol>
+
+<li>
+Using Toolbar button "Send" w/clock icon (you have to be offline to have
+the button toggle to Send Later represented by a picture of a clock above
+the word Send on the button)</li>
+
+<ol TYPE=a>
+<li>
+verify the message went to the "Unsent Messages" folder (for the account
+you are sending from)</li>
+</ol>
+</ol>
+
+<li>
+To Send Later a New Message using:</li>
+
+<ol>
+<li>
+Mnemonics for the menu item File|Send Later</li>
+
+<li>
+Short-cut/accelerator key (Example on Windows: Ctrl+Enter)</li>
+</ol>
+
+<li>
+To Post a News message using:</li>
+
+<ol>
+<li>
+Mnemonics for the menu item File|Send Later</li>
+
+<li>
+Short-cut/accelerator key (Example on Windows: Ctrl+Enter)</li>
+</ol>
+</ol>
+<b>&nbsp;Send Later using the Addressing tab (remember to perform these
+in both HTML &amp; Plain text-News and Mail)</b>
+<ol TYPE=A>
+<li>
+Send Later a message with no address or subject. <i>(covered in Drafts
+and Template test spec, see link above)</i></li>
+
+<li>
+Send Later a message with an Address but no Subject. <i>(covered in Drafts
+and Template test spec, see link above)</i></li>
+
+<li>
+Send Later a message with no Address but a Subject. <i>(covered in Drafts
+and Template test spec, see link above)</i></li>
+
+<li>
+Send Later a message with nothing in the Body. <i>(covered in Drafts and
+Template test spec, see link above)</i></li>
+
+<li>
+Send Later a message with multiple names in addressing field <i>(covered
+in Drafts and Template test spec, see link above)</i></li>
+
+<li>
+Send Later a message to a list in the addressing field <i>(covered in Drafts
+and Template test spec, see link above)</i></li>
+
+<li>
+Send Later a message to a bogus email &amp; newsgroup address <i>(covered
+in Drafts and Template test spec, see link above)</i></li>
+
+<li>
+Send Later a message to a mail address and a newsgroup</li>
+
+<ol>
+<li>
+Verify the message is sent to to the Unsent Messages folder (for the account
+you are sending from), and all the recipients are listed</li>
+</ol>
+
+<li>
+Send Later a message using all of the Addressing options (To: Cc: Bcc,
+etc)</li>
+
+<ol>
+<li>
+Verify the message is sent to the Unsent Messages folder (for the account
+you are sending from), and all of the recipients are listed</li>
+</ol>
+</ol>
+<b>Send Later with Attachments (remember to perform these in both HTML
+&amp; Plain text-News and Mail)</b>
+<ol TYPE=A>
+<li>
+Send Later a message with an attachment, message is sent to Unsent Messages
+Folder (for the account you are sending from) and the attachment is attached
+<i>(more intensive tests covered in Attachments test spec, see link above)</i></li>
+
+<ol>
+<li>
+Attach a File, Web Page or Personal vCard</li>
+</ol>
+
+<li>
+Send Later a message with all of the attachment options <i>(covered in
+Attachments test spec, see link above)</i></li>
+</ol>
+<b>Send Later using various options--remember to perform these in both
+HTML &amp; Plain text-New and Mail</b>
+<ol TYPE=A>
+<li>
+Send Later a message with one of the following options. Verify the options
+work as specified when message is sent to the Unsent Messages folder (for
+the account you are sending from).&nbsp; <i>Fenella&nbsp; &amp; Peter Mock
+have test cases for more extensive testing of Return Receipt, Uuencode
+&amp; Format options.&nbsp; Extensive tests for Encrypted &amp; Signed
+TBD.</i></li>
+
+<ol>
+<li>
+Encrypted (accessed in the Status bar with a drop down)</li>
+
+<li>
+Signed (accessed in the Status bar with a drop down)</li>
+
+<li>
+Return Receipt (accessed from the Address Panel or the Message menu list
+as a check box)</li>
+
+<li>
+Uuencode instead of MIME for attachments&nbsp; (accessed in the "Attach"
+Toolbar button drop down)</li>
+
+<li>
+Format (accessed from the menu bar)</li>
+</ol>
+
+<li>
+Send Later a message using a combination of the options. Verify the options
+work as specified when message is sent to the Unsent Messages folder (for
+the account you are sending from).&nbsp; <i>Fenella and Peter Mock have
+test cases for more extensive testing of Return Receipt, Uuencode &amp;
+Format options.&nbsp; Encrypted &amp; Signed TBD see links above.</i></li>
+</ol>
+<b>Other Send Later Variations</b>
+<ol TYPE=A>
+<li>
+Send Later a message when several New Msg windows are opened.</li>
+
+<ol>
+<li>
+Verify the message is sent to the Unsent Messages folder and the To: address
+correct,&nbsp; the sent message window is closed and the other New Msg
+windows are still opened.</li>
+
+<li>
+Verify each of the other opened windows will send message to Unsent Messages
+folder &amp; close when sent,&nbsp; leaving the remaining windows opened.&nbsp;
+Continue until all messages are sent leaving no window opened.</li>
+</ol>
+
+<li>
+Send Later multiple times (open multiple messages (3 or more) and then
+Send Later one after the other), verify all the messages are in the "Unsent
+Folder"</li>
+
+<li>
+Send Later when there is no Unsent Messages folder.&nbsp; (remove the Unsent
+Messages folder through the operating system, while Communicator is closed)</li>
+
+<ol>
+<li>
+Verify an Unsent Messages folder is created and messages are sent there
+when you Send while Offline and Messenger is NOT opened</li>
+
+<li>
+Verify an Unsent Messages folder is created when you open Messenger</li>
+</ol>
+
+<li>
+Send messages from the "Unsent Messages" folder (aka Outbox if user already
+has an Outbox when upgrading)</li>
+
+<ol>
+<li>
+Using Menu item "Send Unsent Messages", verify the messages are sent if
+you OK the dialog</li>
+
+<li>
+Closing Messenger with messages in the Unsent Messages folder, verify the
+messages are sent if you OK the dialog</li>
+
+<li>
+Opening Messenger with messages in the Unsent Messages folder, verify the
+messages are sent if you OK the dialog</li>
+</ol>
+
+<li>
+Send messages from the Unsent Messages folder</li>
+
+<ol>
+<li>
+Using menu item "Send Unsent Messages" when Online</li>
+
+<li>
+Using menu item "Send Unsent Messages" when Offline</li>
+
+<li>
+Going Online (will see&nbsp; prompt to "Send unsent messages when going
+online")</li>
+
+<li>
+Closing Messenger (will see prompt to "Send unsent messages when going
+online")</li>
+</ol>
+
+<li>
+Send Later with preference for Spell Check before sending checked</li>
+
+<ol>
+<li>
+Send Later a message, verify the message has been checked for spelling
+and is correct.</li>
+</ol>
+</ol>
+
+<hr WIDTH="100%">
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,296 @@
+<HTML>
+<HEAD>
+<TITLE>The Tree Widget</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">The Tree Widget</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="buttons.html">Previous: Titled Buttons</a>]
+[<a href="tabs.html">Next: Tab Widget</a>]
+<p>
+<b>Feature Owner:</b> <a href="mailto:hyatt@netscape.com">David Hyatt</a><br>
+<p>
+<b>Change History:</b>
+<p>
+<ul>
+<li>8/22/99 - Added info about the new selection APIs, and updated the treeallowevents info.
+onchange was turned into onselect.
+</ul>
+<p>
+The tree widget provides the ability to display multiple items in a
+tabular format.  Each item is represented as a row in the table.
+Each row may consist of multiple <i>cells</i>.  
+A tree widget has all the same components as an HTML table, and any users of this widget
+should be thoroughly familiar with the capabilites of <a href="http://www.w3.org/TR/REC-html40/struct/tables.html">
+HTML tables</a>.
+Trees can also respond to all of the same
+CSS properties
+as HTML tables, as documented in the 
+<a href="http://www.w3.org/TR/REC-CSS2/tables.html">CSS2 spec on tables</a>.
+<p>
+The following tags are roughly analogous to their HTML table counterparts.
+<p>
+<table bgcolor=#d0d0d0 width=80% align=center>
+  <tr><td bgcolor=#6699ff><font color=white>Table</font></td>
+	  <td bgcolor=#6699ff><font color=white>Tree</font></td>
+  <tr><td><tt>table</td><td><tt>tree
+  <tr><td><tt>caption</td><td><tt>treecaption
+  <tr><td><tt>colgroup</td><td><tt>treecolgroup
+  <tr><td><tt>col</td><td><tt>treecol
+  <tr><td><tt>thead</td><td><tt>treehead
+  <tr><td><tt>tbody</td><td><tt>treechildren, treeitem
+  <tr><td><tt>tfoot</td><td><tt>treefoot
+  <tr><td><tt>tr</td><td><tt>treerow
+  <tr><td><tt>td</td><td><tt>treecell
+</table>
+<p>
+To insert a tree widget into a document, use 
+the <font color=green>tree</font> tag.
+This tag is analogous to the <font color=green>table</font> tag in HTML.  
+<p>
+The tree widget
+can contain a caption, which can be specified using the <font color=green>treecaption</font>
+tag.
+<p>
+The tree's column information can be specified using the <font color=green>treecolgroup</font>
+and <font color=green>treecol</font> tags;
+these tags respond to all the same properties that the HTML <font color=green>col</font>
+tags do.  These column tags can be used to specify column widths and to apply styles to individual
+columns in the tree view.  Tree column tags can respond to an additional CSS property,
+<font color=purple>column-layout</font>, which indicates whether or not this column's size is
+alterable using the tree's column resizing capabilities. It has values of
+<font color=orange>fixed</font> and <font color=orange>flexible</font>, with the default being
+<font color=orange>flexible</font>.  <font color=red>[This is not yet
+implemented.]</font>
+<p>
+A tree can contain headers, bodies, and footers, just as a table does.  
+<font color=red>[Not yet implemented, but coming online soon, so pay attention.]</font>
+A tree widget's body, unlike a table's body will constrain itself when the height of
+the table is constrained.
+<p>
+The <font color=green>treeitem</font> tag is used to declare a single item (along with
+that item's row and children) in the tree.  The
+tree item contains one or more rows, which are specified using the <font color=red>treerow</font>
+tag.  Each row consists of one or more cells, which are specified using the <font color=green>treecell</font>
+tag.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;tree&gt;
+  &lt;treehead&gt;
+    &lt;treerow&gt;
+      &lt;treecell&gt;Name&lt;/treecell&gt;
+      &lt;treecell&gt;URL&lt;/treecell&gt;
+    &lt;/treerow&gt;
+  &lt;/treehead&gt;
+  &lt;treechildren&gt;
+    &lt;treeitem&gt;
+	  &lt;treerow&gt;
+        &lt;treecell&gt;Netscape Home Page&lt;/treecell&gt;
+        &lt;treecell&gt;http://www.netscape.com&lt;/treecell&gt;
+      &lt;/treerow&gt;
+	&lt;/treeitem&gt;
+  &lt;/treechildren&gt;
+&lt;/tree&gt;
+</table>
+<p>
+Tree items are either open or closed, and their state is specified using the 
+<font color=red>open</font> attribute.  This attribute, when set to true, indicates that
+the tree item's children should be displayed in the tree.  If it is set to false, or if it
+isn't set at all, then the tree item's children are not displayed.
+<p>
+A tree item's children are specified using the <font color=green>treechildren</font> tag, which
+is placed within the parent <font color=green>treeitem</font> tag.
+The <font color=green>treechildren</font> tag contains tree items that represent the children 
+of the parent node.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;tree&gt;
+  &lt;treehead&gt;
+    &lt;treerow&gt;
+      &lt;treecell&gt;Name&lt;/treecell&gt;
+      &lt;treecell&gt;URL&lt;/treecell&gt;
+    &lt;/treeitem&gt;
+  &lt;/treerow&gt;
+  &lt;treechildren&gt;
+    &lt;treeitem&gt;
+	  &lt;treerow&gt;
+        &lt;treecell&gt;Netscape Bookmarks Folder&lt;/treecell&gt;
+        &lt;treecell/&gt;
+      &lt;/treerow&gt;
+      &lt;treechildren&gt;
+        &lt;treeitem&gt;
+		  &lt;treerow&gt;
+	        &lt;treecell&gt;Netscape Home Page&lt;/treecell&gt;
+	        &lt;treecell&gt;http://www.netscape.com&lt;/treecell&gt;
+		  &lt;/treerow&gt;
+        &lt;/treeitem&gt;
+      &lt;/treechildren&gt;
+    &lt;/treeitem&gt;
+  &lt;/treechildren&gt;
+&lt;/tree&gt;
+</table>
+<p>
+The tree automatically handles selection, and it is capable of supporting single and multiple
+selection (through the use of CTRL/command and SHIFT modifier keys).  
+The tree's selection is reflected into the
+content model.  Tree items that are selected have an attribute called <font color=red>selected</font>
+set to <font color=orange>true</font>.  Tree rows that are selected have an
+attribute called <font color=red>selectedrow</font> set.  Tree cells that are selected have an
+attribute called <font color=red>selectedcell</font> that is set to <font color=orange>true</font>.
+CSS can be applied using attribute selector rules, thus enabling the tree designer to
+control the look of the tree's selection.
+<p>
+A <font color=blue>select</font> handler can be attached to the tree, and this handler will
+be invoked whenever the tree's selection changes.  You can either add it as an attribute
+(e.g., <font color=red>onselect</font>) on the <font color=green>tree</font> tag
+or add it using the DOM <font color=blue>addEventListener</font> method.
+<p>
+The tree widget also supports hover feedback on items and cells.  This hover feedback is
+also reflected into the content model.  Tree items that are currently moused over
+have an attribute called <font color=red>hover</font> set to <font color=orange>true</font>.
+Tree cells that are being moused over have an attribute called <font color=red>hover</font>
+set to <font color=orange>true</font>.  Tree rows also use <font color=red>hover</font>.  
+CSS can be applied using attribute selector rules, which
+enable control of the hover feedback effects for the tree. 
+<font color=red>[This will probably change to use
+the :hover mechanism at some point, assuming some sort of bubbling mechanism for hover is
+determined.]</font>  
+<p>
+Because the tree handles selection, events that would normally go to the content inside the
+cell are intercepted by the cell.  This behavior can be turned off on a cell by cell basis
+by setting the <font color=red>treeallowevents</font> attribute on the cell.  This attribute,
+when set to <font color=orange>true</font>, indicates that the cell is unselectable, and that
+the content inside should receive events (like mouse clicks and keystrokes).
+<p>
+To selectively allow events to go to cell content (e.g., a button inside a cell), the
+<font color=red>treeallowevents</font> attribute can be placed on a node that is a descendant
+of the cell.
+<p>
+The tree widget supports a selection API that can be used to modify its current selection.
+This API is outlined below.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+interface XULTreeElement : XULElement {
+  readonly attribute NodeList selectedItems;
+  readonly attribute NodeList selectedCells;
+
+  void selectItem(in XULElement treeItem);
+  void selectCell(in XULElement treeCell);
+
+  void clearItemSelection();
+  void clearCellSelection();
+
+  void addItemToSelection(in XULElement treeItem);
+  void removeItemFromSelection(in XULElement treeItem);
+
+  void addCellToSelection(in XULElement treeCell);
+  void removeCellFromSelection(in XULElement treeCell);
+
+  void toggleItemSelection(in XULElement treeItem);
+  void toggleCellSelection(in XULElement treeCell);
+
+  void selectItemRange(in XULElement startItem, in XULElement endItem);
+  void selectCellRange(in XULElement startItem, in XULElement endItem);
+
+  void selectAll();
+  void invertSelection();
+};
+</pre>
+</table>
+<p>
+Content in a tree cell can be automatically indented based on the node's level in the tree
+by using the <font color=red>treeindentation</font> tag.  The indentation tag can have a <font color=purple>width</font>
+property applied to it using CSS, and this property is multiplied by the node's level of
+indentation to determine how much padding to insert.  The default if no property is specified
+is 16 pixels per level.
+<font color=red>[Style support for treeindentation is not yet 
+implemented.]</font> 
+<p>
+<b>Answers to Common Questions</b>
+<p>
+<b>How do I give column headers a visually distinct look?</b><br>
+You can make a CSS rule like the following to apply a look only to cells inside the
+head of the table.
+<p>
+<font color=purple>treehead treerow treecell { ... }</font>
+<p>
+<b>Can I set the widths of my columns using percentages?</b><br>
+<p>
+Yes. Click <a href="http://www.w3.org/TR/REC-html40/struct/tables.html#h-11.2.4.4">here</a>
+for details.
+<p>
+<b>I don't want the text in my tree cells to wrap. What do I do?</b><br>
+<p>
+Set the <font color=purple>whitespace</font> property on your tree cells in CSS to a value of
+<font color=orange>nowrap</font>.  Then constrain the width of your tree (e.g., give your
+tree a width of 100%).  Once you have done this, the contents of the cells will be clipped.
+<p>
+<b>I would like the text in my tree cells to be cropped in addition to being
+clipped. What do I do?</b><br>
+<p>
+<font color=red>[Not yet implemented.]</font> You will be able to specify this through CSS.
+If the <font color=purple>nowrap</font> property is set and an additional <font color=purple>
+cropstyle</font> property is set (whose value can be <font color=orange>left</font>, 
+<font color=orange>middle</font>, or <font color=orange>right</font>), then the text in the
+cell can be made to crop.
+<p>
+A temporary workaround to get this feature working would be to use titled buttons to hold
+the text.  (See <a href="buttons.html">Titled Buttons</a> for details.)  Titled buttons already
+know how to crop right by default when their widths are constrained.
+<p>
+<b>I want to use the same event handler for all items in my tree, but I don't want
+to define these handlers over and over on each node. What do I do?</b>
+<p>
+Take advantage of the DOM's event handling capabilities.  You can allow events to bubble up
+to your <font color=green>tree</font> node, and handle the events there.  The target of an
+event that bubbles up can be retrieved using <font color=purple>evt.target</font>.  
+<p>
+When using bubbling on a tree view, it is important to remember that the events will bubble
+from child node to parent node.  Don't think of it like a table, where the events will always
+go from cell to row to body.  If a node is 11 levels deep, then the event will bubble
+out through the node's parents before getting to the tree body. Be aware of this distinction
+when writing event-handling code.
+<p>
+<b>How do I make the tree's body scroll independently of the header/footer?</b><br>
+Constrain the height of the tree and this overflow will happen automatically when there
+are too many items to fit in the displayable area.  Boxes can be used to make the tree springy
+(and to make the tree be sized to the width and height of a window).
+<p>
+<b>How do I make clickable graphical cell contents like in Messenger (flags, checks, etc.)?</b><br>
+<p>
+Use <a href="buttons.html">Titled Buttons</a>.  In the click handler for the 
+button, set an attribute on the button to cycle through
+the various states.  Use attribute selector rules for each possible attribute value
+to set up different images for each state
+of the button.  
+If desired, the button's border can even be hidden using CSS.
+<p>
+<b>How do I hide columns?</b><br>
+<p>
+You can read about this capability <a href="http://www.w3.org/TR/REC-CSS2/tables.html#q4">here</a>.
+<p>
+<b>I want to do <font color=purple>insert my feature here</font> with the tree, but I don't know where to start!</b><br>
+It is important to remember that a tree is an extended table, and therefore many of its 
+capabilities are inherited from tables.  Make sure you read the CSS2 and HTML specs on tables
+(links are at the top of this page) to see if your question is answered there.
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="buttons.html">Previous: Titled Buttons</a>]
+[<a href="tabs.html">Next: Tab Widget</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

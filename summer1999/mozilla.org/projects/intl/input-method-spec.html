@@ -1,0 +1,691 @@
+<HTML>
+<HEAD>
+<TITLE>Seamonkey Input Method Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+   
+   
+   
+<!-- saved from url=(0056)http://xpnav.mcom.com/composer/alchemykeyboardinput.html -->
+
+
+
+<center>
+<h1>
+<b><font face="Arial,Helvetica"><font size=+2>Seamonkey Input Method Specification</font></font></b></h1></center>
+
+<address>
+<b>Author: </b><a href="mailto: tague@netscape.com">Tague Griffith</a></address>
+
+<br><b>Date: </b>1998 May 18
+<br><b>Version: Draft 0.1</b>
+<br>
+<hr width="100%">
+<h3>
+Document History:</h3>
+
+<ul>
+<li>
+Version Draft 0.1: Initial Release</li>
+</ul>
+Table Of Contents:
+<ul>
+<li>
+<a href="#Input Method Editing Styles">Input Method Editing Styles</a></li>
+
+<li>
+<a href="#Platform Protocols">Platform Protocols</a></li>
+
+<li>
+<a href="#Editor Functions">Editor Functions</a></li>
+
+<li>
+<a href="#Refernces">References</a></li>
+</ul>
+
+<h3>
+<a NAME="Input Method Editing Styles"></a>Input Method Editing Styles</h3>
+Each platform (Macintosh, Windows, Unix/X) supports the input of several
+Asian languages (e.g. Japanese, Chinese, Korean) through a special system
+service called an Input Method.&nbsp; An input method is a software component
+that converts key presses into text input which can't be typed directly.&nbsp;
+Input methods are normally used to input text for languages which have
+more characters than can fit on a standard keyboard.&nbsp; Input methods
+are commonly used for Japanese, Chinese and Korean but also show up in
+other languages like Thai and Hindi.
+<p>There are four basic style of input method editing: on-the-spot, over-the-spot,
+off-the-spot, and root-window.&nbsp; Only two of the styles (on-the-spot
+and root window) are supported on Macintosh and Windows.&nbsp; The XIM
+(X Input Method) standard defines all four styles, but does not require
+an application or input method to support a particular set of them.&nbsp;
+The style used is negotiated from the set of common styles supported by
+the application and the input method.
+<p><b>On-The-Spot</b>
+<p>The composed text is rendered inside the text window by the application,
+by maintaining a special editing area "between" the text before the insertion
+point and the text after the insertion point. The composed text looks like
+text part of the document, however, different stylistic attributes are
+applied to the text into indicate that it is part of the input method composition
+string.&nbsp; Different parts of the input method composing string will
+have different styles applied to them, which indicates that they are in
+different stages of editing.&nbsp; Once the composition text is finalized
+by the user, it merges into the original document and is indistinguishable
+from the surrounding text. The on-the-spot style is also know as inline
+input on some platforms.
+<br>&nbsp;
+<ul>&nbsp;
+<table COLS=2 WIDTH="100%" >
+<caption><b><u>Example of On-The-Spot Composition Style</u></b></caption>
+
+<tr VALIGN=TOP>
+<td VALIGN=TOP WIDTH="40%">The user types some English text prior to inputting
+Japanese text. Using the arrow keys, the user moves the insertion position
+between "Spot " and "Example" and switches his keyboard into Japanese Mode.
+(This can be done through a hot key or a system menu)</td>
+
+<td><img SRC="onthespot1.jpg" height=165 width=296></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>The user begins to type some Japanese phonetically into the edit area.&nbsp;
+The user types the series [n,i,h,o,n] which the input method automatically
+translates into the two Japanese syllables displayed on the right.&nbsp;
+The Romanized "n" remains because it's conversion is still ambiguous. As
+the user typed, the editor automatically expand the composition area by
+moving the text "Example" as it inserted the Japanese text. The Japanese
+text is displayed displayed with a dotted underline to indicate that it
+is unconverted text and still has additional input steps to go through.</td>
+
+<td><img SRC="onthespot2.jpg" height=165 width=296></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>Now that the user has entered the pronunciation of the word they want
+to add into the document ("nihon" or the Japanese word for Japanese), the
+user selects the appropriate Kanji conversion for the syllables.&nbsp;
+Since a single syllable has multiple possible conversions, the input method
+will bring up a list of possible candidates.&nbsp; The user selects the
+appropriate conversion which is then displayed in the document window.&nbsp;
+Once the user selects the appropriate conversion, the underline style of
+the text changes.</td>
+
+<td><img SRC="onthespot3.jpg" height=165 width=296></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>Finally, the User performs some action (usually pressing the return
+key) which commits the final text.&nbsp; The Japanese text is merged into
+the document and is indistinguishable from the surrounding text.</td>
+
+<td><img SRC="onthespot4.jpg" height=165 width=296></td>
+</tr>
+</table>
+</ul>
+
+<h3>
+Over-The-Spot composition style</h3>
+The composed text is rendered over the insertion point in a "layer" above
+the document window.. The document text doesn't change until the after
+the user has committed the text, so the composed text ends up obscuring
+part of the document during editing.
+<br>&nbsp;
+<ul>&nbsp;
+<table COLS=2 WIDTH="100%" >
+<caption><b><u>Example of Over-The-Spot Composition Style</u></b></caption>
+
+<tr VALIGN=TOP>
+<td VALIGN=TOP WIDTH="40%">The user types some English text prior to inputting
+Japanese text. Using the arrow keys, the user moves the insertion position
+between "Spot " and "Example" and switches his keyboard into Japanese Mode.
+(This can be done through a hot key or a system menu)</td>
+
+<td><img SRC="overthespot1.jpg" BORDER=0 height=108 width=301></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>The user begins to type some Japanese phonetically into the edit area.&nbsp;
+The user types the series [n,i,h,o,n] which the input method automatically
+translates into the two Japanese syllables displayed on the right.&nbsp;
+As the user typed, in this style the editor draws the composing text over
+the the text "Example" in the document.&nbsp;</td>
+
+<td><img SRC="overthespot2.jpg" BORDER=0 height=108 width=244></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>Next the user selects the appropriate Kanji conversion for the syllables.&nbsp;
+Since a single syllable has multiple possible conversions, the input method
+will bring up a list of possible candidates.&nbsp; The user selects the
+appropriate conversion which replaces the phonetic syllables.&nbsp; The
+new candidate text is still drawn over the original document text.</td>
+
+<td><img SRC="overthespot3.jpg" BORDER=0 height=108 width=244></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>When the user commits the composed text, it is inserted into the document.
+Unlike on-the-spot input the new text is inserted as a single operation,
+instead of a series of changing strings.</td>
+
+<td><img SRC="overthespot4.jpg" BORDER=0 height=109 width=288></td>
+</tr>
+</table>
+</ul>
+<b>Off-the-Spot composition style</b>
+<p>The off-the-spot composition style is very similar to the root window
+style.&nbsp; These two styles are distinguished only by the position of
+the editing region.&nbsp; The off-the-spot style draws the editing region
+in a status bar attached to the bottom of the active window.&nbsp; Each
+application window has a status and editing bar, instead of having a single
+independent window.
+<ul>&nbsp;
+<table COLS=2 WIDTH="100%" >
+<caption><b><u>Example of Off-The-Spot Composition Style</u></b></caption>
+
+<tr VALIGN=TOP>
+<td VALIGN=TOP WIDTH="40%">The user types some English text prior to inputting
+Japanese text. Using the arrow keys, the user moves the insertion position
+between "Spot " and "Example" and switches his keyboard into Japanese Mode.
+(This can be done through a hot key or a system menu)</td>
+
+<td><img SRC="offthespot1.jpg" BORDER=0 height=176 width=279></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>The user begins to type some Japanese phonetically into the edit area.&nbsp;
+The user types the series [n,i,h,o,n] which the input method automatically
+translates into the two Japanese syllables displayed on the right.&nbsp;
+As the user typed, in this style the editor draws the composing text in
+a status bar at the bottom of the document.&nbsp;</td>
+
+<td><img SRC="offthespot2.jpg" BORDER=0 height=176 width=279></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>Next the user selects the appropriate Kanji conversion for the syllables.&nbsp;
+Since a single syllable has multiple possible conversions, the input method
+will bring up a list of possible candidates.&nbsp; The user selects the
+appropriate conversion which replaces the phonetic syllables.&nbsp; The
+new candidate text is still drawn in the status bar.</td>
+
+<td><img SRC="offthespot3.jpg" BORDER=0 height=176 width=279></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>When the user commits the composed text, it is inserted into the document.
+Unlike on-the-spot input the new text is inserted as a single operation,
+instead of a series of changing strings.</td>
+
+<td><img SRC="offthespot4.jpg" BORDER=0 height=173 width=278></td>
+</tr>
+</table>
+</ul>
+
+<p><br><b>Root Window composition style</b>
+<p>The composed text is rendered in an entirely separate window which has
+no relationship to the application window.&nbsp; Once the input is committed,
+it is then inserted into the document at the insertion point.&nbsp; The
+Root window style is also know as bottom line or floating window on some
+platforms.
+<ul>&nbsp;
+<table COLS=2 WIDTH="100%" >
+<caption><b><u>Example of Root Window Composition Style</u></b></caption>
+
+<tr VALIGN=TOP>
+<td VALIGN=TOP WIDTH="40%">The user types some English text prior to inputting
+Japanese text. Using the arrow keys, the user moves the insertion position
+between "Spot " and "Example" and switches his keyboard into Japanese Mode.
+(This can be done through a hot key or a system menu)</td>
+
+<td><img SRC="rootwindow1.jpg" height=186 width=329></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>The user begins to type some Japanese phonetically.&nbsp; The user
+types the series [n,i,h,o,n] which the input method automatically translates
+into the two Japanese syllables displayed on the right.&nbsp; As the user
+typed, the input method brings up a new window and displays the content
+in that window.&nbsp; This process is transparent to the application.</td>
+
+<td><img SRC="rootwindow2.jpg" height=192 width=453></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>Now that the user has entered the pronunciation of the word they want
+to add into the document ("nihon" or the Japanese word for Japanese), the
+user selects the appropriate Kanji conversion for the syllables.&nbsp;
+This causes the text in the root window to change, but is transparent to
+the application.</td>
+
+<td><img SRC="rootwindow3.jpg" height=190 width=454></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>Finally, the User performs some action (usually pressing the return
+key) which commits the final text.&nbsp; The Japanese text is merged into
+the document and is indistinguishable from the surrounding text.</td>
+
+<td><img SRC="rootwindow4.jpg" height=185 width=333></td>
+</tr>
+</table>
+</ul>
+
+<h3>
+<a NAME="Platform Protocols"></a>Platform Protocols</h3>
+On each platform, input methods are supported by a protocol defined by
+the platform's windowing system. The following sections give an overview
+of the protocols used on each of the major platforms which Seamonkey supports.&nbsp;
+Consult the platform documentation for more detailed information.
+<p><b>Windows</b>
+<p>The windows input method protocol involves sending four different messages
+to the event handler of a particular window.&nbsp; To support the root
+window style, the input method sends WM_CHAR events to the application.&nbsp;
+Support for the on-the-spot (called inline in the Window's documentation)
+is done through the WM_IME_STARTCOMPOSITION, WM_IME_COMPOSITION, WM_IME_ENDCOMPOSITION
+messages.&nbsp; Windows does not use the off-the-spot or over-the-spot
+styles of input.
+<p>Root window support is handled by the system transparent to the application.&nbsp;
+The input method and the operating system handle displaying the various
+stages of composition input until the user confirms the composition string.
+The operating system handles confirmation by sending the application a
+sequence of WM_CHAR messages representing the final composition string.
+<p>Handling on-the-spot input is a bit more complex, in that the application
+must respond to three additional methods: WM_IME_STARTCOMPOSITION, WM_IME_ENDCOMPOSITION,
+and WM_IME_COMPOSITION.&nbsp;&nbsp; The WM_IME_STARTCOMPOSITION and WM_IME_ENDCOMPOSITION
+methods are used to bracket a single on-the-spot editing session.&nbsp;
+The application needs to respond to WM_IME_STARTCOMPOSITION by creating
+whatever internal state is necessary for maintaining the on-the-spot composition
+buffer.&nbsp; Conversely, the application responds to WM_IME_ENDCOMPOSITION
+by deleting the composition buffer and merging that text into the document.
+<p>The WM_IME_COMPOSITION method contains a string which represents the
+current state of the composition buffer.&nbsp; The application needs to
+extract this string (using ImmGetCompositionString) along with the associated
+composition state data and render it in the document.&nbsp; The application
+will receive a sequence of WM_IME_COMPOSITION events as the status of the
+composition buffer changes.&nbsp; In windows, the WM_IME_COMPOSITION buffer
+always contains the complete state of the composition buffer, it is not
+additive like on other platforms.
+<p><b>Macintosh</b>
+<p>The Macintosh uses a protocol composed of four different AppleEvents
+as well as standard events to support on-the-spot input, while root window
+input is sent to the application through Get/WaitNextEvent event loop.
+Like Windows, macintosh does not support off-the-spot or over-the-spot
+styles.
+<p>Root window support is again virtually transparent to the application.&nbsp;
+The input method and the operating system handle the display of the composition
+window and it's contents.&nbsp; Once the composition string is confirmed,
+the operating system sends the application a series of events.&nbsp; An
+important point to note here is that the Macintosh will send Asian characters
+as two events with the high byte of the character code in the first event
+and the low byte in the second event.
+<p>On-the-spot input is accomplished through the TSM AppleEvent suite:
+Position2Offset, Offset2Position, Update, and GetText. The Position2Offset
+and Offset2Position events are used to map between the document/application's
+text buffer and global screen coordinates.
+<p>The Position2Offset event requests a "hit test" of a particular point
+in the global screen coordinates.&nbsp; The application responds to this
+event by constructing a AppleEvent reply consisting of the buffer offset
+and region class of that particular point.&nbsp; The region class indicates
+if the point is outside the applications windows, inside one of the applications
+windows or inside the active composition area.&nbsp; The offset is a fixed
+(linear) offset from the beginning of the document text buffer or a relative
+offset (from the start of the active input area) depending on the region
+class of the point.&nbsp; Offset2Position does the reverse mapping taking
+an offset and converting it into a global screen coordinate.&nbsp; The
+offset is relative to the start of the composition region, if it exists;
+otherwise, it is relative to the start of the text buffer.
+<p>The Update event is used to change the status of the composition buffer.
+The Update event contains a string of characters that need to be drawn
+in the composition area.&nbsp; Unlike windows, the Macintosh Update event
+is additive so not all Update events will contain the complete string to
+draw.&nbsp; The application receives a sequence of Update events as the
+composition buffer changes.&nbsp; There is no special event like WM_IME_STARTCOMPOSITION
+signaling beginning of a composition sequence. Ending composition is signaled
+by a -1 in the composition buffer length.
+<p>GetText is used to reverse a commit operation.&nbsp; A user selects
+some text then does a special Undo operation.&nbsp; The selected text is
+then converted into a composition area.&nbsp; The application creates a
+new composition editing area and the composition buffer is initialized
+the the selected string.
+<br>&nbsp;
+<p><b>Unix/X-Windows</b>
+<p>Unix/X-Windows XIM, X Input Method protocol, uses a callback mechanism
+to support all four styles of input; however the application and the input
+method aren't required to support any particular styles.&nbsp; The application
+selects a style to use by comparing the styles that are supported by both
+the application and the input method and applying some algorithm to determine
+which style is the best for that particular language.
+<p>Once a style is selected, the application registers the appropriate
+callbacks with the system and provides (through system calls on the XIC
+- X Input Context) what ever font or geometry information is required for
+that style.&nbsp; Root window style requires a minimal amount of work for
+the application, all it needs to appropriately convert key presses into
+Input Method input using XwcLookupString or XmbLookupString.
+<p>Over-the-Spot style requires the application to provide the input method
+with information about about the current font and the location (coordinates)
+of the spot.&nbsp; The application must change the font and spot location
+information (through XSetICValue) as the document editing progresses.
+<p>Off-the-Spot requires the application to provide the same information
+as Over-the-Spot, but it also must handle geometry negotiation with the
+input method.&nbsp; Since the input method needs to draw text in an area
+of the applications window, the application needs to register a Geometry
+negotiation callback with the system so that the input method can request
+a larger area if necessary, or can be informed of changes to the application
+window's geometry.
+<p>On-the-Spot style requires the application to register a set of callbacks
+of similar complexity to the events used in Windows and MacOS.&nbsp; To
+support On-the-Spot, the application must register the following callbacks:
+PreeditStart, PreeditDone, PreeditDraw, and PreeditCaret.&nbsp; PreeditStart
+and PreeditDone are called at the beginning and end of preedit (i.e. input
+method) input.&nbsp; PreeditDraw is called when the input method wants
+the application to display the preedit region or changing some of the highlighting
+or the various input method clauses.&nbsp; PreeditCaret is called when
+the input method wants the application to move the position of the inserton
+point within the predit area.
+<br>&nbsp;
+<h3>
+<a NAME="Editor Functions"></a>Editor Functions</h3>
+The approach that we plan to take for supporting Input Methods in Seamonkey
+is to find a common set of primitive operations which can be implemented
+in cross platform code and can be combined in appropriate ways to support
+a specific platform input method protocol.
+<p>To support input method editing in Seamonkey, we need to add the following
+methods to the editor component:
+<ul>
+<li>
+Start Composition</li>
+
+<li>
+EndComposition</li>
+
+<li>
+SetCompositionString</li>
+
+<li>
+SetCompositionHilighting</li>
+
+<li>
+SetcaretPosition</li>
+
+<li>
+GetCaretCoordinates</li>
+
+<li>
+GetOffsetFromCoordinates</li>
+
+<li>
+GetRegionCoordinatesFromOffset</li>
+</ul>
+These actions should support the input method functionality required for
+the various input method protocols.
+<p><b>Start Composition</b>
+<p>The Start Composition method is used to signal the beginning of a composition
+operation.&nbsp; In response to this method, the editor needs to set up
+any context information and state to handle input method editing.&nbsp;
+The editor needs to create the initial, empty preedit area.
+<p>The preedit area needs to be implemented differently from a raw selection
+since it is not hilighted and the user must be able to move the insertion
+point around inside the preedit area.&nbsp; The editor needs to remember
+the location and size of the preedit area, which can expand and contract
+as the user types.
+<p>The transaction manager should not record the intermediate transactions
+in-between a Start Composition and an EndComposition operation.&nbsp; The
+composition operation should be represented as a single transaction moving
+from the state before the Start Composition to the state just prior to
+the EndComposition.
+<p>Only a single preedit area can be active at one time.
+<p><b>EndComposition</b>
+<p>The EndComposition method is used to close a preedit area and permanently
+commit the predit text into the content buffer.&nbsp; The typing changes
+between Start Composition and EndComposition should be represented as a
+single transaction.
+<p><b>SetCompositionString</b>
+<p>The SetCompositionString method is used to set the current text of the
+preedit area.&nbsp; SetCompositionString can only be used when there is
+an active preedit area (i.e. in between Start/EndComposition calls) in
+the input buffer.&nbsp; Each call to SetCompositionString needs to set
+the entire Preedit text (unlike some platforms which make use of additive
+changes).
+<p><b>SetCompositionHilighting</b>
+<p>The SetCompositionHilighting method is used to apply application private
+CSS style attributes to the text in the preedit area, so that it is hilighted
+according to the platform's UI requirements.&nbsp; The CSS style attributes
+are symbolic representations for the various different highlight states
+(confirmed, raw, unconfirmed) used by input methods to provide the user
+with feedback on the text conversion.
+<p><b>SetCaretPosition</b>
+<p>The SetCaretPostion method is used to position the insertion point (caret)
+at a particular offset within the preedit area.&nbsp; This method will
+not move that caret outside of the preedit area.&nbsp; The offset is relative
+to the beginning of the preedit area and is specified in terms of Unicode
+characters.
+<p><b>GetCaretCoordinates</b>
+<p>The GetCaretCoordinates returns the global screen coordinates of the
+current Caret position, if there is no caret the method returns the appropriate
+status code.
+<p><b>GetCoordinatesOfOffset</b>
+<p>The GetCoordinatesOfOffset method returns the global screen coordinates
+of the given offset into preedit area.&nbsp; The offset is relative to
+the start of the preedit area and is specified in terms of Unicode characters.
+<p><b>GetOffsetFromCoordinates</b>
+<p>The GetOffsetFromCoordinates method does the reverse of GetCoordinatesOfOffset.&nbsp;
+It returns the offset into the preedit area based on the character positioned
+at the particular set of coordinates.&nbsp; The offset is specified in
+terms of Unicode characters.
+<p><b>GetRegionClassFromCoordinates</b>
+<p>The GetRegionClassFromCoordinates returns the region class (inside a
+document window, inside preedit area, outside application windows) of a
+particular set of global screen coordinates.
+<p>Note: this is a general function which needs to be supported by more
+components than the editor.
+<br>&nbsp;
+<h3>
+<a NAME="Refernces"></a>References</h3>
+
+<ul>
+<li>
+<a href="http://java.sun.com/products/jdk/1.2/docs/guide/intl/spec.html">Java
+Input Method Framework Specification (JavaSoft)</a></li>
+
+<li>
+<a href="http://developer.apple.com/techpubs/mac/Text/Text-2.html">Inside
+Macintosh: Text (Addison Wesley/Apple Computer)</a></li>
+
+<li>
+<a href="http://msdn.microsoft.com/library">Developing International Software
+For Windows 95 and NT (Nadine Kano)</a></li>
+
+<li>
+X Windows on The World (Tom McFarland)</li>
+
+<li>
+Xlib Programming Manual (Adrian Nye)</li>
+
+<li>
+<a href="http://www.devworld.apple.com/dev/techsupport/develop/issue29/griffith.html">Gearing
+Up for Asia With the Text Services Manager and TSMTE (Tague Griffith)</a></li>
+</ul>
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

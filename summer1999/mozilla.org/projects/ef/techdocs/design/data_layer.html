@@ -1,0 +1,327 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Primitive Graph Data Layer</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Primitive Graph Format</H2>
+
+
+<H2><FONT SIZE=+4>Data Layer</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="control_schedule_proof.html"><IMG SRC="../arrows/left.gif" ALIGN=
+"BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="primitive_graph.html"><IMG SRC=
+"../arrows/up.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A><A HREF="primitives.html"><IMG SRC="../arrows/right.gif" ALIGN=
+"BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A></PRE>
+
+<DL>
+  <DT><P ALIGN=RIGHT><A HREF="primitives.html"><FONT SIZE=+2>Primitives</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="bytecode_mappings.html"><FONT SIZE=+2>Bytecode
+  Mappings</FONT></A>
+</DL>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P></P>
+
+<P>The data graph nodes and edges belong to one of the kinds below. The
+next page describes the individual <A HREF="primitives.html">primitives</A>
+in detail, followed by a list of <A HREF="bytecode_mappings.html">mappings</A>
+from Java bytecodes to primitive graphs.</P>
+
+<DL>
+  <DT>Terminology note:
+  <DD>When we speak of an <STRONG>integer</STRONG>, we usually mean a mathematical
+  entity without an explicit size; on the other hand, an <STRONG>int</STRONG>
+  is always a 32-bit integer and a <STRONG>long</STRONG> is always a 64-bit
+  integer. Ints and longs can be interpreted as signed or unsigned integers
+  depending on context.
+</DL>
+
+<H3><A NAME="df_edge"></A>Data Edges</H3>
+
+
+<P><TABLE WIDTH="100%" BORDER="1" CELLSPACING="2" CELLPADDING="4">
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_edge_int.gif" WIDTH="37" HEIGHT="19"
+ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_edge_int"></A>An <STRONG>int edge</STRONG> carries a 32-bit
+integer value from the place it's computed to its uses. On the 680x0 int
+edges are usually assigned to data registers.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_edge_long.gif" WIDTH="37" HEIGHT="19"
+ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_edge_long"></A>A <STRONG>long edge</STRONG> carries a 64-bit
+integer value.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_edge_addr.gif" WIDTH="37" HEIGHT="19"
+ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_edge_addr"></A>An <STRONG>address edge</STRONG> carries a pointer
+or object reference value. This is usually a 32-bit value, although on some
+64-bit machines this could be a 64-bit value. On the 680x0 address edges
+are usually assigned to address registers.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_edge_single.gif" WIDTH="37" HEIGHT=
+"19" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_edge_single"></A>A <STRONG>single float edge</STRONG> carries
+a single-precision (32-bit) floating point value. On machines with separate
+floating-point registers we usually assign single float edges to floating-point
+registers.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_edge_double.gif" WIDTH="37" HEIGHT=
+"19" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_edge_double"></A>A <STRONG>double float edge</STRONG> carries
+a double-precision (64-bit) floating point value. On machines with separate
+floating-point registers we usually assign double float edges to floating-point
+registers.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_edge_condition.gif" WIDTH="37" HEIGHT=
+"19" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_edge_condition"></A>A <STRONG>condition edge</STRONG> carries
+the result of a compare primitive to a condition primitive or an <A HREF=
+"control_layer.html#cf_if">if node</A>. The compare primitive outputs one
+of the four states <CODE>less</CODE>, <CODE>equal</CODE>, <CODE>greater</CODE>,
+or <CODE>unordered</CODE> along the condition edge to the condition primitive,
+which can take different actions depending on which state it receives. Condition
+edges are never passed as arguments to or results of function calls.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_edge_store.gif" WIDTH="37" HEIGHT=
+"19" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_edge_store"></A>A <STRONG>memory edge</STRONG> is an abstraction
+for the state of memory, other threads, and input/output devices -- all
+mutable data other than what is held in this function's local variables.
+Primitives that read this data must have a memory edge as one of their inputs,
+and primitives that modify this data must also output a memory edge.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/df_edge_tuple.gif" WIDTH="37" HEIGHT="19" ALIGN="BOTTOM"
+NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_edge_tuple"></A>A <STRONG>tuple edge</STRONG> represents a combination
+of several other data edges. We use tuple edges to carry the outputs of
+primitives that would otherwise produce more than one data edge. Projection
+nodes extract the component edges of a tuple edge.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3><A NAME="df_node"></A>Data Nodes</H3>
+
+
+<P>A data graph node is either a <STRONG>phi-node</STRONG> or a <STRONG>primitive</STRONG>.
+The numerous kinds of primitives are outlined below and described in detail
+on the <A HREF="primitives.html">next page</A>.</P>
+
+<P><FONT COLOR="#FF0000">Caution: The primitive summary below corresponds
+to an older specification of primitive graphs. See the next page for the
+correct details.</FONT></P>
+
+<P><TABLE WIDTH="100%" BORDER="1" CELLSPACING="2" CELLPADDING="4">
+ <TR>
+  <TD WIDTH="26%" HEIGHT="112" VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_phi.gif" ALIGN="BOTTOM" WIDTH="163"
+HEIGHT="100" NATURALSIZEFLAG="3">
+  </TD>
+  <TD WIDTH="74%" VALIGN="TOP">
+<P><A NAME="df_phi"></A><STRONG>Phi nodes</STRONG> are special primitives
+that denote places in the graph where several different definitions of a
+live local variable can reach a control node.</P>
+
+<P>Each phi node must have as many inputs as there are control graph predecessors
+of the control node containing the phi node. The inputs to a phi node are
+paired with these control graph predecessors. If control came to this control
+node from node A, then the phi node selects its own input A; if control
+came from node B, then the phi node selects its own input B, etc.</P>
+
+<P>Usually (but not always) the input variables of a phi node are dead after
+the phi node and have disjoint live ranges. We can often avoid generating
+any code for the phi node by assigning all of its inputs and its output
+to the same register.
+  </TD>
+ </TR>
+ <TR>
+  <TD HEIGHT="81" VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_nullary.gif" ALIGN="BOTTOM" WIDTH=
+"145" HEIGHT="69" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="df_nullary"></A><STRONG>Nullary primitives</STRONG> produce
+constant values without any side effects. Examples include int, long, and
+floating-point constants, pointer constants such as a reference to a static
+instance of the <CODE>NullPointerException</CODE> class. Offsets to fields
+of objects are also constants, as are the incoming arguments of the function
+being compiled.</P>
+
+<P>The rule is that any primitive that does not depend on the function's
+local variables, has no side effects, and always produces the same value
+within a specific invocation of the function is a nullary primitive.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_unary.gif" ALIGN="BOTTOM" WIDTH="163"
+HEIGHT="122" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_unary"></A><STRONG>Unary primitives</STRONG> produce a value
+that depends only on their one argument without producing any side effects
+unless their output edges include a memory edge. When invoked more than
+once on the same argument, a unary primitive produces the same results.
+Examples of unary primitives include adding a constant to a number, subtracting
+a number from a constant, comparing a long to the constant 7 (<CODE>?7</CODE>
+in the figure on the left), comparing an address to nil (<CODE>?nil</CODE>),
+testing a condition (such as <CODE>=</CODE>, which generates 1 if a condition
+was <CODE>equal</CODE> and 0 otherwise), and getting the length of an array.
+The last one is a unary primitive because the length of an array never changes.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_binary.gif" ALIGN="BOTTOM" WIDTH="140"
+HEIGHT="87" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="df_binary"></A>Like unary primitives, <STRONG>binary primitives</STRONG>,
+<STRONG>ternary primitives</STRONG>, and primitives that take more arguments
+produce values that depend only on their arguments without producing any
+side effects unless their output edges include a memory edge. When invoked
+more than once on the same set of arguments, a primitive produces the same
+results. Examples of binary primitives include adding two numbers and comparing
+one number to another (<CODE>?u</CODE> does an unsigned comparison).</P>
+
+<P>Loading a non-volatile field of an object is also a binary primitive.
+Note that since a load takes the <A HREF="#df_edge_store">memory</A> state
+as one of its arguments (and because of Java's semantics permitting reordering
+of non-volatile memory accesses as seen by other threads), a non-volatile
+load satisfies the property that invoking it more than once always yields
+the same value; any operation that might modify the field produces a different
+memory state so the memory argument to a subsequent load of the field will
+be different, thus allowing the subsequent load to return a different value.</P>
+
+<P>Storing a field of an objet is a ternary primitive that takes a memory
+state, an object reference, and a value and produces a new memory state.
+  </TD>
+ </TR>
+ <TR>
+  <TD HEIGHT="116" VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_virtual_call.gif" ALIGN="BOTTOM" WIDTH=
+"109" HEIGHT="104" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="df_virtual_call"></A>A <STRONG>virtual call</STRONG> primitive
+invokes a method passed as an input to the primitive on a set of arguments
+also passed as inputs. The method should have been obtained from a lookupvirtual
+primitive. Argument <VAR>a0</VAR> is the object on which the method is called.</P>
+
+<P>Any non-inlined function is assumed to be capable of side effects, so
+the <A HREF="#df_edge_store">memory</A> state is both an incoming and outgoing
+edge connected to the virtual call. Any non-inlined function is also assumed
+to be capable of throwing exceptions (at the very least, any non-inlined
+function can throw asynchronous exceptions), so the virtual call primitive
+must be connected to an <A HREF="control_layer.html#cf_exc">exception node</A>
+(this implies that the virtual call's results may not be used by any other
+primitive in the same control node).</P>
+
+<P>The result appears only if the method produces a result and the result
+is actually used in this function.
+  </TD>
+ </TR>
+ <TR>
+  <TD HEIGHT="112" VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_static_call.gif" ALIGN="BOTTOM" WIDTH=
+"127" HEIGHT="100" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_static_call"></A>A <STRONG>static call</STRONG> calls a function
+fixed in the primitive rather than determined at runtime. The inputs are
+the current memory state and the arguments of the call. The outputs are
+the revised memory state, the result (only if the method produces a result
+and the result is actually used in this function), and an exception. The
+static call must be connected to an <A HREF="control_layer.html#cf_exc">exception
+node</A>.
+  </TD>
+ </TR>
+ <TR>
+  <TD HEIGHT="90" VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/df_other.gif" ALIGN="BOTTOM" WIDTH="114"
+HEIGHT="78" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="df_other"></A>There are <STRONG>other primitives</STRONG> such
+as the new operator that creates new objects. For most practical purposes
+these behave like static calls to predefined system services.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Constraints</H3>
+
+
+<P><FONT COLOR="#FF7F00">***** There are a zillion constraints on the placement
+of data flow edges and primitives within control nodes. Many of these are
+common sense (such as it's not good to get into situations where there are
+two live copies of a memory state at the same time, and we better not have
+any cycles of data flow edges not broken by phi-nodes), but sometime soon
+we'll need to write down the rules (which may not be obvious) that ensure
+these constraints.</FONT><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

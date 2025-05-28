@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>Progress Meter</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Progress Meter</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="tabs.html">Previous: The Tab Widget</a>]
+[<a href="checkboxes.html">Next: Checkbox (Tri-State)</a>]
+<p>
+<b>Feature Owner:</b> <a href="mailto:evaughan@netscape.com">Eric Vaughan</a><br>
+<p>
+A progress meter is a horizontal or vertical strip that can be used to measure
+progress as a percentage.  It is declared using the <font color=green>progressmeter</font>
+tag.
+<p>
+A progress meter can be in one of two modes: <font color=orange>normal</font> and
+<font color=orange>undetermined</font>.  The <font color=red>mode</font> attribute
+can be used to switch between the modes.
+<p>
+In the <font color=orange>normal</font> mode (the default), the progress meter fills in a 
+certain percentage with its foreground color (as specified using the CSS <font color=purple>
+color</font> property).  This percentage value can be set using the <font color=red>value</font>
+attribute.  The attribute should be given a value 
+between <font color=orange>0</font> and <font color=orange>100</font>.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;progressmeter value="50"/&gt;
+</table>
+<p>
+In the <font color=orange>undetermined</font> mode, the progress bar uses a barber-pole 
+appearance that animates to indicate that the amount of 
+progress is indeterminate.  The progress meter uses two colors in order to draw the 
+barber pole effect, and this second color can be specified using the <font color=purple>color</font>
+property with the <font color=purple>:progressmeter-stripe</font> pseudoelement.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+:progressmeter-stripe {
+	color: #BBBBCC;
+}
+</table>
+<p>
+The progress meter can be aligned horizontally or vertically using the <font color=red>align</font>
+attribute. <font color=red>[This should move into CSS.]</font>  When the bar is aligned
+horizontally (the default), the bar fills in from left to right.  When it is aligned
+vertically, the bar fills in from bottom to top.
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="tabs.html">Previous: The Tab Widget</a>]
+[<a href="checkboxes.html">Next: Checkbox (Tri-State)</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

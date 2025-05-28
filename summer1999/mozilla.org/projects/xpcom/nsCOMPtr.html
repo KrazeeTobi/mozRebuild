@@ -1,0 +1,691 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+	<HEAD>
+		<TITLE>nsCOMPtr User Manual</TITLE>
+		<!-- LINK REL=StyleSheet HREF="http://www.meer.net/ScottCollins/xpfe/Standard.css" TYPE="text/css" -->
+		<LINK REL=StyleSheet HREF="Standard.css" TYPE="text/css">
+	</HEAD>
+
+	<BODY>
+		<H1><SPAN class="source-code">nsCOMPtr</SPAN> User Manual</H1>
+
+<DIV class=author-note>
+	<P>by <A HREF="http://www.meer.net/ScottCollins/">Scott Collins</A><!-- /P -->
+	<P>last modified 29 March 1999</P>
+</DIV>
+
+<DIV class="document-label">
+	<A name="abstract">
+		<STRONG>Abstract:</STRONG>
+		Everything you ever wanted to know about <SPAN class="source-code">nsCOMPtr</SPAN>,
+			a COM `smart-pointer' for mozilla.
+	</A>
+</DIV>
+
+<DIV class="document-label">
+	<P>
+		<STRONG>Document Status:</STRONG> Public.
+		Work continues on this document as comments and code changes are submitted.
+	</P>
+</DIV>
+
+<P>
+	The latest version of this document is available at
+</P>
+<UL>
+	<LI><A HREF="http://www.mozilla.org/projects/xpcom/nsCOMPtr.html">www.mozilla.org/projects/xpcom/nsCOMPtr.html</A></LI>
+	<LI><A HREF="http://www.meer.net/ScottCollins/doc/nsCOMPtr.html">www.meer.net/ScottCollins/doc/nsCOMPtr.html</A></LI>
+</UL>
+
+<P>
+	Please direct all comments and contributions to
+		<A HREF="mailto:scc@netscape.com">Scott Collins &lt;scc@netscape.com&gt;</A>
+		and/or <A HREF="news://news.mcom.com/netscape.public.mozilla.xpcom">news:netscape.public.mozilla.xpcom</A>.
+</P>
+
+<P>
+	<STRONG>Update:</STRONG>
+	<SPAN class="source-code">nsCOMPtr</SPAN> has been updated.
+	I am in the process of updating this documentation to match.
+	In the mean time, the details are available in
+		<A href="news://news.mozilla.org/scc-1302990000280001@h-208-12-39-146.mcom.com">this news posting</A>.
+</P>
+
+<DIV class="contents">
+	<H2>Contents</H2>
+		<UL>
+			<LI><A HREF="#introduction">Introduction</A></LI>
+			<LI>
+				<A HREF="#user-manual">User Manual</A>
+				<UL>
+<LI><A href="#how-to">How do I use <SPAN class="source-code">nsCOMPtr</SPAN>?</A></LI>
+<LI><A href="#where">Where should I use <SPAN class="source-code">nsCOMPtr</SPAN>?</A></LI>
+<LI><A href="#where-not">Where shouldn't I use <SPAN class="source-code">nsCOMPtr</SPAN>?</A></LI>
+<LI><A href="#how-to-convert">Is there an easy way to convert my current code?</A></LI>
+				</UL>
+			</LI>
+<LI><A href="#caveats">Gotchas and Things to Watch Out For</A></LI>
+			<LI>
+				<A href="#misc">Miscellaneous</A>
+				<!-- UL>
+<LI><A href="#bad-names">Why does <SPAN class="source-code">getter_AddRefs</SPAN> have such a funny name?</A></LI>
+<LI><A href="#outside-mozilla">Can I use <SPAN class="source-code">nsCOMPtr</SPAN> in my COM-based project?</A></LI>
+				</UL -->
+			</LI>
+			<LI><A HREF="#bibliography">Bibliography and Related Reading</A></LI>
+		</UL>
+</DIV>
+
+<H2><A name="introduction">Introduction</A></H2>
+
+<P>
+	<SPAN class="source-code">nsCOMPtr</SPAN> is a `smart-pointer'.
+	It is a template class that acts, syntactically,
+    just like an ordinary pointer in C or C++, i.e., you can apply <SPAN class="source-code">*</SPAN> or <SPAN class="source-code">-></SPAN> to it to
+    `get to' what it points at.
+	<SPAN class="source-code">nsCOMPtr</SPAN> is smart in that, unlike a raw COM
+    interface pointer, <SPAN class="source-code">nsCOMPtr</SPAN> manages <SPAN class="source-code">AddRef</SPAN>, <SPAN class="source-code">Release</SPAN>, and <SPAN class="source-code">QueryInterface</SPAN>
+    <EM>for</EM> you.
+</P>
+
+<P>
+    For instance, here is a typical snippet of code (at its most compact) where you assign
+    a COM interface pointer into a member variable:
+<!-- /P -->
+
+<DIV class="source-code">
+<PRE class="source-code">
+// _not_ using smart-pointers
+
+NS_IF_RELEASE(mFoop);  // If I have one already, I must
+                       //   release it before over-writing it.
+if ( mFooP = aPtr )    // Now it's safe to assign it in,
+                       //   and, if it's not NULL
+  mFooP->AddRef();     // I must |AddRef| it, since I'll be
+                       //   holding on to it.
+</PRE>
+</DIV>
+
+<P>
+    If our member variable <SPAN class="source-code">mFooP</SPAN> were a <SPAN class="source-code">nsCOMPtr</SPAN>, however, the snippet above
+    would look like this:
+<!-- /P -->
+
+<DIV class="source-code">
+<PRE class="source-code">
+// using smart-pointers
+
+mFoop = aPtr;          // ...automatically |Release|s
+                       // the old and |AddRef|s the new
+</PRE>
+</DIV>
+
+<P>
+	<SPAN class="source-code">nsCOMPtr</SPAN> helps you write code that is leak-proof, exception safe, and significantly
+	less verbose than you would with raw COM interface pointers.  With <SPAN class="source-code">nsCOMPtr</SPAN>, you
+	may never have to call <SPAN class="source-code">AddRef</SPAN>, <SPAN class="source-code">Release</SPAN>, or <SPAN class="source-code">QueryInterface</SPAN> by hand.
+</P>
+
+<P>
+	You still have to understand COM.  You still have to know which functions return
+	interface pointers that have already been <SPAN class="source-code">AddRef</SPAN>ed and which don't.  You still
+	have to ensure your program logic doesn't produce circularly referencing garbage.
+	<SPAN class="source-code">nsCOMPtr</SPAN> is not a panacea.  It is, however, helpful, easy to use, well-tested,
+	and polite.  It doesn't require that a function author cooperate with you, nor does
+	your use force others to use it.
+</P>
+
+<H2><A name="user-manual">User Manual</A></H2>
+
+<H3><A name="how-to">How do I use <SPAN class="source-code">nsCOMPtr</SPAN>?</A></H3>
+
+<P>
+    Typically, you can use a <SPAN class="source-code">nsCOMPtr</SPAN> exactly as you would a standard COM
+    interface pointer:
+<!-- /P -->
+<TABLE cols=2>
+	<TR>
+		<TD>
+<DIV class="source-code">
+<PRE class="source-code">
+IFoo* fooP;
+// ...
+fooP-&gt;SomeFunction(x, y, z);
+AnotherFunction(fooP);
+
+if ( fooP )
+  // ...
+
+if ( fooP == barP )
+  // ...
+</PRE>
+</DIV>
+		</TD>
+
+		<TD>
+<DIV class="source-code">
+<PRE class="source-code">
+nsCOMPtr&lt;IFoo&gt; fooP;
+// ...
+fooP-&gt;SomeFunction(x, y, z);
+AnotherFunction(fooP);
+
+if ( fooP )
+  // ...
+
+if ( fooP == barP )
+  // ...
+</PRE>
+</DIV>
+		</TD>
+	</TR>
+</TABLE>
+
+<P>
+	There are some differences, though.
+	A <SPAN class="source-code">nsCOMPtr</SPAN> differs, syntactically, from a raw COM interface pointer in three ways:
+</P>
+
+<P>
+	They are declared differently
+<!-- /P -->
+
+<TABLE cols=2>
+<!--
+	<TH>`raw' pointers
+	<TH>`smart-pointers'
+-->
+	<TR>
+		<TD>
+<DIV class="source-code">
+<PRE class="source-code">
+// instead of saying...
+
+IFoo* fooP;
+</PRE>
+</DIV>
+		</TD>
+
+		<TD>
+<DIV class="source-code">
+<PRE class="source-code">
+// ...you say
+
+nsCOMPtr&lt;IFoo&gt; fooP;
+</PRE>
+</DIV>
+		</TD>
+	</TR>
+</TABLE>
+
+<P>
+	You can't call <SPAN class="source-code">AddRef</SPAN> or <SPAN class="source-code">Release</SPAN> through it,
+	nor would you need to.
+	<SPAN class="source-code">AddRef</SPAN> is called for you whenever you assign a COM interface
+		pointer <EM>into</EM> a <SPAN class="source-code">nsCOMPtr</SPAN>.
+	<SPAN class="source-code">Release</SPAN> is called on the old value, and also when the
+		<SPAN class="source-code">nsCOMPtr</SPAN> goes out of scope.
+	Trying to call <SPAN class="source-code">AddRef</SPAN> or <SPAN class="source-code">Release</SPAN> yourself will generate a compile-time error.
+<!-- /P -->
+<TABLE cols=2>
+	<TR>
+		<TD>
+<DIV class="source-code">
+<PRE class="source-code">
+fooP-&gt;AddRef();  // OK
+fooP-&gt;Release(); // OK
+</PRE>
+</DIV>
+		</TD>
+
+		<TD>
+<DIV class="wrong-source-code">
+<PRE class="source-code">
+fooP-&gt;AddRef();  // Err: no perm.
+fooP-&gt;Release(); // Err: no perm.
+</PRE>
+</DIV>
+		</TD>
+	</TR>
+</TABLE>
+
+<P>
+    The final difference is that a bare <SPAN class="source-code">nsCOMPtr</SPAN> (or rather a pointer to it) can't
+    be supplied as an argument to a function that `fills in' a COM interface pointer.
+    Rather it must be wrapped with a utility call that says whether the function calls
+    <SPAN class="source-code">AddRef</SPAN> before returning.
+<!-- /P -->
+<TABLE cols=2>
+	<TR>
+		<TD>
+<DIV class="source-code">
+<PRE class="source-code">
+AcquireFoo(&amp;fooP);
+GetFoo(&amp;fooP);
+</PRE>
+</DIV>
+		</TD>
+
+		<TD>
+<DIV class="source-code">
+<PRE class="source-code">
+AcquireFoo( getter_AddRefs(fooP) );
+GetFoo( getter_doesnt_AddRef(fooP) );
+</PRE>
+</DIV>
+		</TD>
+	</TR>
+</TABLE>
+
+<P>
+	Compare the raw-pointer way...
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+IFoo* foo = 0;
+nsresult status = CreateIFoo(&amp;foo);
+if ( NS_SUCCEEDED(status) )
+  {
+    IBar* bar = 0;
+    if ( NS_SUCCEEDED(status =
+                      foo->QueryInterface(riid, &amp;bar)) )
+      {
+        IFooBar* foobar = 0;
+        if ( NS_SUCCEEDED(status =
+                          CreateIFooBar(foo, bar, &amp;foobar)) )
+          {
+            foobar->DoTheReallyHardThing();
+            foobar->Release();
+          }
+        bar->Release();
+      }
+    foo->Release();
+  }
+</PRE>
+</DIV>
+
+
+<P>
+	To the smart-pointer way...
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+nsCOMPtr&lt;IFoo&gt; fooP;
+nsresult status = CreateIFoo( getter_AddRefs(fooP) );
+if ( NS_SUCCEEDED(status) )
+  {
+    nsCOMPtr&lt;IBar&gt; barP( fooP );
+    if ( barP )
+      {
+        nsCOMPtr&lt;IFooBar&gt; fooBarP;
+        if ( NS_SUCCEEDED(status = 
+                     CreateIFooBar(fooP, barP,
+                            getter_AddRefs(fooBarP))) )
+          fooBarP->DoTheReallyHardThing();
+      }
+  }
+</PRE>
+</DIV>
+
+
+
+
+<H3><A name="where">Where should I use <SPAN class="source-code">nsCOMPtr</SPAN>?</A></H3>
+
+<P>
+	You should use <SPAN class="source-code">nsCOMPtr</SPAN> any place you have an interface pointer that should hold a reference,
+		i.e., that you would have called <SPAN class="source-code">AddRef</SPAN> and <SPAN class="source-code">Release</SPAN> on.
+</P>
+
+<H3><A name="where-not">Where shouldn't I use <SPAN class="source-code">nsCOMPtr</SPAN>?</A></H3>
+
+<P>
+	Don't use <SPAN class="source-code">nsCOMPtr</SPAN>s in your APIs, or in such a way that your use forces them on others.
+	Don't use an <SPAN class="source-code">nsCOMPtr</SPAN> in situations where a simple pointer will do, i.e., when the pointer won't hold a reference.
+	Don't use them in plain old C code;
+		<SPAN class="source-code">nsCOMPtr</SPAN>s are, of course, a C++ only construct.
+</P>
+
+
+
+
+
+<H3><A name="how-to-convert">Is there an easy way to convert my current code?</A></H3>
+
+<P>
+	<SPAN class="editor-note">[[more here soon]]</SPAN>
+</P>
+
+
+
+
+<H2><A name="caveats">Gotchas and Things to Watch Out For</A></H2>
+
+<H3>Things that Annoy You</H3>
+
+<P>
+	This section describe a couple of things that will stop you from building,
+		and/or confuse you immediately.
+</P>
+
+<H4>Iterating</H4>
+
+<P>
+There is a very common idiom for iterating over data-structures with normal pointers, e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+// ...pointers to non-COM objects...
+
+node* p = ...;
+while ( p )
+  {
+    // ...
+    p = p-&gt;next;
+  }
+</PRE>
+</DIV>
+
+<P>
+Consider, however, what
+would happen if you were trying to do this with a regular COM
+interface pointer:
+<!-- /P -->
+<DIV class="wrong-source-code">
+<PRE class="source-code">
+// ...raw COM interface pointers...
+
+nsIDOMNode* child = ...;
+while ( child )
+  {
+    // ...
+    child-&gt;GetNextSibling(&amp;child);
+      // Trouble: overwrote |child| without |Release()|ing it
+  }
+</PRE>
+</DIV>
+
+<P>
+Oops!  We just failed to <SPAN class="source-code">Release(child)</SPAN> before putting a new pointer
+into it.  People do this a lot, and it turns out to be a big source of
+leaks in normal COM code.  Well, could we do this instead?
+<!-- /P -->
+<DIV class="wrong-source-code">
+<PRE class="source-code">
+//...
+Release(child);
+child-&gt;GetNextSibling(&amp;child);
+  // Trouble: tried to call a member function of a dangling or |NULL| pointer
+//...
+</PRE>
+</DIV>
+
+<P>
+Unfortunately, not.  After the <SPAN class="source-code">Release</SPAN>, child <EM>could</EM> be dangling. 
+In fact, if you used the <SPAN class="source-code">NS_RELEASE</SPAN> macro, child would be <SPAN class="source-code">NULL</SPAN> by
+the time you got to the <SPAN class="source-code">GetNextSibling</SPAN> call.
+</P>
+
+<P>
+Now imagine that you've written the same thing with <SPAN class="source-code">nsCOMPtr</SPAN>.
+<!-- /P -->
+<DIV class="wrong-source-code">
+<PRE class="source-code">
+// using |nsCOMPtr|s
+
+nsCOMPtr&lt;nsIDOMNode&gt; child = ...;
+while ( child )
+  {
+    // ...
+    child-&gt;GetNextSibling( getter_AddRefs(child) );
+      // Trouble: tried to call a member function of a |NULL| pointer
+  }
+</PRE>
+</DIV>
+
+<P>
+Using <SPAN class="source-code">nsCOMPtr</SPAN> is exactly like the raw interface pointers, here.
+It <SPAN class="source-code">Release()</SPAN>es and clears out <SPAN class="source-code">child</SPAN> before you assign over it.
+By the time you get to the <SPAN class="source-code">GetNextSibling</SPAN> call,
+	<SPAN class="source-code">child</SPAN> is <SPAN class="source-code">NULL</SPAN>.
+Unlike raw interface pointers,
+	<SPAN class="source-code">nsCOMPtr</SPAN> will fire an <SPAN class="source-code">assert()</SPAN>
+	instead of blindly trying to call <SPAN class="source-code">GetNextSibling</SPAN> off of a <SPAN class="source-code">NULL</SPAN> pointer.
+</P>
+
+<P>
+That's the problem.  So what's the solution?  If this were raw COM
+interface pointers, we'd probably introduce a temporary
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+// ...using raw COM interface pointers...
+
+// ...
+while ( child )
+  {
+    // ...
+    nsIDOMNode* temp = child;
+    temp-&gt;GetNextSibling(&amp;child);
+    Release(temp);
+  }
+</PRE>
+</DIV>
+
+<P>
+The easiest way to do the same thing with <SPAN class="source-code">nsCOMPtr</SPAN> is
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+nsCOMPtr&lt;nsIDOMNode&gt; child = //...;
+while ( child )
+  {
+    // ...
+    nsCOMPtr&lt;nsIDOMNode&gt; temp = child;
+    temp-&gt;GetNextSibling( getter_AddRefs(child) );
+  }
+</PRE>
+</DIV>
+
+<DIV class="editor-note">
+<P>
+	[[the text and examples from this item came from an email exchange with Steve Clark]]
+</P>
+</DIV>
+
+
+<H4>All COM interface classes must supply the <SPAN class="source-code">IID()</SPAN> method</H4>
+
+<P>
+	...
+</P>
+
+
+<H3>Things that Annoy Other People</H3>
+
+<P>
+	This section details a few (hopefully hard to get to) places where our compilers differ,
+		allowing you to write something completely legal that will fail to compile under one of them.
+	These patterns can be hard to catch in practice, since they <EM>are</EM> legal,
+		and probably compile fine under the compiler you are using.
+	If you accidentally hit one of the situations below,
+		you'll only find out you broke the build after you check in.
+</P>
+
+<H4>Don't compare a <SPAN class="source-code">nsCOMPtr</SPAN> with an integer</H4>
+
+<P>
+	VC++ can't handle the following situation
+<!-- /P -->
+<DIV class="wrong-source-code">
+<PRE class="source-code">
+nsCOMPtr&lt;nsIFoo&gt; fooP;
+// ...
+if ( NS_NULL != fooP )
+  // ...
+</PRE>
+</DIV>
+
+<P>
+Instead, use the simpler C++ idiom,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+if ( fooP )
+  // ...
+
+if ( !fooP )
+  // ...
+</PRE>
+</DIV>
+
+
+
+
+
+<H4>Don't use a <SPAN class="source-code">nsCOMPtr</SPAN> on a forward declared (only) class</H4>
+
+<P>
+	VC++ < 6.0 can't handle the following situation
+<!-- /P -->
+<DIV class="wrong-source-code">
+<PRE class="source-code">
+class nsIFoo;          // forward declare some class
+// ...
+nsCOMPtr&lt;nsIFoo&gt; bar;  // ERROR: incomplete type nsIFoo, etc.
+</PRE>
+</DIV>
+
+<P>
+Instead, you must make sure that you actually defined the underlying interface class, e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+#include "nsIFoo.h"    // fully defines |class nsIFoo|
+// ...
+nsCOMPtr&lt;nsIFoo&gt; bar;  // no problem
+</PRE>
+</DIV>
+
+<P>
+Why is this?  It's because VC++ tries to instantiate every member of the template
+as soon as it sees the template declarations.  Bad compiler.  No cookie!
+<SPAN class="editor-note">[[Thanks to mjudge, waterson, and pinkerton on this one.]]</SPAN>
+</P>
+
+<P>
+	You'll need to be careful with this, since the other compilers have no problem with
+	this construct, it'll be easy to miss.
+</P>
+
+
+<H4>Don't construct, assign, and test an <SPAN class="source-code">nsCOMPtr</SPAN> entirely within an <SPAN class="source-code">if</SPAN> or <SPAN class="source-code">while</SPAN> expression</H4>
+
+<P>
+	One of our compilers <SPAN class="editor-note">[[which one?]]</SPAN> can't handle the following situation
+<!-- /P -->
+<DIV class="wrong-source-code">
+<PRE class="source-code">
+nsCOMPtr&lt;nsIBar&gt; bar;
+// ...
+if ( nsCOMPtr&lt;nsIFoo&gt; fooP = barP )  // ERROR: <SPAN class="editor-note">[[what is the exact error message?]]</SPAN>
+  // ...
+</PRE>
+</DIV>
+
+<P>
+Instead, you declare your <SPAN class="source-code">nsCOMPtr</SPAN> <EM>outside</EM> the expression, e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+nsCOMPtr&lt;nsIBar&gt; bar;
+// ...
+nsCOMPtr&lt;nsIFoo&gt; fooP = barP;
+if ( fooP )
+  // ...
+</PRE>
+</DIV>
+
+<H4>All COM interface classes must have a default constructor</H4>
+
+<P>
+	A default constructor is one that can be called with no arguments.
+	It is a general guideline of COM that the real construction happens in a separate function,
+		so most COM classes have default constructors.
+	However, if you make an <SPAN class="source-code">nsCOMPtr</SPAN> for a class without a default constructor,
+		applying <SPAN class="source-code">operator->()</SPAN> causes a compile-time error on the Macintosh.
+<!-- /P -->
+<DIV class="wrong-source-code">
+<PRE class="source-code">
+nsCOMPtr&lt;nsIBar&gt; bar;    // some class without a default constructor
+// ...
+barP-&gt;SomeMemberFunc();  // ERROR: <SPAN class="editor-note">[[what is the exact error message?]]</SPAN>
+</PRE>
+</DIV>
+
+<P>
+	You must ensure that all COM interface classes supply default constructors.
+</P>
+
+
+<H2><A name="misc">Miscellaneous</A></H2>
+
+<H3><A name="bad-names">Why does <SPAN class="source-code">getter_AddRefs</SPAN> have such a funny name?</A></H3>
+
+<P>
+	<SPAN class="source-code">getter_AddRefs</SPAN> and <SPAN class="source-code">getter_doesnt_AddRef</SPAN> use underscores for the same
+	reason our special macros do, quoting from our coding conventions "...to make them
+	stick out like a sore thumb".  Note also that since <SPAN class="source-code">AddRef</SPAN> is one word,
+	<SPAN class="source-code">getter_AddRefs</SPAN> and <SPAN class="source-code">getter_doesnt_AddRef</SPAN> couldn't have the right spacing if only
+	inter-caps were used. 
+</P>
+
+
+<H3><A name="outside-mozilla">Can I use <SPAN class="source-code">nsCOMPtr</SPAN> in my COM-based project?</A></H3>
+
+<P>
+	Yes, but you'll have to abide by the <A HREF="http://www.mozilla.org/NPL/">NPL</A>, and in the code you'll have to:
+</P>
+<UL>
+	<LI>replace <SPAN class="source-code">nsISupports</SPAN> with <SPAN class="source-code">IUnknown</SPAN></LI>
+	<LI>provide or replace the <SPAN class="source-code">NS_</SPAN> macros used in <SPAN class="source-code">nsCOMPtr.h</SPAN></LI>
+	<LI>remove the <SPAN class="source-code">#include "nsISupports.h"</SPAN></LI>
+	<LI>ensure that your COM conventions include a static IID member function in interface classes</LI>
+	<LI>possibly provide a suitable replacement for the type <SPAN class="source-code">PRBool</SPAN></LI>
+	<LI>build and run the unit-tests to make sure everything still works</LI>
+</UL>
+
+<H2><A name="introduction">Bibliography and Related Reading</A></H2>
+
+<DIV class="editor-note">
+	<P>
+		[[Fill in details and links for the following
+	</P>
+	<UL>
+		<LI>Don Box's papers</LI>
+		<LI>Scott Meyers stuff</LI>
+		<LI>Our portability guidelines</LI>
+		<LI>the code itself</LI>
+		<LI>ATL</LI>
+		<LI>COMBIND</LI>
+		<LI></LI>
+	</UL>
+	<P>
+		]]
+	</P>
+</DIV>
+
+
+<DIV class="author-note">
+	<HR>
+		<A HREF="http://validator.w3.org/check?uri=http://www.mozilla.org/projects/xpcom/nsCOMPtr.html">
+			<IMG BORDER=0 align=left SRC="http://validator.w3.org/images/vh40.gif" ALT="Valid HTML 4.0!" HEIGHT=31 WIDTH=88>
+		</A>
+		<A HREF="http://www.w3.org/Style/CSS/Buttons">
+			<IMG BORDER=0 align=left SRC="http://www.w3.org/Style/CSS/Buttons/cssos" ALT="CSS" HEIGHT=31 WIDTH=88>
+		</A>
+		Copyright&copy; 1998 by Netscape; use is subject to the <A HREF="http://www.mozilla.org/NPL/">NPL</A>.
+</DIV>
+	</BODY>
+</HTML>

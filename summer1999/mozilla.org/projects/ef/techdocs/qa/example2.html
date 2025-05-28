@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+   <TITLE>Sample Test 2</TITLE>
+<!-- CHANGED BY: PATRICK DIONISIO, 21-FEB-1997 -->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<TABLE BORDER=0 CELLSPACING=2 CELLPADDING=0 WIDTH="100%" >
+ <TR>
+  <TD VALIGN=TOP NOWRAP>
+
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Quality Assurance</H2>
+
+
+<H2><FONT SIZE=+4>Sample Test 2</FONT></H2>
+  </TD>
+  <TD ALIGN=RIGHT VALIGN=TOP NOWRAP>
+
+      <PRE><A HREF="../index.html"><IMG SRC="../electricalfire.gif" NATURALSIZEFLAG="3" HEIGHT=37 WIDTH=37 ALIGN=BOTTOM></A>  <A HREF="example1.html"><IMG SRC="../arrows/left.gif" NATURALSIZEFLAG="3" HEIGHT=37 WIDTH=37 ALIGN=BOTTOM></A><A HREF="../qa.html"><IMG SRC="../arrows/up.gif" NATURALSIZEFLAG="3" HEIGHT=37 WIDTH=37 ALIGN=BOTTOM></A><A HREF="example3.html"><IMG SRC="../arrows/right.gif" NATURALSIZEFLAG="3" HEIGHT=37 WIDTH=37 ALIGN=BOTTOM></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+This test checks the "dadd" instruction by adding a NaN and a Double.
+
+<PRE>import java.lang.Double;
+
+public class dadd00101
+{
+        public static void main(String argv[])
+        {
+                double NaN = Double.NaN;
+                double d = 3.14;
+
+                if (! Double.isNaN(d + NaN))
+                        System.out.println("Failed.");
+                else if (! Double.isNaN(NaN + 0.0))
+                        System.out.println("Failed.");
+                else if (! Double.isNaN(NaN + NaN))
+                        System.out.println("Failed.");
+                System.out.println("Passed.");
+        }
+}</PRE>
+
+</BODY>
+</HTML>

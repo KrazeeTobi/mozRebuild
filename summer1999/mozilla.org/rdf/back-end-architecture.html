@@ -1,0 +1,696 @@
+<HTML>
+<HEAD>
+<TITLE>rdf: back-end architecture</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+<style>
+code {
+  font-weight: bold;
+}
+
+div.code {
+  border: solid thin;
+  padding: 1em;
+  background: #eee;
+}
+</style>
+
+
+
+
+<center>
+<h1>rdf: back-end architecture</h1>
+</center>
+
+Contact:
+<a href="mailto:waterson@netscape.com">Chris Waterson</a> (waterson@netscape.com)<br>
+
+<small>
+$Id: back-end-architecture.html,v 1.9 1999/08/14 00:22:54 waterson%netscape.com Exp $
+</small>
+
+<p>
+This document provides an overview of the RDF "core" implementation,
+that is, the implementation of the RDF <i>model</i> within Mozilla. It
+assumes some familiarity with the RDF model as described in the
+
+<a href="http://www.w3.org/TR/REC-rdf-syntax/">RDF Model and Syntax Specification</a>.
+
+See also the
+
+<a href="doc/datasource-howto.html">Datasource HOWTO</a>
+
+for details on writing a datasource.
+</p>
+
+<ul>
+<a href="#Model">Model and Terminology</a><br>
+<a href="#Interfaces">Interfaces</a><br>
+<a href="#Example">Example</a><br>
+</ul>
+
+<a name="Model">
+<h2>Model and Terminology</h2>
+</a>
+
+<ul>
+
+<p>
+The Mozilla implementation of the RDF model is based on the RDF Model
+and Syntax Specification.  This section attempts to provide a
+pseudo-mathematical overview of that model
+
+<a href="#1">[1]</a>.
+
+Although there are slight differences between the Mozilla RDF model
+and the model presented in the RDF Model and Syntax Specification, the
+belief is that, for all practical purposes, these differences
+<i>should not</i> affect the use of the RDF model. Any differences
+that lead to behavior that is functionally incorrect with respect to
+the Model and Syntax Specification should be logged as a
+
+<a href="http://bugzilla.mozilla.org/enter_bug.cgi?product=Browser">bug</a>
+
+(select <b>RDF</b> as the "Component").
+</p>
+
+<p>
+The Mozilla RDF "universe" consists of:
+</p>
+
+<ul>
+<li>
+A set of <i>resources</i>, <b>R</b>. There is a one-to-one function
+that maps a <i>resource</i> in <b>R</b> to a string; this string is
+called the <i>Universal Resource Identifier</i> (or URI) of the resource,
+and should conform to
+
+<a href="http://www.isi.edu/in-notes/rfc2396.txt">RFC2396</a>.
+</li>
+
+<li>
+A set of <i>literals</i>, <b>L</b>. There is a one-to-one function
+that maps a <i>literal</i> in <b>L</b> to a string value.
+</li>
+
+<li>
+A set of <i>statements</i>, <b>S</b>. A statement <b>s</b> in <b>S</b>
+is a tuple <b>R</b> x <b>R</b> x { <b>R</b> union <b>L</b> }.
+</li>
+
+</ul>
+
+<p>
+<b><i>Resources</i></b>. Because the function that maps a resource to
+a URI is one-to-one, it is possible to identify each resource using
+its URI. That is, given a URI, it is possible to find a unique
+resource in <b>R</b>. <a href="#2">[2]</a> Informally, a resource is
+some sort of "Internet object" that is uniquely identifiable; for
+example, a web page, an email account, or a USENET news article.
+</p>
+
+<p>
+We realize that the one-to-one mapping of a resource to a URI does not
+adhere to the spirit of RFC2396. Specifically, RFC2396 states that a
+resource might have many different names; e.g., a web page that can be
+reached by redirection.  We've chosen to enforce the one-to-one
+mapping in our model for efficiency's sake. (It would clearly be
+inefficient to contact a web server to resolve each HTTP URI for fear
+that it might be redirected!) That said, we <i>do</i> perform simple
+canoncialization for some URIs; for example "." and ".." resolution in
+HTTP and filesystem URIs.
+</p>
+
+<p>
+The RDF Model and Syntax specification explicitly allows for
+<i>anonymous</i> resources. An anonymous resource is a resource
+without URI-addressable identity. The Mozilla implementation allows
+for such resources (e.g., in serialized RDF/XML), but will
+automatically assign a uniquely generated URI to such a resource.
+</p>
+
+<p>
+<b><i>Literals</i></b>. As with resources, the function that maps a
+literal to a string value is one-to-one. Hence, it is possible to
+identify each literal using its string value. The RDF Model and Syntax
+Specification explicitly states that the mapping from literal to
+string value need <i>not</i> be one-to-one; we've chosen to make the
+mapping one-to-one to allow for efficient comparison of
+literals. Informally, a literal is a primitive value that has no
+"first-class identity"; for example, a string, a date, or a number.
+</p>
+
+<p>
+<b><i>Statements</i></b>. A statement consists of a <i>subject</i>, a
+<i>predicate</i>, and an <i>object</i>. The subject must be a
+resource. The predicate must be a resource (strictly speaking, the
+predicate must be a resource that is a <i>property</i>; however, we do
+not differentiate between a resource that is a property and a resource
+that is not a property in the Mozilla implementation). The object may
+be either a resource or a literal. The terms <i>statement</i> and
+<i>assertion</i> are interchangeable.
+</p>
+
+<p>
+The Mozilla RDF implementation factors the set of statements <b>S</b>
+into subsets. Each subset of statements is called a
+<i>datasource</i>. For example, there is a datasource that contains
+statements about mail messages and news articles; there is a
+datasource that contains statements about the current user's browsing
+history; there is a datasource that contains statements about the
+current user's bookmarks. Each datasource may be addressed
+individually. It is possible to query a datasource to determine
+whether a statement is present. Statements may be added to, removed
+from, or altered in a datasource.
+</p>
+
+<p>
+The implementation allows datasources to be addressed
+collectively. That is, the statements from several different
+datasources may be combined into a <i>composite datasource</i>, in
+which they may be queried or altered "in the aggregate".
+</p>
+
+<p>
+A set of statements may be visualized as a directed, labelled graph,
+and much of the Mozilla RDF API is crafted with this visualization in
+mind. Specifically, the subject of each statement is a node (the
+<i>source</i>), the object of the statement is a node (the
+<i>target</i>), and the predicate is a directed arc from the subject
+node to the object node. In this parlance, a datasource -- which is
+simply a colletion of statements -- is a (possibly unconnected) graph. A
+composite datasource is the graph that is constructed by overlaying
+the subgraphs of several individual datasources.
+</p>
+
+<p>
+<b><i>Reification</i></b>. The RDF Model and Syntax Specification
+discusses how a statement may itself be "reified", and referred to as
+a resource. As of this writing, the Mozilla RDF model does not support
+automatic derivation of "meta statements" that arise from such
+reification.
+</p>
+
+</ul>
+
+<a name="Interfaces">
+<h2>Interfaces</h2>
+</a>
+
+<ul>
+
+<p>
+Below are the primary interfaces that are used to interact with RDF.
+</p>
+
+<p>
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsIRDFService.idl">nsIRDFSerivce</a></code>.
+
+The RDF service is an utility interface that serves three primary
+purposes.  First, it is used to manage "named" datasources. A named
+datasource is a singleton datasource that can be acquired using simple
+URI-like name <a href="#3">[3]</a>; e.g., <code>rdf:bookmarks</code>.
+Second, it is used to implement the function that maps a URI to a
+resource (which is the <i>inverse</i> of the one-to-one
+resource-to-URI function described above).  Third, it is used to
+implement the function that maps a string value to a literal
+(similarly, the inverse of the one-to-one literal-to-string function
+described above).
+</p>
+
+<p>
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsIRDFNode.idl">nsIRDFNode</a></code>.
+
+This is an interface for a node in the RDF graph. A node must either be an
+
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsIRDFResource.idl">nsIRDFResource</a></code>
+
+or an
+
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsIRDFLiteral.idl">nsIRDFLiteral</a></code> <a href="#4">[4]</a>.
+
+Objects that implement these interfaces <i>must</i> be acquired from
+the <code>nsIRDFService</code>.
+</p>
+
+<p>
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsIRDFDataSource.idl">nsIRDFDataSource</a></code>.
+
+This is the interface that provides access to a collection of "related
+statements" (or a "subgraph"). This interface includes methods that
+allow testing for the presence of a statement, enumerating the
+statements contained in the collection, and adding and removing
+statements to the set.
+</p>
+
+<p>
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsIRDFCompositeDataSource.idl">nsIRDFCompositeDataSource</a></code>. 
+
+This interface is derived from <code>nsIRDFDataSource</code>. An
+implementation of this interface will typically combine the statements
+from several datasources together as a collective.  Because the
+<code>nsIRDFCompositeDataSource</code> interface is derived from
+<code>nsIRDFDataSource</code>, it can be queried and modified just like an
+individual data source.
+</p>
+
+<p>
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsIRDFObserver.idl">nsIRDFObserver</a></code>.
+
+This is an interface that an RDF <i>client</i> implements. The
+interface allows a client to be notified when a change occurs to the
+statements in a datasource.
+</p>
+
+<p>
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsIRDFContainer.idl">nsIRDFContainer</a></code>.
+
+This is an interface that allows for simplified access to an RDF
+<i>container</i> object (a <i>bag</i>, <i>sequence</i>, or
+<i>alternation</i>). This interface, in conjunction with
+
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsIRDFContainerUtils.idl">nsIRDFContainerUtils</a></code>
+
+provide straightforward, Java vector-esque methods for manipulating
+and querying RDF container objects.
+</p>
+
+</ul>
+
+<a name="Example">
+<h2>Example</h2>
+</a>
+
+<ul>
+
+<p>
+This section provides some sample code that uses
+
+<a href="../js/">JavaScript</a>
+
+and
+
+<a href="../scriptable/">XPConnect</a>
+
+to interact with the RDF engine, including:
+</p>
+
+<ul>
+<li>Acquiring the RDF service</li>
+<li>Acquiring a datasource</li>
+<li>Acquiring RDF resources</li>
+<li>Using the RDF resources to perform queries on and alter statements in the datasource</li>
+</ul>
+
+<p>
+The code below illustrates this process. You can
+
+<a href="back-end-architecture-ex.html">click here</a>
+
+to run the code in an M9 or later
+
+<a href="../binaries.html">build</a>.
+</p>
+
+<p>
+<b>Acquire the RDF service</b>. To acquire the RDF service, use the
+<code>Components</code> object:
+</p>
+
+<div class="code">
+<pre>
+var RDF = Components.classes['component://netscape/rdf/rdf-service'].getService();
+RDF = RDF.QueryInterface(Components.interfaces.nsIRDFService);
+</pre>
+</div>
+
+<p>
+<b>Create a datasource</b>. Using the <code>Components</code> object,
+we'll create an <i>in-memory datasource</i>, which is just a simple
+"scratch" datasource that will remember the statements we add to it:
+</p>
+
+<div class="code">
+<pre>
+var ds = Components.
+          classes['component://netscape/rdf/datasource?name=in-memory-datasource'].
+          createInstance();
+
+ds = ds.QueryInterface(Components.interfaces.nsIRDFDataSource);
+</pre>
+</div>
+
+<p>
+<b>Acquire RDF nodes</b>. Using the RDF service, you can acquire
+individual RDF resource and literal objects. These are what you use to
+perform a query on the RDF database.
+</p>
+
+<div class="code">
+<pre>
+var homepage = RDF.GetResource('http://people.netscape.com/waterson');
+var FV_quality = RDF.GetResource('urn:my-web-vocabulary:quality');
+var value = RDF.GetLiteral('tres cool');
+</pre>
+</div>
+
+<p>
+<b>Use the RDF nodes to add statements to the datasource</b>. And
+finally, we "do the deed" using the <code>Assert</code> method of the
+<code>nsIRDFDataSource</code> interface:
+</p>
+
+<div class="code">
+<pre>
+ds.Assert(homepage, FV_quality, value, true);
+</pre>
+</div>
+
+<p>
+<b>Query the datasource</b>. Now that we've added a statement to the
+datasource, we can query it to see if it's <i>really</i> there:
+</p>
+
+<div class="code">
+<pre>
+if (ds.HasAssertion(homepage, FV_quality, value, true)) {
+  alert('yep, it sure worked.');
+}
+</pre>
+</div>
+
+<p>
+We can pull a "target" value out given the source and a property:
+</p>
+
+<div class="code">
+<pre>
+var target = ds.GetTarget(homepage, FV_quality, true);
+target = target.QueryInterface(Components.classes.nsIRDFLiteral);
+
+ // expect 'tres cool'
+alert('target is ' + target.Value + '!');
+</pre>
+</div>
+
+<p>
+Or the "source", given a property and a target:
+</p>
+
+<div class="code">
+<pre>
+var source = ds.GetSource(FV_quality, value, true);
+sourcen = source.QueryInterface(Components.classes.nsIRDFResource);
+
+  // expect 'http://people.netscape.com/waterson'
+alert('source is ' + source.Value + '!');
+</pre>
+</div>
+
+</ul>
+
+<h2>Acknowledgements</h2>
+
+<ul>
+
+<p>
+<a href="mailto:daniel.brickley@bristol.ac.uk">Dan Brickley</a> (daniel.brickley@bristol.ac.uk)
+
+and
+
+<a href="mailto:davidmc@netscape.com">David McCusker</a> (davidmc@netscape.com)
+
+both provided valuable inspiration and feedback.
+</p>
+
+</ul>
+
+<h2>Notes</h2>
+
+<ol>
+
+<a name="1"></a>
+<li>
+<p>
+The intent is not to impress the reader with the author's ability to
+generate pseudo-mathematical babble, nor is the intent to confuse or
+cloud the issue. There have been several questions about "what is RDF,
+really?" (e.g.,
+
+<a href="news://news.mozilla.org/37B236A4.8A20151A%40netscape.com">this USENET thread</a>);
+
+this is a humble attempt to explain what is really happening in a
+somewhat formal (but hopefully accessable) way.
+</p>
+</li>
+
+<a name="2"></a>
+<li>
+<p>
+Recall that a one-to-one function is a function that, if
+<b>f(a)&nbsp;=&nbsp;f(b)</b>, then <b>a&nbsp;=&nbsp;b</b>. So in the
+context of resources and URIs (where <b>f</b> maps a resource to a
+URI),  given a specific URI, you'll always be able to get back to the
+same resouce using the <i>inverse</i> of <b>f</b>.
+</p>
+</li>
+
+<a name="3"></a>
+<li>
+<p>
+In reality, this is nothing more than a convenience utility that wraps
+the XPCOM service manager. The "name" of a named datasource is
+shorthand that is exanded into a ProgID; the ProgID is used to load a
+component that is assumed to support <code>nsIRDFDataSource</code> as an
+XPCOM service.
+</p>
+</li>
+
+<a name="4"></a>
+<li>
+<p>
+There are two other literal variants
+
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/ase/idl/nsIRDFInt.idl">nsIRDFInt</a></code>
+
+(for integer values) and
+
+<code><a href="http://lxr.mozilla.org/seamonkey/source/rdf/ase/idl/nsIRDFDate.idl">nsIRDFDate</a></code>
+
+(for date values). These are not "officially" part of the public API,
+and may undergo change as the dust settles around the XML and RDF
+Schema activity.
+</p>
+
+<p>
+Dan Brickley writes
+
+(in <a href="news://news.mozilla.org/Pine.GHP.4.02A.9908131145190.17911-100000%40mail.ilrt.bris.ac.uk">this USENET post</a>):
+</p>
+
+<blockquote>
+The representation of primative data typing within the RDF
+model was deferred by the W3C RDF Schema Working Group in anticipation
+of greater synergy with the XML Schema activity; we can
+<EM>probably</EM> anticipate the development of a syntax neutral set
+of primatives that will serve the needs of the RDF and XML
+communities, since RDF compatibility is a constraint on the XML Schema
+activity. For more details see the
+
+<a href="http://www.w3.org/RDF/">RDF home page</a>,
+
+and in particular the June 1999 Web Architecture note 
+
+<a href="http://www.w3.org/1999/04/WebData">Describing and Exchanging Data</a>
+
+(Berners-Lee, Connolly, Swick) for a discussion of the issues involved
+here.
+</blockquote>
+</p>
+</li>
+
+</ol>
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

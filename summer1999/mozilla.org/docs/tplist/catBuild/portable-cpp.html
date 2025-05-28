@@ -1,0 +1,1420 @@
+<HTML>
+<HEAD>
+<TITLE>C++ portability guide</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+ 
+ 
+ 
+
+<!--------------------------------------------------------------------------->
+
+
+<P ALIGN=CENTER><FONT SIZE="+3"><B>C++ portability guide</B></FONT>
+<BR><FONT SIZE="+1"><B>version 0.7</B></FONT>
+</B></FONT>
+<BR>by <a href="mailto:djw@djw.org">David Williams</A>
+<BR>27 March 1998
+<BR>
+<BR>Updated and maintained by <a href="mailto:ramiro@netscape.com">Ramiro Estrugo</A>
+</P>
+
+<P>
+What follows is a set of rules, guidelines, and tips that we have found
+to be useful in making C++ code portable across many machines and compilers.
+
+<P>
+This information is the result of porting large amounts of code across
+about 25 different machines, and at least a dozen different C++ compilers.
+Some of these things will frustrate you and make you want to throw your
+hands up and say, ``well, that's just a stupid compiler if it doesn't do
+&lt;<I>insert favorite C++ feature</I>&gt;.''  But this is the 
+reality of portable code. If you play by the rules, your code will seamlessly
+work on all of the Mozilla platforms and will be easy to port to newer
+machines.
+
+<P>We will endeavor to keep the information up to date (for example, sometimes
+a new compiler revision will lift a restriction). If you have updates on
+any of these tips, more information, more ideas, please forward them to
+<A HREF="mailto:ramiro@netscape.com">ramiro@netscape.com</A>.
+
+<P>If you find code in Mozilla that violates any of these rules, 
+please report it as a
+<A HREF="http://www.mozilla.org/bugs/report.html">bug</A>.  You can use
+<A HREF="http://www.mozilla.org/bonsai.html">bonsai</A> to find the author.
+
+<P><HR>
+
+<H3>
+<A HREF="#portability_rules">C++ portability rules.</A></H3>
+
+
+<OL>
+<LI>
+<A HREF="#dont_use_templates">Don't use C++ templates.</A></LI>
+<A HREF="#template_restriction_blurb">(*)</A>
+
+<LI>
+<A HREF="#dont_use_static_constructors">Don't use static constructors.</A></LI>
+
+<LI>
+<A HREF="#dont_use_exceptions">Don't use exceptions.</A></LI>
+
+<LI>
+<A HREF="#dont_use_rtti">Don't use Run-time Type Information.</A></LI>
+
+<LI>
+<A HREF="#dont_use_namespace">Don't use namespace facility.</A></LI>
+
+<LI>
+<A HREF="#main_must_be_cpp"><TT>main()</TT> must be in a C++ file.</A></LI>
+
+<LI>
+<A HREF="#use_common_den">Use the common denominator between members of
+a C/C++ compiler family.</A></LI>
+
+<LI>
+<A HREF="#no_cpp_comments_in_c">Don't put C++ comments in C code.</A></LI>
+
+<LI>
+<A HREF="#no_cr_in_code">Don't put carriage returns in XP code.</A></LI>
+
+<LI>
+<A HREF="#put_new_line_at_eof">Put a new line at end-of-file.</A></LI>
+
+<LI>
+<A HREF="#no_extra_semi_colons">Don't put extra top-level semi-colons in
+code.</A></LI>
+
+<LI>
+<A HREF="#file_extension_is_cpp">C++ filename extension is <TT>.cpp</TT>.</A></LI>
+
+<LI>
+<A HREF="#dont_mix_varags_and_inline">Don't mix varargs and inlines.</A></LI>
+
+<LI>
+<A HREF="#dont_use_init_lists_with_cpp">Don't use initializer lists with
+objects.</A></LI>
+
+<LI>
+<A HREF="#always_have_default_constructor">Always have a default constructor.</A></LI>
+
+<LI>
+<A HREF="#no_constructors_in_headers">Don't put constructors in header
+files.</A></LI>
+
+<LI>
+<A HREF="#inner_classes">Be careful with inner-classes.</A></LI>
+
+<LI>
+<A HREF="#init_variables_at_top">Be careful of variable declarations that
+require construction or initialization.</A></LI>
+
+<LI>
+<A HREF="#header_files_c_and_cpp">Make header files compatible with C and
+C++.</A></LI>
+
+<LI>
+<A HREF="#variables_in_for">Be careful of the scoping of variables declared
+inside <TT>for()</TT> statements.</A></LI>
+
+<LI>
+<A HREF="#local_aggregates">Declare local initialized aggregates as static.</A></LI>
+
+<LI>
+<A HREF="#complex_inlines">Expect complex inlines to be non-portable.</A></LI>
+
+<LI>
+<A HREF="#inlines_in_return">Don't use return statements that have an inline
+function in the return expression.</A></LI>
+
+<LI>
+<A HREF="#include_depth">Be careful with the include depth of files and
+file size.</A></LI>
+
+<LI>
+<A HREF="#virtual_on_subclasses">Use virtual declaration on all subclass
+virtual member functions.</A></LI>
+
+<LI>
+<A HREF="#copy_constructors">Always declare a copy constructor and assignment
+operator.</A></LI>
+
+<LI>
+<A HREF="#signatures">Be careful of overloaded methods with like signatures.</A></LI>
+
+<LI>
+<A HREF="#type_scalar_constants">Type scalar constants to avoid unexpected
+ambiguities.</A></LI>
+<LI>
+<A HREF="#bool_types">Always use PRBool or XP_Bool for boolean variables in XP code.</A></LI>
+<LI>
+<A HREF="#cpp_casts">Use macros for C++ style casts.</A></LI>
+<LI>
+<A HREF="#mutable">Don't use mutable.</A></LI>
+<LI>
+<A HREF="#use_ns_com_ptr">Use nsCOMPtr in XPCOM code.</A></LI>
+</OL>
+
+
+<H3>
+<A HREF="#c_and_cplusplus">Stuff that is good to do for C or C++.</A></H3>
+
+<OL>
+<LI>
+<A HREF="#use_nspr_types">Always use the nspr types for intrinsic types.</A></LI>
+
+<LI>
+<A HREF="#dont_ifdef_include">Do not wrap include statements with an #ifdef.</A></LI>
+
+<LI>
+<A HREF="#include_simple_filename"><TT>#include</TT> statements should include only
+simple filenames.</A></LI>
+
+<LI>
+<A HREF="#assignments_in_boolean">Macs complain about assignments in boolean
+expressions.</A></LI>
+
+<LI>
+<A HREF="#filenames_must_be_unique">Every source file must have a unique
+name.</A></LI>
+
+<LI>
+<A HREF="#block_out_with_if_0">Use <TT>#if 0</TT> rather than comments to temporarily
+kill blocks of code.</A></LI>
+
+<LI>
+<A HREF="#turn_warnings_on">Turn on warnings for your compiler, and then
+write warning free code.</A></LI>
+</OL>
+
+<P>
+
+<H3>
+<A HREF="#revision_history">Revision History.</A></H3>
+
+<P>
+
+<P>
+<H3>
+<A HREF="#further_reading">Further Reading.</A></H3>
+</OL>
+<HR>
+
+<H2><A NAME="portability_rules"></A>C++ portability rules.</H2>
+
+<OL>
+<P><B><LI>
+<A NAME="dont_use_templates"></A>Don't use C++ templates.</B>
+<A HREF="#template_restriction_blurb">(*)</A>
+<P>
+Don't use the C++ template feature. This feature is still not implemented
+by all compilers, and even when it is implemented, there is great variation.
+Most of the interesting things that you would want to do with templates
+(type safe container classes, etc.) can be implemented with macros and
+casting, even though you do lose the type safety (pity). Often times subclassing
+can easily achieve the same result.
+
+<P>
+<A NAME="template_restriction_blurb">(*)</A>
+There is a an exception to this rule:
+<A HREF="http://www.mozilla.org/projects/xpcom/nsCOMPtr.html">nsCOMPtr</A>.
+
+<P>
+
+However, this does not mean "Open Season" for template code.  The 
+"<A HREF="#dont_use_templates">Don't use C++ templates</A>" rule still 
+applies.  nsCOMPtr is allowed because the authors spent a lot of time
+making sure their use of templates does not break poor compilers.
+
+<P>
+It is very likely that other "simple" template code will break some poor
+compilers which we need to support.  
+
+<P>
+
+<P><B><LI>
+<A NAME="dont_use_static_constructors"></A>Don't use static constructors.</B><P>
+Non-portable example:
+<PRE>
+  FooBarClass static_object(87, 92);
+
+  void
+  bar()
+  {
+    if (static_object.count > 15) {
+       ...
+    }
+  }
+</PRE>
+
+Static constructors don't work reliably either. A static initialized object
+is an object which is instanciated at startup time (just before <TT>main()</TT>
+is called). Usually there are two components to these objects. First there
+is the data segment which is static data loaded into the global data segment
+of the program. The second part is a initializer function that is called
+by the loader before <TT>main()</TT> is called. We've found that many compilers
+do not reliably implement the initializer function. So you get the object
+data, but it is never initialized. One workaround for this limitation is
+to write a wrapper function that creates a single instance of an object,
+and replace all references to the static initialized object with a call
+to the wrapper function:
+
+<P>Portable example:
+<PRE>
+  static FooBarClass* static_object;
+
+  FooBarClass*
+  getStaticObject()
+  {
+    if (!static_object)
+      static_object = 
+	new FooBarClass(87, 92);
+    return static_object;
+  }
+
+  void
+  bar()
+  {
+    if (getStaticObject()->count > 15) {
+      ...
+    }
+  }
+</PRE>
+
+
+<P><B><LI>
+<A NAME="dont_use_exceptions"></A>Don't use exceptions.</B><P>
+Exceptions are another C++ feature which is not very widely implemented,
+and as such, their use is not portable C++ code. Don't use them. Unfortunately,
+there is no good workaround that produces similar functionality.
+
+<P>One exception to this rule (don't say it) is that it's probably ok,
+and may be necessary to use exceptions in some machine specific code. If
+you do use exceptions in machine specific code you must catch all exceptions
+there because you can't throw the exception across XP (cross platform)
+code.
+
+<P><B><LI>
+<A NAME="dont_use_rtti"></A>Don't use Run-time Type Information.</B><P>
+Run-time type information (RTTI) is a relatively new C++ feature, and not
+supported in many compilers. Don't use it.
+
+<P>If you need runtime typing, you can achieve a similar result
+by adding a <TT>classOf()</TT> virtual member function to the base class of your
+hierarchy and overriding that member function in each subclass. If <TT>classOf()</TT>
+returns a unique value for each class in the hierarchy, you'll be able
+to do type comparisons at runtime.
+
+<P><B><LI>
+<A NAME="dont_use_namespace"></A>Don't use namespace facility.</B><P>
+Support of namespaces (through the <TT>namespace</TT> and <TT>using</TT> keywords)
+is a relatively new C++ feature, and not supported in many compilers. Don't
+use it.
+
+<P><B><LI>
+<A NAME="main_must_be_cpp"></A><TT>main()</TT> must be in a C++ file.</B><P>
+The first C++ compiler, Cfront, was in fact a very fancy preprocessor for
+a C compiler. Cfront reads the C++ code, and generates C code that would
+do the same thing. C++ startup is slightly different to C startup (for
+example static constructor functions must be called for C++), and Cfront
+implements this special startup by noticing the function called "<TT>main()</TT>",
+converting it to something else (like "<TT>__cpp__main()</TT>"), adding another
+<TT>main()</TT> that does the special C++ startup things and then calls the 
+original function. Of course for all this to work, Cfront needs to <I>see</I>
+the <TT>main()</TT> function, hence <TT>main()</TT> must be in a C++ file. Most compilers
+lifted this restriction years ago, and deal with the C++ special initialization
+duties as a linker issue. But there are a few commercial compilers shipping
+that are still based on Cfront: HP, and SCO, are examples.
+
+<P>So the workaround is quite simple. Make sure that <TT>main()</TT> is in a C++
+file. On the Unix version of Mozilla, we did this by adding a new C++ file
+which has only a few lines of code, and calls the main <TT>main()</TT> which is
+actually in a C file.
+
+<P><B><LI>
+<A NAME="use_common_den"></A>Use the common denominator between members
+of a C/C++ compiler family.</B><P>
+For many of the compiler families we use, the implementation of the C and
+C++ compilers are completely different, sometimes this means that there
+are things you can do in the C language, that you cannot do in the C++
+language on the same machine. One example is the 'long long' type. On some
+systems (IBM's compiler used to be one, but I think it's better now), the
+C compiler supports long long, while the C++ compiler does not. This can
+make porting a pain, as often times these types are in header files shared
+between C and C++ files. The only thing you can do is to go with the common
+denominator that both compilers support. In the special case of long long,
+we developed a set of macros for supporting 64 bit integers when the long
+long type is not available. We have to use these macros if either the C
+or the C++ compiler does not support the special 64 bit type.
+
+<P><B><LI>
+<A NAME="no_cpp_comments_in_c"></A>Don't put C++ comments in C code.</B><P>
+The quickest way to raise the blood pressure of a Netscape Unix engineer
+is to put C++ comments (<B><TT>//</TT></B> comments) into C files. Yes, this might
+work on your Microsoft Visual C compiler, but it's wrong, and is not supported
+by the vast majority of C compilers in the world.<B> Just do not go there.</B>
+
+<P>Many header files will be included by C files and included by C++ files.
+We think it's a good idea to apply this same rule to those headers. Don't
+put C++ comments in header files included in C files. You might argue that
+you could use C++ style comments inside <TT><NOBR>#ifdef __cplusplus</NOBR></TT> blocks, but
+we are not convinced that is always going to work (some compilers have
+weird interactions between comment stripping and pre-processing), and it
+hardly seems worth the effort. Just stick to C style <TT>/**/</TT> comments for
+any header file that is ever likely to be included by a C file.
+
+<P><B><LI>
+<A NAME="no_cr_in_code"></A>Don't put carriage returns in XP code.</B><P>
+While this is not specific to C++, we have seen this as more of an issue
+with C++ compilers, see <A HREF="#use_common_den">Use the common denominator
+between members of a C/C++ compiler family.</A>
+
+<P>On unix systems, the standard end of line character is new line (<TT>'\n'</TT>).
+The standard on many PC editors is carriage return (<TT>'\r'</TT>). The PC compilers
+seem to be happy either way, but some Unix compilers just choke when they
+see a carriage return (they do not recognize the character as white space).
+So, we have a rule that you cannot check in carriage returns into any cross
+platform code. This rule is not enforced on the Windows front end code,
+as that code is only ever compiled on a PC. The Mac compilers seem to be
+happy either way, but the same rule applies as for the PC - no carriage
+returns in cross platform code.
+
+<P><B><LI>
+<A NAME="put_new_line_at_eof"></A>Put a new line at end-of-file.</B><P>
+Not having a new-line char at end-of-file breaks some compilers (Solaris).
+
+<P><B><LI>
+<A NAME="no_extra_semi_colons"></A>Don't put extra top-level semi-colons
+in code.</B><P>
+Non-portable example:
+<PRE>
+  int
+  A::foo()
+  {
+  };
+</PRE>
+This is another problem that seems to show up more on C++ than C code.
+This is problem really a bit of a drag. That extra little semi-colon at
+the end of the function is ignored by most compilers, but it makes some
+compilers very unhappy (IBM's AIX compiler doesn't like extra top-level
+semi-colons). Don't do it.
+
+<P>Portable example:
+<PRE>
+  int
+  A::foo()
+  {
+  }
+</PRE>
+
+
+<P><B><LI>
+<A NAME="file_extension_is_cpp"></A>C++ filename extension is <TT>.cpp</TT>.</B><P>
+This one is another plain annoying problem. What's the name of a C++ file?
+<TT>file.cpp</TT>, <TT>file.cc</TT>, <TT>file.C</TT>, <TT>file.cxx</TT>,
+<TT>file.c++</TT>, <TT>file.C++</TT>?  Most compilers
+could care less, but some are very particular. We have not been able to
+find one file extension which we can use on all the platforms we have ported
+Mozilla code to. For no great reason, we've settled on <TT>file.cpp</TT>, probably
+because the first C++ code in Mozilla code was checked in with that extension.
+Well, it's done. The extension we use is <TT>.cpp</TT>.  This extension seems to
+make most compilers happy, but there are some which do not like it. On
+those systems we have to create a wrapper for the compiler (see <TT>STRICT_CPLUSPLUS_SUFFIX</TT>
+in <TT>ns/config/rules.mk</TT> and <TT>ns/build/*</TT>), which actually copies the <TT>file.cpp</TT>
+file to another file with the correct extension, compiles the new file,
+then deletes it. If in porting to a new system, you have to do something
+like this, make sure you use the <TT>#line</TT> directive so that the compiler generates
+debug information relative to the original <TT>.cpp</TT> file.
+
+<P><B><LI>
+<A NAME="dont_mix_varags_and_inline"></A>Don't mix varargs and inlines.</B><P>
+Non-portable example:
+<PRE>
+  class FooBar {
+    void va_inline(char* p, ...) {
+      // <I>something</I>
+    }
+  };
+</PRE>
+The subject says it all, varargs and inline functions do not seem to mix
+very well. If you must use varargs (which can cause portability problems
+on their own), then ensure that the vararg member function is a non-inline
+function.
+
+<P>Portable example:
+<PRE>
+  // <I>foobar.h</I>
+  class FooBar {
+      void 
+	va_non_inline(char* p, ...);
+  };
+
+  // <I>foobar.cpp</I>
+  void 
+  FooBar::va_non_inline(char* p, ...)
+  {
+	 // <I>something</I>
+  }
+</PRE>
+
+
+<P><B><LI>
+<A NAME="dont_use_init_lists_with_cpp"></A>Don't use initializer lists
+with objects.</B><P>
+Non-portable example:
+<PRE>
+  FooClass myFoo = {10, 20};
+</PRE>
+Some compilers won't allow this syntax for objects (HP-UX won't), actually
+only some will allow it. So don't do it. Again, use a wrapper function,
+see <A HREF="#dont_use_static_constructors">Don't use static constructors.</A>
+
+<P><B><LI>
+<A NAME="always_have_default_constructor"></A>Always have a default constructor.</B><P>
+Always have a default constructor, even if it doesn't make sense in terms
+of the object structure/hierarchy.
+HP-UX will barf on statically initialized objects that don't have default
+constructors.
+
+<P><B><LI>
+<A NAME="no_constructors_in_headers"></A>Don't put constructors in header
+files.</B><P>
+The Visual C++ 1.5 compiler for windows is really flaky, and putting constructors
+into the headers seems to be one of the causes of mysterious internal compiler
+errors.
+
+<P><B><LI>
+<A NAME="inner_classes"></A>Be careful with inner-classes.</B><P>
+Some compilers (HP-UX) generally require that types (classes, enums, etc.)
+declared inside of another class should be referred to with their fully
+scoped form (e.g., <TT>Foo::kListMaxLen</TT> versus <TT>kListMaxLen</TT>).
+
+<P><B><LI>
+<A NAME="init_variables_at_top"></A>Be careful of variable declarations
+that require construction or initialization.</B><P>
+Non-portable example:
+<PRE>
+  void
+  A::foo(int c)
+  {
+    switch(c) {
+    case FOOBAR_1:
+      XyzClass buf(100);
+      // <I>stuff</I>
+      break;
+    }
+  }
+</PRE>
+Be careful with variable placement around if blocks and switch statements.
+Some compilers (HP-UX) require that any variable requiring a constructor/initializer
+to be run, needs to be at the start of the method -- it won't compile code
+when a variable is declared inside a switch statement and needs a default
+constructor to run.
+
+<P>Portable example:
+<PRE>
+  void
+  A::foo(int c)
+  {
+    XyzClass buf(100);
+
+    switch(c) {
+    case FOOBAR_1:
+      // <I>stuff</I>
+      break;
+    }
+  }
+</PRE>
+
+
+<P><B><LI>
+<A NAME="header_files_c_and_cpp"></A>Make header files compatible with
+C and C++.</B><P>
+Non-portable example:
+<PRE>
+  /*<I>oldCheader.h</I>*/
+  int existingCfunction(char*);
+  int anotherExistingCfunction(char*);
+
+  /*<I> oldCfile.c </I>*/
+  #include "oldCheader.h"
+  ...
+
+  // <I>new file.cpp</I>
+  extern "C" {
+  #include "oldCheader.h"
+  };
+  ...
+</PRE>
+If you make new header files with exposed C interfaces, make the header
+files work correctly when they are included by both C and C++ files. If
+you start including an existing C header in new C++ files, fix the C header
+file to support C++ (as well as C), don't just <TT><NOBR>extern "C" {}</NOBR></TT>
+ the old header
+file. Do this:
+
+<P>Portable example:
+<PRE>
+  /*<I>oldCheader.h</I>*/
+  #ifdef __cplusplus
+  extern "C" {
+  #endif
+  int existingCfunction(char*);
+  int anotherExistingCfunction(char*);
+  #ifdef __cplusplus
+  }
+  #endif
+
+  /*<I> oldCfile.c </I>*/
+  #include "oldCheader.h"
+  ...
+
+  // <I>new file.cpp</I>
+  #include "oldCheader.h"
+  ...
+</PRE>
+There are number of reasons for doing this, other than just good style.
+For one thing, you are making life easier for everyone else, doing the
+work in one common place (the header file) instead of all the C++ files
+that include it. Also, by making the C header safe for C++, you document
+that "hey, this file is now being included in C++". That's a good thing.
+You also avoid a big portability nightmare that is nasty to fix...
+
+<P>Some systems include C++ in system header files that are designed to
+be included by C or C++. Not just <TT><NOBR>extern "C" {}</NOBR></TT> guarding, but actual C++
+code, usually in the form of inline functions that serve as "optimizations".
+While we question the wisdom of vendors doing this, there is nothing we
+can do about it. Changing system header files, is not a path we wish to
+take. Anyway, so why is this a problem? Take for example the following
+code fragment:
+
+<P>Non-portable example:
+<PRE>
+  /*<I>system.h</I>*/
+  #ifdef __cplusplus
+    /*<I> optimization </I>*/
+  inline int sqr(int x) {return(x*x);}
+  #endif
+
+  /*<I>header.h</I>*/
+  #include &lt;system.h>
+  int existingCfunction(char*);
+
+  // <I>file.cpp</I>
+  extern "C" {
+  #include "header.h"
+  }
+</PRE>
+What's going to happen? When the C++ compiler finds the <TT><NOBR>extern "C"</NOBR></TT> declaration
+in <TT>file.cpp</TT>, it will switch dialects to C, because it's assumed all the
+code inside is C code, and C's type free name rules need to be applied.
+But the __cplusplus pre-processor macro is still defined (that's seen by
+the pre-processor, not the compiler). In the system header file the C++
+code inside the <TT><NOBR>#ifdef __cplusplus</NOBR></TT> block will be seen by the compiler (now
+running in C mode). Syntax Errors galore! If instead the 
+<TT><NOBR>extern "C"</NOBR></TT> was
+done in the header file, the C functions can be correctly guarded, leaving
+the systems header file out of the equation. This works:
+
+<P>Portable example:
+<PRE>
+  /*<I>system.h</I>*/
+  #ifdef __cplusplus
+    /*<I> optimization </I>*/
+  inline int sqr(int x) {return(x*x);}
+  #endif
+
+  /*<I>header.h</I>*/
+  #include &lt;system.h>
+  extern "C" {
+  int existingCfunction(char*);
+  }
+
+  // <I>file.cpp</I>
+  #include "header.h"
+</PRE>
+One more thing before we leave the <TT><NOBR>extern "C"</NOBR></TT> segment of the program. Sometimes
+you're going to have to <TT><NOBR>extern "C"</NOBR></TT> system files. This is because you need
+to include C system header files that do not have <TT><NOBR>extern "C"</NOBR></TT> guarding themselves.
+Most vendors have updated all their headers to support C++, but there are
+still a few out there that won't grok C++. You might have to do this only
+for some platforms, not for others (using <TT>#ifdef SYSTEM_X</TT>). The safest
+place to do <TT><NOBR>extern "C"</NOBR></TT> a system header file (in fact the safest place to
+include a system header file) is at the lowest place possible in the header
+file inclusion hierarchy. That is, push all this stuff down to the header
+files closer to the system code, don't do this stuff in the mail header
+files. Ideally the best place to do this is in the NSPR or XP header files
+- which sit directly on the system code.
+
+<P><B><LI>
+<A NAME="variables_in_for"></A>Be careful of the scoping of variables declared
+inside <TT>for()</TT> statements.</B><P>
+Non-portable example:
+<PRE>
+  void
+  A::foo()
+  {
+      for (int i = 0; i &lt; 10; i++) {
+        // <I>do something</I>
+      }
+      // <I><B>i</B> might get referenced</I>
+      // <I> after the loop.</I>
+      ...
+  }
+</PRE>
+This is actually an issue that comes about because the C++ standard has
+changed over time. The original C++ specification would scope the <B>i</B>
+as part of the outer block (in this case function <TT>A::foo()</TT>). The standard
+changed so that now the <B>i</B> in is scoped within the <TT><NOBR>for() {}</NOBR></TT> block.
+Most compilers use the new standard. Some compilers (for example, HP-UX)
+still use the old standard. Some other compilers (for example, gcc) use
+the new rules, but will tolerate the old. If <B>i</B> was referenced later
+in the <TT><NOBR>for() {}</NOBR></TT> block, gcc will allow the construct, but give a warning
+about use of an "obsolete binding". So, while the code above is valid,
+it would become ambiguous if <B>i</B> was used later in the function. It's
+probably better to be on the safe side and declare the iterator variable
+outside of the <TT>for()</TT> loop. Then you'll know what you are getting on all
+platforms:
+
+<P>Portable example:
+<PRE>
+  void
+  A::foo()
+  {
+    int i;
+    for (i = 0; i &lt; 10; i++) {
+      // <I>do something</I>
+    }
+    // <I><B>i</B> might get referenced</I>
+    // <I> after the loop.</I>
+    ...
+  }
+</PRE>
+
+
+<P><B><LI>
+<A NAME="local_aggregates"></A>Declare local initialized aggregates as
+static.</B><P>
+Non-portable example:
+<PRE>
+  void
+  A:: func_foo()
+  {
+    char* foo_int[] = {"1", "2", "C"};
+    ...
+  }
+</PRE>
+This seemingly innocent piece of code will generate a "loader error" using
+the HP-UX compiler/linker. If you really meant for the array to be static
+data, say so:
+
+<P>Portable example:
+<PRE>
+  void
+  A:: func_foo()
+  {
+    static char *foo_int[] = {"1", "2", "C"};
+    ...
+  }
+</PRE>
+Otherwise you can keep the array as an automatic, and initialize by hand:
+
+<P>Portable example:
+<PRE>
+  void
+  A:: func_foo()
+  {
+    char *foo_int[3];
+
+    foo_int[0] = XP_STRDUP("1");
+    foo_int[1] = XP_STRDUP("2");
+    foo_int[2] = XP_STRDUP("C");
+    // <I>or something equally Byzantine...</I>
+    ...
+  }
+</PRE>
+
+
+<P><B><LI>
+<A NAME="complex_inlines"></A>Expect complex inlines to be non-portable.</B><P>
+Non-portable example:
+<PRE>
+  class FooClass {
+    ...
+    int fooMethod(char* p) {
+      if (p[0] == '\0')
+        return -1;
+
+      doSomething();
+      return 0;
+    }
+    ...
+  };
+</PRE>
+It's surprising, but many C++ compilers do a very bad job of handling inline
+member functions. Cfront based compilers (like those on SCO and HP-UX)
+are prone to give up on all but the most simple inline functions, with
+the error message "sorry, unimplemented". Often times the source of this
+problem is an inline with multiple return statements. The   fix
+for this is to resolve the returns into a single point at the end of the
+function. But there are other constructs which will result in "not implemented".
+For this reason, you'll see that most of the C++ code in Mozilla does not
+use inline functions. We don't want to legislate inline functions away,
+but you should be aware that there is some danger in using them, so do
+so only when there is some measurable gain (not just a random hope of performance
+win). <B>Maybe you should just not go there.</B>
+
+<P>Portable example:
+<PRE>
+  class FooClass {
+    ...
+    int fooMethod(char* p) {
+      int return_value;
+
+	if (p[0] == '\0') {
+	   return_value = -1;
+	} else {
+	   doSomething();
+	   return_value = 0;
+	}
+	return return_value;
+    }
+    ...
+  };
+</PRE>
+Or
+
+<P>Portable example:
+<PRE>
+  class FooClass {
+    ...
+    int fooMethod(char* p);
+    ...
+  };
+
+  int FooClass::fooMethod(char* p)
+  {
+    if (p[0] == '\0')
+      return -1;
+
+    doSomething();
+    return 0;
+  }
+</PRE>
+
+
+<P><B><LI>
+<A NAME="inlines_in_return"></A>Don't use return statements that have an
+inline function in the return expression.</B><P>
+For the same reason as the previous tip, don't use return statements that
+have an inline function in the return expression. You'll get that same
+"sorry, unimplemented" error. Store the return value in a temporary, then
+pass that back.
+
+<P><B><LI>
+<A NAME="include_depth"></A>Be careful with the include depth of files
+and file size.</B><P>
+Be careful with the include depth of files and file size. The Microsoft
+Visual C++1.5 compiler will generate internal compiler errors if you have
+a large include depth or large file size.  Be careful to limit the
+include depth of your header files as well as your file size.
+
+<P><B><LI>
+<A NAME="virtual_on_subclasses"></A>Use virtual declaration on all subclass
+virtual member functions.</B><P>
+Non-portable example:
+<PRE>
+  class A {
+    virtual void foobar(char*);
+  };
+
+  class B : public A {
+    void foobar(char*);
+  };
+</PRE>
+Another drag. In the class declarations above, <TT>A::foobar()</TT> is declared
+as virtual. C++ says that all implementations of void <TT>foobar(char*)</TT> in
+subclasses will also be virtual (once virtual, always virtual). This code
+is really fine, but some compilers want the virtual declaration also used
+on overloaded functions of the virtual in subclasses. If you don't do it,
+you get warnings. While this is not a hard error, because this stuff tends
+to be in headers files, you'll get so many warnings that's you'll go nuts.
+Better to silence the compiler warnings, by including the virtual declaration
+in the subclasses. It's also better documentation:
+
+<P>Portable example:
+<PRE>
+  class A {
+    virtual void foobar(char*);
+  };
+
+  class B : public A {
+    virtual void foobar(char*);
+  };
+</PRE>
+
+
+<P><B><LI>
+<A NAME="copy_constructors"></A>Always declare a copy constructor and assignment
+operator.</B><P>
+One feature of C++ that can be problematic is the use of copy constructors.
+Because a class's copy constructor defines what it means to pass and return
+objects by value (or if you prefer, pass by value means call the copy constructor),
+it's important to get this right. There are times when the compiler will
+silently generate a call to a copy constructor, that maybe you do not want.
+For example, when a you pass an object by value as a function parameter,
+a temporary copy is made, which gets passed, then destroyed on return from
+the function. Maybe you don't want this to happen, maybe you'd always like
+instances of your class to be passed by reference. If you do not define
+a copy constructor the C++ compiler will generate one for you (the default
+copy constructor), and this automatically generated copy constructor might,
+well, suck. So you have a situation where the compiler is going to silently
+generate calls to a piece of code that might not be the greatest code for
+the job (it may be wrong).
+
+<P>Ok, you say, "no problem, I know when I'm calling the copy constructor,
+and I know I'm not doing it". But what about other people using your class?
+The safe bet is to do one of two things: if you want your class to support
+pass by value, then write a good copy constructor for your class. If you
+see no reason to support pass by value on your class, then you should explicitly
+prohibit this, don't let the compiler's default copy constructor do it
+for you. The way to enforce your policy is to declare the copy constructor
+as private, and not supply a definition. While your at it, do the same
+for the assignment operator used for assignment of objects of the same
+class. Example:
+<PRE>
+  class foo {
+    ...
+    private:
+    // <I>These are not supported</I>
+    // <I>and are not implemented!</I>
+    foo(const foo&amp; x);
+    foo&amp; operator=(const foo&amp; x);
+  };
+</PRE>
+When you do this, you ensure that code that implicitly calls the copy constructor
+will not compile and link. That way nothing happens in the dark. When a
+user's code won't compile, they'll see that they were passing by value,
+when they meant to pass by reference (oops).
+
+<P><B><LI>
+<A NAME="signatures"></A>Be careful of overloaded methods with like signatures.</B><P>
+It's best to avoid overloading methods when the type signature of the methods
+differs only by 1 "abstract" type (e.g. <TT>PR_Int32</TT> or <TT>int32</TT>).  What
+you will find as you move that code to different platforms, is suddenly
+on the Foo2000 compiler your overloaded methods will have the same type-signature.
+
+<P><B><LI>
+<A NAME="type_scalar_constants"></A>Type scalar constants to avoid unexpected
+ambiguities.</B><P>
+Non-portable code:
+<PRE>
+  class FooClass {
+    // <I>having such similar signatures</I>
+    // <I>is a bad idea in the first place.</I>
+    void doit(long);
+    void doit(short);
+  };
+
+  void
+  B::foo(FooClass* xyz)
+  {
+    xyz->doit(45);
+  }
+</PRE>
+Be sure to type your scalar constants, e.g., PR_INT32(10) or 10L. 
+Otherwise, you can produce ambiguous function calls which potentially could
+resolve to multiple methods, particularly if you haven't followed (2) above. 
+Not all of the compilers will flag ambiguous method calls.
+
+<P>Portable code:
+<PRE>
+  class FooClass {
+    // <I>having such similar signatures</I>
+    // <I>is a bad idea in the first place.</I>
+    void doit(long);
+    void doit(short);
+  };
+
+  void
+  B::foo(FooClass* xyz)
+  {
+    xyz->doit(45L);
+  }
+</PRE>
+
+<P><B><LI>
+<A NAME="bool_types"></A>Type scalar constants to avoid unexpected ambiguities.</B><P>
+Some platforms (e.g. Linux) have native definitions of types like Bool which sometimes conflict with definitions in XP code.  Always use PRBool (PR_TRUE, PR_FALSE) or XP_Bool (TRUE, FALSE).
+
+<P><B><LI>
+<A NAME="cpp_casts"></A>Use macros for C++ style casts.</B><P>
+Not all C++ compilers support C++ style casts:<P>
+
+<TT>static_cast&lt;type&gt;(expression)</TT> (C++ style) <P>
+
+<TT>(type) expression</TT> (C style) <P>
+
+The header
+<a href="http://cvs-mirror.mozilla.org/webtools/lxr/source/base/src/nscore.h">nscore.h</A>
+defines portable cast macros that use C++ style casts on compilers
+that support them, and regualar casts otherwise.<P>
+
+These macros are defined as follows: <P>
+
+<PRE>
+#define NS_STATIC_CAST(__type, __ptr)      static_cast<__type>(__ptr)
+#define NS_CONST_CAST(__type, __ptr)       const_cast<__type>(__ptr)
+#define NS_REINTERPRET_CAST(__type, __ptr) reinterpret_cast<__type>(__ptr)
+</PRE>
+
+Note that the semantics of <TT>dynamic_cast</TT> cannot be
+duplicated, so we dont use it. See <a
+<A href="mailto:waterson@netscape.com">Chris Waterson's</A> detailed
+<A
+href="news://news.mozilla.org/36718FB3.87154911%40netscape.com">explanation</A>
+on why this is so. <P>
+
+Example: <P>
+
+Instead of: <P>
+
+<PRE>
+foo_t * x = static_cast&lt;foo_t *&gt;(client_data);
+bar_t * nonConstX = const_cast&lt;bar_t *&gt;(this);
+</PRE>
+
+You should use: <P>
+
+<PRE>
+foo_t * x = NS_STATIC_CAST(foo_t *,client_data);
+bar_t * nonConstX = NS_CONST_CAST(bar_t *,this);
+</PRE>
+
+<P><B><LI>
+<A NAME="mutable"></A>Don't use mutable.</B><P>
+Not all C++ compilers support the <TT>mutable</TT> keyword:<P>
+
+You'll have to use the "fake this" approach to cast away the constness 
+of a data member: <P>
+
+<PRE>
+void MyClass::MyConstMethod() const
+{
+  MyClass * fakeThis = NS_CONST_CAST(MyClass *,this);
+
+  // Treat mFoo as mutable
+  fakeThis->mFoo = 99;
+}
+</PRE>
+
+<P><B><LI>
+<A NAME="use_ns_com_ptr"></A>Use nsCOMPtr in XPCOM code.</B><P>
+
+Mozilla has recently adopted the use of
+<A HREF="http://www.mozilla.org/projects/xpcom/nsCOMPtr.html">nsCOMPtr</A>
+in
+<A HREF="http://www.mozilla.org/projects/xpcom/">XPCOM</A> code.
+
+<P>
+
+See the nsCOMPtr
+<A HREF="http://www.mozilla.org/projects/xpcom/nsCOMPtr.html">User Manual</A>
+for usage details.  
+
+</OL>
+
+<P><HR>
+<H2>
+<A NAME="c_and_cplusplus"></A>Stuff that is good to do for C or C++.</H2>
+
+<OL>
+
+<P><B><LI>
+<A NAME="use_nspr_types"></A>Always use the nspr types for intrinsic types.</B><P>
+Always use the nspr types for intrinsic integer types. The only exception
+to this rule is when writing machine dependent code that is called from
+xp code. In this case you will probably need to bridge the type systems
+and cast from an nspr type to a native type. 
+
+<P><B><LI>
+<A NAME="dont_ifdef_include"></A>Do not wrap include statements with an
+<TT>#ifdef</TT>.</B><P>
+Do not wrap include statements with an <TT>#ifdef</TT>. The reason is that when
+the symbol is not defined, other compiler symbols will not be defined and
+it will be hard to test the code on all platforms. An example of what not
+to do:
+
+<P>Bad code example:
+<PRE>
+  // don't do this
+  #ifdef X
+  #include "foo.h"
+  #endif
+</PRE>
+The exception to this rule is when you are including different system files
+for different machines. In that case, you may need to have a 
+<TT><NOBR>#ifdef SYSTEM_X</NOBR></TT> include.
+
+<P><B><LI>
+<A NAME="include_simple_filename"></A><TT>#include</TT> statements should include
+only simple filenames.</B><P>
+Non-portable example:
+<PRE>
+  #include "directory/filename.h"
+</PRE>
+Mac compilers handle <TT>#include</TT> path names in a different manner to other
+systems. Consequently <TT>#include</TT> statements should contain  just simple
+file names. Change the directories that the compiler searches to get the
+result you need, but if you follow the Mozilla module and directory scheme,
+this should not be required.
+
+<P>Portable example:
+<PRE>
+  #include "filename.h"
+</PRE>
+
+
+<P><B><LI>
+<A NAME="assignments_in_boolean"></A>Macs complain about assignments in
+boolean expressions.</B><P>
+Another example of code that will generate warnings on a Mac:
+
+<P>Generates warnings code:
+<PRE>
+  if ((a = b) == c) ...
+</PRE>
+Macs don't like assignments in <B>if</B> statements, even if you properly
+wrap them in parentheses.
+
+<P>More portable example:
+<PRE>
+  a=b;
+  if (a == c) ...
+</PRE>
+
+
+<P><B><LI>
+<A NAME="filenames_must_be_unique"></A>Every source file must have a unique
+name.</B><P>
+Non-portable file tree:
+<PRE>
+  feature_x
+      private.h
+      x.cpp
+  feature_y
+      private.h
+      y.cpp
+</PRE>
+For Mac compilers, every has to have a unique name. Don't assume that just
+because your file is only used locally that it's OK to use the same name
+as a header file elsewhere. It's not ok. Every filename must be different.
+
+<P>Portable file tree:
+<PRE>
+  feature_x
+      xprivate.h
+      x.cpp
+  feature_y
+      yprivate.h
+      y.cpp
+</PRE>
+
+
+<P><B><LI>
+<A NAME="block_out_with_if_0"></A>Use <TT>#if 0</TT> rather than comments to temporarily
+kill blocks of code.</B><P>
+Non-portable example:
+<PRE>
+  int
+  foo()
+  {
+    ...
+    a = b + c;
+    /*
+     * Not doing this right now.
+    a += 87;
+    if (a > b) (* have to check for the
+                  candy factor *)
+      c++;
+     */
+    ...
+  }
+</PRE>
+This is a bad idea, because you always end up wanting to kill code blocks
+that include comments already. No, you can't rely on comments nesting properly.
+That's far from portable. You have to do something crazy like changing
+<TT>/**/</TT> pairs to <TT>(**)</TT> pairs. You'll forget. And don't try using
+<TT>#ifdef NOTUSED</TT>,
+the day you do that, the next day someone will quietly start defining <TT>NOTUSED</TT>
+somewhere. It's much better to block the code out with a 
+<TT><NOBR>#if 0</NOBR></TT>, <TT>#endif</TT>
+pair, and a good comment at the top. Of course, this kind of thing should
+always be a temporary thing, unless the blocked out code fulfills some
+amazing documentation purpose.
+
+<P>Portable example:
+<PRE>
+  int
+  foo()
+  {
+    ...
+    a = b + c;
+  #if 0
+    /*<I> Not doing this right now. </I>*/
+    a += 87;
+    if (a > b) /*<I> have to check for the
+                  candy factor </I>*/
+      c++;
+  #endif
+    ...
+  }
+</PRE>
+
+
+<P><B><LI>
+<A NAME="turn_warnings_on"></A>Turn on warnings for your compiler, and
+then write warning free code.</B><P>
+This might be the most important tip. Beware lenient compilers! What generates
+a warning on one platform will generate errors on another. Turn warnings
+on. Write warning free code. It's good for you.
+
+</OL>
+
+<P><HR>
+<H2>
+<A NAME="revision_history"></A>Revision History.</H2>
+
+<UL>
+<LI>0.5 Initial Revision. 3-27-1998 <a href="mailto:djw@djw.org">David
+Williams</A>
+</LI>
+<LI>0.6 Added "C++ Style casts" and "mutable" entries. 12-24-1998 <a
+href="mailto:ramiro@netscape.com">Ramiro Estrugo</A>
+</LI>
+
+<LI>0.7 Added "nsCOMPtr" entry and mozillaZine resource link. 12-02-1999
+<a href="mailto:ramiro@netscape.com">Ramiro Estrugo</A>
+</LI>
+
+</UL>
+
+<P>
+
+<HR>
+<H2>
+<A NAME="further_reading"></A>Further reading:</H2>
+<UL>
+
+Here are some books and pages which provide further good advice on how
+to write portable C++ code.
+
+<UL>
+<P><LI><I>Scott Meyers,</I>
+ <A HREF="http://www.amazon.com/exec/obidos/ISBN=0201924889">
+ Effective C++ : 50 Specific Ways to Improve Your Programs and
+ Designs</A></LI>
+
+<P><LI><I>Robert B. Murray,</I>
+ <A HREF="http://www.amazon.com/exec/obidos/ISBN=0201563827">
+ C++ Strategies and Tactics</A></LI>
+
+<P><LI>
+<A HREF="http://www.mozillazine.org/resources/recommendations1.html">
+mozillaZine</A>
+has a list of books on C++, Anti-C++, OOP (and other buzzwords).  This
+list was compiled from the suggestions of Mozilla developers.
+</LI>
+
+<P><LI>others?</LI>
+</UL>
+ 
+</UL>
+
+<!--------------------------------------------------------------------------->
+   
+<HR WIDTH="100%"><FONT SIZE="-1"><CENTER>Copyright &copy; 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER></FONT>
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

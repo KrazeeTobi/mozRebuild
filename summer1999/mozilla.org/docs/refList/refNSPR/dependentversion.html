@@ -1,0 +1,450 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Version and dependency discovery</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+
+
+<H2>
+Dependent version checking</H2>
+
+<P>This memo is a proposal for a mechanism that allows cooperating components
+to divulge their own versioning information and compare that to their import
+requirements. In order for this to be effective, all cooperating component
+libraries have to include certain capabilities (defined below).
+
+<P>This mechanism's goal is to provide definitive proof that the product
+environment (made up of one or more shared libraries) is consistent within
+itself. It does not provide static checking that might cause ungraceful
+termination of an application. Nor does it provide early detection of inconsistencies
+such that might be used to drive selective loading of shared libraries.
+<H3>
+Version information</H3>
+Software components can be identified generically by name (regrettably
+I don't know anything better than ASCII). For simplicity the version of
+the software component may also be identified by an ASCII string. The string's
+content is not significant since (as will be described later) only the
+component presenting the version string need understand its makeup.
+<H3>
+Discovering a component's identity and version</H3>
+A component will advertise it identity and version through use of static
+defines in a well-know header. Using NSPR as an example, these constants
+might show up in a header named <B>prvrsion.h</B> and look like:
+
+<PRE>
+#define PR_NAME     "NSPR 2.0"
+#define PR_VERSION  "199770530"
+</PRE>
+
+<B>Note: </B>It would be expected that the name of the component ("NSPR
+2.0" in this example) would not change for the lifetime of the product.
+
+<P>Along with these two constants, each component must provide a function
+capable of returning a boolean answer indicating that available library
+is compatible with the expectations of the caller. That function has a
+signature as follows:
+
+<PRE>typedef PRBool (*version_check)(const char *imported_version);</PRE>
+The importer would literally code this call as (using NSPR as an example):
+
+<UL><PRE>
+if (!PR_VersionCheck(PR_VERSION))
+{
+    ...version check fails...
+}
+</PRE></UL>
+
+At the time a version check routine is called the code should evaluate
+the string passed in as the argument with the version the library is exporting.
+This string will contain the literal value that was defined by environment
+in which the importing component was built. The called function will compare
+the string to the value known to it, which represents the value captured
+at its build time. During the execution of the version check function is
+the opportunity for the called component to verify its dependencies as
+well. The answer returned will be the logical union of all the responses.
+
+<P><B>Caution:</B> Circular dependencies could be a problem.
+
+<H2>
+Version Embedding Specification</H2>
+
+<H3>
+Introduction</H3>
+A complicated product or suite of products can require a huge number of
+shared libraries.
+Over time, each of these libraries is patched numerous times. One of the
+most pressing questions when debugging a field escalation is "What versions
+of the libraries are installed?". Often, problems can be attributed to
+wrong installed versions, incompatible versions, etc. So, what remains
+is how to answer the question "What libraries are installed?". This specification
+proposes a mechanism for answering that question.
+<H3>
+Background</H3>
+Windows NT long ago addressed this issue by the use of standardized version
+resources embedded in libraries. The NT installer uses these version numbers when making decisions
+as to whether or not to overwrite libraries. This proposal allows for similar
+capabilities on a wider variety of platforms.
+<H3>
+Mechanism</H3>
+We define a C structure to contain version information. We then define
+a well-known function that all libraries should expose. We also define
+a naming convention for the instances of the structure to aid in locating
+them in a core file.
+<H3>
+Version structure</H3>
+The structure we use is listed below. The first field is intended to allow
+future extensions to this specification. Version 2 of the body is listed
+below. If the version is not 2, no statement is made about the contents
+of the body at this time. Time is expressed in the format exposed by NSPR's
+<TT>PRTime</TT>. Special builds are intended for non-RTM builds. This could be a
+private patch, a prototyped change, etc. If special is true, the <TT>specialString</TT>
+should be set. All strings are optional, and should be set to NULL if not
+utilized.
+<UL>
+<PRE>#include &lt;prtypes.h>
+
+typedef struct {
+    PRInt32     version; 
+  
+    PRTime      buildTime;
+    char *      buildTimeString;
+  
+    PRUint8     vMajor;
+    PRUint8     vMinor;
+    PRUint8     vPatch;
+  
+    PRBool      beta;
+    PRBool      debug;
+    PRBool      special;
+  
+    char *      filename;
+    char *      description;
+    char *      security;
+    char *      copyright;
+    char *      comment;
+    char *      specialString;
+} PRVersionDescription;</PRE>
+</UL>
+
+<P>The <TT>PRVersionDescription</TT> does use NSPR's typing and type semantics, though is
+not dependent on NSPR 2.0. There are, however, utilities available for accessing the
+information defined by the structure, and they do utilize features of the runtime. Some
+caution should be taken regarding this apparent circular dependency.
+
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>version</TT></B></TD>
+
+<TD>The version of this structure. This memo documents Version 2.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>buildTime</TT></B></TD>
+
+<TD>The time the library was built, expressed as a <TT>PRTime</TT>. <TT>PRTime</TT>'s
+are 64-bit signed numbers representing the number of microseconds since
+midnight, January 1, 1970 GMT.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>builtTimeString</TT></B></TD>
+
+<TD>Another representation of the build time, but in human readable form.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>vMajor</TT></B></TD>
+
+<TD>The major version number of the library. Theoretically, this field
+will change value if and only if there are incompatible changes in the
+library's API.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>vMinor</TT></B></TD>
+
+<TD>The minor version number of the library. Changes in this field indicate
+that the library's content has changed in order to correct deficiencies
+or possibly add new features. Changes to do not affect previous API, but
+might add new. All changes are backward compatible with libraries of lesser
+minor versions.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>vPatch</TT></B></TD>
+
+<TD>The patch level of the library. Patches may be applied to correct deficiencies,
+but the result will be both backward and forward compatible.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>beta</TT></B></TD>
+
+<TD>This library is a <I>beta</I> release. That it is not certified to
+be <I>product ready</I>.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>debug</TT></B></TD>
+
+<TD>The library has been built with debugging options enabled. This implies
+that the library contains debugging symbols and may contain an arbitrary
+amount of other checking code to assist in a development effort.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>special</TT></B></TD>
+
+<TD>The library is a <I>special</I> build for some <I>special</I> purpose.
+See also <B><TT>specialString</TT></B>.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>filename</TT></B></TD>
+
+<TD>The root filename of the linked library.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>description</TT></B></TD>
+
+<TD>An arbitrary string describing the component library.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>security</TT></B></TD>
+
+<TD>The level of security of this component.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>copyright</TT></B></TD>
+
+<TD>Textual synopsis of the Copyright information.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>comment</TT></B></TD>
+
+<TD>Free form field for miscellaneous usage.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>specialString</TT></B></TD>
+
+<TD>Yet another free form field, but for <I>special</I> usage.</TD>
+</TR>
+</TABLE>
+
+<H3>
+Interface</H3>
+All components supporting the version protocol must expose a C function
+named <B><TT>libVersionPoint</TT></B>.
+<BLOCKQUOTE>
+<PRE><TT>const PRVersionDescription *libVersionPoint(void);</TT></PRE>
+</BLOCKQUOTE>
+All components should also expose their <TT>PRVersionDescription</TT> structure
+using the following naming convention.
+<BLOCKQUOTE>Take the filename field from the structure. Convert non-alphanumeric
+characters to "_". Prepend "<TT>PRVersionDescription_</TT>". Use this as
+the name.</BLOCKQUOTE>
+So, for <B><TT>libfoo.so</TT></B>, the name would be <TT>PRVersionDescription_libfoo_so</TT>.
+<P>If the filename field is not set, take <B><TT>PR_Now()</TT></B> and
+print it using <B><TT>PR_snprintf()</TT></B>. Append this to "<TT>PRVersionDescription_</TT>".
+The first form is the preferred form.
+<BR> 
+<DIV ALIGN=right><BR>
+<BR>
+
+<HR WIDTH="100%"></DIV>
+
+<DIV ALIGN=right><I><FONT SIZE=-1>Last updated: Wed Jul 23 16:28:40 PDT 1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

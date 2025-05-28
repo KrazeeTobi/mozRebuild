@@ -1,0 +1,783 @@
+<!doctype linuxdoc system>
+
+<article>
+
+<title> 
+<author>Arun Sharma,
+<tt><htmlurl url="mailto:asharma@netscape.com"
+name="asharma@netscape.com"></tt>
+
+<abstract>
+This document details the design and implementation of 
+<label id="Javasoft">
+<htmlurl
+url="http://partner.javasoft.com/client/browse.cgi/private/netscape/Java_Debugger/index.html?company=netscape"
+name = "JVMDI (Java Virtual Machine Debugger Interface)"> with
+<htmlurl url="http://warp/java/ElectricalFire/"	name="Electrical Fire">.
+</abstract>
+
+<toc>
+
+<sect>Introduction
+<p>
+
+The previous implementation of the Java debugger had parts written in
+Java, which led to stability problems and deadlocks. The new interface
+published by Javasoft seeks to solve the problems using an API that is
+implemented in the same process as the Java VM.
+
+<sect> JVMDI, the API
+<p>
+
+Without further ado.
+
+<verb>
+/*
+ * @(#)jvmdi.h	1.3 97/10/13
+ * 
+ * Copyright 1993-1997 Sun Microsystems, Inc. 901 San Antonio Road, 
+ * Palo Alto, California, 94303, U.S.A.  All Rights Reserved.
+ *
+ * This software is the confidential and proprietary information of Sun
+ * Microsystems, Inc. ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Sun.
+ * 
+ * CopyrightVersion 1.2
+ * 
+ */
+
+/*
+ *   Java Virtual Machine Debug Interface
+ *
+ *   Defines debugging functionality that a VM should provide.  
+ *
+ *   Should not overlap functionality in jni.h or jvm.h
+ */
+
+#ifndef JVMDI_H
+#define JVMDI_H
+
+#include "jni.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef jobject jthread;
+
+typedef jobject jthreadGroup;
+
+struct _jframeID;
+typedef struct _jframeID *jframeID;
+
+
+  /*
+   *  Errors
+   */
+
+typedef jint jvmdiError;
+
+  /* no error */
+#define JVMDI_ERROR_NONE                 ((jvmdiError)0)
+  /* invalid thread */
+#define JVMDI_ERROR_INVALID_THREAD       ((jvmdiError)10)
+  /* invalid thread */
+#define JVMDI_ERROR_INVALID_THREAD_GROUP ((jvmdiError)11)
+  /* invalid methodID (implementation not required to gracefully catch) */
+#define JVMDI_ERROR_INVALID_METHODID     ((jvmdiError)20)
+  /* invalid byte code index */
+#define JVMDI_ERROR_INVALID_BCI          ((jvmdiError)21)
+  /* invalid frameID (implementation not required to gracefully catch) */
+#define JVMDI_ERROR_INVALID_FRAMEID      ((jvmdiError)30)
+  /* there are no more frames on the stack */
+#define JVMDI_ERROR_NO_MORE_FRAMES       ((jvmdiError)31)
+  /* operation cannot be performed on a native frame */
+#define JVMDI_ERROR_NATIVE_FRAME         ((jvmdiError)32)
+  /* operation can only be performed on current frame */
+#define JVMDI_ERROR_NOT_CURRENT_FRAME    ((jvmdiError)33)
+  /* type mismatch (implementation not required to gracefully catch) */
+#define JVMDI_ERROR_TYPE_MISMATCH        ((jvmdiError)34)
+  /* invalid slot */
+#define JVMDI_ERROR_INVALID_SLOT         ((jvmdiError)35)
+  /* duplicate breakpoint */
+#define JVMDI_ERROR_DUPLICATE_BREAKPOINT ((jvmdiError)40)
+  /* no such breakpoint */
+#define JVMDI_ERROR_NO_SUCH_BREAKPOINT   ((jvmdiError)41)
+  /* thread not suspended */
+#define JVMDI_ERROR_THREAD_NOT_SUSPENDED ((jvmdiError)50)
+  /* thread already suspended */
+#define JVMDI_ERROR_THREAD_SUSPENDED     ((jvmdiError)51)
+  /* invalid object (implementation not required to gracefully catch) */
+#define JVMDI_ERROR_INVALID_OBJECT       ((jvmdiError)60)
+  /* invalid class (implementation not required to gracefully catch) */
+#define JVMDI_ERROR_INVALID_CLASS        ((jvmdiError)61)
+  /* null pointer (implementation not required to gracefully catch) */
+#define JVMDI_ERROR_NULL_POINTER         ((jvmdiError)70)
+  /* no more memory available for allocation */
+#define JVMDI_ERROR_OUT_OF_MEMORY        ((jvmdiError)80)
+  /* VM is dead (implementation not required to gracefully catch) */
+#define JVMDI_ERROR_VM_DEAD              ((jvmdiError)90)
+  /* Not yet implemented */
+#define JVMDI_ERROR_NOT_IMPLEMENTED      ((jvmdiError)99)
+
+
+  /*
+   *  Threads
+   */
+
+  /* Thread status is unknown */
+#define JVMDI_THREAD_STATUS_UNKNOWN      ((jint)-1)
+  /* Thread is waiting to die */
+#define JVMDI_THREAD_STATUS_ZOMBIE       ((jint)0)
+  /* Thread is runnable */
+#define JVMDI_THREAD_STATUS_RUNNING      ((jint)1)
+  /* Thread is sleeping - Thread.sleep() or JVM_Sleep() was called */
+#define JVMDI_THREAD_STATUS_SLEEPING     ((jint)2)
+  /* Thread is waiting on a java monitor */
+#define JVMDI_THREAD_STATUS_MONITOR      ((jint)3)
+  /* Thread is waiting - Thread.wait() or JVM_MonitorWait() was called */
+#define JVMDI_THREAD_STATUS_WAIT         ((jint)4)
+  /* Thread is suspended - Thread.suspend(), JVM_Suspend() or
+   * JVMDI_Suspend was called */
+#define JVMDI_THREAD_STATUS_SUSPENDED    ((jint)5)
+  /* Thread is at a breakpoint */
+#define JVMDI_THREAD_STATUS_BREAK        ((jint)6)
+
+/* Return via "statusPtr" the status of the thread as one of
+ * JVMDI_THREAD_STATUS_*.
+ * Errors: JVMDI_ERROR_INVALID_THREAD, JVMDI_ERROR_NULL_POINTER
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetThreadStatus(JNIEnv *env, jthread thread, jint *statusPtr);
+
+	/* Note: jvm.h has suspend/resume (which may be deprecated - as 
+	 * Thread.suspend() has been).  JVMDI version is different, as it
+	 * takes precautions to attempt to avoid deadlock.  Also it 
+	 * cannot be depreciated.
+	 */
+/* Suspend the specified thread.
+ * Errors: JVMDI_ERROR_INVALID_THREAD, JVMDI_ERROR_THREAD_SUSPENDED,
+ * JVMDI_ERROR_VM_DEAD 
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SuspendThread(JNIEnv *env, jthread thread); 
+
+/* Resume the specified thread.
+ * Errors: JVMDI_ERROR_INVALID_THREAD, JVMDI_ERROR_THREAD_NOT_SUSPENDED, 
+ * JVMDI_ERROR_VM_DEAD
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_ResumeThread(JNIEnv *env, jthread thread);
+  
+/* If shouldStep is true cause the thread to generate a 
+ * JVMDI_EVENT_SINGLE_STEP event with each byte-code executed.
+ * Errors: JVMDI_ERROR_INVALID_THREAD, 
+ * JVMDI_ERROR_THREAD_NOT_SUSPENDED (should suspension be a requirement?), 
+ * JVMDI_ERROR_VM_DEAD
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SetSingleStep(JNIEnv *env, jthread thread, jboolean shouldStep);
+
+
+  /*
+   *  Thread Groups
+   */
+
+/* Return in 'groupsPtr' an array of top-level thread groups (parentless 
+ * thread groups).
+ * Note: array returned via 'groupsPtr' is allocated globally and must be
+ * explictly freed with DeleteGlobalRef.
+ * Errors: JVMDI_ERROR_NULL_POINTER, JVMDI_ERROR_OUT_OF_MEMORY
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetTopThreadGroups(JNIEnv *env, jobjectArray *groupsPtr);
+
+/* Return in 'threadsPtr' an array of the threads within the specified 
+ * thread group. 
+ * Note: array returned via 'threadsPtr' is allocated globally and must be
+ * explictly freed with DeleteGlobalRef.
+ * Errors: JVMDI_ERROR_INVALID_THREAD_GROUP, JVMDI_ERROR_NULL_POINTER,
+ * JVMDI_ERROR_OUT_OF_MEMORY
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetGroupsThreads(JNIEnv *env, jthreadGroup group, 
+		       jobjectArray *threadsPtr);
+
+/* Return in 'groupsPtr' an array of the thread groups within the 
+ * specified thread group.
+ * Note: array returned via 'groupsPtr' is allocated globally and must be
+ * explictly freed with DeleteGlobalRef.
+ * Errors: JVMDI_ERROR_INVALID_THREAD_GROUP, JVMDI_ERROR_NULL_POINTER,
+ * JVMDI_ERROR_OUT_OF_MEMORY
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetGroupsThreadGroups(JNIEnv *env, jthreadGroup group, 
+			    jobjectArray *groupsPtr);
+
+/* Suspend all threads recursively contained in the thread group,
+ * except the specified threads.  
+ * If except is NULL suspend all threads in group.
+ * Errors: JVMDI_ERROR_INVALID_THREAD_GROUP, JVMDI_ERROR_INVALID_THREAD 
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SuspendThreadGroup(JNIEnv *env, jthreadGroup group, jobjectArray except); 
+
+/* Resume all threads (recursively) in the thread group, except the
+ * specified threads.  If except is NULL resume all threads in group.
+ * Errors: JVMDI_ERROR_INVALID_THREAD_GROUP, JVMDI_ERROR_INVALID_THREAD 
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_ResumeThreadGroup(JNIEnv *env, jthreadGroup group, jobjectArray except);
+
+  /*
+   *  Stack access
+   */
+
+/* Return via "framePtr" the frame ID for the current stack frame 
+ * of this thread.  Thread must be suspended.  Only Java and
+ * Java native frames are returned.  FrameIDs become invalid if
+ * the frame is resumed.
+ * Errors: JVMDI_ERROR_NO_MORE_FRAMES, JVMDI_ERROR_INVALID_THREAD,
+ * JVMDI_ERROR_THREAD_NOT_SUSPENDED, JVMDI_ERROR_NULL_POINTER
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetCurrentFrame(JNIEnv *env, jthread thread, jframeID *framePtr);
+
+/* Return via "framePtr" the frame ID for the stack frame that called 
+ * the specified frame. Only Java and Java native frames are returned.
+ * Errors: JVMDI_ERROR_NO_MORE_FRAMES, JVMDI_ERROR_INVALID_FRAMEID,
+ * JVMDI_ERROR_NULL_POINTER
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetCallerFrame(JNIEnv *env, jframeID called, jframeID *framePtr);
+
+/* Return via "classPtr" and "methodPtr" the active method in the 
+ * specified frame.
+ * Note: class returned via 'classPtr' is allocated globally and must be
+ * explictly freed with DeleteGlobalRef.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_NULL_POINTER
+ * JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_OUT_OF_MEMORY
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetFrameMethod(JNIEnv *env, jframeID frame, 
+		   jclass *classPtr, jmethodID *methodPtr);
+
+/* Return via "bciPtr" the byte-code index within the active method of 
+ * the specified frame.  This is the index of the currently executing
+ * instruction.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_NATIVE_FRAME,
+ * JVMDI_ERROR_NULL_POINTER
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetFrameBCI(JNIEnv *env, jframeID frame, jint *bciPtr); 
+
+  /*
+   *  Local variables
+   */
+
+/* Return via "valuePtr" the value of the local variable at the
+ * specificied slot.
+ * Note: object returned via 'valuePtr' is allocated globally and must be
+ * explictly freed with DeleteGlobalRef.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NULL_POINTER,
+ * JVMDI_ERROR_NATIVE_FRAME, JVMDI_ERROR_OUT_OF_MEMORY
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetLocalObject(JNIEnv *env, jframeID frame, jint slot, 
+		     jobject *valuePtr);
+
+/* Return via "valuePtr" the value of the local variable at the
+ * specificied slot.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NULL_POINTER,
+ * JVMDI_ERROR_NATIVE_FRAME
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetLocalInt(JNIEnv *env, jframeID frame, jint slot, 
+		  jint *valuePtr);
+
+/* Return via "valuePtr" the value of the local variable at the
+ * specificied slot.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NULL_POINTER,
+ * JVMDI_ERROR_NATIVE_FRAME
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetLocalLong(JNIEnv *env, jframeID frame, jint slot, 
+		   jlong *valuePtr);
+
+/* Return via "valuePtr" the value of the local variable at the
+ * specificied slot.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NULL_POINTER,
+ * JVMDI_ERROR_NATIVE_FRAME
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetLocalFloat(JNIEnv *env, jframeID frame, jint slot, 
+		    jfloat *valuePtr);
+
+/* Return via "valuePtr" the value of the local variable at the
+ * specificied slot.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NULL_POINTER,
+ * JVMDI_ERROR_NATIVE_FRAME
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetLocalDouble(JNIEnv *env, jframeID frame, jint slot, 
+		     jdouble *valuePtr);
+
+/* Set the value of the local variable at the specificied slot.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NATIVE_FRAME
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SetLocalObject(JNIEnv *env, jframeID frame, jint slot, jobject value);
+
+/* Set the value of the local variable at the specificied slot.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NATIVE_FRAME
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SetLocalInt(JNIEnv *env, jframeID frame, jint slot, jint value);
+
+/* Set the value of the local variable at the specificied slot.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NATIVE_FRAME
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SetLocalLong(JNIEnv *env, jframeID frame, jint slot, jlong value);
+
+/* Set the value of the local variable at the specificied slot.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NATIVE_FRAME
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SetLocalFloat(JNIEnv *env, jframeID frame, jint slot, jfloat value);
+
+/* Set the value of the local variable at the specificied slot.
+ * Errors: JVMDI_ERROR_INVALID_FRAMEID, JVMDI_ERROR_INVALID_SLOT,
+ * JVMDI_ERROR_TYPE_MISMATCH, JVMDI_ERROR_NATIVE_FRAME
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SetLocalDouble(JNIEnv *env, jframeID frame, jint slot, jdouble value);
+
+
+  /*
+   *  Operand Stack
+   *
+   *  operations on operand stack to be added later **
+   */
+ 
+  /*
+   *  Breakpoints
+   */
+
+/* Set a breakpoint.  Send a JVMDI_EVENT_BREAKPOINT event when the
+ * instruction at the specified byte-code index in the specified
+ * method is about to be executed.
+ * Errors: JVMDI_ERROR_INVALID_METHODID, JVMDI_ERROR_INVALID_CLASS,
+ * JVMDI_ERROR_INVALID_BCI, JVMDI_ERROR_DUPLICATE_BREAKPOINT,
+ * JVMDI_ERROR_VM_DEAD, JVMDI_ERROR_OUT_OF_MEMORY
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SetBreakpoint(JNIEnv *env, jclass clazz, jmethodID method, jint bci);
+
+/* Clear a breakpoint.
+ * Errors: JVMDI_ERROR_INVALID_METHODID, JVMDI_ERROR_INVALID_CLASS,
+ * JVMDI_ERROR_INVALID_BCI, JVMDI_ERROR_NO_SUCH_BREAKPOINT,
+ * JVMDI_ERROR_VM_DEAD
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_ClearBreakpoint(JNIEnv *env, jclass clazz, jmethodID method, jint bci);
+
+/* Clear all breakpoints.
+ * Errors: JVMDI_ERROR_VM_DEAD
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_ClearAllBreakpoints(JNIEnv *env);
+  
+
+  /*
+   *  Events
+   */
+
+/* This stucture passes information about the event 
+ * bci & catch_bci are method relative. bci is the index of the 
+ * last byte-code executed. 
+ */
+typedef struct {
+    jint kind;		/* the discriminant */
+
+    union {
+	struct { /* kind = JVMDI_EVENT_SINGLE_STEP */
+            jthread thread;
+            jclass clazz;
+            jmethodID method;
+            jint bci;
+        } single_step;
+			
+	struct { /* kind = JVMDI_EVENT_BREAKPOINT */
+            jthread thread;
+            jclass clazz;
+            jmethodID method;
+            jint bci;
+        } breakpoint;
+
+	struct { /* kind = JVMDI_EVENT_FRAME_POP */
+            jthread thread;
+        } frame_pop;
+
+	struct { /* kind = JVMDI_EVENT_EXCEPTION */
+            jthread thread;
+            jclass clazz;
+            jmethodID method;
+            jint bci;
+            jobject exception;
+            jclass catch_clazz;
+            jmethodID catch_method;
+            jint catch_bci;
+        } exception;
+
+	struct { /* kind = JVMDI_EVENT_USER_DEFINED */
+            jobject object;
+            jint key;
+        } user;
+			
+	struct { /* kind = JVMDI_EVENT_THREAD_DEATH or */
+	         /* JVMDI_EVENT_THREAD_CREATE */
+            jthread thread;
+        } thread;
+			
+                 /* kind = JVMDI_EVENT_VM_DEATH */
+                 /* no additional fields */		
+    } u;
+} JVMDI_Event;
+
+	/*** event kinds ***/
+#define JVMDI_EVENT_SINGLE_STEP   ((jint)1)
+#define JVMDI_EVENT_BREAKPOINT    ((jint)2)
+#define JVMDI_EVENT_FRAME_POP     ((jint)3)
+#define JVMDI_EVENT_EXCEPTION     ((jint)4)
+#define JVMDI_EVENT_USER_DEFINED  ((jint)5)
+#define JVMDI_EVENT_THREAD_CREATE ((jint)6)
+#define JVMDI_EVENT_THREAD_DEATH  ((jint)7)
+#define JVMDI_EVENT_VM_DEATH      ((jint)99)
+
+/* event handler hook.
+ * Event handlers should not allocate java objects or call java methods.
+ * Thread getting the event calls the hook.  Thread status is not 
+ * changed, e.g. thread is not suspended - if this is desired, event
+ * handler should suspend.
+ * Note: JVMDI_Event structure and objects within event structure
+ * are allocated locally and will not be preserved across return 
+ * from hook.
+ */
+typedef void (*JVMDI_EventHook)(JNIEnv *env, JVMDI_Event *event);
+
+/* Set the routine which will handle in-coming events.
+ * Passing NULL as hook unsets hook.
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_SetEventHook(JNIEnv *env, JVMDI_EventHook hook);
+
+
+  /*
+   *  Method access
+   */
+
+/* Return via "namePtr" the method's name and via "signaturePtr" the
+ * method's signature.
+ * Note: strings returned via 'namePtr' and 'signaturePtr' are 
+ * allocated globally and must be explictly freed with DeleteGlobalRef.
+ * Errors: JVMDI_ERROR_INVALID_METHODID, JVMDI_ERROR_INVALID_CLASS,
+ * JVMDI_ERROR_NULL_POINTER, JVMDI_ERROR_OUT_OF_MEMORY
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetMethodName(JNIEnv *env, jclass clazz, jmethodID method, 
+		    jstring *namePtr, jstring *signaturePtr);
+
+/* Return via "definingClassPtr" the class in which this method is
+ * defined.
+ * Note: class returned via 'definingClassPtr' is allocated globally 
+ * and must be explictly freed with DeleteGlobalRef.
+ * Errors: JVMDI_ERROR_INVALID_METHODID, JVMDI_ERROR_INVALID_CLASS,
+ * JVMDI_ERROR_NULL_POINTER, JVMDI_ERROR_OUT_OF_MEMORY
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetMethodDefiningClass(JNIEnv *env, jclass clazz, jmethodID method,
+ 			     jclass *definingClassPtr);
+
+/* Return via "isNativePtr" a boolean indicating whether the method
+ * is native.
+ * Errors: JVMDI_ERROR_INVALID_METHODID, JVMDI_ERROR_INVALID_CLASS,
+ * JVMDI_ERROR_NULL_POINTER
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_IsMethodNative(JNIEnv *env, jclass clazz, jmethodID method, 
+		    jboolean *isNativePtr);
+
+
+  /*
+   *  Misc
+   */
+
+/* Return via "classesPtr" all classes currently loaded in the VM.
+ * Note: array returned via 'classesPtr' is allocated globally 
+ * and must be explictly freed with DeleteGlobalRef.
+ * Errors: JVMDI_ERROR_NULL_POINTER, JVMDI_ERROR_OUT_OF_MEMORY
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetLoadedClasses(JNIEnv *env, jobjectArray *classesPtr);
+
+/* Return via "versionPtr" the JVMDI version number.
+ * Higher 16 bits is major version number, lower 16 bit is minor 
+ * version number.
+ * Errors: JVMDI_ERROR_NULL_POINTER
+ */
+JNIEXPORT jvmdiError JNICALL
+JVMDI_GetVersionNumber(JNIEnv *env, jint *versionPtr);
+
+/*
+ * To be added:
+ *
+ * + Program modification mechanisms.
+ *
+ * + Object enumerations, e.g. all instances of...
+ *
+ * + Object locking information.
+ *
+ * + User event generation mechanism.
+ */
+  
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
+#endif /* JVMDI_H */
+</verb>
+
+
+<sect> Design Issues
+<p>
+
+<sect1> Native breakpoints or bytecode mechanism
+<p>
+
+<sect2> Pros for native breakpoints
+<p>
+
+Native breakpoints make it easy to implement "runtime" breakpoints,
+i.e. setting breakpoints when the debuggee is in execution.
+
+Moreover, since the bytecodes are translated to native code on a per
+Method basis, it will not be possible to set a breakpoint in the
+current method with the bytecode mechanism.
+
+<sect2> Pros for bytecode mechanism
+<p>
+
+JVMDI specification has APIs to put breakpoints at a given bytecode
+index. In CISC architectures, a single native instruction could
+subsume many bytecode entries, which makes it impossible to stop the
+debugger at a particular index. In other words, single stepping
+through the bytecode becomes difficult.
+
+<sect1> Debugger thread Vs Event driven model
+<p>
+
+Using NSPR threads might add a runtime overhead associated with thread
+scheduling. The alternative would be to use an event driven model,
+where the VM responds to asynchronous debugger events. But using NSPR
+threads seems to be the most portable way of doing it.
+
+<sect> Data Structures
+<p>
+
+The existing LineNumberTable and LocalVariableTable data structures
+will be used. A few lookup routines are yet to be written.
+
+Proposal:
+
+<itemize>
+
+<item> Add a boolean value indicating whether the variable is in a
+register or stack and another (possibly a byte) to hold the register
+number if in a register.
+
+<item> Associate local variable names with primitive graph nodes 
+
+</itemize>
+
+<bf/Possible problems:/ 
+
+<p>
+
+A single variable assigned in more than one place,
+which gives rise to several different variables in the SSA form and
+the register allocator allocates a different register to these
+copies. Then finding the value of a local variable at runtime requires
+us to figure out exactly what register the variable is in, at that
+point in time.
+
+<p>
+
+<bf/Proposed Solution:/
+
+<p>
+
+See section <ref id="lookup-local" name="Finding the values of local
+variables">
+
+<sect1> Debugger object
+<p>
+
+A debugger object will be implemented and shall be used to hold the
+state of the debugger, including the set of breakpoints set and the
+active/passive ones.
+
+<sect1> PC to byte code mapping
+<p>
+
+See section <ref id="lookup-local" name="Finding the values of local
+variables">
+
+<sect1> Bytecode, local varible name -> location mapping
+<p>
+
+See section <ref id="lookup-local" name="Finding the values of local
+variables">
+
+<sect> Call Stack
+<p>
+
+Already implemented for Win32. Needs to be ported for other
+platforms. (Issues anyone ?)
+
+<sect> Threads 
+<p>
+
+Because all of the debugger API implementation is native, we'll have
+fewer deadlock issues. Need to figure out the data structures for
+thread groups and names.
+
+<sect> Debug related options to the VM
+<p>
+
+The following <bf> independent </bf> options will be added to Electrical fire.
+
+<itemize>
+<item> -debug which turns on debugging
+<item> -On where n is the level of optimization.
+</itemize>
+
+<sect> Implementation ideas and concerns
+<p>
+
+<sect1> Java Frames
+<p>
+
+The <tt/jframeID/ will be the stack pointer of the current thread in
+our implementation. This will make accessing the local variable at 
+a given slot address very simple.
+
+<sect1> Operand Stack
+<p>
+
+Since Electricalfire doesn't have the concept of an operand stack,
+this can not supported easily.
+
+<sect> Implementation strategy
+<p>
+
+Roughly in the order of priority:
+
+<itemize>
+<item> Implement -On options and with no optimizations turned on,
+spill all registers to memory.
+<item> Implement the breakpoint routines, by handling the break point
+related bytecodes and primitives appropriately.
+<item> Implement the thread status related API.
+</itemize>
+
+The goal is to get a very basic debugger which handles breakpoints
+correctly and supports dumping local variables, all of which have been
+spilled into memory working on all the platforms we're planning to
+support.
+
+<sect1> Propagation of Symbolic information
+<p>
+
+During the construction of the primitive graph, the data nodes will be
+annotated with a pointer to the <tt>LocalVariableEntry</tt>. Since it
+is important to keep the compilation time down, it is necessary to
+quickly get to a <tt>LocalVariableEntry</tt> at a given slot
+index. Since the JVM specification doesn't state an order in which
+these entries appear in the table, we'll keep the local variables in
+the increasing order with respect to the slot index, so that a binary
+search of the table will get us to the right entry in O(log(n)) time.
+
+<sect1> What happens when a breakpoint is hit ?
+<p>
+
+A hardware specific breakpoint/trap instruction will be inserted into
+the native code. A platform specific trap handler gets executed and
+the trap handler sends a JVMDI_Event of type
+JVMDI_EVENT_BREAKPOINT. And then waits till the debugger tells it to 
+continue execution using a user defined event.
+
+<sect1> Finding the values of local variables at runtime
+<label id="lookup-local">
+<p>
+
+An auxillary data structure <tt/pc2bci/ maps the current PC to a byte
+code index. Each local variable entry in the <tt/LocalVariableTable/
+will be annotated with a list of mappings from byte code ranges to
+it's address in register or memory.
+
+So querying the value of a local variable will involve the following
+steps: 
+
+<itemize>
+<item> Look up the byte code index in <tt/pc2bci/ using the current
+PC. 
+<item> Look the <tt/LocalVariableEntry/ up in <tt/LocalVariableTable/
+by name.
+<item> Scan the list of mappings looking for the one that has the
+required bytecode.
+<item> Use the type information and the address to fetch the value of
+the local variable.
+</itemize>
+
+<sect1> Flow of control
+<p>
+
+The debugger will run as a separate 
+<htmlurl url="http://warp/hardcore/prj-nspr20/" name="NSPR"> thread
+and wait for events coming in from the primitive debugger interface
+(PDI) as detailed in the <ref id="Javasoft"> document.
+
+<p>
+
+Since all the necessary infrastructure is not in place, for testing
+purposes, an external driver program will be used that sends socket based
+messages to the debugger thread. 
+
+<p>
+
+Further if the VM has been invoked with the <tt/-debug/ option, the VM
+sends a breakpoint event to itself at the main routine, in order to
+give the (possibly) remote debugger an opportunity to connect to the
+VM. (Is this really necessary ?)
+
+<sect> Dependencies
+<p>
+
+<itemize>
+<item> Crystalization of Javasoft API
+<item> Our java.lang.thread and sockets support in order to support
+PDI.
+</itemize>
+</article>

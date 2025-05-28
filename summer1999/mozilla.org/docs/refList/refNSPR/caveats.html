@@ -1,0 +1,458 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR: Caveats</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+   
+
+
+
+<H2>NSPR: Caveats</H2>
+
+NSPR tries to provide a consistent level of service across the platforms
+it supports. This has proven to be quite challenging, a challenge that
+was met to a large degree, but there is always room for improvement. The
+casual client may not encounter a need to know the details of the shortcomings
+to the level described here, but if and when clients become more sophisticated,
+these issues will certainly surface.
+
+<P>This memo is by no way complete.
+<H3>Multiplatform</H3>
+
+
+<UL>
+<P><LI>
+Do not call any blocking system call from a local thread. The only exception
+to this rule is the <B><TT>select()</TT></B> and <B><TT>poll()</TT></B>
+system calls on Unix, both of which NSPR has overridden to make sure they
+are aware of the NSPR local threads.
+
+<P><LI>
+In the combined (MxN) model, which includes NT, IRIX (sprocs), and pthreads-user,
+the primordial thread is always a local thread. Therefore, if you
+call a blocking system call from the primordial thread, it is going to
+block more than just the primordial thread and the system may not function
+correctly. On NT, this problem is especially obvious because the
+idle thread, which is in charge of driving the asynch io completion port,
+is also blocked. Do not call blocking system calls from the primordial
+thread. Create a global thread and call the system call in that thread,
+and have the primordial thread join that thread.
+
+<P><LI>
+NSPR uses timer signals to implement thread preemption for local threads
+on some platforms. If all the software linked into the application is not
+ported to the NSPR API, the application may fail because of threads being
+preempted during critical sections. To disable thread preemption call <B><TT>PR_DisableClockInterrupts()
+</TT></B>during initialization.
+
+<P><LI>
+Interrupting threads (via <B><TT>PR_Interrupt()</TT></B>) on threads blocked
+in I/O functions is implemented to various degrees on different platforms.
+The UNIX based platforms all implement the function though there may be
+up to a 5 second delay in processing the request.
+
+<P><LI>
+The mechanism used to implement <B><TT>PR_Interrupt()</TT></B> on the <B>pthreads</B>
+versions of NSPR is flawed. No failure attributable to the flaw has shown
+up in any tests or products - yet. The specific area surrounding pthread's
+<I>continuation thread</I> has been both observed and empirically proven
+faulty, and a correction identified.
+</UL>
+
+<H3>Macintosh</H3>
+
+
+<UL>
+<P><LI>
+The current port of NSPR for Macintosh will not be usable in its own right.
+The implementation has dependencies on libraries that are implemented in
+the Netscape Communicator. The work to undo this dependency has already
+been started and the result will be made available soon.
+
+<P><LI>
+Macintosh threads are not preemptable. As usual, it isn't that we couldn't
+preempt them, but rather that the Macintosh libraries are not prepared
+for such things to happen. NSPR does take advantage of Macintosh' asynchronous
+I/O capability to perform scheduling during I/O. Still, there is no enforceable
+mechanism to guarantee thread scheduling fairness.
+
+<P><LI>
+Calendar time facilities are limited on Macintosh. One can only determine
+the immediate setting of Daylight Savings Time, not what it would be at
+some arbitrary time in the past or the future.
+
+<P><LI>
+Initialization of NSPR may fail if the host is not connected to a network
+of some kind.
+</UL>
+
+<H3>WIN-16</H3>
+
+The WIN-16 port is unique in the NSPR world in that it uses the <A HREF="http://www.sybase.com/products/languages/watccpl.html">WATCOM</A>
+development environment. This environment does bring along some of its
+own special trappings.
+<UL>
+<P><LI>
+Win16 uses co-operative non-preemptive dispatching for its own processes.
+This means that when the application using NSPR is dispatched, a thread
+within that application will run until that thread voluntarily gives up
+control to another thread within the process. Further, the process in which
+the threads are being emulated will run until it invokes some function
+that gives control to Windows.
+
+<P><LI>
+Windows 3.1 applications always run on a stack provided by Windows. This
+means that NSPR threads use a <I>shadow stack</I> to preserve context across
+a thread switch. At thread switch time, the stack of the current running
+thread is copied to other storage associated with that thread and the about-to-be-dispatched
+thread's stack data is copied back onto the Windows stack just before the
+thread is given control. This has disastrous implications on the generally
+accepted programming practice of taking the address of a stack variable
+and giving that address to another thread.
+
+<P>Consider that the Windows stack is swapped in and out with each thread
+switch. The thread that created a stack variable sees his own stack variables
+correctly across thread switches. However, another thread does not see
+the data as intended because the stack has been swapped out to the <I>shadow
+stack</I> and the current thread's stack now occupies the Windows stack.
+This can be difficult to diagnose.
+
+<P>For complete cross platform portability, do not take the address of
+a stack variable and make that address available to another thread. For
+more details, see the memo on <A HREF="AutoAddresses.html">Automatic Addresses</A>.
+<P><LI>
+Windows 3.1 does not support 64 bit file offsets. The NSPR 64 bit file
+offset APIs map to Windows 3.1 32 bit file offset APIs. You may use NSPR's
+64bit file offset APIs in your Windows 3.1 applications for cross platform
+consistency, but do not expect to see real 64 bit file offset behavior.
+On Windows 3.1, when NSPR detects a value in a 64 bit file offset greater
+than 32bit significance, it terminates with an ASSERT.
+
+<P><LI>
+The general rules of 16 bit Large Model memory restrictions apply to applications
+using NSPR on Windows 3.1.
+
+<P><LI>
+The NSPR Process Creation API functions return an error when invoked on
+Windows 3.1.
+
+<P><LI>
+Functions called in an application by a shared library require an additional
+function prolog. The prolog is presented in the macro <B><TT>PR_CALLBACK</TT></B>.
+For any function made available to any shared library (most likely passed
+in as a function pointer), that function must have the <B><TT>PR_CALLBACK</TT></B>
+qualifier.
+
+<P><LI>
+NSPR functions are normally declared <TT>__cdecl</TT>. These declarations
+are hidden in the <B><TT>PR_EXTERN()</TT></B> declarations in NSPR's header
+files. NSPR functions returning floating point types and structs by value,
+including the derived types PRInt64, are declared <B><TT>__PASCAL</TT></B>.
+These different declarations are to accommodate restrictions in Watcom's
+C/C++ version 11.0 and 11.0a compiler.
+
+<P><LI>
+Windows 3.1 does not provide a non-blocking file I/O interface. NSPR's
+file I/O is done using Windows 3.1's synchronous file I/O API. The NSPR
+file I/O APIs may cause a thread switch even though the I/O is fully synchronous.
+Do not depend on File I/O being synchronous.
+
+<P><LI>
+Command line applications using the LIBC printf() and related APIs behave
+funny on Windows 3.1. Read the fine print in the Windows SDK for the grizzly
+details.
+
+<P><LI>
+Watch out for PRIntn overflow on Win16. Make sure all possible values
+of your PRIntn variables are within 2^16.
+</UL>
+
+<H3>WIN-95</H3>
+
+The WIN-95 version of NSPR should really be labeled WIN-32. The same library
+will work on either WIN-NT or WIN-95.
+<UL>
+<P><LI>
+WIN-95 NSPR uses native threads as NSPR threads. Generally speaking, the
+native threads (on NT or '95) are quite functional. However, having lots
+of them (100s or even 1000s) is unrealistic.
+
+<P><LI>
+<B><TT>PR_Interrupt()</TT></B> is not implemented.
+</UL>
+
+<H3>WIN-NT</H3>
+
+The WIN-NT port of NSPR takes advantage of some of the <A HREF="NTIOTimeoutInterrupt.html">features
+of NT</A> that are not available in WIN-95, such as fibers and asynch I/O.
+The implementation is well suited for high performance application, such
+as a server, but clients may find the WIN-95 version more suited (and adequate)
+for interactive applications such as are prevalent on today's workstations.
+<UL>
+<P><LI>
+The NT version implements a MxN threading model, using native NT threads
+as the virtual processors and NT's fiber abstraction as the locally scheduled
+threads. The fibers are nice because much of the NT API understands them.
+But they are not really preemptable, and that can lead to problems, depending
+on the needs of your application.
+
+<P><LI>
+The mode (blocking or nonblocking) of a socket cannot be changed at will
+once the socket has been used. Also, the new socket created by an
+<B><TT>PR_Accept() </TT></B>call on a listening socket inherits the mode
+of the listening socket, and cannot be changed.
+
+<P><LI>
+A file descriptor is not usable after an IO operation on it fails with
+either <B><TT>PR_IO_TIMEOUT_ERROR</TT></B> or <B><TT>PR_IO_INTERRUPT_ERROR</TT></B>.
+The only thing you can do is to close the file descriptor. See the
+FAQ article for more info. There is no current workaround. You must
+write your program with this restriction in mind.
+
+<P><LI>
+PR_Interrupt is implemented except for <B><TT>PR_Connect()</TT></B>.
+</UL>
+
+<H3>IRIX</H3>
+
+
+<UL>
+<P><LI>
+The IRIX (classic) implementation has a known race condition in creating
+new threads. If the spawned thread establishes and exits before the parent
+thread is resumed, the parent will be left with an invalid pointer to the
+child. The problem has a solution that will be available soon.
+</UL>
+
+<H3>Digital Unix</H3>
+
+
+<UL>
+<P><LI>
+Digital Unix (aka, OSF1) requires the latest patches for the pthreads library.
+The changes are not evident until one tries to do thread suspension (<B><TT>PR_SuspendAll()</TT></B>)
+which is in preparation for garbage collection.
+
+<P><LI>
+Digital Unix is the main platform used for NSPR's prototype use of IPv6.
+There are some conflicts between the patches needed to use IPv6 and those
+needed for pthreads. The IPv6 kit needs to be applied on a baseline configuration
+of Digital Unix V4.0B.
+</UL>
+
+<H3>Linux</H3>
+
+
+<UL>
+<P><LI>
+The pthreads version of Linux (which is not the default) uses the same
+signals that NSPR uses to suspend threads in preparation for garbage collection.
+No solution in hand.
+</UL>
+
+<H3>OS/2</H3>
+
+
+<UL>
+<P><LI>
+The OS/2 port is not functional in its current state due to the requirement
+to remove some files that could not be shipped under the NPL. This problem
+has been resolved and an update will be appearing shortly.
+</UL>
+
+<DIV ALIGN=right></DIV>
+
+<DIV ALIGN=right></DIV>
+
+<DIV ALIGN=right>
+<HR WIDTH="100%"></DIV>
+
+<DIV ALIGN=right><I><FONT SIZE=-1>Last updated: Tue Mar 10 10:31:39 PST
+1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

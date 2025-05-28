@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<TITLE> : Implementation strategy</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<A HREF="debugger-8.html"><IMG SRC="prev.gif" ALT="Previous"></A>
+<A HREF="debugger-10.html"><IMG SRC="next.gif" ALT="Next"></A>
+<A HREF="debugger.html#toc9"><IMG SRC="toc.gif" ALT="Contents"></A>
+<HR>
+<H2><A NAME="s9">9. Implementation strategy</A></H2>
+
+
+<P>Roughly in the order of priority:</P>
+<P>
+<UL>
+<LI> Implement -On options and with no optimizations turned on,
+spill all registers to memory.
+<LI> Implement the breakpoint routines, by handling the break point
+related bytecodes and primitives appropriately.
+<LI> Implement the thread status related API.
+</UL>
+<P></P>
+<P>The goal is to get a very basic debugger which handles breakpoints
+correctly and supports dumping local variables, all of which have been
+spilled into memory working on all the platforms we're planning to
+support.</P>
+
+<H2><A NAME="ss9.1">9.1 Propagation of Symbolic information</A></H2>
+
+
+<P>During the construction of the primitive graph, the data nodes will be
+annotated with a pointer to the <CODE>LocalVariableEntry</CODE>. Since it
+is important to keep the compilation time down, it is necessary to
+quickly get to a <CODE>LocalVariableEntry</CODE> at a given slot
+index. Since the JVM specification doesn't state an order in which
+these entries appear in the table, we'll keep the local variables in
+the increasing order with respect to the slot index, so that a binary
+search of the table will get us to the right entry in O(log(n)) time.</P>
+
+<H2><A NAME="ss9.2">9.2 What happens when a breakpoint is hit ?</A></H2>
+
+
+<P>A hardware specific breakpoint/trap instruction will be inserted into
+the native code. A platform specific trap handler gets executed and
+the trap handler sends a JVMDI_Event of type
+JVMDI_EVENT_BREAKPOINT. And then waits till the debugger tells it to 
+continue execution using a user defined event.</P>
+
+<H2><A NAME="lookup-local"></A> <A NAME="ss9.3">9.3 Finding the values of local variables at runtime</A></H2>
+
+
+<P>An auxillary data structure <CODE>pc2bci</CODE> maps the current PC to a byte
+code index. Each local variable entry in the <CODE>LocalVariableTable</CODE>
+will be annotated with a list of mappings from byte code ranges to
+it's address in register or memory.</P>
+<P>So querying the value of a local variable will involve the following
+steps: </P>
+<P>
+<UL>
+<LI> Look up the byte code index in <CODE>pc2bci</CODE> using the current
+PC. 
+<LI> Look the <CODE>LocalVariableEntry</CODE> up in <CODE>LocalVariableTable</CODE>
+by name.
+<LI> Scan the list of mappings looking for the one that has the
+required bytecode.
+<LI> Use the type information and the address to fetch the value of
+the local variable.
+</UL>
+<P></P>
+
+<H2><A NAME="ss9.4">9.4 Flow of control</A></H2>
+
+
+<P>The debugger will run as a separate NSPR thread and wait for events coming 
+  in from the primitive debugger interface (PDI) as detailed in the <A HREF="debugger.html#Javasoft">Javasoft</A> 
+  document.</P>
+
+<P>Since all the necessary infrastructure is not in place, for testing
+purposes, an external driver program will be used that sends socket based
+messages to the debugger thread. </P>
+
+<P>Further if the VM has been invoked with the <CODE>-debug</CODE> option, the VM
+sends a breakpoint event to itself at the main routine, in order to
+give the (possibly) remote debugger an opportunity to connect to the
+VM. (Is this really necessary ?)</P>
+
+<HR>
+<A HREF="debugger-8.html"><IMG SRC="prev.gif" ALT="Previous"></A>
+<A HREF="debugger-10.html"><IMG SRC="next.gif" ALT="Next"></A>
+<A HREF="debugger.html#toc9"><IMG SRC="toc.gif" ALT="Contents"></A>
+</BODY>
+</HTML>

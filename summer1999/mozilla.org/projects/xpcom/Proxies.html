@@ -1,0 +1,380 @@
+<HTML>
+<HEAD>
+<TITLE>nsISupports Proxies</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2>
+
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+
+
+
+
+   
+   
+   
+
+
+
+<center><font size=+3>nsISupports Proxies</font>
+<br><a href="mailto:dougt@netscape.com">Doug Turner</a></center>
+<center>14 July 1999</center>
+
+<h3>Introduction</h3>
+
+<p>
+First and foremost, this is a work in progress. It is only a reflection
+of nsISupports Proxies as of this writing. A "Proxy", in this context, 
+is a stub object which enables a method of any class which is derived 
+from nsISupports to be called on any in-process thread. "Proxy" itself is 
+possibly not the correct word to use, but this I use it for historical 
+reasons. 
+
+<p>
+The main reason for nsISupports Proxies is that Javascript and UI are
+on a single thread. When one is busy, the other is blocked. A good
+example of this is XPInstall. Its installation scripts differ from
+the majority of Javascripts, which are small and can be quickly run.
+XPInstall installation scripts are sometimes very complex and can require
+long execution time due to unzipping or native file system actions.
+If XPInstall ran on the UI thread, the product would appear frozen until
+the script was complete. This is definitely bad. Because of
+this, XPInstall was moved to its own thread. Now XPInstall can do
+its installations while the product renders, but now XPInstall can not
+access UI elements such as a progress meter or a confirmation dialog.
+How can a separate non-UI thread act as if it was on the UI thread?
+Herein lays the utility of nsISupports Proxies.
+
+<p>
+I believe that other people working on Seamonkey need similar solutions. In 
+this document, I will try to explain how to use nsISupports Proxies.
+
+
+<br>
+<h3>How do I use it?</h3>
+
+<p>
+From a users point of view, you need only to look at the nsIProxyObjectManager.
+It has two entry points:
+
+<p>
+
+<br>
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#CCFFFF" >
+<tr>
+<td>
+<pre>
+    NS_IMETHOD GetProxyObject(nsIEventQueue *destQueue, 
+                              REFNSIID aIID, 
+                              nsISupports* aObj, 
+                              ProxyType proxyType,
+                              void** aProxyObject) = 0;
+  
+    NS_IMETHOD GetProxyObject(nsIEventQueue *destQueue, 
+                              const nsCID &aClass, 
+                              nsISupports *aDelegate, 
+                              const nsIID &aIID,
+                              ProxyType proxyType,
+                              void** aProxyObject) = 0;
+</pre>
+</td>
+</tr>
+</table>
+
+<p>
+The two APIs are essentially the same.  The only difference is that the 
+first accepts a created object, and the latter will create an object for you.   
+Note that this creation of the object will happen of the destination's event 
+queue.  For instance, if you need to not only use an object remotely, but also
+have it created remotely, the second API is what you need to use.
+
+<p>
+I should mention this here.  The IID that you are requesting MUST be in the 
+typelib.  These means that you should have had to create and IDL for it and
+have generated a typelib.  If you have not, or do not know what I am talking
+about see:
+
+<p><a href="http://www.mozilla.org/scriptable/">http://www.mozilla.org/scriptable/</a>
+
+
+
+<p>
+Now, the ProxyType parameter can be either two flags: <b>PROXY_SYNC</b> or <b>PROXY_ASYNC</b>.
+
+<p>
+<b>PROXY_SYNC</b> acts just like a function call in that it blocks the calling 
+thread until the the method is invoked on the destination thread.  This is the 
+normal and default case.  <b>PROXY_ASYNC</b>, on the other hand, is a "fire and 
+forget" method call. Calls on object created with this flag will return immediately
+and you will lose all return information.  NS_OK will be returned to you.  
+
+<p>
+WARNING about <b>PROXY_ASYNC</b>:  
+
+<p>
+You must take very special care when using this flag.  If the calling thread goes away, 
+any function which accesses the calling stack will blow up.  For example:
+<p>
+<br>
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#CCFFFF" >
+<tr>
+<td>
+<pre>
+
+	myFoo->bar(&x)
+
+		... thread goes away ...
+
+	bar(PRInt32 *x)
+    {
+		*x = 0;   <-----  You will blow up here.
+
+</pre>
+</td>
+</tr>
+</table>
+
+<p>
+
+<p>
+So, given an event queue to execute methods on, and either a nsISupports object that
+has been created or CID, and a flag, a new nsISupports proxy object will be returned
+to you.  Once you have a proxy object, you may use it as if it is the "real" object. 
+All the methods that are in the "real" object are stubbed into the proxy object.  When
+you are finished with a proxy object, you should call NS_RELEASE on it. It will take 
+care of freeing the "real" object as well as itself.  If you have created the object 
+yourself and then created the proxy, please note that you will have at least a refcount
+of 2 (one for the proxy and one for  the created object which you passed into 
+GetProxyObject, plus any other refcounts which you may have). 
+
+<p>
+A point here to bring up is how do we supply the event queue to GetProxyObject?
+Well there are two possibilities.  First, you may know which event queue that you 
+are interested in.  In this case, just simply use it.  In most cases, you 
+will want the main UI thread (aka the primordial thread).  If this is the case, 
+you can simply pass nsnull as the event queue. There is logic that will determine 
+if the caller is on the destination thread.  If this is true, I will not call via 
+proxy, but rather invoke the method directly which will save cycles. This detection 
+will only  be used if you are using a proxy created with the <b>PROXY_SYNC</b> flag.
+
+<p>
+A pretty cool feature recently added is AutoProxification.  When ever you call
+a method on a proxy object, each parameter is inspected.  If it happens to be
+a descendent of a nsISupports, it will automatically be turned into a Proxy.
+This allows you to call a component on another thread and then interact with it.
+Any of the objects it may return will be called in a thread-safe manner.
+
+<p>
+This means that Interfaces should be designed for either public or private use.  
+If they are public, then they probably really should have IDLs for them.  
+If AutoProxification can not Proxy a nsISupport parameter, the method will return
+an error code.  
+
+<h3>Example Usage</h3>
+<br>
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#CCFFFF" >
+<tr>
+<td>
+<pre>
+
+	nsresult rv = NS_OK;
+
+	NS_WITH_SERVICE( nsIProxyObjectManager, pIProxyObjectManager, kProxyObjectManagerCID, &rv);
+	if(NS_FAILED(rv)) return rv;
+
+	rv = pIProxyObjectManager->GetProxyObject(nsnull,                    // the primordial thread.
+                                                  nsITestProxy::GetIID(),
+                                                  createdTestObject,         // a created object
+                                                  PROXY_SYNC,                // normal proxy object
+                                                  (void**)proxyToTestObject);// our proxy
+
+	NS_RELEASE(createdTestObject);  // we do not care about the real object anymore. ie. GetProxyObject
+                                        // refcounts it.
+
+	proxyToTestObject->Test1(x,y,z);
+
+	NS_RELEASE(proxyToTestObject);
+
+</pre>
+</td>
+</tr>
+</table>
+
+
+
+
+
+
+
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR BGCOLOR="#000000">
+
+<TD BGCOLOR="#000000" COLSPAN=5><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

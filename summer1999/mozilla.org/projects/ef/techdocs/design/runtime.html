@@ -1,0 +1,420 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Runtime</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2><FONT SIZE=+4>Runtime</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC="../electricalfire.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A>  <A HREF=
+"example1.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM" WIDTH="37"
+HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="../design.html"><IMG SRC="../arrows/up.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="types.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+
+<DL>
+  <DT><P ALIGN=RIGHT><A HREF="types.html"><FONT SIZE=+2>Types</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="monitors.html"><FONT SIZE=+2>Monitors and Hash
+  Codes</FONT></A>
+</DL>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P></P>
+
+<H2>Object Layout</H2>
+
+
+<P>At the highest level each Java object consists of a header and fields.
+On a 32-bit address implementation (i.e. an implementation in which pointers
+are 32 bits wide) the header consists of two words, as shown in <A HREF=
+"#figure1">Figure 1a</A>. On a 64-bit implementation the header consists
+of two doublewords, as shown in <A HREF="#figure1">Figure 1b</A>.</P>
+
+<P>The <CODE>type</CODE> word or doubleword points to the object's type;
+see the <A HREF="types.html">Types page</A> for the details. The <CODE>subheader</CODE>
+word or doubleword contains the object's hash code and monitor bits; see
+the <A HREF="monitors.html">Monitors page</A> for details.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP">
+<A NAME="figure1"></A><IMG SRC="graphics/object_32.gif" WIDTH="181" HEIGHT=
+"114" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/object_64.gif" WIDTH="181" HEIGHT="168" ALIGN="BOTTOM"
+NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD>(a) Object on a 32-bit address machine</TD>
+  <TD>(b) Object on a 64-bit address machine</TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="2">Figure 1</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Alignment</H3>
+
+
+<P>The memory allocator guarantees that all objects will be allocated on
+at least a word boundary. Furthermore, the memory allocator guarantees that
+any object whose size is a multiple of 8 will be allocated on a doubleword
+boundary.</P>
+
+<H3>Fields</H3>
+
+
+<P>An object's instance variables, if any, follow its header. The current
+implementation of Electrical Fire allocates the fields in the same order
+as they are presented in the Java source, with padding inserted as necessary
+to make sure that each field is aligned to a boundary that is a multiple
+of its size. Additional padding is inserted at the end of the object to
+make its size a multiple of 4 if the object does not have a doubleword in
+it or 8 if it does.</P>
+
+<P>The sizes and alignments of the standard Java types are:</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TH ALIGN="LEFT" NOWRAP><P ALIGN=LEFT>Java Type &nbsp;</TH>
+  <TH ALIGN="LEFT"><P ALIGN=LEFT>Size and alignment (bytes)</TH>
+ </TR>
+ <TR>
+  <TD NOWRAP><CODE>boolean</CODE></TD>
+  <TD>1</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP><CODE>byte</CODE></TD>
+  <TD>1</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP><CODE>char</CODE></TD>
+  <TD>2</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP><CODE>short</CODE></TD>
+  <TD>2</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP><CODE>int</CODE></TD>
+  <TD>4</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP><CODE>long</CODE></TD>
+  <TD>8</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP><CODE>float</CODE></TD>
+  <TD>4</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP><CODE>double</CODE></TD>
+  <TD>8</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP>object pointer</TD>
+  <TD>4 or 8</TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>Fields are placed at increasing byte addresses. The order of the bytes
+within a field (big or little-endian) is implementation-dependent.</P>
+
+<P>When class B extends class A, class B's fields follow class A's fields.
+Any padding at the end of class A's instances is dropped. An example illustrates
+this and other instance layout rules.</P>
+
+<H4>Example</H4>
+
+
+<P>Consider the following Java class declarations:</P>
+
+<PRE><FONT COLOR="#FF0000">class A</FONT>
+<FONT COLOR="#FF0000">{</FONT>
+<FONT COLOR="#FF0000">  Object a;</FONT>
+<FONT COLOR="#FF0000">  int b;</FONT>
+<FONT COLOR="#FF0000">  char c;</FONT>
+<FONT COLOR="#FF0000">}</FONT>
+
+<FONT COLOR="#0000FF">class B extends A</FONT>
+<FONT COLOR="#0000FF">{</FONT>
+<FONT COLOR="#0000FF">  boolean d;</FONT>
+<FONT COLOR="#0000FF">  boolean e;</FONT>
+<FONT COLOR="#0000FF">  byte f;</FONT>
+<FONT COLOR="#0000FF">  short g;</FONT>
+<FONT COLOR="#0000FF">  float h;</FONT>
+<FONT COLOR="#0000FF">  double i;</FONT>
+<FONT COLOR="#0000FF">  int j;</FONT>
+<FONT COLOR="#0000FF">}</FONT>
+
+<FONT COLOR="#007F00">class C extends B</FONT>
+<FONT COLOR="#007F00">{</FONT>
+<FONT COLOR="#007F00">  byte k;</FONT>
+<FONT COLOR="#007F00">  B l;</FONT>
+<FONT COLOR="#007F00">}</FONT></PRE>
+
+<P>Instance objects of classes <FONT COLOR="#FF0000">A</FONT>, <FONT COLOR="#0000FF">B</FONT>,
+and <FONT COLOR="#007F00">C</FONT> on a 32-bit address machine will be laid
+out as shown in <A HREF="#figure2">Figure 2</A>. Please note the following:</P>
+
+<UL>
+  <LI>Class <FONT COLOR="#FF0000">A</FONT> is padded to a word boundary at
+  its end.
+  <LI>Classes <FONT COLOR="#0000FF">B</FONT> and <FONT COLOR="#007F00">C</FONT>
+  include a doubleword, so they are padded to a doubleword boundary at their
+  ends.
+  <LI>Even though class <FONT COLOR="#FF0000">A</FONT> is padded to a length
+  of 20, the ending padding is ignored when placing the first field <FONT
+   COLOR="#0000FF">d</FONT> of class <FONT COLOR="#0000FF">B</FONT>.
+  <LI>All fields remain in the same order in which they are declared in the
+  Java source file.
+  <LI><CODE>boolean</CODE> fields are not bit-packed; they are allocated
+  one to a byte.
+</UL>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP">
+<A NAME="figure2"></A><IMG SRC="graphics/object_A_32.gif" WIDTH="181" HEIGHT=
+"114" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/object_B_32.gif" WIDTH="181" HEIGHT="240" ALIGN="BOTTOM"
+NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/object_C_32.gif" WIDTH="181" HEIGHT="276" ALIGN="BOTTOM"
+NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN="CENTER"><FONT COLOR="#FF0000">Class A</FONT></TD>
+  <TD ALIGN="CENTER"><FONT COLOR="#0000FF">Class B</FONT></TD>
+  <TD ALIGN="CENTER"><FONT COLOR="#007F00">Class C</FONT></TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="3">Figure 2</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>On a 64-bit address machine, instance objects of classes <FONT COLOR="#FF0000">A</FONT>,
+<FONT COLOR="#0000FF">B</FONT>, and <FONT COLOR="#007F00">C</FONT> will
+be laid out as shown in <A HREF="#figure3">Figure 3</A>.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP">
+<A NAME="figure3"></A><IMG SRC="graphics/object_A_64.gif" WIDTH="181" HEIGHT=
+"168" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/object_B_64.gif" WIDTH="181" HEIGHT="276" ALIGN="BOTTOM"
+NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/object_C_64.gif" WIDTH="181" HEIGHT="312" ALIGN="BOTTOM"
+NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN="CENTER"><FONT COLOR="#FF0000">Class A</FONT></TD>
+  <TD ALIGN="CENTER"><FONT COLOR="#0000FF">Class B</FONT></TD>
+  <TD ALIGN="CENTER"><FONT COLOR="#007F00">Class C</FONT></TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="3">Figure 3</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H4>Alternative</H4>
+
+
+<P>In order to save space and improve cache locality we may wish to change
+our field allocation to use the first-fit strategy to place each field in
+an object. The field placement would be the same as above except that the
+fields would no longer be required to be in the same order as in the Java
+source file. Using this strategy on class <FONT COLOR="#007F00">C</FONT>
+on a 32-bit address machine would yield the layout in <A HREF="#figure4">Figure
+4</A>. Note that field <FONT COLOR="#0000FF">j</FONT> now fills the hole
+in front of field <FONT COLOR="#0000FF">i</FONT>, and field <FONT COLOR="#007F00">k</FONT>
+fills the hole in front of field <FONT COLOR="#0000FF">g</FONT>.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP">
+<A NAME="figure4"></A><IMG SRC="graphics/object_C_alt_32.gif" WIDTH="181"
+HEIGHT="240" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN="CENTER"><FONT COLOR="#007F00">Class C</FONT></TD>
+ </TR>
+ <TR>
+  <TH>Figure 4</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Arrays</H3>
+
+
+<P>An array is like an object with an extra word in the header and a variable
+number of fields. Arrays have their own distinct <A HREF="types.html">types</A>.
+In an array the subheader is always followed by a length word that gives
+the number of elements in the array, as returned by Java's <CODE>length</CODE>
+expression.</P>
+
+<P>The actual elements of the array follow the length word. There is an
+extra word of padding between the length word and the first element of the
+array if the elements of the array are each eight bytes wide (i.e. for arrays
+of <CODE>long</CODE> or <CODE>double</CODE> on any machine or arrays of
+pointers on a 64-bit machine).</P>
+
+<P>The final element of the array is followed by enough padding so that:</P>
+
+<UL>
+  <LI>There is at least one byte of padding after the final element of the
+  array;
+  <LI>The gross size of the array is a multiple of 4;
+  <LI>If the array is an array of <CODE>long</CODE> or <CODE>double</CODE>,
+  the gross size of the array is a multiple of 8;
+  <LI>If running on a 64-bit address machine, the gross size of the array
+  is a multiple of 8.
+</UL>
+
+<P>The first condition above ensures that we can have a pointer just past
+the last element of the array without confusing the garbage collector.</P>
+
+<H4>Example</H4>
+
+
+<P><A HREF="#figure5">Figure 5</A> shows the layout of arrays of five <CODE>byte</CODE>s,
+five <CODE>int</CODE>s, and five <CODE>long</CODE>s on a 32-bit address
+machine. Note the padding at the end of the array in each case.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP">
+<A NAME="figure5"></A><IMG SRC="graphics/array_byte_5_32.gif" ALIGN="BOTTOM"
+WIDTH="181" HEIGHT="114" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/array_int_5_32.gif" ALIGN="BOTTOM" WIDTH="181" HEIGHT=
+"186" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/array_long_5_32.gif" ALIGN="BOTTOM" WIDTH="181" HEIGHT=
+"312" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN="CENTER"><CODE>byte[5]</CODE></TD>
+  <TD ALIGN="CENTER"><CODE>int[5]</CODE></TD>
+  <TD ALIGN="CENTER"><CODE>long[5]</CODE></TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="3">Figure 5</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P><A HREF="#figure6">Figure 6</A> demonstrates the layout of arrays of
+zero <CODE>byte</CODE>s and zero <CODE>long</CODE>s on a 32-bit address
+machine. Note that, in the case of an array of zero <CODE>long</CODE>s,
+we have one word of padding before the first element of the array (which
+isn't there) as well as padding after the last element of the array. There
+must be at least one byte of such padding, and, since the array is an array
+of <CODE>long</CODE>s, there must be enough padding to bring the array up
+to the next doubleword boundary, which in this case requires an additional
+doubleword of padding.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP">
+<A NAME="figure6"></A><IMG SRC="graphics/array_byte_0_32.gif" WIDTH="181"
+HEIGHT="96" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/array_long_0_32.gif" WIDTH="181" HEIGHT="132" ALIGN=
+"BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN="CENTER"><CODE>byte[0]</CODE></TD>
+  <TD ALIGN="CENTER"><CODE>long[0]</CODE></TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="2">Figure 6</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P><A HREF="#figure7">Figure 7</A> shows the layout of arrays of five <CODE>byte</CODE>s,
+five <CODE>int</CODE>s, and five <CODE>long</CODE>s on a 64-bit address
+machine. Note the padding at the end of the array in each case. The arrays
+of <CODE>int</CODE>s and <CODE>long</CODE>s would normally end on a doubleword
+boundary, but we must insert an entire doubleword of padding at the end
+so that there is at least one byte of padding after the last element.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP">
+<A NAME="figure7"></A><IMG SRC="graphics/array_byte_5_64.gif" ALIGN="BOTTOM"
+WIDTH="181" HEIGHT="168" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/array_int_5_64.gif" ALIGN="BOTTOM" WIDTH="181" HEIGHT=
+"240" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/array_long_5_64.gif" ALIGN="BOTTOM" WIDTH="181" HEIGHT=
+"348" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN="CENTER"><CODE>byte[5]</CODE></TD>
+  <TD ALIGN="CENTER"><CODE>int[5]</CODE></TD>
+  <TD ALIGN="CENTER"><CODE>long[5]</CODE></TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="3">Figure 7</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>
