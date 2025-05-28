@@ -1,0 +1,787 @@
+<HTML>
+<HEAD>
+<TITLE>rdf: back-end architecture</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+
+
+<center>
+<h1>rdf: back-end architecture</h1>
+</center>
+
+Contact:
+<a href="mailto:waterson@netscape.com">Chris Waterson</a> (waterson@netscape.com)<br>
+Last Updated: 29-November-1998
+
+<p>
+The RDF data model is a directed, labeled graph; hence, the
+architecture for using and extending RDF within Mozilla is primarily
+one that is based around manipulating, composing, and extending
+graphs. This document is an overview of the Mozilla implementation of
+the RDF core engine, and will hopefully give you insight on how to
+use the RDF system as a <i>client</i>, as well as how to implement
+your own <i>pluggable data sources</i>.
+</p>
+
+<ul>
+<a href="#Overview">Overview</a><br>
+<a href="#Datatypes_and_Interfaces">Datatypes and Interfaces</a><br>
+<a href="#How_It_Fits_Together">How It Fits Together</a><br>
+<a href="#Manipulating_the_RDF_Back_End">Manipulating the RDF Back End</a><br>
+<a href="#Querying_the_RDF_Back_End">Querying the RDF Back End</a><br>
+<a href="#Pluggable_Data_Sources">Pluggable Data Sources</a><br>
+</ul>
+
+<p>
+<b><i>Disclaimer</i></b>. This is a work in progress, placed up here
+under the assumption that something is better than nothing. Use with
+caution!
+</p>
+
+<a name="Overview">
+<h2>Overview</h2>
+</a>
+
+<ul>
+<p>
+This section will give a brief but utilitarian overview of the RDF
+data model, primarily to establish some working terminology and relate
+these to their implementation in Mozilla. Beware that this is the
+"poor man's version" of the RDF data model: For a complete description
+of the RDF data model, please see the
+
+<a href="http://www.w3.org/TR/WD-rdf-syntax">RDF Model and Syntax
+Specification</a>
+
+and the
+
+<a href="http://www.w3.org/TR/WD-rdf-schema">RDF Schema Specification</a>
+
+which are soon-to-be W3C standards.
+</p>
+
+<p>
+Like any graph, the graph upon which RDF is based consists of
+<i>nodes</i> connected by <i>arcs</i>. An individual node in the RDF
+graph can either be an Internet <i>resource</i> that is identified by
+a Universal Resource Identifier (URI), or a simple string
+<i>value</i>. An individual arcs in an RDF graph is called a
+<i>property</i>: each property is itself a URI that is taken from a
+restricted set of URIs called a <i>vocabulary</i>. This is probably
+easiest illustrated with an example.
+</p>
+
+<p>
+The following is a simple XML-serialized version of an RDF graph:
+</p>
+
+<pre>
+&lt;rdf:RDF
+  xmlns:rdf="http://www.w3.org/TR/WD-rdf-syntax#"
+  xmlns:sm="http://www.mozilla.org/smart-mail/schema#"&gt;
+ &lt;rdf:Description
+   about="http://www.mozilla.org/smart-mail/get-mail.cgi?\
+user=waterson&amp;folder=inbox"&gt;
+   &lt;sm:message resource="#402"
+      sm:recipient="Chris Waterson \"waterson@netscape.com\""
+      sm:sender="Aunt Mabel \"mabel@netcenter.net\""
+      sm:subject="Great new recipe for Yam Soup"&gt;
+    &lt;sm:body&gt;
+     http://www.mozilla.org/smart-mail/get-body.cgi?id=402
+    &lt;/sm:body&gt;
+   &lt;/sm:message&gt;
+ &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;
+</pre>
+
+<p>
+The resulting graph looks something like this (forgive the ASCII art):
+</p>
+
+<pre>
+(http://www.mozilla.org/smart-mail/get-mail.cgi?\
+ user=waterson&amp;folder=inbox)
+ |
+ |
+[http://www.mozilla.org/smart-mail/schema#message]
+ |
+ v
+(http://www.mozilla.org/smart-mail/get-mail.cgi?\
+ user=waterson&amp;folder=inbox#402)
+ |
+ |
+ +--[http://www.mozilla.org/smart-mail/schema#recipient]--+
+ |                                                        |
+ |                                                        v
+ |                    ("Chris Waterson \"waterson@netscape.com\"")
+ |
+ +--[http://www.mozilla.org/smart-mail/schema#sender]--+
+ |                                                     |
+ |                                                     v
+ |                          ("Aunt Mabel \"mabel@netcenter.net\"")
+ |
+ +--[http://www.mozilla.org/smart-mail/schema#subject]--+
+ |                                                      |
+ |                                                      v
+ |                               ("Great new recipe for Yam Soup")
+ |
+ +--[http://www.mozilla.org/smart-mail/schema#body]--+
+                                                     |
+                                                     v
+           (http://www.mozilla.org/smart-mail/get-body.cgi?id=402)
+</pre>
+
+<p>
+In the above diagram, nodes are enclosed in <tt>(parentheses)</tt>,
+and properties are enclosed in <tt>[sqare brackets]</tt>. Nodes that
+contain simple string values are shown with double-quotes surrounding
+their values; e.g., <tt>("Great new recipe for Yam Soup")</tt>. Nodes
+that are Internet resources show their URI values; e.g.,
+<tt>(http://.../id=402)</tt>.
+</p>
+
+<p>
+There are a couple of important takeaways here:
+</p>
+
+<ol>
+
+<li>
+Properties are URIs. I know I said that above, but it's easy to forget
+(and actually, the old Mozilla implementation of the RDF parser
+<i>did</i> forget this fact).
+</li>
+
+<li>
+Properties come from a <i>vocabulary</i>, which is defined by a
+<i>schema</i> in an XML <i>namespace</i>. You can see this from the
+<tt>xmlns:sm="..."</tt> tag. This allows different applications to
+"understand" the properties to have some kind of semantics; e.g., we
+can all agree that
+<tt>http://www.mozilla.org/smart-mail/schema#body</tt> refers to the
+body of a SmartMail message (whatever that may be).
+</li>
+
+<li>
+The graph allows arbitrary <i>properties</i> to be ascribed to
+URIs. These properties may just be string values, or they may actually
+be a relationship to another URI. Presumably, in the above example,
+the <tt>body</tt> refers to a CGI script that could actually fetch the
+body of the message for us.
+</li>
+
+<li>
+There is a difference between the <i>graph</i> and the XML
+<i>serialization</i> of the graph. That this is important will become
+apparent in the following sections.
+</li>
+
+</ol>
+
+</ul>
+
+<a name="Datatypes_and_Interfaces">
+<h2>Datatypes and Interfaces</h2>
+</a>
+
+<ul>
+
+<p>
+Okay, so where does the rubber meet the road? In Mozilla, there are
+several data structures that work together to present an RDF graph as
+a tenable data structure to the outside world. Here's an overview.
+</p>
+
+<p>
+<b><tt>nsIRDFNode</tt></b>. This is an interface for a node in the RDF
+graph. One interface is used for both resource and literal nodes:
+nodes simply contain string values. You generally acquire a node from
+a <i>resource manager</i> using a string value.
+</p>
+
+<p>
+<b><tt>nsIRDFResourceManager</tt></b>. A resource manager is
+responsible for keeping track of <tt>nsIRDFNode</tt> objects. It
+allows you to ask for a node using a string value, and must guarantee
+that the same node will always be returned for strings of equal value
+(to say this more precisely, if <tt>strcmp(s1, s2) == 0</tt>, then it
+must be the case that <tt>n1 == n2</tt>, where <tt>n1</tt> and
+<tt>n2</tt> are <tt>nsIRDFNode</tt> objects aquired from an
+<tt>nsIRDFResourceManager</tt>).
+</p>
+
+<p>
+<b><tt>nsIRDFDataSource</tt></b>. This interface is implemented by a
+data source provider. A data source (like POP) collaborates in the
+creation of an "illusion of a graph" by implementing this interface.
+The interface includes methods that allow testing for the presence of
+an assertion, enumerating all of the properties (arcs) that are
+associated with (lead out of or in to) a resource, and so on.
+</p>
+
+<p>
+Note that the <tt>nsIRDFDataSource</tt> interface is not directly
+exposed to the clients of the RDF subsystem: rather, individual data
+sources are aggregated together and presented via the
+<tt>nsIRDFDataBase</tt> interface, described below.
+</p>
+
+<p>
+<b><tt>nsIRDFDataBase</tt></b>. This interface is used directly by
+clients of RDF to manipulate and query the RDF graph. Specifically, it
+is a <i>strategy</i> for <i>composing</i> the subgraphs that are
+presented by individual <tt>nsIRDFDataSource</tt> objects. For
+example, a "bookmarks" RDF database may consist of a local data source
+of personal bookmarks, a collection of sports bookmarks provided
+remotely by ESPN, and some standard, company-wide bookmarks that are
+loaded from your company's intranet server.
+</p>
+
+<p>
+Note that the <tt>nsIRDFDataBase</tt> is derived from
+<tt>nsIRDFDataSource</tt> interface: this means that an
+<tt>nsIRDFDataBase</tt> can be queried just like an individual data
+source.
+</p>
+
+<p>
+<b><tt>nsIRDFCursor</tt></b>. This is an <i>iterator</i> interface
+that is used to maintain result sets from certain
+<tt>nsIRDFDataSource</tt> and <tt>nsIRDFDataBase</tt>
+methods. Individual data sources may choose to implement
+<tt>nsIRDFCursor</tt> as an "eager" iterator that collects the results
+of a query "up front", or as a "lazy" iterator that evaluates the
+iteration as needed.
+</p>
+
+<p>
+<b><tt>nsIRDFObserver</tt></b>. This is an interface that an RDF
+<i>client</i> implements. The interface allows a client to be notified
+when changes occur in the RDF graph.
+</p>
+
+</ul>
+
+<a name="How_It_Fits_Together">
+<h2>How It Fits Together</h2>
+</a>
+
+<ul>
+
+<p>
+Here's the 50,000 foot view of how it all hangs together. A
+<i>client</i> locates a particular RDF database using the
+
+<a href="../docs/tplist/catFlow/modunote.htm#DLL">XPCOM factory system</a>:
+
+the result is an object that implements the
+<tt>nsIRDFDataBase</tt> interface. The implementor of this interface
+is responsible for correctly initializing and ordering the objects
+which implement the <tt>nsIRDFDataSource</tt> interface.
+</p>
+
+<p>
+For example, the <i>bookmarks</i> "database" might consists of a local
+data source that contains personal bookmarks, a remote data source
+that contains general company-wide bookmarks, and another remote data
+source that collects the top stories from ESPN's web site.
+</p>
+
+<p>
+Each individual data source "knows" how to talk with the real
+implementation to get things done. The data sources that we've
+implemented to date include*:
+</p>
+
+<ul>
+<li>Appletalk</li>
+<li>Bookmarks</li>
+<li>Browser History</li>
+<li>Cookies</li>
+<li>FTP</li>
+<li>LDAP</li>
+<li>POP mail folders</li>
+<li>Sitemaps</li>
+<li>XML-serialized RDF</li>
+</ul>
+
+<p>
+<font size="-1">
+*Disclaimer: the data sources above have all been implemented using a
+C-based API, and are still undergoing surgery to bring them up to
+speed with the XPCOM interfaces described in this documents.
+</font>
+</p>
+
+<p>
+"Whoa!", I heard you just say. "XML-serialzed RDF is just a data
+source?" Yep. XML-serialized RDF (as described in the
+
+<a href="http://www.w3.org/TR/WD-rdf-syntax">RDF Model and Syntax
+Specification</a>)
+
+is dealt with using "just another" data source that knows how to
+tranlate XML-ized RDF into a graph model.
+</p>
+
+<p>
+Here are some of the data sources that we'd still like to implement:
+</p>
+
+<ul>
+<li>Local address book</li>
+<li>IMAP mail folders</li>
+<li>NNTP newsgroups and articles</li>
+<li>Search engine interfaces</li>
+</ul>
+
+<p>
+If you'd like to help work on these, or have other ideas,
+
+<a href="mailto:mozilla-rdf@mozilla.org">let us know</a>.
+</p>
+
+</ul>
+
+<a name="Manipulating_the_RDF_Back_End">
+<h2>Manipulating the RDF Back End</h2>
+</a>
+
+<ul>
+
+<p>
+You should usually manipulate the RDF back end using the
+<tt>nsIRDFDataBase</tt> interface. This allows the database to handle
+delegation of requests to the appropriate data source.
+</p>
+
+<p>
+Maniuplating RDF involves the following steps:
+</p>
+
+<ul>
+<li>Acquire a database to manipulate</li>
+<li>Acquire the resource manager</li>
+<li>Acquire RDF resource nodes</li>
+<li>Use the RDF nodes to make assertions in the database</li>
+<li>Clean up</li>
+</ul>
+
+<p>
+The code below illustrates this process.
+</p>
+
+<p>
+<b>Acquire a database to manipulate</b>. To acquire an
+<tt>nsIRDFDataBase</tt>, use the XPCOM repository:
+</p>
+
+<ul>
+<pre>
+#include "nsRDFCID.h"
+#include "nsRDFDataBase.h"
+#include "nsRepository.h"
+
+static NS_DEFINE_IID(kIRDFDataBaseIID,
+                     NS_IRDFDATABASE_IID);
+
+static NS_DEFINE_CID(kSimpleDataBaseCID,
+                     NS_SIMPLEDATABASE_CID);
+
+nsIRDFDataBase* db;
+nsresult rv =
+    nsRepository::CreateInstance(
+        kSimpleDataBaseCID,
+        NULL,
+        kIRDFDataBaseIID,
+        (void**) &db);
+
+if (NS_FAILED(rv))
+    <i>// deal with error</i>
+
+<i>// <b>db</b> now holds a valid RDF database.</i>
+</pre>
+</ul>
+
+<p>
+<b>Acquire the resource manager</b>. To use the
+<tt>nsIRDFDataSource</tt> methods on <tt>db</tt> in the above example,
+you'll need to first acquire <tt>nsIRDFNode</tt> objects using the
+<i>resource manager</i>, which can be acquired from the XPCOM
+<i>service manager</i>, as illustrated below:
+</p>
+
+<ul>
+<pre>
+#include "nsServiceManager.h"
+#include "nsIRDFResourceManager.h"
+
+static NS_DEFINE_IID(kIRDFResourceManagerIID,
+                     NS_IRDFRESOURCEMANAGER_IID);
+
+static NS_DEFINE_CID(kRDFResourceManagerCID,
+                     NS_RDFRESOURCEMANAGER_CID);
+
+nsIRDFResourceManager* mgr;
+nsresult rv =
+    nsServiceManager::GetService(
+        kRDFResourceManagerCID,
+        kIRDFResourceManagerIID,
+        (nsISupports*) &mgr);
+
+if (NS_FAILED(rv))
+    <i>// deal with error</i>
+
+<i>// <b>mgr</b> now holds the RDF resource manager</i>
+</pre>
+</ul>
+
+<p>
+<b>Acquire RDF resource nodes</b>. Using the resource manager, you
+can acquire individual RDF resources and literals as
+<tt>nsIRDFNode</tt> objects. These are what you use to perform a query
+on the RDF database:
+</p>
+
+<ul>
+<pre>
+#include "nsIRDFNode.h"
+
+<i>// Get the RDF resources necessary to assert that I am
+// the author of this page, using the Dublin Core schema</i>
+nsresult rv;
+nsIRDFNode* page;
+rv = mgr->GetNode("back-end-architecture.html", &page);
+if (NS_FAILED(rv))
+    <i>// deal with error</i>
+
+nsIRDFNode* author;
+rv = mgr->GetNode("http://purl.oclc.org/dc#Author", &author);
+if (NS_FAILED(rv))
+    <i>// deal with error</i>
+
+nsIRDFNode* me;
+rv = mgr->GetNode("Chris Waterson", &me);
+if (NS_FAILED(rv))
+    <i>// deal with error</i>
+</pre>
+</ul>
+
+<p>
+<b>Use RDF nodes to make assertions in the database</b>. And
+finally, we "do the deed" using the <tt>Assert</tt> method of the
+<tt>nsIRDFDataBase</tt> interface (actually, this method inheirited
+from the <tt>nsIRDFDataSource</tt> interface, for those who are
+groveling through source code):
+</p>
+
+<ul>
+<pre>
+<i>// Finally, make the assertion:</i>
+if (NS_FAILED(db->Assert(page, author, me))
+    <i>// Uh oh, an error!</i>
+</pre>
+</ul>
+
+<p>
+<b>Clean up</b>. Of course, you'll need to follow good XPCOM
+programming style and release all the resources that you've acquired
+once you're finished with them.
+</p>
+</ul>
+
+<a name="Querying_the_RDF_Back_End">
+<h2>Querying the RDF Back End</h2>
+</a>
+
+<ul>
+<p>
+Much of the code required to query the RDF back-end is identical to
+that required to manipulate it. Specifically, you need to:
+</p>
+
+<ul>
+<li>Acquire a database to manipulate</li>
+<li>Acquire the resource manager</li>
+<li>Acquire RDF resource nodes</li>
+<li>Use the RDF nodes to create a cursor</li>
+<li>Iterate results from the cursor</li>
+<li>Clean up</li>
+</ul>
+
+<p>
+Steps 1, 2, 3, and 6 are described in detail
+
+<a href="#Manipulating_the_RDF_Back_End">above</a>.
+
+ Steps 4 and 5 are illustrated in detail, below.
+</p>
+
+<p>
+<b>Use the RDF nodes to create a cursor</b>. The code below
+illustrates construction of a <i>cursor</i> that can be used to
+iterate through the arcs of an RDF graph.
+</p>
+
+<ul>
+<pre>
+#include "nsIRDFCursor.h"
+
+<i>// assuming that we've aquired appropriate
+// <b>nsIRDFNode</b> objects, we'll use them to
+// create a cursor that iterates the authors of
+// the current web page.</i>
+nsIRDFCursor* cur;
+nsresult rv =
+    db->GetTargets(page, author, PR_TRUE, &cur);
+
+if (NS_FAILED(rv))
+    <i>// deal with error</i>
+</pre>
+</ul>
+
+<p>
+The above use of the <tt>GetTargets</tt> method returns a cursor that
+enumerates all of the nodes that appear at the end of arcs labeled
+with the <tt>author</tt> property that lead out of the <tt>page</tt>
+node.
+</p>
+
+<p>
+<b>Iterate results from the cursor</b>. Once you've acquired a cursor,
+iterating through the values is easy.
+</p>
+
+<ul>
+<pre>
+while (1) {
+    PRBool more;
+    nsresult rv = cur->HasMoreElements(more);
+    if (NS_FAILED(rv))
+        <i>// deal with error</i>
+
+    if (! more)
+        break; <i>// we're done!</i>
+
+    <i>// get the next element</i>
+    nsIRDFNode* result;
+    PRBool tv;
+    rv = cur->GetNext(result, tv);
+    if (NS_FAILED(rv))
+        <i>// deal with error</i>
+
+    <i>// now <b>result</b> contains the next
+    // node, and <b>tv</b> contains the truth-
+    // value of the arc that leads to
+    // <b>result</b>.</i>
+}
+</pre>
+</ul>
+
+<p>
+<b>Clean up</b>. There are two clean up tasks that are easy to forget
+to do with cursors. First, release each objects that you enumerate
+with the cursor using <tt>GetNext</tt>. Second, release the cursor
+object itself.
+</p>
+
+</ul>
+
+<a name="Pluggable_Data_Sources">
+<h2>Pluggable Data Sources</h2>
+</a>
+
+<ul>
+<p>
+The RDF back-end was designed with extensability in mind. This section
+describes <i>pluggable data sources</i>. <i>Should this go into a
+separate doc?</i>
+</p>
+
+<p>
+There are two basic strategies you can take in designing your
+pluggable data source. The first strategy is involves constructing an
+in-memory copy of the data using an <tt>nsMemoryDataSource</tt>
+object, and to then delegate your implementation of the
+<tt>nsIRDFDataSource</tt> interface to the memory data source
+object. This approach works well if your data source is relatively
+small, can be manipulated only via the front-end, and you don't
+require fine-grained control over what happens "behind the scenes"
+when changes are made to the RDF graph. This strategy is relatively
+easy to implement, and involves constructing two translators: one to
+import data into the graph from the data source, and one to export
+data from the graph back to the data source. The "bookmarks" data
+source is implemented this way.
+</p>
+
+<p>
+The second strategy involves directly implementing the
+<tt>nsIRDFDataSource</tt> interface. This tends to work better if your
+data source is too large to fit in memory, changes are frequently made
+to the contents of the data source "behind the scenes", or you need to
+control exactly what happens when an assertion is added to or removed
+from the graph. This strategy requires more care to implement, as it
+requires you to create the "graph illusion" yourself. This is probably
+how the IMAP data source will be implemented.
+</p>
+</ul>
+
+<a name="Open_Issues">
+<h2>Open Issues</h2>
+</a>
+
+<ul>
+<p>
+There are some open issues here. How do we register pluggable data
+sources? How does a database "know" that it needs to import a
+pluggable data source's subgraph?
+</p>
+
+</ul>
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

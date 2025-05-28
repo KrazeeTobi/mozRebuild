@@ -1,0 +1,709 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Logging</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prprf.html">[Previous]</A>
+<A HREF="prlink.html">[Next]</A><A HREF="last.html">[Last]</A>
+<HR>
+<CENTER>
+<H2>
+<A NAME="Logging"></A>Chapter 18<BR>
+Logging</H2></CENTER>
+This chapter describes the global functions you use to perform Logging.
+NSPR provides a set of Logging functions that will conditionally write
+printf() style strings to the console or to a log file. NSPR uses this
+facility itself for its own development debugging purposes. Logging, when
+enabled, can be selective. Selection is available on a "module" and "level"
+basis Where <A HREF="#PRLogModuleInfo">module</A> is a user
+defined class of log events. Where <A HREF="#PRLogModuleLevel">level</A>
+is a numeric value corresponding to a "seriousness" of the event to be
+logged. Combinations of module and level can be used to get highly selective
+logging.
+
+<P>NSPR also provides "assert" style of macros and functions to aid in
+application debugging.
+
+<H3>
+<A NAME="ConditionalCompilation"></A>Conditional Compilation and Execution</H3>
+NSPR's logging facility is conditionally compiled in and enabled for applications
+using it. These controls are platform dependent. Logging is not compiled
+in for the Win16 platform. Logging is compiled into the NSPR debug builds;
+logging is not compiled into the NSPR optimized builds. The compile time
+#define's enable NSPR logging for application programs: DEBUG or FORCE_PR_LOG.
+
+<P>To enable NSPR logging and/or the debugging aids in your application,
+compile using the NSPR debug build headers and runtime. Set one of the
+compile time defines when you build your application.
+
+<P>Execution time control of NSPR's logging uses two <A HREF="#EnvironmentVariables">environment
+variables</A> . These variables control which modules and levels are logged
+as well as the filename of the logfile. By default, no logging is enabled
+at execution time.
+<H3>
+<A NAME="LogTypes"></A>Log Types</H3>
+Two types supporting NSPR logging are exposed in the API:
+<DL>
+<DD>
+<A HREF="#PRLogModuleInfo">PRLogModuleInfo</A></DD>
+
+<DD>
+<A HREF="#PRLogModuleLevel">PRLogModuleLevel</A></DD>
+</DL>
+
+<H4>
+<A NAME="PRLogModuleInfo"></A>PRLogModuleInfo</H4>
+The PRLogModuleInfo structure controls logging from within your application.
+To log your program's activity, create a PRLogModuleInfo structure using
+<A HREF="#PR_NewLogModule">PR_NewLogModule</A> .
+<H5>
+Syntax</H5>
+
+<PRE>
+#include &lt;prlog.h>
+
+typedef struct PRLogModuleInfo {
+    const char *name;
+    PRLogModuleLevel level;
+    struct PRLogModuleInfo *next;
+} PRLogModuleInfo;
+</PRE>
+
+<H4>
+<A NAME="PRLogModuleLevel"></A>PRLogModuleLevel</H4>
+The enumerated type PRLogModuleLevel defines levels of logging available
+to application programs.
+<H5>
+Syntax</H5>
+
+<PRE>
+#include &lt;prlog.h>
+
+typedef enum PRLogModuleLevel {
+    PR_LOG_NONE = 0,
+    PR_LOG_ALWAYS = 1,
+    PR_LOG_ERROR = 2,
+    PR_LOG_WARNING = 3,
+    PR_LOG_DEBUG = 4,
+
+    PR_LOG_NOTICE = PR_LOG_DEBUG,
+    PR_LOG_WARN = PR_LOG_WARNING,
+    PR_LOG_MIN = PR_LOG_DEBUG,
+    PR_LOG_MAX = PR_LOG_DEBUG
+} PRLogModuleLevel;
+</PRE>
+
+<H4>
+<BR>
+<A NAME="EnvironmentVariables"></A>Environment Variables</H4>
+Two environment variables control the behavior of logging at execution
+time.
+<H5>
+<A NAME="NSPR_LOG_MODULES"></A>NSPR_LOG_MODULES</H5>
+
+<H5>
+Syntax</H5>
+
+<PRE>&lt;moduleName>:&lt;level>[, &lt;moduleName>:&lt;level>]*</PRE>
+Where: &lt;<B>moduleName</B>> is the name specificized in a PR_NewLogModuleInfo()
+call.
+<BR>Where: &lt;<B>level</B>> is a numeric value in the range PR_LOG_NONE
+to PR_LOG_MAX.
+<H5>
+Description</H5>
+Specifying a moduleName that is associated with the name argument in a
+call to <A HREF="#PR_NewLogModule">PR_NewLogModule()</A> with
+a non-zero &lt;value> causes logging to be enabled for the named moduleName.
+
+<P>Special LogModule names are provided for controlling NSPR's log service
+at execution time. These controls should be set in the NSPR_LOG_MODULES
+environment variable at execution time to affect NSPR's log service for
+your application.
+
+<P>The special LogModule "all" enables all LogModules. To enable all LogModule
+calls to PR_LOG(), say:
+<BR><PRE>set NSPR_LOG_MODULES=all:5</PRE>
+
+<P>The special LogModule name "sync" tells the NSPR log service to do unbuffered
+logging.
+
+<P>The special LogModule name "buffsize:&lt;size>" tells NSPR to set the
+log buffer to &lt;size>.
+<H5>
+<A NAME="NSPR_LOG_FILE"></A>NSPR_LOG_FILE</H5>
+
+<H5>
+Syntax</H5>
+
+<PRE>&lt;filespec></PRE>
+Where &lt;<B>filespec</B>> is a filename. Note that the exact syntax of
+this is platform specific.
+<H5>
+Description</H5>
+NSPR_LOG_FILE is the name of the log file you want to use. NSPR logging,
+when enabled, will write to the file named in this environment variable.
+If NSPR_LOG_FILE is not in the environment, then log output will be written
+to stdout or stderr, depending on platform.
+<H3>
+<A NAME="FunctionsAndMacros"></A>Functions and Macros</H3>
+
+<H4>
+<A NAME="PR_NewLogModule"></A>PR_NewLogModule</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlog.h>
+
+PRLogModuleInfo* PR_NewLogModule(const char *name);
+</PRE>
+
+<H5>
+<BR>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<TT>name</TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The name to be assigned to the PRLogModuleInfo
+structure.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A pointer to a PRLogModuleInfo structure.
+<H5>
+Description</H5>
+PR_NewLogModule() allocates and initializes a new PRLogModuleInfo structure.
+If the environment variable <A HREF="#NSPR_LOG_MODULES">NSPR_LOG_MODULES</A>
+contains <B>name, </B>then the value of <A HREF="#PRLogModuleLevel">level</A>
+from the environment is associated with the new PRLogModuleInfo structure.
+<H4>
+<BR>
+<A NAME="PR_SetLogFile"></A>PR_SetLogFile</H4>
+Set the name of the logfile
+<H5>
+Syntax</H5>
+
+<PRE>
+#include &lt;prlog.h>
+
+PRBool PR_SetLogFile(const char *name);
+</PRE>
+
+<H5>
+<BR>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<TT>name</TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The name of the logfile.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+<TT>PR_TRUE</TT> when successful.
+<H5>
+Description</H5>
+Creates the named logfile. Subsequent requests to log will be written to
+this file.
+
+<P>Ordinarily, a user application need not use this API. NSPR initializes
+logging at NSPR startup. The application may use the model provided in
+<A HREF="#UseExample">Use Example</A> to effect application logging.
+<H4>
+<A NAME="PR_SetLogBuffering"></A>PR_SetLogBuffering</H4>
+Set the level of buffering for the logfile.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlog.h></PRE>
+
+<PRE>
+void PR_SetLogBuffering(PRIntn buffer_size);
+</PRE>
+
+<H5>
+<BR>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<TT>buffer_size</TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The size of the buffer used in logging.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Set the size of the buffer used in NSPR logging.
+
+<P>Ordinarily, a user application need not use this API. NSPR initializes
+logging at NSPR startup. The application may use the model provided in
+<A HREF="#UseExample">Use Example</A> to effect application logging.
+<H4>
+<A NAME="PR_LogPrint"></A>PR_LogPrint</H4>
+Unconditionally write an entry to the log.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlog.h></PRE>
+
+<PRE>
+void PR_LogPrint(const char *fmt, ...);
+</PRE>
+
+<H5>
+<BR>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<TT>fmt</TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>an NSPR printf() style format string.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Unconditionally writes to the log.
+<H4>
+<A NAME="PR_LogFlush"></A>PR_LogFlush</H4>
+Flush the log buffer to external media.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlog.h></PRE>
+
+<PRE>
+void PR_LogFlush(void);
+</PRE>
+
+<H5>
+<BR>
+Parameter</H5>
+none
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Flush the log buffer to external media.
+<H4>
+<A NAME="PR_LOG_TEST"></A>PR_LOG_TEST</H4>
+Test to determine if logging is enabled for <B>_module</B> at <B>_level</B>
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlog.h></PRE>
+
+<PRE>PRBool PR_LOG_TEST( PRLogModuleInfo *_module, PRLogModuleLevel _level);</PRE>
+
+<H5>
+<BR>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<TT>_module</TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Pointer to a <A HREF="#PRLogModuleInfo">PRLogModuleInfo</A>
+structure.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>_level</PRE>
+</TD>
+
+<TD>A value defined in <A HREF="#PRLogModuleLevel">PRLogModuleLevel</A></TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+<TT>PR_TRUE</TT> when logging is enabled for the referenced <B>PRLogModuleInfo</B>
+structure at <B>_level, </B>otherwise returns false.
+<H5>
+Description</H5>
+Use PR_LOG_TEST as an expression an a conditional execution statement to
+control logging. See also: <A HREF="#PR_LOG">PR_LOG</A>
+<H4>
+<A NAME="PR_LOG"></A>PR_LOG</H4>
+Conditionally write to the log.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlog.h></PRE>
+
+<PRE>void PR_LOG(_module,_level,_args);</PRE>
+
+<H5>
+<BR>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<TT>_module</TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Pointer to a <A HREF="#PRLogModuleInfo">PRLogModuleInfo</A>
+structure.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>_level</PRE>
+</TD>
+
+<TD>A value defined in <A HREF="#PRLogModuleLevel">PRLogModuleLevel</A></TD>
+</TR>
+
+<TR>
+<TD>_args</TD>
+
+<TD>A variable length argument list, as if to printf().</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+If logging is enabled for _module at _level, then _args is formatted and
+written to the log. See <A HREF="#UseExample">Use Example</A> .
+
+<P>PR_LOG() compiles to nothing if <A HREF="#ConditionalCompilation">compile
+time options</A> are not specified to enable logging.
+<H4>
+<A NAME="PR_Assert"></A>PR_Assert</H4>
+Write arguments to the log and terminate execution.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlog.h></PRE>
+
+<PRE>
+void PR_Assert(const char *s, const char *file, PRIntn ln);
+</PRE>
+
+<H5>
+<BR>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<TT>s</TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A string to be displayed in the log</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>file</PRE>
+</TD>
+
+<TD>A string. Normally the filename of the compilation unit containing
+the call to PR_Assert().</TD>
+</TR>
+
+<TR>
+<TD>ln</TD>
+
+<TD>An integer. Normally the line number within file of the call
+to PR_Assert().</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Display data in the log.
+
+<P>Normally an application would not call PR_Assert() directly. Use
+<A HREF="#PR_ASSERT">PR_ASSERT()</A> instead.
+<H4>
+<A NAME="PR_ASSERT"></A>PR_ASSERT</H4>
+Evaluate an expression. Terminate execution when ;alsdkfj
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlog.h></PRE>
+
+<PRE>void PR_ASSERT( expression );</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<TT>expression</TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Any valid C language expression that
+evaluates to true or false.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+PR_ASSERT() evaluates <B>expression. </B>When <B>expression</B> evaluates
+to zero the application terminates, otherwise the application continues.
+PR_ASSERT() calls PR_Assert() with <B>expression</B> converted to a string,
+passed as argument <B>s.</B> The file and ln are provided from the compile
+time environment.
+
+<P>PR_ASSERT() compiles to nothing if <A HREF="#ConditionalCompilation">compile
+time options</A> are not specified to enable logging.
+<H4>
+<A NAME="PR_NOT_REACHED"></A>PR_NOT_REACHED</H4>
+Terminate when reaching this statement.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlog.h></PRE>
+
+<PRE>void PR_NOT_REACHED( char *_reasonStr)</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<TT>reasonStr</TT>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A string. Why do you not think you
+should be here?.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Write reasonStr to the log and terminate the application.
+
+<P>PR_NOT_REACHED() compiles to nothing if <A HREF="#ConditionalCompilation">compile
+time options</A> are not specified to enable logging.
+<H3>
+<A NAME="UseExample"></A>Use Example</H3>
+The following sample code fragment demonstrates use of the Logging and debug
+aids.
+
+<P>Remember to compile the program with DEBUG defined.
+<BR>Before running the compiled program, set the environment variable <B>NSPR_LOG_MODULE</B>S
+to "<B>userStuff:5</B>"
+<PRE>
+static void UserLogStuff( void )
+{
+    PRLogModuleInfo *myLM;
+    PRIntn i;
+
+    myLM = PR_NewLogModule( "userStuff" );
+    PR_ASSERT( myLM );
+
+    PR_LOG( myLM, PR_LOG_NOTICE, ("Log a Notice %d\n", 999 ));
+    for (i = 0; i &lt; 10 ; i++ )
+    {
+        PR_LOG( myLM, PR_LOG_DEBUG, ("Log Debug number: %d\n", i));
+        PR_Sleep( 500 );
+    }
+    PR_LOG( myLM, PR_LOG_NOTICE, ("That's all folks\n");
+
+} /* end UserLogStuff() */
+</PRE>
+
+<H4>
+
+<HR WIDTH="100%"></H4>
+<A HREF="contents.html">[Contents]</A> <A HREF="prprf.html">[Previous]</A>
+<A HREF="prlink.html">[Next]</A><A HREF="last.html">[Last]</A>
+<DIV ALIGN=right><I><FONT SIZE=-2>Last Updated: Tue Jul 14 16:19:14 PDT 1998</FONT></I>
+<HR SIZE=4></DIV>
+
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html" TARGET="_top">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

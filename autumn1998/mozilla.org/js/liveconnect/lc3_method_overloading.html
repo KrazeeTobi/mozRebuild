@@ -1,0 +1,1109 @@
+<HTML>
+<HEAD>
+<TITLE>Method Overloading Proposal for LiveConnect 3.0</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+
+   
+   
+   
+
+
+
+<H1>
+1 Motivation</H1>
+The technique that earlier versions of LiveConnect use to invoke overloaded
+Java methods from JavaScript is dirt-simple: The first applicable method
+that is enumerated by the Java VM is chosen.&nbsp; (Here, "applicable"
+means that the method name and the number of arguments match and that each
+of the JavaScript arguments can be converted to the corresponding Java
+type listed in the method's signature.)
+<P>The Netscape JVM always enumerated methods using the order in which
+they appeared in their classfile, so rearrangement of methods in the Java
+source files was often required to invoke the desired method.&nbsp; This
+behavior was sometimes painful to developers, both because source was not
+always available and because the static nature of this method resolution
+algorithm sometimes made it impossible to choose a different method resolution
+at each invocation site.&nbsp; Most importantly, the willingness of LiveConnect
+to convert method arguments from JavaScript types to wildly different Java
+types sometimes lead to unexpected method resolutions.&nbsp; A more serious
+problem has cropped up recently with Netscape's migration to 3rd-party
+JVM's: the enumeration order of methods is not defined by the Java specification,
+so overloaded method resolution can occur differently depending on which
+vendor's JVM is being used in conjunction with LiveConnect.&nbsp; It is
+these latter two difficulties which are addressed by this proposal for
+LiveConnect version 3 (LC3).
+<H1>
+2 Introduction</H1>
+Ideally, invocation of Java methods from JavaScript would make use of Java's
+own rules for overloaded method resolution, but using JS's runtime types
+rather than Java's compile-time types.&nbsp; However, that's not feasible
+for several reasons:
+<P>First, Java method signatures distinguish between a variety of numeric
+types, i.e. byte, char, short, int, long, float, double.&nbsp; JavaScript
+collapses all numeric types, whether integral or floating point, into a
+single number type.&nbsp; Given this Java class declaration:
+<BLOCKQUOTE><TT>class Ambiguous {</TT>
+<BR><TT>&nbsp;&nbsp; static public int numericArg(int x)&nbsp;&nbsp; {
+return 1; }</TT>
+<BR><TT>&nbsp;&nbsp; static public int numericArg(byte x)&nbsp; { return
+2; }</TT>
+<BR><TT>&nbsp;&nbsp; static public int numericArg(float x) { return 3;
+}</TT>
+<BR><TT>}</TT></BLOCKQUOTE>
+Which method should be invoked when integralArg is invoked from JavaScript
+?
+<BLOCKQUOTE><TT>Packages.Ambiguous.numericArg(3);</TT></BLOCKQUOTE>
+Finally, there is precedent set by previous versions of LiveConnect which
+are all too willing to convert JavaScript arguments to unrelated Java types,
+e.g. the conversion of a JavaScript boolean value to a string or an instance
+of java.lang.Boolean.
+<H1>
+3 Invocation of Java Methods from JavaScript</H1>
+Unfortunately, there is no way to both completely preserve backward compatibility
+and cure LiveConnect of its method invocation ills.&nbsp; The new approach
+is to apply heuristics to guess the intended method given the runtime JavaScript
+argument types and the type signatures of the candidate Java methods.&nbsp;
+Informally, the method with Java parameter types that most closely match
+the JavaScript types is chosen.&nbsp; For example, when converting from
+a JavaScript number type, a method that specifies a double argument is
+preferred to one that requires a <I>java.lang.String</I>.
+<P>Although the the choice of method to be invoked may be different in
+LC3 compared to earlier versions of LiveConnect, the permitted conversions
+of JavaScript arguments to Java types has not been changed.&nbsp; Hence,
+backward compatibility is preserved for invocations of non-overloaded methods
+or in cases where only a single method is compatible with the argument
+types used.
+<H2>
+<A NAME="Applicability"></A>3.1 Method Accessibility and Applicability</H2>
+The first step in resolving a method invocation is to determine which methods
+of a class are accessible and applicable.&nbsp; A Java method is accessible
+and applicable if all of the following are true:
+<UL>
+<LI>
+The method is public.</LI>
+
+<LI>
+If the invocation is a static invocation, the method must be a static method.&nbsp;
+If the invocation is an instance invocation, the method must not be static.</LI>
+
+<LI>
+The number of parameters in the method declaration equals the number of
+argument expressions in the method invocation.</LI>
+
+<LI>
+The type of each actual argument can be converted by LiveConnect method
+invocation conversion (See <A HREF="#InvocationConversion">Section 3.3</A>).</LI>
+</UL>
+If there are no applicable methods for an invocation, a <TT>NoSuchJavaMethod</TT>
+exception is thrown.&nbsp; If there is only one applicable method, it is
+the one invoked.
+<H2>
+3.2 Choose the Preferred Method</H2>
+When choosing between two or more <A HREF="#Applicability">applicable</A>
+methods, an algorithm is used that is similar in spirit to the ones used
+in Java and C++:
+<BLOCKQUOTE>Suppose that <B>U</B> and <B>S</B> are both applicable methods
+for an invocation, each having <B>n</B> parameters.&nbsp; Suppose, moreover,
+that the Java types of the parameters for method <B>U</B> are <B>u<SUB>1</SUB></B>,...,<B>u<SUB>n</SUB></B>
+and the Java types of&nbsp; the parameters for method <B>S</B> are <B>s<SUB>1</SUB></B>,...,<B>s<SUB>n</SUB></B>.&nbsp;
+Finally, the runtime JavaScript types of the actual arguments are <B>t<SUB>1</SUB></B>,...,<B>t<SUB>n</SUB></B>.&nbsp;
+Then the method U is preferred over method S iff
+<UL>
+<LI>
+<B>u<SUB>j</SUB></B> and <B>s<SUB>j</SUB></B> are the same type, or</LI>
+
+<LI>
+conversion to type <B>u<SUB>j</SUB></B> is <A HREF="#ConversionPreferences">preferred</A>
+to the conversion to type <B>s<SUB>j</SUB></B> when converting from <B>t<SUB>j</SUB></B></LI>
+</UL>
+</BLOCKQUOTE>
+
+<UL>for all <B>j</B> from 1 to <B>n.</B></UL>
+A method is said to be <I>maximally preferred</I> for a method invocation
+if it is applicable and there is no more preferred applicable method.&nbsp;
+If there is only one maximally preferred method, that method is necessarily
+preferred to all other applicable methods<I> </I>and it is the one invoked.&nbsp;
+If there is more than one maximally preferred method, an <TT>AmbiguousJavaMethod</TT>
+JavaScript exception is thrown.
+<H2>
+<A NAME="InvocationConversion"></A>3.3 Allowed Method Argument Conversions</H2>
+The following sections detail the allowed conversions of JavaScript values
+to Java values when converting arguments for method invocation.&nbsp; These
+rules remain essentially unchanged from earlier LiveConnect implementations.
+<H3>
+3.3.1 undefined</H3>
+&nbsp;
+<TABLE BORDER WIDTH="100%" >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type</B></CENTER>
+</TD>
+
+<TD>
+<CENTER><B>Conversion Technique</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Object&nbsp;
+<BR>java.lang.String</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>"undefined"<SUP>1</SUP></BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>boolean</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>false <FONT COLOR="#FF6666">(Should this result in a runtime
+error instead ?)</FONT></BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>double&nbsp;
+<BR>float</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>NaN <FONT COLOR="#FF6666">(Should this result in a runtime
+error instead ?)</FONT></BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>long&nbsp;
+<BR>int&nbsp;
+<BR>short&nbsp;
+<BR>char&nbsp;
+<BR>byte</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>0 (zero) <FONT COLOR="#FF6666">(Should this result in a runtime
+error instead ?)</FONT></BLOCKQUOTE>
+</TD>
+</TR>
+</TABLE>
+
+<BLOCKQUOTE><SUP>1</SUP>The <I>java.lang.String</I> resulting from the
+conversion should be interned, so that it can be compared to other string
+values using the == operator.&nbsp; There is some ambiguity to the result
+because the JS string literal "undefined" and the undefined JS value are
+both converted to the same Java string, but this wart is necessary to maintain
+backward compatibility with LC1.</BLOCKQUOTE>
+
+<H3>
+3.3.2 Boolean</H3>
+&nbsp;
+<TABLE BORDER CELLPADDING=3 COLS=2 WIDTH="100%" >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type</B></CENTER>
+</TD>
+
+<TD>
+<CENTER><B>Conversion Technique</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>boolean</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Map true/false directly to Java equivalent</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Boolean&nbsp;
+<BR>java.lang.Object</CENTER>
+</TD>
+
+<TD VALIGN=CENTER>
+<BLOCKQUOTE>Construct new instance of j<I>ava.lang.Boolean</I>.<SUP>2</SUP></BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE><TT>true&nbsp; </TT>==> "true" <SUP>3</SUP>
+<BR><TT>false </TT>==> "false"</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>double<SUP>4</SUP>
+<BR>float<SUP>4</SUP>
+<BR>long&nbsp;
+<BR>int&nbsp;
+<BR>short&nbsp;
+<BR>char&nbsp;
+<BR>byte</CENTER>
+</TD>
+
+<TD VALIGN=CENTER>
+<BLOCKQUOTE><TT>true&nbsp; </TT>==> 1&nbsp;
+<BR><TT>false </TT>==> 0</BLOCKQUOTE>
+</TD>
+</TR>
+</TABLE>
+
+<BLOCKQUOTE><SUP>2</SUP>Each argument conversion must result in a new <I>java.lang.Boolean</I>
+instance.&nbsp; For example, it is not permitted to always use <TT>java.lang.Boolean.TRUE</TT>
+and <TT>java.lang.Boolean.FALSE.</TT>
+<P><SUP>3</SUP>The <I>java.lang.String</I> resulting from the conversion
+should be interned, so that it can be compared to other string values using
+the == operator.
+<P><SUP>4</SUP>The conversion to Java float and double from JS boolean
+is probably not useful, but it's left in for backward compatibility with
+LC1
+<BR>&nbsp;
+<BR>&nbsp;</BLOCKQUOTE>
+
+<H3>
+<A NAME="Number"></A>3.3.3 Number</H3>
+
+<TABLE BORDER CELLPADDING=3 COLS=2 WIDTH="100%" >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type</B></CENTER>
+</TD>
+
+<TD>
+<CENTER><B>Conversion Technique</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>double&nbsp;</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Transfer exact value to Java with&nbsp;
+<BR>no rounding or loss of magnitude/sign.</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Double&nbsp;
+<BR>java.lang.Object</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Create new instance of <I>java.lang.Double</I>, transferring
+exact value to Java with no rounding or loss of magnitude/sign.</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>float</CENTER>
+</TD>
+
+<TD>
+<UL>
+<LI>
+Round JS number to float precision.</LI>
+
+<LI>
+Unrepresentably large values are converted to +/- infinity.</LI>
+</UL>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>long&nbsp;
+<BR>int&nbsp;
+<BR>short&nbsp;
+<BR>byte&nbsp;
+<BR>char</CENTER>
+</TD>
+
+<TD>
+<UL>
+<LI>
+Round JS number to integral value using round-to-negative-infinity mode.</LI>
+
+<LI>
+Numbers with a magnitude too large to be represented in the target integral
+type result in a runtime error.</LI>
+
+<LI>
+NaNs are converted to zero. <FONT COLOR="#FF6666">(Should NaN's result
+in a runtime error instead ?)</FONT></LI>
+</UL>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE><TT>true&nbsp; </TT>==> "true"<SUP>3</SUP>
+<BR><TT>false </TT>==> "false"</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>boolean</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>0, NaN ==> false&nbsp;
+<BR>all other values ==> true</BLOCKQUOTE>
+</TD>
+</TR>
+</TABLE>
+
+<H3>
+3.3.4 Strings</H3>
+
+<TABLE BORDER CELLPADDING=3 COLS=2 WIDTH="100%" >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type</B></CENTER>
+</TD>
+
+<TD>
+<CENTER><B>Conversion Technique</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String&nbsp;
+<BR>java.lang.Object</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Convert from Unicode JS&nbsp;
+<BR>string to Unicode <I>java.lang.String</I><SUP>5</SUP></BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>double&nbsp;
+<BR>float&nbsp;
+<BR>long&nbsp;
+<BR>int&nbsp;
+<BR>short&nbsp;
+<BR>byte</CENTER>
+</TD>
+
+<TD>
+<OL>
+<LI>
+<FONT COLOR="#000000">Convert string to number per ECMA 9.3.1</FONT></LI>
+
+<LI>
+<FONT COLOR="#000000">Convert Result(1) to Java numeric type using rules
+in <A HREF="#Number">Section 3.3.3</A>.</FONT></LI>
+</OL>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>char</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>
+<LI>
+For one-character strings, result is Unicode character.<SUP>5</SUP></LI>
+
+<LI>
+Otherwise, convert to number, using above rule.</LI>
+</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>boolean</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>empty string ==> false&nbsp;
+<BR>all other values ==> true</BLOCKQUOTE>
+</TD>
+</TR>
+</TABLE>
+
+<BLOCKQUOTE><SUP>5</SUP>Conversion added in LiveConnect version 2.</BLOCKQUOTE>
+
+<H3>
+3.3.5 Null</H3>
+
+<TABLE BORDER CELLPADDING=3 COLS=2 WIDTH="100%" >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type</B></CENTER>
+</TD>
+
+<TD>
+<CENTER><B>Conversion Technique</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>Any class or interface type</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>null</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>double&nbsp;
+<BR>float&nbsp;
+<BR>long&nbsp;
+<BR>int&nbsp;
+<BR>short&nbsp;
+<BR>byte&nbsp;
+<BR>char</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>0 (zero)</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>boolean</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>false</BLOCKQUOTE>
+</TD>
+</TR>
+</TABLE>
+
+<H3>
+3.3.6 Object</H3>
+
+<H4>
+3.3.6.1 JavaObject/JavaArray</H4>
+&nbsp;
+<TABLE BORDER COLS=2 WIDTH="100%" >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type</B></CENTER>
+</TD>
+
+<TD>
+<CENTER><B>Conversion Technique</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>Any interface or class that is assignment-compatible with the Java
+object obtained by unwrapping the JS object, i.e. the unwrapped JavaObject
+is an <TT>instanceof()</TT> the Java argument type.</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Unwrap JS object to obtain Java object</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Call the unwrapped object's toString() method and return the
+result as a new java.lang.String.</BLOCKQUOTE>
+</TD>
+</TR>
+</TABLE>
+
+<H4>
+3.3.6.2 JavaClass</H4>
+&nbsp;
+<TABLE BORDER COLS=2 WIDTH="100%" >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type</B></CENTER>
+</TD>
+
+<TD>
+<CENTER><B>Conversion Technique</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Class<SUP>5</SUP></CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Extract corresponding Java class object</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.JSObject&nbsp;
+<BR>java.lang.Object</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Wrap JS object in new instance of java.lang.JSObject</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Call the JavaClass toString() method and return the result
+as a java.lang.String.</BLOCKQUOTE>
+</TD>
+</TR>
+</TABLE>
+
+<H4>
+3.3.6.3 Other JavaScript Objects</H4>
+&nbsp;
+<TABLE BORDER COLS=2 WIDTH="100%" >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type</B></CENTER>
+</TD>
+
+<TD>
+<CENTER><B>Conversion Technique</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.JSObject&nbsp;
+<BR>java.lang.Object</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Wrap JS object in new instance of java.lang.JSObject</BLOCKQUOTE>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+
+<TD>
+<BLOCKQUOTE>Call the JS object's toString() method and return the result
+as a java.lang.String.</BLOCKQUOTE>
+</TD>
+</TR>
+</TABLE>
+
+<H2>
+<A NAME="ConversionPreferences"></A>3.4 Preferred Argument Conversions</H2>
+When converting from JavaScript to Java types, certain conversions are
+more "natural" and, hence, are preferred.
+<H3>
+3.4.1 undefined</H3>
+There is no preference among Java types for converting from the JavaScript
+undefined value.
+<H3>
+3.4.2 Boolean</H3>
+
+<TABLE BORDER CELLPADDING=3 >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type,</B>
+<BR><B>in decreasing order of preference</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>boolean</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Boolean</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Object&nbsp;</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>long, int, short, char, byte</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>double, float</CENTER>
+</TD>
+</TR>
+</TABLE>
+
+<H3>
+3.4.3 Number</H3>
+
+<TABLE BORDER CELLPADDING=3 >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type,</B>
+<BR><B>in decreasing order of preference</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>double&nbsp;</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Double</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>float</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>long</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>int</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>short</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>char</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>byte</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>boolean</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Object</CENTER>
+</TD>
+</TR>
+</TABLE>
+<BR>
+<FONT COLOR="#FF6666">Rationale: The preference for floating-point types
+over integral types is likely to be the largest culprit in exposing incompatibilities
+with earlier versions of LiveConnect.&nbsp; However, double is the only
+primitive Java type guaranteed not to overflow or lose precision when converting
+from a JS number, so it should be preferred to the other Java numeric types.</FONT>
+<H3>
+3.4.4 Strings</H3>
+
+<TABLE BORDER CELLPADDING=3 >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type,</B>
+<BR><B>in decreasing order of preference</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Object</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>char</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>double, float, long, int, short, byte</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>boolean</CENTER>
+</TD>
+</TR>
+</TABLE>
+
+<H3>
+3.4.5 Null</H3>
+
+<TABLE BORDER CELLPADDING=3 >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type,</B>
+<BR><B>in decreasing order of preference</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>Any class or interface type</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>double, float, long, int, short, byte, char, boolean</CENTER>
+</TD>
+</TR>
+</TABLE>
+
+<H3>
+3.4.6 Object</H3>
+
+<H4>
+3.4.6.1 JavaObject/JavaArray</H4>
+Intuitively, the rule for preference among Java types when converting from
+a Java object that is wrapped in a JS object is that the most specific
+class or interface is preferred.&nbsp; More formally, let <B>T</B> be the&nbsp;
+Java class of an unwrapped JavaObject.&nbsp; Let <B>S</B> and <B>U</B>
+be class or interface types.&nbsp; <B>S</B> is preferred to <B>U</B> iff
+<UL>
+<LI>
+An instance of <B>T</B> is assignable to a variable of type <B>S, </B>i.e.
+<B>T</B>
+instanceof <B>S </B>is true</LI>
+
+<LI>
+An instance of <B>S</B> is assignable to a variable of type <B>U</B>, i.e.
+<B>S</B>
+instanceof <B>U </B>is true</LI>
+
+<LI>
+<B>S</B> and <B>U</B> are not the same types</LI>
+</UL>
+
+<H4>
+3.4.6.2 JavaClass</H4>
+
+<TABLE BORDER >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type,</B>
+<BR><B>in decreasing order of preference</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Class</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.JSObject</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Object</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+</TR>
+</TABLE>
+
+<H4>
+3.4.6.3 Other JavaScript Objects</H4>
+
+<TABLE BORDER >
+<TR BGCOLOR="#BCC0D3">
+<TD>
+<CENTER><B>Java argument type,</B>
+<BR><B>in decreasing order of preference</B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.JSObject</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.Object</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>java.lang.String</CENTER>
+</TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="ExplicitMethod"></A>
+3.5 Explicit Method Specification</H3>
+
+LC3 allows explicitly specifying an overloaded method and bypassing
+the resolution process.  Explicit method specification is typically
+used when an Java method is overloaded using Java numeric types:
+<P>
+<BLOCKQUOTE><TT>class Ambiguous {</TT>
+<BR><TT>&nbsp;&nbsp; static public int numericArg(int x)&nbsp;&nbsp; {
+return 1; }</TT>
+<BR><TT>&nbsp;&nbsp; static public int numericArg(byte x)&nbsp; { return
+2; }</TT>
+<BR><TT>&nbsp;&nbsp; static public int numericArg(float x) { return 3;
+}</TT>
+<BR><TT>}</TT></BLOCKQUOTE>
+<P>
+In this case it is possible to specify that numericArg(int) should be
+called using the following syntax:
+<BR><BLOCKQUOTE><TT>
+intNumericArg = Packages.Ambiguous["numericArg(int)"];<BR>
+intNumericArg(5); // returns 1
+</TT></BLOCKQUOTE>
+<P>
+By using named property access and passing the name of the method with
+type information, an object will be returned that can be
+used to call the desired method.
+<P>
+The same effect can be achieved with this more compact syntax:
+<BR><BLOCKQUOTE><TT>
+Packages.Ambiguous["numericArg(int)"](5); // returns 1
+</TT></BLOCKQUOTE>
+
+<BR>&nbsp;
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

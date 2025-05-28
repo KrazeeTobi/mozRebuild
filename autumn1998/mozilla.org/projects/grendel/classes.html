@@ -1,0 +1,653 @@
+<HTML>
+<HEAD>
+<TITLE>grendel architecture</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+<H1 ALIGN=CENTER>grendel architecture
+<BR><FONT SIZE=3>(the old version)
+<BR>by <a href="mailto:jwz@mozilla.org">Jamie Zawinski</A>
+<BR>12-Aug-1997
+</FONT></H1>
+</P>
+
+<P><HR><P>
+
+This is an older Grendel design document, which is probably fairly out of
+date at this point, but which might make interesting reading anyway. (Among
+other things, this document was written before we had heard of, let alone
+adopted, the JavaMail API.)
+
+<P><HR>
+<UL>
+  <TABLE CELLPADDING=0 CELLSPACING=0 BORDER=0>
+   <TR><TH VALIGN=BASELINE ALIGN=RIGHT NOWRAP>Date: </TH>
+    <TD>Tue, 12 Aug 1997 21:07:09 -0700</TD></TR>
+   <TR><TH VALIGN=BASELINE ALIGN=RIGHT NOWRAP>From: </TH>
+    <TD><NOBR>Jamie Zawinski &lt;jwz@netscape.com&gt;</NOBR></TD></TR>
+   <TR><TH VALIGN=BASELINE ALIGN=RIGHT NOWRAP>Subject: </TH>
+    <TD>Re: some doodling about mail</TD></TR>
+   <TR><TH VALIGN=BASELINE ALIGN=RIGHT NOWRAP>To: </TH>
+    <TD>terry@netscape.com, jevering@netscape.com</TD></TR>
+  </TABLE>
+</UL>
+
+<P> Since I don't have Terry's spiffy drawing program, I've converted 
+his stuff to HTML and expanded on it.
+
+<P> Things I changed:
+<UL>
+  <LI> I think <I>getFolderTree()</I> is better thought of 
+       as <I>getRootFolder()</I> which just returns a folder which
+       probably has sub-folders (that would be the <TT>nsmail/</TT>
+       folder.)
+  <P>
+  <LI> I don't see the point of <I>EditableFolder</I>; even news folders are
+       editable, since news supports cancel, and since users can post new
+       messages.  Also, any non-news folder could change its editability
+       status: chmod, or IMAP permissions.  So I think the editability of
+       these folders should be a runtime property of the folder.
+  <P>
+  <LI> NNTP and IMAP are closer to each other than BSD, so I made the
+       hierarchy show this.
+  <P>
+  <LI> I don't like the distinction between ``real'' folders and search
+       results.  Or rather, I like the search results folder to be the
+       more general of the two, and the ``real'' folder to be a specific
+       instance of that (one with a highly constrained search term.)
+       So I turned that part of the hierarchy unside out.
+  <P>
+  <LI> I don't see why <I>BSDmessage</I> should be its own class; that seems
+       like a runtime decision to me.  Each message points to the folder from
+       which it came, and that folder has a particular (unchanging) type.
+       What methods would you want to define on <I>BSDmessage</I> that wouldn't
+       more properly be on <I>BSDfolder</I> instead?
+  <P>
+  <LI> I still absolutely disagree that threading is a kind of sorting.
+       They are disjoint.
+  <P>
+  <LI> I think we should move away from the notion of a ``mail drop'';
+       it seems to be widely hated.  People like messages to just magically
+       show up in their folders without having to bonk on <I>Get Mail</I>,
+       at least some of the time.  
+       <P>
+       We need to be able to open <TT>/var/mail/$USER</TT> as a folder and
+       have it work.  You know how much I hate that model of operation, but
+       we need to do it.
+       <P>
+       But more importantly (and it's a more general problem) we need to let
+       people use <I>procmail</I>, and dump messages right into their folders.
+       This means we need some sort of asynchronous notification mechanism,
+       where the backend tells the front end that new messages have appeared?
+       I don't know.
+       <P>
+       Perhaps the incoming-message-filter-rules should live on
+       <I>MessageStore</I>.  I guess this is distinct from killfiles,
+       which really seem like they ought to live on
+       <I>MessageSetView.setSearchTerm()</I>.
+       <P>
+       Here's a distinction between public and private folders: on a private
+       folder, you want your filters to actually delete messages.  On a
+       public folder, you simply want it to never show them to you.  Hmmmm...
+</UL>
+
+<P> So here's a new backend class hierarchy...
+<P>
+<HR>
+<P>
+
+<UL>
+  <P>
+  <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+    MessageStore
+    </I></B></FONT></TD></TR>
+    <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+    This is the central storage place for the list of folders.
+    There would be one of these for each IMAP and NNTP server, for
+    example; and one for the folders on the local disk.
+    </TD></TR>
+    <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+    <LI> String descriptionString();
+    <LI> Folder getRootFolder();
+    </UL></TD></TR></TABLE>
+
+  <P>
+  <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+    Folder
+    </I></B></FONT></TD></TR>
+    <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+    Folders might contain messages, or folders, or both, depending on the
+    underlying representation.
+    </TD></TR>
+    <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+    <LI> String getName();
+    <LI> Enumeration getSubFolders();
+    <LI> Enumeration getMessages();
+    <LI> void addMessage(Message);
+    <LI> void deleteMessage(Message);
+    </UL></TD></TR></TABLE>
+
+    <P>
+    <UL>
+      <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+        LocalFolder
+        </I></B></FONT></TD></TR>
+        <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+        An abstract class for folders living on the local disk.
+        </TD></TR>
+        <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW>
+        <BR>
+        </UL></TD></TR></TABLE>
+
+        <P>
+        <UL>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            BSDFolder
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+            A folder who's underlying representation is a BSD mbox file (or
+            perhaps the Content-Length variant, if we really feel adventurous.)
+            This would contain the implementation of the caches used to quickly
+            generate summary information (what used to be .summary files.)
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW>
+            <UL>
+            <BR>
+            </UL></TD></TR></TABLE>
+        </UL>
+
+      <P>
+      <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+        RemoteFolder
+        </I></B></FONT></TD></TR>
+        <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+        An abstract class for folders living on the network.
+        </TD></TR>
+        <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW>
+        <BR>
+        </UL></TD></TR></TABLE>
+
+        <P>
+        <UL>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            IMAPFolder
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+            A folder who's underlying representation resides on an IMAP server.
+            This would implement summarization by talking to the server.
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW>
+            <UL>
+            <BR>
+            </UL></TD></TR></TABLE>
+
+          <P>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            NewsFolder
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+            A folder who's underlying representation resides on an NNTP
+	    server.  This implements <I>deleteMessage</I> in terms 
+	    of ``cancel'', and <I>addMessage</I> by raising an exception
+	    (I guess.)
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW>
+            <UL>
+            <BR>
+            </UL></TD></TR></TABLE>
+        </UL>
+    </UL>
+
+  <P>
+  <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+    MessageSetView
+    </I></B></FONT></TD></TR>
+    <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+    A view into one or more <I>Folder</I>s; the UI will mostly be dealing with
+    <I>FolderView</I>s, not <I>Folder</I>s.  The <I>SearchTerm</I> specifies 
+    how the set of messages in this view was acquired.
+    <P>
+    The <I>SearchTerm</I> is where killfiles live.
+    <P>
+    What about scorefiles?
+    </TD></TR>
+    <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+    <LI> SearchTerm getSearchTerm();
+    <LI> void setSearchTerm(SearchTerm);
+    <LI> int getNumMessages();
+    <LI> Message getMessage(int which);
+    <LI> Message getMessage(String messageID);
+    <LI> int getIndex(Message);
+    <LI> void setSort(SortOrder);
+    <LI> SortOrder getSort();
+    <LI> void setIsThreaded(Bool);
+    <LI> Bool isThreaded();
+    </UL></TD></TR></TABLE>
+
+    <P>
+    <UL>
+      <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+        FolderView
+        </I></B></FONT></TD></TR>
+        <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+        This is a particular, highly-constrained variant of
+        <I>MessageSetView</I>, where the search term is chosen to show only
+        messages from one particular folder.  It might not  show <I>all</I>
+        of the messages in the folder, but all messages will be in the same
+        folder.
+        <P>
+        This does not imply that, should a search only happen to return 
+        messages from one particular folder, that a <I>FolderView</I> will
+        be used: <I>FolderView</I> is only used when the desire to have 
+        messages from one particular folder is specified at the outset.
+        <P>
+	The important distinction here is that you can unambiguously
+        delete a message, and it's clear that it's going to vanish from the
+        real folder, and not just from the ``virtual'' search-results folder.
+        </TD></TR>
+        <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+        <LI> Folder getFolder();
+        </UL></TD></TR></TABLE>
+  </UL>
+
+  <P>
+  <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+    Message
+    </I></B></FONT></TD></TR>
+    <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+    Actually this is more along the lines of <I>MessageDescriptor</I>, or 
+    <I>MessageSummary</I>, since this object represents a message without
+    necessarily having access to the message itself: just the summary
+    information.  That's why it doesn't return an object representing
+    the whole header block: that data probably isn't available until
+    the message is actually displayed.
+    <P>
+    The <I>getMimeStructure()</I> method might return ``unknown'' if the
+    underlying folder representation doesn't save that information.  (NNTP
+    doesn't; BSD doesn't currently but could.)  In no event will that method
+    parse the folder to find out, because that would be expensive (and should
+    be explicit.)
+    <P>
+    What if someday someone wants to add some other header to their summary?
+    Say they want to have a column listing the ``<I>Approved</I>'' header,
+    just to pick a random example.  Suppose further that some of the summary
+    formats used support this (they might.)  This model (with one method for
+    each available header) doesn't deal with that nicely.  Perhaps instead,
+    there should be a <I>getSummaryHeaders()</I> method, which would return
+    an object which contains some set of headers and values (some minimal
+    set of which can be assumed to exist, but with others potentially 
+    present.)
+    </TD></TR>
+    <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+    <LI> String getMessageID();
+    <LI> String getSubject();
+    <LI> String getAuthor();
+    <LI> String getRecipients();
+    <LI> String getSentDate();
+    <LI> Priority getPriority();
+    <LI> void setPriority();
+    <LI> Bool isFlagged();
+    <LI> Bool setFlagged(Bool);
+    <LI> Bool isSigned();
+    <LI> Bool isEncrypted();
+    <LI> Folder getStorageFolder();
+    <LI> Int getStorageFolderIndex();
+    <LI> Message getThreadParent();
+    <LI> Enumeration getThreadChildren();
+    <LI> Enumeration getThreadSiblings();
+    <LI> InputStream getRawText();
+    <LI> MimePart getMimeStructure();
+    </UL></TD></TR></TABLE>
+
+  <P>
+  <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+    MimePart
+    </I></B></FONT></TD></TR>
+    <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+    This describes, and gives access to, the MIME tree within a message:
+    this is what <I>Message.getMimeStructure()</I> returns.
+    </TD></TR>
+    <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+    <LI> String getContentType();
+    <LI> String getFileName();
+    <LI> String getDescription();
+    <LI> String getContentID();
+    <LI> Int getApproximateByteSize();
+    <LI> Enumeration getMimeChildren();
+    <LI> InputStream getRawText();
+    </UL></TD></TR></TABLE>
+
+  <P>
+  <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+    MimeParser
+    </I></B></FONT></TD></TR>
+    <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+    TBD.
+    </TD></TR>
+    <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+    <BR>
+    </UL></TD></TR></TABLE>
+
+</UL>
+
+<P>
+<HR>
+<P>
+What follows is a class hierarchy for what we used to call the front end.
+Does any of this make sense?  At some level, this all just describes windows
+which interact with the objects described above, and with the user.
+
+<P>
+<HR>
+<P>
+
+<UL>
+  <P>
+  <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+    Displayer
+    </I></B></FONT></TD></TR>
+    <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+    This is a generic window, basically.
+    </TD></TR>
+    <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+    <BR>
+    </UL></TD></TR></TABLE>
+
+    <P>
+    <UL>
+      <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+        LeafDisplayer
+        </I></B></FONT></TD></TR>
+        <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+        Displayers which display single objects (not sets.)
+        </TD></TR>
+        <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+        <BR>
+        </UL></TD></TR></TABLE>
+
+        <P>
+        <UL>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            MessageDisplayer
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+            Displays a single MIME message.
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+            <LI> void delete()
+            <LI> void newMessage()
+            <LI> void replyToSender()
+            <LI> void replyToAll()
+            <LI> void forward()
+            <LI> void forwardQuoted()
+            </UL></TD></TR></TABLE>
+
+          <P>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            PersonDisplayer
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+            Displays a single person (mail recipient.)
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+            <LI> void delete()
+            <LI> void edit()
+            <LI> void mailTo()
+            </UL></TD></TR></TABLE>
+
+        </UL>
+
+      <P>
+      <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+        SetDisplayer
+        </I></B></FONT></TD></TR>
+        <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+        Displayers which display sets of objects.
+        </TD></TR>
+        <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+        <BR>
+        </UL></TD></TR></TABLE>
+        <P>
+
+        <UL>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            MessageSetDisplayer
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+            Displays a set of messages (a FolderView.)
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+            <LI> void delete()
+            <LI> void newMessage()
+            <LI> void replyToSender()
+            <LI> void replyToAll()
+            <LI> void forward()
+            <LI> void forwardQuoted()
+            <LI> void selectNext()
+            <LI> void selectPrevious()
+            <LI> void markRead()
+            <LI> void markUnread()
+            <LI> void markThreadRead()
+            <LI> void markThreadUnread()
+            </UL></TD></TR></TABLE>
+
+          <P>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            MessageSetSetDisplayer
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+            Displays a set of folders (a MessageStore.)
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+            <LI> void delete()
+            <LI> void compact()
+            </UL></TD></TR></TABLE>
+
+          <P>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            PersonSetDisplayer
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+            Displays a set of people (an Address Book.)
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+            <LI> void new()
+            <LI> void delete()
+            <LI> void edit()
+            <LI> void mailTo()
+            </UL></TD></TR></TABLE>
+        </UL>
+      </UL>
+
+    <P>
+    <UL>
+      <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+        FrameDisplayer
+        </I></B></FONT></TD></TR>
+        <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+        A window with subwindows.  These bind together windows of other
+        types.
+        </TD></TR>
+        <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+        <BR>
+        </UL></TD></TR></TABLE>
+
+        <P>
+        <UL>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            ThreePaneMessageViewer
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+	    This looks like Cheddar/Akbar.
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+            <LI> void emptyTrash()
+            <LI> MessageSetSetDisplayer getFolderWindow()
+            <LI> MessageSetDisplayer getThreadWindow()
+            <LI> MessageDisplayer getMessageWindow()
+            </UL></TD></TR></TABLE>
+
+          <P>
+          <LI><TABLE><TR><TD COLSPAN=2 BGCOLOR=BLACK><FONT COLOR=WHITE><B><I>
+            MultiWindowMessageViewer
+            </I></B></FONT></TD></TR>
+            <TR><TD></TD><TD BGCOLOR=LIGHTGREEN>
+            This looks like Dogbert.
+            </TD></TR>
+            <TR><TD WIDTH="20%"></TD><TD BGCOLOR=YELLOW><UL>
+            <LI> MessageSetSetDisplayer getFolderWindow()
+            <LI> MessageSetDisplayer createThreadWindow()
+            <LI> MessageDisplayer createMessageWindow()
+            <LI> Enumeration getThreadWindows()
+            <LI> Enumeration getMessageWindows()
+            </UL></TD></TR></TABLE>
+
+        </UL>
+    </UL>
+</UL>
+<HR>
+<P>
+Comments?
+<P>
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

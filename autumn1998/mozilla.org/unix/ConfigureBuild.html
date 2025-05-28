@@ -1,0 +1,432 @@
+<HTML>
+<HEAD>
+<TITLE>Improving the NGLayout Build System</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+
+
+
+
+<table border=0 cellspacing=0 cellpadding=8>
+<tr><td>
+
+<table border=0 cellspacing=0 cellpadding=2>
+<tr><td>
+
+<b><font size="+2" face="Arial,Helvetica">
+Improving the Unix NGLayout Build System
+</font></b>
+
+</tr></td><tr><td>
+
+By
+<a href="mailto:slamm@netscape.com,alecf@netscape.com?Subject=Improving the Raptor Build System">
+Steve Lamm and Alec Flett</a>
+<br>Followup and discussion on 
+<a href="news://news.mozilla.org/netscape.public.mozilla.unix">
+netscape.public.mozilla.unix</a>
+<br>Updated 13 November 1998
+
+</tr></td></table>
+
+</tr></td><tr><td>
+
+<table BORDER=0 CELLSPACING=0 CELLPADDING=1>
+<tr>
+  <td COLSPAN="2">
+    <b><font size="+1" face="Arial,Helvetica">
+    The Problem
+    </font></b>
+  </td>
+</tr><tr>
+  <td>
+    The unix <a href="http://www.mozilla.org/newlayout/unixbuild.html">
+    build system</a> is too complicated. The volume of environment
+    variables you must set just to build is just plain silly. Therefore
+    we are proposing a way to have a reasonable set of default build
+    settings and make it easy for people to configure their own custom
+    settings.
+  </td>
+</tr>
+</table>
+
+</tr></td><tr><td>
+
+<table BORDER=0 CELLSPACING=0 CELLPADDING=1>
+<tr>
+  <td COLSPAN="2">
+    <b><font size="+1" face="Arial,Helvetica">
+    The Goals
+    </font></b>
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    Building on unix should be a matter of typing 'gmake' with a minimal
+    amount of preparation.
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    Each build directory should have it's own build environment that is
+    derived from a set of reasonable defaults.
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    Support the following scenarios:
+  </td>
+</tr><tr>
+  <td></td>
+  <td VALIGN=TOP>
+    <table BORDER=0 CELLSPACING=0 CELLPADDING=0>
+    <tr>
+      <td VALIGN=TOP>
+        <img SRC="../images/bullet1.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+      </td><td>
+        User wants to build a tree without having to set any environment
+        variables, build options, etc.
+      </td>
+    </tr><tr>
+      <td VALIGN=TOP>
+        <img SRC="../images/bullet1.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+      </td><td>
+        User wants to build a specific tree with some minimal change to
+        the default configuration (such as a different compiler, with
+        mail turned on, etc.)
+      </td>
+    </tr><tr>
+      <td VALIGN=TOP>
+        <img SRC="../images/bullet1.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+      </td><td>
+        User wants to build every tree with some set of personal
+        defaults.
+      </td>
+    </tr><tr>
+      <td VALIGN=TOP>
+        <img SRC="../images/bullet1.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+      </td><td>
+        User wants to change the settings on a tree that is already
+        checked out.
+      </td>
+    </tr>
+    </table>
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    We should leverage autoconf as much as possible.
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    Building any portion of the code, such as beginning a build from a
+    subdirectory, should maintain the build environment for the
+    tree.
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    It should be easy to display the current build
+    environment. (i.e. gmake showconfig or something)
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    Support for named grouping of options (such as an optimized build
+    with editor and address book turned on)
+  </td>
+</tr>
+</table>
+
+</td></tr><tr><td>
+
+<table BORDER=0 CELLSPACING=0 CELLPADDING=1>
+<tr>
+  <td COLSPAN="2">
+    <b><font size="+1" face="Arial,Helvetica">
+    Issues
+    </font></b>
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    How to support multiple branches/projects/trees? Mostly an issue for
+    the per-user configuration
+  </td>
+</tr>
+</table>
+
+</td></tr><tr><td>
+
+<table BORDER=0 CELLSPACING=0 CELLPADDING=1>
+<tr>
+  <td COLSPAN="2">
+    <b><font size="+1" face="Arial,Helvetica">
+    Past Solutions
+    </font></b>
+  </td>
+</tr><tr>
+  <td colspan="2">
+    In the past, most developers inside netscape had developed their own
+    solutions to the build problems. For example,
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    <b>Macros, shell scripts, aliases, etc.</b><br>
+    These are all bad solutions because they inconsistent, hard to
+    maintain, and difficult to synchronize between projects, user
+    accounts, etc.
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    <b><tt>myconfig.mk</tt></b><br>
+    In the old build system, you could put a file called myconfig.mk in
+    mozilla/config which would be included during the build
+    process. This solution was a problem because it was easy to lose a
+    configuration file that you had changed by simply deleting a
+    tree. It also required knowledge of how the build system worked.
+  </td>
+</tr><tr>
+  <td VALIGN=TOP>
+    <img SRC="../images/bullet2.gif" ALT="" HSPACE=2 VSPACE=3 height=8 width=8>
+  </td><td>
+    <b><tt>mozmake</tt></b>
+    This was a shell script that slamm wrote for use internally. It was
+    not actually a solution to the complexities of the build system, but
+    instead made it easy to set all the environment variables before you
+    built. It was useful, but not a part of the build system.
+  </td>
+</tr>
+</table>
+
+</td></tr><tr><td>
+
+<table BORDER=0 CELLSPACING=0 CELLPADDING=1>
+<tr>
+  <td>
+    <b><font size="+1" face="Arial,Helvetica">
+    Proposed solution
+    </font></b>
+  </td>
+</tr><tr>
+  <td>
+    Since the purpose of autoconf is to configure a build environment
+    before actually beginning a build, it is trivial to make use of the
+    autoconf system to configure build time options.
+    <p>
+    The build process will be in two main stages, just like any other
+    autoconf based project. The only differences from such a project is
+    that we do a little extra work during each stage to determine
+    Mozilla specific build time variables. Here's what happens:
+    <ol>
+      <li><b>configure</b> - This will create a file called moz_tree.m4 in
+      the root of your build directory which contains local defaults that
+      are generated from the following sources, in order:
+      <ol>
+        <li>Makefile.in</li>
+        <li>Home directory - in ~/.moz_tree.m4</li>
+        <li>configure's --with-xxx parameters</li>
+      </ol>
+    
+      <li><b>gmake</b> - the user runs GNU make which will inherit defaults
+      from the following sources, in order:</li>
+    
+      <ol>
+        <li>config.mk</li>
+        <li>moz_tree.m4 (from the local tree)</li>
+        <li>Environment variables</li>
+      </ol>
+    </ol>
+
+    The moz_tree.m4 file serves as a snapshot of the tree's
+    configuration at the time that configure was run. It also serves as
+    a starting point for a user to create thier own .moz_tree.m4 in
+    their home directory. This file lists all possible options, with the
+    default settings commented out.
+    <p>
+    The addition of a home directory configuration file, ~/moz_tree.m4
+    and environment variables may seem strange, but this is why this
+    setup wins:
+    <ul>
+      <li>A user can specify their preferred environment for all trees
+      that are checked out with ~/.moz_tree.mk</li>
+      <li>An already checked out tree maintains the original environment
+      even if a user changes their ~/.moz_tree.mk</li>
+      <li>moz_tree.mk is easily editable. It's easy to permanently
+      change the environment for a given tree and you don't need to run
+      configure over again.</li>
+      <li>You can always use environment variables to override
+      anything.</li>
+      <li>The defaults are commented out in the moz_tree.m4 files so
+      that user's configuration only overrides the settings that they
+      have explicitly changed.</li>
+    </ul>
+  </td>
+</tr>
+</table>
+
+</td></tr>
+</table>
+
+<br>
+<hr WIDTH="100%">
+Last updated 13 November 1998
+<br><i><a href="mailto:alecf@netscape.com">alecf@netscape.com</a></i>
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

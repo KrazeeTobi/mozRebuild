@@ -1,0 +1,3930 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: I/O Functions</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="priotyp.html">[Previous]</A> <A HREF="prntdb.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<HR>
+<A NAME="419866">
+<P></A><CENTER><H2>Chapter 10<BR><A NAME="419870">
+I/O Functions</H2>
+</A></CENTER>
+<A NAME="419871">
+This chapter describes the NSPR functions used to perform operations such as system access, normal file I/O, and socket (network) I/O.<P></A>
+<A NAME="581036">
+For sample code that illustrates basic I/O operations, see <A HREF="printro.html#1015494">Introduction to NSPR</A>. For information about the types most commonly used with the functions described in this chapter, see <A HREF="priotyp.html#419870">Chapter 9, "I/O Types."</A><P></A>
+<A NAME="532944">
+<A HREF="priofnc.html#484540">Functions that Operate on Pathnames</A><br><A HREF="priofnc.html#484893">Functions that Act on File Descriptors</A><br><A HREF="priofnc.html#488787">Directory I/O Functions</A><br><A HREF="priofnc.html#488828">Socket Manipulation Functions</A><br><A HREF="priofnc.html#581192">Converting Between Host and Network Addresses</A><br><A HREF="priofnc.html#489500">Memory-Mapped I/O Functions</A><br><A HREF="priofnc.html#489549">Anonymous Pipe Function</A><br><A HREF="priofnc.html#629092">Polling Function</A><br><A HREF="priofnc.html#539452">Manipulating Layers</A><P></A>
+
+<A NAME="Functions that Operate on Pathnames"></A>
+<A NAME="484540">
+<H2> Functions that Operate on Pathnames</H2>
+</A>
+<A NAME="597416">
+A file or directory in a file system is specified by its pathname. NSPR uses Unix-style pathnames, which are null-terminated character strings. Only the ASCII character set is supported. The forward slash (<CODE>/</CODE>) separates the directories in a pathname. NSPR converts the slashes in a pathname to the directory separator of the native OS--for example, backslash (<CODE>\)</CODE> on Windows and colon (<CODE>:</CODE>) on Mac OS--before passing it to the native system calls. <P></A>
+<A NAME="596949">
+Some file systems also differentiate drives or volumes.<P></A>
+<A NAME="547609">
+<A HREF="priofnc.html#426710"><CODE>PR_Open</CODE></A><br><A HREF="priofnc.html#486606"><CODE>PR_Delete</CODE></A><br><A HREF="priofnc.html#599816"><CODE>PR_GetFileInfo</CODE></A><br><A HREF="priofnc.html#486650"><CODE>PR_GetFileInfo64</CODE></A><br><A HREF="priofnc.html#488408"><CODE>PR_Rename</CODE></A><br><A HREF="priofnc.html#598814"><CODE>PR_Access</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="426710">
+<H4> PR_Open</H4>
+</A>
+
+<A NAME="426711">
+Opens a file for reading, writing, or both. Also used to create a file.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="426713">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="426714">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="426743">
+<PRE>
+PRFileDesc* PR_Open(
+    const char *name,
+    PRIntn flags,
+    PRIntn mode);</PRE></A><A NAME="Head4;"></A>
+<A NAME="426716">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="426722">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="426719">
+<PRE>name</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="426721">
+The pathname of the file to be opened.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="426770">
+<PRE>flags</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="426821">
+File status flags. <CODE>PR_Open</CODE> performs a bitwise <CODE>OR</CODE> of the following bit flags:</A></P><ul><A NAME="426822">
+<LI><CODE>PR_RDONLY</CODE>. Open for reading only.</A><A NAME="426799">
+<LI><CODE>PR_WRONLY</CODE>. Open for writing only.</A><A NAME="426800">
+<LI><CODE>PR_RDWR</CODE>. Open for reading and writing.</A><A NAME="426840">
+<LI><CODE>PR_CREATE_FILE</CODE>. If the file does not exist, the file is created. If the file exists, this flag has no effect.</A><A NAME="426853">
+<LI><CODE>PR_APPEND</CODE>. The file pointer is set to the end of the file prior to each write.</A><A NAME="426858">
+<LI><CODE>PR_TRUNCATE</CODE>. If the file exists, its length is truncated to 0.</A></ul><A NAME="597602">
+</A></P><A NAME="597785">
+In most cases, only one of the first three flags may be used. If the <CODE>flags</CODE> parameter does include any of the first three flags (<CODE>PR_RDONLY</CODE>, <CODE>PR_WRONLY</CODE>, or <CODE>PR_RDWR</CODE>), the open file can't be read or written, which is not useful.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="426774">
+<PRE>mode</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="533117">
+Access permission bits of the file mode, if the file is created when <CODE>PR_CREATE_FILE</CODE> is on. </A></P><A NAME="598060">
+<B></B></A></P><A NAME="598061">
+The <CODE>mode</CODE> parameter is currently applicable only on Unix platforms. It may apply to other platforms in the future. Possible values of the <CODE>mode</CODE> parameter include the following:</A></P><ul><A NAME="426970">
+<LI>00400. Read by owner.</A><A NAME="426971">
+<LI>00200. Write by owner.</A><A NAME="426999">
+<LI>00100. Execute (search if a directory) by owner.</A><A NAME="427006">
+<LI>00040. Read by group.</A><A NAME="427011">
+<LI>00020. Write by group.</A><A NAME="427020">
+<LI>00010. Execute by group.</A><A NAME="427031">
+<LI>00004. Read by others.</A><A NAME="427047">
+<LI>00002. Write by others.</A><A NAME="427074">
+<LI>00001. Execute by others.</A></ul>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="426723">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="426724">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="598092">
+<LI>If the file is successfully opened, a pointer to a dynamically allocated <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> for the newly opened file. The <CODE>PRFileDesc</CODE> should be freed by calling <A HREF="priofnc.html#622644"><CODE>PR_Close</CODE></A>.</LI>
+</A>
+<A NAME="598093">
+<LI>If the file was not opened successfully, a <CODE>NULL</CODE> pointer.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="426725">
+<H5> Description</H5>
+</A>
+
+<A NAME="598141">
+<CODE>PR_Open</CODE> creates a file descriptor (<A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A>) for the file with the pathname <CODE>name</CODE> and sets the file status flags of the file descriptor according to the value of <CODE>flags</CODE>. If a new file is created as a result of the <CODE>PR_Open</CODE> call, its file mode bits are set according to the <CODE>mode</CODE> parameter. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="486606">
+<H4> PR_Delete</H4>
+</A>
+
+<A NAME="486607">
+Deletes a file.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="486609">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="486610">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="486611">
+<PRE>PRStatus PR_Delete(const char *name);</PRE></A><A NAME="Head4;"></A>
+<A NAME="486612">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="486618">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="486615">
+<PRE>name</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="486617">
+The pathname of the file to be deleted.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="486619">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="486620">
+One of the following values:<P></A>
+<ul>
+<A NAME="486621">
+<LI>If the file is successfully deleted, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="486622">
+<LI>If the file is not successfully deleted, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="486623">
+<H5> Description</H5>
+</A>
+
+<A NAME="486624">
+Deletes a file from the file system. The operation may fail if the file is already open.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="599816">
+<H4> PR_GetFileInfo</H4>
+</A>
+
+<A NAME="599817">
+Gets information about a file with a specified pathname. File size is expressed as a 32-bit integer.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="599819">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="486630">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="486631">
+<PRE>PRStatus PR_GetFileInfo(
+    const char *fn,
+    PRFileInfo *info);</PRE></A><A NAME="Head4;"></A>
+<A NAME="486632">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="486642">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="486635">
+<PRE>fn</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="486637">
+The pathname of the file to get information about.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="486639">
+<PRE>info</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="486641">
+A pointer to a file information object (see <A HREF="priotyp.html#529530"><CODE>PRFileInfo</CODE></A>). On output, <CODE>PR_GetFileInfo</CODE> writes information about the given file to the file information object.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="486643">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="486644">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="486645">
+<LI>If file information is successfully obtained, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="486646">
+<LI>If file information is not successfully obtained, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="486647">
+<H5> Description</H5>
+</A>
+
+<A NAME="598679">
+<CODE>PR_GetFileInfo</CODE> stores information about the file with the specified pathname in the <CODE>PRFileInfo</CODE> structure pointed to by <CODE>info</CODE>. The file size is returned as an unsigned 32-bit integer.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="599843">
+<H5> See also</H5>
+</A>
+
+<A NAME="600281">
+For the 64-bit version of this function, see <A HREF="priofnc.html#486650"><CODE>PR_GetFileInfo64</CODE></A>. To get equivalent information on a file that's already open, use <A HREF="priofnc.html#433149"><CODE>PR_GetOpenFileInfo</CODE></A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="486650">
+<H4> PR_GetFileInfo64</H4>
+</A>
+
+<A NAME="486651">
+Gets information about a file with a specified pathname. File size is expressed as a 64-bit integer. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="486653">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="486654">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="486655">
+<PRE>PRStatus PR_GetFileInfo64(
+    const char *fn,
+    PRFileInfo64 *info);</PRE></A><A NAME="Head4;"></A>
+<A NAME="486656">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="486666">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="486659">
+<PRE>fn</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="538680">
+The pathname of the file to get information about.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="486663">
+<PRE>info</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="598733">
+A pointer to a 64-bit file information object (see <A HREF="priotyp.html#420420"><CODE>PRFileInfo64</CODE></A>). On output, <CODE>PR_GetFileInfo64</CODE> writes information about the given file to the file information object.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="486667">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="486668">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="486669">
+<LI>If file information is successfully obtained, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="486670">
+<LI>If file information is not successfully obtained, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="486671">
+<H5> Description</H5>
+</A>
+
+<A NAME="576239">
+<CODE>PR_GetFileInfo64</CODE> stores information about the file with the specified pathname in the <CODE>PRFileInfo64</CODE> structure pointed to by <CODE>info</CODE>. The file size is returned as an unsigned 64-bit integer. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="602620">
+<H5> See also</H5>
+</A>
+
+<A NAME="602624">
+For the 32-bit version of this function, see <A HREF="priofnc.html#599816"><CODE>PR_GetFileInfo</CODE></A>. To get equivalent information on a file that's already open, use <A HREF="priofnc.html#433238"><CODE>PR_GetOpenFileInfo64</CODE></A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="488408">
+<H4> PR_Rename</H4>
+</A>
+
+<A NAME="488409">
+Renames a file.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="488411">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="488412">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="488413">
+<PRE>PRStatus PR_Rename(
+    const char *from,
+    const char *to);</PRE></A><A NAME="Head4;"></A>
+<A NAME="488414">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="488424">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="488417">
+<PRE>from</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="488419">
+The old name of the file to be renamed.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="488421">
+<PRE>to</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="488423">
+The new name of the file.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="488425">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="576249">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="576250">
+<LI>If file is successfully renamed, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="576251">
+<LI>If file is not successfully renamed, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="598811">
+<H5> Description</H5>
+</A>
+
+<A NAME="598822">
+<CODE>PR_Rename</CODE> renames a file from its old name (<CODE>from)</CODE> to a new name (<CODE>to</CODE>). If a file with the new name already exists, <CODE>PR_Rename</CODE> fails with the error code <CODE>PR_FILE_EXISTS_ERROR</CODE>. In this case, <CODE>PR_Rename</CODE> does not overwrite the existing filename. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="598814">
+<H4> PR_Access</H4>
+</A>
+
+<A NAME="488431">
+Determines the accessibility of a file.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="488433">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="488434">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="488435">
+<PRE>PRStatus PR_Access(
+    const char *name,
+    PRAccessHow how);</PRE></A><A NAME="Head4;"></A>
+<A NAME="488436">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="488449">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="488439">
+<PRE>name</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="488441">
+The pathname of the file whose accessibility is to be determined.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="488443">
+<PRE>how</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="488445">
+Specifies which access permission to check for. Use one of the following values:</A></P><ul><A NAME="488446">
+<LI><CODE>PR_ACCESS_READ_OK</CODE>. Test for read permission.</A><A NAME="488447">
+<LI><CODE>PR_ACCESS_WRITE_OK</CODE>. Test for write permission.</A><A NAME="488448">
+<LI><CODE>PR_ACCESS_EXISTS</CODE>. Check existence of file.</A></ul>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="488450">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="488451">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="488452">
+<LI>If the requested access is permitted, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="488453">
+<LI>If the requested access is not permitted, <CODE>PR_FAILURE</CODE>. </LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="488454">
+<H5> Description</H5>
+</A>
+
+<A NAME="488455">
+This is the declaration for the enumeration <CODE>PRAccessHow</CODE>, used in the <CODE>how</CODE> parameter:<P></A>
+<A NAME="505703">
+<PRE>typedef enum PRAccessHow {
+    PR_ACCESS_EXISTS = 1,
+    PR_ACCESS_WRITE_OK = 2,
+    PR_ACCESS_READ_OK = 3<br>} PRAccessHow;</PRE></A>
+<A NAME="Functions that Act on File Descriptors"></A>
+<A NAME="484893">
+<H2> Functions that Act on File Descriptors</H2>
+</A>
+<A NAME="622611">
+<A HREF="priofnc.html#622644"><CODE>PR_Close</CODE></A><br><A HREF="priofnc.html#543681"><CODE>PR_Read</CODE></A><br><A HREF="priofnc.html#431166"><CODE>PR_Write</CODE></A><br><A HREF="priofnc.html#431267"><CODE>PR_Writev</CODE></A><br><A HREF="priofnc.html#433149"><CODE>PR_GetOpenFileInfo</CODE></A><br><A HREF="priofnc.html#433238"><CODE>PR_GetOpenFileInfo64</CODE></A><br><A HREF="priofnc.html#434006"><CODE>PR_Seek</CODE></A><br><A HREF="priofnc.html#434193"><CODE>PR_Seek64</CODE></A><br><A HREF="priofnc.html#434299"><CODE>PR_Available</CODE></A><br><A HREF="priofnc.html#434445"><CODE>PR_Available64</CODE></A><br><A HREF="priofnc.html#434484"><CODE>PR_Sync</CODE></A><br><A HREF="priofnc.html#627548"><CODE>PR_GetDescType</CODE></A><br><A HREF="priofnc.html#625503"><CODE>PR_GetSpecialFD</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="622644">
+<H4> PR_Close</H4>
+</A>
+
+<A NAME="430771">
+Closes a file descriptor. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="430773">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="430774">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="430874">
+<PRE>PRStatus PR_Close(PRFileDesc *fd);</PRE></A><A NAME="Head4;"></A>
+<A NAME="430776">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="576714">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="576708">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="576713">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object. </A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="576621">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="576622">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="576623">
+<LI>If file descriptor is closed successfully, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="576820">
+<LI>If the file descriptor is not closed successfully, <CODE>PR_FAILURE</CODE>. </LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="543678">
+<H5> Description</H5>
+</A>
+
+<A NAME="599128">
+The file descriptor may represent a normal file, a socket, or an end point of a pipe. On successful return, <CODE>PR_Close</CODE> frees the dynamic memory and other resources identified by the <CODE>fd</CODE> parameter.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="543681">
+<H4> PR_Read</H4>
+</A>
+
+<A NAME="430956">
+Reads bytes from a file or socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="430958">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="430959">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="430993">
+<PRE>
+PRInt32 PR_Read(PRFileDesc *fd,
+    void *buf,
+    PRInt32 amount);
+</PRE></A><A NAME="Head4;"></A>
+<A NAME="430961">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="430967">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="430964">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="430966">
+A pointer to the <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object for the file or socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="431038">
+<PRE>buf</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="431040">
+A pointer to a buffer to hold the data read in. On output, the buffer contains the data.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="431046">
+<PRE>amount</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="431048">
+The size of <CODE>buf</CODE> (in bytes).</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="430968">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="431096">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="431097">
+<LI>A positive number indicates the number of bytes actually read in.</LI>
+</A>
+<A NAME="431098">
+<LI>The value 0 means end of file is reached or the network connection is closed.</LI>
+</A>
+<A NAME="599309">
+<LI>The value -1 indicates a failure. To get the reason for the failure, call <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="599310">
+<H5> Description</H5>
+</A>
+
+<A NAME="599311">
+The thread invoking <CODE>PR_Read</CODE> blocks until it encounters an end-of-stream indication, some positive number of bytes (but no more than <CODE>amount</CODE> bytes) are read in, or an error occurs. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="431166">
+<H4> PR_Write</H4>
+</A>
+
+<A NAME="431167">
+Writes a buffer of data to a file or socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="431169">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="431170">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="431227">
+<PRE>PRInt32 PR_Write(
+    PRFileDesc *fd,
+    const void *buf,
+    PRInt32 amount);</PRE></A><A NAME="Head4;"></A>
+<A NAME="431172">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="431186">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="431175">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="431177">
+A pointer to the <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object for a file or socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="431179">
+<PRE>buf</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="431181">
+A pointer to the buffer holding the data to be written.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="431183">
+<PRE>amount</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="431185">
+The amount of data, in bytes, to be written from the buffer.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="431187">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="431188">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="431189">
+<LI>A positive number indicates the number of bytes successfully written.</LI>
+</A>
+<A NAME="431191">
+<LI>The value -1 indicates that the operation failed. The reason for the failure is obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="431192">
+<H5> Description</H5>
+</A>
+
+<A NAME="599369">
+The thread invoking <CODE>PR_Write</CODE> blocks until all the data is written or the write operation fails. Therefore, the return value is equal to either <CODE>amount</CODE> (success) or -1 (failure). Note that if <CODE>PR_Write</CODE> returns -1, some data (less than <CODE>amount</CODE> bytes) may have been written before an error occurred. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="431267">
+<H4> PR_Writev</H4>
+</A>
+
+<A NAME="431268">
+Writes data to a file or socket from multiple buffers.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="431270">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="431271">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="577151">
+<PRE>PRInt32 PR_Writev(
+    PRFileDesc *fd,
+    PRIOVec *iov,
+    PRInt32 size,
+    PRIntervalTime timeout);</PRE></A><A NAME="577152">
+<PRE>#define PR_MAX_IOVECTOR_SIZE 16</PRE></A><A NAME="Head4;"></A>
+<A NAME="577153">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="431287">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="431276">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="431278">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object for a socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="431280">
+<PRE>iov</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="431282">
+An array of <CODE>PRIOVec</CODE> structures that describe the buffers to write from.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="431284">
+<PRE>size</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="577015">
+Number of <CODE>PRIOVec</CODE> structures in the <CODE>iov</CODE> array. The value of this parameter must not be greater than <CODE>PR_MAX_IOVECTOR_SIZE</CODE>. If it is, the function will fail and the error will be set to <CODE>PR_BUFFER_OVERFLOW_ERROR</CODE>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="431336">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="431338">
+A value of type <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> describing the time limit for completion of the entire write operation.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="431288">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="431289">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="431290">
+<LI>A positive number indicates the number of bytes successfully written.</LI>
+</A>
+<A NAME="431291">
+<LI>The value -1 is an indication that the operation failed. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="431292">
+<H5> Description</H5>
+</A>
+
+<A NAME="599542">
+The thread calling <CODE>PR_Writev</CODE> blocks until all the data is written or the write operation fails. Therefore, the return value is equal to either the sum of all the buffer lengths (on success) or -1 (on failure). Note that if <CODE>PR_Writev</CODE> returns -1, part of the data may have been written before an error occurred. If the <CODE>timeout</CODE> parameter is not <CODE>PR_INTERVAL_NO_TIMEOUT</CODE> and all the data cannot be written in the specified interval, <CODE>PR_Writev</CODE> returns -1 with the error code <CODE>PR_IO_TIMEOUT_ERROR</CODE>. <P></A>
+<A NAME="545880">
+This is the type definition for <CODE>PRIOVec</CODE>: <P></A>
+<A NAME="514568">
+<PRE>typedef struct PRIOVec {
+    char *iov_base;
+    int iov_len;<br>} PRIOVec;</PRE></A><A NAME="514579">
+The <CODE>PRIOVec</CODE> structure has the following fields: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="514572">
+<PRE>iov_base</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="514574">
+A pointer to the beginning of the buffer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="514576">
+<PRE>iov_len</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="514578">
+The size of the buffer.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="433149">
+<H4> PR_GetOpenFileInfo</H4>
+</A>
+
+<A NAME="433150">
+Gets an open file's information. File size is expressed as a 32-bit integer.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="433152">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="433153">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="433206">
+<PRE>PRStatus PR_GetOpenFileInfo(
+    PRFileDesc *fd,
+    PRFileInfo *info);</PRE></A><A NAME="Head4;"></A>
+<A NAME="433155">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="433165">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="433158">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="433160">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object for an open file.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="433162">
+<PRE>info</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="433164">
+A pointer to a <A HREF="priotyp.html#529530"><CODE>PRFileInfo</CODE></A> object. On output, information about the given file is written into the file information object.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="433166">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="433167">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="433168">
+<LI>If file information is successfully obtained, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="433169">
+<LI>If file information is not successfully obtained, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="433170">
+<H5> Description</H5>
+</A>
+
+<A NAME="599735">
+<CODE>PR_GetOpenFileInfo</CODE> obtains the file type (normal file, directory, or other), file size (as a 32-bit integer), and the file creation and modification times of the open file represented by the file descriptor. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="602703">
+<H5> See also</H5>
+</A>
+
+<A NAME="602707">
+For the 64-bit version of this function, see <A HREF="priofnc.html#433238"><CODE>PR_GetOpenFileInfo64</CODE></A>. To get equivalent information on a file that's not already open, use <A HREF="priofnc.html#599816"><CODE>PR_GetFileInfo</CODE></A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="433238">
+<H4> PR_GetOpenFileInfo64</H4>
+</A>
+
+<A NAME="433239">
+Gets an open file's information. File size is expressed as a 64-bit integer.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="433241">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="433242">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="433284">
+<PRE>PRStatus PR_GetOpenFileInfo64(
+    PRFileDesc *fd,
+    PRFileInfo64 *info);</PRE></A><A NAME="Head4;"></A>
+<A NAME="433244">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="433254">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="577272">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="577277">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object for an open file.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="577279">
+<PRE>info</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="577284">
+A pointer to a <A HREF="priotyp.html#420420"><CODE>PRFileInfo64</CODE></A> object. On output, information about the specified file is written into the file information object.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="433255">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="433256">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="433257">
+<LI>If file information is successfully obtained, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="433258">
+<LI>If file information is not successfully obtained, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="433259">
+<H5> Description</H5>
+</A>
+
+<A NAME="602983">
+<CODE>PR_GetOpenFileInfo64</CODE> is the 64-bit version of <A HREF="priofnc.html#433149"><CODE>PR_GetOpenFileInfo</CODE></A>. It obtains the file type (normal file, directory, or other), file size (as a 64-bit integer), and the creation and modification times of the open file represented by the file descriptor. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="602948">
+<H5> See also</H5>
+</A>
+
+<A NAME="602952">
+For the 32-bit version of this function, see <A HREF="priofnc.html#433149"><CODE>PR_GetOpenFileInfo</CODE></A>. To get equivalent information on a file that's not already open, use <A HREF="priofnc.html#486650"><CODE>PR_GetFileInfo64</CODE></A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="434006">
+<H4> PR_Seek</H4>
+</A>
+
+<A NAME="434007">
+Moves the current read-write file pointer by an offset expressed as a 32-bit integer.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434009">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="434010">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="434066">
+<PRE>PRInt32 PR_Seek(
+    PRFileDesc *fd,
+    PRInt32 offset,
+    PRSeekWhence whence);</PRE></A><A NAME="Head4;"></A>
+<A NAME="434012">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="434025">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434015">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434017">
+Pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434019">
+<PRE>offset</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434024">
+A value, in bytes, used with the <CODE>whence</CODE> parameter to set the file pointer. A negative value causes seeking in the reverse direction.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434097">
+<PRE>whence</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434099">
+A value of type <A HREF="priotyp.html#421972"><CODE>PRSeekWhence</CODE></A> that specifies how to interpret the <CODE>offset</CODE> parameter in setting the file pointer associated with the <CODE>fd</CODE> parameter. The value for the <CODE>whence</CODE> parameter can be one of the following:</A></P><ul><A NAME="434100">
+<LI><CODE>PR_SEEK_SET</CODE>. Sets the file pointer to the value of the <CODE>offset</CODE> parameter.</A><A NAME="434101">
+<LI><CODE>PR_SEEK_CUR</CODE>. Sets the file pointer to its current location plus the value of the <CODE>offset</CODE> parameter.</A><A NAME="434102">
+<LI><CODE>PR_SEEK_END</CODE>. Sets the file pointer to the size of the file plus the value of the <CODE>offset</CODE> parameter.</A></ul>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434026">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="434027">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="434028">
+<LI>If the function completes successfully, the resulting pointer location, measured in bytes from the beginning of the file.</LI>
+</A>
+<A NAME="434029">
+<LI>If the function fails, the file pointer remains unchanged and the function returns the value -1. The error code can then be retrieved with <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="434030">
+<H5> Description</H5>
+</A>
+
+<A NAME="603241">
+Here's an idiom for obtaining the current location of the file pointer for the file descriptor in the <CODE>fd</CODE> parameter: <P></A>
+<A NAME="603242">
+<PRE>PR_Seek(fd, 0, PR_SEEK_CUR)</PRE></A><A NAME="Head4;"></A>
+<A NAME="603243">
+<H5> See also</H5>
+</A>
+
+<A NAME="603674">
+If you need to move the file pointer by a large offset that's out of the range of a 32-bit integer, use <A HREF="priofnc.html#434193"><CODE>PR_Seek64</CODE></A>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="434193">
+<H4> PR_Seek64</H4>
+</A>
+
+<A NAME="603331">
+Moves the current read-write file pointer by an offset expressed as a 64-bit integer.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434196">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="434197">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="434247">
+<PRE>PRInt64 PR_Seek64(
+    PRFileDesc *fd,
+    PRInt64 offset,
+    PRSeekWhence whence);</PRE></A><A NAME="Head4;"></A>
+<A NAME="434199">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="434216">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434202">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434204">
+Pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434206">
+<PRE>offset</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434208">
+A value, in bytes, that is used with the <CODE>whence</CODE> parameter to set the file pointer. A negative value causes seeking in the reverse direction.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434210">
+<PRE>whence</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="546063">
+A value of type <A HREF="priotyp.html#421972"><CODE>PRSeekWhence</CODE></A> that specifies how to interpret the <CODE>offset</CODE> parameter in setting the file pointer associated with the <CODE>fd</CODE> parameter. The value for the <CODE>whence</CODE> parameter can be one of the following:</A></P><ul><A NAME="546064">
+<LI><CODE>PR_SEEK_SET</CODE>. Sets the file pointer to the value of the <CODE>offset</CODE> parameter.</A><A NAME="546065">
+<LI><CODE>PR_SEEK_CUR</CODE>. Sets the file pointer to its current location plus the value of the <CODE>offset</CODE> parameter.</A><A NAME="434215">
+<LI><CODE>PR_SEEK_END</CODE>. Sets the file pointer to the size of the file plus the value of the <CODE>offset</CODE> parameter.</A></ul>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434217">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="434218">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="434219">
+<LI>If the function completes successfully, the resulting pointer location, measured in bytes from the beginning of the file.</LI>
+</A>
+<A NAME="434220">
+<LI>If the function fails, the file offset remains unchanged and the function returns the value -1. The error code can then be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="434221">
+<H5> Description</H5>
+</A>
+
+<A NAME="603501">
+This is the idiom for obtaining the current location (expressed as a 64-bit integer) of the file pointer for the file descriptor in the <CODE>fd</CODE> parameter:<P></A>
+<A NAME="603502">
+<PRE>PR_Seek64(fd, 0, PR_SEEK_CUR)</PRE></A><A NAME="603656">
+If the native operating system is capable of handling only a 32-bit file offset, <CODE>PR_Seek64</CODE> may fail with the error code <CODE>PR_FILE_TOO_BIG_ERROR</CODE> if the offset parameter is out of the range of a 32-bit integer. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="603469">
+<H5> See also</H5>
+</A>
+
+<A NAME="603842">
+<A HREF="priofnc.html#434006"><CODE>PR_Seek</CODE></A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="434299">
+<H4> PR_Available</H4>
+</A>
+
+<A NAME="434300">
+Determines the number of bytes (expressed as a 32-bit integer) that are available for reading beyond the current read-write pointer in a specified file or socket. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="434302">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="434303">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="434375">
+<PRE>PRInt32 PR_Available(PRFileDesc *fd);</PRE></A><A NAME="Head4;"></A>
+<A NAME="434305">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="434322">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434308">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434310">
+Pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a file or socket.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434323">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="603994">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="604036">
+<LI>If the function completes successfully, it returns the number of bytes that are available for reading. For a normal file, these are the bytes beyond the current file pointer.</LI>
+</A>
+<A NAME="603996">
+<LI>If the function fails, it returns the value -1. The error code can then be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="434327">
+<H5> Description</H5>
+</A>
+
+<A NAME="604097">
+<CODE>PR_Available</CODE> works on normal files and sockets. <CODE>PR_Available</CODE> does not work with pipes on Win32 platforms.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="604151">
+<H5> See also</H5>
+</A>
+
+<A NAME="604160">
+If the number of bytes available for reading is out of the range of a 32-bit integer, use <A HREF="priofnc.html#434445"><CODE>PR_Available64</CODE></A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="434445">
+<H4> PR_Available64</H4>
+</A>
+
+<A NAME="606090">
+Determines the number of bytes (expressed as a 64-bit integer) that are available for reading beyond the current read-write pointer in a specified file or socket. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="434448">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="434449">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="434479">
+<PRE>PRInt64 PR_Available64(PRFileDesc *fd);</PRE></A><A NAME="Head4;"></A>
+<A NAME="434451">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="434457">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434454">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434456">
+Pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a file or socket.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434458">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="434459">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="606114">
+<LI>If the function completes successfully, it returns the number of bytes that are available for reading. For a normal file, these are the bytes beyond the current file pointer.</LI>
+</A>
+<A NAME="434461">
+<LI>If the function fails, it returns the value -1. The error code can then be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="606122">
+<H5> Description</H5>
+</A>
+
+<A NAME="606123">
+<CODE>PR_Available64</CODE> works on normal files and sockets. <CODE>PR_Available</CODE> does not work with pipes on Win32 platforms.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="606124">
+<H5> See also</H5>
+</A>
+
+<A NAME="606125">
+If the number of bytes available for reading is within the range of a 32-bit integer, use <A HREF="priofnc.html#434299"><CODE>PR_Available</CODE></A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="434484">
+<H4> PR_Sync</H4>
+</A>
+
+<A NAME="434485">
+Synchronizes any buffered data for a file descriptor to its backing device (disk).<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434487">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="434488">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="434543">
+<PRE>PRStatus PR_Sync(PRFileDesc *fd);</PRE></A><A NAME="Head4;"></A>
+<A NAME="434490">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="434496">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434493">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434495">
+Pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a file or socket.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434497">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="434498">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="434499">
+<LI>On successful completion, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="434500">
+<LI>If the function fails, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="434501">
+<H5> Description</H5>
+</A>
+
+<A NAME="546196">
+<CODE>PR_Sync</CODE> writes all the in-memory buffered data of the specified file to the disk. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="627548">
+<H4> PR_GetDescType</H4>
+</A>
+
+<A NAME="627549">
+Describes what type of file is referenced by a specified file descriptor. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="627551">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="627552">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="627553">
+<PRE>PRDescType PR_GetDescType(PRFileDesc *file);</PRE></A><A NAME="Head4;"></A>
+<A NAME="627554">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="627563">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="627557">
+<PRE>file</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="627562">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object whose descriptor type is to be returned.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="627564">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="627565">
+The function returns a <CODE>PRDescType</CODE> enumeration constant that describes the type of file.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="627566">
+<H5> Description</H5>
+</A>
+
+<A NAME="627567">
+The PRDescType enumeration is defined as follows:<P></A>
+<A NAME="627568">
+<PRE>
+typedef enum PRDescType {
+    PR_DESC_FILE = 1,
+    PR_DESC_SOCKET_TCP = 2,
+    PR_DESC_SOCKET_UDP = 3,
+    PR_DESC_LAYERED = 4
+} PRDescType;
+</PRE></A><A NAME="Head4;"></A>
+<A NAME="627569">
+<H5> <br></H5>
+</A>
+
+<A NAME="627587">
+The enumeration has the following enumerators: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="627572">
+<PRE>PR_DESC_FILE</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="627574">
+The <CODE>PRFileDesc</CODE> object represents a normal file.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="627576">
+<PRE>PR_DESC_SOCKET_TCP</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="627578">
+The <CODE>PRFileDesc</CODE> object represents a TCP socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="627580">
+<PRE>PR_DESC_SOCKET_UDP</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="627582">
+The <CODE>PRFileDesc</CODE> object represents a UDP socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="627584">
+<PRE>PR_DESC_LAYERED</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="627586">
+The <CODE>PRFileDesc</CODE> object is a layered file descriptor.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="625503">
+<H4> PR_GetSpecialFD</H4>
+</A>
+
+<A NAME="625504">
+Gets the file descriptor that represents the standard input, output, or error stream.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="625505">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="630703">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="625506">
+<PRE>PRFileDesc* PR_GetSpecialFD(PRSpecialFD id);</PRE></A><A NAME="Head4;"></A>
+<A NAME="625507">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="625513">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="625510">
+<PRE>id</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="625512">
+A pointer to an enumerator of type <CODE>PRSpecialFD</CODE>, indicating the type of I/O stream desired: <CODE>PR_StandardInput</CODE>, <CODE>PR_StandardOutput</CODE>, or <CODE>PR_StandardError</CODE>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="625514">
+<H5> Returns</H5>
+</A>
+
+<A NAME="625515">
+If the <CODE>id</CODE> parameter is valid, <CODE>PR_GetSpecialFD</CODE> returns a file descriptor that represents the corresponding standard I/O stream. Otherwise, <CODE>PR_GetSpecialFD</CODE> returns <CODE>NULL</CODE> and sets the error to <CODE>PR_INVALID_ARGUMENT_ERROR</CODE>.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="625516">
+<H5> Description</H5>
+</A>
+
+<A NAME="625517">
+Type <CODE>PRSpecialFD</CODE> is defined as follows: <P></A>
+<A NAME="625518">
+<PRE>
+typedef enum PRSpecialFD{
+    PR_StandardInput,
+    PR_StandardOutput,
+    PR_StandardError
+} PRSpecialFD;
+</PRE></A><A NAME="625519">
+<PRE>
+#define PR_STDIN PR_GetSpecialFD(PR_StandardInput)
+#define PR_STDOUT PR_GetSpecialFD(PR_StandardOutput)
+#define PR_STDERR PR_GetSpecialFD(PR_StandardError)
+</PRE></A><A NAME="625520">
+File descriptors returned by <CODE>PR_GetSpecialFD</CODE> are owned by the runtime and should not be closed by the caller. <P></A>
+
+<A NAME="Directory I/O Functions"></A>
+<A NAME="488787">
+<H2> Directory I/O Functions</H2>
+</A>
+<A NAME="548326">
+<A HREF="priofnc.html#548334"><CODE>PR_OpenDir</CODE></A><br><A HREF="priofnc.html#548416"><CODE>PR_ReadDir</CODE></A><br><A HREF="priofnc.html#606809"><CODE>PR_CloseDir</CODE></A><br><A HREF="priofnc.html#435655"><CODE>PR_MkDir</CODE></A><br><A HREF="priofnc.html#435773"><CODE>PR_RmDir</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="548334">
+<H4> PR_OpenDir</H4>
+</A>
+
+<A NAME="434585">
+Opens the directory with the specified pathname.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434587">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="434588">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="434661">
+<PRE>PRDir* PR_OpenDir(const char *name);</PRE></A><A NAME="Head4;"></A>
+<A NAME="434590">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="434596">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434593">
+<PRE>name</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434595">
+The pathname of the directory to be opened.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434597">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="434598">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="434599">
+<LI>If the directory is successfully opened, a <A HREF="priotyp.html#496480"><CODE>PRDir</CODE></A> object is dynamically allocated and the function returns a pointer to it.</LI>
+</A>
+<A NAME="434600">
+<LI>If the directory cannot be opened, the function returns <CODE>NULL</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="434601">
+<H5> Description</H5>
+</A>
+
+<A NAME="606504">
+<CODE>PR_OpenDir</CODE> opens the directory specified by the pathname <CODE>name</CODE> and returns a pointer to a directory stream (a <A HREF="priotyp.html#496480"><CODE>PRDir</CODE></A> object) that can be passed to subsequent <A HREF="priofnc.html#548416"><CODE>PR_ReadDir</CODE></A> calls to get the directory entries (files and subdirectories) in the directory. The <A HREF="priotyp.html#496480"><CODE>PRDir</CODE></A> pointer should eventually be closed by a call to <A HREF="priofnc.html#606809"><CODE>PR_CloseDir</CODE></A>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="548416">
+<H4> PR_ReadDir</H4>
+</A>
+
+<A NAME="548417">
+Gets a pointer to the next entry in the directory.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="548419">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="434675">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="434718">
+<PRE>PRDirEntry* PR_ReadDir(
+    PRDir *dir,
+    PRDirFlags flags);</PRE></A><A NAME="Head4;"></A>
+<A NAME="434677">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="434683">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434680">
+<PRE>dir</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434682">
+A pointer to a <A HREF="priotyp.html#496480"><CODE>PRDir</CODE></A> object that designates an open directory.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="434744">
+<PRE>flags</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="434778">
+Specifies which directory entries, if any, to skip. Values can include the following:</A></P><ul><A NAME="434779">
+<LI><CODE>PR_SKIP_NONE</CODE>. Do not skip any files.</A><A NAME="434780">
+<LI><CODE>PR_SKIP_DOT</CODE>. Skip the directory entry "<CODE>.</CODE>" representing the current directory.</A><A NAME="548461">
+<LI><CODE>PR_SKIP_DOT_DOT</CODE>. Skip the directory entry "<CODE>..</CODE>" representing the parent directory.</A><A NAME="548462">
+<LI><CODE>PR_SKIP_BOTH</CODE>. Skip both "<CODE>.</CODE>" and "<CODE>..</CODE>"</A><A NAME="629149">
+<LI><CODE>PR_SKIP_HIDDEN</CODE>. Skip hidden files. On Windows platforms and the Mac OS, this value identifies files with the "hidden" attribute set. On Unix platform, this value identifies files whose names begin with a period ("<CODE>.</CODE>").</A></ul>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="434684">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="434685">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="434686">
+<LI>A pointer to the next entry in the directory.</LI>
+</A>
+<A NAME="434687">
+<LI>If the end of the directory is reached or an error occurs, <CODE>NULL</CODE>. The reason can be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="434688">
+<H5> Description</H5>
+</A>
+
+<A NAME="539869">
+<CODE>PR_ReadDir</CODE> returns a pointer to a directory entry structure:<P></A>
+<A NAME="539872">
+<PRE>struct PRDirEntry {
+    const char *name;<br>};</PRE></A><A NAME="539873">
+<PRE>typedef struct PRDirEntry PRDirEntry;</PRE></A><A NAME="Head4;"></A>
+<A NAME="539874">
+<H5> <br></H5>
+</A>
+
+<A NAME="539880">
+The structure has the following field: <P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="539877">
+<PRE>name</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="539879">
+Name of entry, relative to directory name.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="503008">
+The <CODE>flags</CODE> parameter is an enum of type <CODE>PRDirFlags</CODE>:<P></A>
+<A NAME="503011">
+<PRE>
+typedef enum PRDirFlags {
+    PR_SKIP_NONE = 0x0,
+    PR_SKIP_DOT  = 0x1,
+    PR_SKIP_DOT_DOT = 0x2,
+    PR_SKIP_BOTH  = 0x3,
+    PR_SKIP_HIDDEN = 0x4}
+PRDirFlags;
+</PRE></A><A NAME="606704">
+The memory associated with the returned <CODE>PRDirEntry</CODE> structure is managed by NSPR. The caller must not free the <CODE>PRDirEntry</CODE> structure. Moreover, the <CODE>PRDirEntry</CODE> structure returned by each <CODE>PR_ReadDir</CODE> call is valid only until the next <CODE>PR_ReadDir</CODE> or <A HREF="priofnc.html#606809"><CODE>PR_CloseDir</CODE></A> call on the same <A HREF="priotyp.html#496480"><CODE>PRDir</CODE></A> object. <P></A>
+<A NAME="606806">
+If the end of the directory is reached, <CODE>PR_ReadDir</CODE> returns <CODE>NULL</CODE>, and <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A> returns <CODE>PR_NO_MORE_FILES_ERROR</CODE>. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="606963">
+<H5> See also</H5>
+</A>
+
+<A NAME="606967">
+<A HREF="priofnc.html#548334"><CODE>PR_OpenDir</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="606809">
+<H4> PR_CloseDir</H4>
+</A>
+
+<A NAME="435510">
+Closes the specified directory.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="435512">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="435513">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="435581">
+<PRE>PRStatus PR_CloseDir(PRDir *dir);</PRE></A><A NAME="Head4;"></A>
+<A NAME="435515">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="435529">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="435518">
+<PRE>dir</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="435520">
+A pointer to a <A HREF="priotyp.html#496480"><CODE>PRDir</CODE></A> structure representing the directory to be closed.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="435530">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="435531">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="435532">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="435533">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. The reason for the failure can be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="435534">
+<H5> Description</H5>
+</A>
+
+<A NAME="606850">
+When a <A HREF="priotyp.html#496480"><CODE>PRDir</CODE></A> object is no longer needed, it must be closed and freed with a call to <CODE>PR_CloseDir</CODE> call. Note that after a <CODE>PR_CloseDir</CODE> call, any <CODE>PRDirEntry</CODE> object returned by a previous <A HREF="priofnc.html#548416"><CODE>PR_ReadDir</CODE></A> call on the same <CODE>PRDir</CODE> object becomes invalid. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="606852">
+<H5> See also</H5>
+</A>
+
+<A NAME="606910">
+<A HREF="priofnc.html#548334"><CODE>PR_OpenDir</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="435655">
+<H4> PR_MkDir</H4>
+</A>
+
+<A NAME="435656">
+Creates a directory with a specified name and access mode.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="435658">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="435659">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="435717">
+<PRE>PRStatus PR_MkDir(
+    const char *name,
+    PRIntn mode);</PRE></A><A NAME="Head4;"></A>
+<A NAME="435661">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="435675">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="435664">
+<PRE>name</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="435666">
+The name of the directory to be created. All the path components up to but not including the leaf component must already exist. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="435668">
+<PRE>mode</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="435734">
+The access permission bits of the file mode of the new directory if the file is created when <CODE>PR_CREATE_FILE</CODE> is on.</A></P><A NAME="607008">
+</A></P><A NAME="607021">
+Caveat: The <CODE>mode</CODE> parameter is currently applicable only on Unix platforms. It may be applicable to other platforms in the future.</A></P><A NAME="607056">
+</A></P><A NAME="607065">
+Possible values include the following:</A></P><ul><A NAME="435735">
+<LI><CODE>00400</CODE>. Read by owner.</A><A NAME="435736">
+<LI><CODE>00200</CODE>. Write by owner.</A><A NAME="435737">
+<LI><CODE>00100</CODE>. Search by owner.</A><A NAME="435738">
+<LI><CODE>00040</CODE>. Read by group.</A><A NAME="435739">
+<LI><CODE>00020</CODE>. Write by group.</A><A NAME="435740">
+<LI><CODE>00010</CODE>. Search by group.</A><A NAME="435741">
+<LI><CODE>00004</CODE>. Read by others.</A><A NAME="435742">
+<LI><CODE>00002</CODE>. Write by others.</A><A NAME="435743">
+<LI><CODE>00001</CODE>. Search by others.</A></ul>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="435676">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="435677">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="435678">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="435679">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. The actual reason can be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="435680">
+<H5> Description</H5>
+</A>
+
+<A NAME="607081">
+<CODE>PR_MkDir</CODE> creates a new directory with the pathname <CODE>name</CODE>. All the path components up to but not including the leaf component must already exist. For example, if the pathname of the directory to be created is <CODE>a/b/c/d</CODE>, the directory <CODE>a/b/c</CODE> must already exist. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="549282">
+<H5> See also</H5>
+</A>
+
+<A NAME="607417">
+<A HREF="priofnc.html#435773"><CODE>PR_RmDir</CODE></A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="435773">
+<H4> PR_RmDir</H4>
+</A>
+
+<A NAME="435774">
+Removes a directory with a specified name.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="435776">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="435777">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="435837">
+<PRE>PRStatus PR_RmDir(const char *name);</PRE></A><A NAME="Head4;"></A>
+<A NAME="435779">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="435798">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="435782">
+<PRE>name</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="435784">
+The name of the directory to be removed.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="435799">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="435800">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="435801">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="435802">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. The actual reason can be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="435803">
+<H5> Description</H5>
+</A>
+
+<A NAME="607780">
+<CODE>PR_RmDir</CODE> removes the directory specified by the pathname <CODE>name</CODE>. The directory must be empty. If the directory is not empty, <CODE>PR_RmDir</CODE> fails and <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A> returns the error code <CODE>PR_DIRECTORY_NOT_EMPTY_ERROR</CODE>. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="607804">
+<H5> See also</H5>
+</A>
+
+<A NAME="607808">
+<A HREF="priofnc.html#435655"><CODE>PR_MkDir</CODE></A>.<P></A>
+
+<A NAME="Socket Manipulation Functions"></A>
+<A NAME="488828">
+<H2> Socket Manipulation Functions</H2>
+</A>
+<A NAME="607832">
+The network programming interface presented here is a socket API modeled after the popular Berkeley sockets. Differences include the following: <P></A>
+<ul><P>
+<A NAME="607833">
+<LI>The blocking socket functions in NSPR take a timeout parameter. </LI>
+</A><P>
+<A NAME="607834">
+<LI>Two new functions, <A HREF="priofnc.html#438553"><CODE>PR_TransmitFile</CODE></A> and <A HREF="priofnc.html#439145"><CODE>PR_AcceptRead</CODE></A>, can exploit the new system calls of some operating systems for higher performance. </LI>
+</A></ul><A NAME="607835">
+For a useful supplement to the NSPR documentation, see the textbook <I>Unix Network Programming,</I> 2nd Ed., Vol. 1: <I>Networking APIs: Sockets and XTI,</I> by W. Richard Stevens (Prentice Hall PTR, 1998).<P></A>
+<A NAME="549292">
+<A HREF="priofnc.html#436153"><CODE>PR_NewUDPSocket</CODE></A><br><A HREF="priofnc.html#436251"><CODE>PR_NewTCPSocket</CODE></A><br><A HREF="priofnc.html#436330"><CODE>PR_Connect</CODE></A><br><A HREF="priofnc.html#436441"><CODE>PR_Accept</CODE></A><br><A HREF="priofnc.html#436545"><CODE>PR_Bind</CODE></A><br><A HREF="priofnc.html#436704"><CODE>PR_Listen</CODE></A><br><A HREF="priofnc.html#436793"><CODE>PR_Shutdown</CODE></A><br><A HREF="priofnc.html#437899"><CODE>PR_Recv</CODE></A><br><A HREF="priofnc.html#438166"><CODE>PR_Send</CODE></A><br><A HREF="priofnc.html#438308"><CODE>PR_RecvFrom</CODE></A><br><A HREF="priofnc.html#438455"><CODE>PR_SendTo</CODE></A><br><A HREF="priofnc.html#438553"><CODE>PR_TransmitFile</CODE></A><br><A HREF="priofnc.html#439145"><CODE>PR_AcceptRead</CODE></A><br><A HREF="priofnc.html#439520"><CODE>PR_GetSockName</CODE></A><br><A HREF="priofnc.html#439649"><CODE>PR_GetPeerName</CODE></A><br><A HREF="priofnc.html#439735"><CODE>PR_GetSocketOption</CODE></A><br><A HREF="priofnc.html#439826"><CODE>PR_SetSocketOption</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="436153">
+<H4>  PR_NewUDPSocket</H4>
+</A>
+
+<A NAME="436154">
+Creates a new UDP socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436156">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="436157">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="436197">
+<PRE>PRFileDesc* PR_NewUDPSocket(void);</PRE></A><A NAME="Head4;"></A>
+<A NAME="436166">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="436167">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="436168">
+<LI>Upon successful completion, a pointer to the <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object created for the newly opened UDP socket.</LI>
+</A>
+<A NAME="436169">
+<LI>If the creation of a new UDP socket failed, <CODE>NULL</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="436170">
+<H5> Description</H5>
+</A>
+
+<A NAME="608779">
+UDP (User Datagram Protocol) is a connectionless, unreliable datagram protocol of the TCP/IP protocol suite. UDP datagrams may be lost or delivered in duplicates or out of sequence. <P></A>
+<A NAME="608781">
+<CODE>PR_NewUDPSocket</CODE> creates a new UDP socket. The socket may be bound to a well-known port number with <A HREF="priofnc.html#436545"><CODE>PR_Bind</CODE></A>. Datagrams can be sent with <A HREF="priofnc.html#438455"><CODE>PR_SendTo</CODE></A> and received with <A HREF="priofnc.html#438308"><CODE>PR_RecvFrom</CODE></A>. When the socket is no longer needed, it should be closed with a call to <A HREF="priofnc.html#622644"><CODE>PR_Close</CODE></A>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="436251">
+<H4> PR_NewTCPSocket</H4>
+</A>
+
+<A NAME="436252">
+Creates a new TCP socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436254">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="436255">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="436325">
+<PRE>PRFileDesc* PR_NewTCPSocket(void);</PRE></A><A NAME="Head4;"></A>
+<A NAME="436257">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="549974">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="549975">
+<LI>Upon successful completion, a pointer to the <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object created for the newly opened TCP socket.</LI>
+</A>
+<A NAME="436260">
+<LI>If the creation of a new TCP socket failed, <CODE>NULL</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="436261">
+<H5> Description</H5>
+</A>
+
+<A NAME="609043">
+TCP (Transmission Control Protocol) is a connection-oriented, reliable byte-stream protocol of the TCP/IP protocol suite. <CODE>PR_NewTCPSocket</CODE> creates a new TCP socket. A TCP connection is established by a passive socket (the server) accepting a connection setup request from an active socket (the client). Typically, the server binds its socket to a well-known port with <A HREF="priofnc.html#436545"><CODE>PR_Bind</CODE></A>, calls <A HREF="priofnc.html#436704"><CODE>PR_Listen</CODE></A> to start listening for connection setup requests, and calls <A HREF="priofnc.html#436441"><CODE>PR_Accept</CODE></A> to accept a connection. The client makes a connection request using <A HREF="priofnc.html#436330"><CODE>PR_Connect</CODE></A>. <P></A>
+<A NAME="609047">
+After a connection is established, the client and server may send and receive data between each other. To receive data, one can call <A HREF="priofnc.html#543681"><CODE>PR_Read</CODE></A> or <A HREF="priofnc.html#437899"><CODE>PR_Recv</CODE></A>. To send data, one can call <A HREF="priofnc.html#431166"><CODE>PR_Write</CODE></A>, <A HREF="priofnc.html#431267"><CODE>PR_Writev</CODE></A>, <A HREF="priofnc.html#438166"><CODE>PR_Send</CODE></A>, or <A HREF="priofnc.html#438553"><CODE>PR_TransmitFile</CODE></A>. <A HREF="priofnc.html#439145"><CODE>PR_AcceptRead</CODE></A> is suitable for use by the server to accept a new client connection and read the client's first request in one function call. <P></A>
+<A NAME="609050">
+A TCP connection can be shut down by <A HREF="priofnc.html#436793"><CODE>PR_Shutdown</CODE></A>, and the sockets should be closed by <A HREF="priofnc.html#622644"><CODE>PR_Close</CODE></A>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="436330">
+<H4> PR_Connect</H4>
+</A>
+
+<A NAME="436331">
+Initiates a connection on a specified socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436333">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="436334">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="436378">
+<PRE>PRStatus PR_Connect(
+    PRFileDesc *fd,
+    PRNetAddr *addr,
+    PRIntervalTime timeout);</PRE></A><A NAME="Head4;"></A>
+<A NAME="436336">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="436342">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436339">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="550175">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436386">
+<PRE>addr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436388">
+A pointer to the address of the peer to which the socket is to be connected.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436382">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436384">
+A value of type <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> specifying the time limit for completion of the connect operation.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436343">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="436344">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="436345">
+<LI>Upon successful completion of connection setup, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="436346">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. Further information can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="436347">
+<H5> Description</H5>
+</A>
+
+<A NAME="611083">
+<CODE>PR_Connect</CODE> is usually invoked on a TCP socket, but it may also be invoked on a UDP socket. Both cases are discussed here. <P></A>
+<A NAME="611084">
+If the socket is a TCP socket, <CODE>PR_Connect</CODE> establishes a TCP connection to the peer. If the socket is not bound, it will be bound to an arbitrary local address. <P></A>
+<A NAME="611086">
+<CODE>PR_Connect</CODE> blocks until either the connection is successfully established or an error occurs. If the timeout parameter is not <CODE>PR_INTERVAL_NO_TIMEOUT</CODE> and the connection setup cannot complete before the time limit, <CODE>PR_Connect</CODE> fails with the error code <CODE>PR_IO_TIMEOUT_ERROR</CODE>. <P></A>
+<A NAME="611097">
+If the socket is a TCP socket, there is no connection setup to speak of, since UDP is connectionless. If <CODE>PR_Connect</CODE> is invoked on a UDP socket, it has an overloaded meaning: <CODE>PR_Connect</CODE> merely saves the specified address as the default peer address for the socket, so that subsequently one can send and receive datagrams from the socket using <A HREF="priofnc.html#438166"><CODE>PR_Send</CODE></A> and <A HREF="priofnc.html#437899"><CODE>PR_Recv</CODE></A> instead of the usual <A HREF="priofnc.html#438455"><CODE>PR_SendTo</CODE></A> and <A HREF="priofnc.html#438308"><CODE>PR_RecvFrom</CODE></A>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="436441">
+<H4> PR_Accept</H4>
+</A>
+
+<A NAME="436442">
+Accepts a connection on a specified socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436444">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="436445">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="436506">
+<PRE>PRFileDesc* PR_Accept(
+    PRFileDesc *fd,
+    PRNetAddr *addr,
+    PRIntervalTime timeout);</PRE></A><A NAME="Head4;"></A>
+<A NAME="436447">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="436461">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436450">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436452">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the rendezvous socket on which the caller is willing to accept new connections.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436454">
+<PRE>addr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436456">
+A pointer to a structure of type <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A>. On output, this structure contains the address of the connecting entity.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436458">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436460">
+A value of type <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> specifying the time limit for completion of the accept operation.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436462">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="612790">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="612791">
+<LI>Upon successful acceptance of a connection, a pointer to a new <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> structure representing the newly accepted connection.</LI>
+</A>
+<A NAME="612792">
+<LI>If unsuccessful, <CODE>NULL</CODE>. Further information can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="613027">
+<H5> Description</H5>
+</A>
+
+<A NAME="613028">
+The socket <CODE>fd</CODE> is a rendezvous socket that has been bound to an address with <A HREF="priofnc.html#436545"><CODE>PR_Bind</CODE></A> and is listening for connections after a call to <A HREF="priofnc.html#436704"><CODE>PR_Listen</CODE></A>. <CODE>PR_Accept</CODE> accepts the first connection from the queue of pending connections and creates a new socket for the newly accepted connection. The rendezvous socket can still be used to accept more connections. <P></A>
+<A NAME="612841">
+If the <CODE>addr</CODE> parameter is not <CODE>NULL</CODE>, <CODE>PR_Accept</CODE> stores the address of the connecting entity in the <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A> object pointed to by <CODE>addr</CODE>. <P></A>
+<A NAME="612842">
+<CODE>PR_Accept</CODE> blocks the calling thread until either a new connection is successfully accepted or an error occurs. If the timeout parameter is not <CODE>PR_INTERVAL_NO_TIMEOUT</CODE> and no pending connection can be accepted before the time limit, <CODE>PR_Accept</CODE> returns <CODE>NULL</CODE> with the error code <CODE>PR_IO_TIMEOUT_ERROR</CODE>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="436545">
+<H4> PR_Bind</H4>
+</A>
+
+<A NAME="436546">
+Binds an address to a specified socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436548">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="436549">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="436612">
+<PRE>PRStatus PR_Bind(
+    PRFileDesc *fd,
+    PRNetAddr *addr);</PRE></A><A NAME="Head4;"></A>
+<A NAME="436551">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="436565">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436554">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436556">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436558">
+<PRE>addr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436560">
+A pointer to a <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A> object representing the address to which the socket will be bound.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436566">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="436567">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="436568">
+<LI>Upon successful binding of an address to a socket, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="436569">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. Further information can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="436570">
+<H5> Description</H5>
+</A>
+
+<A NAME="613506">
+When a new socket is created, it has no address bound to it. <CODE>PR_Bind</CODE> assigns the specified address (also known as <CODE>name</CODE>) to the socket. If you do not care about the exact IP address assigned to the socket, set the <CODE>inet.ip</CODE> field of <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A> to <CODE>PR_htonl(INADDR_ANY)</CODE>. If you do not care about the TCP/UDP port assigned to the socket, set the <CODE>inet.port</CODE> field of <CODE>PRNetAddr</CODE> to 0. <P></A>
+<A NAME="613509">
+Note that if <A HREF="priofnc.html#436330"><CODE>PR_Connect</CODE></A> is invoked on a socket that is not bound, it implicitly binds an arbitrary address the socket. <P></A>
+<A NAME="613510">
+Call <A HREF="priofnc.html#439520"><CODE>PR_GetSockName</CODE></A> to obtain the address (name) bound to a socket. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="436704">
+<H4> PR_Listen</H4>
+</A>
+
+<A NAME="436705">
+Listens for connections on a specified socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436707">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="436708">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="436756">
+<PRE>PRStatus PR_Listen(
+    PRFileDesc *fd,
+    PRIntn backlog);</PRE></A><A NAME="Head4;"></A>
+<A NAME="436710">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="436720">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436713">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436715">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket that will be used to listen for new connections.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436717">
+<PRE>backlog</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436719">
+The maximum length of the queue of pending connections.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436721">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="436722">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="436723">
+<LI>Upon successful completion of listen request, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="436724">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. Further information can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="436725">
+<H5> Description</H5>
+</A>
+
+<A NAME="614402">
+<CODE>PR_Listen</CODE> turns the specified socket into a rendezvous socket. It creates a queue for pending connections and starts to listen for connection requests on the socket. The maximum size of the queue for pending connections is specified by the <CODE>backlog</CODE> parameter. Pending connections may be accepted by calling <A HREF="priofnc.html#436441"><CODE>PR_Accept</CODE></A>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="436793">
+<H4> PR_Shutdown</H4>
+</A>
+
+<A NAME="436794">
+Shuts down part of a full-duplex connection on a specified socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436796">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="436797">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="436846">
+<PRE>PRStatus PR_Shutdown(
+    PRFileDesc *fd,
+    PRShutdownHow how);</PRE></A><A NAME="Head4;"></A>
+<A NAME="436799">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="436809">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436802">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436804">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a connected socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="436806">
+<PRE>how</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="436868">
+The kind of disallowed operations on the socket. Possible values include the following:</A></P><ul><A NAME="436869">
+<LI><CODE>PR_SHUTDOWN_RCV</CODE>. Further receives will be disallowed.</A><A NAME="436870">
+<LI><CODE>PR_SHUTDOWN_SEND</CODE>. Further sends will be disallowed.</A><A NAME="436871">
+<LI><CODE>PR_SHUTDOWN_BOTH</CODE>. Further sends and receives will be disallowed.</A></ul>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="436810">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="436811">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="436812">
+<LI>Upon successful completion of shutdown request, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="436813">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. Further information can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="436814">
+<H5> Description</H5>
+</A>
+
+<A NAME="436815">
+The <CODE>PRShutdownHow</CODE> enumeration is defined as follows:<P></A>
+<A NAME="510209">
+<PRE>typedef enum PRShutdownHow{
+    PR_SHUTDOWN_RCV = 0,
+    PR_SHUTDOWN_SEND = 1,
+    PR_SHUTDOWN_BOTH = 2<br>} PRShutdownHow;</PRE></A>
+<A NAME="Head3;"></A>
+<A NAME="437899">
+<H4> PR_Recv</H4>
+</A>
+
+<A NAME="437900">
+Receives bytes from a connected socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="437902">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="437903">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="437977">
+<PRE>PRInt32 PR_Recv(
+    PRFileDesc *fd,
+    void *buf,
+    PRInt32 amount,
+    PRIntn flags,
+    PRIntervalTime timeout);</PRE></A><A NAME="Head4;"></A>
+<A NAME="437905">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="437918">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="437908">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="437910">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="437912">
+<PRE>buf</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="437914">
+A pointer to a buffer to hold the data received.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438053">
+<PRE>amount</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438055">
+The size of <CODE>buf</CODE> (in bytes).</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438049">
+<PRE>flags</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438051">
+This obsolete parameter must always be zero.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438045">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438047">
+A value of type <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> specifying the time limit for completion of the receive operation. </A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="437919">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="437920">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="437921">
+<LI>A positive number indicates the number of bytes actually received.</LI>
+</A>
+<A NAME="437922">
+<LI>The value 0 means the network connection is closed.</LI>
+</A>
+<A NAME="438155">
+<LI>The value -1 indicates a failure. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="437923">
+<H5> Description</H5>
+</A>
+
+<A NAME="437924">
+<CODE>PR_Recv</CODE> blocks until some positive number of bytes are transferred, a timeout occurs, or an error occurs. No more than <CODE>amount</CODE> bytes will be transferred.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="438166">
+<H4>  PR_Send</H4>
+</A>
+
+<A NAME="438167">
+Sends bytes from a connected socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="438169">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="438170">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="438242">
+<PRE>PRInt32 PR_Send(
+    PRFileDesc *fd,
+    const void *buf,
+    PRInt32 amount,
+    PRIntn flags,
+    PRIntervalTime timeout);</PRE></A><A NAME="Head4;"></A>
+<A NAME="438172">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="438194">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438175">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438177">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438179">
+<PRE>buf</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438181">
+A pointer to a buffer containing the data to be sent.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438183">
+<PRE>amount</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438185">
+The size of <CODE>buf</CODE> (in bytes).</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438187">
+<PRE>flags</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438189">
+This obsolete parameter must always be zero.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438191">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="551853">
+A value of type <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> specifying the time limit for completion of the send operation.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="438195">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="438196">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="438197">
+<LI>A positive number indicates the number of bytes successfully sent. If the parameter fd is a blocking socket, this number must always equal amount.</LI>
+</A>
+<A NAME="438199">
+<LI>The value -1 indicates a failure. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="438200">
+<H5> Description</H5>
+</A>
+
+<A NAME="438201">
+<CODE>PR_Send</CODE> blocks until all bytes are sent, a timeout occurs, or an error occurs.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="438308">
+<H4>  PR_RecvFrom</H4>
+</A>
+
+<A NAME="438309">
+Receives bytes from a socket and stores the sending peer's address.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="438311">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="438312">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="438374">
+<PRE>PRInt32 PR_RecvFrom(
+    PRFileDesc *fd,
+    void *buf,
+    PRInt32 amount,
+    PRIntn flags,
+    PRNetAddr *addr,
+    PRIntervalTime timeout);</PRE></A><A NAME="Head4;"></A>
+<A NAME="438314">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="438336">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438317">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438319">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438321">
+<PRE>buf</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438323">
+A pointer to a buffer to hold the data received.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438325">
+<PRE>amount</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438327">
+The size of <CODE>buf</CODE> (in bytes).</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438329">
+<PRE>flags</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438331">
+This obsolete parameter must always be zero.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438381">
+<PRE>addr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438383">
+A pointer to the <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A> object that will be filled in with the address of the sending peer on return.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438333">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438335">
+A value of type <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> specifying the time limit for completion of the receive operation</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="438337">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="438338">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="438339">
+<LI>A positive number indicates the number of bytes actually received.</LI>
+</A>
+<A NAME="438442">
+<LI>The value 0 means the network connection is closed.</LI>
+</A>
+<A NAME="438340">
+<LI>The value -1 indicates a failure. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="438341">
+<H5> Description</H5>
+</A>
+
+<A NAME="578534">
+<CODE>PR_RecvFrom</CODE> receives up to a specified number of bytes from socket, which may or may not be connected. The operation blocks until one or more bytes are transferred, a timeout has occurred, or there is an error. No more than <CODE>amount</CODE> bytes will be transferred. <CODE>PR_RecvFrom</CODE> is usually used with a UDP socket. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="438455">
+<H4>  PR_SendTo</H4>
+</A>
+
+<A NAME="615231">
+Sends bytes a socket to a specified destination. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="438458">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="438459">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="438513">
+<PRE>PRInt32 PR_SendTo(
+    PRFileDesc *fd,
+    const void *buf,
+    PRInt32 amount,
+    PRIntn flags,
+    PRNetAddr *addr,
+    PRIntervalTime timeout);</PRE></A><A NAME="Head4;"></A>
+<A NAME="438461">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="438483">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438464">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438466">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438468">
+<PRE>buf</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438470">
+A pointer to a buffer containing the data to be sent.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438472">
+<PRE>amount</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438474">
+The size of <CODE>buf</CODE> (in bytes).</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438476">
+<PRE>flags</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438478">
+This obsolete parameter must always be zero.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438515">
+<PRE>addr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438517">
+A pointer to the address of the destination.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438480">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438482">
+A value of type <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A> specifying a time limit for completion of the send operation.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="438484">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="438485">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="438486">
+<LI>A positive number indicates the number of bytes successfully sent.</LI>
+</A>
+<A NAME="438487">
+<LI>The value -1 indicates a failure. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="438488">
+<H5> Description</H5>
+</A>
+
+<A NAME="438489">
+<CODE>PR_SendTo</CODE> sends a specified number of bytes from a socket to the specified destination address. The calling thread blocks until all bytes are sent, a timeout has occurred, or there is an error. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="438553">
+<H4>  PR_TransmitFile</H4>
+</A>
+
+<A NAME="438554">
+Sends a complete file across a connected socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="438556">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="438557">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="438648">
+<PRE>PRInt32 PR_TransmitFile(
+    PRFileDesc *networkSocket,
+    PRFileDesc *sourceFile,
+    const void *headers,
+    PRInt32 hlen,
+    PRTransmitFileFlags flags,
+    PRIntervalTime timeout);</PRE></A><A NAME="Head4;"></A>
+<A NAME="438559">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="438585">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438562">
+<PRE>networkSocket</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438564">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the connected socket to send data over.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438566">
+<PRE>sourceFile</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438568">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the file to send.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438570">
+<PRE>headers</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438572">
+A pointer to the buffer holding the headers to be sent before sending data.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438574">
+<PRE>hlen</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438576">
+Length of the <CODE>headers</CODE> buffer in bytes.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438578">
+<PRE>flags</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438580">
+One of the following flags:</A></P><ul><A NAME="552283">
+<LI><CODE>PR_TRANSMITFILE_KEEP_OPEN</CODE> indicates that the socket will be kept open after the data is sent.</A><A NAME="552287">
+<LI><CODE>PR_TRANSMITFILE_CLOSE_SOCKET</CODE> indicates that the connection should be closed immediately after successful transfer of the file.</A></ul>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="438582">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="438584">
+Time limit for completion of the transmit operation.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="438586">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="438587">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="438588">
+<LI>A positive number indicates the number of bytes successfully written, including both the headers and the file.</LI>
+</A>
+<A NAME="438589">
+<LI>The value -1 indicates a failure. If an error occurs while sending the file, the <CODE>PR_TRANSMITFILE_CLOSE_SOCKET</CODE> flag is ignored. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="438590">
+<H5> Description</H5>
+</A>
+
+<A NAME="438691">
+The <CODE>PR_TransmitFile</CODE> function sends a complete file (<CODE>sourceFile</CODE>) across a connected socket (<CODE>networkSocket</CODE>). If <CODE>headers</CODE> is non-<CODE>NULL</CODE>, <CODE>PR_TransmitFile</CODE> sends the headers across the socket before sending the file.<P></A>
+<A NAME="552610">
+The enumeration <CODE>PRTransmitFileFlags</CODE>, used in the <CODE>flags</CODE> parameter, is defined as follows:<P></A>
+<A NAME="507585">
+<PRE>typedef enum PRTransmitFileFlags {
+    PR_TRANSMITFILE_KEEP_OPEN = 0,
+    PR_TRANSMITFILE_CLOSE_SOCKET = 1<br>} PRTransmitFileFlags;</PRE></A>
+<A NAME="Head3;"></A>
+<A NAME="439145">
+<H4> PR_AcceptRead</H4>
+</A>
+
+<A NAME="439146">
+Accepts a new connection and receives a block of data.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="439148">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="439232">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="630189">
+<PRE>PRInt32 PR_AcceptRead(
+    PRFileDesc *listenSock,
+    PRFileDesc **acceptedSock,
+    PRNetAddr **peerAddr,
+    void *buf,
+    PRInt32 amount,
+    PRIntervalTime timeout);</PRE></A><A NAME="Head4;"></A>
+<A NAME="439151">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="439177">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439154">
+<PRE>listenSock</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="439156">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket descriptor that has been called with the <A HREF="priofnc.html#436704"><CODE>PR_Listen</CODE></A> function, also known as the rendezvous socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439158">
+<PRE>acceptedSock</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="615445">
+A pointer to a pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object. On return, <CODE>*acceptedSock</CODE> points to the <CODE>PRFileDesc</CODE> object for the newly connected socket. This parameter is valid only if the function return does not indicate failure.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439162">
+<PRE>peerAddr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="616248">
+A pointer a pointer to a <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A> object. On return, <CODE>peerAddr</CODE> points to the address of the remote socket. The <CODE>PRNetAddr</CODE> object that <CODE>peerAddr</CODE> points to will be in the buffer pointed to by <CODE>buf</CODE>. This parameter is valid only if the function return does not indicate failure.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439334">
+<PRE>buf</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="439336">
+A pointer to a buffer to hold data sent by the peer and the peer's address. This buffer must be large enough to receive <CODE>amount</CODE> bytes of data and two <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A> structures (thus allowing the runtime to align the addresses as needed).</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439166">
+<PRE>amount</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="439168">
+The number of bytes of data to receive. Does not include the size of the <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A> structures. If 0, no data will be read from the peer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439174">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="439176">
+The timeout interval only applies to the read portion of the operation. <CODE>PR_AcceptRead</CODE> blocks indefinitely until the connection is accepted; the read will time out after the timeout interval elapses.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="439178">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="439179">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="439180">
+<LI>A positive number indicates the number of bytes read from the peer.</LI>
+</A>
+<A NAME="439181">
+<LI>The value -1 indicates a failure. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="439182">
+<H5> Description</H5>
+</A>
+
+<A NAME="439184">
+<CODE>PR_AcceptRead</CODE> accepts a new connection and retrieves the newly created socket's descriptor and the connecting peer's address. Also, as its name suggests, <CODE>PR_AcceptRead</CODE> receives the first block of data sent by the peer.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="439520">
+<H4>  PR_GetSockName</H4>
+</A>
+
+<A NAME="439521">
+Gets network address for a specified socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="439523">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="439524">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="439571">
+<PRE>PRStatus PR_GetSockName(
+    PRFileDesc *fd,
+    PRNetAddr *addr);</PRE></A><A NAME="Head4;"></A>
+<A NAME="439526">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="439532">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439529">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="439531">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439591">
+<PRE>addr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="439593">
+On return, the address of the socket.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="439533">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="439534">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="439535">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="439536">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="439649">
+<H4> PR_GetPeerName</H4>
+</A>
+
+<A NAME="439650">
+Gets the network address of the connected peer.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="439652">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="439653">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="439702">
+<PRE>PRStatus PR_GetPeerName(
+    PRFileDesc *fd,
+    PRNetAddr *addr);</PRE></A><A NAME="Head4;"></A>
+<A NAME="439655">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="439665">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439658">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="439660">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439662">
+<PRE>addr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="439664">
+On return, the address of the peer connected to the socket.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="439666">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="439667">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="439668">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="439669">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="439735">
+<H4> PR_GetSocketOption</H4>
+</A>
+
+<A NAME="439736">
+Retrieves the socket options set for a specified socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="439738">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="553397">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="553398">
+<PRE>PRStatus PR_GetSocketOption(
+    PRFileDesc *fd,
+    PRSocketOptionData *data);</PRE></A><A NAME="Head4;"></A>
+<A NAME="553399">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="439751">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439744">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="439746">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the socket whose options are to be retrieved.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="439748">
+<PRE>data</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="617358">
+A pointer to a structure of type <A HREF="priotyp.html#597568"><CODE>PRSocketOptionData</CODE></A>. On input, the <CODE>option</CODE> field of this structure must be set to indicate which socket option to retrieve for the socket represented by the <CODE>fd</CODE> parameter. On output, this structure contains the requested socket option data.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="439752">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="567276">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="567277">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="567278">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="439826">
+<H4> PR_SetSocketOption</H4>
+</A>
+
+<A NAME="567664">
+Sets the socket options for a specified socket.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="439829">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="439830">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="567762">
+<PRE>PRStatus PR_SetSocketOption(
+    PRFileDesc *fd,
+    PRSocketOptionData *data);</PRE></A><A NAME="Head4;"></A>
+<A NAME="568260">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="568276">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="568263">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="568268">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the socket whose options are to be set.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="568270">
+<PRE>data</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="568275">
+A pointer to a structure of type <A HREF="priotyp.html#597568"><CODE>PRSocketOptionData</CODE></A> specifying the options to set.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="567773">
+<H5> Returns</H5>
+</A>
+
+<A NAME="567875">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="567774">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="567775">
+<LI>If unsuccessful, <CODE>PR_FAILURE</CODE>. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="439853">
+<H5> Description</H5>
+</A>
+
+<A NAME="439854">
+On input, the caller must set both the <CODE>option</CODE> and <CODE>value</CODE> fields of the <A HREF="priotyp.html#597568"><CODE>PRSocketOptionData</CODE></A> object pointed to by the <CODE>data</CODE> parameter. <P></A>
+
+<A NAME="Converting Between Host and Network Addresses"></A>
+<A NAME="581192">
+<H2> Converting Between Host and Network Addresses</H2>
+</A>
+<A NAME="582607">
+<A HREF="priofnc.html#581579"><CODE>PR_ntohs</CODE></A><br><A HREF="priofnc.html#581210"><CODE>PR_ntohl</CODE></A><br><A HREF="priofnc.html#618890"><CODE>PR_htons</CODE></A><br><A HREF="priofnc.html#581261"><CODE>PR_htonl</CODE></A><br><A HREF="priofnc.html#581295"><CODE>PR_FamilyInet</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="581579">
+<H4> PR_ntohs</H4>
+</A>
+
+<A NAME="581580">
+Performs 16-bit conversion from network byte order to host byte order.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="581582">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="581197">
+<PRE>#include &lt;prnetdb.h&gt; </PRE></A><A NAME="581198">
+<PRE>PRUint16 PR_ntohs(PRUint16 conversion);</PRE></A><A NAME="Head4;"></A>
+<A NAME="581199">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="581205">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="581202">
+<PRE>conversion</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="581204">
+The 16-bit unsigned integer, in network byte order, to be converted.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="581206">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="581207">
+The value of the <CODE>conversion</CODE> parameter in host byte order.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="581210">
+<H4> PR_ntohl</H4>
+</A>
+
+<A NAME="581211">
+Performs 32-bit conversion from network byte order to host byte order.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="581213">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="581214">
+<PRE>#include &lt;prnetdb.h&gt; </PRE></A><A NAME="581215">
+<PRE>PRUint32 PR_ntohl(PRUint32 conversion);</PRE></A><A NAME="Head4;"></A>
+<A NAME="581216">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="581222">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="581219">
+<PRE>conversion</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="581221">
+The 32-bit unsigned integer, in network byte order, to be converted.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="581223">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="618888">
+The value of the <CODE>conversion</CODE> parameter in host byte order. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="618890">
+<H4> PR_htons</H4>
+</A>
+
+<A NAME="618106">
+Performs 16 bit conversion from host byte order to network byte order. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="618108">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="581248">
+<PRE>#include &lt;prnetdb.h&gt; </PRE></A><A NAME="581249">
+<PRE>PRUint16 PR_htons(PRUint16 conversion);</PRE></A><A NAME="Head4;"></A>
+<A NAME="581250">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="581256">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="581253">
+<PRE>conversion</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="581255">
+The 16-bit unsigned integer, in host byte order, to be converted.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="581257">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="581258">
+The value of the <CODE>conversion</CODE> parameter in network byte order.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="581261">
+<H4> PR_htonl</H4>
+</A>
+
+<A NAME="581262">
+Performs 32-bit conversion from host byte order to network byte order.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="581264">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="581265">
+<PRE>#include &lt;prnetdb.h&gt; </PRE></A><A NAME="581266">
+<PRE>PRUint32 PR_htonl(PRUint32 conversion);</PRE></A><A NAME="Head4;"></A>
+<A NAME="581267">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="581273">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="581270">
+<PRE>conversion</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="581272">
+The 32-bit unsigned integer, in host byte order, to be converted.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="581274">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="581275">
+The value of the <CODE>conversion</CODE> parameter in network byte order. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="581295">
+<H4> PR_FamilyInet</H4>
+</A>
+
+<A NAME="581296">
+Gets the value of the address family for Internet Protocol.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="581298">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="581299">
+<PRE>#include &lt;prnetdb.h&gt; </PRE></A><A NAME="581300">
+<PRE>PRUint16 PR_FamilyInet(void);</PRE></A><A NAME="Head4;"></A>
+<A NAME="581301">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="619145">
+The value of the address family for Internet Protocol. This is usually <CODE>AF_INET</CODE>, but can also be <CODE>AF_INET6</CODE> if IPv6 is enabled. The returned value can be assigned to the <CODE>inet.family</CODE> field of a <A HREF="priotyp.html#420490"><CODE>PRNetAddr</CODE></A> object. <P></A>
+
+<A NAME="Memory-Mapped I/O Functions"></A>
+<A NAME="489500">
+<H2> Memory-Mapped I/O Functions</H2>
+</A>
+<A NAME="619233">
+The memory-mapped I/O functions allow sections of a file to be mapped to memory regions, allowing read-write accesses to the file to be accomplished by normal memory accesses. <P></A>
+<A NAME="619160">
+Memory-mapped I/O functions are currently implemented for Unix and Win32 only.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="442174">
+<H4>  PR_CreateFileMap</H4>
+</A>
+
+<A NAME="442175">
+Creates a file mapping object. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="442177">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="442178">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="442234">
+<PRE>PRFileMap* PR_CreateFileMap(
+    PRFileDesc *fd,
+    PRInt64 size,
+    PRFileMapProtect prot);</PRE></A><A NAME="Head4;"></A>
+<A NAME="442180">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="442198">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442183">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442185">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the file that is to be mapped to memory.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442187">
+<PRE>size</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442189">
+Size of the file specified by <CODE>fd</CODE>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442191">
+<PRE>prot</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442193">
+Protection option for read and write accesses of a file mapping. This parameter consists of one of the following options:</A></P><ul><A NAME="579621">
+<LI><CODE>PR_PROT_READONLY</CODE>. Read-only access.</A><A NAME="579679">
+<LI><CODE>PR_PROT_READWRITE</CODE>. Readable, and write is shared.</A><A NAME="579752">
+<LI><CODE>PR_PROT_WRITECOPY</CODE>. Readable, and write is private (copy-on-write).</A></ul>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="442199">
+<H5> Returns</H5>
+</A>
+
+<A NAME="442200">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="619491">
+<LI>If successful, a file mapping of type <A HREF="priotyp.html#440689"><CODE>PRFileMap</CODE></A>. </LI>
+</A>
+<A NAME="619500">
+<LI>If unsuccessful, NULL. </LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="619529">
+<H5> Description</H5>
+</A>
+
+<A NAME="619530">
+The <CODE>PRFileMapProtect</CODE> enumeration used in the <CODE>prot</CODE> parameter is defined as follows:<P></A>
+<A NAME="619531">
+<PRE>typedef enum PRFileMapProtect {
+    PR_PROT_READONLY,
+    PR_PROT_READWRITE,
+    PR_PROT_WRITECOPY<br>} PRFileMapProtect;</PRE></A><A NAME="619642">
+<CODE>PR_CreateFileMap</CODE> only prepares for the mapping a file to memory. The returned file-mapping object must be passed to <A HREF="priofnc.html#442246"><CODE>PR_MemMap</CODE></A> to actually map a section of the file to memory. <P></A>
+<A NAME="619644">
+The file-mapping object should be closed with a <A HREF="priofnc.html#442363"><CODE>PR_CloseFileMap</CODE></A> call when it is no longer needed. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="442246">
+<H4> PR_MemMap</H4>
+</A>
+
+<A NAME="569739">
+Maps a section of a file to memory.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="442249">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="442250">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="442300">
+<PRE>void* PR_MemMap(
+    PRFileMap *fmap,
+    PRInt64 offset,
+    PRUint32 len);</PRE></A><A NAME="Head4;"></A>
+<A NAME="442252">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="442266">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442255">
+<PRE>fmap</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442257">
+A pointer to the file-mapping object representing the file to be memory-mapped.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442259">
+<PRE>offset</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442261">
+The starting offset of the section of file to be mapped. The offset must be aligned to whole pages.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442263">
+<PRE>len</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442265">
+Length of the section of the file to be mapped. The length must be a multiple of whole pages.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="442267">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="568913">
+The function returns one of the following values:<P></A>
+<ul>
+<LI>If the section of file is successfully mapped, the starting address
+of the memory region to which the section of file is mapped.</LI>
+
+<LI>If the section of file is not successfully mapped, <CODE>NULL</CODE>.
+The error code can be retrieved via <A HREF="prerr.html#1035678">
+<CODE>PR_GetError</CODE></A>.</LI>
+</ul>
+<A NAME="Head4;"></A>
+<A NAME="442269">
+<H5> Description</H5>
+</A>
+
+<A NAME="619847">
+<CODE>PR_MemMap</CODE> maps a section of the file represented by the file mapping <CODE>fmap</CODE> to memory. The section of the file starts at <CODE>offset</CODE> and has the length <CODE>len</CODE>. <P></A>
+<A NAME="619728">
+When the file-mapping memory region is no longer needed, it should be unmapped with a call to <A HREF="priofnc.html#442317"><CODE>PR_MemUnmap</CODE></A>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="442317">
+<H4>  PR_MemUnmap</H4>
+</A>
+
+<A NAME="568969">
+Unmap a memory region that is backed by a memory-mapped file. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="442320">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="442321">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="442355">
+<PRE>PRStatus PR_MemUnmap(
+    void *addr,
+    PRUint32 len);</PRE></A><A NAME="Head4;"></A>
+<A NAME="442323">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="442337">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442326">
+<PRE>addr</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442328">
+The starting address of the memory region to be unmapped.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442334">
+<PRE>len</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442336">
+The length, in bytes, of the memory region.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="442338">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="568983">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="620010">
+<LI>If the memory region is successfully unmapped, <CODE>PR_SUCCESS</CODE>. </LI>
+</A>
+<A NAME="620077">
+<LI>If the memory region is not successfully unmapped, <CODE>PR_FAILURE</CODE>. The error code can be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="442340">
+<H5> Description</H5>
+</A>
+
+<A NAME="620130">
+<CODE>PR_MemUnmap</CODE> removes the file mapping for the memory region (<CODE>addr</CODE>, <CODE>addr + len</CODE>). The parameter <CODE>addr</CODE> is the return value of an earlier call to <A HREF="priofnc.html#442246"><CODE>PR_MemMap</CODE></A>. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="442363">
+<H4> PR_CloseFileMap</H4>
+</A>
+
+<A NAME="569177">
+Closes a file mapping.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="442366">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="442367">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="442407">
+<PRE>PRStatus PR_CloseFileMap(PRFileMap *fmap);</PRE></A><A NAME="Head4;"></A>
+<A NAME="442369">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="442379">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442372">
+<PRE>fmap</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442374">
+The file mapping to be closed.<B></B></A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="442380">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="620163">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="620187">
+<LI>If the file mapping is successfully closed, <CODE>PR_SUCCESS</CODE>. </LI>
+</A>
+<A NAME="620194">
+<LI>If the file mapping is not successfully closed, <CODE>PR_FAILURE</CODE>. The error code can be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>. </LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="442382">
+<H5> Description</H5>
+</A>
+
+<A NAME="620248">
+When a file mapping created with a call to <A HREF="priofnc.html#442174"><CODE>PR_CreateFileMap</CODE></A> is no longer needed, it should be closed with a call to <A HREF="priofnc.html#442363"><CODE>PR_CloseFileMap</CODE></A>. <P></A>
+
+<A NAME="Anonymous Pipe Function"></A>
+<A NAME="489549">
+<H2> Anonymous Pipe Function</H2>
+</A>
+
+<A NAME="Head3;"></A>
+<A NAME="442417">
+<H4>  PR_CreatePipe</H4>
+</A>
+
+<A NAME="442418">
+Creates an anonymous pipe and retrieves file descriptors for the read and write ends of the pipe.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="442420">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="442421">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="442473">
+<PRE>PRStatus PR_CreatePipe(
+    PRFileDesc **readPipe,
+    PRFileDesc **writePipe);</PRE></A><A NAME="Head4;"></A>
+<A NAME="442423">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="442429">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442426">
+<PRE>readPipe</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442428">
+ A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> pointer. On return, this parameter contains the file descriptor for the read end of the pipe. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="442481">
+<PRE>writePipe</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="442483">
+ A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> pointer. On return, this parameter contains the file descriptor for the write end of the pipe.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="442430">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="620352">
+The function returns one of these values:<P></A>
+<ul><P>
+<A NAME="620446">
+<LI>If the pipe is successfully created, <CODE>PR_SUCCESS</CODE>. </LI>
+</A><P>
+<A NAME="620481">
+<LI>If the pipe is not successfully created, <CODE>PR_FAILURE</CODE>. The error code can be retrieved via <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="442432">
+<H5> Description</H5>
+</A>
+
+<A NAME="620572">
+<CODE>PR_CreatePipe</CODE> creates an anonymous pipe. Data written into the write end of the pipe can be read from the read end of the pipe. Pipes are useful for interprocess communication between a parent and a child process. When the pipe is no longer needed, both ends should be closed with calls to <A HREF="priofnc.html#622644"><CODE>PR_Close</CODE></A>. <P></A>
+<A NAME="629090">
+<CODE>PR_CreatePipe</CODE> is currently implemented on Unix and Win32 only. <P></A>
+
+<A NAME="Polling Function"></A>
+<A NAME="629092">
+<H2> Polling Function</H2>
+</A>
+
+<A NAME="Head3;"></A>
+<A NAME="629093">
+<H4>  PR_Poll</H4>
+</A>
+
+<A NAME="466078">
+Detects when I/O is ready for a set of file descriptors.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="466080">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="466081">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="466140">
+<PRE>PRInt32 PR_Poll(
+    PRPollDesc *pds,
+    PRIntn npds,
+    PRIntervalTime timeout);</PRE></A><A NAME="Head4;"></A>
+<A NAME="466083">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="466093">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="466086">
+<PRE>pds</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="466088">
+A pointer to an array of <CODE>PRPollDesc</CODE> structures.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="466090">
+<PRE>npds</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="466092">
+The number of elements in the <CODE>pds</CODE> array. If this parameter is zero, <CODE>PR_Poll</CODE> is equivalent to <A HREF="prthrd.html#1015744"><CODE>PR_Sleep</CODE></A> with a timeout.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="466169">
+<PRE>timeout</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="466171">
+Amount of time the call will block waiting for I/O to become ready. If this time expires without any I/O becoming ready, <CODE>PR_Poll</CODE> returns zero.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="466254">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="580105">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="580106">
+<LI>If successful, the function returns a positive number indicating the number of <CODE>PRPollDesc</CODE> structures in <CODE>pds</CODE> that have events.</LI>
+</A>
+<A NAME="466262">
+<LI>The value 0 indicates the function timed out.</LI>
+</A>
+<A NAME="466257">
+<LI>The value -1 indicates the function failed. The reason for the failure can be obtained by calling <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="466252">
+<H5> Description</H5>
+</A>
+
+<A NAME="466097">
+This function returns as soon as I/O is ready on one or more of the underlying file/socket objects. A count of the number of ready descriptors is returned unless a timeout occurs, in which case zero is returned.<P></A>
+<A NAME="621005">
+The <CODE>in_flags</CODE> field of the <CODE>PRPollDesc</CODE> data structure should be set to the I/O events (readable, writable, exception, or some combination) that the caller is interested in. On return, the <CODE>out_flags</CODE> field of the <CODE>PRPollDesc</CODE> data structure is set to indicate what kind of I/O is ready on the respective descriptor.<P></A>
+<A NAME="569616">
+The <CODE>PRPollDesc</CODE> structure is defined as follows:<P></A>
+<A NAME="500315">
+<PRE>typedef struct PRPollDesc {
+    PRFileDesc* fd;
+    PRInt16 in_flags;
+    PRInt16 out_flags;
+} PRPollDesc;
+</PRE></A>
+
+<A NAME="500339">
+The structure has the following fields:
+
+<TABLE BORDER="0">
+
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="500320">
+<TT><B>fd</B></TT></A><TD VALIGN=baseline ALIGN=left><A NAME="621337">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing a socket. This field can be set to <CODE>NULL</CODE> to indicate to <CODE>PR_Poll</CODE> that this <CODE>PRFileDesc</CODE> object should be ignored.</A></P>
+
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="500324">
+<TT><B>in_flags</B></TT></A><TD VALIGN=baseline ALIGN=left><A NAME="500326">
+A bitwise <CODE>OR</CODE> of the following bit flags:</A>
+
+<ul><A NAME="500327">
+<LI><CODE>PR_POLL_READ</CODE>: fd is readable.</A><A NAME="500328">
+<LI><CODE>PR_POLL_WRITE</CODE>: fd is writable.</A><A NAME="500329">
+<LI><CODE>PR_POLL_EXCEPT</CODE>: fd has an exception condition.</A></ul>
+
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="500331">
+<TT><B>out_flags</B></TT></A><TD VALIGN=baseline ALIGN=left><A NAME="500333">
+A bitwise <CODE>OR</CODE> of the following bit flags:</A>
+
+<ul><A NAME="500334">
+<LI><CODE>PR_POLL_READ</CODE></A><A NAME="500335">
+<LI><CODE>PR_POLL_WRITE</CODE></A><A NAME="500336">
+<LI><CODE>PR_POLL_EXCEPT</CODE></A><A NAME="500337">
+<LI><CODE>PR_POLL_ERR</CODE>: <CODE>fd</CODE> has an error. </A><A NAME="500338">
+<LI><CODE>PR_POLL_NVAL</CODE>: <CODE>fd</CODE> is bad<B>.</B></A></ul><A NAME="621423">
+</A></P>
+
+</TABLE>
+
+<A NAME="621452">
+<P><B>Note:</B> The <CODE>PR_POLL_ERR</CODE> and <CODE>PR_POLL_NVAL</CODE> flags are used only in <CODE>out_flags</CODE>. The <CODE>PR_POLL_ERR</CODE> and <CODE>PR_POLL_NVAL</CODE> events are always reported by <CODE>PR_Poll</CODE>.</A></P>
+
+<A NAME="Manipulating Layers"></A>
+<A NAME="539452">
+<H2> Manipulating Layers</H2>
+</A>
+<A NAME="621504">
+File descriptors may be layered. For example, SSL is a layer on top of a reliable bytestream layer such as TCP. <P></A>
+<A NAME="621505">
+Each type of layer has a unique identity, which is allocated by the runtime. The layer implementor should associate the identity with all layers of that type. It is then possible to scan the chain of layers and find a layer that one recognizes and therefore predict that it will implement a desired protocol. <P></A>
+<A NAME="621507">
+A layer can be pushed onto or popped from an existing stack of layers. The file descriptor of the top layer can be passed to NSPR I/O functions, which invoke the appropriate version of the I/O methods polymorphically.<P></A>
+<A NAME="631875">
+NSPR defines three identities: <P></A>
+<A NAME="632124">
+<PRE>#define PR_INVALID_IO_LAYER (PRDescIdentity)-1<br>#define PR_TOP_IO_LAYER (PRDescIdentity)-2<br>#define PR_NSPR_IO_LAYER (PRDescIdentity)0</PRE></A><ul><P>
+<A NAME="631877">
+<LI><CODE>PR_INVALID_IO_LAYER</CODE>: An invalid layer identify (for error return).</LI>
+</A><P>
+<A NAME="631285">
+<LI><CODE>PR_TOP_IO_LAYER</CODE>: The identity of the top of the stack.</LI>
+</A><P>
+<A NAME="631290">
+<LI><CODE>PR_NSPR_IO_LAYER</CODE>: The identity for the layer implemented by NSPR. </LI>
+</A></ul><A NAME="631614">
+<CODE>PR_TOP_IO_LAYER</CODE> may be used as a shorthand for identifying the topmost layer of an existing stack. For example, the following lines of code are equivalent:<P></A>
+<A NAME="631641">
+<PRE>rv = PR_PushIOLayer(stack, PR_TOP_IO_LAYER, my_layer);<br>rv = PR_PushIOLayer(stack, PR_GetLayersIdentity(stack), my_layer);</PRE></A><A NAME="631573">
+<A HREF="priofnc.html#631521"><CODE>PR_GetUniqueIdentity</CODE></A><br><A HREF="priofnc.html#628281"><CODE>PR_GetNameForIdentity</CODE></A><br><A HREF="priofnc.html#539525"><CODE>PR_GetLayersIdentity</CODE></A><br><A HREF="priofnc.html#539542"><CODE>PR_GetIdentitiesLayer</CODE></A><br><A HREF="priofnc.html#630905"><CODE>PR_GetDefaultIOMethods</CODE></A><br><A HREF="priofnc.html#574179"><CODE>PR_CreateIOLayerStub</CODE></A><br><A HREF="priofnc.html#539563"><CODE>PR_PushIOLayer</CODE></A><br><A HREF="priofnc.html#539584"><CODE>PR_PopIOLayer</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="631521">
+<H4> PR_GetUniqueIdentity</H4>
+</A>
+
+<A NAME="539492">
+Asks the runtime to allocate a unique identity for a layer identified by the layer's name.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="539494">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="539495">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="539496">
+<PRE>PRDescIdentity PR_GetUniqueIdentity(const char *layer_name);</PRE></A><A NAME="Head4;"></A>
+<A NAME="539497">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="539503">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="539500">
+<PRE>layer_name</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="539502">
+The string associated with the creation of a layer's identity.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="539504">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="539505">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="628085">
+<LI>If successful, the <A HREF="priotyp.html#502006"><CODE>PRDescIdentity</CODE></A> for the layer associated with the string specified in the layer named layer_name.</LI>
+</A>
+<A NAME="628121">
+<LI>If the function cannot allocate enough dynamic memory, it fails and returns the value <CODE>PR_INVALID_IO_LAYER</CODE> with the error code <CODE>PR_OUT_OF_MEMORY_ERROR</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="539506">
+<H5> Description</H5>
+</A>
+
+<A NAME="628492">
+A string may be associated with a layer when the layer is created. <CODE>PR_GetUniqueIdentity</CODE> allocates a unique layer identity and associates it with the string. The string can be subsequently passed to <A HREF="priofnc.html#574179"><CODE>PR_CreateIOLayerStub</CODE></A> to create a new file descriptor of that layer.<P></A>
+<BLOCKQUOTE><B>WARNING: </B><a name="630367">
+For any particular layer name, <CODE>PR_GetUniqueIdentity</CODE> can be only called once. Only 
+one identity is allocated for each name. 
+</blockquote>
+</a>
+
+<A NAME="Head3;"></A>
+<A NAME="628281">
+<H4> PR_GetNameForIdentity </H4>
+</A>
+
+<A NAME="628282">
+Gets the string associated with a layer's unique identity.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="539511">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="539512">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="539513">
+<PRE>const char* PR_GetNameForIdentity(PRDescIdentity ident);</PRE></A><A NAME="Head4;"></A>
+<A NAME="539514">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="539520">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="539517">
+<PRE>ident</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="539519">
+A layer's identity.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="539521">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="539522">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="629341">
+<LI>If successful, the function returns a pointer to the string associated with the specified layer. </LI>
+</A>
+<A NAME="629350">
+<LI>If unsuccessful, the function returns <CODE>NULL</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="574018">
+<H5> Description</H5>
+</A>
+
+<A NAME="574019">
+A string may be associated with a layer when the layer is created. The string is copied by the runtime, and <CODE>PR_GetNameForIdentity</CODE> returns a pointer to that copy. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="539525">
+<H4> PR_GetLayersIdentity</H4>
+</A>
+
+<A NAME="539526">
+Gets the unique identity for the layer of the specified file descriptor <P></A>
+<A NAME="Head4;"></A>
+<A NAME="539528">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="539529">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="539530">
+<PRE>PRDescIdentity PR_GetLayersIdentity(PRFileDesc* fd);</PRE></A><A NAME="Head4;"></A>
+<A NAME="539531">
+<H5> Parameter<br></H5>
+</A>
+
+<A NAME="539537">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="539534">
+<PRE>fd</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="539536">
+A pointer to a file descriptor.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="628711">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="628722">
+If successful, the function returns the <A HREF="priotyp.html#502006"><CODE>PRDescIdentity</CODE></A> for the layer of the specified file descriptor. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="539542">
+<H4> PR_GetIdentitiesLayer</H4>
+</A>
+
+<A NAME="539543">
+Finds the layer with the specified identity in the specified stack of layers. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="539545">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="539546">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="539547">
+<PRE>PRFileDesc* PR_GetIdentitiesLayer(
+    PRFileDesc* stack,
+    PRDescIdentity id);</PRE></A><A NAME="Head4;"></A>
+<A NAME="539548">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="539558">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="539551">
+<PRE>stack</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="539553">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object that is a layer in a stack of layers.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="539555">
+<PRE>id</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="539557">
+The identity of the specified layer.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="539559">
+<H5> Returns<br></H5>
+</A>
+
+<A NAME="628816">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="628840">
+<LI>If successful, a pointer to a file descriptor of the layer with the specified identity in the given stack of layers.</LI>
+</A>
+<A NAME="628859">
+<LI>If not successful, <CODE>NULL</CODE>. </LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="539561">
+<H5> Description</H5>
+</A>
+
+<A NAME="628906">
+The stack of layers to be searched is specified by the <CODE>fd</CODE> parameter, which is a layer in the stack. Both the layers underneath <CODE>fd</CODE> and the layers above <CODE>fd</CODE> are searched to find the layer with the specified identity. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="630905">
+<H4> PR_GetDefaultIOMethods</H4>
+</A>
+
+<A NAME="630906">
+Gets the default I/O methods table.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="630908">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="630909">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="630910">
+<PRE>const PRIOMethods* PR_GetDefaultIOMethods(void);</PRE></A><A NAME="Head4;"></A>
+<A NAME="630911">
+<H5> Returns</H5>
+</A>
+
+<A NAME="630915">
+If successful, the function returns a pointer to a <A HREF="priotyp.html#520509"><CODE>PRIOMethods</CODE></A> structure.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="630916">
+<H5> Description</H5>
+</A>
+
+<A NAME="630917">
+After using <CODE>PR_GetDefaultIOMethods</CODE> to identify the default I/O methods table, you can select elements from that table with which to build your own layer's methods table. You may not modify the default I/O methods table directly. You can pass your own layer's methods table to <A HREF="priofnc.html#574179"><CODE>PR_CreateIOLayerStub</CODE></A> to create your new layer.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="574179">
+<H4> PR_CreateIOLayerStub</H4>
+</A>
+
+<A NAME="574220">
+Creates a new layer. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="574185">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="630759">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="574190">
+<PRE>PRFileDesc* PR_CreateIOLayerStub(
+    PRDescIdentity ident
+    PRIOMethods const *methods);</PRE></A><A NAME="Head4;"></A>
+<A NAME="574230">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="574278">
+The function has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="574275">
+<PRE>ident</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="574277">
+The identity to be associated with the new layer.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="630876">
+<PRE>methods</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="630878">
+A pointer to the <A HREF="priotyp.html#520509"><CODE>PRIOMethods</CODE></A> structure specifying the functions for the new layer.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="574237">
+<H5> Returns</H5>
+</A>
+
+<A NAME="574282">
+A new file descriptor for the specified layer. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="574297">
+<H5> Description</H5>
+</A>
+
+<A NAME="628923">
+A new layer may be allocated by calling <CODE>PR_CreateIOLayerStub</CODE>. The file descriptor returned contains the pointer to the I/O methods table provided. The runtime neither modifies the table nor tests its correctness.<P></A>
+<A NAME="628930">
+The caller should override appropriate contents of the file descriptor returned before pushing it onto the protocol stack.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="539563">
+<H4> PR_PushIOLayer</H4>
+</A>
+
+<A NAME="539564">
+Adds a layer onto the stack.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="539566">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="539567">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="539568">
+<PRE>
+PRStatus PR_PushIOLayer(
+    PRFileDesc *stack,
+    PRDescIdentity id,
+    PRFileDesc *layer);</PRE></A><A NAME="Head4;"></A>
+<A NAME="539569">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="539579">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="539572">
+<PRE>stack</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="539574">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the stack.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="539576">
+<PRE>id</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="539578">
+A <A HREF="priotyp.html#502006"><CODE>PRDescIdentity</CODE></A> object for the layer on the stack above which the new layer is to be added.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="574419">
+<PRE>layer</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="574421">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the new layer to be added to the stack. </A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="580933">
+<H5> Returns</H5>
+</A>
+
+<A NAME="580940">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="580934">
+<LI>If the layer is successfully pushed onto the stack, <CODE>PR_SUCCESS</CODE>.</LI>
+</A>
+<A NAME="580938">
+<LI>If the layer is not successfully pushed onto the stack, <CODE>PR_FAILURE</CODE>. Use <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A> to get additional information regarding the reason for the failure.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="539582">
+<H5> Description</H5>
+</A>
+
+<A NAME="539583">
+A file descriptor for a layer (possibly allocated using <A HREF="priofnc.html#574179"><CODE>PR_CreateIOLayerStub</CODE></A>) may be pushed onto an existing stack of file descriptors at any time. The new layer is inserted into the stack just above the layer with the identity specified by <CODE>id</CODE>.<P></A>
+<A NAME="574379">
+Even if the <CODE>id</CODE> parameter indicates the topmost layer of the stack, the value of the file descriptor describing the original stack will not change. In other words, <CODE>stack</CODE> continues to point to the top of the stack after the function returns.<P></A>
+
+<P><B>Caution:</B> Keeping the pointer to the stack even as layers are pushed onto
+the top of the stack is accomplished by swapping the contentes of the file
+descriptor being pushed and the stack's current top layer file descriptor.
+
+<P>The intent is that the pointer to the stack remain the stack's <I>identity</I>
+even if someone (perhaps covertly) has pushed other layers. There are some subtle
+ramifications.
+
+<UL>
+<P>The ownership of the storage pointed to by the caller's <TT>layer</TT> argument is
+relinquished to the runtime. Accessing the object via the pointer is not permitted
+while the runtime has ownership. The correct mechanism to access the object is to
+get a pointer to it by calling <A HREF="priofnc.html#539525"><TT>PR_GetIdentitiesLayer()</TT></A>.
+
+<P>The contents of the caller's object are <I>swapped</I> into another
+<I>container</I>, including the reference to the object's destructor. If
+the original container was allocated using a different mechanism than used
+by the runtime, the default calling of the layer's destructor by the runtime
+will fail (<A HREF="priofnc.html#574179"><TT>PR_CreateIOLayerStub()</TT>
+</A> is provided to allocate layer objects and template implementations). The destructor will be called on all layers when the stack is <I>closed</I> (see <A HREF="priofnc.html#622644"><TT>PR_Close()</TT></A>). If the containers are
+allocated by some method other than <TT>PR_CreateIOLayerStub()</TT>, it may
+be required that the stack have the layers <I>popped</I> off (in reverse
+order that they were <I>pushed</I>) before calling <TT>PR_Close()</TT>.
+</UL>
+
+<A NAME="Head3;"></A>
+<A NAME="539584">
+<H4> PR_PopIOLayer</H4>
+</A>
+
+<A NAME="539585">
+Removes a layer from the stack.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="539587">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="539588">
+<PRE>#include &lt;prio.h&gt; </PRE></A><A NAME="539589">
+<PRE>PRFileDesc *PR_PopIOLayer(
+    PRFileDesc *stack,
+    PRDescIdentity id);</PRE></A><A NAME="Head4;"></A>
+<A NAME="539590">
+<H5> Parameters<br></H5>
+</A>
+
+<A NAME="539596">
+The function has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="539593">
+<PRE>stack </PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="539595">
+A pointer to a <A HREF="priotyp.html#420111"><CODE>PRFileDesc</CODE></A> object representing the stack from which the specified layer is to be removed.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="628993">
+<PRE>id</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="628995">
+Identity of the layer to be removed from the stack.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="580988">
+<H5> Returns</H5>
+</A>
+
+<A NAME="580989">
+The function returns one of the following values:<P></A>
+<ul>
+<A NAME="580990">
+<LI>If the layer is successfully removed from the stack, a pointer to the removed layer.</LI>
+</A>
+<A NAME="629001">
+<LI>If the layer is not found in the stack or cannot be popped (for example, the bottommost layer), the function returns <CODE>NULL</CODE> with the error code <CODE>PR_INVALID_ARGUMENT_ERROR</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="629033">
+<H5> Description</H5>
+</A>
+
+<A NAME="629034">
+<CODE>PR_PopIOLayer</CODE> pops the specified layer from the stack. If the object to be removed is found, <CODE>PR_PopIOLayer</CODE> returns a pointer to the removed object The object then becomes the responsibility of the caller. <P></A>
+<A NAME="629021">
+Even if the identity indicates the top layer of the stack, the reference returned is not the file descriptor for the stack and that file descriptor remains valid. In other words, <CODE>stack</CODE> continues to point to the top of the stack after the function returns.<B> </B><P></A>
+<A NAME="630834">
+<P></A>
+
+<P><HR>
+<A HREF="contents.html">[Contents]</A> <A HREF="priotyp.html">[Previous]</A> <A HREF="prntdb.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<P ALIGN=right>
+
+<FONT SIZE=-2><I>Last Updated: Wed Jul 29 15:36:41 PDT 1998</I></FONT>
+
+<HR SIZE=4>
+
+<P> <CENTER>Copyright © 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html"
+TARGET=_top>Netscape Communications Corporation</A></FONT>
+</CENTER>
+<P>
+<P>
+
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

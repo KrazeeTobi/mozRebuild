@@ -1,0 +1,20 @@
+--- ./pngconf.h.cls	Thu Jun 18 22:58:34 1998
++++ ./pngconf.h	Sun Jun 21 17:31:16 1998
+@@ -100,7 +100,7 @@
+ /* This is an attempt to force a single setjmp behaviour on Linux.  If
+  * the X config stuff didn't define _BSD_SOURCE we wouldn't need this.
+  */
+-#ifdef __linux__
++#if defined(__linux__) && defined(BROKEN_HEADERS)
+ #ifdef _BSD_SOURCE
+ #define _PNG_SAVE_BSD_SOURCE
+ #undef _BSD_SOURCE
+@@ -109,7 +109,7 @@
+ __png.h__ already includes setjmp.h
+ __dont__ include it again
+ #endif
+-#endif /* __linux__ */
++#endif /* __linux__ && BROKEN_HEADERS */
+ 
+ /* include setjmp.h for error handling */
+ #include <setjmp.h>

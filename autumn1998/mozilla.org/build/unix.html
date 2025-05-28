@@ -1,0 +1,353 @@
+<HTML>
+<HEAD>
+<TITLE>Building the Mozilla client on unix platforms</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ROWSPAN=2>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../news.html"> What's New</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../search"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+
+</TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ROWSPAN=2>
+<P><BR>
+
+
+
+
+
+<HR>
+<H1>Building the Mozilla client on Unix platforms</H1>
+
+<H2>
+Daniel Nunes, <TT><A HREF="mailto:leaf@mozilla.org">leaf@mozilla.org</A></TT></H2>
+v 1.3.1, 1998-11-27
+
+<P>
+<HR><I>How to build Mozilla on a Unix System.</I>
+<HR>
+<H2>1. <A HREF="#s1">Introduction</A></H2>
+
+<H2>2. <A HREF="#s2">Building Mozilla</A></H2>
+
+<UL>
+<LI>
+<A HREF="#ss2.1">2.1 Get the Code </A></LI>
+
+<LI>
+<A HREF="#ss2.2">2.2 Requirements</A></LI>
+
+<LI>
+<A HREF="#ss2.3">2.3 Build the Lizard</A></LI>
+
+<LI>
+<A HREF="#ss2.4">2.4 After the Build</A></LI>
+</UL>
+
+<H2>3. <A HREF="#s3"> Other Unix Build pages </A></H2>
+
+<H2>4. <A HREF="#s4"> Common Problems </A></H2>
+
+<HR>
+<H2><A NAME="s1">1. Introduction</A></H2>
+
+<P>
+Perhaps you are interested in building classic Mozilla, before the 
+fall of the old layout engine, and the rise of the new. If so, the
+<B><A HREF="../docs/tplist/catBuild/classic-unix.html">Classic Mozilla Build document</A></B> 
+is what you're looking for.
+
+<P>
+ 
+<P>
+What this document is: A guide to building the Mozilla application.
+<BR>
+This includes:
+<OL>
+<LI> A listing of the development tools you will need to build Mozilla. </LI>
+<LI> A sample set of commands to build Mozilla using the Autoconf 
+build system. </LI>
+</OL>
+<P>
+If you're looking for documentation on developing features or fixing bugs,
+the Mozilla
+<A HREF="../docs/tplist/tplist.html">Technical Documents</A> or 
+<A HREF="../library.html"> Library </A>
+are probably what you're looking for.
+<P>
+<HR>
+<H2><A NAME="s2">2. Building Mozilla </A></H2>
+<P>
+<UL>Each of the following subsections describes, or gives references to
+descriptions of, the steps necessary to build Mozilla.
+</UL>
+<UL>
+<H2><A NAME="ss2.1">2.1 Get the Code</A></H2>
+<P>
+<UL>
+
+Eventually, there will be two principal ways of getting the code,
+<A HREF="../download.html"> ftp</A> and
+<A HREF="../cvs.html"> CVS</A>.
+CVS will provide the most current code for building, but is
+slower than ftp. Ftp drops are generally produced once per month,
+and are known to compile on some machine, somewhere.
+
+<B>For now</B>, however, you must do the following to obtain the newest 
+browser source:
+<BR><BR>
+<CODE>
+cvs co SeaMonkeyBrowser<BR>
+</CODE>
+<BR>
+This should pull all the right source for building the xpviewer.
+</UL>
+<P>
+<H2><A NAME="ss2.2">2.2 Requirements</A></H2>
+<UL>
+The following should be installed:
+<UL>
+<LI><A HREF="http://www.gtk.org/">Gtk+</A> 1.1.5 or better
+    RPMs for linux on intel can be found at <A HREF="http://www.gnome.org/~msw/RPMS/i386/">
+    http://www.gnome.org/~msw/RPMS/i386/</A>. <BR>
+    Remove any old
+    glib-devel and gtk+-devel packages already installed on your machine.<BR>
+    <TT>rpm -e glib-devel<BR>
+    rpm -e gtk+-devel</TT><P> 
+    Install the new glib, glib-devel, gtk+, and gtk+-devel packages.<BR>
+    <TT>rpm -i *.rpm</TT> <P>
+
+
+<LI>The native C/C++ compiler (or GNU C/C++ compiler 2.7.2 in lieu of the 
+    native compiler)
+<LI>GNU make 3.74 or better
+<LI>Perl5
+<LI><A HREF="../projects/autoconf/">Autconf</A> requirements.
+<LI>NSPR. After you've pulled the source, as above, do the following to 
+    install NSPR (you only have to do this once, if you like): <BR> <BR>
+    Get NSPR.  From the directory where you issued the <CODE>cvs co
+    SeaMonkeyBrowser</CODE> command, do:<br><BR>
+    <CODE>
+    cvs co -rNSPRPUB_RELEASE_3_0 NSPR
+    </CODE><BR><BR>
+    Then build it:<BR><BR>
+    <CODE>
+    cd mozilla <BR>
+    gmake -C nsprpub DIST=/usr/local/nspr NSDISTMODE=copy NS_USE_GCC=1 \<BR>
+    MOZILLA_CLIENT=1 NO_MDUPDATE=1 NS_USE_NATIVE= USE_PTHREADS= export <BR>
+    </CODE>
+    <BR>    
+    <CODE>LD_LIBRARY_PATH</CODE> must include the path to the NSPR
+    shared objects.<BR>
+    For the above <CODE>DIST</CODE> specificatoin, this means adding 
+    <CODE>/usr/local/nspr/lib</CODE> to <CODE>LD_LIBRARY_PATH</CODE> 
+    (either:
+     <BR> 
+    <CODE>setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/usr/local/nspr/lib</CODE>
+     <BR>
+      or 
+     <BR>
+    <CODE>export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/nspr/lib</CODE>
+     .<BR>
+     If you get an error like "No such variable" then omit the 
+     <CODE>${LD_LIBRARY_PATH}:</CODE> part
+   )<BR> <BR>
+    Or, if you're into rpms, try Chris Blizzard's
+<A HREF="http://odin.appliedtheory.com/netscape_component_rpms/">NSPR rpms</A> 
+    (in which case, you probably don't need to worry about setting 
+     <CODE>LD_LIBRARY_PATH</CODE>, provided you install both of them).
+</UL>
+<P>
+Your hardware should be equal to, or better than:
+<UL>
+32 MB RAM, 128 MB swap (64 MB RAM recommended)
+</UL>
+</UL>
+<P>
+<H2><A NAME="ss2.3">2.3 Build the Lizard</A></H2>
+<P>
+<UL>
+Starting in the mozilla/ directory: <BR> <BR>
+<CODE>
+autoconf<BR>
+mkdir obj-`./build/autoconf/config.guess`<BR>
+cd obj-`./build/autoconf/config.guess`<BR>
+../configure --with-nspr=/usr/local/nspr<BR>
+gmake depend<BR>
+gmake<BR>
+</CODE>
+<P>
+Note that once you start doing development, you don't need to repeat the 
+first four commands every time you build. Once you've configured, you don't
+have to configure again unless you add or remove Makefile.in files or 
+modify configure.in (cvs update can do this! beware!). If a Makefile.in is 
+modified, but not added or removed, you just need to run ./config.status 
+from the obj-`./build/autoconf/config.guess` directory.
+</UL>
+
+<H2><A NAME="ss2.4">2.4 After the build </A></H2>
+<UL>
+
+<LI> <CODE>cd dist/bin</CODE> and you should see links to the objects you
+      need to run <CODE>main</CODE> and <CODE>xpviewer</CODE>. 
+
+<LI>On most unixen </CODE>LD_LIBRARY_PATH</CODE> must be set to wherever 
+the necessary libraries are (the same directory as the executables, in this
+case).
+
+<UL>
+<LI>On HP-UX, the equivalent environment variable is <CODE>SHLIB_PATH</CODE>.
+<LI>On AIX, the equivalent environment variable is <CODE>LIBPATH</CODE>.
+</UL>
+<LI>Set <CODE>MOZILLA_HOME</CODE> to the directory the binary resides in 
+   as well.
+</UL>
+</UL>
+<HR>
+<H2><A NAME="s3">3. Other Unix Build pages</A></H2>
+<UL>
+<LI><A HREF="../unix/linux-reqs.html">Linux requirements</A>
+<LI><A HREF="../unix/irix.html">Irix build foibles</A>
+</UL>
+
+<HR>
+<H2><A NAME="s4">4. Common Sticking Points</A></H2>
+<LI>I'm sure there are bound to be some. Send 
+<A HREF="mailto:leaf@mozilla.org"> me</A> mail. 
+<HR>
+
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+</FONT>
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>
