@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>hdoc001.html</TITLE>
+<!-- Descrpt: HTMLDocument.title
+     Author: janc@netscape.com
+     Revs: 03/03/99 - Created
+           mm/dd/yy - Validated
+     ToDo: Implement error trapping routine  
+
+     CONFIDENTIAL AND PROPRIETARY TEST SCRIPT OF NETSCAPE COMMUNICATIONS 
+     CORPORATION. Copyright © 1996, 1997, 1998, 1999 Netscape Communications 
+     Corporation. All rights reserved. Use of this Test Script is subject 
+     to the terms of the applicable license agreement from Netscape 
+     Communications Corporation. -->
+
+<SCRIPT TYPE="text/javascript" SRC="../testlib.js"></SCRIPT>
+</HEAD>
+<BODY onLoad="fixSubmit();">
+
+<FORM name="results" action="/ngdriver/cgi-bin/writeresults.cgi" method="post">
+<SCRIPT TYPE="text/javascript">
+document.write('<input name="resultsfile" type="hidden" value="' + window.opener.document.resultsform.resultsfile.value + '">');
+</SCRIPT>
+<input type="hidden" name="textarea">
+</FORM>
+
+<SCRIPT TYPE="text/javascript">
+//onerror = "handlerText";
+var sFilename = "hdoc001.html";
+var tc = 0;
+aTestcases = new Array();
+
+aTestcases[tc++] = new Testcase(sFilename,
+                               "Read HTMLDocument.title from a title which contains text",
+                               "hdoc001.html",
+	 		                         document.title,
+		 	                         "Expected &quot;hdoc001.html&quot; - Bug me, jc");	      //Bug #, if any
+
+writeResults(aTestcases);
+
+</SCRIPT>
+</BODY>
+</HTML>
+
+
+
+
+
+

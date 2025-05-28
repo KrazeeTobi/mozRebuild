@@ -1,0 +1,220 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla on Solaris FAQ</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+  
+  
+
+
+
+<center><b><font size=+1>Mozilla on Solaris FAQ</font></b><br></center>
+
+<ol>
+
+<li><a href="#patches">Patches needed for Solaris 2.6</a></li>
+<li><a href="#compiler">What compiler should I use?</a></li>
+<li><a href="#switch">How do I switch between two compilers?</a></li>
+
+</ol>
+
+<hr>
+<!--------------------------------->
+
+<ol>
+
+<li>
+<b><a NAME="patches"></a>Patches needed for Solaris 2.6</b>
+<ul>
+
+<li>
+Fix for <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=17221">undefined symbol _XlcCompileResourceList at runtime:"</a><br>
+([Thanks to <a href="mailto:mhw@mft.co.uk">mhw@mft.co.uk</a>]<br>
+This looks like SunSolve bug report #4239074, no patch, suggested workaround:<br>
+<pre>
+Edit the file : /usr/openwin/lib/locale/iso8859-1/XI18N_OBJS
+  Remove the line 
+  < XOM     xomEuro            _XomGenericOpenOM # XOM_open
+  Add the line 
+  > XOM     common/xomLTRTTB   _XomGenericOpenOM # XOM_open
+</pre>
+See <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=17221">17221</a> for more discussion.
+</li>
+<br>
+<br>
+
+<li>
+Fix for <b>Wrong Architecture</b> error on startup:<br>
+Solaris 2.6 needs a recent patch, we haven't tracked this down yet,
+but the <a href="http://sunsolve.Sun.COM/pub-cgi/show.pl?target=patches/patch-access">latest jumbo</a> patch should fix this.
+</li>
+
+</ul>
+</li><br>
+
+<li><b><a NAME="compiler">What compiler should I use?</a></b><br>
+There are 4 compilers that are known to work: gcc-2.7.2.3, egcs, WS4.2, WS5.0.
+They all have trade-offs and there is no clear leader right now.  Tinderbox is currently running a gcc-2.7.2.3 build, some Solaris contributors are using the Workshop 4.2 compiler with some success.<br>
+<table border=1 offset=0>
+<tr>
+
+<td>Compiler</td>
+<td>Good</td>
+<td>Bad</td>
+<td>Notes</td>
+
+</tr>
+
+<tr>
+<td>gcc 2.7.2.3</td>
+<td>
+<li>Classic compiler, lots of support on many platforms.</li>
+<li>Purify support</li>
+</li>
+</td>
+<td>Weak C++ support, defines LCD for tinderbox right now.</td>
+<td>More-recent versions not rock solid yet.</td>
+</tr>
+
+<tr>
+<td>egcs</td>
+<td>
+<li>Benefits from linux coverage.</li>
+</td>
+<td>
+<li>No purify</li>
+<li>Can't step in debugger</li>
+</td>
+<td></td>
+</tr>
+
+<tr>
+<td>WS4.2</td>
+<td>Purify support</td>
+<td>$$</td>
+<td>Picky compiler, some bugs, mostly worked-around with autoconf.</td>
+</tr>
+
+<tr>
+<td>WS5.0</td>
+<td>
+
+<li>Purify support</li>
+<li>Built-in preformance tools</li>
+
+</td>
+<td>$$</td>
+<td>Some 4.2 bugs fixed, some new ones.</td>
+</tr>
+
+</table>
+</li>
+<br>
+
+<li><b><a NAME="switch">How do I switch between two compilers?</a></b><br>
+If both a gnu compiler and non-gnu compiler are in your path,
+the gnu compiler wins the config test.  To override this, or to pick from among
+several compilers you have in your path, set the environment variables
+<b>CC</b> and <b>CXX</b> to point to the compiler you want to use:
+<pre>
+  # Example to override gcc install with WS5.0
+  setenv CC  /usr/local/workshop/SUNWspro/bin/cc
+  setenv CXX /usr/local/workshop/SUNWspro/bin/CC
+  ./configure
+</pre>
+</li>
+
+
+
+</ol>
+
+    <hr>
+    <address><a href="mailto:mcafee@netscape.com">Chris McAfee</a></address>
+<!-- Created: Sat Feb 20 03:16:07 PST 1999 -->
+<!-- hhmts start -->
+Last modified: Tue Nov 23 16:32:19 PST 1999
+<!-- hhmts end -->
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/solaris.html&amp;rev=&amp;root=/cvsroot/">Last modified November 23,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,184 @@
+<HTML>
+<HEAD>
+<TITLE>tree hints</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+&nbsp;
+<center>
+<p><b>Semi Random Build Tips From Past Breakage</b></center>
+
+<p>Contents:
+<p><a href="#General Strategies for Succesful">General Strategies for Successful
+Development</a>
+<br><a href="#Compiler Quirks and">Compiler Quirks and Examples</a>
+<br>&nbsp;
+<p><a NAME="General Strategies for Succesful"></a><b>General Strategies
+for Successful Development</b>
+<p>Waterson's Hints.
+<p>1. Get a good build to work with. To do this, pull sometime during the
+<br>tree closure during morning verification builds.
+<p>2. Pay attention during tree closure. Follow n.p.m.builds and #mozilla
+<br>to see if there are spot fixes that get applied to get stuff working
+<br>during the tree closure. If _you_ can't build or run, then it's likely
+<br>that QA won't be able to either, and the tree will stay closed until
+<br>things get better. And, if you're to blame, all the better that you're
+<br>paying attention!
+<p>3. Don't update your entire tree to fix spot bustage. This'll just slow
+<br>you down. If something breaks in mozilla/foo/src, update mozilla/foo/src
+<br>_only_. There's a good chance somebody will have checked in a fix for
+<br>the bustage by the time you get to it. If it's still not fixed, update
+<br>mozilla/foo/public to see if it's some header bustage. Then scream
+to
+<br>the newsgroups and on #mozilla.
+<p>3. Be smart before you check in.
+<p>a. Test your stuff. Write a test case if you're doing a new feature.
+<br>*Test* the test case if you're fixing a bug. Step through it in the
+<br>debugger to make sure your code does what you think it should do. Think
+<br>about what depends on you. See if you broke that stuff. Run it in
+<br>viewer. Run it in apprunner. Run mail. Run editor. Think about whether
+<br>or not this will have platform specific issues. Despite what QA says,
+<br>their smoke tests are marginally useful: I don't even think QA uses
+<br>them. (If they did, Sidebar wouldn't have been broken for a week :-/).
+<p>b. Be up-to-date. But don't get stressed out about being _exactly_ up
+to
+<br>date, but be smart. Use a different level of paranoia depending on
+<br>whether you're updating one directory or ten, a header file, a C++
+file,
+<br>a XUL file, a makefile. As a rule of thumb, update _at least_ the
+<br>immediate directories you're working in before you check in. If there
+<br>are changes in a directory, rebuild it to make sure you didn't hork
+<br>those dirs.
+<p>c. If you're adding or removing files, be sure that you've got Mac,
+<br>Windows, and Unix makefile changes ready to fly.
+<p>d. Don't check in if the tree has been burning for hours. Unless you
+<br>really feel like fixing bustage (see 4a, below).
+<p>4. Be smart after you check in.
+<p>a. Update your entire tree after you check in. Rebuild. If there's build
+<br>bustage, fix it. EVEN IF IT ISN'T YOURS. Make sure your build RUNS.
+If
+<br>it doesn't, start to panic. Figure out what's wrong and who's to blame.
+<br>Make sure they know they're to blame.
+<p>b. Pull your changes on another platform. Rebuild. Test. Don't _have_
+<br>another platform? Go on #mozilla and find somebody who does.
+<p>c. Use the "Bonsai Query Page", "Tinderbox", n.p.m.builds,
+<br>n.p.m.checkins, and #mozilla to figure out who did what. Be sure that
+<br>_you_ contribute to the newsgroups and IRC when appropriate.
+<p>d. Use depend builds. On Win32, this requires some extra work ("nmake
+<br>-fclient.mak depend"), but is well worth it.
+<p><a NAME="Compiler Quirks and"></a><b>Compiler Quirks and Examples</b>
+<br>&nbsp;
+<ul>
+<li>
+egcs lets you define integer consts inside a class definition; VC5 won't,
+but you can use enum to do the same thing.</li>
+
+<li>
+Temporarily commented out (the unused) |construct| member which uses placement
+|new|, apparently not available on SunOS. That's the only bustage I see
+so far.</li>
+
+<li>
+Solaris is more picky than mac/linux/win32, i guess. I got bit the exact
+same way yesterday. The problem is that you have to include the definition
+of an interface before you ever use it in an nsCOMPtr, for the Solaris
+compiler.</li>
+
+<li>
+[warren@netscape.com - 09/11 12:45] So under VC6 you can assign a&nbsp;
+nsCOMPtr to a non-nsCOMPtr&nbsp; with no problem, but the other compilers
+are having problems.&nbsp; I've added a .get() where ever&nbsp; I introduced
+this to fix the problem, but I expect a few&nbsp; more red spots before&nbsp;
+everything picks up the&nbsp; change.</li>
+</ul>
+
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/seamonkey/rules/tree-hints.html&amp;rev=&amp;root=/cvsroot/">Last modified September 11,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

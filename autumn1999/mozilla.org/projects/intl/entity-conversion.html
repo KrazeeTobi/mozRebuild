@@ -1,0 +1,151 @@
+<HTML>
+<HEAD>
+<TITLE>Entity conversion interface</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+<b>Entity conversion interface</b>
+<br>11/12/99 nhotta@netscape.com
+<p><b>Description</b>
+<p>The entity converter converts unicode characters into character entity
+references (CER). SaveAs interface is a superset of the entity converter
+which also converts unicode to a target character set (also process NCR
+as fallback in case of HTML).
+<p><b>API</b>
+<p>nsIEntityConverter
+<br>There are two ways to convert, character base which takes one unicode
+character and string base which takes a null terminated unicode string
+(wstring). A null terminated unicode string is allocated for the output
+which needs to be freed by the caller (by nsAllocator::free).
+<br>There are attributes to be specified in order to control the entity
+generation. For example, using html40 generates all entities defined in
+HTML 4.0. Or each category (html40Latin1, html40Symbols, html40Special)
+or combination of these can be separately specified.
+<p>nsISaveAsCharset
+<br>The interface needs initialization by the caller. Init call requires
+to specify three attributes, fallback behavior, order of the entity generation
+and entity version. Fallback is used when entity generation failed (no
+entity) or processing plain text. Order of the entity generation, if apply
+the entity conversion before charset conversion then all characters which
+have entity defined are converted to entities. While applying it after
+means only characters cannot be mapped to the target charset are converted
+to entities. It is also possible to disable the entity generation. Entity
+version is explained in nsIEntityConverter.
+<br>Once the interface is initialized, the caller can call Convert passing
+a null terminated unicode buffer (wstring). Converted string is allocated
+and returned as a C string which needs to be deallocated (by nsAllocator::free).
+<p><b>Extensibility</b>
+<p>The entity converter can be extended by creating a definition file and
+updates the file list (both in res/entityTables).
+<p>1) Assign a name - 20 characters maximum which is also used as a file
+name (e.g. newname.properties).
+<p>2) Update the file list - update htmlEntityVersions.properties which
+contains list of definition files, change the length and add the new name.
+<p>htmlEntityVersions.properties
+<br>length=4
+<br>1=html40Latin1
+<br>2=html40Symbols
+<br>3=html40Special
+<br>4=transliterate
+<p>3) Create a new file - create a file and define name/value pairs, left
+side is entity.xxxx (xxxx is unicode code point in decimal), right side
+is a name to be converted for that unicode.
+<p>entity.list.name=transliterate
+<br>entity.169=(c)
+<br>entity.8364=EURO
+<br>entity.8482=(tm)
+<p>4) Use a new definition for the entity converter - Extended definitions
+is available immediately to the following create instance of the interface
+(i.e. no restart is needed). The version to specify to the converter is
+a bit value of the assigned number in the file list (e.g. for 4=transliterate,
+it is bit 3 thus the version is 8, see nsIEntityConverter.idl for the existing
+values).
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/intl/entity-conversion.html&amp;rev=&amp;root=/cvsroot/">Last modified November 12,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,1727 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Bytecode Mappings</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN=TOP NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Primitive Graph Format</H2>
+
+
+<H2>Data Layer</H2>
+
+
+<H2><FONT SIZE=+4>Bytecode Mappings</FONT></H2>
+  </TD>
+  <TD VALIGN=TOP NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="primitives.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM" 
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="data_layer.html"><IMG SRC=
+"../arrows/up.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A><A HREF="example1.html"><IMG SRC="../arrows/right.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+<P></P>
+
+<P></P>
+
+<P>The following table lists all bytecodes currently permitted inside portable
+Java code. The quick bytecodes are not included because they are purely
+an interpreter optimizations and not permitted inside portable Java code.
+For each bytecode the table shows the primitive or primitives to which the
+translator's front end will convert the bytecode.</P>
+
+<H3>Notation</H3>
+
+
+<P>The notation <FONT COLOR="#330099">Ui<I><FONT SIZE=-2>n</FONT></I></FONT> represents an incoming
+data flow edge connected to the source of the integer at index <I>n</I>
+(index 0 is the top of stack)
+on the Java stack just before the bytecode. Similarly, <FONT COLOR="#330099">Ul<I><FONT SIZE=-2>n</FONT></I></FONT>
+represents a data flow edge connected to the source of the long at indices
+<I>n</I> and <I>n</I>+1 on the Java stack just before the bytecode,
+<FONT COLOR="#330099">Uf<I><FONT SIZE=-2>n</FONT></I></FONT> represents the same for a float at index
+<I>n</I>, <FONT COLOR="#330099">Ud<I><FONT SIZE=-2>n</FONT></I></FONT> represents the same for
+a double at indices <I>n</I> and <I>n</I>+1, and <FONT COLOR="#330099">Ua<I><FONT SIZE=-2>n</FONT></I></FONT>
+represents the same for an object reference at index <I>n</I>. <FONT COLOR="#330099">U&curren;<I><FONT
+ SIZE=-2>n</FONT></I></FONT> is one of the above, with the kind chosen depending
+on the context.</P>
+
+<P>The notation <FONT COLOR="#330099">Vi<I><FONT SIZE=-2>n</FONT></I></FONT> represents an outgoing
+integer data flow edge that produces the integer at index <I>n</I>
+on the Java stack just after the bytecode. Similarly, <FONT COLOR="#330099">Vl<I><FONT SIZE=-2>n</FONT></I></FONT>
+represents an outgoing integer data flow edge that produces the long at
+indices <I>n</I> and <I>n</I>+1 on the Java stack just after the
+bytecode, <FONT COLOR="#330099">Vf<I><FONT SIZE=-2>n</FONT></I></FONT> represents the same for a
+float at index <I>n</I>, <FONT COLOR="#330099">Vd<I><FONT SIZE=-2>n</FONT></I></FONT> represents
+the same for a double at indices <I>n</I> and <I>n</I>+1, and <FONT COLOR="#330099">Va<I><FONT
+ SIZE=-2>n</FONT></I></FONT> represents the same for an object reference at index
+<I>n</I>. <FONT COLOR="#330099">V&curren;<I><FONT SIZE=-2>n</FONT></I></FONT> is one of the
+above, with the kind chosen depending on the context.</P>
+
+<P>If <FONT COLOR="#330099">Li<I><FONT SIZE=-2>v</FONT></I></FONT> is a target of a primitive, then
+it represents an outgoing integer data flow edge that produces the integer in the local variable at index
+<I>v</I> just after the bytecode. If <FONT COLOR="#330099">Li<I><FONT SIZE=-2>v</FONT></I></FONT>
+is a source of a primitive, then it represents an incoming integer data flow edge connected to the source
+of the integer in the local variable at index <I>v</I> just before the bytecode.
+<FONT COLOR="#330099">Lf<I><FONT SIZE=-2>v</FONT></I></FONT> and
+<FONT COLOR="#330099">La<I><FONT SIZE=-2>v</FONT></I></FONT> are analogous for float and address local variables.
+<FONT COLOR="#330099">Ll<I><FONT SIZE=-2>v</FONT></I></FONT> and
+<FONT COLOR="#330099">Ld<I><FONT SIZE=-2>v</FONT></I></FONT> are analogous for pairs of local variables
+that together hold a long or a double.</P>
+
+<P><FONT COLOR="#330099">Ti<I><FONT SIZE=-2>n</FONT></I></FONT> is an int temporary data flow edge
+used to construct a bytecode from several connected primitives.
+<FONT COLOR="#330099">Tl<I><FONT SIZE=-2>n</FONT></I></FONT>,
+<FONT COLOR="#330099">Ta<I><FONT SIZE=-2>n</FONT></I></FONT>,
+<FONT COLOR="#330099">Tf<I><FONT SIZE=-2>n</FONT></I></FONT>, and
+<FONT COLOR="#330099">Td<I><FONT SIZE=-2>n</FONT></I></FONT> are analogous.
+<FONT COLOR="#330099">Tc<I><FONT SIZE=-2>n</FONT></I></FONT> is a
+<A HREF="data_layer.html#df_edge_condition">condition</A> temporary data flow edge, and
+<FONT COLOR="#330099">Tt<I><FONT SIZE=-2>n</FONT></I></FONT> is a
+<A HREF="data_layer.html#df_edge_tuple">tuple</A> temporary data flow edge.</P>
+
+<P>Some generated primitives have outgoing edges that are not used. These are represented
+by <FONT COLOR="#330099">&Oslash;</FONT>.</P>
+
+<H3>Constants</H3>
+
+
+<P>The mappings make use of the following constants:</P>
+
+<P><TABLE WIDTH="100%" BORDER=0 CELLSPACING=4 CELLPADDING=0>
+ <TR>
+  <TH WIDTH="10%" NOWRAP><P ALIGN=RIGHT>Name&nbsp;</TH>
+  <TH WIDTH="90%"><P ALIGN=LEFT>Value</TH>
+ </TR>
+ <TR>
+  <TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><CODE>objectTypeOffset&nbsp;</CODE></TD>
+  <TD VALIGN=TOP>Offset from an object's address to its type word.</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><CODE>arrayLengthOffset&nbsp;</CODE></TD>
+  <TD VALIGN=TOP>Offset from an array's address to its length word.</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><CODE>arrayEltsOffset&nbsp;</CODE></TD>
+  <TD VALIGN=TOP>Offset from an array's address to its first element.</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><CODE>intfIndexTableOffset&nbsp;</CODE></TD>
+  <TD VALIGN=TOP>
+Offset from the beginning of a class object to its field that points to that
+class's row in the interface index table.
+  </TD>
+ </TR>
+ <TR>
+  <TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><CODE>intfAssignableTableOffset&nbsp;</CODE></TD>
+  <TD VALIGN=TOP>
+Offset from the beginning of a class object to its field that points to that
+class's row in the interface assignability table.
+  </TD>
+ </TR>
+ <TR>
+  <TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><CODE>assignableMatchValueOffset&nbsp;</CODE></TD>
+  <TD VALIGN=TOP>
+Offset from the beginning of a class object to its field that contains that
+class's value in the interface assignability table.
+  </TD>
+ </TR>
+</TABLE><P></P>
+
+<H3>Mappings</H3>
+
+
+<P><TABLE WIDTH="100%" BORDER=0 CELLSPACING=0 CELLPADDING=0>
+ <TR>
+  <TH WIDTH="10%" COLSPAN=2>Bytecodes</TH>
+  <TH WIDTH="45%" ROWSPAN=2><P ALIGN=LEFT>Description</TH>
+  <TH WIDTH="45%" ROWSPAN=2><P ALIGN=LEFT>Equivalent Primitives</TH>
+ </TR>
+ <TR>
+  <TH WIDTH="5%" HEIGHT=20><P ALIGN=LEFT>Hex</TH>
+  <TH WIDTH="5%"><P ALIGN=LEFT>Assembly</TH>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 00 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">nop </FONT></CODE></TD>
+  <TD VALIGN=TOP>No operation.<BR></TD>
+  <TD VALIGN=TOP>Deleted.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 01 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">aconst_null </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push nil.</TD>
+  <TD VALIGN=TOP ROWSPAN=18>
+<FONT COLOR="#330099">V&curren;<FONT SIZE=-2>0</FONT> = <CODE>Const.</CODE>&curren; C&curren;</FONT>;<BR>
+or coalesced with a subsequent primitive.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 02 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iconst_m1 </FONT></CODE></TD>
+  <TD VALIGN=TOP NOWRAP>Push the int -1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 03 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iconst_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP NOWRAP>Push the int 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 04 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iconst_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP NOWRAP>Push the int 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 05 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iconst_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP NOWRAP>Push the int 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 06 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iconst_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the int 3.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 07 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iconst_4 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the int 4.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 08 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iconst_5 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the int 5.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 09 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lconst_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the long 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 0A </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lconst_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the long 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 0B </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fconst_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the float 0.0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 0C </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fconst_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the float 1.0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 0D </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fconst_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the float 2.0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 0E </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dconst_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the double 0.0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 0F </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dconst_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the double 1.0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 10 cc <BR>&nbsp;&nbsp; 11 cccc </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">bipush <I>c</I> <BR>sipush <I>c</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push the int exts(<I>c</I>).</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 12 ii <BR>&nbsp;&nbsp; 13 iiii </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ldc <I>i</I> <BR>ldc_w <I>i</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push constant table int, float, or string address at index <I>i</I>.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 14 iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ldc2_w <I>i</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push constant table long or double at index <I>i</I>.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 15 vv <BR>C4 15 vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iload <I>v</I> <BR>wide iload <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local int variable at index <I>v</I>.</TD>
+  <TD VALIGN=TOP ROWSPAN=25>Deleted; data flow edges subsume local variable manipulations.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 16 vv <BR>C4 16 vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lload <I>v</I> <BR>wide lload <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local long variable at index <I>v</I>.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 17 vv <BR>C4 17 vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fload <I>v</I> <BR>wide fload <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local float variable at index <I>v</I>.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 18 vv <BR>C4 18 vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dload <I>v</I> <BR>wide dload <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local double variable at index <I>v</I>.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 19 vv <BR>C4 19 vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">aload <I>v</I> <BR>wide aload <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local address variable at index <I>v</I>.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 1A </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iload_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local int variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 1B </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iload_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local int variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 1C </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iload_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local int variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 1D </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iload_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local int variable at index 3.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 1E </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lload_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local long variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 1F </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lload_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local long variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 20 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lload_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local long variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 21 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lload_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local long variable at index 3.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 22 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fload_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local float variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 23 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fload_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local float variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 24 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fload_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local float variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 25 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fload_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local float variable at index 3.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 26 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dload_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local double variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 27 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dload_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local double variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 28 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dload_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local double variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 29 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dload_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local double variable at index 3.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 2A </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">aload_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local address variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 2B </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">aload_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local address variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 2C </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">aload_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local address variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 2D <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">aload_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Push local address variable at index 3.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 2E </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iaload </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read int array element.</TD>
+  <TD VALIGN=TOP ROWSPAN=8>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2>1</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2>1</FONT>, <CODE>arrayLengthOffset</CODE></FONT>;<BR>
+<FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT> = <CODE>Ld.i</CODE> &copy;, Ta<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>Limit.i</CODE> Ui<FONT SIZE=-2>0</FONT>, Ti<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ti<FONT SIZE=-2>1</FONT> = <CODE>Shl.i</CODE> Ui<FONT SIZE=-2>0</FONT>, lgsizeof(&curren;)</FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>1</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2>1</FONT>, Ti<FONT SIZE=-2>1</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>2</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, <CODE>arrayEltsOffset</CODE></FONT>;<BR>
+<FONT COLOR="#330099">V&curren;<FONT SIZE=-2>0</FONT> =
+ <CODE>Ld</CODE></FONT>[<FONT COLOR="#330099"><CODE>U</CODE></FONT>|<FONT COLOR="#330099"><CODE>S</CODE></FONT>]<FONT COLOR="#330099"><CODE>.</CODE>&curren;
+ M, Ta<FONT SIZE=-2>2</FONT></FONT>. <BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 2F </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">laload </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read long array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 30 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">faload </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read float array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 31 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">daload </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read double array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 32 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">aaload </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read object array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 33 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">baload </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read signed byte array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 34 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">caload </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read char array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 35 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">saload </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read signed short array element.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 36 vv <BR>C4 36 vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">istore <I>v</I> <BR>wide istore <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local int variable at index <I>v</I>.</TD>
+  <TD VALIGN=TOP ROWSPAN=25>Deleted; data flow edges subsume local variable manipulations.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 37 vv <BR>C4 37 vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lstore <I>v</I> <BR>wide lstore <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local long variable at index <I>v</I>.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 38 vv <BR>C4 38 vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fstore <I>v</I> <BR>wide fstore <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local float variable at index <I>v</I>.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 39 vv <BR>C4 39 vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dstore <I>v</I> <BR>wide dstore <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local double variable at index <I>v</I>.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 3A vv <BR>C4 3A vvvv </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">astore <I>v</I> <BR>wide astore <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local address variable at index <I>v</I>.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 3B </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">istore_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local int variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 3C </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">istore_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local int variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 3D </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">istore_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local int variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 3E </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">istore_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local int variable at index 3.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 3F </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lstore_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local long variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 40 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lstore_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local long variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 41 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lstore_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local long variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 42 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lstore_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local long variable at index 3.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 43 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fstore_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local float variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 44 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fstore_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local float variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 45 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fstore_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local float variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 46 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fstore_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local float variable at index 3.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 47 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dstore_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local double variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 48 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dstore_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local double variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 49 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dstore_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local double variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 4A </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dstore_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local double variable at index 3.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 4B </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">astore_0 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local address variable at index 0.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 4C </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">astore_1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local address variable at index 1.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 4D </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">astore_2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local address variable at index 2.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 4E <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">astore_3 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop into local address variable at index 3.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 4F </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iastore </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write int array element.</TD>
+  <TD VALIGN=TOP ROWSPAN=8>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2>2</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2>2</FONT>, <CODE>arrayLengthOffset</CODE></FONT>;<BR>
+<FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT> = <CODE>Ld.i</CODE> &copy;, Ta<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>Limit.i</CODE> Ui<FONT SIZE=-2>1</FONT>, Ti<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+[<FONT COLOR="#FF0000">exc <FONT COLOR="#330099">&Oslash; = <CODE>SysCallEC</CODE> <CODE>CheckArrayStore</CODE>, Ua<FONT SIZE=-2>2</FONT>, Ua<FONT SIZE=-2>0</FONT></FONT></FONT>]<BR>
+<FONT COLOR="#330099">Ti<FONT SIZE=-2>1</FONT> = <CODE>Shl.i</CODE> Ui<FONT SIZE=-2>1</FONT>, lgsizeof(&curren;)</FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>1</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2>2</FONT>, Ti<FONT SIZE=-2>1</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>2</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, <CODE>arrayEltsOffset</CODE></FONT>;<BR>
+<FONT COLOR="#330099">M' = <CODE>St.</CODE>&curren; M, Ta<FONT SIZE=-2>2</FONT>, U&curren;<FONT SIZE=-2>0</FONT></FONT>.<BR>
+(If &curren;=<CODE>l</CODE> or &curren;=<CODE>d</CODE> then
+ <FONT COLOR="#330099">Ua<FONT SIZE=-2>2</FONT></FONT> is really <FONT COLOR="#330099">Ua<FONT SIZE=-2>3</FONT></FONT> and
+ <FONT COLOR="#330099">Ui<FONT SIZE=-2>1</FONT></FONT> is really <FONT COLOR="#330099">Ui<FONT SIZE=-2>2</FONT></FONT>.)<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 50 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lastore </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write long array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 51 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fastore </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write float array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 52 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dastore </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write double float array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 53 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">aastore </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write object array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 54 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">bastore </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write signed byte array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 55 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">castore </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write char array element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 56 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">sastore </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write signed short array element.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 57 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">pop </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop top stack element.</TD>
+  <TD VALIGN=TOP ROWSPAN=2>Deleted; data flow edges subsume stack location manipulations.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 58 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">pop2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Pop top two stack elements.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 59 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dup </FONT></CODE></TD>
+  <TD VALIGN=TOP>Duplicate top stack element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 5A </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dup_x1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Insert copy of top stack element behind second element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 5B </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dup_x2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Insert copy of top stack element behind third element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 5C </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dup2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Duplicate top two stack elements.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 5D </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dup2_x1 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Insert copies of top two stack elements behind third element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 5E </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dup2_x2 </FONT></CODE></TD>
+  <TD VALIGN=TOP>Insert copies of top two stack elements behind fourth element.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 5F <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">swap </FONT></CODE></TD>
+  <TD VALIGN=TOP>Swap top two stack elements.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 60 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iadd </FONT></CODE></TD>
+  <TD VALIGN=TOP>Add two ints.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Add.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 61 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ladd </FONT></CODE></TD>
+  <TD VALIGN=TOP>Add two longs.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>Add.l</CODE>
+Ul<FONT SIZE=-2>2</FONT>, Ul<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 62 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fadd </FONT></CODE></TD>
+  <TD VALIGN=TOP>Add two floats.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vf<FONT SIZE=-2>0</FONT> = <CODE>FAdd.f</CODE>
+Uf<FONT SIZE=-2>1</FONT>, Uf<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 63 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dadd </FONT></CODE></TD>
+  <TD VALIGN=TOP>Add two doubles.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vd<FONT SIZE=-2>0</FONT> = <CODE>FAdd.d</CODE>
+Ud<FONT SIZE=-2>2</FONT>, Ud<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 64 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">isub </FONT></CODE></TD>
+  <TD VALIGN=TOP>Subtract two ints.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Sub.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 65 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lsub </FONT></CODE></TD>
+  <TD VALIGN=TOP>Subtract two longs.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>Sub.l</CODE>
+Ul<FONT SIZE=-2>2</FONT>, Ul<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 66 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fsub </FONT></CODE></TD>
+  <TD VALIGN=TOP>Subtract two floats.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vf<FONT SIZE=-2>0</FONT> = <CODE>FSub.f</CODE>
+Uf<FONT SIZE=-2>1</FONT>, Uf<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 67 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dsub </FONT></CODE></TD>
+  <TD VALIGN=TOP>Subtract two doubles.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vd<FONT SIZE=-2>0</FONT> = <CODE>FSub.d</CODE>
+Ud<FONT SIZE=-2>2</FONT>, Ud<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 68 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">imul </FONT></CODE></TD>
+  <TD VALIGN=TOP>Multiply two ints.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Mul.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 69 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lmul </FONT></CODE></TD>
+  <TD VALIGN=TOP>Multiply two longs.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>Mul.l</CODE>
+Ul<FONT SIZE=-2>2</FONT>, Ul<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 6A </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fmul </FONT></CODE></TD>
+  <TD VALIGN=TOP>Multiply two floats.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vf<FONT SIZE=-2>0</FONT> = <CODE>FMul.f</CODE>
+Uf<FONT SIZE=-2>1</FONT>, Uf<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 6B <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dmul </FONT></CODE></TD>
+  <TD VALIGN=TOP>Multiply two doubles.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vd<FONT SIZE=-2>0</FONT> = <CODE>FMul.d</CODE>
+Ud<FONT SIZE=-2>2</FONT>, Ud<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 6C </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">idiv </FONT></CODE></TD>
+  <TD VALIGN=TOP>Divide two ints.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT>, E = <CODE>DivE.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 6D </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ldiv </FONT></CODE></TD>
+  <TD VALIGN=TOP>Divide two longs.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT>, E = <CODE>DivE.l</CODE>
+Ul<FONT SIZE=-2>2</FONT>, Ul<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 6E </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fdiv </FONT></CODE></TD>
+  <TD VALIGN=TOP>Divide two floats.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vf<FONT SIZE=-2>0</FONT> = <CODE>FDiv.f</CODE>
+Uf<FONT SIZE=-2>1</FONT>, Uf<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 6F <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ddiv </FONT></CODE></TD>
+  <TD VALIGN=TOP>Divide two doubles.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vd<FONT SIZE=-2>0</FONT> = <CODE>FDiv.d</CODE>
+Ud<FONT SIZE=-2>2</FONT>, Ud<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 70 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">irem </FONT></CODE></TD>
+  <TD VALIGN=TOP>Compute remainder of int division.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT>, E = <CODE>ModE.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 71 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lrem </FONT></CODE></TD>
+  <TD VALIGN=TOP>Compute remainder of long division.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT>, E = <CODE>ModE.l</CODE>
+Ul<FONT SIZE=-2>2</FONT>, Ul<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 72 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">frem </FONT></CODE></TD>
+  <TD VALIGN=TOP>Compute remainder of truncated float division.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vf<FONT SIZE=-2>0</FONT> = <CODE>FRem.f</CODE>
+Uf<FONT SIZE=-2>1</FONT>, Uf<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 73 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">drem </FONT></CODE></TD>
+  <TD VALIGN=TOP>Compute remainder of truncated double division.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vd<FONT SIZE=-2>0</FONT> = <CODE>FRem.d</CODE>
+Ud<FONT SIZE=-2>2</FONT>, Ud<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 74 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ineg </FONT></CODE></TD>
+  <TD VALIGN=TOP>Negate an int.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Sub.i</CODE>
+0, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 75 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lneg </FONT></CODE></TD>
+  <TD VALIGN=TOP>Negate a long.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>Sub.l</CODE>
+0, Ul<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 76 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fneg </FONT></CODE></TD>
+  <TD VALIGN=TOP>Negate a float.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vf<FONT SIZE=-2>0</FONT> = <CODE>FSub.f</CODE>
+-0.0, Uf<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 77 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dneg </FONT></CODE></TD>
+  <TD VALIGN=TOP>Negate a double.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vd<FONT SIZE=-2>0</FONT> = <CODE>FSub.d</CODE>
+-0.0, Ud<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 78 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ishl </FONT></CODE></TD>
+  <TD VALIGN=TOP>Shift int left.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Shl.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 79 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lshl </FONT></CODE></TD>
+  <TD VALIGN=TOP>Shift long left.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>Shl.l</CODE>
+Ul<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 7A </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ishr </FONT></CODE></TD>
+  <TD VALIGN=TOP>Arithmetical shift int right.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Shr.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 7B </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lshr </FONT></CODE></TD>
+  <TD VALIGN=TOP>Arithmetical shift long right.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>Shr.l</CODE>
+Ul<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 7C </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iushr </FONT></CODE></TD>
+  <TD VALIGN=TOP>Logical shift int right.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>ShrU.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 7D <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lushr </FONT></CODE></TD>
+  <TD VALIGN=TOP>Logical shift long right.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>ShrU.l</CODE>
+Ul<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 7E </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iand </FONT></CODE></TD>
+  <TD VALIGN=TOP>Int bitwise AND.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>And.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 7F <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">land </FONT></CODE></TD>
+  <TD VALIGN=TOP>Long bitwise AND.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>And.l</CODE>
+Ul<FONT SIZE=-2>2</FONT>, Ul<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 80 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ior </FONT></CODE></TD>
+  <TD VALIGN=TOP>Int bitwise OR.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Or.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 81 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lor </FONT></CODE></TD>
+  <TD VALIGN=TOP>Long bitwise OR.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>Or.l</CODE>
+Ul<FONT SIZE=-2>2</FONT>, Ul<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 82 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ixor </FONT></CODE></TD>
+  <TD VALIGN=TOP>Int bitwise exclusive OR.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Xor.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 83 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lxor </FONT></CODE></TD>
+  <TD VALIGN=TOP>Long bitwise exclusive OR.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>Xor.l</CODE>
+Ul<FONT SIZE=-2>2</FONT>, Ul<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 84 vv cc <BR>C4 84 vvvv cccc <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iinc <I>v</I>,<I>c</I> <BR>wide iinc <I>v</I>,<I>c</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Increment local variable at index <I>v</I> by the constant <I>c</I>.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Li<FONT SIZE=-2><I>v</I></FONT> = <CODE>Add.i</CODE>
+Li<FONT SIZE=-2><I>v</I></FONT>, Ci</FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 85 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">i2l </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert int to long.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>ConvL.i</CODE>
+Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 86 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">i2f </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert int to float.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vf<FONT SIZE=-2>0</FONT> = <CODE>FConvF.i</CODE>
+Ui<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 87 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">i2d </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert int to double.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vd<FONT SIZE=-2>0</FONT> = <CODE>FConvD.i</CODE>
+Ui<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 88 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">l2i </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert long to int.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>ConvI.l</CODE>
+Ul<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 89 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">l2f </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert long to float.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vf<FONT SIZE=-2>0</FONT> = <CODE>FConvF.l</CODE>
+Ul<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 8A <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">l2d </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert long to double.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vd<FONT SIZE=-2>0</FONT> = <CODE>FConvD.l</CODE>
+Ul<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 8B </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">f2i </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert float to int.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>FConvI.f</CODE>
+Uf<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 8C </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">f2l </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert float to long.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>FConvL.f</CODE>
+Uf<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 8D <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">f2d </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert float to double.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vd<FONT SIZE=-2>0</FONT> = <CODE>FConvD.f</CODE>
+Uf<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 8E </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">d2i </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert double to int.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>FConvI.d</CODE>
+Ud<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 8F </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">d2l </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert double to long.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vl<FONT SIZE=-2>0</FONT> = <CODE>FConvL.d</CODE>
+Ud<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 90 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">d2f </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert double to float.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vf<FONT SIZE=-2>0</FONT> = <CODE>FConvF.d</CODE>
+Ud<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 91 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">i2b </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert int to signed byte.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Ext.i</CODE>
+Ui<FONT SIZE=-2>0</FONT>, 8</FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 92 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">i2c </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert int to char.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>And.i</CODE>
+Ui<FONT SIZE=-2>0</FONT>, 0xFFFF</FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 93 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">i2s </FONT></CODE></TD>
+  <TD VALIGN=TOP>Convert int to signed short.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Ext.i</CODE>
+Ui<FONT SIZE=-2>0</FONT>, 16</FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 94 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lcmp </FONT></CODE></TD>
+  <TD VALIGN=TOP>Three-way compare of two longs, yielding either -1, 0, or 1.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>Cmp.l</CODE>
+Ul<FONT SIZE=-2>2</FONT>, Ul<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>CatL.i</CODE> Tc<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 95 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fcmpl </FONT></CODE></TD>
+  <TD VALIGN=TOP>Three-way float compare; yields -1 on incomparable.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>FCmp.f</CODE>
+Uf<FONT SIZE=-2>1</FONT>, Uf<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>CatL.i</CODE> Tc<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 96 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">fcmpg </FONT></CODE></TD>
+  <TD VALIGN=TOP>Three-way float compare; yields 1 on incomparable.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>FCmp.f</CODE>
+Uf<FONT SIZE=-2>1</FONT>, Uf<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>CatG.i</CODE> Tc<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 97 </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dcmpl </FONT></CODE></TD>
+  <TD VALIGN=TOP>Three-way double compare; yields -1 on incomparable.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>FCmp.d</CODE>
+Uf<FONT SIZE=-2>2</FONT>, Uf<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>CatL.i</CODE> Tc<FONT SIZE=-2>0</FONT></FONT>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 98 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dcmpg </FONT></CODE></TD>
+  <TD VALIGN=TOP>Three-way double compare; yields 1 on incomparable.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>FCmp.d</CODE>
+Uf<FONT SIZE=-2>2</FONT>, Uf<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>CatG.i</CODE> Tc<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 99 dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ifeq </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if popped int is zero.</TD>
+  <TD VALIGN=TOP ROWSPAN=6>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>Cmp.i</CODE> Ui<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+<FONT COLOR="#FF0000">if<FONT COLOR="#330099"><CODE><I>cond</I></CODE> Tc<FONT SIZE=-2>0</FONT></FONT> goto cnode(&sect;+<I>d</I>) else A</FONT>;<BR>
+<FONT COLOR="#FF0000">A:</FONT>;<BR>
+where <FONT COLOR="#330099"><CODE><I>cond</I></CODE></FONT> is:<BR>
+<CODE><FONT COLOR="#006600">&nbsp;ifeq &nbsp;</FONT><FONT COLOR="#330099">Eq</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;ifne &nbsp;</FONT><FONT COLOR="#330099">Ne</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;iflt &nbsp;</FONT><FONT COLOR="#330099">Lt</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;ifge &nbsp;</FONT><FONT COLOR="#330099">Ge</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;ifgt &nbsp;</FONT><FONT COLOR="#330099">Gt</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;ifle &nbsp;</FONT><FONT COLOR="#330099">Le</FONT></CODE><BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 9A dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ifne </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if popped int is nonzero.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 9B dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">iflt </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if popped int is less than zero.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 9C dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ifge </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if popped int is greater than or equal to zero.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 9D dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ifgt </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if popped int is greater than zero.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 9E dddd <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ifle </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if popped int is less than or equal to zero.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; 9F dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">if_icmpeq </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if two popped ints are equal.</TD>
+  <TD VALIGN=TOP ROWSPAN=6>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>Cmp.i</CODE>
+Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#FF0000">if<FONT COLOR="#330099"><CODE><I>cond</I></CODE> Tc<FONT SIZE=-2>0</FONT></FONT> goto cnode(&sect;+<I>d</I>) else A</FONT>;<BR>
+<FONT COLOR="#FF0000">A:</FONT>;<BR>
+where <FONT COLOR="#330099"><CODE><I>cond</I></CODE></FONT> is:<BR>
+<CODE><FONT COLOR="#006600">&nbsp;if_icmpeq &nbsp;</FONT><FONT COLOR="#330099">Eq</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;if_icmpne &nbsp;</FONT><FONT COLOR="#330099">Ne</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;if_icmplt &nbsp;</FONT><FONT COLOR="#330099">Lt</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;if_icmpge &nbsp;</FONT><FONT COLOR="#330099">Ge</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;if_icmpgt &nbsp;</FONT><FONT COLOR="#330099">Gt</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;if_icmple &nbsp;</FONT><FONT COLOR="#330099">Le</FONT></CODE><BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A0 dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">if_icmpne </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if two popped ints are not equal.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A1 dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">if_icmplt </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if second int popped is less than first.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A2 dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">if_icmpge </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if second int popped is greater than or equal to first.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A3 dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">if_icmpgt </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if second int popped is greater than first.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A4 dddd <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">if_icmple </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if second int popped is less than or equal to first.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A5 dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">if_acmpeq </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if two popped addresses are equal.</TD>
+  <TD VALIGN=TOP ROWSPAN=2>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>Cmp.a</CODE>
+Ua<FONT SIZE=-2>1</FONT>, Ua<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#FF0000">if<FONT COLOR="#330099"><CODE><I>cond</I></CODE> Tc<FONT SIZE=-2>0</FONT></FONT> goto cnode(&sect;+<I>d</I>) else A</FONT>;<BR>
+<FONT COLOR="#FF0000">A:</FONT>;<BR>
+where <FONT COLOR="#330099"><CODE><I>cond</I></CODE></FONT> is:<BR>
+<CODE><FONT COLOR="#006600">&nbsp;if_acmpeq &nbsp;</FONT><FONT COLOR="#330099">Eq</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;if_acmpne &nbsp;</FONT><FONT COLOR="#330099">Ne</FONT></CODE><BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A6 dddd <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">if_acmpne </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if two popped addresses are not equal.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A7 dddd <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">goto </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>).<BR></TD>
+  <TD VALIGN=TOP>Deleted; control flow edges subsume unconditional branches.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A8 dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">jsr </FONT></CODE></TD>
+  <TD VALIGN=TOP>Jump to subroutine at cnode(&sect;+<I>d</I>), pushing the return address on the Java stack.</TD>
+  <TD VALIGN=TOP>[For now] expanded into inlined subroutine contents.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; A9 vv <BR>C4 A9 vvvv <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ret <I>v</I> <BR>wide ret <I>v</I> </FONT></CODE></TD>
+  <TD VALIGN=TOP>Return from subroutine, getting return address from local variable at index <I>v</I>.<BR></TD>
+  <TD VALIGN=TOP>[For now] deleted when subroutine calls are expanded.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; AA ... <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">tableswitch </FONT></CODE></TD>
+  <TD VALIGN=TOP>
+Dense int switch statement to one of the labels in
+{<I>d</I><FONT SIZE=-2><I>low</I></FONT>,
+<I>d</I><FONT SIZE=-2><I>low</I>+1</FONT>, ...,
+<I>d</I><FONT SIZE=-2><I>high</I></FONT>; <I>default</I>}.<BR>
+  </TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT> = <CODE>Add.i</CODE>
+Ui<FONT SIZE=-2>0</FONT>, -<I>low</I></FONT>;<BR>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>CmpU.i</CODE> Ti<FONT SIZE=-2>0</FONT>, <I>high</I>-<I>low</I>+1</FONT>;<BR>
+<FONT COLOR="#FF0000">if<FONT COLOR="#330099"><CODE>Ge</CODE> Tc<FONT SIZE=-2>0</FONT></FONT> goto cnode(&sect;+<I>default</I>) else A</FONT>;<BR>
+<FONT COLOR="#FF0000">A: switch <FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT></FONT>
+{cnode(&sect;+<I>d</I><FONT SIZE=-2><I>low</I></FONT>),
+cnode(&sect;+<I>d</I><FONT SIZE=-2><I>low</I>+1</FONT>), ...,
+cnode(&sect;+<I>d</I><FONT SIZE=-2><I>high</I></FONT>)}</FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; AB ... <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lookupswitch </FONT></CODE></TD>
+  <TD VALIGN=TOP>Sparse int switch statement.<BR></TD>
+  <TD VALIGN=TOP>Expanded into a tree of <FONT COLOR="#FF0000">if</FONT> primitives.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; AC </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ireturn </FONT></CODE></TD>
+  <TD VALIGN=TOP>Return int from function.</TD>
+  <TD VALIGN=TOP ROWSPAN=5>
+<FONT COLOR="#FF0000">return <FONT COLOR="#330099">U&curren;<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+followed by a control flow edge to the <FONT COLOR="#FF0000">end</FONT> node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; AD </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">lreturn </FONT></CODE></TD>
+  <TD VALIGN=TOP>Return long from function.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; AE </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">freturn </FONT></CODE></TD>
+  <TD VALIGN=TOP>Return float from function.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; AF </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">dreturn </FONT></CODE></TD>
+  <TD VALIGN=TOP>Return double from function.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B0 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">areturn </FONT></CODE></TD>
+  <TD VALIGN=TOP>Return address from function.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B1 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">return </FONT></CODE></TD>
+  <TD VALIGN=TOP>Return from function with no value.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">return</FONT> followed by a control flow edge to the
+<FONT COLOR="#FF0000">end</FONT> node.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B2 iiii </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">getstatic </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read static field <I>i</I>.</TD>
+  <TD VALIGN=TOP>
+If field is not volatile:<BR>
+<FONT COLOR="#330099">&nbsp;&nbsp;V&curren;<FONT SIZE=-2>0</FONT> = <CODE>LdG.</CODE>&curren; M, globalAddr(<I>i</I>)</FONT>.<BR>
+If field is volatile:<BR>
+<FONT COLOR="#330099">&nbsp;&nbsp;Tt<FONT SIZE=-2>0</FONT> = <CODE>LdVG.</CODE>&curren; M, globalAddr(<I>i</I>)</FONT>;<BR>
+<FONT COLOR="#330099">&nbsp;&nbsp;M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+<FONT COLOR="#330099">&nbsp;&nbsp;V&curren;<FONT SIZE=-2>0</FONT> = <CODE>Proj.</CODE>&curren; Tt<FONT SIZE=-2>0</FONT>, 1</FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B3 iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">putstatic </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write static field <I>i</I>.</TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">M' =
+ <CODE>St</CODE></FONT>[<FONT COLOR="#330099"><CODE>V</CODE></FONT>]<FONT COLOR="#330099"><CODE>G.</CODE>&curren;
+ M, globalAddr(<I>i</I>), U&curren;<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B4 iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">getfield </FONT></CODE></TD>
+  <TD VALIGN=TOP>Read instance field <I>i</I>.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2>0</FONT>, fieldOffset(<I>i</I>)</FONT>;<BR>
+then, if field is not volatile:<BR>
+<FONT COLOR="#330099">&nbsp;&nbsp;V&curren;<FONT SIZE=-2>0</FONT> = <CODE>Ld.</CODE>&curren; M, Ta<FONT SIZE=-2>0</FONT></FONT>;<BR>
+or, if field is volatile:<BR>
+<FONT COLOR="#330099">&nbsp;&nbsp;Tt<FONT SIZE=-2>0</FONT> = <CODE>LdV.</CODE>&curren; M, Ta<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">&nbsp;&nbsp;M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+<FONT COLOR="#330099">&nbsp;&nbsp;V&curren;<FONT SIZE=-2>0</FONT> = <CODE>Proj.</CODE>&curren; Tt<FONT SIZE=-2>0</FONT>, 1</FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B5 iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">putfield </FONT></CODE></TD>
+  <TD VALIGN=TOP>Write instance field <I>i</I>.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2>0</FONT>, fieldOffset(<I>i</I>)</FONT>;<BR>
+<FONT COLOR="#330099">M' = <CODE>St</CODE></FONT>[<FONT COLOR="#330099"><CODE>V</CODE></FONT>]<FONT COLOR="#330099"><CODE>.</CODE>&curren;
+ M, Ta<FONT SIZE=-2>0</FONT>, U&curren;<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B6 iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">invokevirtual </FONT></CODE></TD>
+  <TD VALIGN=TOP>Call method <I>i</I> using dynamic dispatch.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2><I>n</I>-1</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2><I>n</I>-1</FONT>, <CODE>objectTypeOffset</CODE></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>1</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>2</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, methodVTableOffset(<I>i</I>)</FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>3</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>2</FONT></FONT>;<BR>
+<FONT COLOR="#FF0000">exc </FONT><FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>Call</CODE>
+ M, Ta<FONT SIZE=-2>3</FONT>, Ua<FONT SIZE=-2><I>n</I>-1</FONT>, U&curren;<FONT SIZE=-2><I>n</I>-2</FONT>, ...,
+ U&curren;<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+[<FONT COLOR="#330099">V&curren;<FONT SIZE=-2>0</FONT> = <CODE>Proj.</CODE>&curren; Tt<FONT SIZE=-2>0</FONT>, 1</FONT>];<BR>
+or optimized into an <CODE>invokespecial</CODE>-style call.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B7 iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">invokespecial </FONT></CODE></TD>
+  <TD VALIGN=TOP>Call superclass, private, or initialization method <I>i</I> using static dispatch.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2><I>n</I>-1</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#FF0000">exc </FONT><FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>Call</CODE>
+ M, lookupSpecial(<I>i</I>), Ua<FONT SIZE=-2><I>n</I>-1</FONT>, U&curren;<FONT SIZE=-2><I>n</I>-2</FONT>, ...,
+ U&curren;<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+[<FONT COLOR="#330099">V&curren;<FONT SIZE=-2>0</FONT> = <CODE>Proj.</CODE>&curren; Tt<FONT SIZE=-2>0</FONT>, 1</FONT>].<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B8 iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">invokestatic </FONT></CODE></TD>
+  <TD VALIGN=TOP>Call static method <I>i</I>.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc </FONT><FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>Call</CODE>
+ M, lookupStatic(<I>i</I>), U&curren;<FONT SIZE=-2><I>n</I>-1</FONT>, U&curren;<FONT SIZE=-2><I>n</I>-2</FONT>, ...,
+ U&curren;<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+[<FONT COLOR="#330099">V&curren;<FONT SIZE=-2>0</FONT> = <CODE>Proj.</CODE>&curren; Tt<FONT SIZE=-2>0</FONT>, 1</FONT>].<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; B9 iiii nn00&nbsp;<BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">invokeinterface </FONT></CODE></TD>
+  <TD VALIGN=TOP>Call interface method <I>i</I> with <I>n</I> arguments.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2><I>n</I>-1</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2><I>n</I>-1</FONT>, <CODE>objectTypeOffset</CODE></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>1</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>2</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, <CODE>intfIndexTableOffset</CODE></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>3</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>2</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>4</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>3</FONT>, interfaceNumber(<I>i</I>)*4</FONT>;<BR>
+<FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT> = <CODE>Ld.i</CODE> &copy;, Ta<FONT SIZE=-2>4</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>5</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, intfMethodVTableOffset(<I>i</I>)</FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>6</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>5</FONT>, Ti<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>7</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>6</FONT></FONT>;<BR>
+<FONT COLOR="#FF0000">exc </FONT><FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>Call</CODE>
+ M, Ta<FONT SIZE=-2>7</FONT>, Ua<FONT SIZE=-2><I>n</I>-1</FONT>, U&curren;<FONT SIZE=-2><I>n</I>-2</FONT>, ...,
+ U&curren;<FONT SIZE=-2>0</FONT></FONT>;<BR>
+<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+[<FONT COLOR="#330099">V&curren;<FONT SIZE=-2>0</FONT> = <CODE>Proj.</CODE>&curren; Tt<FONT SIZE=-2>0</FONT>, 1</FONT>];<BR>
+or optimized into an <CODE>invokevirtual</CODE> or <CODE>invokespecial</CODE>-style call.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; BA <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><I>unused</I></TD>
+  <TD VALIGN=TOP><I>Illegal instruction</I><BR></TD>
+  <TD VALIGN=TOP>Cause verifier error if this bytecode is encountered in code.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; BB iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">new </FONT></CODE></TD>
+  <TD VALIGN=TOP>Create a new object of the given class.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>SysCallEV</CODE> <CODE>New</CODE>,
+ M, class(<I>i</I>)</FONT></FONT>;<BR>
+<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+<FONT COLOR="#330099">Va<FONT SIZE=-2>0</FONT> = <CODE>Proj.a</CODE> Tt<FONT SIZE=-2>0</FONT>, 1</FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; BC tt <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">newarray </FONT></CODE></TD>
+  <TD VALIGN=TOP>Create a new array of non-objects.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>SysCallEV</CODE> <CODE><I>creator</I></CODE>,
+ M, Ui<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+<FONT COLOR="#330099">Va<FONT SIZE=-2>0</FONT> = <CODE>Proj.a</CODE> Tt<FONT SIZE=-2>0</FONT>, 1</FONT>;<BR>
+where <FONT COLOR="#330099"><CODE><I>creator</I></CODE></FONT> is:<BR>
+<CODE>&nbsp;tt</CODE><BR>
+<CODE>&nbsp;04 &nbsp;<FONT COLOR="#330099">NewBooleanArray</FONT></CODE><BR>
+<CODE>&nbsp;05 &nbsp;<FONT COLOR="#330099">NewCharArray</FONT></CODE><BR>
+<CODE>&nbsp;06 &nbsp;<FONT COLOR="#330099">NewFloatArray</FONT></CODE><BR>
+<CODE>&nbsp;07 &nbsp;<FONT COLOR="#330099">NewDoubleArray</FONT></CODE><BR>
+<CODE>&nbsp;08 &nbsp;<FONT COLOR="#330099">NewByteArray</FONT></CODE><BR>
+<CODE>&nbsp;09 &nbsp;<FONT COLOR="#330099">NewShortArray</FONT></CODE><BR>
+<CODE>&nbsp;0A &nbsp;<FONT COLOR="#330099">NewIntArray</FONT></CODE><BR>
+<CODE>&nbsp;0B &nbsp;<FONT COLOR="#330099">NewLongArray</FONT></CODE><BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; BD iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">anewarray </FONT></CODE></TD>
+  <TD VALIGN=TOP>Create a new array of objects of the given type.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>SysCallEV</CODE> <CODE>NewObjectArray</CODE>,
+ M, type(<I>i</I>), Ui<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+<FONT COLOR="#330099">Va<FONT SIZE=-2>0</FONT> = <CODE>Proj.a</CODE> Tt<FONT SIZE=-2>0</FONT>, 1</FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; BE <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">arraylength </FONT></CODE></TD>
+  <TD VALIGN=TOP>Get length of array.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2>0</FONT>, <CODE>arrayLengthOffset</CODE></FONT>;<BR>
+<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Ld.i</CODE> &copy;, Ta<FONT SIZE=-2>0</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; BF <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">athrow </FONT></CODE></TD>
+  <TD VALIGN=TOP>Throw an exception.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099">&Oslash; = <CODE>SysCallEC</CODE> <CODE>Throw</CODE>,
+ Ua<FONT SIZE=-2>0</FONT></FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C0 iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">checkcast </FONT></CODE></TD>
+  <TD VALIGN=TOP>Throw <CODE>ClassCastException</CODE> if the object is not of the given type.<BR></TD>
+  <TD VALIGN=TOP>
+If type(<I>i</I>) is <CODE>Object</CODE>, don't generate any code. Otherwise:<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>Cmp.a</CODE> Ua<FONT SIZE=-2>0</FONT>, <CODE>nil</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">if<FONT COLOR="#330099"><CODE>Eq</CODE> Tc<FONT SIZE=-2>0</FONT></FONT> goto B else A</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">A:</FONT>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2>0</FONT>, <CODE>objectTypeOffset</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>1</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>0</FONT></FONT>;<BR>
+&nbsp;&nbsp;<I>common</I><BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">B:</FONT>;<BR>
+where <I>common</I> is one of the following:<BR>
+If type(<I>i</I>) is a final type:<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099"><FONT COLOR="#FF0000">exc </FONT><CODE>ChkCast.a</CODE> Ta<FONT SIZE=-2>1</FONT>, type(<I>i</I>)</FONT>.<BR>
+Otherwise, if type(<I>i</I>) is a class, or an array of a class, or an array of arrays of a class, or ...:<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>2</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, <CODE>nVTableSlotsOffset</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT> = <CODE>Ld.i</CODE> &copy;, Ta<FONT SIZE=-2>2</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099"><FONT COLOR="#FF0000">exc </FONT><CODE>LimCast.a</CODE> Ti<FONT SIZE=-2>0</FONT>, nVTableSlots(<I>i</I>)</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>3</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, selfVTableSlot(<I>i</I>)</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>4</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>3</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099"><FONT COLOR="#FF0000">exc </FONT><CODE>ChkCast.a</CODE> Ta<FONT SIZE=-2>4</FONT>, type(<I>i</I>)</FONT>.<BR>
+Otherwise, if type(<I>i</I>) is an interface, or an array of an interface, or an array of arrays of an interface, or ...:<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>2</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, <CODE>intfAssignableTableOffset</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>3</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>2</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>4</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>3</FONT>, interfaceNumber(<I>i</I>)*2</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT> = <CODE>LdU.h</CODE> &copy;, Ta<FONT SIZE=-2>4</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>5</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, <CODE>assignableMatchValueOffset</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ti<FONT SIZE=-2>1</FONT> = <CODE>LdU.h</CODE> &copy;, Ta<FONT SIZE=-2>5</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099"><FONT COLOR="#FF0000">exc </FONT><CODE>ChkCast.i</CODE>
+ Ti<FONT SIZE=-2>0</FONT>, Ti<FONT SIZE=-2>1</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C1 iiii <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">instanceof </FONT></CODE></TD>
+  <TD VALIGN=TOP>
+Return true if the object has the given type;<BR>
+however, always return false if the object is null.<BR>
+  </TD>
+  <TD VALIGN=TOP>
+If type(<I>i</I>) is <CODE>Object</CODE>:<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>Cmp.a</CODE> Ua<FONT SIZE=-2>0</FONT>, <CODE>nil</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> = <CODE>Ne.a</CODE> Tc<FONT SIZE=-2>0</FONT></FONT>.<BR>
+Otherwise:<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>Cmp.a</CODE> Ua<FONT SIZE=-2>0</FONT>, <CODE>nil</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">if<FONT COLOR="#330099"><CODE>Eq</CODE> Tc<FONT SIZE=-2>0</FONT></FONT> goto B else A</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">A:</FONT>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT> = <CODE>Add.a</CODE> Ua<FONT SIZE=-2>0</FONT>, <CODE>objectTypeOffset</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>1</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>0</FONT></FONT>;<BR>
+&nbsp;&nbsp;<I>common</I><BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">goto C</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">B:&nbsp; <FONT COLOR="#330099">Ti<FONT SIZE=-2>1</FONT> = 0</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">C:&nbsp; <FONT COLOR="#330099">Vi<FONT SIZE=-2>0</FONT> =
+ phi Ti<FONT SIZE=-2>0</FONT>, Ti<FONT SIZE=-2>1</FONT></FONT></FONT>.<BR>
+where <I>common</I> is one of the following:<BR>
+If type(<I>i</I>) is a final type:<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Tc<FONT SIZE=-2>1</FONT> = <CODE>Cmp.a</CODE> Ta<FONT SIZE=-2>1</FONT>, type(<I>i</I>)</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT> = <CODE>Eq.i</CODE> Tc<FONT SIZE=-2>1</FONT></FONT>.<BR>
+Otherwise, if type(<I>i</I>) is a class, or an array of a class, or an array of arrays of a class, or ...:<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>2</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, <CODE>nVTableSlotsOffset</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ti<FONT SIZE=-2>2</FONT> = <CODE>Ld.i</CODE> &copy;, Ta<FONT SIZE=-2>2</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Tc<FONT SIZE=-2>1</FONT> = <CODE>Cmp.i</CODE> Ti<FONT SIZE=-2>2</FONT>, nVTableSlots(<I>i</I>)</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">if<FONT COLOR="#330099"><CODE>Lt</CODE> Tc<FONT SIZE=-2>1</FONT></FONT> goto B else C</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">C:</FONT>
+<FONT COLOR="#330099">Ta<FONT SIZE=-2>3</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, selfVTableSlot(<I>i</I>)</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>4</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>3</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Tc<FONT SIZE=-2>2</FONT> = <CODE>Cmp.a</CODE> Ta<FONT SIZE=-2>4</FONT>, type(<I>i</I>)</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT> = <CODE>Eq.i</CODE> Tc<FONT SIZE=-2>2</FONT></FONT>.<BR>
+Otherwise, if type(<I>i</I>) is an interface, or an array of an interface, or an array of arrays of an interface, or ...:<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>2</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, <CODE>intfAssignableTableOffset</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>3</FONT> = <CODE>Ld.a</CODE> &copy;, Ta<FONT SIZE=-2>2</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>4</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>3</FONT>, interfaceNumber(<I>i</I>)*2</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ti<FONT SIZE=-2>2</FONT> = <CODE>LdU.h</CODE> &copy;, Ta<FONT SIZE=-2>4</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ta<FONT SIZE=-2>5</FONT> = <CODE>Add.a</CODE> Ta<FONT SIZE=-2>1</FONT>, <CODE>assignableMatchValueOffset</CODE></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ti<FONT SIZE=-2>3</FONT> = <CODE>LdU.h</CODE> &copy;, Ta<FONT SIZE=-2>5</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Tc<FONT SIZE=-2>1</FONT> = <CODE>Cmp.i</CODE> Ti<FONT SIZE=-2>2</FONT>, Ti<FONT SIZE=-2>3</FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Ti<FONT SIZE=-2>0</FONT> = <CODE>Eq.i</CODE> Tc<FONT SIZE=-2>1</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C2 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">monitorenter </FONT></CODE></TD>
+  <TD VALIGN=TOP>Enter a monitored region of code.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099"><CODE>ChkNull.a</CODE> Ua<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+<FONT COLOR="#FF0000">exc <FONT COLOR="#330099">M' = <CODE>MEnter</CODE> M, Ua<FONT SIZE=-2>0</FONT>, slot</FONT></FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C3 <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">monitorexit </FONT></CODE></TD>
+  <TD VALIGN=TOP>Exit a monitored region of code.<BR></TD>
+  <TD VALIGN=TOP>
+<FONT COLOR="#330099">M' = <CODE>MExit</CODE> M, Ua<FONT SIZE=-2>0</FONT>, slot</FONT>.<BR>
+slot must be the slot number of the matching <CODE>MEnter</CODE> primitive,
+determined by static control and data flow analysis.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C4 ...<BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><I>wide</I> </CODE></TD>
+  <TD VALIGN=TOP><I>Prefix</I></TD>
+  <TD VALIGN=TOP>See descriptions of prefixed bytecodes.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C5 iiii nn <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">multianewarray </FONT></CODE></TD>
+  <TD VALIGN=TOP>Create <I>n</I>-dimensional array.<BR></TD>
+  <TD VALIGN=TOP>
+If <I>n</I>=1, generate code as if for <CODE><FONT COLOR="#006600">newarray</FONT></CODE> or
+<CODE><FONT COLOR="#006600">anewarray</FONT></CODE>.<BR>
+If <I>n</I>=2, use:<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">exc <FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>SysCallEV</CODE> <CODE>New2DArray</CODE>,
+ M, type(<I>i</I>), Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Va<FONT SIZE=-2>0</FONT> = <CODE>Proj.a</CODE> Tt<FONT SIZE=-2>0</FONT>, 1</FONT>.<BR>
+If <I>n</I>=3, use:<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">exc <FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>SysCallEV</CODE> <CODE>New3DArray</CODE>,
+ M, type(<I>i</I>), Ui<FONT SIZE=-2>2</FONT>, Ui<FONT SIZE=-2>1</FONT>, Ui<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Va<FONT SIZE=-2>0</FONT> = <CODE>Proj.a</CODE> Tt<FONT SIZE=-2>0</FONT>, 1</FONT>.<BR>
+Otherwise, construct a temporary array <FONT COLOR="#330099">Ta<FONT SIZE=-2>0</FONT></FONT> of all the dimensions and call:<BR>
+&nbsp;&nbsp;<FONT COLOR="#FF0000">exc <FONT COLOR="#330099">Tt<FONT SIZE=-2>0</FONT> = <CODE>SysCallEV</CODE> <CODE>NewNDArray</CODE>,
+ M, type(<I>i</I>), Ta<FONT SIZE=-2>0</FONT></FONT></FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">M' = <CODE>Proj.m</CODE> Tt<FONT SIZE=-2>0</FONT>, 0</FONT>;<BR>
+&nbsp;&nbsp;<FONT COLOR="#330099">Va<FONT SIZE=-2>0</FONT> = <CODE>Proj.a</CODE> Tt<FONT SIZE=-2>0</FONT>, 1</FONT>.<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C6 dddd </CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ifnull </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if popped address is null.</TD>
+  <TD VALIGN=TOP ROWSPAN=2>
+<FONT COLOR="#330099">Tc<FONT SIZE=-2>0</FONT> = <CODE>Cmp.a</CODE> Ua<FONT SIZE=-2>0</FONT>, <CODE>nil</CODE></FONT>;<BR>
+<FONT COLOR="#FF0000">if<FONT COLOR="#330099"><CODE><I>cond</I></CODE> Tc<FONT SIZE=-2>0</FONT></FONT> goto cnode(&sect;+<I>d</I>) else A</FONT>;<BR>
+<FONT COLOR="#FF0000">A:</FONT>;<BR>
+where <FONT COLOR="#330099"><CODE><I>cond</I></CODE></FONT> is:<BR>
+<CODE><FONT COLOR="#006600">&nbsp;ifnull&nbsp;&nbsp;&nbsp; &nbsp;</FONT><FONT COLOR="#330099">Eq</FONT></CODE><BR>
+<CODE><FONT COLOR="#006600">&nbsp;ifnonnull &nbsp;</FONT><FONT COLOR="#330099">Ne</FONT></CODE><BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C7 dddd <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">ifnonnull </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>) if popped address is not null.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C8 dddddddd <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">goto_w </FONT></CODE></TD>
+  <TD VALIGN=TOP>Go to cnode(&sect;+<I>d</I>).<BR></TD>
+  <TD VALIGN=TOP>Deleted; control flow edges subsume unconditional branches.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; C9 dddddddd <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">jsr_w </FONT></CODE></TD>
+  <TD VALIGN=TOP>Jump to subroutine at cnode(&sect;+<I>d</I>), pushing the return address on the Java stack.<BR></TD>
+  <TD VALIGN=TOP>[For now] expanded into inlined subroutine contents.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; CA <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><CODE><FONT COLOR="#006600">breakpoint </FONT></CODE></TD>
+  <TD VALIGN=TOP>Breakpoint.<BR></TD>
+  <TD VALIGN=TOP><FONT COLOR="#330099">M' = <CODE>Break</CODE> M</FONT>.<BR></TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP NOWRAP><CODE>&nbsp;&nbsp; CB-FF <BR>&nbsp;</CODE></TD>
+  <TD VALIGN=TOP NOWRAP><I>unused</I></TD>
+  <TD VALIGN=TOP><I>Quick and illegal instructions</I><BR></TD>
+  <TD VALIGN=TOP>Cause verifier error if any of these bytecodes are encountered in code.<BR></TD>
+ </TR>
+
+</TABLE>
+<HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,357 @@
+<HTML>
+<HEAD>
+<TITLE>performance: profiling juju</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<center>
+<h1>performance: profiling juju</h1>
+</center>
+
+Contact:
+<a href="mailto:waterson@netscape.com">Chris Waterson</a> (waterson@netscape.com)<br>
+<small>
+$Id: profiling-juju.html,v 1.1 1999/09/28 21:29:24 waterson%netscape.com Exp $
+</small>
+
+<p>
+This page contains tricks and tips for the black art of Profiling
+Mozilla. For information about the tools that are available for
+profiling, please see
+
+<a href="tools.html">this page</a>.
+</p>
+
+<h2>Quantify</h2>
+
+<ul>
+<p>
+Rational Software's
+
+<a href="http://www.rational.com/products/quantify/index.jtmpl?borschtid=30142038831761639304">Quantify</a>
+
+product can be a truly wonderful tool to work with. If you can get it
+to work.
+</p>
+
+</ul>
+<h3>Collecting Data</h3>
+<ul>
+
+<p>
+Collecting data is actually the "riskiest" part. Mozilla is,
+unfortunately, a big 500 pound gorilla of a product to profile, and it
+really pushes Quantify to its limits. Here is the magic recipe that
+I've used to get traces out of the tool on Win32.
+</p>
+
+<p>
+<b>Build with <tt>MOZ_PROFILE=1</tt> and <tt>MOZ_DEBUG</tt>
+unset</b>. Rule Number One in profiling is to <em>profile what you'll
+ship</em>. Profiling debug bits means you'll fight with
+<code>sprintf()</code> calls that generate debugging strings that go
+nowhere, sloppy (but quickly) generated code from the compiler, and
+all the <code>#ifdef DEBUG</code> cruft that people have left in to
+verify internal structures. In other words, you'll risk spending the
+afternoon chasing down a "big win", only to discover somebody's sanity
+checking code is really, really slow.
+</p>
+
+<p>
+<b>Build in a separate tree</b>. Don't combine debug and optimized
+bits in the same tree. Doing so risks the anger of the profiling gods.
+</p>
+
+<p>
+<b>Run the app once before starting to profile</b>. After a clean
+build, you should run the app once to let XPCOM autoregistration and
+other "first time" tasks take place; e.g., selecting the default
+profile. (Unless, of course, your goal is to profile these "first
+time" tasks.)
+</p>
+
+<p>
+<b>Use "function level timing" for a module that Quantify can't
+instrument</b>. By default, Quantify will try to instrument each DLL
+using <em>line-level</em> instrumentation. This is the most accurate;
+however, sometimes (when appropriate chickens have not been
+sacrificed), doing line-level instrumentation will cause the target
+app to crash. If this happens, try changing the instrumentation for
+the module that was being instrumented when the crash occurred to
+<em>function-level</em>. To do this:
+
+<ul>
+<li>
+Click the <b>Setting...</b> button in the <b>Run Program</b>
+dialog. This will bring up the <b>Program Settings</b> dialog.
+</li>
+
+<li>
+Click the <b>Modules...</b> button in the <b>Program Settings</b>
+dialog. This will bring up the <b>Module Instrumentation</b> dialog.
+</li>
+
+<li>
+Find the module that was being instrumented when the crash occurred,
+and change its <b>Measurement</b> from <b>Default</b> to
+<b>Function</b>.
+</li>
+
+</ul>
+
+(Tip o' the hat to kipp for that trick.)
+</p>
+
+<p>
+<b>Remove all the files from your Quantify cache directory</b> if the
+above doesn't seem to work. (This is what the tech support people at
+Rational say, anyway.) I think maybe this has worked for me. Or maybe
+it was because I did it under the light of a full moon...
+</p>
+
+<p>
+<b>"Pause" recording of data until you get to the task you want to
+profile</b>. You do this by clicking the little "VCR pause" button in
+the toolbar, and then clicking the "Rewind" button to clear out any
+partially-collected results. Get the app to a state where you are
+<em>just about</em> to perform the task you want to profile, then
+"un-pause" the data recorder, perform the task, re-pause the recorder,
+and shut the app down cleanly. Besides avoiding a <em>ton</em> of
+unnecessary cruft, you will greatly increase the chances that Quantify
+will actually be able to parse the collected data set.
+</p>
+
+</ul>
+<h3>Analyzing Data</h3>
+<ul>
+
+<p>
+Once you've collected the data, you'll quickly find yourself weeding
+through more information than you probably care to know. Here are some
+tips for isolating the stuff that's important.
+</p>
+
+<p>
+<b>Plan to take notes</b>. As you start to walk through this data,
+you'll stumble on <em>dozens</em> of things that surprise you. Rather
+than trying to address each individually, <em>take notes</em> so you
+can come back to stuff.
+</p>
+
+<p>
+<b>Focus on the thread that did the work when analyzing the
+data</b>. Quantify will collect timing information from <em>all</em>
+the threads that ran during your task, and will include "dead time"
+spent waiting in Necko threads even if you didn't happen to load
+anything. Wading through that just makes your life harder. Start by
+finding the "green thread" (i.e., the thread that did all the work),
+and then use the <b>Call Graph</b> window and the right-mouse to
+<b>Focus on Subtree</b>. I've found it <em>amazingly</em> useful to
+recursively "focus down the tree" on hot operations.
+</p>
+
+<p>
+<b>Use the "Function List" to find hot function</b>. The function list
+can be sorted by column, so you can find functions by name, function
+time, and call count. The "function+descendant time" and "call count"
+columns are most useful for finding the Big Kahunae of low hanging
+fruit. Start there.
+</p>
+
+<p>
+<b>Use the "Function Detail" window to walk up and down call
+chains</b>. The function list will give you a crude overview of where
+time is being spent. But you know the code better than Quantify. Use
+the function list (sorted alphabetically) to find key entry points
+(e.g., where layout is starting, where a reflow is triggered), and
+then switch to the function detail view to navigate up and down the
+tree to see <em>who is calling it</em> and <em>who it calls</em>. You
+may be surprised. Use the <b>Call Graph</b> window to re-focus on
+subroutines if you become particularly interested in one place or
+another.
+</p>
+
+<p>
+<b>Use call counts to identify opportunities for algorithmic
+change</b>. A high call count may indicate an opportunity for
+algorithmic change; e.g., replacing a list with a hashtable.
+</p>
+
+<p>
+<b>Use the "Annotated Source" to examine leaf-level functions</b> that
+are taking a lot of time, or have high call counts. You can access
+this menu by right-clicking in the <b>Function Detail</b> menu, choose
+<b>Annotated Source</b> in the <b>Switch To</b> submenu.
+
+</p>
+
+<p>
+<b>Compare profiles against each other after optimizing</b>. Make sure
+the performance optimization you <em>thought</em> you made actually
+worked. Save the original profile as a baseline, and then refer back
+to it as you tune the code. Not only will this keep you honest, it'll
+give you bragging rights ("I made <code>foo()</code> go 200% faster!").
+</p>
+
+</ul>
+
+<h2>Mac Profiling Tips</h2>
+
+<ul>
+
+<p>
+These courtesy
+
+<a mailto="pierre@netscape.com">Pierre Saslawski</a> (pierre@netscape.com),
+
+who posted them in
+
+<a href="news://news.mozilla.org/37F0B9AE.AD60306%40netscape.com">this article</a>.
+</p>
+
+</ul>
+<h3>Resolving aliases is slow!</h3>
+<ul>
+
+<p>
+Launching the app after restarting the Mac takes about 37 seconds with a
+debug build with aliases and about 19 seconds with the real files.
+</p>
+
+<p>
+It takes 4.5s to load the 43 DLLs instead of 3.06s, which means that
+using aliases makes it 50% slower for relatively big files. It must be
+worse for plenty of small files (like xpt, xul, gif...).
+</p>
+
+<p>
+Result: if you are working on performance, you should use
+a copy of the debug build with real files instead of aliases
+otherwise you may not be able to appreciate your improvements to
+their fullest.
+</p>
+
+</ul>
+<h3>File cache makes a big difference</h3>
+<ul>
+
+<p>
+With VM on and a cache of 8Mb, it takes 37 seconds to launch a debug
+build with aliases. With a cache of 128Kb (the minimum allowed by MacOS),
+it takes 1 minute and 5 seconds. The time needed to load just the DLLs
+was 12 seconds instead of 4.5.
+</p>
+
+</ul>
+<h3>Virtual Memory makes almost no difference</h3>
+<ul>
+
+<p>
+Turning the Virtual Memory on and off, makes no difference at all
+for launching the app for the first time: 37 seconds in both cases.
+However, VM-on improves quite a bit the time needed to relaunch the
+app just after a Quit: about 9 seconds instead of 12. Most of this
+difference comes from the time needed to reload the DLLs: 0.8 seconds
+in one case, 2.9 seconds in the other.
+</p>
+
+</ul>
+<h3>Optimized builds are a little bit faster</h3>
+<ul>
+
+<p>
+We suspected it, however the difference is not very important. I compared
+a debug build without aliases and a daily build from Mozilla.org.
+After restarting the Mac, the debug build takes about 19 seconds to
+launch, the optimized build about 16 seconds. We have about the same
+difference when relaunching the applications a second time: 12 seconds
+versus 9. It can be explained by a smaller size of DLLs in optimized
+builds rather than by a better code (but it is just my guess).
+</p>
+
+</ul>
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/performance/profiling-juju.html&amp;rev=&amp;root=/cvsroot/">Last modified September 28,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

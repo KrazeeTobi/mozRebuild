@@ -1,0 +1,3117 @@
+<HTML>
+<HEAD>
+<TITLE>NGLayout HTML Tag Reference Chart</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+   
+
+
+<HR><h2>New Layout: HTML Tag Handling Chart</h2>
+Authors: <A HREF="mailto:rickg@netscape.com">Rick Gessner</a>
+<BR>Updated: 23 October 1998
+<HR>
+<p>
+<i>[eds. note: This document extracted from email. Original message follows]</i><br>
+During a recent tag handling fest in the parser, it occured to me that we don't have a "how to handle tag x"
+document. So I've created a the following table of HTML tags and how we handle them in the parser. I needed this
+for debugging purposes, and others may benefit from it during testing. 
+</p>
+<p>
+Anyway, it's a work in progress, so send me issues.
+</p>
+<p><i>-<A href="mailto:rickg@netscape.com">Rick</a></i></p>
+
+<p><font face="Verdana"><font size=+4>A</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td HEIGHT="33">
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td HEIGHT="33">
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td HEIGHT="33">
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td HEIGHT="33">
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td HEIGHT="33">
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">a</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">abbr</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">acronym</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">address</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">applet</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">area</font></td>
+
+<td><font face="Verdana">&lt;map></font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>B</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td WIDTH="16%">
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td WIDTH="23%">
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td WIDTH="27%">
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td WIDTH="19%">
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td WIDTH="15%">
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td WIDTH="15%">
+<center><b><font face="Verdana">Head&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td WIDTH="15%">
+<center><b><font face="Verdana">Other Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">b</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="27%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="19%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">base</font></td>
+
+<td WIDTH="23%"><font face="Verdana">&lt;head></font></td>
+
+<td WIDTH="27%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="19%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">basefont</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="27%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="19%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">bdo</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="27%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="19%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">bgsound</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">&lt;head>+x</font></center>
+</td>
+
+<td WIDTH="27%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="19%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">big</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="27%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="19%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">blink</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="27%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="19%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">blockquote</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="27%"></td>
+
+<td WIDTH="19%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">body</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">&lt;html>, &lt;noframe></font></center>
+</td>
+
+<td WIDTH="27%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="19%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">del, ins</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">br</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="27%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="19%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td WIDTH="16%"><font face="Verdana">button</font></td>
+
+<td WIDTH="23%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="27%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="19%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%">
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+
+<td WIDTH="15%"><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>.</td>
+
+<td>...</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>C</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td HEIGHT="2">
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td HEIGHT="2">
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td HEIGHT="2">
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td HEIGHT="2">
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td HEIGHT="2">
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">caption</font></td>
+
+<td><font face="Verdana">table</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">center</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">cite</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">code</font></td>
+
+<td><font face="Verdana">x</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">col</font></td>
+
+<td><font face="Verdana">colgroup, table</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">colgroup</font></td>
+
+<td><font face="Verdana">table</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">col</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>D</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">dd</font></td>
+
+<td><font face="Verdana">dl</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">*</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">del</font></td>
+
+<td><font face="Verdana">body</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">dfn</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">dir</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">li</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">div</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">dl</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">dd, dt</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">dt</font></td>
+
+<td><font face="Verdana">dl</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>E</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">em</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">embed</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">param+x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td>.</td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>F</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">fieldset</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">legend+x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">font</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">form</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">keygen+x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">frame</font></td>
+
+<td>
+<center><font face="Verdana">frameset</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">frameset</font></td>
+
+<td><font face="Verdana">frameset, html</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">frame, frameset, noframes</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>G</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>H</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Head</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">head</font></td>
+
+<td><font face="Verdana">&lt;html></font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">hr</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">html</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">body, frameset, head</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">h<i>x</i></font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>I</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Head&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">i</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">iframe</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">ilayer</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">img</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">ins</font></td>
+
+<td>
+<center><font face="Verdana">body</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">isindex</font></td>
+
+<td>
+<center><font face="Verdana">head+x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>J</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>K</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">kbd</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">keygen</font></td>
+
+<td>
+<center><font face="Verdana">form</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>L</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Head&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">label</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">layer</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">legend</font></td>
+
+<td>
+<center><font face="Verdana">fieldset</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">li</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">(if inside ol/ul)</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">link</font></td>
+
+<td>
+<center><font face="Verdana">head</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">listing</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>M</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Head&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">map</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">area</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">marquee</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">menu</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">li</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">meta</font></td>
+
+<td>
+<center><font face="Verdana">head</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">multicol</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+<p><font face="Verdana"><font size=+4>N</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Head&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">nextid</font></td>
+
+<td>
+<center><font face="Verdana">head</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">nobr</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">noembed</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">noframes</font></td>
+
+<td>
+<center><font face="Verdana">frametset+x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">body+x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">nolayer</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">noscript</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>O</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">object</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">param+x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">ol</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">li</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">optgroup</font></td>
+
+<td>
+<center><font face="Verdana">select, optgroup</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">option, optgroup</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">option</font></td>
+
+<td>
+<center><font face="Verdana">optgroup, select</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">text</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>.</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>P</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">p</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">param</font></td>
+
+<td>
+<center><font face="Verdana">applet, object</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">plaintext</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">pre</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td></td>
+
+<td>
+<center><font face="Verdana">x*</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana">*Exceptions:</font>
+<br><font face="Verdana">applet, basefont, big, blink, font, iframe, img,
+nobr, object, small, sub, sup</font>
+<p><font face="Verdana"><font size=+4>Q</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">q</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>S</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Head&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">s</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">samp</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">script</font></td>
+
+<td>
+<center><font face="Verdana">head+x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">text</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">select</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">optgroup, option</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">small</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">sound</font></td>
+
+<td>
+<center><font face="Verdana">head+x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">spacer</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">span</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">strike</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">strong</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">style</font></td>
+
+<td>
+<center><font face="Verdana">head</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">text</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">sub</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">sup</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>T</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Head&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">table</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">caption, col,colgroup, tr, thead, tbody, tfoot</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">tbody</font></td>
+
+<td>
+<center><font face="Verdana">table</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">tr</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">td</font></td>
+
+<td>
+<center><font face="Verdana">tr</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">textarea</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">text</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">tfoot</font></td>
+
+<td>
+<center><font face="Verdana">table</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">tr</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">th</font></td>
+
+<td>
+<center><font face="Verdana">tr</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">thead</font></td>
+
+<td>
+<center><font face="Verdana">table</font></center>
+</td>
+
+<td></td>
+
+<td>
+<center><font face="Verdana">tr</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">title</font></td>
+
+<td>
+<center><font face="Verdana">head</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">text</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">tr</font></td>
+
+<td>
+<center><font face="Verdana">table, tbody, thead, tfoot</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">th, td</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">tt</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>U</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">u</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">ul</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td>
+<center><font face="Verdana">li</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=+4>VWX!</font></font>
+<br>&nbsp;
+<table BORDER=0 WIDTH="85%" >
+<tr BGCOLOR="#FFCCCC">
+<td>
+<center><b><font face="Verdana">Tag</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Parent</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Inline&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+
+<td>
+<center><b><font face="Verdana">Block&nbsp;</font></b>
+<br><b><font face="Verdana">Content</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td><font face="Verdana">var</font></td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">&nbsp;wbr</font></td>
+
+<td>
+<center><font face="Verdana">&nbsp;x</font></center>
+</td>
+
+<td>
+<center><font face="Verdana">&nbsp;x</font></center>
+</td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+
+<td><font face="Verdana">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">xmp</font></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">!doctype</font></td>
+
+<td></td>
+
+<td></td>
+
+<td>
+<center><font face="Verdana">html</font></center>
+</td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><font face="Verdana">!--</font></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/newlayout/doc/tagchart.html&amp;rev=&amp;root=/cvsroot/">Last modified October 24,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

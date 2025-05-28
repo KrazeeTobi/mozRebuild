@@ -1,0 +1,1269 @@
+<HTML>
+<HEAD>
+<TITLE>Extending Mozilla</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+   
+   
+
+
+
+<H1 ALIGN=CENTER>Extending Mozilla</H1>
+
+<CENTER>Warren Harris</CENTER>
+
+<CENTER>Client Engineering</CENTER>
+
+<CENTER>Netscape Communications Corp.</CENTER>
+
+<H2>Contents</H2>
+
+
+<UL>
+<LI>
+<A HREF="#Intro">Introduction</A></LI>
+
+<LI>
+<A HREF="#NewPluginAPI">The New Plugin API</A></LI>
+
+<UL>
+<LI>
+<A HREF="#COM">COM</A></LI>
+
+<LI>
+<A HREF="#Compatibility">Backwards Compatibility</A></LI>
+</UL>
+
+<LI>
+<A HREF="#Architecture">Plugin Architecture</A></LI>
+
+<UL>
+<LI>
+<A HREF="#Suspending">Suspending Plugins</A></LI>
+</UL>
+
+<LI>
+<A HREF="#Extending">Extending the Plugin API</A></LI>
+
+<UL>
+<LI>
+<A HREF="#Libraries">The Plugin API and libraries</A></LI>
+
+<LI>
+<A HREF="#GoodCitizen">Be a good citizen</A></LI>
+
+<LI>
+<A HREF="#AddingMethod">Adding a method to an existing interface</A></LI>
+
+<LI>
+<A HREF="#NewInterface">Defining a new interface</A></LI>
+
+<LI>
+<A HREF="#MakeAccessible">Making your interface accessible</A></LI>
+
+<LI>
+<A HREF="#Aggregateable">Making your implementation "aggregateable"</A></LI>
+</UL>
+</UL>
+
+<H2><A NAME="Intro"></A>Introduction</H2>
+
+The Netscape Communicator source release, "Mozilla," opens up a whole new
+world of possibilities for feature integration. The entire architecture
+and operation of Mozilla is exposed for your use -- everything from making
+the simplest bug fix, to complete integration of your application. This
+document suggests strategies for how to best go about integrating new code
+with Mozilla, in a way that is compatible with the <A HREF="http://www.mozilla.org/NPL/">Netscape
+Public License</A>.
+
+<P>As a developer, you may choose one of several strategies for packaging
+and distributing your Mozilla extensions:
+<OL>
+<P><LI>
+Hack on Mozilla sources until you've developed a "frankenbrowser" that
+embodies the best of Mozilla and your application. Then distribute the
+result to your customers for their enjoyment.</LI>
+
+<P>There are several downsides to this approach:
+<UL>
+<P><LI>
+you have to maintain and support your hacked version which may be a significant
+cost,</LI>
+
+<P><LI>
+your customers have to deal with your hacked version of the browser which
+may lack other features they require from other similarly hacked browsers,</LI>
+
+<P><LI>
+your code may become available to others,</LI>
+
+<P><LI>
+you may have to reapply and/or redesign your changes for future Mozilla
+versions,</LI>
+
+<P><LI>
+you have to have your own distribution channel.<P>
+</LI>
+</UL>
+
+<P><LI>
+Same as the previous approach, but you request that your application be
+integrated as part of the baseline Mozilla release.</LI>
+
+<P>This approach would have the advantage of getting your changes distributed
+widely, and may be best if your primary added value is not in the client,
+but in a server product that these changes interact with. But you have
+to be convincing that your client code has wide appeal, and that these
+changes should become part of all future releases. This may be a hard sell
+if your application satisfies a particular niche market, but is not something
+needed by all users. <P>
+
+<P><LI>
+Hack on Mozilla to add the minimal set of hooks you need to support the
+rest of your application. Then develop and distribute the rest of your
+application as a "super plugin."</LI>
+
+<P>This approach has numerous advantages:
+<UL>
+<P><LI>you only have to provide hooks, not your whole application, so your
+code remains unavailable to competitors,
+<P><LI>
+since you've make minimal changes to Mozilla, there's a much greater likelihood
+that mozilla.org will understand your changes and be able to make them
+part of the baseline for future releases,</LI>
+
+<P><LI>
+your hooks make be useful to other "super plugin" developers, so again
+there's a much greater likelihood that they will be implemented in the
+baseline,</LI>
+
+<P><LI>
+you don't have to maintain and support the whole browser, just your plugin,</LI>
+
+<P><LI>
+since your application is a plugin, you can distribute it over the Web.
+The official Mozilla release (with your hooks) is your distribution channel.</LI>
+</UL>
+</OL>
+Which of these two methods do we recommend? The last one, of course. If
+you agree, continue reading and we'll give you the gory details on how
+best to go about adding hooks.
+
+<P>"Hey, wait a minute! I started reading this to find out about how to
+extend Mozilla, not write some stupid plugin!" you calmly point out. "What
+are you trying to pull...." Well, although this paper focuses primarily
+on the Plugin API, you have to see the big picture. The Plugin API is a
+model for how all extensions to Mozilla should be designed and implemented.
+Although plugins to date have been concerned with extensions controlled
+by the OBJECT tag, as you'll see, the techniques described here are generally
+applicable. Over time, plugins can take on an increasing range of functionality.
+One can easily imagine extending them to include networking protocol plugins,
+html extensions, or even replacements entire browser subsystems like bookmarks,
+or mail/news handling. So when we say plugins here, think big.
+<H2>
+<HR WIDTH="100%"><A NAME="NewPluginAPI"></A>The New Plugin API</H2>
+
+Starting with the Mozilla source release, there's a new modernized version
+of the Plugin API. We made the effort to restructure the Plugin API to
+facilitate extensibility. That way you can add your hooks for your new
+super plugin with much less effort than the old Plugin API. Some of the
+disadvantages of the old API were:
+<UL>
+<P><LI>
+The single table of browser entry points did not lend itself to being extended
+in multiple ways. Consider the case where you submit your Mozilla hooks
+to Netscape, and so do 50 other developers. What order do all these new
+methods get inserted in? What happens if one of them need to be changed
+slightly in a future release?</LI>
+
+<P><LI>
+Glue files needed to be linked with plugin DLLs. This mechanism is brittle
+and makes it hard for us to provide new additions to the Plugin API without
+breaking existing plugins.</LI>
+
+<P><LI>
+The old Plugin API version numbering system didn't lend itself to multiple
+extensions. Consider the case where your plugin needs extension A and B
+to run, but someone else's plugin prefers A and C, but can actually run
+with just C. How do you build a plugin that maintains backward compatibility
+in that sort of environment?</LI>
+
+<P><LI>
+The old Plugin API was well overdue for modernization and basic object-oriented
+(re)design.</LI>
+</UL>
+With the new Plugin API all these problems are solved. We've provided a
+C++ API to plugins that eliminates the need for plugin-side glue files,
+and deals with the multi-dimensional versioning issues by using a cross-platform
+component architecture based on a subset of COM (the Component Object Model).
+<H3><A NAME="COM"></A>COM -- Isn't that a scary Microsoft thing?</H3>
+
+No on both counts, actually. COM has its origins in Apollo's NCS system,
+and was later developed by Digital and Microsoft as part of their OLE/ActiveX
+architecture. We use a very small subset of COM that we call "XPCOM" ("XP"
+stands for cross-platform) for the new Plugin API that is essentially a
+method of using abstract base classes, and 3 simple but powerful methods:
+<UL>
+<P><LI>
+QueryInterface: Deals with interface versioning by using universally unique
+interface IDs.</LI>
+
+<P><LI>
+AddRef and Release: Deal with reference counting the object so that the
+system knows when it can deallocate it.</LI>
+</UL>
+That's it. Using XPCOM in the plugin context is really quite simple. We
+don't make use of any of the COM factory constructor mechanisms, object
+aggregation, OLE interfaces, or the registry to find and load components.
+Plugin DLLs are still searched for and loaded by Mozilla from the plugin
+directories where they've always been found.
+<H3><A NAME="Compatibility"></A>But what about backward compatibility?</H3>
+
+For backward compatibility, Mozilla will still continue to load and run
+plugins using the old Plugin API. So consider the old Plugin API as deprecated,
+but understand that it will continue to be supported by Netscape until
+it is no longer needed. All new plugins should be written using the new
+Plugin API, and most importantly, all extensions made to Mozilla must be
+done by extending the new C++ interfaces.
+
+<P>It's also possible to develop a plugin that uses the new Plugin APIs
+but also will run in older versions of Communicator (and Navigator). A
+new version of the old plugin glue files will be provided that maps from
+the old plugin entry points to their new C++ equivalents, so you can take
+advantage of the new C++ architecture for any plugins you develop.
+<H2>
+<HR WIDTH="100%"><A NAME="Architecture"></A>Plugin Architecture</H2>
+
+This section assumes that you're somewhat familiar with the old plugin
+architecture. If not, see <A HREF="http://developer.netscape.com/docs/manuals/communicator/plugin/">The
+Plug-In Guide</A> distributed with the LiveConnect/Plug-In SDK.
+
+<P>The new plugin architecture breaks up the old monolithic interface into
+several abstract base classes. All "NPP" functions (those implemented by
+the plugin developer) become methods on the NPIPlugin, NPIPluginInstance
+and NPIPluginStream classes. All "NPN" functions (those provided by Mozilla)
+become methods on the NPIPluginManager, NPIPluginManagerStream, NPIPluginInstancePeer
+and NPIPluginStreamPeer classes. (The "NP" prefix stands for "Netscape
+Plugin" and the "I" denotes that this class is an abstract interface.)
+Functions pertaining to LiveConnect functionality are provided as subclasses
+of these basic classes and will be discussed later in the document.
+
+<P>When a plugin is loaded by the browser, an instance of NPIPluginManager
+is passed to the plugin's initial entry point, NP_CreatePlugin (this corresponds
+to the old Plugin API's NPP_Initialize function). This function is responsible
+for instantiating a subclass of NPIPlugin and returning it to the caller,
+i.e. Mozilla. Mozilla hangs on to this plugin object and uses it to obtain
+general information about the plugin, e.g. the MIME type that the plugin
+handles, or its name and description strings to be displayed in the "About
+Plugins" page (note that on some platform these strings may come from from
+resources associated with the plugin DLL).
+
+<P>When an EMBED or OBJECT tag appears on the page, the NewInstance method
+is called on the plugin object. It is the responsibility of the NewInstance
+method to instantiate a subclass of NPIPluginInstance. The NewInstance
+method is passed an instance of NPIPluginInstancePeer which the newly created
+plugin instance may use to query particular aspects of the plugin's relationship
+to the page -- the HTML tag attributes, or the size and location on the
+page. Typically the plugin instance stores the plugin instance peer in
+an instance variable for use by other methods later.
+
+<P>After the plugin instance is created, a data stream may be provided
+to it by calling the NewStream method on the plugin instance. This will
+happen if the OBJECT tag has a DATA attribute (or the EMBED tag has a SRC
+attribute), or if the plugin instance explicitly requests a stream by calling
+GetURL or PostURL on the plugin instance peer. When NewStream is called
+it is passed an instance of NPIPluginStreamPeer which is used to obtain
+subsequent information about the stream, or to control it. NewStream constructs
+an appropriate instance of NPIPluginStream and passes it back to the browser.
+The browser then calls the WriteReady and Write operations on the plugin
+stream to pass data to the plugin.
+<H3><A NAME="Suspending"></A>Suspending plugins</H3>
+
+One substantial difference between the old Plugin API and the new C++ version
+is the means by which plugin instances are suspended when you leave the
+browser page containing them. With the old plugin API, the plugin's NPP_Destroy
+operation was called which was responsible for saving the state of the
+plugin in a flat buffer. This buffer was saved in the browser's history
+mechanism, and if the page containing the plugin was ever revisited, the
+buffer would be passed to NPP_NewInstance so that a new instance could
+be created echoing the previously saved state. And if the page containing
+the plugin was ever discarded from the history, the browser would simply
+call free on the buffer. Although this method of saving the plugin's state
+worked, it required a lot of work on the part of the plugin to save and
+restore itself.
+
+<P>With the new C++ Plugin API, a plugin instance will be sent a Stop message
+which informs it that it is being suspended. The plugin can either do a
+lot of work to suspend itself as before, or can simply stop operation and
+wait for a corresponding Start method to indicate that the plugin's page
+has again become active. Both Stop and Start will be followed by a SetWindow
+call indicating that the plugin's parent window has been changed. Finally,
+when a plugin's page leaves the history, the Release method will be called
+on the plugin instance, indicating that it should free up its state and
+destroy itself. This new Start/Stop/Release mechanism greatly simplifies
+the amount of effort needed to write a plugin.
+<H2>
+<HR WIDTH="100%"><A NAME="Extending"></A>Extending the Plugin API</H2>
+
+Hopefully the Plugin API will allow you to write a wide range of extensions
+for an off-the-shelf Mozilla without requiring additional access to browser's
+internals. But if you've always wished you could gain access to the XYZ
+feature from your plugin, here's your chance -- and some advice on how
+to do it.
+<H3><A NAME="Libraries"></A>The Plugin API and libraries</H3>
+
+First, it's really important to distinguish between the need to access
+the internal state of the browser (like information pertaining to the layout
+of the plugin on the page) and the need to access functions that could
+very well be packaged as a library or DLL. As you explore the Mozilla source
+code, you'll find that some of the things that were exposed through the
+Plugin API are there because of the way the code evolved. Things that could
+have been packaged as a library (like perhaps networking) are instead calls
+into the browser through the Plugin API. Newer features like NSPR (Netscape
+Portable Runtime for threads, synchronization and I/O) are packaged as
+reusable DLLs (dynamically linked libraries) that can be linked with plugins
+directly. As Mozilla continues to evolve we intend to make more and more
+things available as DLLs and reusable libraries (for example, access to
+our imaging code).
+
+<P>As you're sitting down with the morass of Mozilla code thinking about
+how to expose that feature you really need, consider making the effort
+to pull subsystems into reusable DLLs. Talk with mozilla.org to hook you
+up with the original Netscape developers of a piece of code to determine
+whether a piece of code is in the process of being pulled out into a DLL,
+or whether doing so would benefit not only yourself, but the community
+at large. Packaging things as DLLs is by far the most preferable way to
+go, providing a nice package that can be used by not only your plugin and
+the browser, but by future applications as well.
+<H3><A NAME="GoodCitizen"></A>Be a good citizen</H3>
+
+If you decide that you need access to the running browser, and not just
+a shared library of functionality, then there are some rules that we ask
+you to observe to make sure your extensions are a good citizen with respect
+to the rest of source code and our plans for how we'd like to see Mozilla
+evolve. First if you extend or change an API we ask that you observe the
+following guidelines:
+<OL>
+<P><LI>
+Talk about your ideas and proposal for changes with the Mozilla community.
+There's no substitute for feedback before embarking on a lengthy development
+process. Many developments begin as hacks just to get things going ("I
+don't need to create an API... I just need to grab this private field so
+that I can get my demo running..."), but as we all know every little feature
+has a way of taking on a life of its own -- needing one more thing, or
+a bug fix, or works for this, but isn't general for that, or needs documentation,
+etc.</LI>
+
+<P>Take the time to talk to the community before just hacking something
+together. You may get some good advice, or find out that someone has already
+done what you're trying to do. Check out the <A HREF="http://www.mozilla.org/community.html">mozilla.org
+newsgroups</A>. <P>
+
+<P><LI>
+Try to find existing APIs that accomplish what you want. If you find something
+at almost does what you want, think about how to extend it.<P>
+</LI>
+
+<P><LI>
+Use XPCOM to package any new APIs. C++ virtual methods and QueryInterface
+are a powerful combination for packaging functionality for a number of
+reasons:</LI>
+
+<UL>
+<P><LI>
+Packaging functionality as virtual methods allows clients to be compiled
+independently of the implementation of a module. This localizes changes,
+and minimizes the things that have to get recompiled.</LI>
+
+<P><LI>
+The level of indirection inherent with virtual methods allows modules to
+be dynamically loaded and unloaded. This goes well beyond basic DLLs which
+need to be loaded at startup or first access, and can greatly reduce the
+footprint of an application. A user pays for what they use, instead of
+everything that the developers could think of throwing in.</LI>
+
+<P><LI>
+QueryInterface allows programs to make runtime decisions about the presence
+or absence of modules. If an interface can be accessed, the caller can
+go ahead and use it -- if not, alternatives can be tried. QueryInterface
+allows applications to degrade gracefully.</LI>
+
+<P><LI>
+XPCOM is simple to use, very low overhead, and works on all platforms.
+That means that you don't have to resort to different mechanisms on each
+platform you intend to support.<P>
+</LI>
+</UL>
+
+<P><LI>
+Be sure to create new interface IDs whenever you change or extend an interface.
+In XPCOM, interface IDs are used to denote particular interfaces, and
+carry with them assumptions about what methods are present, and what arguments
+they take. Programs desiring to use a particular interface use an interface
+ID to ask the question "do you support this interface?" If so, know that
+they can cast the result to a particular C++ base class and call its virtual
+methods.</LI>
+
+<P>Since interface IDs are strongly tied to C++ classes, it's important
+to change the interface ID whenever the class changes. If a class gets
+changed in a backward compatible way, it can continue to support both interface
+IDs (or any number of them), and savvy clients can use the newer interface
+IDs to know its safe to call the newer methods. <P>
+
+<P><LI>
+Observe the rules about reference counting objects so that you don't introduce
+memory leaks.<P>
+</LI>
+
+<P><LI>
+Observe the cross-platform coding conventions described in the <A HREF="../../../../hacking/portable-cpp.html">C++
+Portability Guide</A>.<P>
+</LI>
+
+<P><LI>
+Think hard about the best way to break up your new functionality into separate
+pieces. Ask yourself the following questions:</LI>
+
+<UL>
+<P><LI>
+Does all the new stuff I'm developing belong together in one package, or
+does it really belong in separate modules, or as part of existing modules?
+(Don't toss things all together just because you're the one that developed
+them.)</LI>
+
+<P><LI>
+Is there anything that I'm developing that can be pulled out as a separate
+facility, or that is more generally applicable?</LI>
+
+<P><LI>
+Is there any simple things I can do to make what I'm developing more general
+(without going overboard)? (This is a hard one that separates the novices
+from the true architects.)</LI>
+
+<P><LI>
+What are the dependencies that I've established, and are they all absolutely
+necessary?</LI>
+
+<P><LI>
+How can I minimize my interface and still achieve the desired goal? (Or
+"if I couldn't have this one complicated thing, how bad would that be?")</LI>
+
+<P><LI>
+What are the hardest parts of my interface to explain, and what can I do
+to make its operation more obvious? (Writing the documentation really helps
+clean up the code sometimes.)</LI>
+
+<P><LI>
+Have I chosen the best names for my classes and methods, and have I stuck
+to the established style guidelines? (Note that you might like your style
+better, but you're introducing yet another hurdle for the next guy.)<P>
+</LI>
+</UL>
+
+<P><LI>
+Be prepared for a couple of iterations of your interface's design before
+things are considered final. Don't release the "1.0 final" version of your
+plugin, order 10,000 CDs to be pressed, and on the same day send your changes
+back to mozilla.org. Most likely there will be some questions, suggestions
+and changes to be made before your hooks become part of the next Mozilla
+source release.</LI>
+
+<P>Talk to us, let us know what you want, what your plans are, and a gross
+schedule and we promise to work with you. The last thing we want is someone
+going away, angry, saying "mozilla.org screwed my product over in the 11th
+hour." Remember that we've got a hard job trying to balance the needs of
+hundreds of developers while trying to evolve the Mozilla source base in
+a coherent direction. Cut us some slack, and be patient, and we'll do our
+best to make you look good!</OL>
+Now down to the nuts and bolts...
+
+<P>First you should be sure to read Will's excellent document, <A HREF="http://www.mozilla.org/docs/modunote.htm">Modularization
+Techniques</A>, on using XPCOM and writing modules. Then you should continue
+reading to learn the gory details of extending Mozilla.
+
+<P>
+<HR WIDTH="100%">
+<H3><A NAME="AddingMethod"></A>Adding a method to an existing interface</H3>
+
+Let's say that your application is "heavy into networking," and you've
+poured through the netlib code and discovered that "true happiness lies
+in exposing the 'server_status' field of the URL_Struct associated with
+an outstanding network request of a NPIPluginStreamPeer interface." (Go
+look at the Mozilla source and you'll see what I'm talking about.) How
+exactly should you go about doing this?
+
+<P>First, congratulations on spending enough time looking at the Mozilla
+source code to see that what you need is there beneath the covers, but
+not exposed through the Plugin API. Good engineering starts with understanding
+the terrain.
+
+<P>Second, since the objective here is simple -- to simply add a method
+and not totally rearchitect the world -- we'll be sure add the new method(s)
+at the end of the class declaration. That way, the extended interface won't
+become incompatible with the old vtable layout, and cause plugins that
+expected the old NPIPluginStreamPeer interface to be forced to recompile:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TH ALIGN=CENTER>from nsplugin.h</TH>
+ </TR>
+ <TR>
+  <TD>
+
+<PRE>
+
+  class NPIPluginStreamPeer : public nsISupports {
+  public:
+      <I>...all the old NPIPluginStreamPeer methods...</I>
+
+      //////////////////////////////////////////////
+      // <I>Extensions to NPIPluginStreamPeer for version 2: </I>
+      // <I>GetServerStatus: This methods returns the server</I>
+      // <I>status code for the requested URL.  </I>
+      virtual NS_IMETHOD_(PRInt32)
+      GetServerStatus(void) = 0;
+  };
+
+  #define NP_IPLUGINSTREAMPEER1_IID                     \
+  { /* <I>38278eb0-a1bd-11d1-85b1-00805f0e4dfe</I> */          \
+      0x38278eb0,                                       \
+      0xa1bd,                                           \
+      0x11d1,                                           \
+      { 0x85, 0xb1, 0x00, 0x80, 0x5f, 0x0e, 0x4d,0xfe } \
+  }
+  #define NP_IPLUGINSTREAMPEER2_IID                     \
+  { /* <I>f87f0420-c149-11d1-85c1-00805f034dfe</I> */          \
+      0xf87f0420,                                       \
+      0xc149,                                           \
+      0x11d1,                                           \
+      { 0x85, 0xc1, 0x00, 0x80, 0x5f, 0x03, 0x4d,0xfe } \
+  }
+  #define NP_IPLUGINSTREAMPEER_IID  NP_IPLUGINSTREAMPEER2_IID
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>
+Some things to observe here:
+<OL>
+<P><LI>
+The method was added at the end of the class, just as we said. That way
+the vtable of the C++ class is extended in a compatible way. (If some other
+developer also wants to extend the NPIPluginStreamPeer class in the same
+release of Mozilla, then some negotiation needs between you, the other
+developer, and the mozilla.org guys -- that's why you should be sure to
+communicate what you're trying to do.)</LI>
+
+<P><LI>
+We were careful to add a comment saying that some additions were being
+made to the original interface. That way it's clear what's being added.</LI>
+
+<P><LI>
+The new function is documented (somewhat). That way people reading the
+header have some idea how things work.</LI>
+
+<P><LI>
+The new method is declared virtual. All interface methods must be virtual.</LI>
+
+<P><LI>
+The NS_IMETHOD_(<I>ResultType</I>) macro is used to declare the calling
+convention to be used in a cross-platform way. This is important for example
+on Windows where the macro expands to add '__stdcall', a declaration for
+standard COM calling conventions.</LI>
+
+<P><LI>
+The name of the method is specified with inter-caps ("GetServerStatus")
+rather than some other convention (like following the netlib convention
+and calling it "server_status" or something like that).</LI>
+
+<P><LI>
+We've declared the return type of the method PRInt32 (a 32-bit signed integer).
+We do this so that the result is the same size on all platforms (Win16
+thinks 'int' is a 16-bit quantity), despite the sloppy definition of 'server_status'
+as 'int' in the net.h header file. (NSPR's type declarations should be
+used whenever possible for cross-platform portability.)</LI>
+
+<P><LI>
+In this particular case, the void argument list is explicitly specified
+with "(void)". This was done because g++ compilers (which aren't fully
+C++ compliant) tread "()" and "(void)" differently with respect to overloaded
+operations. (Even if you're not compiling with g++, do this -- somebody
+else will be using it.)</LI>
+
+<P><LI>
+The method was declared pure abstract ("= 0") since this is an interface.
+All interface methods must be pure abstract.</LI>
+
+<P><LI>
+The old NP_IPLUGINSTREAMPEER_IID macro was renamed NP_IPLUGINSTREAMPEER1_IID
+to make way for the new methods that are to be added. We don't want to
+loose this old IID because older plugins still depend on it.</LI>
+
+<P><LI>
+A new interface ID was generated by using 'uuidgen -s' on Windows (sorry,
+tools to generate universally unique IDs aren't yet available on other
+platforms). The result of this was pasted into the NP_IPLUGINSTREAMPEER2_IID
+macro.</LI>
+
+<P><LI>
+Finally the general name of the interface ID, NP_IPLUGINSTREAMPEER_IID,
+was aliased to the new interface ID, NP_IPLUGINSTREAMPEER2_IID. That way
+plugins that were compiled with the old interface ID and old version of
+the header, when recompiled, will pick up the new IID (and new methods).</LI>
+</OL>
+That seems like a lot to consider when adding a new method, but most of
+these things apply whether we're adding one method or several, and most
+are pretty simple once you get the hang of it.
+
+<P>Next we need to implement this addition to the browser. First note that
+we've simply extended the interface, NPIPluginStreamPeer. So we have to
+add a corresponding declaration to the implementation header file. Hunting
+around in the source you'll find that this lives in npglue.h:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TH ALIGN=CENTER>from npglue.h</TH>
+ </TR>
+ <TR>
+  <TD>
+
+<PRE>
+
+  class nsPluginStreamPeer : public NPISeekablePluginStreamPeer {
+  public:
+      <I>...all the other nsPluginStreamPeer methods...</I>
+
+      // <I>GetServerStatus: This methods returns the</I>
+      // <I>server status code for the requested URL.  </I>
+      virtual NS_IMETHOD_(PRInt32)
+      GetServerStatus(void);
+
+  protected:
+      ...
+  };
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>
+Here we've copied the declaration of the method from NPIPluginStreamPeer,
+but made it not be a pure abstract method. It doesn't matter where this
+method gets inserted in the class because the compiler will sort it out
+based on the interface being inherited, but will put it near the end for
+clarity anyway. Finally we can implement our extensions as follows:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TH ALIGN=CENTER>from nsplugin.cpp</TH>
+ </TR>
+ <TR>
+  <TD>
+
+<PRE>
+
+  NS_IMETHOD_(PRInt32)
+  nsPluginStreamPeer::GetServerStatus(void)
+  {
+      return urls->server_status;
+  }
+
+  NS_DEFINE_IID(kSeekablePluginStreamPeerIID,
+                NP_ISEEKABLEPLUGINSTREAMPEER_IID);
+  NS_DEFINE_IID(kPluginStreamPeer1IID,
+                NP_IPLUGINSTREAMPEER1_IID);   // <I>changed</I>
+  NS_DEFINE_IID(kPluginStreamPeer2IID,
+                NP_IPLUGINSTREAMPEER2_IID);   // <I>NEW!</I>
+
+  NS_IMETHOD_(nsresult)
+  nsPluginStreamPeer::QueryInterface(const nsIID&amp; aIID,
+                                     void**aInstancePtr)
+  {
+      if (NULL == aInstancePtr) {
+	  return NS_ERROR_NULL_POINTER;
+      }
+      if ((stream->seekable &amp;&amp;
+           aIID.Equals(kSeekablePluginStreamPeerIID)) ||
+	  aIID.Equals(kPluginStreamPeer1IID)||
+	  aIID.Equals(kPluginStreamPeer2IID)||  // <I>NEW!</I>
+	  aIID.Equals(kISupportsIID)) {
+	  *aInstancePtr = (void*)((nsISupports*)this);
+	  AddRef();
+	  return NS_OK;
+      }
+      return NS_NOINTERFACE;
+  }
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>
+Here we see our humble method definition (most methods will probably be
+more complex than this!), and then a change to QueryInterface to say that
+we not only support the old interface ID (with the new name, NP_IPLUGINSTREAMPEER1_IID),
+but also the new interface ID with that denotes the current version of
+the class NPIPluginStreamPeer with the GetServerStatus extension, NP_IPLUGINSTREAMPEER2_IID.
+
+<P>That's it -- with one small exception -- we blew it! In this particular
+case we can add a method to NPIPluginStreamPeer and maintain backward compatibility
+because there is already a public subclass of NPIPluginStreamPeer defined,
+namely, NPISeekablePluginStreamPeer! If we added a method to this superclass
+(interface), we'd affect existing plugins that depend on the previous version
+of the NPISeekablePluginStreamPeer class -- its RequestRead method would
+get moved down one notch because of the addition of the GetServerStatus
+method to its superclass. Back to the drawing board!
+
+<P>(Sorry to take you through this big detour, but the above technique
+might be useful for classes that don't otherwise have subclasses. However,
+the following technique -- although a bit more complex -- will work in
+most all circumstances while allowing backward compatibility to be maintained.)
+<H3><A NAME="NewInterface"></A>Defining a new interface</H3>
+
+Rather than trying to add a new method to an existing class (and possibly
+breaking subclasses), a far better way to go is to just define a new interface.
+QueryInterface can be used on an object not only to negotiate some subclass
+or extension to that object's class, but also to obtain a completely different
+object operating as a logical extension to the first.
+
+<P>Here's a new interface that implements the GetServerStatus method:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TD>
+
+<PRE>
+
+  class NPIServerStatus : public nsISupports {
+  public:
+      // <I>use QueryInterface on an instance of</I>
+      // <I>NPIPluginStreamPeer to obtain this interface</I>
+
+      // <I>GetServerStatus: This methods returns the</I>
+      // <I>server status code for the requested URL.  </I>
+      virtual NS_IMETHOD_(PRInt32)
+      GetServerStatus(void);
+  };
+
+  #define NP_ISERVERSTATUS_IID                          \
+  { /* <I>f87f0420-c149-11d1-85c1-00805f034dfe</I> */          \
+      0xf87f0420,                                       \
+      0xc149,                                           \
+      0x11d1,                                           \
+      { 0x85, 0xc1, 0x00, 0x80, 0x5f, 0x03, 0x4d,0xfe } \
+  }
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>
+Then to obtain an instance of this interface, the plugin code would do
+something like this:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TD>
+
+<PRE>
+
+  NS_DEFINE_IID(kServerStatusIID, NP_ISERVERSTATUS_IID);
+
+  void somePluginOperation(NPIPluginStreamPeer* peer) {
+      NPIServerStatus* ssIntf;
+      if (peer->QueryInterface(kServerStatusIID,
+                               (void**)&amp;ssIntf)== NS_OK) {
+	  // <I>at this point we've successfully obtained</I>
+          // <I>an instance supporting NPIServerStatus so</I>
+          // <I> we can call GetServerStatus: </I>
+	  PRInt32 status = ssIntf->GetServerStatus();
+	  <I>...now use status...</I>
+
+	  // <I>don't forget to release the thing we</I>
+          // <I> obtained by QueryInterface </I>
+	  ssIntf->Release();
+      }
+      else {
+	  // <I>otherwise, the plugin stream peer</I>
+          // <I>we were passed doesn't support the </I>
+	  // <I>NPIServerStatus interface-- probably</I>
+          // <I> because it's an older version of the</I>
+          // <I> browser.</I>
+
+	  <I>...do something else...</I>
+      }
+      ...
+  }
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>Of course this example is rather simple. Your interfaces will usually
+provide more than one accessor routine. But for illustrative purposes,
+let's continue and look at how to add the NPIServerStatus interface to
+the browser's plugin stream peer implementation.
+<H3><A NAME="MakeAccessible"></A>Making your new interface accessible</H3>
+
+The easiest way to add support for NPIServerStatus to the browser's nsPluginStreamPeer
+implementation is to just use multiple inheritance:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TH ALIGN=CENTER>from npglue.h</TH>
+ </TR>
+ <TR>
+  <TD>
+
+<PRE>
+
+  class nsPluginStreamPeer : public NPISeekablePluginStreamPeer,
+			     public NPIServerStatus {
+  public:
+      <I>...all the other nsPluginStreamPeer methods...</I>
+
+      // <I>GetServerStatus: This methods returns the</I>
+      // <I>server status code for the requested URL.  </I>
+      virtual NS_IMETHOD_(PRInt32)
+      GetServerStatus(void);
+
+  protected:
+      ...
+  };
+   </PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>
+Then we implement the GetServerStatus method as we did above. The QueryInterface
+method, however, gets an extra 'if' statement:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TH ALIGN=CENTER>from nsplugin.cpp</TH>
+ </TR>
+ <TR>
+  <TD>
+
+<PRE>
+
+  NS_IMETHOD_(PRInt32)
+  nsPluginStreamPeer::GetServerStatus(void)
+  {
+      return urls->server_status;
+  }
+
+  NS_DEFINE_IID(kSeekablePluginStreamPeerIID,
+                NP_ISEEKABLEPLUGINSTREAMPEER_IID);
+  NS_DEFINE_IID(kPluginStreamPeerIID,
+                NP_IPLUGINSTREAMPEER_IID);
+  NS_DEFINE_IID(kServerStatusIID,
+                NP_ISERVERSTATUS_IID);
+
+  NS_IMETHOD_(nsresult)
+  nsPluginStreamPeer::QueryInterface(const nsIID&amp; aIID,
+                                     void**aInstancePtr)
+  {
+      if (NULL == aInstancePtr) {
+	  return NS_ERROR_NULL_POINTER;
+      }
+      if ((stream->seekable &amp;&amp;
+           aIID.Equals(kSeekablePluginStreamPeerIID)) ||
+	  aIID.Equals(kPluginStreamPeerIID)||
+	  aIID.Equals(kISupportsIID)) {
+	  *aInstancePtr = (void*)
+             ((NPISeekablePluginStreamPeer*)this);
+	  AddRef();
+	  return NS_OK;
+      }
+      if (aIID.Equals(kServerStatusIID)) {   // <I>NEW!</I>
+	  *aInstancePtr = (void*)((NPIServerStatus*)this);
+	  AddRef();
+	  return NS_OK;
+      }
+      return NS_NOINTERFACE;
+  }
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>
+Here, it's important to have separate interface ID tests for those interfaces
+being inherited through the NPISeekablePluginStreamPeer superclass, and
+for those interfaces being inherited through the NPIServerStatus superclass
+(i.e. NPIServerStatus itself). This is because different vtables are obtained
+at the point where the 'this' pointer is cast to one superclass or the
+other. Note that we don't use the 'static_cast' operator available in newer
+versions of C++ because not all compilers that we use to compile Mozilla
+support it. Also, there's a nsISupports interface that could also be obtained
+through the NPIServerStatus superclass, but since it ends up being operationally
+identical to the one from the NPISeekablePluginStreamPeer superclass, we
+don't need to do anything special to allow it to be accessed.
+<H3><A NAME="Aggregateable"></A>Making your implementation "aggregateable"</H3>
+
+There's one last thing you might consider doing with your new interface
+to give it maximum flexibility and modularity: make it aggregateable. Aggregation
+is the concept of allowing two or more instances to be glued together as
+if they were one object implementing multiple interfaces. This is a good
+thing if different parts of the aggregated whole live in different logical
+subsections of the Mozilla codebase, or if part of the object is loaded
+on demand from a DLL.
+
+<P>We've provided the header file nsAgg.h (ns/xpcom/src/nsAgg.h) to make
+aggregation a relatively straightforward thing to do. For our example,
+we'll make NPIServerStatus an aggregated implementation whose "outer" object
+is the plugin stream peer. Again, you probably wouldn't want to build such
+an elaborate mechanism for such a simple method (and in this particular
+case, the GetServerStatus method probably rightfully belongs in the NPIPluginStreamPeer
+interface), but we'll continue with the example for illustrative purposes.
+(Note that the JVM Plug-in API for adding Java virtual machine plugins
+was implemented this way, as an aggregateable interface that extends the
+basic nsPluginManager class in Mozilla.)
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TD>
+
+<PRE>
+
+  class nsServerStatus : public NPIServerStatus {
+  public:
+      NS_DECL_AGGREGATED
+
+      nsServerStatus(nsISupports* outer, URL_Struct*url);
+      virtual ~nsServerStatus(void);
+
+      // <I>GetServerStatus: This methods returns the</I>
+      // <I>server status code for the requested URL. </I>
+      virtual NS_IMETHOD_(PRInt32)
+      GetServerStatus(void);
+
+  protected:
+      URL_Struct* urls;
+  };
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TD>
+
+<PRE>
+
+  nsServerStatus::nsServerStatus(nsISupports* outer,
+                                 URL_Struct*url)
+      : urls(url)
+  {
+      NS_INIT_AGGREGATED(outer);
+  }
+
+  nsServerStatus::~nsServerStatus(void)
+  {
+  }
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>The first thing you'll notice here is that nsServerStatus, our new
+implementation, only inherits from the NPIServerStatus interface that defines
+the abstract GetServerStatus method. This class will work hand in hand
+with the nsPluginStreamPeer class already defined in nsplugin.cpp.
+
+<P>The second thing is that we use the NS_DECL_AGGREGATED macro to declare
+all the mechanism needed to make this class aggregateable. We'll see more
+later as we start implementing this class how this works.
+
+<P>Third, the constructor takes an instance that supports the nsISupports
+interface as an "outer" object. The mechanism set up by NS_DECL_AGGREGATED
+will test whether the outer object is non-NULL, and if so, will forward
+nsISupports operations to the outer which will get first crack at QueryInterface,
+and will manage the reference counting for the aggregated objects. Also
+the URL structure is passed in the constructor in order to initialize the
+instance variable needed by the GetServerStatus method. Here's what the
+constructor and destructor look like:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TD>
+
+<PRE>
+
+  nsServerStatus::nsServerStatus(nsISupports* outer,
+                                 URL_Struct* url)
+      : urls(url)
+  {
+      NS_INIT_AGGREGATED(outer);
+  }
+
+  nsServerStatus::~nsServerStatus(void)
+  {
+  }
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>Here the constructor initializes the urls instance variable from the
+url argument, and then uses the NS_INIT_AGGREGATED macro to initialize
+outer. NS_INIT_AGGREGATED also does the work that NS_INIT_ISUPPORTS usually
+does when you're just implementing a subclass of nsISupports. The destructor
+does nothing special. We're just careful not to declare it in the header
+file (inline), because it's virtual, and some compilers can't deal with
+that. Also we're careful to use 'void' in the argument list for poor g++.
+
+<P>The only other change we have to make to finish our aggregated implementation
+is we have to declare the nsISupports operations by using the macro NS_IMPL_AGGREGATED,
+and then write an AggregatedQueryInterface method instead of the usual
+QueryInterface. It will be called from the QueryInterface implementation
+defined by the NS_IMPL_AGGREGATED macro after it does its aggregation magic:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TD>
+
+<PRE>
+
+  NS_IMPL_AGGREGATED(nsServerStatus);
+
+  NS_IMETHOD_(nsresult)
+  nsServerStatus::AggregatedQueryInterface(const nsIID&amp; aIID,
+                                           void** aInstancePtr)
+  {
+      if (NULL == aInstancePtr) {
+	  return NS_ERROR_NULL_POINTER;
+      }
+      if (aIID.Equals(kServerStatusIID)) {
+	  *aInstancePtr = (void*) this;
+	  AddRef();
+	  return NS_OK;
+      }
+      if (aIID.Equals(kISupportsIID)) {
+	  // <I>special case for when we're called</I>
+          // <I> from the Create operation</I>
+	  *aInstancePtr = &amp;fAggregated;
+	  return NS_OK;
+      }
+      return NS_NOINTERFACE;
+  }
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>The GetServerStatus method looks just like it did before, so we won't
+bother to show you again. So that's it! We've defined an aggregated class
+with relatively little pain.
+
+<P>Now, how do we hook it up to our nsPluginStreamPeer class? The first
+trick is that we must define an instance variable in nsPluginStreamPeer
+that points to the instance of the nsServerStatus class -- but we must
+declare it of type nsISupports. That's because we're going to use QueryInterface
+on it whenever we need a more specific type:
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TH ALIGN=CENTER>from npglue.h</TH>
+ </TR>
+ <TR>
+  <TD>
+
+
+<PRE>
+
+  class nsPluginStreamPeer : public NPISeekablePluginStreamPeer {
+  public:
+      <I>...all the other nsPluginStreamPeer methods...</I>
+
+      <I>(don't declare GetServerStatus here)</I>
+
+  protected:
+      nsISupports* fServerStatus;
+      ...
+  };
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>
+Then in the QueryInterface method of nsPluginStreamPeer, we'll instantiate
+our nsServerStatus class, possibly loading it dynamically if we want. Usually
+that's done by using the nsFactory mechanism (which we strongly encourage
+you to use), but we won't go into it here. See the document <A HREF="http://www.mozilla.org/docs/tplist/catFlow/modunote.htm">Modularization
+Techniques</A> for more details.
+
+<P>
+<TABLE BORDER WIDTH="100%" BGCOLOR="#DDDDDD">
+ <TR>
+  <TH ALIGN=CENTER>from nsplugin.cpp</TH>
+ </TR>
+ <TR>
+  <TD>
+
+
+<PRE>
+
+  NS_IMETHOD_(nsresult)
+  nsPluginStreamPeer::QueryInterface(const nsIID&amp; aIID,
+                                     void**aInstancePtr)
+  {
+      if (NULL == aInstancePtr) {
+	  return NS_ERROR_NULL_POINTER;
+      }
+      if ((stream->seekable &amp;&amp;
+           aIID.Equals(kSeekablePluginStreamPeerIID)) ||
+	  aIID.Equals(kPluginStreamPeerIID) ||
+	  aIID.Equals(kISupportsIID)) {
+	  *aInstancePtr = (void*)
+              ((NPISeekablePluginStreamPeer*)this);
+	  AddRef();
+	  return NS_OK;
+      }
+      if (fServerStatus == NULL) { // <I>try to create/load it </I>
+	  nsServerStatus* ss = <I>...create or load it...</I>
+	  if (ss) {
+	     nsresult ok = ss->QueryInterface(kISupportsIID,
+                                              (void**)&amp;fServerStatus);
+	     if (ok != NS_OK) {
+		 <I>...release or unload ss...</I>
+	     }
+	  }
+      }
+      if (fServerStatus)
+	  return fServerStatus->QueryInterface(aIID,aInstancePtr);
+      else
+	  return NS_NOINTERFACE;
+  }
+</PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P>
+What's happening here is that we're doing the usual QueryInterface thing
+for the plugin stream peer, but if that fails, we check whether fServerStatus
+has been set yet to see if we should load it. Note that this implementation
+could suffer from continually trying to load or create the server status
+object (for instance if the DLL simply isn't available), but we'll let
+you fix that. If we are able to load or create it, we use QueryInterface
+to set the fServerStatus instance variable. This call to QueryInterface
+is very special. The aggregation boiler-plate code that we used to define
+QueryInterface for nsServerStatus knows that when kISupportsIID is passed
+to it it must return a special internal version of nsISupports that makes
+the aggregation work. Fortunately you don't have to think about this too
+much -- just copy the example (ok, if you want, you can stare at nsAgg.h
+for a while and figure out how it works).
+
+<P>So, that was only a little complicated, but now that you've done it,
+you'll be the proud owner of a completely dynamically loadable and modular
+interface that can be aggregated with just about any other class in Mozilla.
+We think that's a big plus, and we'll worship you if you go to the trouble
+to do it right.
+
+<P>
+<HR WIDTH="100%">
+
+<P>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/extendmoz.html&amp;rev=&amp;root=/cvsroot/">Last modified November  3,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

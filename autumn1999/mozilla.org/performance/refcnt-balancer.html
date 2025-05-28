@@ -1,0 +1,486 @@
+<HTML>
+<HEAD>
+<TITLE>refcount balancer</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<center>
+<h1>refcount balancer</h1>
+</center>
+
+Contact:
+<a href="mailto:waterson@netscape.com">Chris Waterson</a> (waterson@netscape.com)<br>
+
+<h2>overview</h2>
+
+<p>
+One of the things that sucks about XPCOM is that you have to deal with
+reference counting. It's hard and prone to errors, and Mozilla leaks
+like a sieve because of it. Unlike the good old fashioned
+<code>malloc()</code> and <code>free()</code> model where memory gets
+allocated in exactly one place and freed in exactly one other place,
+reference counting is distributed all over. There may be twenty
+different spots in the code where a single object is
+<code>AddRef()</code>-ed. And if just one of those
+<code>AddRef()</code>-ers forgets to <code>Release()</code>, well,
+you're screwed.
+</p>
+
+<p>
+Traditional leak tracking tools like
+
+<a href="http://www.rational.com/products/purify_unix/index.jtmpl?borschtid=30142038831761639304">Purify</a>
+
+don't help much either. They'll tell you that you leaked an object,
+but they won't help you track down the twenty different clients that
+<code>AddRef()</code>-ed it, let alone the joker that forgot to
+<code>Release()</code> it.
+</p>
+
+<p>
+This crude set of tools attempts to address that problem. It's not a
+panacea, but it at least gives some insight into who is
+<code>AddRef()</code>-ing whom.
+</p>
+
+<p>
+From 50,000 feet, here's what happens.
+</p>
+
+<ul>
+<li>
+<p>
+You discover that your <code>FooImpl</code> object is leaking, maybe Bruce
+Mitchener tells you, maybe you notice on your own because your
+destructor is never called.  You cringe and moan and later the bug for
+3 or 4 milestones. But since you know about this tool, you eventually
+roll up your sleeves and start working on it.
+</p>
+</li>
+
+<li>
+<p>
+You set a couple of environment variables in a debug build.
+</p>
+</li>
+
+<li>
+<p>
+As you run, you notice piles and piles of information will start to
+spew out to the console. Specifically, as your object is
+<code>AddRef()</code>-ed and <code>Release()</code>-ed, a <i>stack
+trace</i> is generated, along with the operation (<b>AddRef</b> or
+<b>Release</b>), <code>this</code> (i.e., the object that just got
+operated on), and the current reference count of your object.  This
+mountain of information, although impressive, is useless in its
+current form.
+</p>
+</li>
+
+<li>
+<p>
+You next run Perl script #1 over the resulting log file. This Perl
+script will pick out the instances of objects that leaked. You choose
+one of the objects that's particularly interesting to you.
+</p>
+</li>
+
+<li>
+<p>
+You now run Perl script #2 over the log file. This script is the Fancy
+Magic. It takes each stack trace and strings it together into a call
+graph. Each node in the graph represents a call site, and has a
+"balance factor" which is the total number of <code>AddRef()</code>
+operations that it has been included in <i>minus</i> the total number
+of <code>Release()</code> operations that it has been included in. (I
+told you it was Fancy Magic.)
+</p>
+</li>
+
+</ul>
+
+<p>
+So what does all that mean? The cool part -- you were waiting for the
+cool part -- is that you can look at this graph and see what subtrees
+are "balanced"; i.e., total number of <code>AddRef()</code>s equals
+total number of <code>Release()</code>-es. You <i>know</i> you don't
+need to worry about those trees because no evil leakage happened
+there.
+</p>
+
+<p>
+For trees that are <i>out of balance</i>, you need to dig a little bit
+deeper. Subtrees get out of balance when one code path
+<code>AddRef()</code>s the object, and a code path somewhere else does
+the corresponding <code>Release()</code>.
+</p>
+
+<p>
+Like I said, it's not a panacea, but you can start to play Mah Jongg
+with the out-of-balance trees, proving to yourself in each case that
+the <code>AddRef()</code> from one tree matches with the
+<code>Release()</code> in another. In short, it does a decent job of
+directing you to the places you need to verify in your code.
+</p>
+
+<h2>details</h2>
+
+<p>
+<b>Enabling Runtime Logging</b>. You need to set a couple of runtime
+environment variable to produce output.
+</p>
+
+<ul>
+<em>for Unix</em>
+<pre>
+setenv XPCOM_MEM_REFCNT_LOG <i>log-file.dat</i>
+setenv XPCOM_MEM_LOG_CLASSES <i>MyLeakyObjectImpl</i>
+setenv XPCOM_MEM_LOG_OBJECTS <i>MyLeakyObjectSerialNumber</i> (optional)
+</pre>
+
+<em>for Windows</em>
+<pre>
+set XPCOM_MEM_REFCNT_LOG=<i>log-file.dat</i>
+set XPCOM_MEM_LOG_CLASSES=<i>MyLeakyObjectImpl</i>
+set XPCOM_MEM_LOG_OBJECTS=<i>MyLeakyObjectSerialNumber</i> (optional)
+</pre>
+
+<em>for Mac</em>
+<pre>
+TBD
+</pre>
+</ul>
+
+<p>
+(Note that case <em>is</em> important.) These variables are described
+in more detail in the
+
+<a href="http://lxr.mozilla.org/mozilla/source/xpcom/doc/MemoryTools.html">Memory Tools</a>
+
+documentation.
+</p>
+
+<p>
+Now when you run, you should see lots of information dumped to your
+<code>log-file.dat</code> (which defaults to the console, if not
+set). Specifically, each time an object is <code>AddRef()</code>-ed and
+<code>Release()</code>-ed, several lines will get added to the file. So
+make sure you have plenty of disk space.
+</p>
+
+<p>
+<b>Postprocessing Step 1: Finding the Leakers</b>. First you have to
+figure out which objects leaked. There's a Perl script that does
+this. It grovels through the log file, and figures out which objects
+got allocated (it knows because they were just allocated because they
+got <code>AddRef()</code>-ed and their refcount became <b>1</b>). It adds
+them to a list. When it finds an object that got freed (it knows
+because its refcount goes to <b>0</b>), it removes it from the
+list. Anything left over is leaked.
+</p>
+
+<p>
+The script is called 
+
+<a href="find-leakers.pl"><code>find-leakers.pl</code></a>.
+
+ So, depending on your platform, do something like:
+</p>
+
+<ul>
+<pre>
+% perl -w find-leakers.pl my-leaks.log
+</pre>
+</ul>
+
+<p>
+(Replace <code>my-leaks.log</code> with your logfile.) This will print out
+a list of pointers:
+</p>
+
+<ul>
+<pre>
+0x00253ab0 (1)
+0x00253ae0 (2)
+0x00253bd0 (4)
+</pre>
+</ul>
+
+<p>
+The number in parenthesis is the order in which it was allocated, if
+you care. Pick one for use with Step 2.
+</p>
+
+<p>
+<b>Postprocessing Step 2: Building the Balance Tree</b>. Now that
+you've picked an object that leaked, you can build a "balance tree"
+(anyone who can think of a better name feel free to let me know). This
+process takes all the stack <code>AddRef()</code> and <code>Release()</code>
+stack traces and munges them into a call graph. Each node in the graph
+represents a call site. Each call site has a "balance factor", which
+is positive if more <code>AddRef()</code>s than <code>Release()</code>-es have
+happened at the site, zero if the number of <code>AddRef()</code>s and
+<code>Release()</code>-es are equal, and negative if more
+<code>Release()</code>-es than <code>AddRef()</code>s have happened at the
+site.
+</p>
+
+<p>
+To build the balance tree, run 
+
+<a href="make-tree.pl"><code>make-tree.pl</code></a>; e.g.,
+</p>
+
+<ul>
+<pre>
+% perl -w make-tree.pl --object 0x00253ab0 &lt; my-leak.log
+</pre>
+</ul>
+
+<p>
+Note that you specify the object that you want <code>make-tree.pl</code>
+to examine. This will build an indented tree that looks something like
+this (except probably a lot larger and leafier):
+</p>
+
+<ul>
+<pre>
+.root: bal=1
+  main: bal=1
+    DoSomethingWithFooAndReturnItToo: bal=2
+      NS_NewFoo: bal=1
+</pre>
+</ul>
+
+<p>
+Let's pretend in our toy example that <code>NS_NewFoo()</code> is a
+factory method that makes a new foo and returns
+it. <code>DoSomethingWithFooAndReturnItToo()</code> is a method that
+munges the foo before returning it to <code>main()</code>, the main
+program.
+</p>
+
+<p>
+What this little tree is telling you is that you leak <i>one
+refcount</i> overall on object <code>0x00253ab0</code>. But, more
+specifically, it shows you that:
+
+<ul>
+
+<li>
+<code>NS_NewFoo()</code> "leaks" a refcount. This is probably "okay"
+because it's a factory method that creates an <code>AddRef()</code>-ed
+object.
+</li>
+
+<li>
+<code>DoSomethingWithFooAndReturnItToo()</code> leaks <i>two</i>
+refcounts. Hmm...this probably isn't okay, especially because...
+</li>
+
+<li>
+<code>main()</code> is back down to leaking <i>one</i> refcount.
+</li>
+
+</ul>
+
+<p>
+So from this, we can deduce that <code>main()</code> is correctly
+releasing the refcount that it got on the object returned from
+DoSomethingWithFooAndReturnItToo(), so the leak <i>must</i> be
+somewhere in that function.
+</p>
+
+<p>
+So now say we go fix the leak in
+<code>DoSomethingWithFooAndReturnItToo()</code>, re-run our trace, grovel
+through the log "by hand" to find the object that corresponds to
+<code>0x00253ab0</code> in the new run, and run
+<code>make-tree.pl</code>. What we'd hope to see is a tree that looks
+like:
+</p>
+
+<ul>
+<pre>
+.root: bal=0
+  main: bal=0
+    DoSomethingWithFooAndReturnItToo: bal=1
+      NS_NewFoo: bal=1
+</pre>
+</ul>
+
+<p>
+That is, <code>NS_NewFoo()</code> "leaks" a single reference count; this
+leak is "inherited" by <code>DoSomethingWithFooAndReturnItToo()</code>;
+but is finally balanced by a <code>Release()</code> in <code>main()</code>.
+</p>
+
+<h2>hints</h2>
+
+<p>
+Clearly, this is an iterative and analytical process. Maybe somebody
+smarter than me can figure out ways to automate parts of it. To date,
+I've figured out some tricks.
+</p>
+
+<p>
+<b>Ignoring balanced trees</b>. The <code>make-tree.pl</code> script
+accepts an option <code>--ignore-balanced</code>, which tells it
+<i>not</i> to bother printing out the children of a node whose balance
+factor is zero. This can help remove some of the clutter from an
+otherwise noisy tree.
+</p>
+
+<p>
+<b>Playing Mah Jongg</b>. An unbalanced tree is not necessarily an
+evil thing. More likely, it indicates that one <code>AddRef()</code> is
+cancelled by another <code>Release()</code> somewhere else in the code. So
+the game is to try to match them with one another.
+</p>
+
+<p>
+<b>Excluding Functions</b> To aid in this process, you can create an
+"excludes file", that lists the name of functions that you want to
+exclude from the tree building process (presumably because you've
+matched them). <code>make-tree.pl</code> accepts the option <code>--exlude
+[file]</code>, where <code>[file]</code> is a newline-separated list of
+function names that will be <i>excluded</i> from consideration while
+building the tree. Specifically, any call stack that contains that
+call site will not contribute to the computation of balance factors in
+the tree.
+</p>
+
+<h2>pricing & availability</h2>
+
+<p>
+As of this writing, the stack tracing code is implemented for Win32
+and i386 Linux (compiled with <code>egcs</code> and glibc 2.0 and
+2.1). Dontations gladly accepted; Bourbon preferred over other
+currencies.
+</p>
+
+<p>
+The Perl scripts, of course, require only Larry Wall's finest (5.00504
+seems to work for me).
+</p>
+
+<br><a href="find-leakers.pl">find-leakers.pl</a>
+<br><a href="make-tree.pl">make-tree.pl</a>
+
+<h2>credits</h2>
+
+<p>
+I stole the stack walking code from
+
+<a href="mailto:kipp@netscape.com">Kipp Hickman</a>
+
+and Matt Pietrek (see
+
+<a href="http://msdn.microsoft.com/library/periodic/period97/F1/D3/S245C6.htm">this article</a>).
+
+For Linux,
+
+<a href="mailto:shaver@netscape.com">Mike Shaver</a>,
+<a href="mailto:bruce@cybersight.com">Bruce Mitchener</a>, and
+<a href="mailto:ramiro@netscape.com">Ramiro Estrugo</a>.
+
+all helped me get things right. Mucho gusto.
+
+<a href="mailto:waldemar@netscape.com">Waldemar Horwat</a> and
+<a href="mailto:jar@netscape.com">Jim Roskind</a>
+
+helped to improve the post-processing scripts.
+</p>
+
+<hr>
+
+<small>
+$Id: refcnt-balancer.html,v 1.7 1999/11/16 02:14:49 waterson%netscape.com Exp $
+</small>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/performance/refcnt-balancer.html&amp;rev=&amp;root=/cvsroot/">Last modified November 16,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

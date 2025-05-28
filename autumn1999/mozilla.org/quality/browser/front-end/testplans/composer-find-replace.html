@@ -1,0 +1,910 @@
+<HTML>
+<HEAD>
+<TITLE>Feature Test Plan-Find/Replace</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+   
+
+   
+
+   
+
+
+
+
+
+
+<b><font size=+3>Feature Test Plan</font></b>
+
+<br><b><i><font size=+1>5.0 Ender</font></i></b>
+
+<br><i><font size=+1>Find+Replace</font></i><i><font size=+1></font></i>
+
+<p>Written by <a href="mailto:sujay@netscape.com">Sujay Desai</a>
+
+<br>
+
+<hr WIDTH="100%">
+
+<br><b>History:</b>
+
+<table CELLSPACING=0 CELLPADDING=0 COLS=4 WIDTH="100%" NOSAVE >
+
+<tr>
+
+<td VALIGN=TOP>
+
+<center><b>Date&nbsp;</b></center>
+
+</td>
+
+
+
+<td VALIGN=TOP>
+
+<center><b>Change Description</b></center>
+
+</td>
+
+
+
+<td VALIGN=TOP>
+
+<center><b>Revision</b></center>
+
+</td>
+
+
+
+<td VALIGN=TOP>
+
+<center><b>Updated By</b></center>
+
+</td>
+
+</tr>
+
+
+
+<tr ALIGN=CENTER VALIGN=CENTER NOSAVE>
+
+<td VALIGN=TOP NOSAVE>
+
+<center>&nbsp;12/11</center>
+
+</td>
+
+
+
+<td VALIGN=TOP>
+
+<center>creation&nbsp;</center>
+
+</td>
+
+
+
+<td VALIGN=TOP NOSAVE>
+
+<center>1.0</center>
+
+</td>
+
+
+
+<td VALIGN=TOP>
+
+<center>sujay</center>
+
+</td>
+
+</tr>
+
+
+
+<tr ALIGN=CENTER VALIGN=CENTER NOSAVE>
+
+<td NOSAVE>5/4</td>
+
+
+
+<td>updated</td>
+
+
+
+<td>1.1</td>
+
+
+
+<td>sujay</td>
+
+</tr>
+
+</table>
+
+
+
+<p><b>References:</b>
+
+<p>Engineering Specifications:
+
+<br>&nbsp;
+
+<p>http://webgroup/composer/ComposerEngSpec.html#Find Replace (internal
+
+link)
+
+<p><b>Test Case Management Usage:</b>
+
+<br>The detailed test cases for this feature can be found in Beaker by
+
+the following different criteria:
+
+<br>Major Area:&nbsp; Ender
+
+<br>Minor Areas: Find/Replace
+
+<br>Category:&nbsp; Composer UI
+
+<p>
+
+<hr WIDTH="100%">
+
+<ul>
+
+<li>
+
+<i><u>Find/Replace</u></i></li>
+
+
+
+<ul>
+
+<li>
+
+large document</li>
+
+
+
+<ul>
+
+<li>
+
+Open a large document in the editor</li>
+
+
+
+<li>
+
+Enter a simple string in the Find dialog that has multiple occurences that
+
+exists in document</li>
+
+
+
+<li>
+
+Verify that you're able to find each occurence of that string</li>
+
+</ul>
+
+
+
+<li>
+
+small document</li>
+
+
+
+<ul>
+
+<li>
+
+Open a small document in the editor</li>
+
+
+
+<li>
+
+Enter a simple string in the Find dialog that has 1 or more occurences
+
+that exists in document</li>
+
+
+
+<li>
+
+Verify that you're able to find each occurence of that string</li>
+
+</ul>
+
+
+
+<li>
+
+short string</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter a very short string(e.g. "hi") in the Find dialog</li>
+
+
+
+<li>
+
+Verify that you're able to find each occurence of that string.</li>
+
+</ul>
+
+
+
+<li>
+
+long string</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter a long string(e.g. "existentialism") in the Find dialog that exists
+
+in document</li>
+
+
+
+<li>
+
+Verify that you're able to find each occurence of that string.</li>
+
+</ul>
+
+
+
+<li>
+
+null string</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter a very null string(e.g. " ") in the Find dialog</li>
+
+
+
+<li>
+
+Verify that nothing is found and an error dialog pops up: "Nothing to search
+
+for"</li>
+
+</ul>
+
+
+
+<li>
+
+case sensitive</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter a string(e.g. "The") in the Find dialog that exists in document</li>
+
+
+
+<li>
+
+Click on the Case Sensitive checkbox, followed by OK button to start Find.</li>
+
+
+
+<li>
+
+Verify that you're able to find only "The" occurences of that string and
+
+not "the"</li>
+
+</ul>
+
+
+
+<li>
+
+case insensitive</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter a string(e.g. "The") in the Find dialog that exists in document</li>
+
+
+
+<li>
+
+Click on the Case Sensitive checkbox, followed by OK button to start Find.</li>
+
+
+
+<li>
+
+Verify that you're able to find any occurence containing "the", (e.g. The,
+
+tHe, thE, the)</li>
+
+</ul>
+
+
+
+<li>
+
+backward (case 1)</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter a string in the Find dialog that exists in document</li>
+
+
+
+<li>
+
+Find all occurences untill you're at the end of document</li>
+
+
+
+<li>
+
+Now click on Backwards checkbox, followed by OK button</li>
+
+
+
+<li>
+
+Verify that you're able to find occurences of that string going up the
+
+document, backwards.</li>
+
+</ul>
+
+
+
+<li>
+
+backwards (case 2)</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Insert cursor somewhere after the first string to be found.</li>
+
+
+
+<li>
+
+Enter that string in the Find dialog and click on Backwards checkbox, followed
+
+by Ok button</li>
+
+
+
+<li>
+
+Verify that you're able to find the occurences of that string backwards
+
+from where you</li>
+
+
+
+<br>originally inserted your cursor.</ul>
+
+
+
+<li>
+
+clear</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter any string in the Find dialog, clicking OK button is optional</li>
+
+
+
+<li>
+
+Click on the Clear button in the Find dialog</li>
+
+
+
+<li>
+
+Verify that the text field in the Find dialog is empty and able to accept
+
+new input.</li>
+
+</ul>
+
+
+
+<li>
+
+garbage chars</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter a bogus string(e.g. "9s7ryg9r" ) in the Find dialog that doesn't
+
+exist in document</li>
+
+
+
+<li>
+
+Verify that you're able find no occurence of that string.</li>
+
+</ul>
+
+
+
+<li>
+
+replace once</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter a string in the Find dialog that exists in document</li>
+
+
+
+<li>
+
+Also click on the Replace Once checkbox along with a string that you want
+
+to replace</li>
+
+
+
+<li>
+
+Verify that you're able to find one occurence of string and it replaces
+
+with new string</li>
+
+</ul>
+
+
+
+<li>
+
+replace all</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Enter a string in the Find dialog that exists in document at least more
+
+than once</li>
+
+
+
+<li>
+
+Also click on the Replace All checkbox along with a string that you want
+
+to replace</li>
+
+
+
+<li>
+
+Verify that you're able to find all occurences of string and replace with
+
+new string</li>
+
+
+
+<br>everywhere in document</ul>
+
+
+
+<li>
+
+wrap</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in Editor</li>
+
+
+
+<li>
+
+Enter a string in the Find dialog that exists in document</li>
+
+
+
+<li>
+
+Verify that all occurences of that string are found</li>
+
+
+
+<li>
+
+When you reach the bottom/end of the document, It should stop at bottom
+
+and pop</li>
+
+
+
+<br>up a panel "End of document reached, continue from beginning?" with
+
+OK/Cancel buttons.
+
+<li>
+
+If you click OK, it should start finding occurences of that string all
+
+over from the beginning/top</li>
+
+
+
+<br>of the document
+
+<li>
+
+If you click Cancel, it should end the search.</li>
+
+</ul>
+
+
+
+<li>
+
+find again/next</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in Editor</li>
+
+
+
+<li>
+
+Enter a string in the Find dialog that exists in document</li>
+
+
+
+<li>
+
+Verify that you're able to find the first occurence of that string</li>
+
+
+
+<li>
+
+Click on Find Next/Again in Find Dialog</li>
+
+
+
+<li>
+
+Verify that you're able to find the next occurence of that string</li>
+
+
+
+<li>
+
+Repeat until no more occurences are found, should work until end of document</li>
+
+</ul>
+
+
+
+<li>
+
+find string contains space(s) (case 1)</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in Editor</li>
+
+
+
+<li>
+
+Enter a string with 1 or more space(e.g. "he llo") in the Find dialog that
+
+doesn't exist in document</li>
+
+
+
+<li>
+
+Verify that you cannot find that occurence because it has a space in it.</li>
+
+</ul>
+
+
+
+<li>
+
+find string contains space(s) (case 2)</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in Editor</li>
+
+
+
+<li>
+
+Enter a string with 1 or more space(e.g. "he llo") in the Find dialog that
+
+also exists in document</li>
+
+
+
+<li>
+
+Verify that you're able to find all occurences of that string with space
+
+in it.</li>
+
+</ul>
+
+
+
+<li>
+
+strings to be matched contains space(s), tabs, returns</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in Editor</li>
+
+
+
+<li>
+
+Enter a string (e.g. "hello")in the Find dialog that exists in document
+
+but with spaces, tabs or return</li>
+
+
+
+<li>
+
+Verify that you cannot find that occurence because it has space(s), tab(s)
+
+or return(s)</li>
+
+
+
+<br>between the string.</ul>
+
+</ul>
+
+</ul>
+
+
+
+<blockquote>The goal of this feature test plan is to exercise the functionality
+
+of Find and Replace within
+
+<br>the Ender UI.</blockquote>
+
+
+
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/browser/front-end/testplans/composer-find-replace.html&amp;rev=&amp;root=/cvsroot/">Last modified November  5,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

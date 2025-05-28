@@ -1,0 +1,182 @@
+<HTML>
+<HEAD>
+<TITLE>Debugger API for Rhino</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<h1><center>Debugger API for Rhino</center></h1>
+<p>
+<font color="red"><center>This release of the Debugger API should be considered to be of Beta quality.</center></font>
+<p>
+The Debugger API for Rhino consists of a set of Java interfaces 
+which describes a high level debugger API and a default implementation of that
+API.
+<p>
+Most of the API is in the <code>com.netscape.javascript.debug</code> package. It is built 
+upon low-level support built into the core engine in <code>com.netscape.javascript</code>. 
+<p>
+The <code>com.netscape.javascript.debug</code> package includes an implementation of the Debugger API 
+interfaces outlined below. The class <code>com.netscape.javascript.debug.DebugManager.java</code> 
+implements the <a href="com/netscape/javascript/debug/IDebugManager.html">IDebugManager</a> 
+interface and <code>com.netscape.javascript.debug.SourceTextManagerImpl.java</code> implements 
+the <a href="com/netscape/javascript/SourceTextManager.html">SourceTextManager</a> interface. 
+<p>
+The class <code>com.netscape.javascript.tools.shell.Main.java</code> provides an 
+example which invokes the Debugger API.
+<p>
+<hr>
+<p>
+The core interface of the API is <a href="com/netscape/javascript/debug/IDebugManager.html">IDebugManager</a>.
+This interface provide the central point for interacting with the debug system. 
+It supports the setting of the following hooks:
+<ul>
+<li><a href="com/netscape/javascript/debug/IInterruptHook.html">IInterruptHook</a> for immediate interrupt.                     
+<li><a href="com/netscape/javascript/debug/IInstructionHook.html">IInstructionHook</a> for breakpoints.                             
+<li><a href="com/netscape/javascript/debug/IDebugBreakHook.html">IDebugBreakHook</a> for breaking on errors.                      
+<li><a href="com/netscape/javascript/debug/IErrorReporter.html">IErrorReporter</a> for hooking into the error reporter system.  
+<li><a href="com/netscape/javascript/debug/IScriptHook.html">IScriptHook</a> for notification of script and function load and unload.  
+</ul>
+Customers of the Debugger API can provide implementations of these hook 
+interfaces which can be passed to the <i>IDebugManager</i> in order receive 
+notification of the various events within the core JavaScript engine.
+<p>
+When hooks are called they are passed appropriate objects which are implemented 
+by the Debugger API to describe such things as <i>stack frames</i>, 
+<i> program counter locations</i>, etc. The interfaces for these objects are:
+<ul>
+<li><a href="com/netscape/javascript/debug/IThreadState.html">IThreadState</a> representing the state of the stopped thread.
+<li><a href="com/netscape/javascript/debug/IStackFrame.html">IStackFrame</a> representing a stack frame.
+<li><a href="com/netscape/javascript/debug/IPC.html">IPC</a> representing a program counter location.
+<li><a href="com/netscape/javascript/debug/IScript.html">IScript</a> representing a compiled JavaScript script or function.
+<li><a href="com/netscape/javascript/debug/ISourceLocation.html">ISourceLocation</a> representing a location in the souce code.
+</ul>
+<p>
+<hr>
+<p>
+<a href="com/netscape/javascript/SourceTextManager.html">SourceTextManager</a> 
+is an interface used to supply a centralized location from which a debugger 
+client can access JavaScript source. It supports capturing source  as it is 
+parsed by <i>Rhino</i>. Alternately, source can be fed to it by the 
+embedding; e.g. in a browser embedding where the JavaScript code is just a 
+part of the html source the browser can feed the entire source to the 
+<i>SourceTextManager</i> so that a debugger can 'see' the whole source and 
+not just the part that is fed to the JavaScript compiler.
+<p>
+<a href="com/netscape/javascript/SourceTextItem.html">SourceTextItem</a> is an 
+interface representing a single 'block' of source code text (typically this 
+is an entire source file). This may be pure JavaScript source, or may include 
+JavaScript source embedded in html or whatever. The point is that this is the 
+text that a debugger should show to a user while debugging the JavaScript code. 
+This interface supports incrementally updated content. This is specifically 
+useful in browser embeddings where text is received in blocks. In fact, in a 
+browser it is possible that some of the source on a page may be compiled 
+and run even before the entire content of the page has been received from a 
+server.
+<p>
+<hr>
+<p>
+<a href="com/netscape/javascript/debug/ILaunchableDebugger.html">ILaunchableDebugger</a> 
+is an interface that abstractly represents a debugger user interface. It is 
+defined to allow an embedding to request that a debugger be launched without 
+requiring that the embedding be coupled at compile time to a particular debugger 
+implementation.
+<p>
+<hr>
+<h3>Limitations and unimplemented features</h3>
+<ul>
+<li>Data Watchpoints are not implemented.
+<li>Catching exceptions thrown in JavaScript code is not implemented.
+<li>Per context hooking is not implemented.
+<li>Setting the debug level to any non-zero value forces the optimization level to zero.
+<li>Tracking of calls to plain Java methods from JavaScript is not implemented.
+<li>Running at debug level >= 6 causes JIT errors with the Symantec JVM (but no other JVMs)
+<li>The Debug API has not been rigorously tested. 
+</ul>
+<p>
+<hr WIDTH="100%">
+<br><A HREF="overview-summary.html">back to top</A>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/rhino/debugApi.html&amp;rev=&amp;root=/cvsroot/">Last modified June 10,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,246 @@
+<HTML>
+<HEAD>
+<TITLE>rdf: in fifty words or less</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+<center>
+<h1>rdf: in fifty words or less</h1>
+</center>
+
+Contact:
+<a href="mailto:waterson@netscape.com">Chris Waterson</a> (waterson@netscape.com)<br>
+Last Updated: 19-November-1998
+
+<p>
+Okay, so maybe this is a bit more that fifty words, but the key points
+are pretty simple (and put into <b>bold text</b> for you manager-types
+who just want to get straight to the point). The <i>Resource
+Description Framework</i>, or "RDF", is really two things.
+</p>
+
+<ul>
+<b>
+First, RDF is a graph-based model for describing Internet
+<i>resources</i> (like web pages and email messages), and how these
+resources relate to one another.
+</b>
+</ul>
+
+<p>
+But what does that mean, <i>really</i>? To a Mozilla developer, it
+means that the RDF data model (the "graph") can be used as a mechanism
+for integrating and organizing Internet resources.
+</p>
+
+<p>
+Let's look at an example: <i>bookmarks</i>. Right now, most web
+browsers let you organize your bookmarks hierarchically into
+<i>folders</i>. Each bookmark is a <i>pointer</i> to an web page
+called a <b>URL</b>. (Actually, "URI" for <i>universal resource
+identifier</i> is the modern way to talk about these pointers, but
+that's just really a nit for the language lawyers to pick...)
+</p>
+
+<p>
+But a web page is just one kind of Internet resource. There are tons
+of others, including email messages, UseNet news articles (or entire
+UseNet news groups), and search results from your favorite web
+crawler, just to name a few. And fundamentally, there's no reason that
+you shouldn't be able to treat these as "bookmarks" as well, grouping
+them together into folders as you please, or maybe even creating
+"smart" folders that, when you open them, dynamically generate their
+contents by running common search that you define.
+</p>
+
+<p>
+And a "bookmark" could really have arbitrary properties associated
+with it: you might want to invent your own "classification" scheme for
+a bookmark <i>a la</i> Macintosh's "hot", "warm", "cool" color
+coding. Or you might want to relate a bookmark to another bookmark,
+or keep it in multiple "folders" at once.
+</p>
+
+<p>
+The RDF graph provides a perfect data model upon which to build a
+"universal" bookmarking service as described above: the graph can
+contain pointers to arbitrary resources and can group them in just
+about any way that you can imagine.
+</p>
+
+<p>
+But wait, there's more...
+</p>
+
+<ul>
+<b>
+Second, RDF is a serialization syntax. This syntax allows the
+graph-like model to be communicated between "agents".
+</b>
+</ul>
+
+<p>
+Okay, what the heck does <i>that</i> mean? Fundamentally, it means
+that parts of the RDF data model can be communicated across network
+boundaries, and the contents of the graph can dynamically change as
+information arrives from a remote service.
+</p>
+
+<p>
+Let's go back to our bookmark example. Say that one of my bookmark
+"folders" is really a pointer to my email in-box: when I open that
+folder, voila! All the messages that I've received over night
+appear.
+</p>
+
+<p>
+But how did that happen? The in-box "folder" was really just a pointer
+to an Internet resource that contains more RDF that extends the
+graph. That "Internet resource" was a URL that pointed to a CGI script
+(say,
+
+<tt>http://www.mozilla.org/smart-mail/get-mail.cgi?user=waterson&amp;folder=inbox</tt>).
+
+The CGI script actually generates <i>serialized RDF</i>, which is
+basically just a way of formatting a graph into XML:
+</p>
+
+<pre>
+&lt;rdf:RDF
+    xmlns:rdf="http://www.w3.org/TR/WD-rdf-syntax#"
+    xmlns:sm="http://www.mozilla.org/smart-mail/schema#"&gt;
+  &lt;rdf:Description
+    about="http://www.mozilla.org/smart-mail/get-mail.cgi?\
+user=waterson&amp;folder=inbox"&gt;
+    &lt;sm:message id="4025293"&gt;
+       &lt;sm:recipient&gt;
+         Chris Waterson "waterson@netscape.com"
+       &lt;/sm:recipient&gt;
+       &lt;sm:sender&gt;
+         Aunt Helga "helga@netcenter.net"
+       &lt;/sm:sender&gt;
+       &lt;sm:received-by&gt;x-wing.mcom.com&lt;/sm:received-by&gt;
+       &lt;sm:subject&gt;Great recipe for Yam Soup!&lt;/sm:subject&gt;
+       &lt;sm:body&gt;
+         http://www.mozilla.org/smart-mail/get-body.cgi?id=4025293
+       &lt;/sm:body&gt;
+    &lt;/sm:message&gt;
+    &lt;sm:message id="4025294"&gt;
+       &lt;sm:recipient&gt;
+         Chris Waterson "waterson@netscape.com"
+       &lt;/sm:recipient&gt;
+       &lt;sm:sender&gt;
+         Sarah Waterson "waterson.2@postbox.acs.ohio-state.edu"
+       &lt;/sm:sender&gt;
+       &lt;sm:received-by&gt;x-wing.mcom.com&lt;/sm:received-by&gt;
+       &lt;sm:subject&gt;We won our ultimate game&lt;/sm:subject&gt;
+       &lt;sm:body&gt;
+         http://www.mozilla.org/smart-mail/get-body.cgi?id=4025294
+       &lt;/sm:body&gt;
+    &lt;/sm:message&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;
+</pre>
+
+<p>
+Upon receipt of the above monstrosity, the RDF engine folds the RDF
+into the graph at the appropriate place, and the tree control that
+actually implements the UI to the bookmarks is notified that it should
+begin drawing some icons for the latest message about Yam Soup from
+Aunt Helga.
+</p>
+
+<p>
+This is <i>exactly</i> how
+
+<a href="../mailnews/">SmartMail</a>
+
+works.
+</p>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/rdf/50-words.html&amp;rev=&amp;root=/cvsroot/">Last modified November 20,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

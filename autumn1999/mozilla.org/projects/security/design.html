@@ -1,0 +1,232 @@
+<HTML>
+<HEAD>
+<TITLE>Component Security</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<h1>
+Component Security for Mozilla</h1>
+<script>document.write('<a href="mailto:norris'+String.fromCharCode(64)+
+                       'netscape.com">Norris Boyd</a><br>');</script>
+<script>
+        function lastMod() {
+                var d = new Date(document.lastModified);
+                return (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();
+        }
+        document.write(lastMod() + '<br>');
+</script>
+
+<hr>
+<br>&nbsp;
+<blockquote>Hackers point out that it is vendors, not they, who are responsible
+for the gaping holes that permeate so many products. With companies releasing
+software as fast as possible, proper security often gets lost in the rush
+toward store shelves. "As complexity increases, the opportunity for vulnerability
+increases," says Steven Foote, a senior vice president at the Hurwitz Group,
+which analyzes strategic business applications.&nbsp; -- U.S. News, <a href="http://www.usnews.com/usnews/issue/990614/14hack.htm">Can
+hackers be stopped?</a></blockquote>
+
+<p><br>Mozilla will make increasing use of Internet technologies to implement
+the browser itself. This has many benefits for modularity, cross-platform
+development, and encouraging development by a wider range of people. However,
+it also makes the process of ensuring browser security more challenging
+because the lines distinguishing the trusted browser from the untrusted
+content it displays have become blurred.
+<h2>
+Security Model</h2>
+Mozilla should support the existing security model for JavaScript in web
+content (see <a href="http://developer.netscape.com/docs/manuals/communicator/jssec/index.htm">JavaScript
+Security in Communicator 4.x</a>), with the possible exception of
+<a href="#signedScripts">signed
+scripts</a>. Any <a href="#APIs">new APIs</a> accessible from web content
+using Java or JavaScript should be reviewed for security.
+<p>Unlike Communicator 4.x (or Mozilla classic), Mozilla makes heavy use
+of web-style programming to build the browser itself. This is accomplished
+by making powerful actions available to JavaScript, and means that the
+security model for Mozilla must grow to support two kinds of code: untrusted
+web content and trusted browser implementation code.
+<p>Eventually we will need a full capabilities system similar to what Java
+has reached in Java2. However, given the need to ship quickly, we should
+implement a simpler binary trust model. All code used to implement the
+browser should be given full privileges, while the privileges of any code
+from off the net should be limited as it was in 4.x.
+<p>I'm proposing the following limitations to the capabilities of web-based
+code:
+<ul>
+<li>
+No web-based XUL</li>
+
+<li>
+No direct access to RDF</li>
+
+<li>
+Chrome only runs from the local filesystem (i.e., no downloadable chrome,
+only installable chrome)</li>
+
+<li>
+Limited access to XPConnect components--most components will not be accessible
+from web content, and those that are accessible must undergo security review</li>
+
+<li>
+No access of web content to the surrounding chrome</li>
+</ul>
+These limitations serve to make the system simpler and more secure.
+<h2>
+Implementation</h2>
+
+<h3>
+Distinguishing types of code</h3>
+There are two types of code in our security model: web content and browser
+implementation code. How do we distinquish the two? The existing JavaScript
+codebase contains support for associating a principal with every script
+that is evaluated. Then during execution, a stack of principals corresponding
+to the stack frame of the executing JavaScript can be retrieved. Thus at
+any point security critical code can check to see if it has been called
+by script, and if so, whether that script was privileged or not.
+<br>&nbsp;
+<h2>
+Component Security Analysis</h2>
+
+<h3>
+DOM</h3>
+The DOM should implement the security model from 4.x (at least the unsigned
+part). Historically the DOM has been the area with the most public exploits,
+so security implementation here will need careful review.
+<p>There are several proposals for additions to the 4.x DOM security model.
+Researchers from Bell Labs have proposed several new features, most notably
+domain-specific policies. There's a similar proposal described and elaborated
+in <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=858">Bugzilla bug
+858</a>.
+<h3>
+XUL</h3>
+Since XUL is used to implement chrome, it needs access to highly privileged
+services. All code in chrome should be trusted, which means that installing
+code into chrome is a privileged action. Note that skins don't contain
+any code and should be safe to install without any heavy safeguards.
+<p>XUL code can interact with web content. However, we must ensure that
+web content cannot interact with privileged XUL code. The web content must
+live in a sandbox that cannot be breached through prototype chains or by
+the JavaScript "caller" property.
+<h3>
+RDF</h3>
+Through the sidebar, RDF content can be retrieved directly from untrusted
+servers and aggregated with other RDF content. We'll need a filter for
+RDF that can remove potentially dangerous pieces like JavaScript event
+handlers and link cancellation.
+<p>Many RDF data sources reflect security assets. Most obvious is the filesystem,
+but others like the chrome registry have security implications as well.
+We should prohibit direct access to RDF from untrusted code.
+<h3>
+XPConnect</h3>
+XPConnect allows JavaScript (and soon Java) to get access to native XPCOM
+components that can perform privileged actions. John Bandhauer has implemented
+support for restricting which components are visible through XPConnect.
+Scripts running from web content should be limited to a small set of components,
+each of which is reviewed for security.
+<h3>
+Netlib and Necko</h3>
+Currently protocols like "chrome:" and "resource:" are implemented by pluggable
+protocol handlers. Any untrusted code will need to have limits on which
+protocols it can access. Historically, this has been a source of many exploits
+through protocols like "about:" and "javascript:".
+<br>&nbsp;
+<h2>
+<a NAME="APIs"></a>APIs for Review</h2>
+
+<h3>
+New DOM APIs</h3>
+Not sure what's here.... joki will help.
+<h3>
+Chrome registry API</h3>
+This is an API that allows web pages to request adding XUL files to chrome.
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/security/design.html&amp;rev=&amp;root=/cvsroot/">Last modified October 13,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,212 @@
+<HTML>
+<HEAD>
+<TITLE>JavaScript Shell</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<center>
+<h1>
+JavaScript Shell</h1></center>
+The JavaScript shell provides a simple way to run scripts in batch mode
+or an interactive environment for exploratory programming.
+<h2>
+Invoking the Shell</h2>
+<tt>java org.mozilla.javascript.tools.shell.Main</tt> [<i>options</i>]
+<i>file</i><tt>.js
+[<i>script-arguments</i>]</tt>
+<p>where <i>options</i> are:
+<p><tt>-e </tt><i>script-source</i>
+<blockquote>Executes <i>script-source</i> as a JavaScript script.</blockquote>
+<tt>-f </tt><i>script-filename</i>
+<blockquote>Reads filename specified by <i>script-filename</i> and executes
+it as a JavaScript script.</blockquote>
+<tt>-opt </tt><i>optLevel</i>
+<br><tt>-O</tt> <i>optLevel</i>
+<ul>Optimizes at level <i>optLevel</i>, which must be an integer between
+0 and 9. See <a href="opt.html">Optimization</a> for more details.</ul>
+<tt>-version </tt><i>versionNumber</i>
+<ul>Specifies the language version to compile with. The string <i>versionNumber</i>
+must be one of <tt>100</tt>, <tt>110</tt>, <tt>120</tt>, <tt>130</tt>,
+or <tt>140</tt>. See <a href="overview.html#versions">JavaScript Language
+Versions</a> for more information on language versions.</ul>
+
+<h2>
+Predefined Properties</h2>
+Scripts executing in the shell have access to some additional properties
+of the top-level object.
+<br>&nbsp;
+<h4>
+arguments</h4>
+
+<blockquote>The <tt>arguments</tt> object is an array containing the strings
+of all the arguments given at the command line when the shell was invoked.</blockquote>
+
+<h4>
+help()</h4>
+
+<blockquote>Executing the help function will print usage and help messages.</blockquote>
+
+<h4>
+defineClass(<i>className</i>)</h4>
+
+<blockquote>Define an extension using the Java class named with the string
+argument <i>className</i>. Uses ScriptableObject.defineClass() to define
+the extension.</blockquote>
+
+<h4>
+load([<i>filename</i>, ...])</h4>
+
+<blockquote>Load JavaScript source files named by string arguments. If
+multiple arguments are given, each file is read in and executed in turn.</blockquote>
+
+<h4>
+loadClass(<i>className</i>)</h4>
+
+<blockquote>Load and execute the class named by the string argument <i>className</i>.
+The class must be a class that implements the Script interface, as will
+any script compiled by <a href="jsc.html">jsc</a>.</blockquote>
+
+<h4>
+print([<i>expr</i> ...])</h4>
+
+<blockquote>Evaluate and print expressions. Evaluates each expression,
+converts the result to a string, and prints it.</blockquote>
+
+<h4>
+quit()</h4>
+
+<blockquote>Quit shell. The shell will also quit in interactive mode if
+an end-of-file character is typed at the prompt.</blockquote>
+
+<h4>
+version([<i>number</i>])</h4>
+
+<blockquote>Get or set JavaScript version number. If no argument is supplied,
+the current version number is returned. If an argument is supplied, it
+is expected to be one of <tt>100</tt>, <tt>110</tt>, <tt>120</tt>, <tt>130,</tt>
+or <tt>140</tt> to indicate JavaScript version 1.0, 1.1, 1.2, 1.3, or 1.4
+respectively.</blockquote>
+
+<h2>
+Example</h2>
+Here the shell is invoked three times from the command line. (The system
+command prompt is shown as <tt>$</tt>.) The first invocation executes a
+script specified on the command line itself. The next invocation has no
+arguments, so the shell goes into interactive mode, reading and evaluating
+each line as it is typed in. Finally, the last invocation executes a script
+from a file and accesses arguments to the script itself.
+<p><tt>$ java org.mozilla.javascript.tools.shell.Main -e print('hi')</tt>
+<p><tt>hi</tt>
+<p><tt>$ java org.mozilla.javascript.tools.shell.Main</tt>
+<p><tt>js> print('hi')</tt>
+<br><tt>hi</tt>
+<br><tt>js> 6*7</tt>
+<br><tt>42</tt>
+<br><tt>js> function f() {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return a;</tt>
+<br><tt>}</tt>
+<br><tt>js> var a = 34;</tt>
+<br><tt>js> f()</tt>
+<br><tt>34</tt>
+<br><tt>js> quit()</tt>
+<p><tt>$ cat echo.js</tt>
+<br><tt>for (i in arguments) {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print(arguments[i])</tt>
+<br><tt>}</tt>
+<br><tt>$ java org.mozilla.javascript.tools.shell.Main echo.js foo bar</tt>
+<p><tt>foo</tt>
+<br><tt>bar</tt>
+<p><tt>$</tt>
+<p>
+<hr WIDTH="100%">
+<br><a href="index.html">back to top</a>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/rhino/shell.html&amp;rev=&amp;root=/cvsroot/">Last modified September 28,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

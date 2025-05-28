@@ -1,0 +1,246 @@
+<HTML>
+<HEAD>
+<TITLE>performance: http compression</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<center>
+<h1>performance: HTTP Compression</h1>
+</center>
+
+Owners:
+<a href="mailto:jg@netscape.com">John Giannandrea</a> (jg@netscape.com),
+<a href="mailto:ebina@netscape.com">Eric Bina</a> (ebina@netscape.com)<br>
+Last Updated: 15-September-1998
+
+<p>
+<a href="get_src.html">Getting the Apache module source.</a>
+</p>
+
+<p>
+This project aims to improve real and perceived <i>web browsing</i>
+performance by having the server send compressed HTML files to the
+browser, and having the browser uncompress before displaying.
+Assuming fast enough processors on most machines these days, the
+user should end up seeing the document sooner this way than sending
+uncompressed HTML.  Also, since a majority of network traffic these
+days is HTTP traffic, compressing all HTML sent via HTTP should recover
+a significant amount of <i>wasted</i> network bandwidth.
+</p>
+
+<h3>Stage 1 - <tt>Content-Encoding: gzip</tt></h3>
+
+<dl>
+<dt>Status: <i>Complete</i>
+<dd>
+<p>
+The current Mozilla source already sends <tt>Accept-encoding: gzip</tt>
+and can do a streaming decompression of HTML data received with
+<tt>Content-encoding: gzip</tt>.  All that is needed is a server
+set up to serve this data to mozilla, while maintaining backwards
+compatibility with browsers that can't handle the compressed data.
+</p>
+<p>
+To this end a new Apache 1.3 server module has been written.
+It is activated on a per-directory basis with a command in
+the access.conf file of the format:
+<center>
+<br><tt>CompressContent Yes</tt>
+</center></br>
+When activated, and only if an <tt>Accept-encoding: gzip</tt> header
+is received, all requests for files from that directory
+will be redirected to requests for an equivalent compressed file
+from that directory if one exists.  In essence if you ask for
+<tt>foo.html</tt> and both it and <tt>foo.html.gz</tt> exist
+then those requests with an appropriate Accept-encoding will
+get the compressed file, and other requests will get the uncompressed
+file.
+</p>
+<p>
+This neatly solves the backwards compatibility problem for the browser,
+but creates a maintenance problem on the server end.  One would need to run
+some sort of automated script to regularly maintain up to date compressed
+versions of files in the directories that needed them.  For a solution
+to this maintenance problem, see <i>Stage 2</i> below.
+</p>
+</dl>
+
+<dl>
+<dt>Results:
+<dd>
+
+<p>
+<center>
+Here is an optimal case where all images are in the cache.
+<table border>
+<tr><th colspan=2>Local</th><th colspan=2>ISDN 64 kbits/sec</th><th colspan=2>28.8</th></tr>
+<tr><th>No GZIP</th><th>GZIP</th><th>No GZIP</th><th>GZIP</th><th>No GZIP</th><th>GZIP</th></tr>
+<tr><td>56.9 sec</td><td>61.0 sec</td><td>105.1 sec</td><td>83.2 sec</td><td>327.9 sec</td><td>121.8 sec</td></tr>
+<tr align=center><td colspan=2>7% Slower</td><td colspan=2>21% Faster</td><td colspan=2>63% Faster</td></tr>
+</table>
+</center>
+
+Notes:
+<ol>
+<li>For the <b>Local</b> run both the client and server are running
+on the same machine, so we are seeing both the overhead for client unzip,
+and the slight extra overhead for the server to locate and send the
+gzipped content. (an extra call to stat() a file)
+</ol>
+</p>
+
+<p>
+A more realistic workload was then generated simulating a user starting
+with an empty cache, and visiting the CNN site to read in order:
+Main Page, World, U.S., U.S. Local, Weather, Sci-Tech, Entertainment,
+Travel, Health, Style, and In-Depth.
+<center>
+<table border>
+<tr><th colspan=2>Local</th><th colspan=2>ISDN 128 kbits/sec</th><th colspan=2>28.8</th><th colspan=2>14.4</th></tr>
+<tr><th>No GZIP</th><th>GZIP</th><th>No GZIP</th><th>GZIP</th><th>No GZIP</th><th>GZIP</th><th>No GZIP</th><th>GZIP</th></tr>
+<tr><td>53.0 sec</td><td>53.2 sec</td><td>82.1 sec</td><td>77.6 sec</td><td>264.7 sec</td><td>184.4 sec</td><td>474.1 sec</td><td>307.7 sec</td></tr>
+<tr align=center><td colspan=2>0.4% Slower</td><td colspan=2>5.5% Faster</td><td colspan=2>30% Faster</td><td colspan=2>35% Faster</td></tr>
+</table>
+</center>
+
+Notes:
+<ol>
+<li>A much more realistic set of data with a mix of image hits and
+misses after the first CNN page.
+<li>Note that the gzip cost on the local system is basically lost in the
+noise.
+<li>Also all the image loads make the apparent gain at 28.8 much lower.
+<li>It is curious that the 14.4 load doesn't show a greater speedup.
+</ol>
+
+<p>
+These results seem promising enough to warrant moving on to implementation
+of <i>Stage 2</i>.
+</p>
+</dl>
+
+<h3>Stage 2 - <tt>Transfer-Encoding: gzip</tt></h3>
+
+<dl>
+<dt>Status: <i>Begun</i>
+<dd>
+<p>
+Here we hope to use the new HTTP1.1 <tt>TE: gzip</tt> header to request
+compressed versions of HTML files.  Then the server would need to do
+streaming compression to generate the results.  To minimize the overhead
+on the server it should keep a cache of the compressed files
+to quickly fill future requests for the same compressed data.
+</p>
+<p>
+The current Mozilla source can already accept and decode
+<tt>Transfer-encoding: gzip</tt> data, but does not currently
+send the <tt>TE:</tt> header.  Work has begun on implementing
+the streaming compression in the latest Netscape Enterprise
+Server.  (<font color="#FE2604">General call for volunteers to implement
+this as a module for Apache 1.3</font>).
+</p>
+</dl>
+
+<h3>Stage 3 - Other compression types</h3>
+<p>
+The previous two stages all dealt only with <i>gzip</i> as a form of
+compression.  While a great general compression scheme, we probably want to
+negotiate compression type based on the data type requested.  For example
+if the client requested with a <tt>TE: gzip</tt> header data that turned out
+to be a JPEG image, the server probably should know not to try to
+transfer-encode this with gzip.
+</p>
+
+<h3>Comments etc.</h3>
+<p>
+Any comments/questions or any volunteers to do the TE-aware Apache module,
+or other work, contact: <a href="mailto:ebina@netscape.com">Eric Bina</a>.
+</p>
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/apache/gzip/index.html&amp;rev=&amp;root=/cvsroot/">Last modified September 18,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

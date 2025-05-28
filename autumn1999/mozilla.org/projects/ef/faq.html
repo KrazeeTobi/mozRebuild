@@ -1,0 +1,200 @@
+<HTML>
+<HEAD>
+   <META NAME="Author" CONTENT="Scott Furman">
+   <TITLE>FAQ</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER><B>ElectricalFire Compiler</B></CENTER>
+
+<H1 ALIGN=CENTER>Frequently Asked Questions</H1>
+
+<CENTER>
+  Author: <A HREF="mailto:Scott%20Furman%20%3Cfur@netscape.com%3E">Scott Furman</A> 
+  <BR>
+  <FONT SIZE=-1>Last Modified:</FONT><SCRIPT>document.write(document.lastModified);</SCRIPT>
+</CENTER>
+
+<HR WIDTH="30%">
+<H4><A NAME="what_is"></A>What is ElectricalFire ?</H4>
+
+ElectricalFire (EF) is a Java Virtual Machine (JVM) - an engine that executes
+Java programs.&nbsp; Like many other JVM's, EF compiles Java class files
+into native machine code for faster performance.&nbsp; (A Java source-code
+compiler is first used to compile Java into the intermediate bytecode language
+that is stored in Java class files.)&nbsp; EF's compiler is a <A HREF="#JIT">JIT</A>
+(Just-In-Time) compiler because it does not compile code until it is executed
+for the first time.
+<H4><A NAME="JIT"></A>What's a JIT ?</H4>
+
+JIT is short for "Just-In-Time compiler".&nbsp; Here's how a Java JIT works:
+When Java code calls a Java method and that method hasn't been previously
+called, the caller is suspended while the compiler loads the Java class
+file from the network or file system and compiles it to machine code.
+After compilation completes, execution resumes in the newly compiled method.
+The compilation process is completely transparent to the Java program (except
+for any delay when a method is first invoked.)
+
+<P>JIT compilation is superior to traditional batch compilation because:
+<UL>
+<LI>
+It allows on-demand compilation of methods.&nbsp; Unused methods are never
+compiled.
+
+<LI>
+It enables distribution of platform-independent Java classfiles rather
+than platform-dependent executables.
+
+<LI>
+In the case of network-loaded classes, a Java program can start before
+its been fully loaded.
+</UL>
+On the other hand, JIT'ing code has its disadvantages:
+<UL>
+  <LI> It causes suspension of program execution while the compiler runs. These 
+    short delays often aggregate into a perceptible startup delay for a Java program 
+    or they might cause a program to run "choppily". 
+  <LI> JIT'ing requires that the compiler be distributed and run as part of the 
+    JVM and also consumes more memory in order to perform the compilation.
+  <LI> JIT compilation might not produce code that's as fast as that produced 
+    by batch compilers.&nbsp; This is both because the optimization techniques 
+    used by batch compilers are too slow to use in a JIT and because insufficient 
+    global information is available to make optimizing decisions, e.g. inlining, 
+    when compilation proceeds incrementally. 
+</UL>
+For these reasons, some attention may be given to a batch compilation mode
+for ElectricalFire.
+<H4><A NAME="JDK_port"></A>Is ElectricalFire a port of Sun's JDK ?</H4>
+
+No source code from Sun's JDK is used anywhere in ElectricalFire, nor will
+any be allowed in the future.
+<H4><A NAME="Platforms"></A>What platforms does ElectricalFire support ?</H4>
+
+<p>Short answer:</p>
+<blockquote>
+  <p>For now, only x86 Linux and Windows 95/98/NT are supported. </p>
+</blockquote>
+<P>Long answer:
+<BLOCKQUOTE>Really, the first question to ask is, "What processor architectures 
+  does ElectricalFire (EF) support ?".&nbsp;&nbsp;&nbsp; EF was designed to be 
+  relatively easy to port to any architecture by creating a compiler "back-end" 
+  and writing some assembly support code.&nbsp; The EF source code release contains 
+  a relatively complete x86 back-end and very incomplete back-ends for the Power-PC, 
+  HP PA-RISC, and SPARC processors. 
+  <P>Second, you have to ask whether your OS is supported by the Java runtime
+libraries.&nbsp; Since the state of ElectricalFire's runtime libraries
+is highly incomplete right now, this is still an academic question.</BLOCKQUOTE>
+
+<H4><A NAME="State_of_the_source"></A>What's the current state of ElectricalFire
+?</H4>
+
+The project is just starting to get interesting.&nbsp; On x86 machines,
+more than 90% of the Java Compatibility Kit (JCK) instruction tests now
+pass and we are able to run <TT>javac</TT>, the Java compiler that is itself
+written in Java.
+
+<P>Support for the java.lang and java.lang.reflect packages is substantial, but 
+  far from complete.&nbsp; Basic support is available for java.io. Virtually all 
+  other classes, e.g. AWT, do not work at all because they require integration 
+  with the VM's native code.&nbsp; (When EF was a commercial product, we were 
+  relying on being able to use Sun's JDK1.2 classes and native code to implement 
+  virtually all high-level library functionality.) We will work with one of the 
+  groups working on free Java class libraries, such as the <A HREF="http://www.classpath.org/">Classpath</A> 
+  project, to add Java standard class libraries.&nbsp; Late-breaking news: Sun's 
+  <A HREF="http://java.sun.com/pr/1998/12/pr981208-01.html">new Java licensing 
+  scheme</A> might allow the use of the JDK 1.2 libraries with ElectricalFire.&nbsp; 
+  Stay tuned for further updates. 
+<H4><A NAME="JDK_version"></A>Does ElectricalFire support JDK version 1.1 or
+1.2 ?</H4>
+
+It doesn't really support either yet.&nbsp; See "<A HREF="#State_of_the_source">What's
+the current state of ElectricalFire ?</A>"
+<H4><A NAME="language"></A>What programming language does ElectricalFire use
+?</H4>
+
+Most ElectricalFire code is written in C++.&nbsp; A small amount is written
+in platform-specific assembly code.
+<H4><A NAME="interpreter_and_compiler"></A>Does ElectricalFire contain both
+an interpreter and a compiler ?</H4>
+
+Electrical fire does not contain a Java bytecode interpreter.&nbsp; <B>All</B>
+Java bytecodes are compiled before executing them.&nbsp; Hence, there is
+no opportunity to introduce bugs in which Java program behavior differs
+depending on whether or not bytecode are compiled or interpreted.
+It might be desirable to add an interpreter to eliminate compilation delay
+for rarely-executed methods, such as static initializers.
+<H4><A NAME="Speed"></A>How fast does Java code run using ElectricalFire ?</H4>
+
+The truth is, we don't know yet.&nbsp; No large Java programs have been benchmarked 
+yet using ElectricalFire.&nbsp; We would expect EF to be <A HREF="techdocs/performance.html">at 
+least as fast as existing JITs</A>.&nbsp; The goal of the project is to produce 
+code that has performance that is roughly on par with C/C++. 
+<H4><A NAME="non_developer_help"></A>I'm a programmer, but I don't write compilers.
+Can I help ?</H4>
+
+Definitely!&nbsp; For ElectricalFire to be successful, we will need a strong conformance 
+and functional test suite. 
+<P>Another good place to contribute your time would be the <A HREF="http://www.classpath.org/">Classpath
+Project</A>, which seeks to create an LGPL'ed replacement for the standard
+Java class libraries.&nbsp; Without Java class libraries, ElectricalFire
+would be virtually useless.
+<H4><A NAME="Use_EF"></A>How do I use ElectricalFire for running my Java programs
+?</H4>
+
+It's a little premature for end-users to run ElectricalFire. For one thing, there 
+is only limited implementation of Java classes.&nbsp; You can't use it with Java 
+programs that use AWT, for example. Also, EF is still immature, with many known 
+bugs. Finally, there's no debugging support. 
+<H4><A NAME="Commercial_Product"></A>When will ElectricalFire be released as
+a commercial product of Netscape ?</H4>
+
+<p>There are no plans to make ElectricalFire into a commercial product, by Netscape 
+  or anyone else that we know of.&nbsp; There are no employees paid by Netscape 
+  to work on ElectricalFire.</p>
+<h4><a name="Who_Develops"></a>If Netscape isn't paying anyone to work on ElectricalFire, 
+  who's going to do the development ?</h4>
+<p>You are; This is an open-source project, after all. Four people in the original 
+  development team have volunteered to act as developers and/or module owners, 
+  including the original compiler architect, Waldemar Horwat. So, we have the 
+  seeds of a really good team, but lots more people will be needed to make the 
+  project a success. If you're interested in contributing, check out the <a href="plan.html">developer 
+  roadmap</a>. </p>
+<H4><A NAME="Official_JVM"></A>Will ElectricalFire be the official or default
+JVM for the Netscape browser ?</H4>
+
+Netscape's <A HREF="../../oji">OJI Project</A> is an attempt to allow <B><I>any</I></B>
+JVM to run inside of the browser.&nbsp; Netscape's commercial version of
+the Mozilla browser could conceivably be distributed with a default JVM.
+However, ElectricalFire will certainly not have that honor, because <A HREF="#Commercial_Product">there
+are no plans for it to be released as a commercial product</A>.&nbsp; There
+is no default JVM for the open-source browser and no plans to nominate
+ElectricalFire for that position.
+<H4><A NAME="Origins"></A>What are the origins of ElectricalFire ?</H4>
+
+ElectricalFire began as an in-house commercial compiler project at Netscape in 
+early 1997.&nbsp; The compiler, which was never publicly announced, was scheduled 
+for release in June 1998. It was cancelled in January, 1998 when the company made 
+a strategic shift away from Java.&nbsp; The source was made publicly available 
+on mozilla.org using volunteer effort in January of 1999.&nbsp; Click <A HREF="deadpage.html">here</A> 
+for a more detailed history of the project. 
+<H4><A NAME="Naming"></A>How did the project get its name ?</H4>
+
+<a href="mailto:Scott%20Silver%20%3Cscott.m.silver@alum.dartmouth.org%3E">Scott 
+Silver</a>, one of the first EF developers, originally wanted to codename the 
+project "<A HREF="http://w3.one.net/~lalong/sexualchocolate/">Sexual Chocolate</A>".&nbsp; 
+(I'm not making this up.)&nbsp; That name was rejected, presumably because it 
+would confuse Netscape's managers: "So, this Sexual Chocolate project actually 
+has nothing to do with chocolate ?"&nbsp; Instead, Silver proposed "Electrical 
+Fire" (two separate words).&nbsp; For the open-source release, Scott Furman coalesced 
+the two words into one: "ElectricalFire", to make it apparent that the project 
+was not to be confused with a safety hazard.&nbsp; A word of advice for the wise: 
+if you end up working on a project with Scott Silver, do <b><i><FONT SIZE=+1>not</FONT></i></b> 
+allow him to handle the project codename. 
+<H4>Under what terms is the source code licensed ?</H4>
+<P>ElectricalFire is provided under the <A HREF="http://www.mozilla.org/NPL/">Netscape 
+  Public License</A>. See the NPL <A HREF="http://www.mozilla.org/NPL/FAQ.html">FAQ</A> 
+  for details.
+<P>&nbsp; 
+</BODY>
+</HTML>

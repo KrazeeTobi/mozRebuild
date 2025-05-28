@@ -1,0 +1,542 @@
+<HTML>
+<HEAD>
+<TITLE>Mail/news 5.0 I18n functional specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+Mail/news 5.0 I18n functional
+specification
+<br>last update 10/21/99
+<br>nhotta@netscape.com
+<p><a NAME="5.0 I18N feature"></a><b>5.0 I18N functional specification
+- </b><font size=-1>Note this list does not cover all I18N mail/news feature,
+rather this was written intended as a reference to clarify feature specification
+(e.g. charset label of reply message)</font>
+<table BORDER COLS=4 WIDTH="100%" >
+<tr>
+<td></td>
+
+<td>Description</td>
+
+<td WIDTH="5%">Milestone</td>
+
+<td WIDTH="5%">Status</td>
+</tr>
+
+<tr>
+<td><u>mail/news</u></td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>charset for a new mail</td>
+
+<td>Charset of a new mail always set by the default charset of pref (i.e.
+no inheritance from a current window).</td>
+
+<td>M4</td>
+
+<td>Done</td>
+</tr>
+
+<tr>
+<td>charset for reply/forward mail</td>
+
+<td>Charset of the original message (main body) is used.</td>
+
+<td>M13</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>charset for mailtourl</td>
+
+<td>Charset of a new mail always set by the default charset of pref (i.e.
+no inheritance from a current window).</td>
+
+<td>M15</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>charset for a new mail by address book</td>
+
+<td>Charset of a new mail always set by the default charset of pref.</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#Attachment view/send in">attachment/send</a></td>
+
+<td>No charset label for attachments unless HTML with META charset specified.
+<br>If the main body charset is ISO-2022-JP, HTML attachments are base64
+encoded.&nbsp;</td>
+
+<td>M10</td>
+
+<td>Done</td>
+</tr>
+
+<tr>
+<td>thread pane display</td>
+
+<td>Display subject/address in multiple charset by using charsets encoded
+in MIME header.</td>
+
+<td>M4</td>
+
+<td>Done</td>
+</tr>
+
+<tr>
+<td>thread pane sorting</td>
+
+<td>Use the application locale, store it in a message db (at folder creation
+time) then use it for <a href="http://www.mozilla.org/projects/intl/collation.html">locale
+sensitive string comparison</a>.</td>
+
+<td>M5</td>
+
+<td>Done</td>
+</tr>
+
+<tr>
+<td>thread pane date display</td>
+
+<td>Use <a href="http://www.mozilla.org/projects/intl/date-time-format.html">locale
+sensitive date/time format interface</a>. Always use application locale.</td>
+
+<td>M5</td>
+
+<td>Done</td>
+</tr>
+
+<tr>
+<td>message body view</td>
+
+<td>libmime to convert message to unicode before passing to the layout.</td>
+
+<td>M5</td>
+
+<td>Done</td>
+</tr>
+
+<tr>
+<td>charset override</td>
+
+<td>&nbsp;</td>
+
+<td>M15</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#Attachment view/send in">attachment/view</a></td>
+
+<td>Display multiple charsets.&nbsp;
+<br>Decide the charset by following process.&nbsp;
+<br>1) Content-Type charset 2) Charset menu selection 3) Auto charset detection
+if available (e.g. Japanese).</td>
+
+<td>M6</td>
+
+<td>Done 1)&amp;3)</td>
+</tr>
+
+<tr>
+<td>attachment view by browser</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>folder pane view</td>
+
+<td>Multi lingual display by unicode.</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>message search widget</td>
+
+<td>Multi lingual display by unicode.</td>
+
+<td>M15</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>local message search</td>
+
+<td>Header search, apply MIME decode and charset conversion before comparison
+if necessary.&nbsp;
+<br>Body search, apply decoders (quoted printable, base64, html named entity
+and NCR), plus charset conversion if necessary.</td>
+
+<td>M15</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>IMAP search</td>
+
+<td>Send UTF8 query, plus fall back mechanism by mail charset of the mail
+folder, finally asscii.&nbsp;
+<br>4.51 to support the fall back, 4.5 only supports ascii search. 5.0
+should support utf-8 query.</td>
+
+<td>M14</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>IMAP folder name</td>
+
+<td>When a folder name is stored locally, it should be UTF-8 or modified
+UTF-7 instead of system charset.</td>
+
+<td>M11</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>message filter</td>
+
+<td>Same issue as local message search</td>
+
+<td>M15</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>newsgoup search</td>
+
+<td>Whatever supported by 4.5 (need investigation)</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><u>address book</u></td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>sorting</td>
+
+<td>Same as the message thread sorting.&nbsp;
+<br>Use the application locale, store it in a message db then use it for
+locale sensitive string comparison.</td>
+
+<td>M11&nbsp;</td>
+
+<td>&nbsp;Done</td>
+</tr>
+
+<tr>
+<td>address book widgets</td>
+
+<td>Multi lingual display by unicode.</td>
+
+<td>M11</td>
+
+<td>&nbsp;Done</td>
+</tr>
+
+<tr>
+<td>type down</td>
+
+<td>Multi lingual support.</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>name completion</td>
+
+<td>Multi lingual support.</td>
+
+<td>M14&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><u>Preference</u></td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>intl.mailcharset.cyrillic</td>
+
+<td>not needed</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>intl.mailcharset.override_1</td>
+
+<td>not needed</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>mailnews.send_hankaku_kana</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<p>
+<hr WIDTH="100%">
+<br><a NAME="Attachment view/send in"></a><b>Attachment view/send in detail</b>
+<p>View:
+<ul>
+<li>
+Charset labeled attachments can be viewed correctly.</li>
+
+<li>
+Unlabeled attachments may be viewed if charset detection is available.</li>
+
+<li>
+Otherwise, unlabeled (and not iso-8859-1) attachments cannot be viewed
+inline (i.e. displayed as a link).</li>
+
+<li>
+There is a post beta 1 feature which enable the charset menu to view unlabeled
+attachments (charset override #5938).</li>
+</ul>
+
+<p><br>Send:
+<ul>
+<li>
+Use META charset for HTML as a charset label if available.</li>
+
+<li>
+Otherwise, no charset label&nbsp; is attached to the sending attachments.</li>
+
+<li>
+Apply Base 64 encoding for Japanese attachments only.</li>
+</ul>
+
+<p><br>
+<hr WIDTH="100%">
+<br><a NAME="Address book charset"></a><b>Address book charset conversion</b>
+<ul>
+<li>
+Charset for the storage is UTF-8 (escape/unescape for 8 bit data may be
+done by database).</li>
+
+<li>
+Charset conversion of UCS2 and UTF-8 (both direction) is needed between
+RDF and address book storage.</li>
+
+<li>
+Importing ldif needs no conversion (base64 decoding only) since ldif charset
+is UTF-8.</li>
+
+<li>
+Importing 4.x address book needs conversion from pref specified charset
+to UTF-8.</li>
+
+<li>
+I18n to provide a mapping function from csid to charset name since csid
+is used in 4.x pref.</li>
+</ul>
+
+<p><br>
+<hr WIDTH="100%">
+<br><b>Charset conversion fallback for mail send</b><b></b>
+<p>text/html - Apply charset conversion first. For characters not convertered
+from unicode, fallback to named entity then NCR.
+<p>text/plain - Apply charset conversion first. For characters not convertered
+from unicode, fallback to '?' (question mark) or send as UTF-8 (need a
+pref for the selection).
+<p>
+<hr WIDTH="100%">
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/intl/mail-news-i18n-spec.html&amp;rev=&amp;root=/cvsroot/">Last modified October 22,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

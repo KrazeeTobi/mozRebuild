@@ -1,0 +1,197 @@
+<HTML>
+<HEAD>
+<TITLE>INI file syntax</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<center>
+<h4>
+INI file syntax</h4></center>
+
+<hr WIDTH="100%">
+<p>INI file contains 4 major sections. They are Local Variables, Navigation
+Controls, Sub Pages, Widgets.
+<p><b>Local Variables</b> : These are the variables that are specific to
+the corresponding INI file. Local Variables allow each page to define it's
+own properties like title, font, caption, etc., If an INI file misses a
+common property like title, Wizard Machine travels up in the tree to get
+the corresponding value and the value thus obtained will be used as local
+variable. A global defaults node will be defined in the beginning (which
+can't be modified by the user) and it will serve as ultimate destination
+in case no node contains the required information.
+<p><b>Navigation Controls</b> : We can make Wizard Machine to jump from
+one node to another node (not to it's sibling as moving to sibling is default)
+by mentioning information of desired transfer of control under this section.
+For example, if we want wizard to from a particular node to the end of
+the session, we can associate path to be jumped with onNext action. Similarly,
+we can mention the name of the help file to be loaded in this section.
+<p><b>Sub Pages</b> : We have a hierarchical structure with respect to
+the data maintenance of CCK components. A node can contains sub nodes.
+For example, CCK as main node can have Shell, Install Builder, etc. as
+sub nodes. This information is represented under this section. When a page
+has no more sub pages, it is considered as a leaf node and will be displayed
+according to the widgets defined on the page.
+<p><b>Widgets</b> : Widgets are the fields that are presented to the end
+user to collect the information required by the CCK wizard to create a
+build of customized communicator. Each widget will have standard features
+like name, value, coordinates, type, etc.,. One can also associate an action
+with a widget that can generate an event via certain actions (for example
+a click on button). Not every INI file will have widgets. A page with no
+widgets is considered as container as container page and wizard machine
+moves to the next/previous displayable page in the sequence as a result
+next/previous actions carrying the information offered by the container
+page.
+<p>
+<hr WIDTH="100%">
+<p><u>Skeleton INI file</u> :
+<p>[Local Varaibles]
+<br>Name=name
+<br>Title=title
+<br>Visisbility=show/hide
+<p>[Navigation Controls]
+<br>OnNext=node path
+<br>Help=help file
+<p>#Represents any sub pages under this component
+<br>&nbsp;[Sub Pages]
+<br>page1<i>=show/hide</i>
+<br>page2<i>=show/hide</i>
+<br><i>.</i>
+<br><i>.</i>
+<br><i>.</i>
+<p>#Represents all fields that go on to the dialog pertained to this page
+<br>[Widget1]
+<br>type=widget type
+<br>name=name of widget
+<br>value=value
+<br>start_X=beginning X coordinate
+<br>start_Y=beginning Y coordinate
+<br>Width=widget width
+<br>Height=widget height
+<p>.
+<br>.
+<br>.
+<p>[Widget'n']
+<p>
+<hr WIDTH="100%">
+<p><u>Here is the sample INI file</u> :
+<p>#Variables that are specific to the page. Scoped variables.
+<br>[Local Variables]
+<br>Name=page1
+<br>Title=Sample Page
+<br>Visibility=show
+<p>[Navigation Controls]
+<br>OnNext=Install Builder, Done Page
+<br>Help=Convert.txt
+<p>#Represents any sub pages under this component
+<br>&nbsp;[Sub Pages]
+<br><i>No sub pages defined. A leaf node.</i>
+<p>#Represents all fields that go on to the dialog pertained to this page
+<br>[Widget1]
+<br>type=Text
+<br>name=Text1
+<br>value=Converting JSC File to CFG file.
+<br>start_X=7
+<br>start_Y=15
+<br>Width=25
+<br>Height=25
+<p>[Widget2]
+<br>type=Button
+<br>name=Button1
+<br>value=Convert
+<br>start_X=23
+<br>start_Y=31
+<br>Width=63
+<br>Height=45
+<br>onClick=ce.dll, ConvertJSCtoCFG
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/cck/docs/WizardMachine/syntax.html&amp;rev=&amp;root=/cvsroot/">Last modified February  6,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+  <HEAD>
+    <TITLE>Some COM Ownership Guidelines</TITLE>
+    <!-- LINK REL=StyleSheet HREF="http://www.meer.net/ScottCollins/xpfe/Standard.css" TYPE="text/css" -->
+    <LINK REL=StyleSheet HREF="Standard.css" TYPE="text/css">
+  </HEAD>
+
+  <BODY>
+		<H1>Some COM Ownership Guidelines</H1>
+
+<DIV class=author-note>
+	<P>by <A HREF="http://www.meer.net/ScottCollins/">Scott Collins</A><!-- /P -->
+	<P>last modified 27 April 1999</P>
+</DIV>
+
+<DIV class="document-label">
+	<A name="abstract">
+		<STRONG>Abstract:</STRONG>
+		Some simple guidelines for building a supportable ownership model.
+	</A>
+</DIV>
+
+<DIV class="document-label">
+	<P>
+		<STRONG>Document Status:</STRONG> Draft; Public.
+		More explanation needed.
+	</P>
+</DIV>
+
+
+<H2>If you made it, you own it.</H2>
+
+<P>
+	...naturally.
+	If you create a temporary object,
+		obviously it's up to you to destroy it.
+	That's a sure sign of ownership.
+	If you create an object with a longer lifespan,
+		you will own it until you give ownership away.
+</P>
+
+<H3>All `factory' and `getter' functions produce owning pointers.</H3>
+
+<P>
+	Such a function is the perfect example of something that
+		creates an object with a longer lifespan that itself,
+		and gives away ownership (by producing a pointer that is already <SPAN class="source-code">AddRef</SPAN>ed) ---
+		in this case, to the caller.
+	This is terrific for factory functions,
+		but can be problematic for mere getters.
+	It's unfortunate if you just needed access to it for a moment.
+	In the latter case, caching the pointer you got back makes you a de facto owner.
+	This may not be appropriate; and it may be hard to remedy
+		without knowing if the object in question was truly created in response to your query.
+</P>
+
+
+<H2>Needing it isn't, by itself, a valid reason for owning it.</H2>
+
+<P>
+	You don't own an object because <STRONG>you</STRONG> need <STRONG>it</STRONG>.
+	In fact often you own it because <STRONG>it</STRONG> needs <STRONG>you</STRONG>.
+</P>
+
+<H2>If you own <STRONG>it</STRONG>, it shouldn't own <STRONG>you</STRONG>.</H2>
+
+<P>
+	Even transitively.
+	Or put another way: the ownership graph for any system should be acyclic.
+	Anytime there is a cycle of ownership,
+		there is a situation that isn't automatically handled by destructors.
+	Special code must be provided and called to break the cycle before the participants can be individually released.
+</P>
+
+<H2>You don't need to own it if it's lifetime is guaranteed to be longer than yours.</H2>
+
+<P>
+	As for instance, when it owns you.
+</P>
+
+<H2>Parents own their children (and not the reverse).</H2>
+
+<P>
+	Though parents may not <STRONG>need</STRONG> to own their children.
+	For instance, a tree may own all the nodes that are in it.
+	All the nodes in the tree point to each other with non-owning pointers.
+	In the simplest scheme, however,
+		parents point to their children with owning-pointers,
+		children point back to their parents with non-owning-pointers.
+</P>
+
+<H2>Containers own the things they contain (and not the reverse).</H2>
+
+<P>
+</P>
+
+
+<H2>Use <SPAN class="source-code">nsCOMPtr</SPAN>s to implement owning-pointers.</H2>
+
+<P>
+	It's explicit, efficient, and fairly bullet-proof.
+	It's easier to write `getter's and `setter's; and you don't need to put anything in your destructor.
+</P>
+
+<DIV class="author-note">
+  <HR>
+    <A HREF="http://validator.w3.org/check?uri=http://www.mozilla.org/projects/xpcom/Ownership.html">
+      <IMG BORDER=0 align=left SRC="http://validator.w3.org/images/vh40.gif" ALT="Valid HTML 4.0!" HEIGHT=31 WIDTH=88>
+    </A>
+    <A HREF="http://www.w3.org/Style/CSS/Buttons">
+      <IMG BORDER=0 align=left SRC="http://www.w3.org/Style/CSS/Buttons/cssos" ALT="CSS" HEIGHT=31 WIDTH=88>
+    </A>
+    Copyright&copy; 1999 by Netscape; use is subject to the <A HREF="http://www.mozilla.org/NPL/">NPL</A>.
+</DIV>
+	</BODY>
+</HTML>

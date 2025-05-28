@@ -1,0 +1,482 @@
+<HTML>
+<HEAD>
+<TITLE>How to test XPConnect components within Mozilla Mail/News</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+ 
+<div align="center">
+<b><font size="+2">How to test XPConnect components within Mozilla Mail/News</font></b><br><br>
+<b>By Par Pandit &lt;<A href="mailto:ppandit@netscape.com">ppandit@netscape.com</A>&gt;</b><br>
+<b>Last Updated: November 29, 1999</b><br>
+<b>Verion 1.1</b>
+<br>
+</div>
+<br><br>
+<div align="center"><font size="+2">Table of Contents</font></div>
+<div align="left">
+<ol>
+	<li><A href="#Introduction">Introduction</A>
+	<li><A href="#Prequiste">Before you can start</A>
+	<li><A href="#WhatToDo">What to do</A>
+	<li><A href="#PossibleProblems">Possible Problems</A>
+	<li><A href="#DirectoriesFiles">Directories and Files Involved</A>
+	<li><A href="#Commands">Glossary</A></li>
+</ol>
+</div>
+<P>&nbsp;</P>
+<a name="Introduction"></a>
+<P align=center><STRONG>Introduction</STRONG></P><B></B>
+<P>This document describes the basics needed to start testing the 
+Mail API. A working knowledge of JavaScript is assumed. We are looking for 
+people to take ownership of an API interface and provide testcases for all 
+the methods and properties that exist within that interface. We have a standard template 
+that we follow for setting up the testcases and reporting the results. This 
+template will hopefully will connected to a database in the future to 
+keep track of testcase pass/fail history. In the meantime, we want people to 
+develop testcases. If you participate, you will be assigned an interface and 
+your name will be displayed in APICalls.html. It helps to know C++ as well 
+since many times you need to look at the actual code of Mozilla to understand what 
+the API call is trying to accomplish. You will get to know and understand Mozilla 
+and its components better and will learn about some of the standards that 
+Mozilla is implementing. If you are interested in participating, please email 
+the coordinator <A href="mailto:ppandit@netscape.com?Subject=API Testing ">Par Pandit</A>. 
+<b></P>
+<a name="Prequiste"></a>
+<P align=center>Before you can start</P></B>
+<P>
+<br>
+<ul>
+<li>Please read all you can about the following topics:
+    <P></P>
+<P>
+<ul>
+<li><a href="http://www.mozilla.org/projects/xpcom/">XPCOM</a>
+<li><a href="http://www.mozilla.org/scriptable/index.html">XPConnect</a>
+<li><a href="http://www.mozilla.org/rdf/doc/">RDF</a>
+<li><a href="http://www.mozilla.org/js/">JavaScript</a>
+<li><a href="http://www.mozilla.org/xpfe/xptoolkit/xulintro.html">XUL</a>
+<li><a href="http://www.w3.org/TR/html40/">HTML</a></li>
+<li><a href="http://www.mozilla.org/mailnews/arch/">Mozilla Mail 5.0 Architecture</a>
+</ul> 
+<br>
+<li>Check the <A href="tests/apicalls.html">APICalls.html</A> file to see
+which interfaces require testcases.
+<li> Actually use the Messenger email client before starting so you will have a
+better understanding of the features and functions calls. 
+<li> Finally understand that not everything is 
+    implemented nor is it guaranteed to be before 5.0 is shipped.</li></ul>
+<br><br>
+<a name="WhatToDo"></a>
+<P></P>
+<UL></UL>
+<div align="center"><b>What to do</b></div>
+<ol type="I">
+	<li>Go to <A href="tests/apicalls.html">APICalls.html</A> to find out which interfaces 
+    need testing and choose an interface. For our purposes we will chose the interface nsIMsgCompFields in the file /mozilla/mailnews/compose/public/nsIMsgCompFields.idl
+    
+	<li>Determine the Prog ID for the interface
+	<ol type="A">
+		<li>Go to the component's public directory
+		<ol type="i">
+			<li>Example: cd 
+            \mozilla\mailnews\compose\public</li>  
+		</ol>
+		<li>Open the component factory file
+		<ol type="i">
+			<li>Example: notepad \mozilla\mailnews\compose\build\nsMsgCompFactory.cpp
+			<li>In the NSRegisterSelf function look for the ProgID for MsgCompFields
+			<ol type="a">
+				<li>Notice the <i><b>component://netscape/messengercompose/ composefields</b></i> in<br> 
+				rv = 
+				  
+				  compMgr-&gt;RegisterComponent( kCMsgCompFieldsCID,
+										&quot;Message Compose Fields&quot;,
+										&quot;component://netscape/messengercompose/composefields&quot;,
+										path, PR_TRUE, PR_TRUE);<br>
+				<li>Copy the ProgID into a buffer or text page</li>     
+			</ol></li>
+		</ol></li>
+	</ol>
+    <li>Create a new testcase 
+	<ol type="A">
+		<li> All the testcases contain the following the basic format
+		<ol type="i">
+			<li> Header to describe name and status
+			<li> Global variables contained within the HEAD section
+			<li> Some code that is included as part of the automation testing that we are planning to do
+			<li> A form that includes buttons for all the methods or variables that will be tested
+			<li> A series of functions that start with 
+                Do_XXX that will test the method or variable</li>               
+		</ol>
+		<li> Start a new testcase by copying from an existing testcase or the standard template
+		<li> In order to get an instance of the interface, use an existing one (getService) or create one (createInstance). Use getservice() if the interface is a singleton. Use createInstance() if the interface is not a singleton and  if you want to create a new object. Modify the testcase code to use the ProgID you saved in the buffer. For the example we would use createInstance() but both methods are provided below.
+		<ol type="i">
+			<li><b><i>instanceofcompfields = Components.classes[ 'component://netscape/messengercompose/composefields']. createInstance();</i></b>
+			<li><b><i>instanceofcompfields = Components.classes[ 'component://netscape/messengercompose/composefields']. getservice();</i></b></li>
+		</ol>
+		<li> Do a interface query to verify that you access the COM object as the interface you want to test
+		<ol type="i">
+			<li>
+<b><i>instanceofcompfields. QueryInterface (Components.interfaces.nsIMsgCompFields); </i></b>
+		</ol>
+		<li> Set up the form and associated functions
+		<ol type="i">
+			<li> Go to the form and change the button values to reflect the methods to be tested.
+			<li> Create a series of empty fuctions named Do_XXXX with XXXX replaced by the name of the method to be tested
+			<li> Associate a link between the each button and its function
+			<ol type="a">
+				<li> Example: <form><input type="button" value="SetTo()" onClick="Do_SetTo();"> is mapped to a function Do_SetTo()</form></li>      
+			</ol></li>
+		</ol>
+		<li>Change the dump and document.wrote statements to reflect the interface you are testing
+		<li>Change sFilename to reflect the name of the testcase. When you are assigned a testcase in <A href="tests/apicalls.html">APICalls.html</A>, you will be provide the filename you should use.
+		<ol type="i">
+			<li>var sFilename = 
+            &quot;mncompose004.html&quot;
+		</ol>
+		<li> Change the parameters of Testcase to reflect the name of the testcase and Interface
+		<ol type="i">
+			<li><pre>aTestcases[tc++] = new Testcase(<b>sFilename</b>,
+                               <b>&quot;nsIMsgCompFields&quot;</b>,
+                               &quot;Pass&quot;,
+                               GetTheComposeSession(),
+                               &quot;Bug report required&quot;);</pre></li>
+		</ol>
+		<li>Now comes the hard part. Actually write the function calls and have the output go to the textarea of the form. This includes making sure you receive and handle the nsresult output from most function and do error handling.
+		<li>If at any time during the running of a function, 
+        the expected result fails then change the global variable result to 
+        fail</li>                     
+	</ol></li>
+</ol>
+<OL></OL>
+<OL></OL>
+<br>
+<a name="PossibleProblems"></a>
+<b><div align="center">Possible Problems </div></b>
+<br>
+You will encounter many possible problems when trying to test XPConnect. Here is a list of the current known ones.
+<ul>
+	<li>Anything within the C++ markings in IDL files is not testable such as the following from nsIMsgSend.idl
+		<ul>
+		<li><pre>%{C++
+#include &quot;nsIURL.h&quot;
+#include &quot;rosetta.h&quot;
+#include &quot;rosetta_mailnews.h&quot;
+%}		</pre>
+		<li><pre>%{ C++
+enum
+{
+  nsMsgDeliverNow = 0,
+  nsMsgQueueForLater = 1,
+  nsMsgSave = 2,
+  nsMsgSaveAs = 3,
+  nsMsgSaveAsDraft = 4,
+  nsMsgSaveAsTemplate = 5
+} /* nsMsgDeliverMode */;
+%}		</pre>
+		<li><pre>%{ C++
+typedef nsresult (*nsMsgSendCompletionCallback)
+        (nsresult aExitCode, 
+	void *tagData, 
+	nsFileSpec *returnFileSpec);
+typedef nsresult (*nsMsgSendUnsentMessagesCallback)
+        (nsresult aExitCode, 
+	PRUint32 totalSentCount, 
+	PRUint32 totalSentSuccessfully, 
+	void *tagData);
+%}		</pre>
+		<li><pre>%{ C++
+// Attachment file/URL structures
+struct nsMsgAttachmentData
+{
+  nsIURI  *url;	
+  char *desired_type;	
+  char *real_type;
+  char *real_encoding;	
+  char *real_name;
+  char *description;			 
+  char *x_mac_type, *x_mac_creator; 
+};		</pre></li>
+		</ul>
+	<li>Anything with the word [native] is not testable
+		<ul>
+		<li>Example: [ptr] native 
+        sendListenerPtr(nsIMsgSendLaterListener *) in IMsgSendLater.idl</li>      
+		</ul>
+	<li>Interfaces that contain [noscript] mean the following methods are not testable (???)
+	<li>There are several data structure which are not possible to construct within JavaScript
+		<ul>
+		<li>nsISupports: void AddUnique(in nsISupports element) in nsIAbBase.idl (???)
+		<li>nsISupportsArray: void DeleteDirectories(in nsISupportsArray dierctories) in nsIAbDirectory
+		<li>nsFileSpec: void OpenMDB(in nsFileSpec dbName, in boolean create) in nsIAddrDatabase.idl
+		<li>nsIDOM*: void DeleteCards(in nsIDOMXULElement tree, in nsIDOMXULElement srcDir, in nsIDOMNodeList node) in nsIAddressBook
+		<li></li>
+		</ul>
+	<li>Scriptable functions which contains parameters that 
+    have any of the possible problems above are not testable</li>               
+</ul>
+
+<a name="DirectoriesFiles"></a>
+<b><div align="center">Directories and Files Involved</div></b>
+
+<ul>
+<li>\mozilla\mailnews\addrbook
+<ul>
+	<li>\build\nsAbBaseCID.h 
+        
+	<li>\build\nsAbFactory.cpp</li>
+</ul>
+<ul>
+	<li>\public\nsIAbAddressCollector.idl
+	<li>\public\nsIAbBase.idl
+	<li>\public\nsIAbCard.idl
+	<li>\public\nsIAbDirectory.idl
+	<li>\public\nsIAbListener.idl
+	<li>\public\nsIAddrBookSession.idl
+	<li>\public\nsIAddrDatabase.idl
+	<li>\public\nsIAddrDBAnnouncer.idl
+	<li>\public\nsIAddrDBListner.idl
+	<li>\public\nsIAddressBook.idl
+	<li>\public\nsIAutoCompleteListener.idl
+	<li>\public\nsIAutoCompleteSession.idl</li>
+</ul>
+<li>\mozilla\mailnews\base
+<ul>
+	<li>\build\nsMsgBaseCID.h 
+        
+	<li>\build\nsMsgFactory.cpp</li>
+</ul>
+<ul>
+	<li>\public\nsICopyMessageListener.idl
+	<li>\public\nsICopyMsgStreamListener.idl
+	<li>\public\nsIFolder.idl
+	<li>\public\nsIFolderListener.idl
+	<li>\public\nsIMessage.idl
+	<li>\public\nsIMessageView.idl
+	<li>\public\nsIMesseneger.idl
+	<li>\public\nsIMsgAccount.idl
+	<li>\public\nsIMsgAccountManager.idl
+	<li>\public\nsIMsgBiffManager.idl
+	<li>\public\nsICopyServices.idl
+	<li>\public\nsICopyServiceListener.idl
+	<li>\public\nsIMsgFolder.idl
+	<li>\public\nsIMsgFolderCache.idl
+	<li>\public\nsIMsgFolderCacheElement.idl
+	<li>\public\nsIMsgGroupRecord.idl
+	<li>\public\nsIMsgHdr.idl
+	<li>\public\nsIMsgHost.idl
+	<li>\public\nsIMsgIdentity.idl
+	<li>\public\nsIMsgIncomingServer.idl
+	<li>\public\nsIMsgMailNewsUrl.idl
+	<li>\public\nsIMsgMailSession.idl
+	<li>\public\nsIMsgMessageService.idl
+	<li>\public\nsIMsgSignature.idl
+	<li>\public\nsIMsgStatusFeedback.idl
+	<li>\public\nsIMsgMsgThread.idl
+	<li>\public\nsIMsgVCard.idl
+	<li>\public\nsIMsgWindowData.idl
+	<li>\public\nsIUrlListener.idl
+	<li>\public\nsIUrlListenerManager.idl
+	<li>\public\nsMsgFolderFlags.idl</li>
+</ul>
+<li>\mozilla\mailnews\compose
+<ul>
+	<li>\build\nsIMsgCompCID.h
+	<li>\build\nsIMsgCompFcatory.cpp</li>
+</ul>
+<ul>
+	<li>\public\nsIMsgCompFields.idl
+	<li>\public\nsIMsgCompose.idl
+	<li>\public\nsIMsgComposeService.idl
+	<li>\public\nsIMsgDraft.idl
+	<li>\public\nsIMsgQuote.idl
+	<li>\public\nsIMsgSend.idl
+	<li>\public\nsIMsgSendLater.idl
+	<li>\public\nsIMsgSendLaterListener.idl
+	<li>\public\nsIMsgSendListener.idl
+	<li>\public\nsISmtpService.idl</li>
+</ul>
+<li>\mozilla\mailnews\db
+<ul>
+	<li>\msgdb\build\nsMsgDBCID.h
+	<li>\msgdb\build\nsMsgDBFactory.cpp</li>
+</ul>
+<ul>
+	<li>\msgdb\public\nsIDBChangeAnnouncer.idl
+	<li>\msgdb\public\nsIDBChangeListener.idl
+	<li>\msgdb\public\nsIDBFolderInfo.idl
+	<li>\msgdb\public\nsIMsgDatabase.idl</li>
+</ul>
+<li>\mozilla\mailnews\idl
+<ul>
+	<li>\MailNewsTypes.idl</li>
+</ul>
+<li>\mozilla\mailnews\imap
+<ul>
+	<li>\build\nsIMsgImapCID.h
+	<li>\build\nsImapFactory.cpp</li>
+</ul>
+<ul>
+	<li>No IDL files for imap at this time</li>       
+</ul>
+<li>\mozilla\mailnews\local
+<ul>
+	<li>\build\nsMsgLocalCID.h
+	<li>\build\nsMsgLocalFactory.cpp</li>
+</ul>
+<ul>
+	<li>\public\nsIMailboxService.idl
+	<li>\public\nsIMailboxUrl.idl
+	<li>\public\nsIMsgParseMailMsgState.idl
+	<li>\public\nsIPop3IncomingServer.idl
+	<li>\public\nsIPop3Service.idl
+	<li>\public\nsIPop3Sink.idl
+	<li>\public\nsIPop3URL.idl</li>
+</ul>
+<li>\mozilla\mailnews\mime
+<ul>
+	<li>\abstatus\build\nsMiscStatusFactory.cpp
+	<li>\emitters\build\nsMimeEmitterCID.h
+	<li>\emitters\build\nsEmitterfactory.cpp</li>
+</ul>
+<ul>
+	<li>\public\nsIMimeEmitter.idl
+	<li>\public\nsIMimeMiscStatus.idl
+	<li>\public\nsIMimeStreamConverter.idl
+	<li>\public\nsIMimeURLUtils.idl
+	<li>\public\nsIMsgHeaderParser.idl</li>
+</ul>
+<li>\mozilla\mailnews\movemail
+<li>\mozilla\mailnews\news
+<ul>
+	<li>\build\nsMsgNewsCID.h
+	<li>\build\nsMsgNewsFactory.cpp</li>
+</ul>
+<ul>
+	<li>\public\nsIMsgOfflineNewsState.idl
+	<li>\public\nsINNTPArticleList.idl
+	<li>\public\nsINNTPCategory.idl
+	<li>\public\nsINNTPCategoryContainer.idl
+	<li>\public\nsINNTPHost.idl
+	<li>\public\nsINntpIncomingServer.idl
+	<li>\public\nsINNTPNewsgroup.idl
+	<li>\public\nsINNTPNewsgroupList.idl
+	<li>\public\nsINNTPNewsgroupPost.idl
+	<li>\public\nsINntpService.idl
+	<li>\public\nsINntpUrl.idl</li>
+</ul>
+<li>\mozilla\mailnews\public
+<ul>
+	<li>MailNewsTypes2.idl</li>
+</ul>
+<li>\mozilla\mailnews\ui</li>
+</ul>
+
+<a name="Commands"></a>
+<b><div align="center">Glossary</div></b>
+<dl>
+	<dt>dump	<dd>send output to the DOS debug window when 
+        seamonkey is running	
+	<dt>http	<dd>Hypertext Transfer Protocal is designed to be a 
+    small, fast protocal that is well suited for distributed multimedia 
+    information systems and hypertext jumps between sites 
+    <dt>mime	<dd>MIME is a series of specifications that describe how to
+	represent binary data as text so that they may be sent via text-based electronic
+	mail.
+	<dt>native	<dd>This is the same (as far as xpconnect is concerned) 
+    as declaring it as a void*</dd> 
+	<dt>singleton <dd>A 'singleton' object is one in which the object can 
+    be created only once. There cannot be multiple instances of a singleton 
+    objects. Most of the services &amp; sessions interfaces are singleton.   
+	<dt>additional mozilla terms <dd> <a href="http://www.mozilla.org/docs/jargon.html">http://www.mozilla.org/docs/jargon.html</a>
+</dl>
+<OL></OL>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/howtotestmnapi.html&amp;rev=&amp;root=/cvsroot/">Last modified November 29,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

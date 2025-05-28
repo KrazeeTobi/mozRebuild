@@ -1,0 +1,230 @@
+<HTML>
+<HEAD>
+<TITLE>Leaky</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+<center><b><font size="+2" face="Arial,Helvetica">
+Leaky
+</font></b></center><br>
+Leaky is a program which will help you find memory leaks, and as of late,
+help you debug reference count problems with xpcom objects.<br>
+<br>
+
+<b><font size="+2" face="Arial,Helvetica">
+Get the Source
+</font></b></center><br>
+Leaky is not currently part of the default SeaMonkey module,<br>
+you will need to explicitly pull the source:<br>
+<br>
+<pre>
+  cvs checkout mozilla/tools/leaky 
+</pre>
+If there is enough demand, we can make this part of
+the default SeaMonkey module.
+<br>
+<br>
+
+<b><font size="+2" face="Arial,Helvetica">
+Building it
+</font></b></center><br>
+<pre>
+  ./configure --enable-leaky
+</pre>
+Top-of-tree build should Just Build It and leaky will show up in dist/bin.
+<br>
+<br>
+
+
+<b><font size="+2" face="Arial,Helvetica">
+Using Leaky
+</font></b></center><br>
+
+After it has been built, you can use TestPreload and TestMalloc and ShowLibs to
+debug your implementation.
+<p>By setting the <code>LIBMALLOC_LOG</code> environment variable you control how much
+information is logged during the programs execution. See libmalloc.h for
+a definition of the values to use. If you are using <code>LD_PRELOAD</code>, here is
+one way to run your program:
+<blockquote><tt>env LD_PRELOAD=/full/path/to/libleaky.so LIBMALLOC_LOG=1
+my-program</tt></blockquote>
+The debugging malloc library creates two files, <code>malloc-log</code> and <code>malloc-map</code>.
+The malloc-log file can be quite large for large programs (e.g. mozilla)
+so be prepared to have alot of disk space. The malloc-map is tiny.
+<p>Once your program has completed execution you can use leaky to look
+for memory leaks, or at least use it to dump the log. For memory leaks,
+you use leaky like this:
+<blockquote><tt>leaky -d &lt;program-name-goes-here> malloc-log</tt></blockquote>
+Leaky will then display all of the call sites where memory was leaked.
+To look at the entire log file contents, not just the leaks add "-a" to
+the arguments:
+<blockquote><tt>leaky -d -a &lt;program-name-goes-here> malloc-log</tt></blockquote>
+For debugging reference count issues, here is what I&nbsp;do:
+<ol>
+<li>
+Set LIBMALLOC_LOG&nbsp;to "8"</li>
+
+<li>
+Modify your source code so that your class::Addref and class::Release methods
+call __log_addref and __log_release, as appropriate. See libmalloc.h for
+their signatures.</li>
+
+<li>
+Run your program so that you get the log data. Its often convenient to
+run your program in the debugger and then set a breakpoint at an interesting
+location where you think some object is being leaked or over-freed. Then
+when the debugger gets there tell it to execute DumpAddressMap. In gdb
+you do this:</li>
+
+<ol><tt></tt>&nbsp;
+<br><tt>(gdb)&nbsp;p DumpAddressMap()</tt>
+<br><tt></tt>&nbsp;</ol>
+
+<li>
+Then use leaky to capture the addref and release calls to a log file:</li>
+
+<ol>&nbsp;
+<br><tt>leaky -d -a &lt;program-name-goes-here>&nbsp;malloc-log >&nbsp;log</tt>
+<br>&nbsp;</ol>
+
+<li>
+Then use "grep" to search the log for a specific object by grepping for
+its memory address...</li>
+
+<li>
+On a typical *short*&nbsp;run of mozilla, I'll end up with a malloc-log
+file of around 5 to 10 megabytes and the resulting converted log file will
+be 10 to 20 times that so be prepared to have alot of disk space. It helps
+a great deal to narrow down your problem space to reduce the log file size...</li>
+</ol>
+<br>
+
+Leaky now has a "graph" output option.  If you do this:</p>
+<pre>
+  leaky -gqx &lt;program-name-goes-here>&nbsp; malloc-log | c++filt | sed -e 's/&/&amp;/g' > /tmp/GQ0.html</pre>
+<p>Then leaky will make a graph of the leaks [-g] and output that graph
+in xml format (currently actually html...) [-x]. I use c++filt to
+translate the C++ mangled names into ascii and then use sed to make it
+legitimate html and off it goes to a file.</p>
+
+<p>If you throw file at viewer (recursion is cool) then it will
+present you with a treeview of the leaks that you can click on to
+open/close sections.  Screenshot below, on a test run of viewer.  Enjoy!</p>
+
+<img src="images/leaky.gif">
+
+<br>
+<br>
+
+<b><font size="+2" face="Arial,Helvetica">
+Porting to non-Intel/Linux
+</font></b></center><br>
+
+<p>Initial version works only on x86 linux. To work on other platforms you will need to:
+<ol>
+<li>Implement <code>CrawlStack()</code> in libmalloc.cpp</li>
+<li>Implement <code>DumpAddressMap()</code> in libmalloc.cpp and in ShowLibs.cpp</li>
+<li>Either support LD_PRELOAD in your dynamic linker, <b>or</b><br>produce a library
+that wraps your libc malloc (see config.h for some clues)</li>
+<li>Implement symbol table reading code (see coff.cpp, elf.cpp and bfd.cpp
+for examples; at the time of writing this document only bfd.cpp was known
+to work)</li>
+</ol>
+
+<hr>
+<!-- hhmts start -->
+Last modified: Mon Sep 27 12:19:49 PDT 1999
+<!-- hhmts end -->
+<br>
+Send comments to <i><a href="mailto:kipp@netscape.com">Kipp Hickman</a></i><br>
+<br>
+
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/leaky.html&amp;rev=&amp;root=/cvsroot/">Last modified September 27,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

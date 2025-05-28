@@ -1,0 +1,1608 @@
+<HTML>
+<HEAD>
+<TITLE>Feature Test Plan-Editing Functions</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+   
+
+   
+
+   
+
+
+
+
+
+
+
+
+<h2>
+
+Feature Test Plan</h2>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ender (Composer)
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit Commands: Cut, Copy,
+
+Paste, Undo, Redo
+
+<br>&nbsp;
+
+<p>Written by: <a href="mailto:sujay@netscape.com">Sujay Desai</a>
+
+<br>
+
+<hr>
+
+<p><b>History:</b>
+
+<table BORDER=0 COLS=4 WIDTH="100%" >
+
+<tr>
+
+<td>
+
+<center><b>Date&nbsp;</b></center>
+
+</td>
+
+
+
+<td>
+
+<center><b>Change Description</b></center>
+
+</td>
+
+
+
+<td>
+
+<center><b>Revision</b></center>
+
+</td>
+
+
+
+<td>
+
+<center><b>Updated By</b></center>
+
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+
+<center>3/10/99&nbsp;</center>
+
+</td>
+
+
+
+<td>
+
+<center>Created</center>
+
+</td>
+
+
+
+<td>
+
+<center>1.0&nbsp;</center>
+
+</td>
+
+
+
+<td>
+
+<center>Sujay Desai</center>
+
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+5/06/99</td>
+
+
+
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+Updated</td>
+
+
+
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+2.0</td>
+
+
+
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+Sujay Desai</td>
+
+</tr>
+
+</table>
+
+<b>References:</b>
+
+<br>UI and/or Functional Specifications:&nbsp; <a href="http://webgroup/composer/enderFeatures.html">http://webgroup/composer/enderFeatures.html</a>&nbsp;
+
+(internal link)
+
+<p><b>Test Case Management Usage:</b>
+
+<br>The detailed test cases for this can be found in :TBD
+
+<br>Major Area: Composer
+
+<br>Minor Area:&nbsp; Editing Functions
+
+<br>Category:
+
+<p>
+
+<hr WIDTH="100%">
+
+<br>The clipboard editing functions for Ender are Cut, Copy, Paste, Undo
+
+and Redo and need to be tested in various combinations&nbsp;&nbsp;&nbsp;
+
+together.
+
+<p><b>Combinations of Cut/Copy/Paste and Undo/Redo</b>
+
+<ul>
+
+<li>
+
+<b>Cut/Copy/Paste</b></li>
+
+
+
+<ul>
+
+<li>
+
+simple text cut+paste</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text somewhere else in document
+
+or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you cut got pasted successfully</li>
+
+</ul>
+
+
+
+<li>
+
+simple text copy+paste</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text somewhere else in document
+
+or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted successfully</li>
+
+</ul>
+
+
+
+<li>
+
+mixed content cut+paste</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of mixed content(bold/italic text, links,
+
+table, headers, targets, etc.)</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of content somewhere else in document
+
+or new blank page</li>
+
+
+
+<li>
+
+Verify that the content you cut got pasted successfully</li>
+
+</ul>
+
+
+
+<li>
+
+mixed content copy+paste</li>
+
+
+
+<ul>
+
+<li>
+
+Open an HTML document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of mixed content(bold/italic text, links,
+
+table, headers, targets, etc.)</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of content somewhere else in document
+
+or new blank page</li>
+
+
+
+<li>
+
+Verify that the content you copied got pasted successfully</li>
+
+</ul>
+
+
+
+<li>
+
+keyboard shortcut cut+paste</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use [Alt | Ctrl | Command]-X to cut a portion of text</li>
+
+
+
+<li>
+
+Use [Alt | Ctrl | Command]-V to paste that portion of text somewhere else
+
+in document or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you cut got pasted successfully using the keyboard
+
+shortcuts</li>
+
+</ul>
+
+
+
+<li>
+
+keyboard shortcut copy+paste</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use [Alt | Ctrl | Command]-C to copy a portion of text</li>
+
+
+
+<li>
+
+Use [Alt | Ctrl | Command]-V to paste that portion of text somewhere else
+
+in document or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted successfully using the keyboard
+
+shortcuts</li>
+
+</ul>
+
+
+
+<li>
+
+simple text cut+paste from browser</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of text from browser window</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into editor page</li>
+
+
+
+<li>
+
+Verify that the text you cut did not get pasted succesfully(unless from
+
+a form field)</li>
+
+</ul>
+
+
+
+<li>
+
+simple text copy+paste from browser</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of text from browser window</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into editor page</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted successfully</li>
+
+</ul>
+
+
+
+<li>
+
+simple text cut+paste from mail message</li>
+
+
+
+<ul>
+
+<li>
+
+Open a mail message from your inbox</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of text from mail message</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into editor page</li>
+
+
+
+<li>
+
+Verify that the text you cut got pasted succesfully</li>
+
+</ul>
+
+
+
+<li>
+
+simple text copy+paste from mail message</li>
+
+
+
+<ul>
+
+<li>
+
+Open a mail message from your inbox</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of text from mail message</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into editor page</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted succesfully</li>
+
+</ul>
+
+
+
+<li>
+
+simple text cut+paste from editor into mail message</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into a mail compose message</li>
+
+
+
+<li>
+
+Verify that the text you cut got pasted successfully into the mail message</li>
+
+</ul>
+
+
+
+<li>
+
+simple text copy+paste from editor into mail message</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into a mail composer message</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted successfully into the mail message</li>
+
+</ul>
+
+
+
+<li>
+
+simple text cut+paste from editor into local text editor</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into a local text editor</li>
+
+
+
+<li>
+
+Verify that the text you cut got pasted successfully into the local text
+
+editor</li>
+
+</ul>
+
+
+
+<li>
+
+simple text copy+paste from editor into local text editor</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into a local text editor</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted successfully into the local
+
+text editor</li>
+
+</ul>
+
+
+
+<li>
+
+simple text cut+paste from local text editor into editor</li>
+
+
+
+<ul>
+
+<li>
+
+Open a text document in your local text editor</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of regular text from the local text editor</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into the editor</li>
+
+
+
+<li>
+
+Verify that the text you cut got pasted successfully into the editor</li>
+
+</ul>
+
+
+
+<li>
+
+simple text copy+paste from local text editor into editor</li>
+
+
+
+<ul>
+
+<li>
+
+Open a text document in your local text editor</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of regular text from the local text editor</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text into the editor</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted successfully into the editor</li>
+
+</ul>
+
+
+
+<li>
+
+simple text cut+paste followed by Undo+Redo</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text somewhere else in document
+
+or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you cut got pasted successfully</li>
+
+
+
+<li>
+
+Use Edit | Undo</li>
+
+
+
+<li>
+
+Verify that the text that just got pasted is gone</li>
+
+
+
+<li>
+
+Use Edit | Redo</li>
+
+
+
+<li>
+
+Verify that the text that just disappeared is back</li>
+
+</ul>
+
+
+
+<li>
+
+simple text copy+paste followed by Undo+Redo</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste that portion of text somewhere else in document
+
+or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted successfully</li>
+
+
+
+<li>
+
+Use Edit | Undo</li>
+
+
+
+<li>
+
+Verify that the text that just got pasted is gone</li>
+
+
+
+<li>
+
+Use Edit | Redo</li>
+
+
+
+<li>
+
+Verify that the text that just disappeared is back</li>
+
+</ul>
+
+
+
+<li>
+
+simple text cut+paste using middle-mouse click(Unix only)</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of regular text</li>
+
+
+
+<li>
+
+Use middle-mouse click to paste that portion of text somewhere else in
+
+document or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you cut got pasted successfully</li>
+
+</ul>
+
+
+
+<li>
+
+simple text copy+paste using middle-mouse click(Unix only)</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of regular text</li>
+
+
+
+<li>
+
+Use middle-mouse click to paste that portion of text somewhere else in
+
+document or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted successfully</li>
+
+</ul>
+
+
+
+<li>
+
+simple text cut+paste multiple times</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Cut to cut a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste x times that portion of text somewhere else in
+
+document or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you cut got pasted successfully x times</li>
+
+</ul>
+
+
+
+<li>
+
+simple text copy+paste multiple times</li>
+
+
+
+<ul>
+
+<li>
+
+Open a normal document in the editor</li>
+
+
+
+<li>
+
+Use Edit | Copy to copy a portion of regular text</li>
+
+
+
+<li>
+
+Use Edit | Paste to paste x times that portion of text somewhere else in
+
+document or new blank page</li>
+
+
+
+<li>
+
+Verify that the text you copied got pasted successfully x times</li>
+
+</ul>
+
+</ul>
+
+
+
+<li>
+
+<b>Undo/Redo</b></li>
+
+
+
+<ul>
+
+<li>
+
+single edit+undo+redo</li>
+
+
+
+<ul>
+
+<li>
+
+Open a blank document in the editor</li>
+
+
+
+<li>
+
+make a single edit(e.g. type "hello world")</li>
+
+
+
+<li>
+
+Pull-down Edit | Undo</li>
+
+
+
+<li>
+
+Verify that "hello world" text is gone after Undo</li>
+
+
+
+<li>
+
+Pull-down Edit | Redo</li>
+
+
+
+<li>
+
+Verify that "hello world" text is back again after Redo</li>
+
+</ul>
+
+
+
+<li>
+
+single edit+undo+another edit+undo</li>
+
+
+
+<ul>
+
+<li>
+
+Open a blank document in the editor</li>
+
+
+
+<li>
+
+make a single edit(e.g. type "hello world")</li>
+
+
+
+<li>
+
+Pull-down Edit | Undo</li>
+
+
+
+<li>
+
+Verify that "hello world" text is gone after Undo</li>
+
+
+
+<li>
+
+make another edit(e.g. type "goodbye world")</li>
+
+
+
+<li>
+
+Pull-down Edit | Undo</li>
+
+
+
+<li>
+
+Verify that "goodbye world" text is gone after Undo</li>
+
+</ul>
+
+
+
+<li>
+
+single edit+undo+redo+another edit+undo using keyboard shortcuts</li>
+
+
+
+<ul>
+
+<li>
+
+Open a blank document in the editor</li>
+
+
+
+<li>
+
+make s single edit(e.g. type "hello world")</li>
+
+
+
+<li>
+
+Use [Alt | Ctrl | Command]-Z to Undo</li>
+
+
+
+<li>
+
+Verify that "hello world" text is gone after Undo</li>
+
+
+
+<li>
+
+Use [Alt | Ctrl | Command]-Y to Redo</li>
+
+
+
+<li>
+
+Verify that "hello world" text is back after Redo</li>
+
+
+
+<li>
+
+make another edit(e.g. delete "hello world", then type "goodbye world")</li>
+
+
+
+<li>
+
+Use [Alt | Ctrl | Command]-Z to Undo</li>
+
+
+
+<li>
+
+Verify that "hello world" text is back after Undo</li>
+
+</ul>
+
+
+
+<li>
+
+multiple edits+multiple undo+multiple redo</li>
+
+
+
+<ul>
+
+<li>
+
+Open a blank document in the editor</li>
+
+
+
+<li>
+
+make multiple edits</li>
+
+
+
+<ol>
+
+<li>
+
+type "hello world"</li>
+
+
+
+<li>
+
+change "hello world" text to italic</li>
+
+
+
+<li>
+
+change "hello world" text to font size +2</li>
+
+</ol>
+
+
+
+<li>
+
+Pull-down Edit | Undo 3 times</li>
+
+
+
+<ol>
+
+<li>
+
+Verify that "hello world" text is changed from font size +2 to original
+
+font size +0</li>
+
+
+
+<li>
+
+Verify that "hello world" text&nbsp; is changed from italic to regular</li>
+
+
+
+<li>
+
+Verify that "hello world" text is gone and a blank page is left</li>
+
+</ol>
+
+
+
+<li>
+
+Pull-down Edit | Redo 2 times</li>
+
+
+
+<ol>
+
+<li>
+
+Verify that "hello world" text is back</li>
+
+
+
+<li>
+
+Verify that "hello world" text is changed to italic</li>
+
+</ol>
+
+</ul>
+
+
+
+<li>
+
+pruning the undo stack</li>
+
+
+
+<ul>
+
+<li>
+
+Open a blank page in the editor</li>
+
+
+
+<li>
+
+make multiple edits</li>
+
+
+
+<ol>
+
+<li>
+
+Insert a table with 1 row + 1 column</li>
+
+
+
+<li>
+
+Enter some text in a table cell (e.g. "Netscape")</li>
+
+
+
+<li>
+
+Change the style of "Netscape" to bold</li>
+
+
+
+<li>
+
+Use Link properties to link "Netscape" to "http://www.netscape.com"</li>
+
+</ol>
+
+
+
+<li>
+
+Pull-down Edit | Undo 2 times</li>
+
+
+
+<ol>
+
+<li>
+
+Verify that "Netscape" link is removed after first Undo</li>
+
+
+
+<li>
+
+Verify that "Netscape" text is changed from bold to normal text</li>
+
+</ol>
+
+
+
+<li>
+
+make another edit</li>
+
+
+
+<ol>
+
+<li>
+
+Change "Netscape" text to color red</li>
+
+</ol>
+
+
+
+<li>
+
+Verify there are 3 undoable operations left on undo stack; Pull-down Edit
+
+| Undo 3 times</li>
+
+
+
+<ul>
+
+<li>
+
+Verify that "Netscape" text is changed from red text to normal after first
+
+Undo</li>
+
+
+
+<li>
+
+Verify that "Netscape" text is gone from table cell</li>
+
+
+
+<li>
+
+Verify that the original table inserted is deleted and left with blank
+
+document</li>
+
+</ul>
+
+</ul>
+
+
+
+<li>
+
+maximum level of Undo testing</li>
+
+
+
+<ul>
+
+<li>
+
+Open a blank page in the editor</li>
+
+
+
+<li>
+
+make lots of edits(e.g. about 50-75 edits)</li>
+
+
+
+<li>
+
+Pull-down Edit | Undo successively</li>
+
+
+
+<li>
+
+Verify that there is an undoable operation for each edit that is made</li>
+
+</ul>
+
+
+
+<li>
+
+single edit+undo+undo+redo+redo (twice in a row, not possible)</li>
+
+
+
+<ul>
+
+<li>
+
+Open a blank document in the editor</li>
+
+
+
+<li>
+
+make a single edit(e.g. type "hello world")</li>
+
+
+
+<li>
+
+Pull-down Edit | Undo</li>
+
+
+
+<li>
+
+Verify that "hello world" text is gone after Undo</li>
+
+
+
+<li>
+
+Pull-down Edit | Undo again</li>
+
+
+
+<li>
+
+Verify that Edit | Undo is not even available again to use(i.e. menu item
+
+dimmed)</li>
+
+
+
+<li>
+
+Pull-down Edit | Redo</li>
+
+
+
+<li>
+
+Verify that "hello world" text is back after Redo</li>
+
+
+
+<li>
+
+Pull-down Edit | Redo again</li>
+
+
+
+<li>
+
+Verify that Edit | Redo is not even available again to use(i.e. menu item
+
+dimmed)</li>
+
+</ul>
+
+</ul>
+
+</ul>
+
+
+
+<br>&nbsp;
+
+<br>&nbsp;
+
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/browser/fe_testplans/composer-editing.html&amp;rev=&amp;root=/cvsroot/">Last modified October 21,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

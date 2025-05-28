@@ -1,0 +1,404 @@
+<HTML>
+<HEAD>
+<TITLE>Bug Writing Guidelines</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+	
+	
+
+
+
+
+<H1 ALIGN="CENTER">bug writing guidelines</H1>
+<P ALIGN="CENTER"><B>(Maintained by </B><A HREF="mailto:leger@netscape.com"><B>Jan
+Leger</B></A><B> and </B><A HREF="mailto:eli@netscape.com"><B>Eli Goldberg</B></A><B>)</B></P>
+<P><FONT SIZE="4"><B><BR>
+Why You Should Read This</B></FONT>
+
+
+<BLOCKQUOTE>
+	<P>The Mozilla bug tracking system (<A HREF="http://bugzilla.mozilla.org">Bugzilla</A>)
+	allows any interested individuals on the Internet to directly report and track bugs
+	in mozilla.org open-source projects. <BR>
+	<BR>
+	Like you, Mozilla QA wants your bug reports to result in bug fixes; the more effectively
+	a bug is reported, the more likely that an engineer will actually fix it.<BR>
+	<BR>
+	By following these guidelines, you can help ensure that your bugs stay at the top
+	of the Mozilla engineers' heap, and get fixed.
+
+</BLOCKQUOTE>
+
+<CENTER>
+<P><FONT SIZE="4"><B><BR>
+</B></FONT>
+<TABLE BORDER="1" CELLPADDING="10" CELLSPACING="0" WIDTH="75%" BGCOLOR="#FEFFE6">
+	<TR>
+		<TD>
+			<P ALIGN="CENTER"><B>Are you in the right place?</B></P>
+			<P>These bug writing guidelines, and the Bugzilla bug tracking system, are for reporting
+			bugs in mozilla.org open-source projects. To report bugs in Netscape Navigator or
+			Communicator, please visit the <A HREF="http://help.netscape.com/forms/bug-client.html">Navigator/Communicator
+			Bug Report Form</A>.
+		</TD>
+	</TR>
+</TABLE>
+</P>
+</CENTER>
+<P><FONT SIZE="4"><B><BR>
+How to Write a Useful Bug Report</B></FONT>
+
+
+<BLOCKQUOTE>
+	<P>Useful bug reports are ones that get bugs fixed. A useful bug report normally
+	has two qualities:
+
+	<OL>
+	<LI><B>Reproducible.</B> If an engineer can't see it or conclusively prove that it
+	exists, the engineer will probably stamp it &quot;WORKSFORME&quot; or &quot;INVALID&quot;,
+	and move on to the next bug. Every detail you can provide helps. <BR>
+	<BR>
+	
+	<LI><B>Specific.</B> The quicker the engineer can trace down the issue to a specific
+	problem, the more likely it'll be fixed expediently. If you're crashing on a site,
+	please take the time to isolate what on the page is triggering the crash, and include
+	it as an HTML snippet in the bug report if possible. <BR>
+	<BR>
+	(Specific bugs have the added bonus of remaining relevant when an engineer actually
+	gets to them; in a rapidly changing web, a bug report of &quot;foo.com crashes my
+	browser&quot; becomes meaningless after the site experiences a half-dozen redesigns
+	and hundreds of content changes.)<BR>
+	<BR>
+	
+	</OL>
+
+	<P>Let's say you crash at foo.com, and want to write up a bug report:
+
+	<BLOCKQUOTE>
+		<P><B>BAD:</B> &quot;Mozilla crashed. I think I was on foo.com. My computer uses
+		Windows. I think that this is a really bad problem and you should fix it now.&quot;<BR>
+		<BR>
+		<B>GOOD: </B>&quot;I crashed each time when I went to foo.com, using the 10.28.99
+		build of Seamonkey on a Win NT 4.0 (Service Pack 5) system. I also rebooted into
+		Linux, and reproduced this problem using the 10.28.99 Linux build.<BR>
+		<BR>
+		Apprunner crashed each time upon drawing the Foo banner at the top of the page. I
+		broke apart the page, and discovered that the following image link will crash Apprunner
+		reproducibly, unless you remove the &quot;border=0&quot; attribute:<BR>
+		<BR>
+		<FONT SIZE="2"><TT>&lt;IMG SRC=&quot;http://foo.com/images/topics/topicfoos.gif&quot;
+		width=34 height=44 border=0 alt=&quot;News&quot;&gt;</TT>&quot;</FONT>
+
+	</BLOCKQUOTE>
+	<P>We'd also recommend reviewing a few of the better bug reports, such as <A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=2683">2683</A>,
+	<A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=3092">3092</A> or <A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=4044">4044</A>.
+	Bug submissions that do not meet these &quot;Useful Bug Report&quot; criteria tend
+	to be investigated on a time-available basis, if investigated at all.
+
+</BLOCKQUOTE>
+
+<P><FONT SIZE="4"><B><BR>
+How to Enter your Useful Bug Report into Bugzilla</B>:</FONT>
+
+
+<BLOCKQUOTE>
+	<P>Before you enter your bug, use the <A HREF="http://www.mozilla.org/quality/most-frequent-bugs/">Mozilla
+	QA Most Frequent Bugs</A> list and the <A HREF="http://bugzilla.mozilla.org/query.cgi">Bugzilla
+	Query Page</A> to determine whether the defect you've discovered is a known bug,
+	and has already been reported.<BR>
+	<BR>
+	Next, be sure that you've reproduced your bug using a build released within the past
+	three days. Our development process moves at lightning speed, and the bug you've
+	found may already have been fixed. (Nightly builds can be downloaded from the <A
+	HREF="http://www.mozilla.org/binaries.html">mozilla.org binaries page</A>.) <BR>
+	<BR>
+	If you've discovered a new bug using a current build, report it in Bugzilla:
+
+</BLOCKQUOTE>
+
+
+<OL>
+	<OL>
+		<LI>From the Bugzilla main page (<A HREF="http://bugzilla.mozilla.org">http://bugzilla.mozilla.org</A>),
+		choose &quot;Enter a new bug&quot;.
+		<LI>Select the product that you've found a bug in.
+		<LI>Enter your E-mail address, Password, and press the &quot;Login&quot; button.
+		(If you don't yet have a password, leave the password text box empty, and press the
+		&quot;E-mail me a password&quot; button instead. You'll receive an E-mail message
+		with your password shortly.)
+	</OL>
+	<P>Now, fill out the form. Here's what it all means:
+</OL>
+
+
+
+<BLOCKQUOTE>
+	<P><B>Where did you find the bug?</B>
+
+	<BLOCKQUOTE>
+		<P><B>Product: In which product did you find the bug?</B><BR>
+		You just filled this out on the last page.</P>
+		<P><B>Version: In which product version did you find the bug?</B><BR>
+		We're not yet using this field. Just leave the default value as you found it. ;)</P>
+		<P><B>Component: In which component does the bug exist?</B><BR>
+		Bugzilla requires that you select a component to enter a bug. (If they all look meaningless,
+		click on the Component link, which links to descriptions of each component, to help
+		you make the best choice.)</P>
+		<P><B>Platform:&#160;On which hardware platform did you find this bug?</B><FONT SIZE="2"><B>
+		</B>(e.g. Macintosh, SGI, Sun, PC.) </FONT><BR>
+		If you know the bug happens on all hardware platforms, choose 'All'. Otherwise, select
+		the platform that you found the bug on, or &quot;Other&quot; if your platform isn't
+		listed.</P>
+		<P><B>OS: On which Operating System (OS) did you find this bug?</B> <FONT SIZE="2">(e.g.
+		Linux, Windows NT, Mac OS 8.5.)</FONT><BR>
+		If you know the bug happens on all OSs, choose 'All'. Otherwise, select the OS that
+		you found the bug on, or &quot;Other&quot; if your OS isn't listed.</P>
+
+	</BLOCKQUOTE>
+	<P><B><BR>
+	How important is the bug?</B>
+
+	<BLOCKQUOTE>
+		<P><B>Severity: How damaging is the bug?</B><BR>
+		This item defaults to 'normal'. (To determine the most appropriate severity for a
+		particular bug, click on the Severity link for a full explanation of each choice,
+		from Critical to Enhancement.)
+
+	</BLOCKQUOTE>
+	<P><B><BR>
+	Who will be following up on the bug?</B>
+
+	<BLOCKQUOTE>
+		<P><B>Assigned To: Which engineer should be responsible for fixing this bug?</B><BR>
+		Bugzilla will automatically assign the bug to a default engineer upon submitting
+		a bug report; the text box exists to allow you to manually assign it to a different
+		engineer. (To see the list of default engineers for each component, click on the
+		Component link.)</P>
+		<P><B>Cc: Who else should receive e-mail updates on changes to this bug? </B><BR>
+		List the full e-mail addresses of other individuals who should receive an e-mail
+		update upon every change to the bug report. You can enter as many e-mail addresses
+		as you'd like; e-mail addresses must be separated by commas, with no spaces between
+		the addresses.
+
+	</BLOCKQUOTE>
+	<P><B><BR>
+	What else can you tell the engineer about the bug?</B></P>
+
+	<BLOCKQUOTE>
+		<P><B>URL: On what URL did you discover this bug?</B><BR>
+		If you encountered the bug on a particular URL, please provide it (or, them) here.
+		If you've isolated the bug to a specific HTML snippet, please also provide a URL
+		for that, too.</P>
+
+		<P><B>Summary:</B> <B>How would you describe the bug, in approximately 60 or fewer
+		characters?</B><BR>
+		A good summary should <U>quickly and uniquely identify a bug report</U>. A summary
+		of &quot;Drag-scrolling any web page crashes Mac builds&quot; is a useful title.
+		&quot;Crash&quot; or &quot;Drag Crash&quot; would be examples of a bad title.<BR>
+		<BR>
+		Also, please insert one of the following boldfaced codes into the beginning of your
+		summary, if you believe it appropriate.
+
+		<BLOCKQUOTE>
+			<P><B>[PP]</B> Platform Parity bugs. A bug is a Platform Parity<B> </B>bug if it
+			only occurs on a particular platform or two platforms. For example, if you find a
+			bug on Linux, but it does not occur using the same day's Win32 or Mac OS build.</P>
+
+			<P><B>[4.xP]</B> Product Parity bugs. A bug is a Product Parity bug if it occurs
+			on Mozilla builds, but does not occur using the latest release of Netscape Communicator
+			or Microsoft Internet Explorer.<BR>
+			
+
+		</BLOCKQUOTE>
+		<P>(To learn more about common Bugzilla codes, refer to the <A HREF="http://www.mozilla.org/quality/bugzilla-code-definitions.html">Bugzilla
+		Code Definitions</A>.) </P>
+
+		<P><BR>
+		<B>Description: What else can you tell the engineer about this bug? </B><BR>
+		Please provide as detailed of a problem diagnosis in this field as possible. Mozilla
+		QA urges you to use the following <A HREF="bug-template.html">bug report template</A>,
+		to ensure that all relevant information comes through:
+
+		<BLOCKQUOTE>
+			<P><B>Overview Description:</B> More detailed expansion of summary.
+
+			<BLOCKQUOTE>
+				<PRE><FONT SIZE="2">Drag-selecting any page crashes Mac builds in NSGetFactory</FONT></PRE>
+
+			</BLOCKQUOTE>
+			<P><B>Steps to Reproduce: </B>The minimal set of steps necessary to trigger the bug.
+			Include any special setup steps.
+
+			<BLOCKQUOTE>
+				<PRE><FONT SIZE="2">1) View any web page. (I used the default sample page, 
+   resource:/res/samples/test0.html)
+2) Drag-select the page. (Specifically, while holding down the 
+   mouse button, drag the mouse pointer downwards from any point in 
+   the browser's content region to the bottom of the browser's 
+   content region.)</FONT></PRE>
+
+			</BLOCKQUOTE>
+			<P><B>Actual Results:</B> What the application did after performing the above steps.
+
+			<BLOCKQUOTE>
+				<PRE><FONT SIZE="2">The application crashed. Stack crawl appended below from MacsBug.</FONT></PRE>
+
+			</BLOCKQUOTE>
+			<P><B>Expected Results:</B> What the application should have done, were the bug not
+			present.
+
+			<BLOCKQUOTE>
+				<PRE><FONT SIZE="2">The window should scroll downwards. Scrolled content should 
+be selected. (Or, at least, the application should not crash.)</FONT></PRE>
+
+			</BLOCKQUOTE>
+			<P><B>Build Date &amp; Platform:</B> Date and platform of the build that you first
+			encountered the bug in. (The build date can be found in the browser window's lower-right
+			hand corner, in YYYYMMDDHH format.)
+
+			<BLOCKQUOTE>
+				<PRE><FONT SIZE="2">11/2/99 build on Mac OS (Checked Viewer &amp; Apprunner)</FONT></PRE>
+
+			</BLOCKQUOTE>
+			<P><B>Additional Builds and Platforms:</B> Whether or not the bug takes place on
+			other platforms or browsers.
+
+			<BLOCKQUOTE>
+				<PRE><FONT SIZE="2"> - Occurs On
+        Seamonkey (11/2/99 build on Windows NT 4.0)
+
+ - Doesn't Occur On
+        Seamonkey (11/4/99 build on Red Hat Linux; feature not supported)
+        Internet Explorer 5.0 (RTM build on Windows NT 4.0)
+        Netscape Communicator 4.5 (RTM build on Mac OS)</FONT>
+</PRE>
+
+			</BLOCKQUOTE>
+			<P><B>Additional Information:</B> Minimized HTML snippets, Talkback crash IDs, and
+			any other debugging information. For crashing bugs:
+
+			<UL>
+	<LI><B>Win32:</B> if you receive a Dr. Watson error, please note the type of the
+	crash, and the module that the application crashed in. (e.g. access violation in
+	apprunner.exe)
+	<LI><B>Mac OS:</B> if you're running MacsBug, please provide the results of a <B><TT>how</TT></B>
+	and an <B><TT>sc</TT></B>.
+	<LI><B>Unix: </B>please provide a minimized stack trace, which can be generated by
+	typing <B><TT>gdb apprunner core</TT></B> into a shell prompt.
+			</UL>
+
+
+			<BLOCKQUOTE>
+				<P>
+				<PRE><FONT SIZE="2">*** MACSBUG STACK CRAWL OF CRASH (Mac OS)
+
+Calling chain using A6/R1 links
+ Back chain  ISA  Caller
+ 00000000    PPC  0BA85E74  
+ 03AEFD80    PPC  0B742248  
+ 03AEFD30    PPC  0B50FDDC  NSGetFactory+027FC
+PowerPC unmapped memory exception at 0B512BD0 NSGetFactory+055F0</FONT></PRE>
+
+			</BLOCKQUOTE>
+
+		</BLOCKQUOTE>
+
+	</BLOCKQUOTE>
+	<P>You're done! <BR>
+	<BR>
+	After double-checking your entries for any possible errors, press the &quot;Commit&quot;
+	button, and your bug report will now be in the Bugzilla database.<BR>
+	<I><BR>
+	<BR>
+	</I><FONT SIZE="2">(Thanks to Claudius Gayle, Peter Mock, Chris Pratt, and Chris
+	Yeh for contributing to this document. Additional </FONT><A HREF="mailto:bug-writing-comments@netscape.com"><FONT
+	SIZE="2">suggestions</FONT></A><FONT SIZE="2"> welcome.)</FONT>
+	</BLOCKQUOTE>
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/bug-writing-guidelines.html&amp;rev=&amp;root=/cvsroot/">Last modified November 11,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

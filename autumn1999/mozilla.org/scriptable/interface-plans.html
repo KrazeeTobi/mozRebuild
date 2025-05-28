@@ -1,0 +1,371 @@
+<HTML>
+<HEAD>
+<TITLE>XPConnect interface plans</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<center><h2>XPConnect interface plans</h2></center>
+<center><a href="mailto:jband@netscape.com">John Bandhauer</a> - 8 Dec 1998</center>
+<p>
+
+This is a quick and dirty overview of some of the interfaces and the internal
+mechanisms I am working on for XPConnect to support COM identity and maximize
+sharing of objects. Much handwaving remains...
+
+<p>
+
+Note that what is elsewhere called <code>JS2CPPProxy</code> is here called
+<code>WrappedNative</code> and what is elsewhere called <code>CPP2JSProxy</code> is
+here called <code>WrappedJS</code>.
+
+<h3>The InterfaceInfo subsystem</h3>
+<p>
+
+<i>[Scott Furman is looking closer at representing interface data on his
+own. These are just my ideas]</i>
+
+<p>
+
+<b>nsIInterfaceInfoFactory</b>
+
+<p>
+
+This interface will encapsulate information files. It can return an
+nsIInterfaceInfo object for any given UIID. It should provide services (on its
+own or through some helper class?) to read and write InterfaceInfo files.
+A single instance of this factory, and the InterfaceInfo objects it dispenses,
+could be shared at runtime by various client modules.
+
+<p>
+
+<b>nsIInterfaceInfo</b>
+
+<p>
+
+This interface will encapsulate one XPCOM interface - i.e. one UIID. It can
+return information about that interface including the name, the superinterface,
+the number of methods, an information object about each method, and information
+about constants defined by the interface. It should be able to hide
+superinterface boundaries. i.e. when asked for method info objects it should
+return those of the superinterface chain as if they were part of this interface.
+We may have methods in this object to return these 'flattened' sets of methods
+and constants, and alternate methods to return only those of the directly
+represented interface.
+
+<p>
+
+<b>nsIMethodInfo</b>
+
+<p>
+
+This interface will encapsulate one method. It will have methods to get the
+name, the number of params, and each param.
+
+<p>
+
+<b>nsIParamInfo</b>
+
+<p>
+
+This interface will encapsulate one paramerter. It will have methods to get the
+type and modifiers (e.g. in, out, in/out, is_iid reference, etc). Optionally we
+could expose the param name. We might decide to not expose nsIMethodInfo as an
+object and instead just have nsIMethodInfo return an encoded string or
+array of bytes representing the params?
+
+<p>
+
+The InterfaceInfo system will be used by XPConnect, but it ought to stand on
+its own. The XPIDL compiler ought to use it to write InterfaceInfo files. Other
+tools should be able to use it to read, modify, merge. and split those files. It
+should not depend either on XPIDL or XPConnect if we can avoid those
+dependencies.
+             
+<p>
+
+<h3>The XPConnect Runtime</h3>
+
+<p>
+
+<b>nsIXPConnectRuntime (implemented by nsXPConnectRuntime)</b>
+
+<p>
+
+nsXPConnectRuntime objects will be instantiated one to one with nsIJSRuntime;
+i.e. there will be a factory which takes an nsIJSRuntime as a param to create
+instances of nsXPConnectRuntime. nsIXPConnectRuntime is used to bootstrap
+XPCOM into the JS environment and to supply wrappers used for JS calling XPCOM
+and XPCOM calling JS.
+
+<p>
+
+Bootstrapping mainly consists of reflecting the runtime registry and some other
+'well known' (potentially application specific) objects into JavaScript. This
+allows JavaScript to access and instantiate XPCOM objects and also to register
+JavaScript objects with the shared registry to be accessed by arbitrary XPCOM
+objects.
+
+<p>
+
+We should develop a standard namespace in JS for access to these well known
+objects: perhaps an object named 'xpcom' to which these well known
+objects can be attached as properties. We may add default code to make this
+easy. But, in fact, this can be done easily with normal jsapi calls.
+
+<p>
+
+The key methods of nsIXPConnectRuntime are those that do the wrapping.
+XPCOM Interfaces and JS objects passed across existing XPConnect wrappers will
+be automatically wrapped. However, nsIXPConnectRuntime will provide explicit
+interfaces for bootstrapping and for XPCOM code that wants to
+explicitly construct graphs of reflected XPCOM interfaces in a JavaScript
+context.
+
+<p>
+
+The primary interfaces of nsIXPConnectRuntime are:
+
+<pre>
+    NS_IMETHOD WrapNative(nsIJSContext* aJSContext, nsISupports* aCOMObj,
+                          REFNSIID aIID, nsICCWrappedNative** aWrapper) = 0;
+
+    NS_IMETHOD WrapJS(nsIJSContext* aJSContext, nsIJSObject* aJSObj, 
+                      REFNSIID aIID, nsICCWrappedJS** aWrapper) = 0;
+
+</pre>
+
+<p>
+
+The wrappers are XPCOM objects and are reference counted. The wrappers
+constructed (or found) by WrappedJS expose a GetJSObject method to allow callers to
+construct relationships between the wrapper and other JSObjects using the jsapi.
+
+<p>
+
+Both kinds of wrappers follow similar rules...
+
+<p>
+
+I'm planning a 'fully-factored' class graph to implement this system. We need
+to construct distinct wrapper instances for each interface of a given object,
+however, many different objects may expose the same interface. I'll factor out
+those common parts into objects which can be shared by separate wrappers.
+
+<p>
+
+In order to correctly support COM identity rules the various wrappers for the
+various interfaces of a given wrapped object will be linked in a list. The root
+object of the linked list of wrappers will be the wrapper representing
+nsISupports. Often that wrapper is also the same wrapper that supports some
+other interface. In fact, most typically, a given wrapped object will only be
+wrapped for nsISupports and one 'interesting' interface. And most objects will
+return the same pointer when QueryInterface calls are made asking for
+nsISupports and an 'interesting' interface. In these most common cases we need
+only generate one wrapper.
+
+<p>
+
+Each wrapper will have a pointer to the 'root' wrapper and to a 'next' wrapper.
+The root wrapper's 'root' pointer will point to itself (and thus we can see that
+it is the root). A hash table will be maintained that allows us to get at the
+root wrapper for any wrapped object. From there we can walk the links looking
+for a wrapper that 'does' the interface desired. It will sometimes be necessary
+to do a QueryInterface of 'nsISupports' on the interface we want to wrap in
+order to get the 'right' key for the hash table lookup. We can find or add
+the appropriate wrapper as necessary (sometimes having to create a new root
+wrapper for an object if none existed before).
+
+<p>
+
+The wrappers are linked together but are individually reference counted.
+However, they are not individually freed. Rather, they are freed en mass when
+all become unreachable. For WrappedNative wrappers 'unreachability' is a cross
+between reference counts going to zero and the JSObject finalizer having been
+called. The JSObject components of these wrappers will be rooted in JavaScript's
+gc system while XPCOM holds references and unrooted when the refcount goes to
+zero. So, the freeing happens only when JavaScript's gc decides to finalize the
+wrapper.
+
+<p>
+
+<b>QueryInterface for for wrapped JavaScript objects...</b>
+
+<p>
+
+The WrappedJS wrappers allow JavaScript objects to be reflected into XPCOM. In
+order to succeed, the JavaScript object must implement the methods declared by
+the given interface. In many real world uses of XPCOM a given object may be
+expected to implement more than one interface. For instance, an object claiming
+to be a a specific kind of widget might need to implement the interface of that
+specific kind of widget and also the common nsIWidget interface. 
+
+<p>
+
+To support this idiom I think we should support QueryInterface of wrapped
+objects implemented in JavaScript. We want it to be easy to implement XPCOM
+interfaces in JavaScript, so we don't want to require that all wrapped
+JavaScript objects support QueryInterface. So... 
+
+<p>
+
+If a wrapped JavaScript object has no QueryInterface method then we assume that
+the object only supports the interface for which it was wrapped. Any XPCOM
+caller of QueryInterface on that wrapped object will receive that same wrapper
+when asking for either that interface or for nsISupports and will receive errors
+when other interfaces are requested. 
+
+<p>
+
+If the wrapped JavaScript object does have a QueryInterface method then we call
+it. We will have a means of representing UUIDs in JavaScript to pass to the
+QueryInterface call. The object can return itself or some other object when
+asked for a given interface (or it can fail - return null or possible we'll use
+exception handling?). Being able to return some other object allows it to
+implement the multiple interfaces through delegation or whatever means it
+chooses and to avoid problems when more than one interface uses a method with
+the same name but different meaning. In order to make the wrapping work right it
+is required that any object that does implement QueryInterface must also 'do the
+right thing' when asked for the nsISupports (i.e. the root) interface. The same
+is true of any objects it returns from a call to QueryInterface. And all objects
+thus returned as representing different interfaces of the same 'virtual' object
+must return the same object when asked for the nsISupports object. This allows
+us to support COM identity rules everywhere.
+
+<p>
+
+<b>Factoring...</b>
+
+<p>
+
+For each instance of the WrappedNative wrapper we need to build a JSObject with the
+appropriate method stubs, getters/setters, and constant properties. I propose
+that to simplify this we lazily build a JSClass for each kind of interface (one
+per InterfaceInfo) and share that JSClass between WrappedNative instances. These
+can not be directly shared across JSRuntimes, so they will be per
+nsIXPConnectRuntime. So, for each nsXPConnectRuntime we'll maintain a
+hashtable keyed by UIID that returns an object that contains both an
+InterfaceInfo reference (which can be shared across JSRuntimes) and a JSClass.
+We build these as needed. They can be found/constructed whenever a new
+WrappedNative wrapper is constructed.
+
+<p>
+
+<i>[<code>10 Dec - jband - </code> Scott Furman pointed out that just sharing a
+JSClass would not have the intended effect because property set calls cause new
+properties to be set on the object instances rather than calling the class's
+setter as I intended. He suggested building these Wrapper objects using the
+newer ObjectOps callback system in the jsapi to allow more direct per object
+handling. LiveConnect uses this strategy. I'll look closer at that code.
+Nevertheless, a 'per class' shared object can handle this aspect for the various
+Wrapper instances used for a given interface.]</i> 
+
+<p>
+
+The nsXPConnectRuntime will also hold one hashtable each to map XPCOM objects
+to WrappedNative wrappers and to map JSObjects to WrappedJS wrappers. In both cases
+the wrapped objects will be the 'root' object as returned by a QueryInterface
+for nsISupports and the wrapper will be the appropriate 'root' wrapper (from
+which we can find wrappers for other interfaces on the object as explained
+previously). We can support an xpcom.equals method that takes two objects (in
+JavaScript) and determins if they represent the same underlying object. This can
+work whether the objects are JavaScript which happen to have WrappedJS wrappers or
+the JSObject object exposed into JavaScript of WrappedNative wrappers. Either way
+xpcom.equals can do the grunt work to check for COM identity.
+
+<hr>
+<b>changes...</b>
+<font size="-1">
+<ul>
+<li><code>10 Dec 1998 - jband - </code>changed "WrapJS" to "WrappedJS"
+<li><code>10 Dec 1998 - jband - </code>changed "WrapNative" to "WrappedNative"
+<li><code>10 Dec 1998 - jband - </code>Added note about use of ObjectOps rather than JSClass
+<li><code>11 Jan 1999 - jband - </code>changed 'comconnect' references to be 'XPConnect'
+</ul>
+</font>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/scriptable/interface-plans.html&amp;rev=&amp;root=/cvsroot/">Last modified January 11,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

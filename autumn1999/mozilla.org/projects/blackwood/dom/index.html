@@ -1,0 +1,162 @@
+<HTML>
+<HEAD>
+<TITLE>Java DOM API</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+  
+  
+
+  
+    
+    <p align=center><b><font size="+3">Java DOM API</font><br> by
+    Akhil Arora &lt;<a
+    href="mailto:akhil.arora@sun.com">akhil.arora@sun.com</a>&gt;</b></p>
+    
+    <p>The Java DOM API is part of the <a
+    href="http://www.mozilla.org/projects/blackwood/">Blackwood</a>
+    project. It is an implementation of the <a
+    href="http://www.w3.org/TR/REC-DOM-Level-1/java-language-binding.html">Java
+    bindings</a> specified in <a
+    href="http://www.w3.org/TR/REC-DOM-Level-1/">Document Object Model
+    (DOM) Level 1 Specification</a>. Only the core DOM interfaces are
+    implemented. </p>
+
+    <p>
+    <ul>
+      
+    <p><b><li>Why?</li></b><br>
+    
+      The primary purpose of the Java DOM API is to allow Java Applets
+      and Pluglets to interact with and modify the document they are
+      embedded into. An Applet, for example, need not even have a
+      display area, it can do its work solely through DOM
+      manipulations.
+    </p>
+
+    <p><b><li>How?</li></b><br>
+
+      The Java DOM API is written as a very thin layer on top of the
+      C++ <tt>coreDOM</tt> API using JNI. Each Java object delegates
+      all method calls to the corresponding C++ <tt>coreDOM</tt>
+      object.
+    </p>
+
+    <p><b><li>Using <a href='http://lxr.mozilla.org/mozilla/source/java/dom'>the API</a></li></b><br>
+      
+      The API is intended to be used by Java Applets, Java <a
+      href="http://www.mozilla.org/projects/blackwood/java-plugins/">Pluglets</a>
+      and Java Applications that embed Gecko. Some important things to
+      keep in mind when using the API are listed below.
+    </p>
+
+    <ul>
+    <p><b><li>Thread safety</li></b><br>
+
+      It is only safe to access and manipulate the DOM from within a
+      method of the <tt>DocumentLoadListener</tt> interface, since
+      these calls are made from the main layout thread. Trying to
+      access or manipulate the DOM from any other thread is unsafe. We
+      may be able to work around this limitation using <a
+      href="http://www.mozilla.org/projects/xpcom/Proxies.html">nsISupports
+      Proxies</a>.
+    </p>
+
+    <p><b><li>Null returns</li></b><br>
+
+      API users need to check for <tt>null</tt> returns from methods
+      such as <tt>Node.getAttributes()</tt>. If a node does not have
+      any attributes, a <tt>null</tt> object will be returned, instead
+      of an empty <tt>NamedNodeMap</tt> with zero elements, in
+      accordance with the spec.
+  </p>
+  </ul>  
+
+  </p>
+
+  </ul>
+  </p>
+
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/blackwood/dom/index.html&amp;rev=&amp;root=/cvsroot/">Last modified August  9,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

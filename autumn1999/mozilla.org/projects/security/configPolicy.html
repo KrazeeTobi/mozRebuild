@@ -1,0 +1,163 @@
+<HTML>
+<HEAD>
+<TITLE>Configurable Security Policies</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<center>
+<h1>
+Configurable Security Policies</h1></center>
+
+<p><br><script>document.write('<a href="mailto:norris'+String.fromCharCode(64)+
+                       'netscape.com">Norris Boyd</a><br>');</script>
+<script>
+	var d = new Date(document.lastModified);
+	document.write((d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear());
+	document.write('<br>');
+</script>
+
+<hr WIDTH="100%">
+<h3>
+What are "Configurable Security Policies"?</h3>
+This is the idea that users should be able to set up security policies
+for their browsers, and also have different security policies for different
+internet sites. The ideas come from a number of sources. Bell Labs researchers
+Vinod Anupam and Alain Mayer have written papers and contributed code to
+Mozilla. The infamous <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=858">bug
+858</a> serves as a wish list for this sort of functionality. Finally,
+IE's zones employ some of this idea.
+<br>&nbsp;
+<h3>
+Design</h3>
+A good user interface would be nice for this, but I'd like to focus on
+the underlying implementation first. The code contributed from Bell Labs
+stores the policy information in the preferences. This is a good place
+in general, although it does mean that the capability to write preferences
+(granted to some signed scripts) becomes more powerful. We may wish eventually
+to store the policies elsewhere or prohibit access to the security preferences.
+<p>The policy preferences are designed such that all the necessary information
+can be read out of the preferences file at startup and cached. I'm worried
+about performance if every access to a DOM property needs to look up a
+preference.
+<p>The preferences file might look like this:
+<blockquote><tt>pref("security.policy.strict.sites",&nbsp;&nbsp;&nbsp;&nbsp;
+"http://www.evil.org http://www.annoying.com");</tt>
+<br><tt>pref("security.policy.strict.window.open", "noAccess");</tt>
+<br><tt>pref("security.policy.default.htmlinputelement.value", "sameOrigin");</tt>
+<br><tt>pref("security.policy.default.location.host", "sameOrigin");</tt>
+<br><tt>pref("security.policy.default.navigator.preference.read", "UniversalPreferencesRead");</tt></blockquote>
+The preference "<tt>security.policy.strict.sites</tt>" defines the web
+sites to which the <tt>strict</tt> policy is applied. The value of that
+preference is a list of sites (protocol and domain only), separated by
+spaces. The <tt>default</tt> policy is special; it will be used if no site-specify
+policy overrides it.
+<p>The final four lines set some attributes for the policies. In strict
+mode, we disallow access to <tt>window.open()</tt>. The default mode requires
+scripts to come from the same origin as the HTML input element or the location
+object in order to access them. And to read the <tt>navigator.preference</tt>
+property requires the <tt>UniversalPreferencesRead</tt> capability to be
+enabled.
+<br>&nbsp;
+<h3>
+Implementation</h3>
+The core of the current implementation resides in <a href="http://lxr.mozilla.org/seamonkey/source/caps/src/nsScriptSecurityManager.cpp">mozilla/caps/src/nsScriptSecurityManager.cpp</a>.
+In particular, member function <tt>InitFromPrefs</tt> is called when the
+security manager is initialized. It traverses all the <tt>security.policy</tt>
+preferences to build up internal data structures that can be quickly queried
+to determine the work needed to check access to a property.
+<p>We still have no implementation of a UI for this. I think that could
+be the hardest part of this feature to implement.
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/security/configPolicy.html&amp;rev=&amp;root=/cvsroot/">Last modified November 18,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

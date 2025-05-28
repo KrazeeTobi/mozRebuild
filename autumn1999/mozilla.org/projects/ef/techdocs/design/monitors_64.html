@@ -1,0 +1,154 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire 64-Bit Monitors and Hash Codes</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Runtime</H2>
+
+
+<H2>Monitors and Hash Codes</H2>
+
+
+<H2><FONT SIZE=+4>64-Bit Implementation</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC="../electricalfire.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A>  <A HREF=
+"monitors_32.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM" WIDTH="37"
+HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="monitors.html"><IMG SRC="../arrows/up.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="optimizations.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P></P>
+
+<P>On a 64-bit address machine we put an object's monitor and its hash code
+into a single doubleword -- the object's subheader at offset 8 in the object.
+<A HREF="#figure1">Figure 1</A> shows the placement of the subheader in
+an object. <A HREF="#figure2">Figure 2</A> shows the layout of the bits
+in the subheader.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP">
+<A NAME="figure1"></A><IMG SRC="graphics/object_64_subheader.gif" WIDTH=
+"181" HEIGHT="168" ALIGN="BOTTOM" NATURALSIZEFLAG="0">
+  </TD>
+ </TR>
+ <TR>
+  <TH>Figure 1</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/subheader_bits_64.gif" WIDTH="311" HEIGHT="50" ALIGN=
+"RIGHT" NATURALSIZEFLAG="0"><A NAME="figure2"></A>
+  </TD>
+ </TR>
+ <TR>
+  <TD>(a) Subheader bits</TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/subheader_hash_64.gif" WIDTH="419" HEIGHT="77" ALIGN=
+"RIGHT" NATURALSIZEFLAG="0">
+  </TD>
+ </TR>
+ <TR>
+  <TD>(b) Hash code states</TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/subheader_monitor_64.gif" WIDTH="419" HEIGHT="104" ALIGN=
+"RIGHT" NATURALSIZEFLAG="0">
+  </TD>
+ </TR>
+ <TR>
+  <TD>(c) Monitor states</TD>
+ </TR>
+ <TR>
+  <TH>Figure 2</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>Unlike the 32-bit case, the hash code bits and monitor bits are separate
+and independent in a 64-bit subheader.</P>
+
+<P>A subheader <CODE>s</CODE>'s hash code bits can be in one of the two
+states below. There is no extended hash code pool.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP"><A NAME="st_hash_computed"></A><B>Computed Hash</B></TD>
+  <TD VALIGN="TOP">The object's hash value is the given signed 32-bit integer: <CODE>s&gt;&gt;32</CODE>.</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP"><A NAME="st_hash_uncomputed"></A><B>Uncomputed Hash</B></TD>
+  <TD VALIGN="TOP">The object's hash value has not been computed yet.</TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>A subheader <CODE>s</CODE>'s monitor bits can be in one of the three
+states below. A thread ID is some unique 30-bit identifier of a thread.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" HEIGHT="89">
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP" HEIGHT="20"><A NAME="st_unlocked"></A><B>Unlocked</B></TD>
+  <TD VALIGN="TOP">The object is unlocked.</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP" HEIGHT="30"><A NAME="st_locked_uncontested"></A><B>Uncontended Locked</B></TD>
+  <TD VALIGN="TOP">
+The object is locked. Bits 2 through 31 of <CODE>s</CODE> contain the ID
+of the thread that locked it. No other thread is waiting for the object's
+lock.
+  </TD>
+ </TR>
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP" HEIGHT="30"><A NAME="st_locked_contested"></A><B>Contended Locked</B></TD>
+  <TD VALIGN="TOP">
+The object is locked. Bits 2 through 31 of <CODE>s</CODE> contain the ID
+of the thread that locked it. Other threads <I>may</I> be waiting for the
+object's lock.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>The procedures for entering and exiting a monitor and reading and writing
+hash codes are similar to their <A HREF="monitors_32.html">32-bit brethren</A>
+but simpler because the hash code bits and monitor bits are separate and
+independent. Instead of saving the subheader in a function's stack frame,
+MonitorEnter needs only save a flag that states whether the monitor was
+recursively entered.</P>
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

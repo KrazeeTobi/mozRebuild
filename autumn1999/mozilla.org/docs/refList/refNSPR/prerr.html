@@ -1,0 +1,1022 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Error Handling</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prinrvl.html">[Previous]</A>
+<A HREF="prlong.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<HR><A NAME="1036261"></A>
+<CENTER>
+<H2>
+Chapter 14<BR>
+<A NAME="1013897"></A>NSPR Error Handling</H2></CENTER>
+<A NAME="1026847"></A>This chapter describes the functions for retrieving
+and setting errors and the error codes set by NSPR.
+
+<P><A NAME="1037749"></A><A HREF="prerr.html#1037715">Error Type</A>
+<BR><A HREF="prerr.html#1037349">Error Functions</A>
+<BR><A HREF="prerr.html#1027954">Error Codes</A>
+
+<P><A NAME="Error Type"></A><A NAME="1037715"></A>
+<H2>
+Error Type</H2>
+<A NAME="Head3;"></A><A NAME="1037392"></A>
+<H4>
+PRErrorCode</H4>
+<A NAME="1037424"></A>Type for error codes that can be retrieved with <TT><A HREF="prerr.html#1035678">PR_GetError</A></TT>.
+You can also set your own errors using <TT><A HREF="prerr.html#1027920">PR_SetError</A></TT>.
+
+<P><A NAME="Head4;"></A><A NAME="1037457"></A>
+<H5>
+Syntax</H5>
+<A NAME="1038896"></A>
+<PRE>#include &lt;prerror.h></PRE>
+<A NAME="1037486"></A>
+<PRE>typedef PRInt32 PRErrorCode</PRE>
+<A NAME="Head4;"></A><A NAME="1037512"></A>
+<H5>
+Description</H5>
+<A NAME="1038442"></A>The service NSPR offers in this area is the ability
+to associate a thread-specific condition with an error number. The error
+number namespace is not well managed. NSPR assumes error numbers starting
+at -6000 (decimal) and progressing towards zero. At present less than 100
+error codes have been defined. If NSPR's error handling is adopted by calling
+clients, then some sort of partitioning of the namespace will have to be
+employed. NSPR does not attempt to address this issue.
+
+<P><A NAME="1038526"></A>For NSPR errors, see <A HREF="prerr.html#1027954">Error
+Codes</A>.
+
+<P><A NAME="Error Functions"></A><A NAME="1037349"></A>
+<H2>
+Error Functions</H2>
+<A NAME="1037809"></A><TT><A HREF="prerr.html#1027920">PR_SetError</A></TT>
+<BR><TT><A HREF="prerr.html#1035677">PR_SetErrorText</A></TT>
+<BR><TT><A HREF="prerr.html#1035678">PR_GetError</A></TT>
+<BR><TT><A HREF="prerr.html#1027989">PR_GetOSError</A></TT>
+<BR><TT><A HREF="prerr.html#1027944">PR_GetErrorTextLength</A></TT>
+<BR><TT><A HREF="prerr.html#1027946">PR_GetErrorText</A></TT>
+
+<P><A NAME="Head3;"></A><A NAME="1027920"></A>
+<H4>
+PR_SetError</H4>
+<A NAME="1035524"></A>Sets error information within a thread context.
+
+<P><A NAME="Head4;"></A><A NAME="1035451"></A>
+<H5>
+Syntax</H5>
+<A NAME="1038917"></A>
+<PRE>#include &lt;prerror.h></PRE>
+<A NAME="1035676"></A>
+<PRE>void PR_SetError(PRErrorCode <TT>errorCode</TT>, PRInt32 oserr)</PRE>
+<A NAME="Head4;"></A><A NAME="1036698"></A>
+<H5>
+Parameters</H5>
+<A NAME="1036729"></A>The function has these parameters:
+
+<P>
+<TABLE BORDER=0 >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036736"></A>
+<PRE><TT>errorCode</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036738"></A>The NSPR (platform-independent)
+translation of the error.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036740"></A>
+<PRE><TT>oserr</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036742"></A>The platform-specific
+error. If there is no appropriate OS error number, a zero may be supplied.</TD>
+</TR>
+</TABLE>
+
+<TABLE>
+<TR>
+<TD></TD>
+</TR>
+</TABLE>
+<A NAME="Head4;"></A><A NAME="1038540"></A>
+<H5>
+Description</H5>
+<A NAME="1038572"></A>NSPR does not validate the value of the error number
+or OS error number being specified. The runtime merely stores the value
+and returns it when requested.
+
+<P><A NAME="Head3;"></A><A NAME="1035677"></A>
+<H4>
+PR_SetErrorText</H4>
+<A NAME="1035689"></A>Sets the text associated with an error.
+
+<P><A NAME="Head4;"></A><A NAME="1035683"></A>
+<H5>
+Syntax</H5>
+<A NAME="1038936"></A>
+<PRE>#include &lt;prerror.h></PRE>
+<A NAME="1036090"></A>
+<PRE>void PR_SetErrorText(PRIntn textLength, const char *text)</PRE>
+<A NAME="Head4;"></A><A NAME="1037107"></A>
+<H5>
+Parameters</H5>
+<A NAME="1037117"></A>The function has these parameters:
+
+<P>
+<TABLE BORDER=0 >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1037110"></A>
+<PRE>textLength</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1037112"></A>The length of the
+text in the <TT>text</TT>. May be <TT>NULL</TT>. If not <TT>NULL</TT>,
+and if <TT>text</TT> is zero, the string is assumed to be a null-terminated
+C string. Otherwise the text is assumed to be the length specified and
+to possibly include <TT>NULL</TT> characters (as might occur in a multilingual
+string).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1037114"></A>
+<PRE>text</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1037116"></A>The text to associate
+with the error.</TD>
+</TR>
+</TABLE>
+
+<TABLE>
+<TR>
+<TD></TD>
+</TR>
+</TABLE>
+<A NAME="Head4;"></A><A NAME="1037094"></A>
+<H5>
+Description</H5>
+<A NAME="1038626"></A>The text is copied into the thread structure and
+remains there until the next call to <TT>PR_SetError</TT>. If there is
+error text already present in the thread, the previous value is first deleted.
+The new value is copied into storage allocated and owned by NSPR and remains
+there until the next call to <TT>PR_SetError</TT> or another call to <TT>PR_SetErrorText</TT>.
+
+<P><A NAME="1038608"></A>NSPR makes no use of this function. Clients may
+use it for their own purposes.
+
+<P><A NAME="Head3;"></A><A NAME="1035678"></A>
+<H4>
+PR_GetError</H4>
+<A NAME="1036136"></A>Returns the current thread's last set platform-independent
+error code.
+
+<P><A NAME="Head4;"></A><A NAME="1036137"></A>
+<H5>
+Syntax</H5>
+<A NAME="1038951"></A>
+<PRE>#include &lt;prerror.h></PRE>
+<A NAME="1036138"></A>
+<PRE>PRErrorCode PR_GetError(void)</PRE>
+<A NAME="Head4;"></A><A NAME="1036139"></A>
+<H5>
+Returns</H5>
+<A NAME="1038671"></A>The value returned is a 32-bit number. NSPR provides
+no direct interpretation of the number's value. NSPR does use <TT><A HREF="prerr.html#1027920">PR_SetError</A></TT>
+to set error numbers defined in <A HREF="prerr.html#1027954">Error Codes</A>.
+
+<P><A NAME="Head3;"></A><A NAME="1027989"></A>
+<H4>
+PR_GetOSError</H4>
+<A NAME="1035780"></A>Returns the current thread's last set OS-specific
+error code.
+
+<P><A NAME="Head4;"></A><A NAME="1036149"></A>
+<H5>
+Syntax</H5>
+<A NAME="1038958"></A>
+<PRE>#include &lt;prerror.h></PRE>
+<A NAME="1035770"></A>
+<PRE>PRInt32 PR_GetOSError(void)</PRE>
+<A NAME="Head4;"></A><A NAME="1038065"></A>
+<H5>
+Returns</H5>
+<A NAME="1038066"></A>The value returned is a 32-bit signed number. Its
+interpretation is left to the caller.
+
+<P><A NAME="Head4;"></A><A NAME="1038089"></A>
+<H5>
+Description</H5>
+<A NAME="1038736"></A>Used for platform-specific code that requires the
+underlying OS error. For portability, clients should not create dependencies
+on the values of OS-specific error codes. However, this information is
+preserved, along with a platform neutral error code, on a per thread basis.
+It is most useful during development.
+
+<P><A NAME="Head3;"></A><A NAME="1027944"></A>
+<H4>
+PR_GetErrorTextLength</H4>
+<A NAME="1035904"></A>Gets the length of the error text.
+
+<P><A NAME="Head4;"></A><A NAME="1036155"></A>
+<H5>
+Syntax</H5>
+<A NAME="1038965"></A>
+<PRE>#include &lt;prerror.h></PRE>
+<A NAME="1035905"></A>
+<PRE>PRInt32 PR_GetErrorTextLength(void)</PRE>
+<A NAME="Head4;"></A><A NAME="1035896"></A>
+<H5>
+Returns</H5>
+<A NAME="1038154"></A>If a zero is returned, no error text is currently
+set. Otherwise, the value returned is sufficient to contain the error text
+currently available.
+
+<P><A NAME="Head3;"></A><A NAME="1027946"></A>
+<H4>
+PR_GetErrorText</H4>
+<A NAME="1036081"></A>Copies the current thread's current error text without
+altering the text as stored in the thread's context.
+
+<P><A NAME="Head4;"></A><A NAME="1036161"></A>
+<H5>
+Syntax</H5>
+<A NAME="1038968"></A>
+<PRE>#include &lt;prerror.h></PRE>
+<A NAME="1036084"></A>
+<PRE>PRInt32 PR_GetErrorText(char *text);</PRE>
+<A NAME="Head4;"></A><A NAME="1038245"></A>
+<H5>
+Parameter</H5>
+<A NAME="1038285"></A>The function has one parameter:
+
+<P>
+<TABLE BORDER=0 >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1038282"></A>
+<PRE>text</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1038284"></A>On output, the array
+pointed to contains the thread's current error text.</TD>
+</TR>
+</TABLE>
+
+<TABLE>
+<TR>
+<TD></TD>
+</TR>
+</TABLE>
+<A NAME="Head4;"></A><A NAME="1027953"></A>
+<H5>
+Returns</H5>
+<A NAME="1038211"></A>The actual number of bytes copied. If the result
+is zero, <TT>text</TT> is unaffected.
+
+<P><A NAME="Error Codes"></A><A NAME="1027954"></A>
+<H2>
+Error Codes</H2>
+<A NAME="1032357"></A>Error codes defined in <TT>prerror.h</TT>:
+
+<P>
+<TABLE BORDER=0 >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036404"></A><B>Constant</B></TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036406"></A><B>Description</B></TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036412"></A>
+<PRE><TT>PR_OUT_OF_MEMORY_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036414"></A>Insufficient memory
+to perform request.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036416"></A>
+<PRE><TT>PR_BAD_DESCRIPTOR_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036418"></A>The file descriptor
+used as an argument in the preceding function is invalid.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036420"></A>
+<PRE><TT>PR_WOULD_BLOCK_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036422"></A>The operation would
+have blocked, which conflicts with the semantics that have been established.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036424"></A>
+<PRE><TT>PR_ACCESS_FAULT_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036426"></A>One of the arguments
+of the preceding function specified an invalid memory address.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036428"></A>
+<PRE><TT>PR_INVALID_METHOD_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036430"></A>The preceding function
+is invalid for the type of file descriptor used.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036432"></A>
+<PRE><TT>PR_ILLEGAL_ACCESS_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036434"></A>One of the arguments
+of the preceding function specified an invalid memory address.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036436"></A>
+<PRE><TT>PR_UNKNOWN_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036438"></A>Some unknown error
+has occurred.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036440"></A>
+<PRE><TT>PR_PENDING_INTERRUPT_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036442"></A>The operation terminated
+because another thread has interrupted it with <TT><A HREF="prthrd.html#1015726">PR_Interrupt</A></TT>.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036444"></A>
+<PRE><TT>PR_NOT_IMPLEMENTED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036446"></A>The preceding function
+has not been implemented.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036448"></A>
+<PRE><TT>PR_IO_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036450"></A>The preceding I/O
+function encountered some sort of an error, perhaps an invalid device.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036452"></A>
+<PRE><TT>PR_IO_TIMEOUT_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036454"></A>The I/O operation
+has not completed in the time specified for the preceding function.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036456"></A>
+<PRE><TT>PR_IO_PENDING_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036458"></A>An I/O operation has
+been attempted on a file descriptor that is currently busy with another
+operation.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036460"></A>
+<PRE><TT>PR_DIRECTORY_OPEN_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036462"></A>The directory could
+not be opened.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036464"></A>
+<PRE><TT>PR_INVALID_ARGUMENT_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036466"></A>One or more of the
+arguments to the function is invalid.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036468"></A>
+<PRE><TT>PR_ADDRESS_NOT_AVAILABLE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036470"></A>The network address
+(<TT><A HREF="priotyp.html#420490">PRNetAddr</A></TT>) is not available
+(probably in use).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036472"></A>
+<PRE><TT>PR_ADDRESS_NOT_SUPPORTED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036474"></A>The type of network
+address specified is not supported.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036476"></A>
+<PRE><TT>PR_IS_CONNECTED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036478"></A>An attempt to connect
+on an already connected network file descriptor.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036480"></A>
+<PRE><TT>PR_BAD_ADDRESS_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036482"></A>The network address
+specified is invalid (as reported by the network).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036484"></A>
+<PRE><TT>PR_ADDRESS_IN_USE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036486"></A>Network address specified
+(<TT><A HREF="priotyp.html#420490">PRNetAddr</A></TT>) is in use.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036488"></A>
+<PRE><TT>PR_CONNECT_REFUSED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036490"></A>The peer has refused
+to allow the connection to be established.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036492"></A>
+<PRE><TT>PR_NETWORK_UNREACHABLE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036494"></A>The network address
+specifies a host that is unreachable (perhaps temporary).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036497"></A>
+<PRE><TT>PR_CONNECT_TIMEOUT_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036499"></A>The connection attempt
+did not complete in a reasonable period of time.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036501"></A>
+<PRE><TT>PR_NOT_CONNECTED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036503"></A>The preceding function
+attempted to use connected semantics on a network file descriptor that
+was not connected.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036505"></A>
+<PRE><TT>PR_LOAD_LIBRARY_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036507"></A>Failure to load a
+dynamic library.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036509"></A>
+<PRE><TT>PR_UNLOAD_LIBRARY_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036511"></A>Failure to unload
+a dynamic library.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036513"></A>
+<PRE><TT>PR_FIND_SYMBOL_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036515"></A>Symbol could not be
+found in the specified library.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036517"></A>
+<PRE><TT>PR_INSUFFICIENT_RESOURCES_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036519"></A>There are insufficient
+system resources to process the request.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036521"></A>
+<PRE><TT>PR_DIRECTORY_LOOKUP_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036523"></A>A directory lookup
+on a network address has failed.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036525"></A>
+<PRE><TT>PR_TPD_RANGE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036527"></A>Attempt to access
+a thread-private data index that is out of range of any index that has
+been allocated to the process.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036529"></A>
+<PRE><TT>PR_PROC_DESC_TABLE_FULL_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036531"></A>The process' table
+for holding open file descriptors is full.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036533"></A>
+<PRE><TT>PR_SYS_DESC_TABLE_FULL_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036535"></A>The system's table
+for holding open file descriptors has been exceeded.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036537"></A>
+<PRE><TT>PR_NOT_SOCKET_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036539"></A>An attempt to use
+a non-network file descriptor on a network-only operation.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036541"></A>
+<PRE><TT>PR_NOT_TCP_SOCKET_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036543"></A>Attempt to perform
+a TCP specific function on a non-TCP file descriptor.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036545"></A>
+<PRE><TT>PR_SOCKET_ADDRESS_IS_BOUND_ERRO</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036547"></A>Attempt to bind an
+address to a TCP file descriptor that is already bound.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036549"></A>
+<PRE><TT>PR_NO_ACCESS_RIGHTS_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036551"></A>Calling thread does
+not have privilege to perform the operation requested.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036553"></A>
+<PRE><TT>PR_OPERATION_NOT_SUPPORTED_ERRO</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036555"></A>The requested operation
+is not supported by the platform.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036557"></A>
+<PRE><TT>PR_PROTOCOL_NOT_SUPPORTED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036559"></A>The host operating
+system does not support the protocol requested.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036561"></A>
+<PRE><TT>PR_REMOTE_FILE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036563"></A>Access to the remote
+file has been severed.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036565"></A>
+<PRE><TT>PR_BUFFER_OVERFLOW_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036567"></A>The value retrieved
+is too large to be stored in the buffer provided.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036569"></A>
+<PRE><TT>PR_CONNECT_RESET_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036571"></A>The (TCP) connection
+has been reset by the peer.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036573"></A>
+<PRE><TT>PR_RANGE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036575"></A>Unused.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036577"></A>
+<PRE><TT>PR_DEADLOCK_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036579"></A>Performing the requested
+operation would have caused a deadlock. The deadlock was avoided.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036581"></A>
+<PRE><TT>PR_FILE_IS_LOCKED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036583"></A>An attempt to acquire
+a lock on a file has failed because the file is already locked.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036585"></A>
+<PRE><TT>PR_FILE_TOO_BIG_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036587"></A>Completing the write
+or seek operation would have resulted in a file larger than the system
+could handle.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036589"></A>
+<PRE><TT>PR_NO_DEVICE_SPACE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036591"></A>The device for storing
+the file is full.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036593"></A>
+<PRE><TT>PR_PIPE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036595"></A>Unused.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036597"></A>
+<PRE><TT>PR_NO_SEEK_DEVICE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036599"></A>Unused.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036601"></A>
+<PRE><TT>PR_IS_DIRECTORY_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036603"></A>Attempt to perform
+a normal file operation on a directory.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036605"></A>
+<PRE><TT>PR_LOOP_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036607"></A>Symbolic link loop.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036609"></A>
+<PRE><TT>PR_NAME_TOO_LONG_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036611"></A>Filename is longer
+than allowed by the host operating system.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036613"></A>
+<PRE><TT>PR_FILE_NOT_FOUND_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036615"></A>The requested file
+was not found.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036617"></A>
+<PRE><TT>PR_NOT_DIRECTORY_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036619"></A>Attempt to perform
+directory specific operations on a normal file.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036621"></A>
+<PRE><TT>PR_READ_ONLY_FILESYSTEM_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036623"></A>Attempt to write to
+a read-only file system.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036625"></A>
+<PRE><TT>PR_DIRECTORY_NOT_EMPTY_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036627"></A>Attempt to delete
+a directory that is not empty.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036629"></A>
+<PRE><TT>PR_FILESYSTEM_MOUNTED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036631"></A>Attempt to delete
+or rename a file object while the file system is busy.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036633"></A>
+<PRE><TT>PR_NOT_SAME_DEVICE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036635"></A>Request to rename
+a file to a file system on another device.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036637"></A>
+<PRE><TT>PR_DIRECTORY_CORRUPTED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036639"></A>The directory object
+in the file system is corrupted.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036641"></A>
+<PRE><TT>PR_FILE_EXISTS_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036643"></A>Attempt to create
+or rename a file when the new name is already being used.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036645"></A>
+<PRE><TT>PR_MAX_DIRECTORY_ENTRIES_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036647"></A>Attempt to add new
+filename to directory would exceed the limit allowed.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036649"></A>
+<PRE><TT>PR_INVALID_DEVICE_STATE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036651"></A>The device was in
+an invalid state to complete the desired operation.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036653"></A>
+<PRE><TT>PR_DEVICE_IS_LOCKED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036655"></A>The device needed
+to perform the desired request is locked.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036657"></A>
+<PRE><TT>PR_NO_MORE_FILES_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036659"></A>There are no more
+entries in the directory.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036661"></A>
+<PRE><TT>PR_END_OF_FILE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036663"></A>Unexpectedly encountered
+end of file (Mac OS only).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036665"></A>
+<PRE><TT>PR_FILE_SEEK_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036667"></A>An unexpected seek
+error (Mac OS only).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036669"></A>
+<PRE><TT>PR_FILE_IS_BUSY_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036671"></A>The file is busy and
+the operation cannot be performed (Mac OS only).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036673"></A>
+<PRE><TT>PR_IN_PROGRESS_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1038840"></A>The operation is still
+in progress (probably a nonblocking connect).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036677"></A>
+<PRE><TT>PR_ALREADY_INITIATED_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1038842"></A>The (retried) operation
+has already been initiated (probably a nonblocking connect).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036681"></A>
+<PRE><TT>PR_GROUP_EMPTY_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036683"></A>The wait group is
+empty.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036685"></A>
+<PRE><TT>PR_INVALID_STATE_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036687"></A>The attempted operation
+is on an object that was in an improper state to perform the request.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036689"></A>
+<PRE><TT>PR_MAX_ERROR</TT></PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE><A NAME="1036691"></A>Placeholder for the
+end of the list.</TD>
+</TR>
+</TABLE>
+
+<TABLE>
+<TR>
+<TD></TD>
+</TR>
+</TABLE>
+<A NAME="1027736"></A>
+
+<P>
+<HR><A HREF="contents.html">[Contents]</A> <A HREF="prinrvl.html">[Previous]</A>
+<A HREF="prlong.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<DIV ALIGN=right><I><FONT SIZE=-2>Last Updated: Mon Jul 13 18:29:09 PDT 1998<HR SIZE=4></DIV>
+
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html" TARGET="_top">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/refList/refNSPR/prerr.html&amp;rev=&amp;root=/cvsroot/">Last modified July 17,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

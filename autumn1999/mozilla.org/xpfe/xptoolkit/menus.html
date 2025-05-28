@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+<TITLE>Menu Bars and Menus</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Menu Bars and Menus</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="xulintro.html">Previous: Introduction to a XUL Document</a>]
+[<a href="toolbars.html">Next: Toolbars and Toolboxes</a>]
+<p>
+<b>Feature Owner:</b><br>
+<a href="mailto:saari@netscape.com">Chris Saari</a> (Mac Menus)<br>
+<a href="mailto:hyatt@netscape.com">David Hyatt</a> (XP Menus)<br>
+<p>
+A XUL document can contain exactly one menu bar, specified using the
+<font color=green>menubar</font> tag.  As one might expect,
+this tag specifies the contents of the
+menu bar.  This menu bar is either placed inside the window (on Windows and GTK) or 
+is used as the menu bar when the window specified by the XUL file is the active 
+window (on the Mac).
+<p>
+If the XUL document is not opened as a top-level window (see <a href="windows.html">Windows
+and Dialogs</a>), then the <font color=green>menubar</font> tag is ignored.
+<p>
+The menubar tag contains <font color=green>menu</font> tags as children.  Each menu
+child represents one top-level menu on the menu bar.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;menubar&gt;
+  &lt;menu value="File"/&gt;
+  &lt;menu value="Edit"/&gt;  
+  &lt;menu value="View"/&gt;  
+  &lt;menu value="Help"/&gt;  
+&lt;/menubar&gt;
+</table>
+<p>
+The <font color=red>value</font> attribute on the menus is the display name that is used
+for the menus.  Menus contain a <font color=green>menupopup</font> tag that represents the
+popup view for a menu.  This popup can contain menus or menu items as children, the distinction being
+that menus always have children, and menu items never have children.  Menu items are
+represented using the <font color=green>menuitem</font> tag, and their display names
+are also set using the <font color=red>value</font> attribute.
+<p>
+Separators are represented using the <font color=green>menuseparator</font> tag. This tag
+contains no children.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;menu value="File"/&gt;
+  &lt;menupopup&gt;
+    &lt;menuitem value="New..."/&gt;
+    &lt;menuitem value="Close"/&gt;
+    &lt;menuseparator/&gt;  
+    &lt;menuitem value="Save"/&gt;
+    &lt;menuitem value="Save As..."/&gt;
+    &lt;menuseparator/&gt;  
+    &lt;menuitem value="Exit"/&gt;
+  &lt;/menupopup&gt;
+&lt;/menu&gt;
+</table>
+<p>
+Menus can also have shortcut keys and accelerators defined.  The shortcut key is a single letter
+that can be used (on some platforms) to quickly access the menu in combination with another
+key (e.g., ALT).  The attribute for specifying this key is <font color=red>accesskey</font>.
+<p>
+Accelerators are key combinations that represent the same command that would be invoked if
+the menu item were selected. There is a single attribute <font color=red>key</font> whose
+value represents the ID of a <font color=green>key</font> element in the key binding set.
+(See <a href="keybinding.html">Key Binding</a> for details.)  You can also just specify the
+accelerator text directly using the <font color=red>acceltext</font> attribute.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;menu value="File" accesskey="f"/&gt;
+  &lt;menuitem value="New..." accesskey="n" key="newKey"/&gt;
+  &lt;menuitem value="Close" accesskey="c" key="closeKey"/&gt;
+  &lt;separator/&gt;  
+  &lt;menuitem value="Save" accesskey="s" key="saveKey"/&gt;
+  &lt;menuitem value="Save As..." accesskey="a" key="saveAsKey"/&gt;
+  &lt;separator/&gt;  
+  &lt;menuitem value="Exit" accesskey="x" key="exitKey"/&gt;  
+&lt;/menu&gt;
+</table>
+<p>
+Menus can be enabled or disabled.  The <font color=red>disabled</font> attribute, if set to
+<font color=orange>true</font>, indicates that the menu item is disabled.  The
+<font color=blue>setAttribute</font> and <font color=blue>unsetAttribute</font>
+AOM methods can be used on the menu or menu item element 
+to set and clear this attribute.  Doing so will cause the menu or menu item
+to enable/disable.
+<p>
+<font color=red>[NOT YET IMPLEMENTED]</font>
+Menus can also be checked (or unchecked).  The <font color=red>checked</font> attribute, if
+set to <font color=orange>true</font>, indicates that the menu item is checked.  As with
+the <font color=red>disabled</font> attribute, the AOM APIs can be used to check or uncheck
+the menu by setting or unsetting this attribute.
+<p>
+The <font color=purple>command</font>
+event is executed whenever a menu item is invoked.  
+This event can be added through script (via the <font color=blue>addEventListener</font>
+AOM API) or an <font color=red>oncommand</font> attribute
+can be placed on the <font color=green>menuitem</font> tag.
+<p>
+Command event listeners can also be placed on menus and menu bars.  Command events that occur on menu items,
+if not handled by the items,
+will bubble up to their parent menus, to the menu bar, and then up into the document.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;menu value="File" accesskey="f"/&gt;
+  &lt;menuitem value="New..." accesskey="n" key="newKey" command="new()"/&gt;
+  &lt;menuitem value="Close" accesskey="c" key="closeKey" command="window.close()"/&gt;
+  &lt;separator/&gt;  
+  &lt;menuitem value="Save" accesskey="s" key="saveKey" command="saveFile()"/&gt;
+  &lt;menuitem value="Save As..." accesskey="a" key="saveAsKey" command="saveFileAs()"/&gt;
+  &lt;separator/&gt;  
+  &lt;menuitem value="Exit" accesskey="x" key="exitKey" command="closeAllWindows()"/&gt;  
+&lt;/menu&gt;
+</table>
+<p>
+On platforms other than the Macintosh, menus and menu items may contain arbitrary HTML/XUL. 
+If HTML/XUL is placed inside a menu item or menu, it will be used as the menu's look (rather
+than the display text and accelerator text used by default if no HTML/XUL children are specified).
+Be aware if you choose to do this that the Macintosh cannot display these tags.  Always have
+a value attribute and an oncommand attribute on menu items to ensure interoperability with the Mac.
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="xulintro.html">Previous: Introduction to a XUL Document</a>]
+[<a href="toolbars.html">Next: Toolbars and Toolboxes</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

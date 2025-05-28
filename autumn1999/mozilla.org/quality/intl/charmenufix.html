@@ -1,0 +1,414 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla Character Set Menu Workaround</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<center>
+<h2>
+How to Display the Rest of the Mozilla Character Set Menu Items: a workaround</h2></center>
+
+<p><br>Written by: <a href="mailto:momoi@netscape.com">Katsuhiko Momoi</a>
+<br>Last update: 10/29/99
+<p><b><font color="#FF0000">Note: </font></b><font color="#000000">Starting
+with 10/28/99, builds on all platforms now contain the temporary Character
+Set menu workaround described below. Thus users no longer need to make
+manual modifications. The following note will be kept as a historical note.
+This is only a temporary workaround and will be eventually replaced by
+customizable and scrollable Character Set menus.</font><font color="#000000"></font>
+<p><font color="#000000">==================</font>
+<p><b>The Character Set </b>currently (at M10) contains <a href="#charlist">49
+items</a> and is too long and unwieldy -- overall charset menu specs are
+under consideration.&nbsp; (<b>Note</b>: The following suggestions will
+work for M9 also but not for M8 or earlier builds.)
+<ul>
+<li>
+The Character set menus will be eventually a) <b>scrollable</b> and b)
+<b>customizable</b>
+via a menu. At M10, however, neither of these features has been checked
+in. For Unix and Windows clients, this presents a difficulty since the
+Character Set menu items may not be all visible on these platforms even
+if your monitor size is 21-inch. If you have this problem, we would like
+to suggest the following workaround ideas:</li>
+
+<ul>
+<li>
+For languages for which the <a href="chardetect.html">charset detection
+modules</a> are available, choose one and see if that would not be sufficient
+for your viewing needs.</li>
+
+<li>
+If you need to use the Character Set menu items and they are not visible
+on your screen, you can modify the Character Set menus to re-arrange the
+order of menu items.&nbsp; This is what we will discuss below.</li>
+
+<li>
+The workaround discussed below reorganizes the entire Character Set menu
+to make all the items available for use.&nbsp; If you're interested in
+enabling just a few Character set items, you can just move up a few menu
+items to the top of the list by editing just the <b>.xul </b>files mentioned
+below.</li>
+</ul>
+
+<li>
+<b>The workaround organizes</b> a single Character Set menu into 6 (more
+or less natural) groups: (See <a href="http://www.mozilla.org/quality/intl/m6/unixchamenu/charmenusample.gif">this
+image</a> from M8 workaround to see how it would look like.)</li>
+
+<ul>
+<li>
+<b>ISO:</b> all ISO charsets except those for Cyrillic, Arabic and Hebrew</li>
+
+<li>
+<b>Multi-byte:</b> Chinese, Japanese, Korean, and Unicode</li>
+
+<li>
+<b>Cyrillic:</b> Russian and Ukrainian charsets</li>
+
+<li>
+<b>SE Asian/Armenian/Semitic:</b> somewhat unnatural grouping of Vietnamese,
+Thai, Armenian, Arabic and Hebrew</li>
+
+<li>
+<b>Macintosh:</b> all Mac-specific character sets</li>
+
+<li>
+<b>Windows:</b> all Windows-specific character sets.</li>
+</ul>
+
+<li>
+<b>The workaround also normalizes</b> the Character set UI names to the
+ones we will be using for the final version of Mozilla.</li>
+
+<li>
+Here's what you can do: (<b>First, make a backup copy of each of the files
+you are going to replace!</b>)</li>
+
+<ul>
+<li>
+<b>Method 1 (M9 only):</b> <b><font color="#FF0000">If you're using M9
+release build</font>,</b> you can simply replace the relevant files with
+the ones posted to the following sites. This method should not be used
+for later builds since these files are constantly updated. For the latter
+case, use Method 2 and just replace the Character set menu part of each
+file.</li>
+
+<ul>
+<li>
+For Navigator window:</li>
+
+<ul>
+<li>
+Replace ../chrome/navigator/content/default/navigator.xul&nbsp; with the
+one found <a href="http://www.mozilla.org/quality/intl/m9/charmenu/navigator/">here</a>.</li>
+
+<li>
+Replace also ../chrome/navigator/locale/en-US/navigator.dtd&nbsp; with
+the one found <a href="http://www.mozilla.org/quality/intl/m9/charmenu/navigator/">here</a>.</li>
+</ul>
+
+<li>
+For Messenger window:</li>
+
+<ul>
+<li>
+Replace ../chrome/messenger/content/default/messenger.xul&nbsp; with the
+one found <a href="http://www.mozilla.org/quality/intl/m9/charmenu/messenger/">here</a>.</li>
+
+<li>
+Replace ../chrome/messenger/locale/en-US/messenger.dtd&nbsp; with the one
+found <a href="http://www.mozilla.org/quality/intl/m9/charmenu/messenger/">here</a>.</li>
+</ul>
+
+<li>
+For Messenger Compose window: (This is for Character set UI names normalization
+purpose only. The menu here is short enough as it is.)</li>
+
+<ul>
+<li>
+Replace ../chrome/messengercompose/locale/en-US/messengercompose.dtd&nbsp;
+with the one found <a href="http://www.mozilla.org/quality/intl/m9/charmenu/messengercompose/">here</a>.</li>
+</ul>
+
+<li>
+For Editor:</li>
+
+<ul>
+<li>
+Replace ../chrome/editor/content/default/EditorAppShell.xul&nbsp; with
+the one found <a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/">here</a>.</li>
+
+<li>
+Replace ../chrome/editor/locale/en-US/EditorAppShell.dtd&nbsp; with the
+one found <a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/">here</a>.</li>
+</ul>
+</ul>
+
+<li>
+<b>Method 2 (M9 or later):</b> Replace Character set menu portion of the
+relevant component by copy/pasting the content of the files below. This
+should work for post-M9 builds. When the target files to modify have changed
+between M9 and M10 builds, I have indicated which modifications to do in
+the parentheses. Don't make M9 modifications with M10 files, and vice versa.</li>
+
+<ul>
+<li>
+For Navigator window (<b><font color="#FF0000">M9 only</font></b>):</li>
+
+<ul>
+<li>
+../chrome/navigator/content/default/navigator.xul: replace the portion
+which begins with <b>&lt;menu value="&amp;dcharMenu.label;"> </b>up to
+but not including <b>&lt;menu accesskey="s" value="&amp;searchMenu.label;">
+</b>with
+the content of the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/navigator/diffs/navcharmenuxul.txt">here</a>.</li>
+
+<li>
+../chrome/navigator/locale/en-US/navigator.dtd: replace the portion which
+begins with <b>&lt;!ENTITY dcharMenu.label "Character Set"> </b>up to but
+not including <b>&lt;!ENTITY searchMenu.label "Search"> </b>with the content
+of the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/navigator/diffs/charmenudtd.txt">here</a>.</li>
+</ul>
+
+<li>
+For Navigator window (<b><font color="#FF0000">M10 only</font></b>):</li>
+
+<ul>
+<li>
+../chrome/navigator/content/default/navigatorOverlay.xul: replace the portion
+which begins with <b>&lt;menu value="&amp;dcharMenu.label;"> </b>up to
+but not including&nbsp; <b>&lt;menu id = "charsetMenu" /> </b>with the
+content of the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/navigator/diffs/m10navcharmenuxul.txt">here</a>.</li>
+
+<li>
+../chrome/navigator/locale/en-US/navigator.dtd: replace the portion which
+begins with <b>&lt;!ENTITY dcharMenu.label "Character Set"> </b>up to but
+not including <b>&lt;!ENTITY searchMenu.label "Search"> </b>with the content
+of the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/navigator/diffs/charmenudtd.txt">here</a>.</li>
+</ul>
+
+<li>
+For Messenger window (<b><font color="#FF0000">M9 only)</font></b></li>
+
+<ul>
+<li>
+../chrome/messenger/content/default/messenger.xul: replace the portion
+which begins with <b>&lt;menu value="&amp;dcharMenu.label;"> </b>up to
+but not including <b>&lt;menu value="&amp;searchMenu.label;"> </b>with
+the content of the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/messenger/diffs/msgcharmenuxul.txt">here</a>.</li>
+
+<li>
+../chrome/messenger/locale/en-US/messenger.dtd: replace the portion which
+begins with <b>&lt;!ENTITY dcharMenu.label "Character Set"> </b>up to but
+not including <b>&lt;!-- Search Menu --> </b>with the content of the file
+<a href="http://www.mozilla.org/quality/intl/m9/charmenu/messenger/diffs/charmenudtd.txt">here</a>.</li>
+</ul>
+
+<li>
+For Messenger window (<b><font color="#FF0000">M10 only)</font></b></li>
+
+<ul>
+<li>
+../chrome/messenger/content/default/messenger.xul: replace the portion
+which begins with <b>&lt;menu value="&amp;dcharMenu.label;"> </b>up to
+but not including <b>&lt;menu value="&amp;searchMenu.label;"> </b>with
+the content of the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/messenger/diffs/m10msgcharmenuxul.txt">here</a>.</li>
+
+<li>
+../chrome/messenger/locale/en-US/messenger.dtd: replace the portion which
+begins with <b>&lt;!ENTITY dcharMenu.label "Character Set"> </b>up to but
+not including <b>&lt;!-- Search Menu --> </b>with the content of the file
+<a href="http://www.mozilla.org/quality/intl/m9/charmenu/messenger/diffs/charmenudtd.txt">here</a>.
+(<b>Note</b>: M10 file contains Localization notes for each charset, e.g.
+"<b>&lt;!-- LOCALIZATION NOTE ...</b>". My workaround file does not include
+these L10n notes but not having them would be harmless for this workaround.)</li>
+</ul>
+
+<li>
+For Messenger Compose window (<b><font color="#FF0000">M9 only</font></b>):</li>
+
+<ul>
+<li>
+../chrome/messengercompose/locale/en-US/messengercompose.dtd: replace the
+portion which begins with <b>&lt;!ENTITY dcharMenu.label "Character Set">
+</b>up
+to but not including <b>&lt;!-- Insert menu items --> </b>with the content
+of the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/messengercompose/diffs/msgcmpscharmenudtdt.txt">here</a>.</li>
+</ul>
+
+<li>
+For Messenger Compose window (<b><font color="#FF0000">M10 only</font></b>):</li>
+
+<ul>
+<li>
+../chrome/messengercompose/locale/en-US/messengercompose.dtd: replace the
+portion which begins with <b>&lt;!ENTITY dcharMenu.label "Character Set">
+</b>up
+to but not including <b>&lt;!-- Format menu items --> </b>with the content
+of the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/messengercompose/diffs/msgcmpscharmenudtdt.txt">here</a>.</li>
+</ul>
+
+<li>
+For Editor (<b><font color="#FF0000">M9 only</font></b>):</li>
+
+<ul>
+<li>
+../chrome/editor/content/default/EditorAppShell.xul: replace the portion
+which begins with <b>&lt;menu value="&amp;dcharMenu.label;" accesskey="&amp;viewcharsetmenu.accesskey;">
+</b>up
+to but not including <b>&lt;menu value="&amp;insertMenu.label;" accesskey="&amp;insertmenu.accesskey;">
+</b>with the content of the file
+<a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/diffs/editcharmenuxul.txt">here</a>.</li>
+
+<li>
+../chrome/editor/locale/en-US/EditorAppShell.dtd: replace the portion which
+begins with <b>&lt;!ENTITY dcharMenu.label "Character Set"> </b>up to but
+not including <b>&lt;!-- Insert menu items --> </b>with the content of
+the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/diffs/charmenudtd.txt">here</a>.</li>
+
+<li>
+../chrome/editor/locale/en-US/EditorAppShell.dtd: Add the contents of <a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/diffs/editcharmenudtd.txt">this
+file</a> right <b>below the following line</b>: &lt;<b>!ENTITY viewcharsetmenu.accesskey
+"s"></b>.&nbsp; (This 3rd step is probably optional.)</li>
+</ul>
+
+<li>
+For Editor (<b><font color="#FF0000">M10 only</font></b>):</li>
+
+<ul>
+<li>
+../chrome/editor/content/default/EditorOverlay.xul: replace the portion
+which begins with <b>&lt;menu id="charsetMenu" value="&amp;dcharMenu.label;"
+accesskey="&amp;viewcharsetmenu.accesskey;"> </b>up to but not including
+
+<b>&lt;!-- Insert menu --> </b>with the content of the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/diffs/m10editcharmenuxul.txt">here</a>.</li>
+
+<li>
+<b><font color="#FF0000">For builds prior to 10/25/99</font></b>, use the
+following:</li>
+
+<ul>
+<li>
+../chrome/editor/content/default/EditorAppShell.xul: add right below the
+line <b>&lt;menu id="charsetMenu"/></b>, the content of the file found
+<a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/diffs/m10editappshell.txt">here</a>.</li>
+</ul>
+
+<li>
+<b><font color="#FF0000">For builds after10/25/99</font></b>, use the following
+<b><font color="#FF0000">instead</font></b>:</li>
+
+<ul>
+<li>
+../chrome/editor/content/default/editor.xul: add right below the line <b>&lt;menu
+id="charsetMenu"/></b>, the content of the file found
+<a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/diffs/m10editappshell.txt">here</a>.</li>
+</ul>
+
+<li>
+../chrome/editor/content/default/TextEditorAppShell.xul: add right below
+the line <b>&lt;menu id="charsetMenu"/></b>, the content of the file found
+<a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/diffs/m10editappshell.txt">here</a>.</li>
+
+<li>
+../chrome/editor/locale/en-US/EditorOverlay.dtd: replace the portion which
+begins with <b>&lt;!ENTITY dcharMenu.label "Character Set"> </b>up to but
+not including <b>&lt;!-- Insert menu items --> </b>with the content of
+the file <a href="http://www.mozilla.org/quality/intl/m9/charmenu/editor/diffs/m10charmenudtd.txt">here</a>.</li>
+</ul>
+</ul>
+</ul>
+
+<ul>&nbsp;</ul>
+</ul>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/intl/charmenufix.html&amp;rev=&amp;root=/cvsroot/">Last modified October 29,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

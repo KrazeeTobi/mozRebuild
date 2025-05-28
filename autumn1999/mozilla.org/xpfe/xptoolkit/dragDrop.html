@@ -1,0 +1,402 @@
+<HTML>
+<!--This file created 11/16/99 4:59 PM by Claris Home Page version 3.0 30 Day Trial-->
+<HEAD>
+   <TITLE>Drag and Drop</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 3.0 30 Day Trial">
+   <X-CLARIS-WINDOW TOP=52 BOTTOM=741 LEFT=180 RIGHT=918>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+</HEAD>
+<BODY>
+<P><TABLE CELLSPACING=0 WIDTH="100%">
+   <TR>
+      <TD BGCOLOR="#6699FF">
+         <P><FONT SIZE="+1" FACE="Century Gothic" COLOR="#FFFFFF">Drag
+         and Drop</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;<A HREF="index.html">Table of Contents</A>&#93;
+         &#91;<A HREF="clipboard.html">Previous: Clipboard</A>&#93;
+         &#91;Next: File Dialog&#93;</P>
+         
+         <P><B>Feature Owner:</B> <A HREF="mailto:pinkerton@netscape.com">Mike
+         Pinkerton</A></P>
+         
+         <H2>Overview</H2>
+         
+         <P>This document describes the Drag and Drop Service used to
+         transfer data with mozilla and other applications via drag
+         and drop and assumes the reader is familiar with the
+         Transferable object discussed in the <A HREF="introClipDD.html">previous</A>
+         document. The meat of this API can be found in <A HREF="http://lxr.mozilla.org/seamonkey/source/widget/public/nsIDragService.idl">nsIDragService</A>
+         and <A HREF="http://lxr.mozilla.org/seamonkey/source/widget/public/nsIDragSession.idl">nsIDragSession</A>.</P>
+         
+         <P>The Drag Service, whose interface is <A HREF="http://lxr.mozilla.org/seamonkey/source/widget/public/nsIDragService.idl">nsIDragService</A>,
+         always exists. Its purpose is to start a drag (either from
+         within the app or from some external source) and report if a
+         drag is currently in progress. When a drag is underway, the
+         Drag Service creates (and manages) a Drag Session, whose
+         interface is <A HREF="http://lxr.mozilla.org/seamonkey/source/widget/public/nsIDragSession.idl">nsIDragSession</A>.
+         It is the Drag Session that holds all of the information
+         relevant to the current drag. Drag Sessions are transient,
+         and the lack of its existance means that there is currently
+         no drag in progress.</P>
+         
+         <H2>Handling Drag Events</H2>
+         
+         <H3>Initiating a Drag From Within The App</H3>
+         
+         <P>When the user makes a gesture that could be interpreted
+         as a drag (a click and motion of the mouse over some number
+         of pixels), a NS_DRAGDROP_GESTURE event is generated and
+         sent to the content model starting at the node where the
+         mouse initially was depressed. While this event can be
+         handled at the frame level in C++, we recommend that you
+         handle it in JavaScript with an
+         <FONT COLOR="#CC0000">ondraggesture</FONT> handler.</P>
+         
+         <P>This event will bubble up the content tree as necessary
+         so you don't need to worry about placing a handler at every
+         single level. The <FONT COLOR="#CC0000">target</FONT> field
+         of the event structure (event.target) will contain the
+         content node where the mouse went down so you can still tell
+         what happened as the event bubbles.</P>
+         
+         <P>Below is an example of the XUL and the JS:</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+&lt;titledbutton id="page-proxy-button" ondraggesture="DragProxyIcon(event);"/&gt; 
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+function DragProxyIcon ( event )
+{
+  // get the drag service
+  var dragStarted = false;
+  var dragService = Components.classes&#91;"component://netscape/widget/dragservice"&#93;.getService();
+  if ( dragService ) dragService = dragService.QueryInterface(Components.interfaces.nsIDragService);
+  if ( dragService ) {
+                  
+    // create a transferable
+    var trans = Components.classes&#91;"component://netscape/widget/transferable"&#93;.createInstance();
+    if ( trans ) trans = trans.QueryInterface(Components.interfaces.nsITransferable);
+    if ( trans ) {
+      trans.addDataFlavor("text/plain");
+      var genTextData = Components.classes&#91;"component://netscape/supports-string"&#93;.createInstance();
+      if ( genTextData ) 
+        genTextData = genTextData.QueryInterface(Components.interfaces.nsISupportsString);
+      if ( genTextData ) {
+        genTextData.data = "this is a test;
+ 
+        // add data to the transferable
+        trans.setTransferData ( "text/plain", genTextData, id.length );  // single byte data
+ 
+        // create an array for our drag items, though we only have one this time
+        var transArray = Components.classes&#91;"component://netscape/supports-array"&#93;.createInstance();
+        if ( transArray ) 
+          transArray = transArray.QueryInterface(Components.interfaces.nsISupportsArray);
+        if ( transArray ) {
+          // put it into the list as an |nsISupports|
+          var genTrans = trans.QueryInterface(Components.interfaces.nsISupports);
+          transArray.AppendElement(genTrans);
+                  
+          // Actually kick off the drag
+          var nsIDragService = Components.interfaces.nsIDragService;
+          dragService.invokeDragSession ( transArray, null, nsIDragService.DRAGDROP_ACTION_COPY + 
+                                              nsIDragService.DRAGDROP_ACTION_MOVE );
+          dragStarted = true;
+        }
+      } // if data object
+    } // if transferable
+  } // if drag service
+                  
+  if ( dragStarted )          // don't propagate the event if a drag has begun
+    event.preventBubble();
+    
+} // DragProxyIcon                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>The key call here is
+         <FONT COLOR="#990066">dragService.invokeDragSession()</FONT>,
+         which actually tells the OS to begin the drag. Note that
+         just because you receive a draggesture event this does
+         <B>not</B> mean that a drag should begin. For example, if
+         there is no selection in a text field, obviously a click and
+         drag will select text and should not start a drag. Only the
+         client has enough information to make the decision so it is
+         completely up to the client to tell the Drag Service (and
+         subsequently the OS) to go ahead with the drag.</P>
+         
+         <P><FONT COLOR="#FF0000">&lt;&lt;discuss the drag region
+         parameter&gt;&gt;</FONT></P>
+         
+         <P>Futhermore, it is <B>very important</B> that if your
+         handler starts the drag that it does not allow the event to
+         continue to bubble. Not stopping the event will cause any
+         other handlers further up in the tree to fire and possibly
+         invoke the drag multiple times. To prevent this, make sure
+         you call
+         <FONT COLOR="#990066">event.preventBubble()</FONT>.</P>
+         
+         <H3>When The Drag Starts Outside The App</H3>
+         
+         <P>Obviously, not all drags begin with clicks within our
+         application, yet we still need to have a Drag Session
+         created for communicating with the OS about the information
+         contained in the drag. The native implementations of drag
+         and drop should call the following API on the Drag Service
+         when they notice a drag has entered or left a gecko
+         window:</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+/**
+  * Tells the Drag Service to start a drag session. This is called when
+  * an external drag occurs
+  */
+void startDragSession ( ) ;
+                  
+/**
+  * Tells the Drag Service to end a drag session. This is called when
+  * an external drag occurs
+  */
+void endDragSession ( ) ;
+                 </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>These calls create a Drag Session filled with the
+         appropriate information. No draggesture events will be
+         generated for drags started this way which is why it is up
+         to native C++ code to read the OS drag events appropriately.
+         Clients should not have to worry about this case, but
+         platform implementers will.</P>
+         
+         <H3>While The Mouse Moves Around</H3>
+         
+         <P>As the user moves their mouse within the app there are
+         several events that get generated: dragenter, dragexit, and
+         dragover (which map to NS_DRAGDROP_ENTER, NS_DRAGDROP_EXIT,
+         and NS_DRAGDROP_OVER, respectively). For most purposes, the
+         only one that you need to worry about when doing tracking is
+         dragover which is called while the mouse is over a frame. In
+         order to get the correct feedback, you need to write an
+         <FONT COLOR="#CC0000">ondragover</FONT> handler</P>
+         
+         <P>This event will bubble up the content tree as necessary
+         so you don't need to worry about placing a handler at every
+         single level. The <FONT COLOR="#CC0000">target</FONT> field
+         of the event structure (event.target) will contain the
+         content node the mouse is currently over so you can still
+         tell what is going on as the event bubbles.</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+&lt;box id="appcontent" align="vertical" flex="100%"
+    ondragover="return DragOverContentArea(event);"&gt;</PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+function DragOverContentArea ( event )
+{
+  var validFlavor = false;
+  var dragSession = null;
+                  
+  var dragService = Components.classes&#91;"component://netscape/widget/dragservice"&#93;.getService();
+  if ( dragService )
+    dragService = dragService.QueryInterface(Components.interfaces.nsIDragService);
+  if ( dragService ) {
+    dragSession = dragService.getCurrentSession();
+    if ( dragSession ) {
+      if ( dragSession.isDataFlavorSupported("moz/toolbaritem") )
+        validFlavor = true;
+      else if ( dragSession.isDataFlavorSupported("text/plain") )
+        validFlavor = true;
+      //XXX other flavors here...such as files from the desktop?
+        
+      if ( validFlavor ) {
+        // XXX do some drag feedback here, set a style maybe???
+          
+        dragSession.canDrop = true;
+        event.preventBubble();
+      }
+    }
+  }
+} // DragOverContentArea
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>The main purpose of this handler is to check if the
+         correct flavors are present in the drag (using
+         <FONT COLOR="#990066">dragSession.isDataFlavorSupported()</FONT>)
+         and set the <FONT COLOR="#CC0000">canDrop</FONT> attribute
+         on the Drag Session. Setting this attribute lets the OS know
+         that the drop is allowed and can do things like change the
+         cursor to indicate this area is a valid drop target.</P>
+         
+         <P>The above handler is fairly simplistic. While all
+         ondragover handlers follow this basic pattern, when dragging
+         over toolbars or trees other actions are necessary in order
+         to get the correct drop feedback these widgets provide. See
+         the toolbar and tree documentation for how to write the best
+         ondragover handlers for these widgets.</P>
+         
+         <P>Again, it is <B>very important</B> that if your handler
+         determines that the drag is allowable that it does not allow
+         the event to continue to bubble. Not stopping the event will
+         cause any other handlers further up in the tree to fire and
+         possibly change the answer/feedback you've so carefully
+         computed. To prevent this, make sure you call
+         <FONT COLOR="#990066">event.preventBubble()</FONT>.</P>
+         
+         <H3>When A Drop Occurs</H3>
+         
+         <P>When the mouse is released over a valid drop target (and
+         the Drag Session's <FONT COLOR="#CC0000">canDrop</FONT>
+         attribute is true), a NS_DRAGDROP_DROP event is sent to the
+         content where the drop occured. This can be handled with an
+         <FONT COLOR="#CC0000">ondragdrop</FONT> event handler.</P>
+         
+         <P>This event will bubble up the content tree as necessary
+         so you don't need to worry about placing a handler at every
+         single level. The <FONT COLOR="#CC0000">target</FONT> field
+         of the event structure (event.target) will contain the
+         content node where the mouse edned up so you can still tell
+         what happened as the event bubbles.</P>
+         
+         <P>Below is an example of the XUL and the JS:</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+&lt;box id="appcontent" align="vertical" flex="100%"
+    ondragdrop="return DropOnContentArea(event);"&gt;</PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+function DropOnContentArea ( event )
+{ 
+  var dropAccepted = false;
+    
+  var dragService = Components.classes&#91;"component://netscape/widget/dragservice"&#93;.getService();
+  if ( dragService ) 
+    dragService = dragService.QueryInterface(Components.interfaces.nsIDragService);
+  if ( dragService ) {
+    var dragSession = dragService.getCurrentSession();
+    if ( dragSession ) {
+      var trans = Components.classes&#91;"component://netscape/widget/transferable"&#93;.createInstance();
+      if ( trans ) 
+        trans = trans.QueryInterface(Components.interfaces.nsITransferable);
+      if ( trans ) {
+        trans.addDataFlavor("text/plain");
+        for ( var i = 0; i &lt; dragSession.numDropItems; ++i ) {
+          dragSession.getData ( trans, i );
+          var dataObj = new Object();
+          var bestFlavor = new Object();
+          var len = new Object();
+          trans.getAnyTransferData ( bestFlavor, dataObj, len );
+          if ( dataObj ) 
+            dataObj = dataObj.value.QueryInterface(Components.interfaces.nsISupportsString);
+          if ( dataObj ) {          
+            // pull the URL out of the data object
+            var id = dataObj.data.substring(0, len.value);
+            event.preventBubble();     
+          }
+        } // foreach drag item
+      }
+    }
+  }
+} // DropOnContentArea
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>There isn't really too much involved in this handler as
+         it looks a lot like the normal code written when accessing
+         data using a transferable object. The drag specific piece in
+         this example is the
+         <FONT COLOR="#CC0000">numDropItems</FONT> attribute which
+         contains the number of discrete items that form the drag.
+         The for loop in the example just asks the Drag Service for
+         each item in turn using
+         <FONT COLOR="#990066">dragSession.getData()</FONT>.</P>
+         
+         <P>For clients that are doing their own drop feedback, it is
+         important to point out that an exit event will be generated
+         after the drop is processed to allow for any kind of cleanup
+         (erasing the drop feedback, perhaps). This guarantees that
+         every drag enter will be matched with a corresponding drag
+         exit event.</P>
+         
+         <P>Once again, it is <B>very important</B> that if your
+         handler handles the drop that it does not allow the event to
+         continue to bubble. Not stopping the event will cause any
+         other handlers further up in the tree to fire and possibly
+         process the drop twice. To prevent this, make sure you call
+         <FONT COLOR="#990066">event.preventBubble()</FONT>.</P>
+         
+         <P>&nbsp;
+         
+         <HR SIZE=1 solid>
+         
+         &#91;<A HREF="index.html">Table of Contents</A>&#93;
+         &#91;<A HREF="clipboard.html">Previous: Clipboard</A>&#93;
+         &#91;Next: File Dialog&#93;
+         
+         <HR SIZE=1 solid>
+         
+         Contact us at <A HREF="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</A>.
+         Want to complain about the new documentation? Email
+         <A HREF="mailto:hyatt@netscape.com">Dave Hyatt</A>.</P>
+         
+         <P></P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+</BODY>
+</HTML>

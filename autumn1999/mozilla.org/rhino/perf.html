@@ -1,0 +1,167 @@
+<HTML>
+<HEAD>
+<TITLE>Performance Hints</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<center>
+<h1>
+Performance Hints</h1></center>&nbsp;
+<h3>
+<tt>var</tt> Statements</h3>Use <tt>var</tt> statements when possible. Not only is it good 
+programming practice, it can speed up your code by allowing the compiler to 
+generate special code to access the variables. For example, you could rewrite
+<p><tt>function sum(a) {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; result = 0;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; for (i=0; i &lt; 
+a.length; i++)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result += a[i];</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; return result;</tt>
+<br><tt>}</tt>
+<p>as
+<p><tt>function sum(a) {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var result = 0;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; for (var i=0; i 
+&lt; a.length; i++)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result += a[i];</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; return result;</tt>
+<br><tt>}</tt>
+<p>This is not equivalent code because the second version does 
+not modify global variables <tt>result</tt> and <tt>i</tt>. However, if you don't intend for any other function to 
+access these variables, then storing them globally is probably wrong anyway 
+(what if you called another function that had a loop like the one in <tt>sum</tt>!).
+<br>&nbsp;
+<h3>
+Arrays</h3>Use the forms of the Array constructor that 
+specify a size or take a list of initial elements. For example, the code
+<p><tt>var a = new Array();</tt>
+<br><tt>for (var i=0; i &lt; n; i++)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; a[i] = i;</tt>
+<p>could be sped up by changing the constructor call to <tt>new Array(n)</tt>. A constructor call like that indicates to 
+the runtime that a Java array should be used for the first <i>n</i> entries of the array. Similarly,
+<tt>new 
+Array(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)</tt> or <tt>[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</tt> will cause a 3-element 
+Java array to be allocated to hold the contents of the JavaScript array.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<tt>eval</tt> and <tt>new Function</tt></h3>Avoid calling <tt>eval</tt> when 
+possible. Calls to <tt>eval</tt> are slow because the script 
+being executed must be compiled. Constructing a new function object can be slow 
+for the same reason, while function expressions are more efficient because the 
+function can be compiled. For example, the code
+<p><tt>function MyObject(a) {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; this.s = a;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; this.toString = new 
+Function(&quot;return this.s&quot;);</tt>
+<br><tt>}</tt>
+<p>could be written more efficiently as
+<p><tt>function MyObject(a) {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; this.s = a;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; this.toString = 
+function () { return this.s }</tt>
+<br><tt>}</tt>
+<p>Beginning with Rhino 1.4 Release 2, code 
+passed to eval and new Function will be interpreted rather than compiled to 
+class files.
+<br>&nbsp;</p>
+<h3>
+with</h3>Using the <tt>with</tt> 
+statement prevents the compiler from generating code for fast access to local 
+variables. You're probably better off explicitly accessing any properties of the 
+object.
+<br>&nbsp;
+<p>
+<hr WIDTH="100%">
+<br><a href="index.html">back to top</a>
+<br>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/rhino/perf.html&amp;rev=&amp;root=/cvsroot/">Last modified June 10,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

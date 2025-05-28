@@ -1,0 +1,203 @@
+<HTML>
+<HEAD>
+<TITLE>mozilla.org</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<HR><B><FONT><FONT COLOR="#008080">Frames</FONT></FONT></B>
+<BR><FONT><FONT SIZE=-1>Author: <U><FONT COLOR="#3366FF"><A HREF="mailto:karnaze@netscape.com">Chris
+Karnaze</A></FONT></U></FONT></FONT>
+<BR>Updated: 12 Oct 1998
+<BR>
+<HR>
+<BR>
+<TABLE COLS=1 WIDTH="80%" BGCOLOR="#FFFFCC" >
+ <TR>
+  <TD><B>Overview</B></TD>
+ </TR>
+</TABLE>
+
+<BR>Frames consits of the content and layout classes supporting &lt;FRAMESET>,
+&lt;FRAME> and &lt;IFRAME> tags. A document with a &lt;FRAMESET> does not
+contain a body tag and the &lt;FRAMESET> specifies how the layout will
+divided into rows and columns. Each cell of this division can contain a
+&lt;FRAME> (leaf cell) or another &lt;FRAMESET>. Leaf cells are rendered
+with the contents of the document specified by the &lt;FRAME>s src attribute.
+The only rendering associated with non-leaf cells is contributed by the
+leaf cells that they contain (1 or more levels below).
+
+<P>An &lt;IFRAME> is like a &lt;FRAME> without a containing &lt;FRAMESET>.
+They define complete documents that are rendered inline within the box
+they define by their width and height attributes.
+
+<P>An nsIWebShell (and nsWebShell implementation) provides the document
+support to &lt;FRAME>s and &lt;IFRAME>s.
+<BR>
+<TABLE COLS=1 WIDTH="80%" BGCOLOR="#FFFFCC" >
+ <TR>
+  <TD><B>Major Components</B></TD>
+ </TR>
+</TABLE>
+
+<BR>&lt;FRAMESET>s and &lt;IFRAME>s are comprised of content classes (including
+nsHTMFramesetElement, nsHTMLFrameElement, nsHTMLIFrameElement) and layout/frame
+classes including nsFrameSetFrame, nsFrameSetBorderFrame, nsFrameSetBlankFrame,
+nsHTMLFrameOuterFrame, nsHTMLFrameInnerFrame. The content classes are fairly
+light weight and provide basic getters and setters on their attributes.
+The layout are a bit more involved and provide the needed layout capabilities
+in addition to user draggable frame borders in the case of &lt;FRAMESET>s.
+
+<P>A &lt;FRAMESET> layout consists of a single nsFrameSetFrame which can
+contain one or more nsFrameSetBorderFrames, nsFrameSetBlankFrames. An nsFrameSetBorderFrame
+defines a border between two adjacent cells within its containing nsFrameSetFrame.
+By being a separate frame, it can support user dragging to resize the adjacent
+cells. nsFrameSetBlankFrame provides minimal support in the case where
+a &lt;FRAMESET> specifies more leaf cells than &lt;FRAME>s. It renders
+as just a blank white box.
+
+<P>The layout for both a &lt;FRAME> and an &lt;IFRAME> consists of a single
+nsHTMLFrameOuterFrame which contains a single nsHTMLFrameInnerFrame. The
+outer frame provides the border for the &lt;IFRAME> layout (the border
+for the &lt;FRAME> layout is provided by the nsFrameSetFrame, so consequently
+at some point, the outer frame might go away in this case). The inner frame
+contains an nsIWebShell which is associated with the sub document to be
+rendered.
+
+<P>
+<TABLE COLS=1 WIDTH="80%" BGCOLOR="#FFFFCC" >
+ <TR>
+  <TD><B>Implementation</B></TD>
+ </TR>
+</TABLE>
+
+<BR>nsFrameSetFrame's <I>ParseRowColSpec</I> takes the <B><I>rows</I></B>
+and <B><I>cols</I></B> attributes and builds an array of nsFramesetSpecs
+specifying the units (pixel, percentage, proportional) and the values.
+<I>Reflow</I> passes this spec to <I>CalculateRowCol</I> which calculates
+the cells dimensions. <I>Reflow</I> lays out its children nsFrameSetFrames,
+nsHTMLFrameOuterFrames, nsFrameSetBlankFrames from left to right and top
+to bottom (based on the matrix of cells defined) and subtracting out the
+width of nsFrameSetBorderFrames. It next lays out the nsFrameSetBorderFrames.
+
+<P>There are a couple of cases where the layout process becomes more complicated.
+First, since border widths can be specified at the &lt;FRAMESET> and/or
+&lt;FRAME> level and &lt;FRAMESET>s can be arbitrarily nested, border width
+calculations need to take this into account. Second, since borders are
+parented by an nsFrameSetFrame yet they can be specified to be not mouse
+sensitive (<B><I>noresize</I></B> attribute) possibly many levels below
+that in an nsHTMLFrameSetFrame, this causes some extra recursive logic.
+
+<P>nsHTMLFrameOuterFrame's <I>Reflow </I>subtracts the space for its borders
+and reflows its single nsHTMLFrameInnerFrame. In the case of &lt;FRAME>
+layout the border has width 0 since the nsFrameSetFrame parent handles
+all borders. The inner frame makes a link to the nsIWebShell which is responsible
+for laying out the sub document.
+<BR>
+<TABLE COLS=1 WIDTH="80%" BGCOLOR="#FFFFCC" >
+ <TR>
+  <TD><B>Roadmap</B></TD>
+ </TR>
+</TABLE>
+
+<BR>Frames are complete except for outstanding bugs.
+<BR>
+<TABLE COLS=1 WIDTH="80%" BGCOLOR="#FFFFCC" >
+ <TR>
+  <TD><B>Known Bugs</B></TD>
+ </TR>
+</TABLE>
+
+<BR>Cell calculation when absolute pixel values are specified are not always
+right. Dragging a border outside the causes the view system to hang.
+<BR>
+<TABLE COLS=1 WIDTH="70%" >
+ <TR BGCOLOR="#FFFFCC">
+  <TD><B>Schedule</B></TD>
+ </TR>
+</TABLE>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/newlayout/doc/frames.html&amp;rev=&amp;root=/cvsroot/">Last modified January 15,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,653 @@
+<HTML>
+<HEAD>
+<TITLE>nsCOMPtr FAQ</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+	
+    <!-- LINK REL=StyleSheet HREF="Standard.css" TYPE="text/css" -->
+    <LINK REL=StyleSheet HREF="http://www.mozilla.org/projects/xpcom/Standard.css" TYPE="text/css">
+	
+
+	
+		<H1><SPAN class="source-code">nsCOMPtr</SPAN> FAQ</H1>
+
+<DIV class=author-note>
+	<P>by <A HREF="http://www.meer.net/ScottCollins/">Scott Collins</A><!-- /P -->
+	<P>last modified 25 October 1999</P>
+</DIV>
+
+<div class="document-label">
+	<p>
+		<strong>Document Status</strong>: <span class="warning"><strong>Retired</strong></span>.
+		This document is now obsolete.
+		It was never very complete,
+			and now it is subsumed by the 
+			<a href="http://www.mozilla.org/projects/xpcom/nsCOMPtr.html"><span class="source-code">nsCOMPtr</span> User's Manual</a>.
+		Please use that document as your reference.
+	</p>
+</div>
+
+<DIV class="editor-note">
+	<P>
+		This document is very unfinished, but I'm checking it in anyway to facilitate comments.
+		I'll be posting updates frequently until it reaches a more complete state.
+		I hope that even in its current state, it is still of some help to you.
+	</P>
+</DIV>
+
+
+<H2>Introduction</H2>
+
+
+<H2>The Basics</H2>
+
+<H3>How do I initialize an <SPAN class="source-code">nsCOMPtr</SPAN>?</H3>
+
+<H3>How do I <SPAN class="source-code">Release</SPAN> an <SPAN class="source-code">nsCOMPtr</SPAN> <EMPH>before</EMPH> its destruction?</H3>
+<DIV class="source-code">
+<PRE class="source-code">
+nsCOMPtr&lt;nsIFoo&gt; fooP = ...;
+
+  <SPAN class="comment">// ...</SPAN>
+
+fooP = 0;
+</PRE>
+</DIV>
+
+<H3>What do I do when I need a normal pointer?</H3>
+
+
+<DIV class="faq-item">
+<H3>What are all these funny modifiers:
+	<SPAN class="source-code">do_QueryInterface</SPAN>, <SPAN class="source-code">dont_QueryInterface</SPAN>, <SPAN class="source-code">getter_AddRefs</SPAN>, and <SPAN class="source-code">dont_AddRef</SPAN>?</H3>
+<!-- Well, <A href="msg2.html">this email message</A> describes them in detail. -->
+<P>
+When you assign a value into an <SPAN class="source-code">nsCOMPtr</SPAN>, you can elicit special behavior by annotating the
+	value with one of these modifiers.
+The default behavior, what you are implicitly requesting when you assign an unadorned
+	raw COM interface pointer into an <SPAN class="source-code">nsCOMPtr</SPAN>,
+	is equivalent to <SPAN class="source-code">dont_QueryInterface</SPAN>.
+The new value is <SPAN class="source-code">AddRef</SPAN>ed; nothing else.
+</P>
+
+<H4><SPAN class="source-code">do_QueryInterface( nsISupports* );</SPAN></H4>
+<P>
+The pointer is <SPAN class="source-code">QueryInterface</SPAN>d for the COM correct interface,
+	and it is <SPAN class="source-code">AddRef</SPAN>ed (by <SPAN class="source-code">QueryInterface</SPAN>) as part of the assignment.
+Use this when the type you are assigning in is different than your <SPAN class="source-code">nsCOMPtr</SPAN>, e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Using |do_QueryInterface|...</SPAN>
+
+nsIBar* rawBarP;
+nsCOMPtr&lt;nsIBar&gt; barP;
+  <SPAN class="comment">// ...</SPAN>
+
+  <SPAN class="comment">// ...|do_QueryInterface| works as well with an |nsCOMPtr| source as with a raw COM interface pointer</SPAN>
+nsCOMPtr&lt;nsIFoo&gt; foo0P = <STRONG>do_QueryInterface(</STRONG>rawBarP<STRONG>)</STRONG>;
+nsCOMPtr&lt;nsIFoo&gt; foo1P = <STRONG>do_QueryInterface(</STRONG>barP<STRONG>)</STRONG>;
+</PRE>
+</DIV>
+
+<H4><SPAN class="source-code">do_QueryInterface( nsISupports*, nsresult* );</SPAN></H4>
+<P>
+As above, but the error result of <SPAN class="source-code">QueryInterface</SPAN> is available to you, e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Using |do_QueryInterface|...</SPAN>
+
+nsIBar* rawBarPtr;
+  <SPAN class="comment">// ...</SPAN>
+nsresult status;
+nsCOMPtr&lt;X&gt; x = <STRONG>do_QueryInterface(</STRONG>rawBarPtr, &amp;status<STRONG>)</STRONG>;
+if ( NS_SUCCEEDED(status) )
+  <SPAN class="comment">// ...</SPAN>
+</PRE>
+</DIV>
+
+<H4><SPAN class="source-code">dont_QueryInterface( nsIFoo* );</SPAN></H4>
+<P>
+The almost minimal action: the source pointer is exactly the right type,
+	I <STRONG>promise</STRONG>.
+So just assign it in.
+The pointer will be <SPAN class="source-code">AddRef</SPAN>ed.
+Note, this is not appropriate when the source pointer is not exactly the right type,
+	e.g., in the case of inheritance.
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Using |dont_QueryInterface|...</SPAN>
+
+
+</PRE>
+</DIV>
+
+<H4><SPAN class="source-code">getter_AddRefs( X* );</SPAN></H4>
+<P>
+The minimal action: the source pointer is exactly the right type,
+	I <STRONG>promise</STRONG>.
+So just assign it in.
+And by the way, the thing that made the source pointer
+	already <SPAN class="source-code">AddRef</SPAN>ed it for you.
+E.g.,
+<!-- P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Using |getter_AddRefs|...</SPAN>
+
+nsIFoo* CreateFoo();
+
+nsCOMPtr&lt;nsIFoo&gt; fooP = <STRONG>getter_AddRefs(</STRONG>CreateFoo()<STRONG>)</STRONG>;
+</PRE>
+</DIV>
+
+<H4><SPAN class="source-code">dont_AddRef( X* );</SPAN></H4>
+<P>
+A synonym for <SPAN class="source-code">getter_AddRefs</SPAN>, but it reads better for non-function arguments, e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Using |dont_AddRef|...</SPAN>
+
+nsIFoo* temp;
+nsresult status = GetFoo(&amp;temp);
+nsCOMPtr&lt;nsIFoo&gt; fooP = <STRONG>dont_AddRef(</STRONG>temp<STRONG>)</STRONG>;
+</PRE>
+</DIV>
+
+<P>
+The following table summarizes the calls.
+</P>
+<TABLE>
+<TD>
+</TD>
+<TD>
+</TD>
+<TD>
+</TD>
+</TABLE>
+
+</DIV>
+
+<H2>Calling and Writing Setters</H2>
+
+
+<DIV class="faq-item">
+<H3>Should I write my setter to take an <SPAN class="source-code">nsCOMPtr</SPAN> parameter?</H3>
+
+<P>
+Probably not.
+It is prohibited entirely if your setter is part of a COM interface.
+Otherwise, it seems tempting, however, consider this.
+If your setter takes a raw COM interface pointer,
+	it can be called easily by both callers with an <SPAN class="source-code">nsCOMPtr</SPAN> and
+	by callers with only a raw COM interface pointer.
+If your setter takes an <SPAN class="source-code">nsCOMPtr</SPAN>, it can only be called by one, and not the other.
+Additionally, you typically don't need to hold an owning reference to parameters merely for
+	the life of the function, as they are guaranteed to live longer than the call.
+</P>
+</DIV>
+
+<DIV class="faq-item">
+<H3>How do I call a setter that takes a raw COM interface pointer?</H3>
+
+<P>
+An <SPAN class="source-code">nsCOMPtr</SPAN> automatically provides a raw COM interface pointer when needed.
+See the item "What do I do when I need a normal pointer?".
+So just call the setter and use your <SPAN class="source-code">nsCOMPtr</SPAN> as the parameter.
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Calling a setter...</SPAN>
+
+nsresult SetFoo( nsIFoo* );  <SPAN class="comment">// ...the setter for this example.</SPAN>
+
+nsCOMPtr&lt;nsIFoo&gt; fooP;
+  <SPAN class="comment">// ...</SPAN>
+SetFoo(fooP);  <SPAN class="comment">// Just call it.  The |nsCOMPtr| automatically provides a raw COM interface pointer</SPAN>
+</PRE>
+</DIV>
+</DIV>
+
+<H2>Calling and Writing Getters</H2>
+
+<P>
+In traditional parlance, the term `getter' usually means a member function that accesses an attribute.
+A getter is an accessor, in opposition to a `setter' which is a mutator.
+For our purposes, the attributes we care about are COM interface pointers.
+We expand the definition to contain global as well as member functions.
+So, in the discussions that follow, a getter is any function whose purpose is to return
+	a COM interface pointer.
+The result might be in the form of a raw COM interface pointer, or an <SPAN class="source-code">nsCOMPtr</SPAN>.
+It might returned as the function result,
+	or through a pointer or reference parameter.
+<SPAN class="source-code">QueryInterface</SPAN> is, perhaps, the most famous COM getter.
+</P>
+
+<P>
+COM has two key rules that impact the design and use of getters.
+First, a getter must always <SPAN class="source-code">AddRef</SPAN> its result.
+Second, a getter must always initialize its result to <SPAN class="source-code">0</SPAN> in case of error.
+</P>
+
+
+<DIV class="faq-item">
+<H3>How do I call a getter that returns an <SPAN class="source-code">nsIFoo*</SPAN> function result?</H3>
+<P>
+Wrap the getter in <SPAN class="source-code">getter_AddRefs</SPAN>
+	and construct or assign into your <SPAN class="source-code">nsCOMPtr</SPAN> from that.
+Note that it's cheaper to construct an <SPAN class="source-code">nsCOMPtr</SPAN> with the right value,
+	than it is to construct it and then separately assign in the value.
+<!-- P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Calling a getter that returns an |nsIFoo*| function result...</SPAN>
+
+nsIFoo* CreateFoo(); <SPAN class="comment">// ...the getter for this example.</SPAN>
+
+  <SPAN class="comment">// Prefer construction (as these two samples show) to construction followed by assignment.</SPAN>
+  <SPAN class="comment">//  Both forms of construction are equivalent...</SPAN>
+nsCOMPtr&lt;nsIFoo&gt; foo0P( <STRONG>getter_AddRefs(</STRONG>CreateFoo()<STRONG>)</STRONG> ); <SPAN class="comment">// ...function form</SPAN>
+nsCOMPtr&lt;nsIFoo&gt; foo1P = <STRONG>getter_AddRefs(</STRONG>CreateFoo()<STRONG>)</STRONG>;  <SPAN class="comment">// ...assignment form</SPAN>
+
+  <SPAN class="comment">// Construction followed by assignment.</SPAN>
+  <SPAN class="comment">//  It's slightly more expensive than the construction-only samples above.</SPAN>
+nsCOMPtr&lt;nsIFoo&gt; foo2P;
+foo2P = <STRONG>getter_AddRefs(</STRONG>CreateFoo()<STRONG>)</STRONG>;
+</PRE>
+</DIV>
+
+<P>
+<SPAN class="source-code">dont_AddRef</SPAN> is a synonym for this use of <SPAN class="source-code">getter_AddRefs</SPAN>.
+It's useful when, for some reason, you have a pointer that has already been <SPAN class="source-code">AddRef</SPAN>ed,
+	and so, no `getter' is involved directly in the assignment.
+Here's an example taken from the item "What's the most efficient way to assign into an <SPAN class="source-code">nsCOMPtr</SPAN>?"
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// An optimization pattern that transforms |nsCOMPtr| assignments into constructions...</SPAN>
+<SPAN class="comment">//  Here, showing how |dont_AddRef| is related to |getter_AddRefs|.</SPAN>
+
+nsresult GetFoo( nsIFoo** ); <SPAN class="comment">// ...the getter for this example.</SPAN>
+
+  <SPAN class="comment">// Instead of saying this...</SPAN>
+nsCOMPtr&lt;nsIFoo&gt; foo0P;
+nsresult status = GetFoo( getter_AddRefs(foo0P) );
+
+  <SPAN class="comment">// ...you can say this.</SPAN>
+nsIFoo* temp;
+status = GetFoo(&amp;temp);
+nsCOMPtr&lt;nsIFoo&gt; foo1P = <STRONG>dont_AddRef(</STRONG>temp<STRONG>)</STRONG>;
+</PRE>
+</DIV>
+</DIV>
+
+
+<DIV class="faq-item">
+<H3>How do I call a getter that fills in an <SPAN class="source-code">nsIFoo**</SPAN> parameter?</H3>
+<P>
+If you wrap an <SPAN class="source-code">nsCOMPtr</SPAN> with <SPAN class="source-code">getter_AddRefs</SPAN>, you can use it as an argument to getters in this form.
+This is a different use (but with the same end goal) of <SPAN class="source-code">getter_AddRefs</SPAN> than what we saw in the previous item.
+<!-- P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Calling a getter that fills in an |nsIFoo**| parameter...</SPAN>
+
+nsresult GetFoo( nsIFoo** ); <SPAN class="comment">// ...the getter for this example.</SPAN>
+
+nsCOMPtr&lt;nsIFoo&gt; fooP;
+nsresult status = GetFoo( <STRONG>getter_AddRefs(</STRONG>fooP<STRONG>)</STRONG> );
+</PRE>
+</DIV>
+</DIV>
+
+
+<DIV class="faq-item">
+<H3>How do I call a getter that fills in an <SPAN class="source-code">nsIFoo*&</SPAN> parameter?</H3>
+<P>
+You should probably report it as a bug.
+Reference parameters should be avoided for getters,
+	as they make the fact that a parameter will modified
+	invisible at the call site.
+You can still use such a getter, however,
+	by wrapping your <SPAN class="source-code">nsCOMPtr</SPAN> with <SPAN class="source-code">getter_AddRefs</SPAN>, as in the previous item,
+	and dereferencing the result.
+E.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Calling a getter that flls in an |nsIFoo*&amp;| parameter...</SPAN>
+
+nsresult GetFoo( nsIFoo*&amp; ); <SPAN class="comment">// ...the getter for this example.</SPAN>
+
+nsCOMPtr&lt;nsIFoo&gt; fooP;
+nsresult status = GetFoo( <STRONG>*getter_AddRefs(</STRONG>fooP<STRONG>)</STRONG> );
+</PRE>
+</DIV>
+</DIV>
+
+
+<DIV class="faq-item">
+<H3>What do I do if the getter doesn't <SPAN class="source-code">AddRef</SPAN> its result?</H3>
+<P>
+You should probably report it as a bug.
+However, if the getter has some legitimate reason for not <SPAN class="source-code">AddRef</SPAN>ing its result,
+	you can still use it with your <SPAN class="source-code">nsCOMPtr</SPAN>s
+	with an intermediate step.
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Assigning into an |nsCOMPtr| from a getter that _doesn't_ |AddRef| its result...</SPAN>
+
+nsIFoo* CreateFooWithoutAddRef();
+nsresult GetFooWithoutAddRef( nsIFoo** );
+
+nsCOMPtr&lt;nsIFoo&gt; foo0P = CreateFooWithoutAddRef();
+
+nsIFoo* temp;
+nsresult status = GetFooWithoutAddRef(&amp;temp);
+nsCOMPtr&lt;nsIFoo&gt; foo1P = temp;
+</PRE>
+</DIV>
+<P>
+Naturally, you won't be able to use <SPAN class="source-code">getter_AddRefs</SPAN>, as this getter <STRONG>doesn't</STRONG> <SPAN class="source-code">AddRef</SPAN>.
+</P>
+</DIV>
+
+
+<DIV class="faq-item">
+<H3>Should I write my getter to return an <SPAN class="source-code">nsCOMPtr</SPAN>?</H3>
+<P>
+Probably not.
+It is prohibited entirely if your getter is part of a COM interface.
+If your getter is <STRONG>not</STRONG> part of a COM interface,
+	you might be tempted to write the following.
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// One (less than satisfactory) way of writing a getter that isn't part of a COM interface...</SPAN>
+
+nsresult
+Bar::GetFoo( nsCOMPtr&lt;nsIFoo&gt;* aResult ) const
+  {
+    NS_PRECONDITION(aResult, "null parameter");
+
+    (*aResult) = mFooP;
+    return NS_OK;
+  }
+</PRE>
+</DIV>
+<P>
+But this implies that an <SPAN class="source-code">nsCOMPtr</SPAN> cannot be constructed from a call to your getter;
+	only assigned into.
+And construction is preferred over assignment.
+To facility construction, we'll want to return our pointer as the function result.
+This leaves two possibilities.
+We can return an <SPAN class="source-code">nsCOMPtr</SPAN>, or we can return a raw COM interface pointer.
+</P>
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Another (less than satisfactory) way of writing a getter...</SPAN>
+
+nsCOMPtr&lt;nsIFoo&gt;
+Bar::GetFoo() const
+  {
+    return nsCOMPtr&lt;nsIFoo&gt;(mFooP);
+  }
+<SPAN class="comment">// Watch out for |nsIFoo* fooP = barP-&gt;GetFoo();| which compiles, but leaves |fooP| un-|AddRef|ed.</SPAN>
+</PRE>
+</DIV>
+<P>
+Returning an <SPAN class="source-code">nsCOMPtr</SPAN> will almost certainly create a temporary;
+	and it encourages a particularly evil error, as noted.
+Returning a raw COM interface pointer
+	facilitates <SPAN class="source-code">nsCOMPtr</SPAN> construction,
+	works with non-<SPAN class="source-code">nsCOMPtr</SPAN> callers, and
+	is likely to be more efficient than returning an <SPAN class="source-code">nsCOMPtr</SPAN> directly. 
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// How to write a getter...</SPAN>
+
+  <SPAN class="comment">// Note: both these patterns hold whether |mFooP| is an |nsCOMPtr| or a raw COM interface pointer.</SPAN>
+
+  <SPAN class="comment">// The preferred form of a getter that is _not_ part of a COM interface...</SPAN>
+nsIFoo*
+Bar::GetFoo() const
+  {
+    nsIFoo* result = mFooP;
+    NS_IF_ADDREF(result);
+    return result;
+  }
+
+  <SPAN class="comment">// The preferred form of a getter that is part of a COM interface...</SPAN>
+nsresult
+Bar::GetFoo( nsIFoo** aResult )
+  {
+    NS_PRECONDITION(aResult, "null parameter");
+
+    (*aResult) = mFooP;
+    NS_IF_ADDREF(*aResult);
+    return NS_OK;
+  }
+</PRE>
+</DIV>
+<P>
+Reference parameters should be avoided for getters.
+</P>
+</DIV>
+
+
+
+
+
+
+<H2>Calling and Writing <SPAN class="source-code">QueryInterface</SPAN></H2>
+
+
+<H2>Trouble Shooting</H2>
+
+<DIV class="faq-item">
+</DIV>
+
+
+
+<H2>Efficiency</H2>
+
+
+<DIV class="faq-item">
+<H3>What's the most efficient way to assign into an <SPAN class="source-code">nsCOMPtr</SPAN>?</H3>
+
+<P>
+The most efficient way, in both time and space, to get a value into an <SPAN class="source-code">nsCOMPtr</SPAN> is at construction time.
+Prefer construction over assignment whenever reasonable.
+Initialize member <SPAN class="source-code">nsCOMPtr</SPAN>s in the member initialization clause of your constructor.
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Initialize member |nsCOMPtr|s in the member initialization clause of your constructor...</SPAN>
+
+class Bar
+  {
+    public:
+      Bar( nsIFoo* initial_fooP );
+      <SPAN class="comment">// ...</SPAN>
+    private:
+      nsCOMPtr&lt;nsIFoo&gt; mFooP;
+  };
+
+Bar::Bar( nsIFoo* initial_fooP )
+    : <STRONG>mFooP(initial_fooP)</STRONG> <SPAN class="comment">// initialize it _here_</SPAN>
+  {
+    <SPAN class="comment">// not here</SPAN>
+  }
+</PRE>
+</DIV>
+<P>
+Additionally, there is an optimization pattern using a temporary that converts assignment form
+	to construction form.
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// An optimization pattern that transforms |nsCOMPtr| assignments into constructions...</SPAN>
+
+nsresult GetFoo( nsIFoo** ); <SPAN class="comment">// ...the getter for this example.</SPAN>
+
+  <SPAN class="comment">// Instead of saying this...</SPAN>
+nsCOMPtr&lt;nsIFoo&gt; foo0P;
+nsresult status = GetFoo( getter_AddRefs(foo0P) );
+
+  <SPAN class="comment">// ...you can say this.</SPAN>
+nsIFoo* temp;
+status = GetFoo(&amp;temp);
+nsCOMPtr&lt;nsIFoo&gt; foo1P = dont_AddRef(temp);
+</PRE>
+</DIV>
+</DIV>
+
+
+
+
+
+<H2>Esoterica</H2>
+
+
+<DIV class="faq-item">
+<H3>Why is <SPAN class="source-code">getter_AddRefs</SPAN> used in two such different contexts?</H3>
+<P>
+	Originally, <SPAN class="source-code">getter_AddRefs</SPAN> was only used in the parameter form,
+		e.g., for assigning into <SPAN class="source-code">nsCOMPtr</SPAN>s from getters like <SPAN class="source-code">nsresult GetFoo( nsIFoo** )</SPAN>, et al.
+	It worked in a team with (the now obsolete) <SPAN class="source-code">getter_doesnt_AddRef</SPAN>.
+	<SPAN class="source-code">dont_AddRef</SPAN> was the only choice for non-parameter situations like
+		<SPAN class="source-code">nsIFoo* CreateFoo()</SPAN>.
+	Several factors led to the change.
+	First, <SPAN class="source-code">getter_doesnt_AddRef</SPAN> had unacceptable efficiency problems;
+		and since getters that don't <SPAN class="source-code">AddRef</SPAN> their result are against the rules of COM,
+		<SPAN class="source-code">getter_doesnt_AddRef</SPAN> was removed.
+	Second, people kept using <SPAN class="source-code">getter_AddRefs</SPAN> around functions where they were supposed to
+		call <SPAN class="source-code">dont_AddRef</SPAN>.
+	This happened enough that it was reasonable to question the interface.
+	At that point, I made a second form of <SPAN class="source-code">getter_AddRefs</SPAN> that was simply a synonym
+		for <SPAN class="source-code">dont_AddRef</SPAN>.
+	Now it behaved as people seemed to expect.
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// |getter_AddRefs| is used in two very different contexts...</SPAN>
+
+nsCOMPtr&lt;nsIFoo&gt; foo0P = <STRONG>getter_AddRefs(</STRONG>CreateFoo()<STRONG>)</STRONG>;
+  <SPAN class="comment">// either to wrap a getter function that returns a pointer before assigning it into an |nsCOMPtr|</SPAN>
+
+nsresult status = GetFoo( <STRONG>getter_AddRefs(</STRONG>fooP<STRONG>)</STRONG> ); 
+  <SPAN class="comment">// or to wrap an |nsCOMPtr| parameter that will be filled in by a getter</SPAN>
+</PRE>
+</DIV>
+</DIV>
+
+
+<H2>Bibliography and Related Reading</H2>
+
+<DIV class="bibliography-entry">
+<A href="">Effective COM</A>
+50 Ways to Improve your COM and MTS-based Applications
+by Don Box, et al.
+</DIV>
+
+
+<DIV class="author-note">
+	<HR>
+		<!-- A HREF="http://validator.w3.org/">
+			<IMG BORDER=0 align=left SRC="http://validator.w3.org/images/vh40.gif" ALT="Valid HTML 4.0!" HEIGHT=31 WIDTH=88>
+		</A>
+		<A HREF="http://www.w3.org/Style/CSS/Buttons">
+			<IMG BORDER=0 align=left SRC="http://www.w3.org/Style/CSS/Buttons/cssos" ALT="CSS" HEIGHT=31 WIDTH=88>
+		</A -->
+		Copyright&copy; 1999 by Netscape; use is subject to the <A HREF="http://www.mozilla.org/NPL/">NPL</A>.
+</DIV>
+	
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/xpcom/nsCOMPtr/nsCOMPtrFAQ.html&amp;rev=&amp;root=/cvsroot/">Last modified October 25,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

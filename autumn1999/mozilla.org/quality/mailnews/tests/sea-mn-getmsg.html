@@ -1,0 +1,1083 @@
+<HTML>
+<HEAD>
+<TITLE>Get Message Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.0 Project (Seamonkey)</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mail and News Component</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Get Messages</b>
+<p>Written by: <a href="../../../../../ns/tools/qa/mailnews/testspecs/seamonkey/tests/esther@netscape.com">Esther
+Goes</a>
+<br>Original specs by Peter Mock &amp; Laurel Carlson
+<p><b>History:</b>
+<br>121698 Started update from original Nova spec
+<br>102299 Updating spec for Seamonkey
+<br>102799 Updating spec for Seamonkey
+<br>&nbsp;
+<p><b>References:</b>
+<br>UI Specification:&nbsp; No spec yet- merging Nova test specs
+<br>Other:&nbsp; None
+<p>
+<hr WIDTH="100%">
+<br>Description: Get New Messages menu item and Get Msg Toolbar button
+retrieves new messages from both <b>Mail</b> &amp; <b>News</b> servers.&nbsp;
+Note: Get Next [N] Messages menu item still (TBD).
+<p><b>Basic Functionality</b>
+<ol TYPE=A>
+<li>
+Get New Messages</li>
+
+<ol>
+<li>
+Mail/News message retrieval from various windows, verify Get Msg works
+in each of these views.</li>
+
+<ol TYPE=a>
+<li>
+3 Pane UI</li>
+
+<ul TYPE=SQUARE>
+<li>
+Menu</li>
+
+<ul TYPE=DISC>
+<li>
+Get New Messages</li>
+
+<li>
+Get New Messages - drop down list</li>
+
+<li>
+Mnemonic</li>
+</ul>
+
+<li>
+Toolbar Button</li>
+
+<ul TYPE=DISC>
+<li>
+Get Msg</li>
+
+<li>
+Get Msg drop down menu&nbsp; - contains the name of each account separately,
+plus an "All Accounts" option.</li>
+
+<li>
+Use the drop down menu to select an account and retrieve mail for the selected
+account only. Only one account can be selected at a time using the drop
+down menu.</li>
+</ul>
+
+<li>
+Context menu</li>
+
+<ul TYPE=DISC>
+<li>
+Folder pane w/Mail Server selected, right mouse click, menu reads Get New
+Messages for this Account</li>
+
+<li>
+Folder pane w/Newsgroup selected, right mouse click, menu reads Get New
+Messages for this Newsgroup (TBD)Message Window -stand alone window</li>
+</ul>
+</ul>
+
+<li>
+2 Pane UI -Folder pane hidden</li>
+
+<ul TYPE=SQUARE>
+<li>
+Menu</li>
+
+<ul TYPE=DISC>
+<li>
+Get New Messages</li>
+
+<li>
+Get New Messages - drop down list</li>
+
+<li>
+Mnemonic</li>
+</ul>
+
+<li>
+Toolbar Button</li>
+
+<ul TYPE=DISC>
+<li>
+Get Msg</li>
+
+<li>
+Get Msg drop down menu&nbsp; - contains the name of each account separately,
+plus an "All Accounts" option.</li>
+
+<li>
+Use the drop down menu to select an account and retrieve mail for the selected
+account only. Only one account can be selected at a time using the drop
+down menu.</li>
+</ul>
+
+<li>
+Context menu</li>
+
+<ul TYPE=DISC>
+<li>
+Folder pane w/Mail Server selected, right mouse click, menu reads Get New
+Messages for this Account</li>
+
+<li>
+Folder pane w/Newsgroup selected, right mouse click, menu reads Get New
+Messages for this Newsgroup (TBD)Message Window -stand alone window</li>
+</ul>
+</ul>
+
+<li>
+Address Book (using Inbox icon from Communicator Task Bar)</li>
+
+<ul TYPE=SQUARE>
+<li>
+Component Bar</li>
+</ul>
+
+<li>
+Browser Window (using Inbox icon from Communicator Task Bar)</li>
+
+<ul TYPE=SQUARE>
+<li>
+Component Bar</li>
+</ul>
+
+<li>
+Editor Window (using Inbox icon from Communicator Task Bar)</li>
+
+<ul TYPE=SQUARE>
+<li>
+Component Bar</li>
+</ul>
+</ol>
+
+<li>
+Password (Mail &amp; News)</li>
+
+<ol TYPE=a>
+<li>
+No password</li>
+
+<ul>
+<li>
+verify new messages are not retrieved when leaving the password dialog
+empty then clicking OK</li>
+</ul>
+
+<li>
+Incorrect password</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify new messages are not retrieved when giving an incorrect password
+then clicking OK</li>
+
+<li>
+verify a Login failed dialog comes up, after clicking OK, a second password
+dialog window comes up</li>
+</ul>
+
+<li>
+After incorrect password, re-enter correct password in same session</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify new messages are retrieved after entering the correct password in
+the second password dialog window</li>
+</ul>
+
+<li>
+Password Saved from previous session (Remember Password preference=True,
+located in Account Setup under Server)</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify no password dialog comes up when doing a Get Msg the first time
+af for accounts that have Remember Password checked.</li>
+</ul>
+</ol>
+
+<li>
+Enable/Disable conditions: (News)</li>
+
+<ol TYPE=a>
+<li>
+Get New Messages</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify this is enabled (when a Mail Server, Newsgroup or Mail Folder is
+selected)</li>
+
+<li>
+verify this is disabled when a News Server is selected</li>
+</ul>
+
+<li>
+Get Next [# entered in Account Setup] Messages</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify this is enabled when a&nbsp; Newsgroup is selected</li>
+
+<li>
+verify this is disabled when a News Server, Mail Server or Mail Folder
+is selected</li>
+</ul>
+</ol>
+
+<li>
+Interrupting Get New Messages operation</li>
+
+<ol TYPE=a>
+<li>
+Canceling Get Msg operation right away (you may have to have a very large
+number of new messages to this test this in order to slow the download
+process enough to Cancel)</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify the downloading process is stopped</li>
+</ul>
+
+<li>
+Cancel during downloading of mail messages (may have to have a very large
+attachment for this test to slow the download process enough to Cancel)</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify the downloading process is stopped</li>
+</ul>
+
+<li>
+Cancel during downloading of news messages (may have to have a very large
+number of new messages to this test this in order to slow the download
+process enough to Cancel)</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify the downloading process is stopped</li>
+</ul>
+
+<li>
+After interrupting get mail operation, get mail again</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify the Get Msg toolbar button and Get New Messages menu item are enabled</li>
+
+<li>
+verify all messages are downloaded</li>
+</ul>
+</ol>
+
+<li>
+Items to check in all download cases for Mail and News messages</li>
+
+<ol TYPE=a>
+<li>
+verify Progress dialog corresponds to action (may have to have a very large
+number of new messages to this test this in order to display the Progress
+dialog)</li>
+
+<li>
+verify Status bar text corresponds to action (may have to have a very large
+attachment for this test to slow the download process enough to see the
+status display)</li>
+
+<li>
+verify the mail folder returns to useable state (enabled and can navigate,
+etc.)</li>
+
+<li>
+verify newsgroup returns to useable state (enabled and can navigate, etc.)</li>
+
+<li>
+verify the proper number of news headers news downloaded (per set number
+in Account Setup)</li>
+</ol>
+
+<li>
+Mail Inbox in various states</li>
+
+<ol TYPE=a>
+<li>
+verify Get New Messages from the menu or Get Msg toolbar button works with
+Mail Inbox in the following states:</li>
+
+<ol>
+<li>
+Inbox closed</li>
+
+<li>
+Inbox Empty, no messages</li>
+
+<li>
+Sorted&nbsp; in different columns</li>
+
+<ul TYPE=SQUARE>
+<li>
+Ascending order</li>
+
+<li>
+Descending order</li>
+
+<li>
+by Thread</li>
+
+<ul TYPE=DISC>
+<li>
+Collapsed</li>
+
+<li>
+Expanded</li>
+</ul>
+
+<li>
+by Subject</li>
+
+<li>
+by Sender</li>
+
+<li>
+by Date</li>
+
+<li>
+by Unread</li>
+
+<li>
+by Size</li>
+
+<li>
+by Status</li>
+
+<li>
+by flag</li>
+</ul>
+
+<li>
+All messages read</li>
+
+<li>
+All message unread</li>
+</ol>
+</ol>
+
+<li>
+Get New Messages - Multiple Accounts (have at least 2 POP, 2 IMAP, 2 News
+and 2 other (TBD),&nbsp; uncheck the checkbook for "Check for new mail
+every [] minutes" for each account.</li>
+
+<ol TYPE=a>
+<li>
+Send message/s to some of your accounts: 1 POP, 1 IMAP, 1 TBD and 1 Newsgroup,
+verify clicking the Get Msg button gets the mail for ALL accounts for which
+the user is currently logged plus the account that is currently selected.
+Mail should first be retrieved for the account that is selected (and then
+the other accounts the user is currently logged into). If the user is not
+currently logged into the account selected, the Logon Dialog is displayed,
+gets the new message/s for each of the mail accounts.&nbsp; Verify you
+see the visuals:</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify for each mail account you sent a message to (located in the SideBar),
+the inbox contains a little green diamond</li>
+
+<li>
+verify status bar reads - TBD</li>
+
+<li>
+TBD</li>
+</ul>
+
+<li>
+Send message/s to all of your accounts:&nbsp; verify clicking the Get Msg
+button gets the mail for ALL accounts for which the user is currently logged
+plus the account that is currently selected. Mail should first be retrieved
+for the account that is selected (and then the other accounts the user
+is currently logged into). If the user is not currently logged into the
+account selected, the Logon Dialog is displayed, gets the new message/s
+for each of the mail accounts.&nbsp; Verify you see the visuals:</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify for all mail accounts you sent a message to (located in the SideBar),
+the inbox contains a little green diamond</li>
+
+<li>
+verify status bar reads - TBD</li>
+
+<li>
+TBD</li>
+</ul>
+
+<li>
+Send message/s to newsgroups only:&nbsp; clicking Get Msg does not display
+visuals for mail accounts:</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify for each newsgroup you sent a message to (located in the SideBar),
+the inbox contains a little green diamond (TBD)</li>
+
+<li>
+TBD verify status bar reads - TBD</li>
+
+<li>
+TBD</li>
+</ul>
+</ol>
+
+<li>
+New Messages appearance in Inbox of mail account and newsgroup</li>
+
+<ol TYPE=a>
+<li>
+Verify when you click New Msg and a new message is received, the Thread
+pane scrolls to top if your sort order is Descending or to the bottom if
+your order is Ascending, allowing the new message to be visible immediately.</li>
+</ol>
+
+<li>
+General Feedback for Getting Mail and News</li>
+
+<ol TYPE=a>
+<li>
+During mail download for Mail and News</li>
+
+<ul TYPE=SQUARE>
+<li>
+Status/progress bar (can only be seen if the download takes enough time
+to warrant one)</li>
+</ul>
+
+<li>
+After mail download for Mail</li>
+
+<ul TYPE=SQUARE>
+<li>
+Mail notification indicator (Inbox with a little green diamond)</li>
+
+<li>
+Sound (TBD)</li>
+
+<li>
+Focus of window after message retrieval</li>
+</ul>
+
+<li>
+Error messages are informative and correct</li>
+</ol>
+</ol>
+</ol>
+<b>Basic Functionality Tests - Preferences tied to Get Messages (Edit|Account
+Setup)</b>
+<ol TYPE=A>
+<li>
+&nbsp;Server panel - Mail</li>
+
+<ol>
+<li>
+Check box for "Check for new mail every [&nbsp; ] minutes"</li>
+
+<ol TYPE=a>
+<li>
+check box =checked, minutes=10; verify Get Msg works immediately, overriding
+the minutes set in this preference</li>
+
+<li>
+check box=unchecked, minutes=10; verify Get Msg works immediately, overriding
+the minutes set in this preference</li>
+</ol>
+
+<li>
+Check box&nbsp; for "Automatically down load any new messages"</li>
+
+<ol TYPE=a>
+<li>
+check box =checked, minutes=10; verify Get Msg works immediately, overriding
+the minutes set in this preference</li>
+
+<li>
+check box=unchecked, minutes=10; verify Get Msg works immediately, overriding
+the minutes set in this preference</li>
+</ol>
+</ol>
+
+<li>
+Server panel - News</li>
+
+<ol>
+<li>
+Check box titled "Always use name and password"</li>
+
+<ol TYPE=a>
+<li>
+check box =checked, verify when Get Msg is clicked, the "Netscape User
+Prompt" dialog comes asking for user name, then the "Password Entry" dialog
+comes up asking password, give correct information then verify operation
+is completed</li>
+
+<li>
+check box=unchecked, verify when Get Msg is clicked no user or password
+dialogs come up and the operation is completed</li>
+</ol>
+
+<li>
+Check box titled "Ask me before downloading more than [&nbsp; ] messages"</li>
+
+<ol TYPE=a>
+<li>
+check box =checked, verify when Get Msg is clicked, a "Download Headers"
+dialog comes up, if there are more messages to be downloaded than the number
+entered in this box</li>
+
+<li>
+check box=unchecked, verify when Get Msg is clicked and there are more
+new messages than the number set in this box, that no "Download Headers"
+dialog comes up and all the new messages are downloaded.</li>
+</ol>
+</ol>
+
+<li>
+Copies and Folders - Mail</li>
+
+<ol>
+<li>
+Check box titled "Bcc [your account name displays here by default]"</li>
+
+<ol TYPE=a>
+<li>
+check box=checked, send message to a test account that you have access
+to, Get the message:</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify the header does not have the Bcc listed</li>
+
+<li>
+verify when message is viewed using menu item View|Page Source, Bcc is
+not listed</li>
+
+<li>
+Open your mail box and verify you received the message, but Bcc is not
+listed in the message view or the page source</li>
+
+<li>
+Note: the only place the Bcc is visible is in the copy of the message that
+was sent to the Sent folder (covered in the Send spec)</li>
+</ul>
+
+<li>
+check box=unchecked, send message to a test account that you have access
+to, Get the message.</li>
+
+<ul>
+<li>
+verify the header does not have the Bcc listed</li>
+
+<li>
+verify when message is viewed using menu item View|Page Source, Bcc is
+not listed</li>
+
+<li>
+Open your mail box and verify you received the message, but Bcc is not
+listed in the message view or the page source</li>
+
+<li>
+Note: the only place the Bcc would have been visible is in the copy of
+the message that was sent to the Sent folder (this test covered in the
+Send spec)</li>
+</ul>
+</ol>
+
+<li>
+Check box titled "Bcc another address: [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+]</li>
+
+<ol TYPE=a>
+<li>
+check box=checked, enter email address for a test account in the text box
+and send message to another test account that you have access to, Get the
+message from the account you sent to:</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify the header does not have the Bcc listed</li>
+
+<li>
+verify when message is viewed using menu item View|Page Source, Bcc is
+not listed</li>
+
+<li>
+Open the message for the account you Bcc'd and verify the message was received,
+but Bcc is not listed in the message view or the page source</li>
+
+<li>
+Note: the only place the Bcc is visible is in the copy of the message that
+was sent to the Sent folder (covered in the Send spec)</li>
+</ul>
+
+<li>
+check box=unchecked, enter email address for a test account in the text
+box and send message to another test account that you have access to, Get
+the message from the account you sent to:</li>
+
+<ul>
+<li>
+verify the header does not have the Bcc listed</li>
+
+<li>
+verify when message is viewed using menu item View|Page Source, Bcc is
+not listed</li>
+
+<li>
+Open the message for the account you Bcc'd and verify the message was received,
+but Bcc is not listed in the message view or the page source</li>
+
+<li>
+Note: the only place the Bcc would have been visible is in the copy of
+the message that was sent to the Sent folder (this test covered in the
+Send spec)</li>
+</ul>
+</ol>
+</ol>
+
+<li>
+Copies and Folders - News</li>
+
+<ol>
+<li>
+Check box titled "Bcc [your account name displays here by default]"</li>
+
+<ol TYPE=a>
+<li>
+check box=checked, send message to a newsgroup, Get the message:</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify the header does not have the Bcc listed</li>
+
+<li>
+verify when message is viewed using menu item View|Page Source, Bcc is
+not listed</li>
+
+<li>
+Open the message in the newsgroup, verify the Bcc is not listed in the
+message view or the page source</li>
+
+<li>
+Note: the only place the Bcc is visible is in the copy of the message that
+was sent to the Sent folder (covered in the Send spec)</li>
+</ul>
+
+<li>
+check box=unchecked, send message to a newsgroup, Get the message.</li>
+
+<ul>
+<li>
+verify the header does not have the Bcc listed</li>
+
+<li>
+verify when message is viewed using menu item View|Page Source, Bcc is
+not listed</li>
+
+<li>
+Open the message in the newsgroup, verify the Bcc is not listed in the
+message view or the page source</li>
+
+<li>
+Note: the only place the Bcc would have been visible is in the copy of
+the message that was sent to the Sent folder (this test covered in the
+Send spec)</li>
+</ul>
+</ol>
+
+<li>
+Check box titled "Bcc another address: [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+]</li>
+
+<ol TYPE=a>
+<li>
+check box=checked, enter email address for a test account in the text box
+and send message to a newsgroup, Get the message:</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify the header does not have the Bcc listed</li>
+
+<li>
+verify when message is viewed using menu item View|Page Source, Bcc is
+not listed</li>
+
+<li>
+Open the message in the account you Bcc'd, verify the Bcc is not listed
+in the message view or the page source</li>
+
+<li>
+Note: the only place the Bcc is visible is in the copy of the message that
+was sent to the Sent folder (covered in the Send spec)</li>
+</ul>
+
+<li>
+check box=unchecked, enter email address for a test account in the text
+box and send message to a newsgroup, Get the message</li>
+
+<ul>
+<li>
+verify the header does not have the Bcc listed</li>
+
+<li>
+verify when message is viewed using menu item View|Page Source, Bcc is
+not listed</li>
+
+<li>
+Open the message in the account you Bcc'd, verify the Bcc is not listed
+in the message view or the page source</li>
+
+<li>
+Note: the only place the Bcc would have been visible is in the copy of
+the message that was sent to the Sent folder (this test covered in the
+Send spec)</li>
+</ul>
+</ol>
+</ol>
+</ol>
+<b>Advanced Functionality Tests - Preference for downloading New messages
+(Edit|Account Setup)</b>
+<ol TYPE=A>
+<li>
+"Ask me before downloading more than [N] messages" =OFF or unchecked.&nbsp;
+Get New Messages results=No Warning</li>
+
+<ol>
+<li>
+There are&nbsp; messages on server.</li>
+
+<li>
+No new messages on server. Check for appropriate (status bar) message.</li>
+
+<li>
+Interrupt download.</li>
+
+<li>
+Download after previous interruption.</li>
+
+<li>
+Download large number of messages.</li>
+
+<li>
+Perform when opening group</li>
+
+<li>
+Perform when group already opened (getting more messages)</li>
+</ol>
+
+<li>
+"Ask me before downloading more than [N] messages" = ON or checked.</li>
+
+<ol>
+<li>
+Open a group with no more than N messages to download. No warning should
+appear.</li>
+
+<li>
+Open a group with no messages to download. No warning should appear.</li>
+</ol>
+
+<li>
+"Ask me before downloading more than [N] messages" = ON or checked.&nbsp;
+Open a group, get all messages</li>
+
+<ol>
+<li>
+There are more than N new messages on server.</li>
+
+<li>
+Cancel before download</li>
+
+<li>
+Interrupt download.</li>
+
+<li>
+Download after previous interruption.</li>
+
+<li>
+Download large number of messages.</li>
+</ol>
+
+<li>
+"Ask me before downloading more than [N] messages" = ON or checked. Open
+a group, get N messages</li>
+
+<ol>
+<li>
+There are more than N new messages on server.</li>
+
+<li>
+Interrupt download.</li>
+</ol>
+
+<li>
+"Ask me before downloading more than [N] messages" = ON or checked. Get
+New Messages, group already open</li>
+
+<ol>
+<li>
+There are less than N new messages</li>
+
+<li>
+There are more than N new messages, use download all option in warning
+dialog</li>
+
+<li>
+There are more than N new messages, use download N option in warning dialog</li>
+
+<ol TYPE=a>
+<li>
+don't mark remaining headers read</li>
+
+<li>
+do mark remaining headers read</li>
+</ol>
+
+<li>
+There are no new messages</li>
+
+<li>
+Interrupt download</li>
+</ol>
+
+<li>
+"Ask me before downloading more than [N] messages" =OFF or unchecked.&nbsp;
+Get Next N (older) messages, group already open</li>
+
+<ol>
+<li>
+There are N older messages not retrieved. Get Next N messages, check for
+proper amount downloaded. Verify they're the older messages, not new.</li>
+
+<li>
+There are way more than N older messages not retrieved. Get Next N messages
+repeatedly. Verify each time downloads older messages, not new or duplicates.</li>
+
+<li>
+Repeat Get Next N until there are no more (older) messages to get. Verify
+handling, appropriate message.</li>
+
+<li>
+Get N older messages after:</li>
+
+<ol TYPE=a>
+<li>
+initial chunk download doesn't mark remaining headers read</li>
+
+<li>
+initial chunk download does mark remaining headers read</li>
+</ol>
+</ol>
+
+<li>
+"Ask me before downloading more than [N] messages" =OFF or unchecked.&nbsp;
+Using both Get New Messages and Get Next N</li>
+
+<ol>
+<li>
+Get New Messages after having done a partial download and a Get Next N,
+verify appropriate new&nbsp; messages are retrieved.</li>
+
+<ol TYPE=a>
+<li>
+there are no new messages, but there are older messages</li>
+
+<li>
+there are new messages, but no older messages</li>
+
+<li>
+there are new messages&nbsp; and older messages</li>
+</ol>
+
+<li>
+Alternate Get Next [N] Messages and Get New Messages a few times, verify
+each gets it appropriate older vs. newer messages.</li>
+</ol>
+
+<li>
+Download warning preference setting</li>
+
+<ol>
+<li>
+Check default N size in edit box on first enable, verify it's set at 500</li>
+
+<li>
+Check the download warning dialog for accuracy when default value of 500
+is exceeded during download.</li>
+
+<li>
+Check general properties/aesthetics of download headers warning dialog</li>
+
+<li>
+Download warning dialog modal tests:</li>
+
+<ol TYPE=a>
+<li>
+exit with dialog up&nbsp; from group window</li>
+
+<li>
+exit with dialog up from other mail window</li>
+
+<li>
+exit with dialog up from a web window</li>
+</ol>
+
+<li>
+Enable/disable from preferences dialog</li>
+
+<ol TYPE=a>
+<li>
+enable from disabled state</li>
+
+<ul>
+<li>
+use existing value for N</li>
+
+<li>
+change value for N</li>
+</ul>
+
+<li>
+disable from enabled state</li>
+
+<ul>
+<li>
+manually clear edit box N number</li>
+
+<li>
+leave edit box N as is</li>
+</ul>
+</ol>
+
+<li>
+Change N from warning dialog</li>
+
+<ol TYPE=a>
+<li>
+Verify number changes in dialog</li>
+
+<li>
+Verify proper (changed) number of now downloads</li>
+
+<li>
+Verify preferences dialog now shows changed N</li>
+</ol>
+</ol>
+
+<li>
+Special (ref&nbsp; bug #77400):&nbsp; Verify unread count after using [N]
+download to download only a few headers (do not mark remaining read), read
+a few messages then exit and return.</li>
+</ol>
+
+<hr WIDTH="100%">
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-getmsg.html&amp;rev=&amp;root=/cvsroot/">Last modified November  1,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

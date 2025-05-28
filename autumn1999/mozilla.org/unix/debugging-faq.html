@@ -1,0 +1,452 @@
+<HTML>
+<HEAD>
+<TITLE>Debugging Mozilla on Linux FAQ</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<center><b><font size=+1>Debugging Mozilla on Linux FAQ</font></b>
+<br><font size=-1>last modified:</font><SCRIPT>document.write(document.lastModified)</SCRIPT></center>
+
+<hr WIDTH="100%">
+<br>Contents:
+<ol>
+<li>
+<a href="#introduction">Introduction</a></li>
+
+<li>
+<a href="#debugging">How do I debug 5.0
+on Linux?</a></li>
+
+<li>
+<a href="#gdb">How do I use ddd / gdb?</a></li>
+
+<li>
+<a href="#fastdebugging">
+The debugger is slow. How can I make it faster?</a></li>
+
+<li>
+<a href="#breakpoints">
+ddd/gdb won't let me set a break point. Why not?</a></li>
+
+<li>
+<a href="#aborts">The application
+is aborting. Where do I set the break point to find out where it
+is exiting?</a></li>
+
+<li>
+<a href="#strace">What is strace
+and how do I use it?</a></li>
+
+<li>
+<a href="#SIG32">What should I do about the SIG32 I'm getting
+on RH 6.0?</a></li>
+
+<li>
+<a href="#LD_BIND_NOW">How do I use LD_BIND_NOW env variable?</a></li>
+
+<li>
+<a href="#GDBINIT">This is too hard, just give me a .gdbinit that works.</a></li>
+
+<li>
+<a href="#PRUnichar">How do I display PRUnichar's?</a></li>
+
+<li>
+<a href="#Debian">Debian's gdb doesn't work.  What do I do?</a></li>
+
+<li>
+<a href="#Shared">"run" or "prun" in gdb fails with "error in loading
+shared libraries."</a></li>
+
+
+<!--------------------------------->
+
+<li>
+<a href="#questions">I have questions.  Who do I ask?</a></li>
+<li>
+<a href="#comments">I have comments about this FAQ.  Who do I send them to?</a></li>
+<li>
+<a href="#additions">I want to add to this FAQ.  Who do I send my additions to?</a></li>
+</ol>
+
+<hr WIDTH="100%">
+
+<ol>
+
+<li>
+<b><a NAME="introduction"></a>Introduction:</b>
+<p>This document is to help those Mac and Windows people debug Mozilla
+on Linux. This is a work in progress.<br>
+<br>
+</li>
+
+<li>
+<b><a NAME="debugging"></a>
+How do I debug 5.0 on Linux?
+</b>
+<pre>
+  $ cd mozilla/dist/bin
+  $ ./mozilla-apprunner.sh -g
+</pre>
+<p>If you are new to debugging on Linux, I recommend using ddd.
+ddd is a graphical debugger that runs on top of gdb. You may still
+find yourself doing gdb command from within ddd.<br>
+<br>
+</li>
+
+<li>
+<b>
+<a NAME="gdb"></a>How do I use ddd / gdb?
+</b>
+<p>Some docs to get started:<br>
+<a href="http://www.gnu.org/manual/gdb-4.17/html_mono/gdb.html">
+http://www.gnu.org/manual/gdb-4.17/html_mono/gdb.html</a><br>
+<a href="http://www.cs.tu-bs.de/softech/ddd/ddd-tips.html">
+http://www.cs.tu-bs.de/softech/ddd/ddd-tips.html</a><br>
+<a href="http://www.cs.tu-bs.de/softech/ddd/ddd-faq.html">
+http://www.cs.tu-bs.de/softech/ddd/ddd-faq.html</a><br>
+<br>
+</li>
+
+<li>
+<b>
+<a NAME="fastdebugging"></a>
+The debugger (gdb/ddd) is slow. How can I make it faster?</b>
+<br>
+<br>
+Add this line to your $HOME/.gdbinit file:
+<pre>
+   set auto-solib-add 0
+</pre>
+
+<p>This will cause gdb to lazily read symbol tables. (If you are using this option with glibc 2.1, please see <a href="#SIG32">What should I do about the SIG32 I'm getting in RH 6.0?</a>)
+<p>Example:
+<p>I'm debugging apprunner. I interrupt the process.
+Looking at the stack trace, I see this:
+<pre>
+(gdb) where
+#0 0x4085e7d0 in ?? () from /lib/libc.so.6
+#1 0x4066cbf0 in ?? () from /usr/lib/libglib-1.2.so.0
+#2 0x4066c634 in ?? () from /usr/lib/libglib-1.2.so.0
+#3 0x4066c979 in ?? () from /usr/lib/libglib-1.2.so.0
+#4 0x4059bf3a in ?? () from /usr/lib/libgtk-1.2.so.0
+#5 0x40222a19 in ?? () from /builds/seth/MOZILLA/06.23.1999/04.30/mozilla/dist/bin/libwidgetgtk.so
+#6 0x4015617d in ?? () from /builds/seth/MOZILLA/06.23.1999/04.30/mozilla/dist/bin/libnsappshell.so
+#7 0x804aa00 in main (argc=2, argv=0xbffffa04) at nsAppRunner.cpp:670
+#8 0x407cecb3 in ?? () from /lib/libc.so.6
+(gdb)
+</pre>
+
+<p>To load the symbol tables, type this at the gdb prompt:
+<pre>
+(gdb) shar libwidgetgtk.so
+(gdb) shar libnsappshell.so
+(gdb) shar libc.so.6
+(gdb) shar libglib-1.2.so.0
+(gdb) shar libgtk-1.2.so.0
+</pre>
+
+<p>Now, if I do "where" again to see the stack trace, I get this:
+<pre>
+<p>(gdb) where
+#0 0x4085e7d0 in __poll (fds=0x83171f8, nfds=3, timeout=19) at ../sysdeps/unix/sysv/linux/poll.c:45
+#1 0x4066cbf0 in g_main_poll ()
+#2 0x4066c634 in g_main_iterate ()
+#3 0x4066c979 in g_main_run ()
+#4 0x4059bf3a in gtk_main ()
+#5 0x40222a19 in nsAppShell::Run (this=0x80c35e0) at nsAppShell.cpp:237
+#6 0x4015617d in nsAppShellService::Run (this=0x80b4a80) at nsAppShellService.cpp:428
+#7 0x804aa00 in main (argc=2, argv=0xbffffa04) at nsAppRunner.cpp:670
+#8 0x407cecb3 in __libc_start_main (main=0x8049abc &lt;main>,
+argc=2, argv=0xbffffa04, init=0x804956c &lt;_init>, fini=0x804b738 &lt;_fini>,
+rtld_fini=0x4000a350, stack_end=0xbffff9fc) at ../sysdeps/generic/libc-start.c:78
+</pre>
+
+<p>Advanced tricks:
+<br>1) you don't have to type the full library name to load it
+<p>"shar msg" will load any libraries (used by the process you are debugging)
+that match this pattern lib*msg*
+<pre>
+(gdb) shar msg
+Reading symbols from /builds/seth/MOZILLA/06.23.1999/04.30/mozilla/dist/bin/libmsgbaseutil.so...done.
+Reading symbols from /builds/seth/MOZILLA/06.23.1999/04.30/mozilla/dist/bin/components/libmsgimap.so...done.
+Reading symbols from /builds/seth/MOZILLA/06.23.1999/04.30/mozilla/dist/bin/components/libmsgnews.so...done.
+Reading symbols from /builds/seth/MOZILLA/06.23.1999/04.30/mozilla/dist/bin/components/libmsgcompose.so...done.
+Reading symbols from /builds/seth/MOZILLA/06.23.1999/04.30/mozilla/dist/bin/components/libmsgdb.so...done.
+</pre>
+<p>2) mozilla/tools/debug/gdb/solib.gdbinit
+<p>I added some macros to load symbols from chunks of code that im
+<br>interested in - as opposed to the whole damn thing.
+<br>For rdf, mailnews, etc, you will need new entries.
+<p><a href="http://x21.deja.com/=dnc/[ST_rn=ps]/getdoc.xp?AN=465346259&CONTEXT=930633898.1554514020&hitnum=0">thanks to Arun Sharma for this tip.</a>
+<p>
+</li>
+
+<li>
+<b><a NAME="breakpoints"></a>ddd/gdb won't let me set a break point. Why not?</b><br>
+<br>
+You probably can't set a breakpoint because the library where the symbol lives isn't loaded yet. 
+<br>(This happens if you are using the "auto-solib-add" trick (from #4).)<br>
+But here's a trick from <a href="mailto:blizzard@redhat.com">blizzard@redhat.com</a>:
+<br>
+<pre>
+"You can't set a breakpoint in a library that hasn't been loaded but you can
+set a breakpoint in _dl_open and set the breakpoint once the library has been
+loaded.  It's not pretty but it works."
+</pre>
+<br>
+</b>
+</li>
+
+<li>
+<b><a NAME="aborts"></a>
+Where do I break to track down aborts?
+</b>
+<p>PR_ASSERT() vs NS_ASSERTION() on Linux.
+<pre>
+(gdb) b abort
+(gdb) b exit
+</pre>
+</li>
+
+<li>
+<b>
+<a NAME="strace"></a>
+What is strace and how do I use it?
+</b>
+<p>strace is your friend.  more on this later.
+<br>
+<br>
+</li>
+
+<li>
+<b><a NAME="SIG32"></a>Why do I keep stopping with SIG32? How do I stop that?</b>
+<p>For rh 6.0, you may need to add this line to your $HOME/.gdbinit file:
+<pre>
+   handle SIG32 nostop
+</pre>
+<p>
+<p> With the landing of Necko, mozilla is a multi-threaded application on Unix.
+ Unfortunately, this confuses pthreads when run under gdb on glibc 2.1 with the <a href="#Question: faster debugging">auto-solib-add</a> option.
+<p> The solution is to have libpthread.so loaded when the first thread gets
+created. One trick to do this is to set a breakpoint in main() and then load libpthread at this point:
+<pre>
+gdb ./apprunner 
+GNU gdb 4.17.0.11 with Linux support
+Copyright 1998 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i386-redhat-linux"...
+(gdb) tbreak main
+Breakpoint 1 at 0x804b289: file nsAppRunner.cpp, line 808.
+(gdb) run
+Starting program: .../mozilla/dist/bin/./apprunner 
+
+Breakpoint 1, main (argc=1, argv=0xbffff8a4) at nsAppRunner.cpp:808
+808	    rv = NS_InitXPCOM(NULL);
+(gdb) sha pthread
+Reading symbols from /lib/libpthread.so.0...done.
+(gdb) cont
+</pre>
+You can also add these lines to your .gdbinit:
+<pre>
+def prun
+  tbreak main
+  run
+  sha pthread
+  cont
+end
+</pre>
+And then simply type "prun" instead of "run" to run apprunner.<br>
+<br>
+</li>
+
+<li>
+<b><a NAME="LD_BIND_NOW"></a>How do I use the
+LD_BIND_NOW environment variable?</b>
+<p>You might want to add information about environment. I always
+have this
+<br>set:
+<p>export LD_BIND_NOW=1
+<p>or, if you are using tcsh as your shell:
+<p>setenv LD_BIND_NOW 1
+<p>The LD_BIND_NOW=1 keeps the dynamic linker from lazily linking symbols.
+<br>This means that when you're walking through code you never suddenly
+end up in the dynamic loader hunting for a symbol.
+<br>from Christopher Blizzard <a href="mailto:blizzard@redhat.com">&lt;blizzard@redhat.com&gt;</a>
+<br><br>
+</li>
+
+<li><b><a NAME="LD_BIND_NOW">This is too hard, just give me a .gdbinit that works.</a></b><br>
+<br>
+<a href=".gdbinit">.gdbinit</a><br>
+<br>
+</li>
+
+<li><b><a NAME="PRUnichar">How do I display PRUnichar's?</a></b><br>
+<br>
+Several people have suggested ways to do this:
+<ul>
+
+<li>
+<pre>
+(gdb) print ((PRUnichar*)uri.mBuffer)[0]@16
+$47 = {114, 100, 102, 58, 110, 117, 108, 108, 0, 0, 8, 0, 0, 0, 37432,
+16514}
+</pre>
+</li>
+
+<li>
+Define a small helper function "punichar" in #ifdef NS_DEBUG code somewhere.
+</li>
+
+</ul>
+<br>
+</li>
+
+<li><b><a NAME="Debian">Debian's gdb doesn't work.  What do I do?</a></b><br>
+[submitted by <a href="mailto:bruce@cybersight.com">Bruce Mitchener</a>]<br>
+Debian's unstable distribution currently uses glibc 2.1 and gdb 4.18.
+However, there is no package of gdb for Debian with the appropriate threads
+patches that will work with glibc 2.1.  I was able to get this to work by
+getting the gdb 4.18 RPM from Red Hat's rawhide server and installing that.
+It has all of the patches necessary for debugging threaded software.  These
+fixes are expected to be merged into gdb, which will fix the problem for
+Debian Linux.<br>
+<br>
+
+</li>
+
+<li><b><a NAME="Shared">"run" or "prun" in gdb with "error in loading 
+shared libraries."</a></b><br><br>
+Attempting to run apprunner inside gdb fails with an error message
+similar to the following: <p>
+<tt>Starting program: /u/dmose/s/mozilla/mozilla-all/mozilla/dist/bin/./apprunner /u/dmose/s/mozilla/mozilla-all/mozilla/dist/bin/./apprunner: error in loading shared libraries: libraptorgfx.so: cannot open shared object file: No such file or directory</tt>
+<p>
+Your LD_LIBRARY_PATH is probably being reset by your .cshrc or
+.profile.  From the gdb manual:<br><br>
+<tt>
+*Warning:* GDB runs your program using the shell indicated by your
+`SHELL' environment variable if it exists (or `/bin/sh' if not).  If
+your `SHELL' variable names a shell that runs an initialization
+file--such as `.cshrc' for C-shell, or `.bashrc' for BASH--any
+variables you set in that file affect your program.  You may wish to
+move setting of environment variables to files that are only run when
+you sign on, such as `.login' or `.profile'.
+</tt>
+<br><br>
+</li>
+
+
+
+<!--------------------------------->
+
+<li>
+<b><a NAME="questions"></a>I have questions.  </b>
+<p>post your questions to this newsgroup:<br>
+<p><a href="news://news.mozilla.org/netscape.public.mozilla.unix">news://news.mozilla.org/netscape.public.mozilla.unix</a>
+<p>If you are trying to debug Mozilla on UNIX, we'll gladly help.<br><br>
+</li>
+
+<li>
+<b><a NAME="comments"></a>I have comments.  </b>
+<p>post your constructive comments to this newsgroup:<br>
+<p><a href="news://news.mozilla.org/netscape.public.mozilla.unix">news://news.mozilla.org/netscape.public.mozilla.unix</a>
+<p><i>whining will be ignored.</i><br><br>
+</li>
+
+
+<li>
+<b><a NAME="additions"></a>I want to add to this FAQ.  Who I send my additions to?</b>
+<p>post your additions to this newsgroup:<br>
+<p><a href="news://news.mozilla.org/netscape.public.mozilla.unix">news://news.mozilla.org/netscape.public.mozilla.unix</a> or send mail to <a href="mailto:sspitzer@netscape.com">sspitzer@netscape.com</A>.
+</li>
+
+</ol>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/debugging-faq.html&amp;rev=&amp;root=/cvsroot/">Last modified November  5,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,216 @@
+<HTML>
+<HEAD>
+<TITLE>xpidl for CodeWarrior</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<H1>xpidl for CodeWarrior</H1>
+
+<H2>v1.0d1 - first development release</H2>
+
+<H3>Installation Notes</H3>
+
+<P>xpidl for CodeWarrior consists of three tools, which must be
+installed in three distinct locations in your "CodeWarrior Plugins"
+folder:</P>
+
+<OL>
+   <LI>xpidl - the idl compiler - goes in "Compilers"</LI>
+   
+   <LI>xpidl Settings - the preferences panel - goes in "Preference
+   Panels"</LI>
+   
+   <LI>xpt Linker - the .xpt file linker - goes in "Linkers"</LI>
+</OL>
+
+<H3>Setting up an IDL Project</H3>
+
+<H4>Create a new IDL Project</H4>
+
+<P>After installing the tools, create a new empty project. Add .idl
+files for the particular module you are working with (for example all
+of the .idl files in mozilla/xpcom/idl).</P>
+
+<H4>Generating Headers</H4>
+
+<P>Open CodeWarrior's target specific settings window. Go to the
+"Target Settings" panel, and change the "Target Name:" field to
+"headers". Set the "Linker:" preference to "None". Switch to the
+"xpidl Settings" panel and set the "Mode:" to "Header Files". The
+panel should look like the following:</P>
+
+<CENTER><IMG SRC="mac-xpidl-headers.gif" WIDTH=625 HEIGHT=381 ALIGN=bottom></CENTER>
+
+<H4>Generating Type Libraries</H4>
+
+<P>Create another target in the IDL project you created before. Call
+this target "typelibs". Set the "Linker:" preference to "xpt Linker".
+Go to the "xpidl Settings" panel again, and set the "Mode:" to "Type
+Libraries". Set the "Linker output:" field to an appropriate name
+(e.g. "xpcom.xpt"). The xpt Linker will combine all of the .xpt files
+generated for each .idl file into a single type library. The panel
+should look like the following:</P>
+
+<CENTER><IMG SRC="mac-xpidl-typelibs.gif" WIDTH=625 HEIGHT=381 ALIGN=bottom></CENTER>
+
+<H4>Sample IDL Project</H4>
+
+<P>A sample project can be found in the Mozilla tree at
+"mozilla/xpcom/tools/xpidl/macbuild/test". This project points at the
+current idl files in "mozilla/xpcom/idl".</P>
+
+<H2>v1.0d2 - second development release</H2>
+
+<H3>Enhancements</H3>
+
+<H4>Better Dependency Tracking</H4>
+
+<P>When the xpidl compiler generates header or typelib files, it now
+informs the CodeWarrior IDE that an external file has been created.
+This lets CodeWarrior know that the external file depends on the .idl
+file from which it was compiled. Thus, if a header or typelib file is
+deleted (e.g. you throw away your dist folder), the IDE will
+correctly recompile the .idl file to regenerate the appropriate file.
+Moreover, if you're working with an IDL project, and use the "Remove
+Objects" command, the IDE will delete the external files, giving you
+a clean slate.</P>
+
+<P>The .xpt files are also built within a target specific folder
+within the IDL project's data folder. Only the final linked .xpt file
+will appear in the project's output directory.</P>
+
+<H4>Bug Fixes</H4>
+
+<P>Fixed a bug where the linker would always relink the output .xpt
+library.</P>
+
+<P>Fixed a major problem with trapping calls to exit(), causing
+infinite recursion. Was using exception handling which evidently
+doesn't work with this kind of shared library setup. Switched to
+trapping calls to exit() with setjmp/longjmp, and disabled exception
+handling (for now).</P>
+
+<H2>v1.0d3 - third development release</H2>
+
+<H4>No new features</H4>
+
+<H4>Bug Fixes</H4>
+
+<P>Each #include of a .idl file was leaking a file handle. Now, when
+an include file is done being processed, the file is explicitly
+closed.</P>
+
+<H2>v1.0d4 - fourth development release</H2>
+
+<H4>New Feature: Header Alias Creation</H4>
+
+<P>The linker has been enhanced to create aliases to header files in
+the project's output directory. This lets our build system throw away
+the contents of mozilla/dist, without causing all of the header files
+to be regenerated, which will speed up dependency builds. To use this
+feature, you must turn on the linker in your project's header file
+target, and provide a name of a file for the linker to create in the
+output directory. For example, if your project is called
+"moduleIDL.mcp", and you create a type library called "module.xpt",
+you should call this file "module.headers". This file is only created
+to provide a timestamp for the Metrowerks IDE. If you throw away the
+file, the linker will recreate all of the aliases, but the original
+header files will be untouched.</P>
+
+<H4>Bug Fixes</H4>
+
+<P>All of the latest changes to the xpidl compiler have been
+incorporated in this release. Take a look at the CVS logs to see what
+changed.</P>
+
+<P>
+
+<HR>
+
+<FONT SIZE="-2">Last Modified on 18 May 1999 by Patrick C. Beard
+&lt;beard@netscape.com&gt;</FONT></P>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/build/mac-xpidl-plugin.html&amp;rev=&amp;root=/cvsroot/">Last modified May 29,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

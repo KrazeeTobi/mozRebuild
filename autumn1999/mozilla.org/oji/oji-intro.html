@@ -1,0 +1,610 @@
+<HTML>
+<HEAD>
+<TITLE>Introduction to OJI Internals</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+  
+  
+  
+  
+    <h1>Introduction to OJI Internals</h1>
+    
+    <h2>Purpose of this Document</h2>
+    
+    
+    <UL>
+      
+	This document is an introduction to the topic of what Mozilla
+	requires of an OJI plugin.  It is assumed the reader already knows
+	what OJI is, and wants to know how to start writing an OJI plugin
+	for Mozilla. <P>
+
+	  <UL>
+	  <LI> <A HREF="#What">What You Need to Implement</A>
+	  <LI> <A HREF="#Sample">Sample Implementation Framework</A>
+	  </UL>
+	
+    </UL>
+    
+    <h2><A NAME="What">What</A> You Need to Implement</H2>
+    
+    <UL>
+
+      You must implement four functions in your oji plugin dll, in
+      addition to all the classes that comprise the OJI and plugin
+      interfaces, listed below. <P>
+
+	<UL>
+
+	  <LI> <A HREF="#DLL">Shared Library Functions</A>
+          <LI> <A HREF="#Classes">Classes</A>
+
+	</UL> <P>
+
+      
+	<UL>
+	  
+    <h2><A NAME="DLL">Shared Library Functions</A></H2>
+    
+    An OJI plugin is a Mozilla plugin that also happens to
+    implement the required OJI interfaces.  Like all Mozilla
+    plugins, the entry points from Mozilla to your plugin must
+    be in a shared library with a filename starting with
+    <code>np</code>, as in <code>npoji.dll</code>.  This shared
+    library must be in the plugins directory, which is currently
+    <code>mozilla/dist/[WIN32*/]bin/plugins</code>.  Your OJI
+    shared library should implement and export the following
+    functions (which are really mozilla's component auto
+    registration functions): <P></P>
+      
+    <UL>
+      
+      <LI>  <code><pre>
+
+extern "C" nsresult NSGetFactory(nsISupports *pProvider, 
+				 const nsCID &clsid, 
+                                 const char *aClassName,
+                                 const char *aProgID,		         
+			         nsIFactory **ppFactory);
+	</pre> 
+      </code>
+	
+	<UL>
+	  
+	    <UL> 
+	      
+	      <LI> <code>nsISupports *pProvider</code>
+		
+		<UL>
+		  
+		    This points to the current nsIServiceManager.
+		    
+		</UL><P></P>
+		  
+	      <LI> <code>const nsCID %clsid</code>
+		
+		<UL>
+		  
+		    This is kPluginCID, from <code>static
+		      NS_DEFINE_CID(kPluginCID, NS_PLUGIN_CID);</code>
+		    
+		</UL><P></P>
+		  
+	      <LI> <code>const char *aClass</code>
+		
+		<UL>
+		  
+		    This value ends up being null, when mozilla calls
+		    NSGetFactory for your OJI plugin.
+		    
+		</UL><P></P>
+		  
+	      <LI> <code>const char *progID</code>
+		
+		<UL>
+		  
+		    This value ends up being null, when mozilla calls
+		    NSGetFactory for your OJI plugin.
+		    
+		</UL><P></P>
+		  
+	      <LI> <code>nsIFactory **ppFactory</code>
+		
+		<UL>
+		  
+		    Where you store the return value, which must be an
+		    instance of nsIPlugin.
+		    
+		</UL><P></P>
+		  
+	    </UL>
+	    
+	    This function happens to get called when LiveConnect is
+	    started.  It is your opportunity to return an instance of
+	    nsIPlugin.  <B>You may find it convenient to have this
+	      instance also implement nsIJVMPlugin.</B> <P></P>
+	      
+	</UL> <P></P>
+	  
+      <LI> <code><pre>
+
+extern "C" nsresult NSRegisterSelf(nsISupports* serviceMgr,
+				   const char *path);
+
+</code></pre>
+
+    <UL>
+
+	  <UL> 
+
+	      <LI> <code>nsISupports *serviceMgr</code>
+
+		<UL>
+		  This points to the current nsIServiceManager.
+
+		</UL><P></P>
+
+	      <LI> <code>const char *path</code>
+
+		<UL>
+
+		  The absolute qualified path to the dll that is being loaded
+
+		</UL><P></P>
+		
+	    </UL>
+
+	    This function is not called by the mozilla plugin system.
+	  
+    </UL> <P></P>
+
+	
+	      <LI> <code><pre>
+
+extern "C" NS_EXPORT nsresult NSUnregisterSelf(nsISupports* serviceMgr,
+					       const char *path);
+</pre></code>
+
+	<UL>
+
+	  <UL> 
+
+	      <LI> <code>nsISupports *serviceMgr</code>
+
+		<UL>
+		  This points to the current nsIServiceManager.
+
+		</UL><P></P>
+
+	      <LI> <code>const char *path</code>
+
+		<UL>
+
+		  The absolute qualified path to the dll that is being loaded
+
+		</UL><P></P>
+
+	    </UL>
+
+	    This function is not called by the mozilla plugin system.
+	    If this were a XPCOM component that was autoregistering,
+	    this function would be called to allow the component to
+	    register itself with the serviceManager. <P></P>
+
+	</UL> <P></P>
+
+	
+      <LI> <code><pre>
+
+extern "C" PRBool NSCanUnload(nsISupports* serviceMgr)
+</pre></code>
+
+	<UL>
+
+	    <UL>
+
+	      <LI> <code>nsISupports *serviceMgr</code>
+		
+		<UL>
+		    This points to the current nsIServiceManager.
+		    
+		</UL><P></P>
+		  
+	    </UL><P></P>
+
+	      This function isn't called by the mozilla plugin system,
+	      but if it were, it's purpose is to determine whether it is
+	      safe to unload the plugin.
+	  
+	  
+    </UL><P></P>
+	  
+    </UL>
+
+	    
+    <h2><A NAME="Classes">Classes</H2>
+
+      This section lists all the classes you need to implement in order
+      to be an OJI plugin, and provides links to the header files via
+      lxr. For each class, we list the interfaces to which they must
+      respond when called by QueryInterface or AggregatedQueryInterface,
+      in addition to the mandatory nsISupports.<P>
+
+<TABLE BORDER="1">
+
+<TR>
+
+<TH COLSPAN="1">OJI Classes</TH>
+</TR>
+
+<TR>
+
+<TD>
+
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/oji/public/nsIJVMConsole.h">mozilla\modules\oji\public\nsIJVMConsole.h</A>: nsIJVMConsole <BR>
+AggregatedQueryInterface: NS_IJVMCONSOLE_IID
+
+</TD>
+
+
+
+</TR>
+
+
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/oji/public/nsIJVMPlugin.h">mozilla\modules\oji\public\nsIJVMPlugin.h</A>: nsIJVMPlugin <BR>
+QueryInterface: NS_IJVMPLUGIN_IID, NS_IJVMCONSOLE_IID
+</TD>
+
+
+
+</TR>
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/oji/public/nsIJVMPluginInstance.h">mozilla\modules\oji\public\nsIJVMPluginInstance.h</A>: nsIJVMPluginInstance<BR>
+QueryInterface: NS_IPLUGININSTANCE_IID, NS_IJVMPLUGININSTANCE_IID
+</TD>
+
+
+
+</TR>
+
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/oji/public/nsIJVMPrefsWindow.h">mozilla\modules\oji\public\nsIJVMPrefsWindow.h</A>: nsIJVMPrefsWindow<BR>
+AggregatedQueryInterface: NS_IJVMPREFSWINDOW_IID
+</TD>
+
+
+
+</TR>
+
+
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/oji/public/nsISecureEnv.h">mozilla\modules\oji\public\nsISecureEnv.h</A>: nsISecureEnv<BR>
+AggregatedQueryInterface: NS_ISECUREENV_IID
+</TD>
+
+
+
+</TR>
+
+
+<TR>
+<TH COLSPAN="2">Plugin classes</TH>
+</TR>
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/plugin/public/nsIPlugin.h">mozilla\modules\plugin\public\nsIPlugin.h</A>: nsIPlugin<BR>
+AggregatedQueryInterface: NS_IPLUGIN_IID
+</TD>
+
+
+
+</TR>
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/plugin/public/nsIPluginInstance.h">mozilla\modules\plugin\public\nsIPluginInstance.h</A>: nsIPluginInstance<BR>
+QueryInterface: NS_IPLUGININSTANCE_IID
+</TD>
+
+
+
+</TR>
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/plugin/public/nsIPluginInstancePeer.h">mozilla\modules\plugin\public\nsIPluginInstancePeer.h</A>: nsIPluginInstancePeer<BR>
+QueryInterface: NS_IPLUGININSTANCEPEER_IID
+<BR><FONT COLOR="RED">PENDING(edburns): not sure why the plugin needs to implement this.</FONT>
+</TD>
+
+
+
+</TR>
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/plugin/public/nsIPluginManager.h">mozilla\modules\plugin\public\nsIPluginManager.h</A>: nsIPluginManager<BR>
+QueryInterface: NS_IPLUGINMANAGER_IID
+<BR><FONT COLOR="RED">PENDING(edburns): not sure why the plugin needs to implement this.</FONT>
+</TD>
+
+
+
+</TR>
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/plugin/public/nsIPluginStreamInfo.h">mozilla\modules\plugin\public\nsIPluginStreamInfo.h</A>: nsIPluginStreamInfo<BR>
+QueryInterface: NS_IPLUGINSTREAMINFO_IID
+</TD>
+
+
+
+</TR>
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/plugin/public/nsIPluginStreamListener.h">mozilla\modules\plugin\public\nsIPluginStreamListener.h</A>: nsIPluginStreamListener<BR>
+QueryInterface: NS_IPLUGINSTREAMLISTENER_IID
+</TD>
+
+
+
+</TR>
+
+<TR>
+
+<TD>
+<A HREF="http://lxr.mozilla.org/mozilla/source/modules/plugin/public/nsIPluginTagInfo.h">mozilla\modules\plugin\public\nsIPluginTagInfo.h</A>: nsIPluginTagInfo
+QueryInterface: NS_IPLUGINTAGINFO_IID
+<BR><FONT COLOR="RED">PENDING(edburns): not sure why the plugin needs to implement this.</FONT>
+</TD>
+
+
+
+</TR>
+
+</TABLE>
+	<P>
+
+
+    </UL> <!-- Classes -->
+
+    </UL> <!-- Stuff you need to implement -->
+
+      <h2><A NAME="Sample">Sample</A> Implementation Framework</h2>
+
+    <UL>
+
+      This section lists sample class definitions and the appropriate
+      mozilla inheritences for each class.  You must implement these
+      interfaces in addition to the above mentioned NS* functions in
+      order to implement a Java Plugin.
+
+	<code><pre>
+/**
+
+ * Responsible for creating an instance of the Java Plugin.
+
+ */
+
+class JavaPluginFactory : public nsIJVMPlugin, public nsIPlugin
+{
+};
+	</pre></code> <P>
+
+	<code><pre>
+/**
+
+ * The actual java plugin instance.  
+
+ */
+
+class JavaPlugin : public nsIJVMPluginInstance, public nsIPluginInstance 
+{
+};
+	</pre></code> <P>
+
+	<code><pre>
+
+/**
+
+ * Instances of this class come from the nsIJVMPlugin instance.  
+ * This class provides a secure version of the JNIEnv class, from 
+ * Sun's JNI.  There is a 1:1 mapping of methods in this class and
+ * methods in JNI.
+
+ */
+
+class SecureJNIEnv : public nsISecureEnv
+{
+};
+	</pre></code> <P>
+
+	<code><pre>
+/**
+
+ * Allow mozilla to pop up or hide a console that displays the console
+ * output from the java plugin.
+
+ */
+
+class JavaConsole : public nsIJVMConsole
+{
+};
+	</pre></code> <P>
+
+	<code><pre>
+/**
+
+ * Allow mozilla to pop up or hide a window that allows the user to
+ * control settings of the Java plugin.
+
+ */
+
+class JavaPrefsWindow : public nsIJVMPrefsWindow
+{
+};
+	</pre></code> <P>
+
+	<code><pre>
+/**
+
+ * <BR><FONT COLOR="RED">PENDING(edburns): not sure why the plugin needs to implement this.</FONT>
+
+ */
+
+class PluginInstancePeer : public nsIPluginInstancePeer, public nsIPluginTagInfo 
+{
+};
+	</pre></code> <P>
+
+	<code><pre>
+/**
+
+ * <BR><FONT COLOR="RED">PENDING(edburns): not sure why the plugin needs to implement this.</FONT>
+
+ */
+class PluginManager : public nsIPluginManager 
+{
+};
+	</pre></code> <P>
+
+	<code><pre>
+/**
+
+ * Allows mozilla to gain information about streams for this plugin
+ * <BR><FONT COLOR="RED">PENDING(edburns): not sure why the plugin needs to implement this.</FONT>
+
+ */
+class PluginStreamInfo : public nsIPluginStreamInfo 
+{
+};
+	</pre></code> <P>
+
+	<code><pre>
+/**
+
+ * Methods that get called by mozilla for various stream events.
+
+ */
+class PluginStreamListener : public nsIPluginStreamListener 
+{
+};
+	</pre></code> <P>
+
+
+      
+    </UL> <!-- Sample Implementation Framework -->
+
+
+    <hr>
+    <address><a href="mailto:Ed Burns <ed.burns@sun.com>"></a></address>
+<!-- Created: Sat Aug 28 10:59:31 Pacific Daylight Time 1999 -->
+<!-- hhmts start -->
+Last modified: Sat Aug 28 23:54:22 Pacific Daylight Time 1999
+<!-- hhmts end -->
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/oji/oji-intro.html&amp;rev=&amp;root=/cvsroot/">Last modified August 29,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<TITLE>Color Picker</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Color Picker</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="windows.html">Previous: Windows and Dialogs</a>]
+<p>
+<b>Feature Owner:</b> <a href="mailto:pavlov@netscape.com">Stuart Parmenter</a><br>
+<p>
+A color picker is a frame that contains a graphical representation of multiple colors.
+<p>
+The color picker is specified using the <font color=green>colorpicker</font> tag.  The attribute 
+<font color="red">type</font> is used to specify the type of color picker such as <font color="orange">
+swatch</font>.  If this attribute is omitted, the color picker will be a swatch.
+<font color="red">[Note: The only color picker currently implemented is a swatch.]</font>
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;colorpicker type="swatch"/&gt;
+</table>
+<p>
+Palettes can be chosen using the <font color="red">palettename</font> attribute.  Currently supported are
+<font color="orange">standard</font> which is a 70 color palette, <font color="orange">web</font> which
+is the 216 &quot;web safe&quot; palette, and <font color="orange">grey</font> which is a grey scale palette.
+If this attribute is omitted, you will get the standard palette.
+<font color="red">[Note: It is currently not possible to change colors or add custom colors.]</font>
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;colorpicker type="swatch" palettename="web"/&gt;
+</table>
+<p>
+When a color is selected, the <font color="red">color</font> attribute is set containing the color that was
+selected.  An example of this is below:
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;html:script&gt;
+  function doSomethingUseful(cp)
+  {
+    var color = cp.getAttribute('color');
+    document.getElementById("input").value = color;
+  }
+&lt;/html:script&gt;
+ 
+&lt;colorpicker id="cp" onclick="doSomethingUseful(this);"/&gt;
+&lt;html:input id="input"/&gt;
+</table>
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="windows.html">Previous: Windows and Dialogs</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

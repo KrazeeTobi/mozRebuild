@@ -1,0 +1,934 @@
+<HTML>
+<HEAD>
+<TITLE>Reply Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.0 Project (Seamonkey)</b>
+<br><b><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </i>Mail and News
+Component</b>
+<br><b><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i> Reply</b>
+<p>Written by: <a href="mailto:esther@netscape.com">Esther Goes</a>
+<br>Original specs by Peter Mock &amp; Laurel Carlson
+<p><b>History:</b>
+<br>122398 Started updating original spec from Nova
+<br>020399 Updating based on first review (fenella)
+<br>030299 Updating based on second review (pmock)
+<p><b>Reviewed By: </b><a href="mailto:pmock@netscape.com">Peter Mock</a>,
+<a href="mailto:fenella@netscape.com">Fenella</a>
+<p><b>References:</b>
+<br>UI Specification:&nbsp; No specific spec for reply
+<br>Other: <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-composition.html">Composition
+test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-layout-plain.html">Plain
+Text test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-layout-html.html">HTML
+test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-attachment.html">Attachments
+test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-basfunc-intelligent.html">Intelligent
+Send test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-basfunc-return-receipt.html">Return
+Receipt test spec</a>, (some of these links are not available at this time)
+<br>&nbsp;
+<p>
+<hr WIDTH="100%">
+<br>Description: Perform these tests in both HTML &amp; Plain text modes.&nbsp;
+Reply to a Mail message and a Newsgroup message
+<br><b>NOTE: </b><u>Plain text format may change.&nbsp; It may be done
+within HTML compose window using a conversion tool instead of a separate
+editor.</u>
+<p><b>Windows Using Reply</b>
+<ol TYPE=A>
+<li>
+Windows from which you can Reply to a message</li>
+
+<ol>
+<li>
+3 Pane UI (with all three panes expanded, click Reply and verify a compose
+window comes up and the correct name is entered in the To: field)</li>
+
+<li>
+Message Window (double click on a message to bring it up in it's own window,
+click Reply and verify a compose window comes up and the correct name is
+entered in the To: field)</li>
+
+<li>
+3 Pane UI collapsed to 2 pane UI</li>
+
+<ol TYPE=a>
+<li>
+Collapse the Thread pane only and reply to a message from the Message pane,
+verify as mentioned above</li>
+
+<li>
+Collapse the Message pane only and reply to a message from the Thread pane,
+veify as mentioned above</li>
+
+<li>
+Collapse the Sidebar (Folder pane) only and reply to a message with:</li>
+
+<ul>
+<li>
+Thread pane in focus, verify as mentioned above</li>
+
+<li>
+Message pane in focus, verfify as mentioned above</li>
+</ul>
+</ol>
+
+<li>
+3 Pane UI collapsed to 1 pane UI</li>
+
+<ol TYPE=a>
+<li>
+Collapse the Thread pane and Sidebar (Folder pane) then reply to a message
+from the Message pane, verify as mentioned above</li>
+
+<li>
+Collapse the Message pane and Sidebar (Folder pane) then reply to a message
+from the Thread pane, verify as mentioned above</li>
+</ol>
+</ol>
+
+<li>
+Reply to a message using, verify as mentioned above</li>
+
+<ol>
+<li>
+Toolbar</li>
+
+<li>
+Menu</li>
+
+<li>
+Context Menus</li>
+
+<li>
+Mnemonics</li>
+
+<li>
+Mailto: Link</li>
+
+<li>
+Short-cut/accelerator key (Example on Windows: Ctrl+M, Unix: Alt+M, Mac:
+Cmd+M)</li>
+</ol>
+</ol>
+<b>Preferences for Replying - </b>(Found in Preferences, listed under Messages,
+the second item "Automatically quote the original message when replying"
+<ol TYPE=A>
+<li>
+Automatic quoting = ON ("Automatically quote the original message when
+replying" check box is checked)</li>
+
+<ol>
+<li>
+verify when this is ON,&nbsp; the selected option becomes the default action
+when using the "Reply" toolbar button is clicked (in both HTML &amp; Plain
+text format)</li>
+</ol>
+
+<li>
+Automatic quoting = OFF ("Automatically quote the original message when
+replying" check box is unchecked)</li>
+
+<ol>
+<li>
+verify there is NO quoted text in the message body when "start my reply
+above the quoted text" is selected (in both HTML &amp; Plain text format)</li>
+</ol>
+</ol>
+<b>Locations from which Reply option can be used</b>
+<ol TYPE=A>
+<li>
+&nbsp;Toolbar w/Preferences set to: Automatic quoting=ON &amp; "start my
+reply above the quoted text" selected.&nbsp; (Perform specific tests for
+Mail &amp; News messages)&nbsp; Use a message that contains a link, inserted
+image, paragraph of text and signature and /or vCard.</li>
+
+<ol>
+<li>
+Reply <b>(Mail only)</b></li>
+
+<ol TYPE=a>
+<li>
+Verify a click of this button will launch a compose window with the contents
+of the original message pasted in the body of the reply and the cursor
+positioned above the text. The reply is sent to only the Sender</li>
+</ol>
+
+<li>
+Reply All <b>(Mail only)</b></li>
+
+<ol TYPE=a>
+<li>
+Verify a click of this button will launch a compose window with the contents
+of the original message pasted in the body of the reply and the cursor
+positioned above the text. The reply is sent to the Sender and all other
+recipients</li>
+</ol>
+
+<li>
+Reply> <b>(News only)</b></li>
+
+<ol TYPE=a>
+<li>
+Verify a click of this button will launch a compose window with the contents
+of the original message pasted in the body of the reply and the cursor
+positioned above the text.</li>
+
+<li>
+Verify the default is to Newsgroups</li>
+
+<li>
+to Sender Only</li>
+
+<ul TYPE=SQUARE>
+<li>
+Verify when this is selected, only the Sender of the message is placed
+in the To: field and the message is sent to only the Sender</li>
+
+<li>
+Verify mnemonic (currently "S") for this button item works as directed</li>
+</ul>
+
+<li>
+to Newsgroup</li>
+
+<ul TYPE=SQUARE>
+<li>
+Verify when this is selected, only the Newsgroup from the original message
+is placed in the To: field and the message is sent to only the Newsgroup</li>
+
+<li>
+Verify mnemonic (currently "N") for this button item works as directed</li>
+
+<li>
+Short cut key not tied to toolbar button, tested in Menu section of this
+spec</li>
+</ul>
+</ol>
+
+<li>
+Reply All> <b>(News only)</b></li>
+
+<ol TYPE=a>
+<li>
+Verify a click of this button will launch a compose window with the contents
+of the original message pasted in the body of the reply and the cursor
+positioned above the text</li>
+
+<li>
+Verify the default is to Sender and Newsgroups</li>
+
+<li>
+to Sender and All Recipients (For this case use a message that has multiple
+people and multiple groups in the addressing pane)</li>
+
+<ul>
+<li>
+Verify when this is selected, only the Sender and mail recipients from
+the original message are placed in the Addressing field (not the newsgroups)
+and the message is sent to only those recipients</li>
+
+<li>
+Verify mnemonic (currently "N") works as directed</li>
+</ul>
+
+<li>
+to Sender and Newsgroups</li>
+
+<ul>
+<li>
+Verify when this is selected, only the Sender and Newsgroups from the original
+message are placed in the Addressing field (no other mail addresses) and
+the message is sent to only those recipients</li>
+
+<li>
+Verify mnemonic (currently "r") works as directed</li>
+
+<li>
+Short cut key not tied to toolbar button, tested in Menu section of this
+spec</li>
+</ul>
+</ol>
+</ol>
+
+<li>
+Menubar&nbsp; w/Preferences set to: Automatic quoting=ON &amp; "start my
+reply above the quoted text" selected.&nbsp; (Perform specific tests for
+Mail &amp; News messages)&nbsp; Can be found under menu item Messages while
+in the windows mentioned above. Use a message that contains a link, inserted
+image, paragraph of text and signature and /or vCard.</li>
+
+<ol>
+<li>
+Reply <b>(Mail only)</b></li>
+
+<ol TYPE=a>
+<li>
+Verify a click of this button will launch a compose window with the contents
+of the original message pasted in the body of the reply and the cursor
+positioned above the text. The reply is sent to only the Sender.</li>
+
+<li>
+Verify mnemonic (currently "R") works as directed</li>
+</ol>
+
+<li>
+Reply All <b>(Mail only)</b></li>
+
+<ol TYPE=a>
+<li>
+Verify a click of this button will launch a compose window with the contents
+of the original message pasted in the body of the reply and the cursor
+positioned above the text. The reply is sent to the Sender and all other
+recipients</li>
+
+<li>
+Verify mnemonic (currently "p") works as directed</li>
+</ol>
+
+<li>
+Reply> <b>(News only)</b></li>
+
+<ol TYPE=a>
+<li>
+Verify a click of this button will launch a compose window with the contents
+of the original message pasted in the body of the reply and the cursor
+positioned above the text.</li>
+
+<li>
+Verify the default is to Newsgroups</li>
+
+<li>
+to Sender Only</li>
+
+<ul>
+<li>
+Verify when this is selected, only the Sender of the message is placed
+in the To: field and the message is sent to only the Sender</li>
+
+<li>
+Verify mnemonic (currently "S") works as directed</li>
+</ul>
+
+<li>
+to Newsgroup</li>
+
+<ul>
+<li>
+Verify when this is selected, only the Newsgroup from the original message
+is placed in the To: field and the message is sent to only the Newsgroup</li>
+
+<li>
+Verify mnemonic (currently "N") works as directed</li>
+
+<li>
+Verify Short Cut key (currently Ctrl+R) works as directed</li>
+</ul>
+</ol>
+
+<li>
+Reply All> <b>(News only)</b></li>
+
+<ol TYPE=a>
+<li>
+Verify a click of this button will launch a compose window with the contents
+of the original message pasted in the body of the reply and the cursor
+positioned above the text</li>
+
+<li>
+Verify the default is to Sender and Newsgroups</li>
+
+<li>
+to Sender and All Recipients (For this case use a message that has multiple
+people and multiple groups in the addressing pane)</li>
+
+<ul TYPE=SQUARE>
+<li>
+Verify when this is selected, only the Sender and mail recipients from
+the original message are placed in the Addressing field (not the newsgroups)
+and the message is sent to only those recipients</li>
+
+<li>
+Verify mnemonic (currently "S") works as directed</li>
+</ul>
+
+<li>
+to Sender and Newsgroups (For this case use a message that has multiple
+people and multiple groups in the addressing pane)</li>
+
+<ul TYPE=SQUARE>
+<li>
+Verify when this is selected, only the Sender and Newsgroups from the original
+message are placed in the Addressing field (no other mail addresses) and
+message is sent to only those recipients</li>
+
+<li>
+Verify mnemonic (currently "N") works as directed</li>
+
+<li>
+Short Cut Key (currently Ctrl+Shift+R) works as directed</li>
+</ul>
+</ol>
+</ol>
+
+<li>
+Context Menu<b>&nbsp;</b> (right mouse click on mail or news message to
+bring up the Context menu) Use a message that contains a link, inserted
+image, paragraph of text and signature and /or vCard.</li>
+
+<ol>
+<li>
+When a <b>Mail</b> message is selected</li>
+
+<ol TYPE=a>
+<li>
+Verify right mouse click will bring up a menu listing (2) options: Reply
+to Sender, Reply to Sender and All Recipients</li>
+
+<li>
+Verify for both of the options, you can Reply to a message in HTML format&nbsp;
+(<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify for both of the options, you can Reply a message in plain text format&nbsp;
+(<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify the mnemonic (aka-access keys=underlined character of a <b>Context</b>
+menu item) for each option listed below works as directed:</li>
+
+<ul TYPE=SQUARE>
+<li>
+Reply to Sender Only (currently S"e"nder)</li>
+
+<li>
+Reply to Sender and All Recipients (currently "A")</li>
+</ul>
+
+<li>
+&nbsp;Short Cut Key (combination of keys) not tied to Context Menu tested
+in Menu section of this test spec</li>
+
+<li>
+Verify for one of the options listed above, when you do a Reply using a
+domain outside of @netscape.com, the Intelligent Send dialog appears</li>
+</ol>
+
+<li>
+When a <b>News</b> message is selected</li>
+
+<ol TYPE=a>
+<li>
+Verify right mouse click will bring up a menu listing (4) options: Reply
+to Sender, Reply to Sender and All Recipients, Reply to Newsgroup &amp;
+Reply to Sender and Newsgroup</li>
+
+<li>
+Verify for news related options, you can Reply to a message in HTML format&nbsp;
+(<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify for news related options, you can Reply a message in plain text
+format&nbsp; (<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify the Mnemonic (aka-access keys=underlined character of a <b>Context</b>
+menu item) for each option listed below works as directed:</li>
+
+<ul TYPE=SQUARE>
+<li>
+Reply to Newsgroup (currently "N")</li>
+
+<li>
+Reply to Sender and Newsgroup (currently "r")</li>
+</ul>
+
+<li>
+Short Cut Key (combination of keys) not tied to Context Menu tested in
+Menu section of this test spec</li>
+</ol>
+</ol>
+</ol>
+<b>Basic Functionality of Reply</b>
+<ol TYPE=A>
+<li>
+When quoting text in a <b>Reply</b> message</li>
+
+<ol>
+<li>
+Plain text compose Quoted text uses ">" to begin each quoted sentence</li>
+</ol>
+
+<ol>
+<li>
+HTML Quoted text does not use ">" to begin each quoted sentence but uses
+a blue bar "<font color="#3333FF">|</font><font color="#000000">"</font></li>
+</ol>
+
+<li>
+<font color="#000000">When Replying verify:</font></li>
+
+<ol>
+<li>
+<font color="#000000">Verify subject title is preceded with "Re:"</font></li>
+
+<li>
+<font color="#000000">Verify when sorting messages by Thread the message
+is indented under Parent message.</font></li>
+
+<li>
+<font color="#000000">Verify you have (2) blank lines by default (could
+have been changed in prefs.js) separating the quoted text.</font></li>
+</ol>
+
+<li>
+Quoting &amp; Wrap Long Lines when Replying</li>
+
+<ol>
+<li>
+Quoting html to html &amp; Reply as html</li>
+
+<ol TYPE=a>
+<li>
+Smart html editor figures out where and how to wrap long lines.</li>
+</ol>
+
+<li>
+Quoting plain text to html &amp; Reply as html</li>
+
+<ol TYPE=a>
+<li>
+Quoting plain text to html does not reformat the original plain text message.
+Line formats are preserved via hard line breaks (&lt;CR>&lt;LF>).</li>
+</ol>
+</ol>
+
+<li>
+Additional Reply testing (automatic quote enable - default)</li>
+
+<ol>
+<li>
+Reply to multiple plain text replies</li>
+
+<li>
+Reply to multiple HTML replies</li>
+
+<li>
+Reply to mixture of HTML &amp; Plain text replies</li>
+
+<li>
+Reply All to multiple plain text replies</li>
+
+<li>
+Reply All to multiple HTML replies Reply All to mixture of HTML &amp; Plain
+text replies</li>
+</ol>
+</ol>
+<b>Compose Window when Replying</b>
+<ol TYPE=A>
+<li>
+Address pane</li>
+
+<ol>
+<li>
+Address field</li>
+
+<ol TYPE=a>
+<li>
+Verify the full address including email domain is inserted in the To: field</li>
+
+<li>
+Reply to a message that is addressed to a single recipient.&nbsp; Verify
+that the reply has the sender name in the To:&nbsp; field , the name is
+placed in the first recipient field and the cursor is placed in the body
+of the message as stated in the preference.</li>
+
+<li>
+Reply to a message that is addressed to multiple To: recipients.&nbsp;
+Verify only the sender is placed in the To: field, the name is place in
+the first recipient field, and the cursor is place in the body of the message
+as stated in the preference.</li>
+
+<li>
+Reply to a message that is addressed to To: and Cc: recipients. Verify
+only the sender is placed in the To: field, the name is place in the first
+recipient field, and the cursor is place in the body of the message as
+stated in the preference.</li>
+
+<li>
+Reply All to a message that is addressed to multiple recipients.&nbsp;&nbsp;
+Verify:</li>
+
+<ul TYPE=SQUARE>
+<li>
+To: recipients are addressed as To: recipients</li>
+
+<li>
+Cc: recipients are addressed as Cc: recipients</li>
+
+<li>
+Bcc: recipients are addressed as Bcc: recipient</li>
+
+<li>
+Group recipient is addressed as Group recipient</li>
+</ul>
+</ol>
+
+<li>
+Drag &amp; Drop</li>
+
+<ol TYPE=a>
+<li>
+verify dragging a addresses from the Address Book to the Compose window
+address pane, placing name below the inserted Reply name works correctly</li>
+
+<li>
+verify dragging multiple addresses from the Address Book to the Compose
+window address pane, placing names below the inserted Reply name works
+correctly</li>
+</ol>
+
+<li>
+Copying &amp; Pasting name</li>
+
+<ol TYPE=a>
+<li>
+verify copying and pasting names in the Compose window address pane, placing
+names below the inserted Reply name works correctly</li>
+</ol>
+
+<li>
+Deleting Name</li>
+
+<ol TYPE=a>
+<li>
+verify the menu option for delete does <b>not </b>work in the address field</li>
+
+<li>
+verify selecting a name and clicking the "Del" key twice removes: first
+the name, then the icon</li>
+
+<li>
+verify selecting one of the icons in the Address field and clicking the
+"Del" key removes the name and the icon (exception listed next)</li>
+
+<li>
+verify selecting the last remaining icon in the Address field and clicking
+the "Del" key does <b>not</b> remove the&nbsp; icon but will remove the
+name if there is a name one on the line</li>
+
+<li>
+Delete the recipient and address to a different recipient.&nbsp; Verify
+the message has been sent to the correct person .</li>
+
+<li>
+Use the Backspace key to delete all the recipients.&nbsp; Verify the last
+icon is not removed and nothing bad happens.&nbsp; (Note: We use to crash
+on the unix platform performing this test)</li>
+</ol>
+
+<li>
+Attachment tab (See Attachment test spec link above for more comprehensive
+tests)</li>
+
+<ol TYPE=a>
+<li>
+Using Toolbar button Attach, select one of each and verify they show up
+in the Attachment pane and arrive properly</li>
+
+<li>
+File (one of each)</li>
+
+<ul TYPE=SQUARE>
+<li>
+Text</li>
+
+<li>
+HTML</li>
+
+<li>
+Binary (e.g. Gif/JPEG/BMP)</li>
+
+<li>
+vCard</li>
+
+<li>
+Java Applets</li>
+</ul>
+
+<li>
+Web Page</li>
+
+<ul TYPE=SQUARE>
+<li>
+One that is valid</li>
+
+<li>
+One that is not valid</li>
+</ul>
+
+<li>
+My Address Book card</li>
+
+<li>
+Signature (Preference setting)</li>
+</ol>
+
+<li>
+Option tab</li>
+
+<ol TYPE=a>
+<li>
+Signed &amp; Encrypted (to be tested by TBD Security)</li>
+
+<li>
+Uuencode&nbsp; (covered in Attachments test spec , see link above)</li>
+
+<li>
+Format&nbsp; (covered in Intelligent Send test spec, see link above)</li>
+
+<li>
+Return Receipt (covered in Return Receipt test spec, see link above)</li>
+
+<li>
+Intelligent Send option (covered in Intelligent Send test spec, see link
+above)</li>
+</ol>
+
+<li>
+Subject field</li>
+
+<ol TYPE=a>
+<li>
+Verify the subject line has Fwd: at the beginning</li>
+
+<li>
+Send one of each priority options, verify they arrive with the proper priority</li>
+</ol>
+
+<li>
+Priority: Highest, High, Normal, Low, Lowest (test one of each)</li>
+
+<li>
+Message area (to be tested see Composition test spec, Plain Text test spec.
+HTML test spec)</li>
+</ol>
+
+<li>
+Address Book Picker when Replying to a message (Perform these tests with
+both Mail &amp; News messages).&nbsp; Note: For Pinpoint addressing against
+a particular Directory,&nbsp; select the Directory in the Addressing preferences
+before typing the name in the addressing field.</li>
+
+<ol>
+<li>
+Addressing messages using the Pinpoint Addressing feature (automatic name
+completion) by typing a name in the Addressing field below the name that
+was inserted for the Reply To:&nbsp; that will match a name found in:</li>
+
+<ol TYPE=a>
+<li>
+Personal Address Book-verify the matching address fills in</li>
+
+<li>
+Netscape Phone Directory-verify the matching address fills in</li>
+
+<li>
+[public LDAP]&nbsp; Directory-verify the matching address fills in</li>
+</ol>
+
+<li>
+Perform the following operation using the Address picker (by clicking the
+Address toolbar button) while in a Reply-Compose window</li>
+
+<ol TYPE=a>
+<li>
+Select a name and click on the To: button-verify the address is added to
+the bucket, clicking OK fills in the name in the addressing field</li>
+
+<li>
+Select a name and click on the Cc: button-verify the address is added to
+the bucket, clicking OK fills in the name in the addressing field</li>
+
+<li>
+Select a name and click on the Bcc: button-verify the address is added
+to the bucket, clicking OK fills in the name in the addressing field</li>
+
+<li>
+Select a name, click on the To: button, then remove from bucket-verify
+the address does not fill in the To: field</li>
+
+<li>
+Click on the Cancel button to abort a selection</li>
+
+<li>
+Send message, verify sending to correct addresses</li>
+</ol>
+
+<li>
+Bug 103665 - Stressing the Address Picker dialog</li>
+
+<ol TYPE=a>
+<li>
+Start a compose message, click on Address button, then cancel operation</li>
+
+<ul>
+<li>
+Manual testing= repeat this step manually several times (launch Address
+Picker, Cancel)</li>
+
+<li>
+Automation testing=was written for Nova, automation script not transferable
+to 5.0 at this time</li>
+</ul>
+
+<li>
+Start a compose message, click on Address button, change LDAP directory,
+then cancel operation</li>
+
+<ul>
+<li>
+Manual testing= repeat this step manually several times (launch Address
+Picker, Cancel)</li>
+
+<li>
+Automation testing=was written&nbsp; for Nova, automation script not transferable
+to 5.0 at this time</li>
+</ul>
+</ol>
+</ol>
+
+<li>
+Spell check messages before sending=On&nbsp; for a Reply To message (Perform
+these tests with both Mail &amp; News messages)</li>
+
+<ol>
+<li>
+Verify message is spell checked before reply is sent.</li>
+</ol>
+
+<li>
+Sending Action for a Reply To message (Perform these tests with both Mail
+&amp; News messages)</li>
+
+<ol>
+<li>
+Send Now-verify the message is sent immediately</li>
+
+<li>
+Send Later-verify the message is put in the Unsent Messages (aka Outbox)</li>
+
+<li>
+Save as Draft-verify the message is put in the Drafts folder (try this
+with Draft folder=local and IMAP)</li>
+
+<li>
+Save as Template-verify the message is put in the Template folder (try
+this with Template folder=local and IMAP)</li>
+
+<li>
+Intelligent Send (See the Intelligent Send test spec link above)</li>
+
+<li>
+When replying to a Plain Text message and your format preference is set
+to "Use the HTML editor to compose messages", a HTML Compose window appears.</li>
+
+<li>
+When replying to a HTML message and your format preference is set to "Use
+the plain text editor to compose messages", a Plain Text Compose window
+appears.&nbsp; (TBD if Plain Text will stay).</li>
+</ol>
+</ol>
+
+<hr WIDTH="100%">
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-reply.html&amp;rev=&amp;root=/cvsroot/">Last modified August 13,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

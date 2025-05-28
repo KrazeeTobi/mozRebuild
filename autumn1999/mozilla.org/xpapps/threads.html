@@ -1,0 +1,239 @@
+<HTML>
+<HEAD>
+<TITLE>mozilla.org</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<CENTER><B><FONT SIZE=+1>Threads in SeaMonkey</FONT></B>
+<BR>Where we are
+<BR>Created: Dec 18, 1998
+<BR>Last updated:&nbsp; Dec 18, 1998
+<BR>Comments to:&nbsp; <A HREF="mailto:netscape.public.mozilla.xpfe">xpfe
+newsgroup</A></CENTER>
+
+<P>
+<P>
+
+<P>This document describes the thoughts on threading issues for SeaMonkey
+and beyond. This is a preliminary design proposal and outcome of a meeting
+that was held this week.
+<BR>
+<H2><U>Threads in SeaMonkey:</U></H2>
+
+The&nbsp; current plan for 5.0 for all&nbsp; major platforms (Windows,
+Mac, Unix)&nbsp; is to have one UI thread and one or more netlib threads.
+Processing that occurs in the UI thread includes, parsing, Creation of
+Content model, layout, DOM activity, incremental &amp; resize reflows,
+UI event loop, callbacks&nbsp; and plugins.&nbsp; The netlib threads are
+responsible only for network activities.&nbsp; All the major platforms
+use NSPR module to create the threads.&nbsp; There are 2 things about using
+NSPR to create and manage threads&nbsp; that should not be confused.
+<OL>
+<LI>
+To Use the NSPR threads API
+
+<LI>
+To Use, user level threads created by NSPR&nbsp; or to use native platform
+threads created for you by NSPR.
+</OL>
+All platforms use the NSPR APIs to create their threads for the obvious
+reason of portability, but not all platforms use NSPR user threads. The
+issues are described in the next section. You can learn more about NSPR
+
+<A HREF="../docs/refList/refNSPR/">here</A>
+<BR>
+<H1><U>Platform Issues:</U></H1>
+
+One of the main concerns that were raised in the meeting was,&nbsp; platform
+support for multiple UI threads and the possibility of having multiple
+UI threads.
+<H3><U><FONT COLOR="#000000">Unix:</FONT></U></H3>
+
+Unix, currently&nbsp; supports only one UI thread because the underlying
+libraries Xlib, gtk, Xt, motif are not thread safe.&nbsp; Any situation
+that necessitates multiple threads to access the X libraries (like Java)
+has to go through a locking mechanism that will make sure, only one thread
+accesses X at any given time.&nbsp; This is the solution, communicator
+versions 2+ have used.&nbsp;&nbsp; The granularity of the lock is a key
+factor in deciding which threads to use. NSPR user threads or Native threads.
+? Unix Communicator 4.5&nbsp; uses NSPR user threads and the XLock mechanism
+is tightly integrated in NSPR.
+<H4>Threads in unix for 5.0:</H4>
+
+For 5.0 the current consideration is to continue to use NSPR user threads
+for 1 UI thread one or more netlib threads to take care of the above situation
+with Java or any other plugin that may access the X libraries.
+<H4>Threads in unix beyond 5.0:</H4>
+
+The Unix team is however very keen in moving the Xlock&nbsp; mechanism
+out of NSPR&nbsp;&nbsp; to a higher level.&nbsp; This will enable unix
+to use Native threads (which is pthreads in most platforms) which has other
+developmental advantages&nbsp; like easy to debug, ability to interact
+with other&nbsp; software components etc....&nbsp; This will also enable
+unix to have&nbsp; multiple&nbsp; NSPR UI threads with their own nsGUIEvent
+message pumps and all access to the underlying X/rendering layer
+controlled through the Xlock.&nbsp;&nbsp; The unix team may consider moving
+the xlock out of NSPR for 5.0 depending on how OJI&nbsp;will live in SeaMonkey.
+To learn more about the Xlock issues and java, you can look <A HREF="http://www.mozilla.org/unix/using-x-with-mozilla-threads.html">here.</A>
+<H3><U><FONT COLOR="#000000">Windows:</FONT></U></H3>
+
+Windows is inherently capable of having multiple UI threads and a native
+event loop per thread. Though this is a great advantage, its usage
+with other modules of SeaMonkey which are not currently thread safe is
+in question.&nbsp; In order to have the model where each&nbsp; toplevel
+window runs in its own&nbsp; thread, we need to have most of the webshell
+interfaces, DOM, XPFE widgets, to be thread safe and we are not there yet.
+<H4>Threads in windows for 5.0:</H4>
+
+So, considering all the new work that needs to be done to get to this mode,
+for 5.0, windows will also support only one UI thread for the complete
+application and multiple netlib threads. Windows will use the NSPR threads
+API to create native threads for its needs.
+<BR>
+<H3><B><U><FONT COLOR="#000000">Mac:</FONT></U></B></H3>
+
+The current implementation, and future plan for threading on MacOS lies with
+NSPR threads. The Mac implementation of NSPR threads is a user level and non
+preemptive. It does not rely upon the MacOS Thread Manager. Should it ever
+become advantageous and plausible to utilize pthreads on top of Mach in
+System X, or the Thread Manager as the implementation of MacOS NSPR threads,
+the issue can be revisited.
+
+<P>Since NSPR threads on MacOS are not preemptive, it allows us to control
+reentrancy and locking issues more easily. In short, the fact that many MacOS
+Toolbox calls are not thread safe can be dealt with by choosing carefully
+what to lock, and where to yield control of a thread for a possible context
+switch.
+
+<H4>Performance of Threads on MacOS</H4>
+
+How well threads perform on MacOS vs. other, preemptive platforms depends
+largely upon how effectively yield calls are placed in code. On a preemptive
+system, a yield call may either be a no-op or a true yield (I'm not sure
+off the top of my head what it is in NSPR for Win and Unix).
+
+<P>The NSPR thread scheduling policy for MacOS threads can also be adjusted
+to give preference to threads which have events pending in their event
+queues for lower event response latency.
+
+<P>NSPR file I/O on the Mac can be better integrated with NSPR threads
+to provide better performance. For example, a thread that was blocked on
+file I/O but is now ready to run can be giving a higher priority in the
+scheduling policy. This is commonly done on some unix systems to improve
+I/O performance. Also, NSPR file I/O can do speculative look ahead buffering
+to improve the performance of sequential file reads of the same byte size.
+This sort of operation is very common throughout the code base. Speculative
+read ahead buffering allows the sequential file reads of the same or smaller
+size to return immediately without doing a context switch. I have many
+of these changes that I made during the Gromit project but never checked
+in. I'm planning on giving Wan-Teh and the NSPR team these changes Real
+Soon Now for possible integration.
+<BR>
+<H4>Threads on MacOS in Netscape 5.0</H4>
+
+MacOS will have just as many NSPR threads as other OSes, one UI thread,
+and one or more NetLib threads. Very little will be different on MacOS
+than any other platform in this model other than their non-preemptive nature.
+<H4>Threads on MacOS beyond 5.0</H4>
+
+In the future if we have more UI threads, code can be added to have event
+dispatching from the Mac application's main event loop to the proper thread
+event queue. This sort of marshaling would allow the MacOS platform differences
+to be further abstracted out, and more code to be written in an XP fashion.
+Again, performance concerns could be addressed within the MacOS NSPR thread
+scheduler.
+<H2><U>Modal Dialogs:</U></H2>
+
+The current proposal to implement modal dialogs is&nbsp; this setup is
+to have a mutex&nbsp; that will allow layout module to finish up any
+layout or reflow operation that may be in progress and then bring up the
+Modal dialog.&nbsp; As long as the modal dialog is up,&nbsp; layout will
+interact only with it.
+
+<P>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpapps/threads.html&amp;rev=&amp;root=/cvsroot/">Last modified October  6,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

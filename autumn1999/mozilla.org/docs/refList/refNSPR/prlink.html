@@ -1,0 +1,479 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Dynamic Library Linking</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A>
+<A HREF="prlog.html">[Previous]</A> <A HREF="prsystem.html">[Next]</A><A HREF="last.html">[Last]</A>
+<HR>
+<CENTER>
+<H2>
+<A NAME="Dynamic Library"></A>Chapter 19<BR>
+Dynamic Library Linking</H2></CENTER>
+This section describes NSPR's programming interface to load, unload and
+resolve symbols in dynamic libraries. It also provides a method by which
+one can condition symbols of statically linked code so that to other clients
+it appears as though they are dynamically loaded.
+<BR>
+<LI>
+<A HREF="#Types">Types</A></LI>
+
+<LI>
+<A HREF="#Functions">Functions</A></LI>
+
+<LI>
+<A HREF="#Platform Notes">Platform Notes</A></LI>
+
+<H3>
+<A NAME="Types"></A>Types</H3>
+
+<H4>
+<A NAME="PRLibrary"></A><TT>PRLibrary</TT></H4>
+A <TT>PRLibrary<I> </I></TT>is an opaque structure. A reference to such
+a structure may be returned by some of the functions in the runtime and
+serve to <I>identify</I> a particular instance of a library.
+<BLOCKQUOTE><TT>typedef struct PRLibrary PRLibrary;</TT></BLOCKQUOTE>
+
+<H4>
+<A NAME="PRStaticLinkTable"></A><TT>PRStaticLinkTable</TT></H4>
+A static link table entry may be created by a client of the runtime so
+that other clients can access static or dynamic libraries transparently.
+The basic function on a dynamic library is to acquire a pointer to a function
+that the library exports. If, during initialization, such entries are manually
+created, then future attempts to link to the symbols can be treated in
+a consistent fashion.
+<PRE>
+typedef struct PRStaticLinkTable {
+    const char *name;
+    void (*fp)();
+} PRStaticLinkTable;
+</PRE>
+
+<H3>
+<A NAME="Functions"></A>Functions</H3>
+
+<H4>
+<A NAME="PR_SetLibraryPath"></A><TT>PR_SetLibraryPath</TT></H4>
+For convenience, a default library pathname may be registered with the
+runtime. This allows an environment to express policy decisions globally
+and lazily rather than hardcoding and distributing the decisions throughout
+the code.
+<BLOCKQUOTE><TT><A HREF="prtyp.html#1027728">PRStatus</A> PR_SetLibraryPath(const
+char *path);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>path</TT></B></TD>
+
+<TD>A pointer to a character array that contains the directory path that
+the application should use as a default. The syntax of the pathname is
+not defined, nor whether that pathname should be absolute or relative.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+This function will fail (return a value of <TT>PR_FAILURE</TT>) if it cannot
+allocate sufficient storage to make a copy of the <TT>path</TT> string.
+<BR>
+<H4>
+<A NAME="PR_GetLibraryPath"></A><TT>PR_GetLibraryPath</TT></H4>
+<B><TT>PR_GetLibraryPath()</TT></B> allows the caller to discover the current
+default.
+<BLOCKQUOTE><TT>char* PR_GetLibraryPath(void);</TT></BLOCKQUOTE>
+
+<H5>
+Result</H5>
+The result is a copy of the library pathname. If sufficient storage cannot
+be allocated to contain the copy, a <TT>NULL</TT> will be returned.
+Storage for the result is allocated by the runtime and becomes the responsibility
+of the caller. It should be deleted by calling <B><TT><A HREF="#PR_FreeLibraryName">PR_FreeLibraryName</A>()</TT></B>.
+<BR><A NAME="PR_GetLibraryName"></A>
+<H4>
+<TT>PR_GetLibraryName</TT></H4>
+Given a directory name and a library name construct a full path name that
+will refer to the actual dynamically loaded library. This does not test
+for existence of said file, it just constructs the full filename. The name
+constructed is system dependent and prepared for <B><TT><A HREF="#PR_LoadLibrar">PR_LoadLibrary()</A></TT></B>.
+<BLOCKQUOTE><TT>char* PR_GetLibraryName(const char *dir, const char *lib);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>dir</TT></B></TD>
+
+<TD>A <TT>NULL</TT>-terminated string representing the path name of the
+library. A suitable source for this information would be the result of
+a call to <B><TT><A HREF="#PR_GetLibraryPath">PR_GetLibraryPath()</A></TT></B>.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>lib</TT></B></TD>
+
+<TD>The leaf name of the library of interest.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+If the function call is successful, the character array returned
+is one suitable for use in the <B><TT><A HREF="#PR_LoadLibrar">PR_LoadLibrary()</A></TT></B>
+call. The storage for the result is allocated by the runtime and becomes
+the responsibility of the caller and must ultimately be deleted by using
+the <B><TT><A HREF="#PR_FreeLibraryName">PR_FreeLibraryName()</A></TT></B>
+function.
+
+<P><B><TT>PR_GetLibraryName()</TT></B> might fail if the runtime cannot
+allocate sufficient memory for the result. In such cases a <TT>NULL</TT>
+will be returned.
+<H4>
+<A NAME="PR_FreeLibraryName"></A><TT>PR_FreeLibraryName</TT></H4>
+<B><TT>PR_FreeLibraryName()</TT> </B>is available for deleting the storage
+allocated by the runtime in the functions described previously. It is important
+to use this function to rather than calling directly into malloc in order
+to isolate the runtime's semantics regarding storage management.
+<BLOCKQUOTE><TT>void PR_FreeLibraryName(char *mem);</TT></BLOCKQUOTE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>mem</TT></B></TD>
+
+<TD>A reference to a character array that was previously allocated by the
+dynamic library runtime.</TD>
+</TR>
+</TABLE>
+
+<H4>
+<A NAME="PR_LoadLibrar"></A><TT>PR_LoadLibrary</TT></H4>
+<B><TT>PR_LoadLibrary()</TT></B> attempts to load the referenced library.
+It will suppress duplicate loading if the library is already known by the
+runtime.
+<BLOCKQUOTE><TT><A HREF="#PRLibrary">PRLibrary</A>* PR_LoadLibrary(const
+char *name);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>name</TT></B></TD>
+
+<TD>A platform dependent character array that depicts the library to be
+loaded. An appropriate source of such an array would be <B><TT><A HREF="#PR_GetLibraryName">PR_GetLibraryName()</A></TT></B>.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Results</H5>
+If the operation is successful, a reference to an opaque <TT>PRLibrary</TT>
+object is returned. This becomes the library's <I>identity</I>. If the
+library is already known to the runtime, the duplicate loading will be
+suppressed. Each <B><TT>PR_LoadLibrary()</TT></B> must be paired with a
+corresponding <B><TT><A HREF="#PR_UnloadLibrary">PR_UnloadLibrary()</A></TT></B>
+in order to return the runtime to its original state.
+
+<P>If the operation fails, a <TT>NULL</TT> result will be returned. The
+reason for the failure can be discovered by calling <B><TT><A HREF="prerr.html#1035678">PR_GetError()</A></TT></B>.
+<H4>
+<A NAME="PR_UnloadLibrary"></A><TT>PR_UnloadLibrary</TT></H4>
+<B><TT>PR_UnloadLibrary()</TT></B> undoes the effect of a <B><TT>PR_LoadLibrary()</TT></B>.
+If the function is successful, future references to the library using its
+identity (<TT>PRLibary*</TT>) will be invalid.
+<BLOCKQUOTE><TT><A HREF="prtyp.html#1027728">PRStatus</A> PR_UnloadLibrary(<A HREF="#PRLibrary">PRLibrary</A>
+*lib);</TT></BLOCKQUOTE>
+
+<H4>
+Parameter</H4>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>lib</TT></B></TD>
+
+<TD>A reference previously returned from <B><TT><A HREF="#PR_LoadLibrar">PR_LoadLibary()</A></TT></B>.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+If the function returns a value of <TT>PR_FAILURE</TT> the library could
+not be unloaded. The actual reason may be discovered by calling <B><TT><A HREF="prerr.html#1035678">PR_GetError()</A></TT></B>.
+Otherwise, future references to the library identified by its <TT>PRLibary</TT>
+reference should be considered invalid.
+<H4>
+<A NAME="PR_FindSymbol"></A><TT>PR_FindSymbol</TT></H4>
+<B><TT>PR_FindSymbol()</TT></B> will return an untyped reference to a symbol
+in a particular library given the identity of the library and a textual
+representation of the symbol in question.
+<BLOCKQUOTE><TT>void* PR_FindSymbol(<A HREF="#PRLibrary">PRLibrary</A>
+*lib, const char *name);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>lib</TT></B></TD>
+
+<TD>A valid reference to a loaded library or <TT>NULL</TT>. This parameter
+can be acquired only by a call to <B><TT><A HREF="#PR_LoadLibrar">PR_LoadLibrary()</A></TT></B>.
+If this parameter is <TT>NULL</TT> all libraries known to the runtime and
+the main program will be searched in an unspecified order.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>name</TT></B></TD>
+
+<TD>A textual representation of the symbol to resolve.</TD>
+</TR>
+</TABLE>
+
+<H5>
+<B>Result</B></H5>
+<B><TT>PR_FindSymbol()</TT></B> returns an untyped pointer. Dominant use
+of the function is expected to be to look up functions in a shared library,
+though data symbols can also be acquired. Getting a pointer to a symbol
+in a library does indicate that the library is available when the search
+was made. The runtime does nothing to insure the continued validity of
+the symbol. If the library is unloaded (for instance), the results of any
+<B><TT>FindSymbol()</TT></B> calls become invalid as well.
+<H4>
+<A NAME="PR_FindSymbolAndLibrary"></A><TT>PR_FindSymbolAndLibrary</TT></H4>
+<B><TT>PR_FindSymbolAndLibrary()</TT></B> finds a symbol in one of the
+currently loaded libraries. Given the name of a symbol, return the address
+of the symbol, and the library that contains that symbol, or <TT>NULL</TT>
+if no such function can be found. The order that the known libraries are
+searched in not specified.
+<BLOCKQUOTE><TT>void* PR_FindSymbolAndLibrary(const char *name, <A HREF="#PRLibrary">PRLibrary</A>
+**lib);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>name</TT></B></TD>
+
+<TD>The textual representation of the symbol to locate.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>lib</TT></B></TD>
+
+<TD>A reference to a location at which the runtime will store the library
+in which the symbol was discovered.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Results</H5>
+If the symbol could not be found, a <TT>NULL </TT>is returned. Otherwise,
+a non-<TT>NULL</TT> pointer to the symbol will be returned. Also, the owning
+library's identity will be stored in the location pointed to by the parameter
+<TT>lib</TT>. This function is equivalent to first calling <B><TT>PR_LoadLibary()</TT></B>
+followed by <B><TT>PR_FindSymbol()</TT></B>. The identity returned from
+<B><TT>PR_FindSymbolAndLibrary()</TT></B> <I>must</I> be the target of
+a <B><TT>PR_UnloadLibrary()</TT></B> in order to return the runtime to
+its original state.
+<H4>
+Looking Up Symbols Defined in the Main Executable Program</H4>
+<TT>PR_LoadLibrary</TT> cannot open a handle that references the main executable
+program. (This is admittedly an omission that should be fixed.)
+However, it is possible to look up symbols defined in the main executable
+program as follows.
+<BR><TT> PRLibrary *lib;</TT>
+<BR><TT> void *funcPtr;</TT>
+
+<P><TT> funcPtr = PR_FindSymbolAndLibrary("FunctionName",
+&amp;lib);</TT>
+<BR><TT></TT>
+<BR>When <TT>PR_FindSymbolInLibrary</TT> returns, <TT>funcPtr</TT> is the
+value of the function pointer you want to look up, and the variable <TT>lib</TT>
+references the main executable program. Then you can call <TT>PR_FindSymbol</TT>
+on <TT>lib</TT> to look up other symbols defined in the main program.
+Remember to call <TT>PR_UnloadLibrary(lib)</TT> to close the library handle
+when you are done.
+<H4>
+<A NAME="PR_LoadStaticLibrary"></A><TT>PR_LoadStaticLibrary</TT></H4>
+The purpose of <B><TT>PR_LoadStaticLibrary()</TT></B> is so that other
+clients in the process can access static symbols using the same mechanisms
+as those available for dynamically loaded libraries. Once the static symbols
+are made known to the runtime (presumably at initialization) the remainder
+of the application can use the API uniformly, including symbols possibly
+implemented in the main program.
+<BLOCKQUOTE><TT><A HREF="#PRLibrary">PRLibrary</A>* PR_LoadStaticLibrary(</TT>
+<BR><TT> const char *name, const <A HREF="#PRStaticLinkTable">PRStaticLinkTable</A>
+*table);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD><B><TT>name</TT></B></TD>
+
+<TD>The name the caller wishes to associate with the static library. If
+the value is <TT>NULL</TT> the symbols will be made available to the library
+which represents the executable.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>table</TT></B></TD>
+
+<TD>A reference to the client constructed table containing symbol name
+and address tuples. The table is <I>not</I> copied by the runtime.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+If the function call is successful, the new table's identity is returned.
+In order to return the runtime to its previous state, the identity must
+be the argument of a <B><TT><A HREF="#PR_UnloadLibrary">PR_UnloadLibarary()</A></TT></B>
+call.
+<H3>
+<A NAME="Platform Notes"></A>Platform Notes</H3>
+On some platforms, in order to use the dynamic library loading functions
+described in this chapter, certain environment variables must be set at
+run time, and you may even need to link your executable programs using
+special linker options.
+
+<P>This section is a short summary of these platform idiosyncrasies.
+For more information, please consult the <TT>ld</TT> and <TT>dlopen</TT>
+(or <TT>shl_load</TT> on HP-UX) manual pages on Unix and the <TT>LoadLibrary</TT>
+documentation on Win32.
+<H4>
+<A NAME="Dynamic Library Search Path"></A>Dynamic Library Search Path</H4>
+The dynamic library search path is the list of directories in which to
+look for a dynamic library. Each platform has its own standard directories
+in which to look for dynamic libraries, plus a customizable list of directories
+specified by an environment variable.
+
+<P>On most Unix systems, this environment variable is <TT>LD_LIBRARY_PATH</TT>.
+These systems typically use <TT>dlopen</TT> to load a dynamic library.
+
+<P>HP-UX uses <TT>shl_load</TT> to load dynamic libraries, and the environment
+variable specifying the dynamic library search path is <TT>SHLIB_PATH</TT>.
+Moreover, the executable program must be linked with the <TT>+s</TT> option
+so that it will search for shared libraries in the directories specified
+by <TT>SHLIB_PATH</TT> at run time. Alternatively, you can enable
+the <TT>+s</TT> option as a postprocessing step using the <TT>chatr</TT>
+tool:
+<BR><TT> <I>link your executable program a.out without
+the +s option</I></TT>
+<BR><TT> chatr +s enable a.out</TT>
+
+<P>On Rhapsody, the environment variable is <TT>DYLD_LIBRARY_PATH</TT>.
+
+<P>On Win32, the environment variable is <TT>PATH</TT>. (So the same
+search path is used to search for executable programs and DLLs.)
+<H4>
+<A NAME="Exporting Symbols From the Main Executable Program"></A>Exporting
+Symbols From the Main Executable Program</H4>
+On some systems, symbols defined in the main executable program are not
+exported by default. On HP-UX, one must link the executable program
+with the <TT>-E</TT> linker option in order to export all symbols in the
+main program to shared libraries. If you use the GNU <TT>s</TT>
+(on any platform), you must also link the executable program with the <TT>-E</TT>
+option.
+<BR>
+<HR WIDTH="100%"><A HREF="contents.html">[Contents]</A> <A HREF="prlog.html">[Previous]</A>
+<A HREF="prsystem.html">[Next]</A><A HREF="last.html">[Last]</A>
+<DIV ALIGN=right><I><FONT SIZE=-2>Last Updated: Tue Jul 14 17:07:28 PDT 1998</FONT></I>
+<HR SIZE=4></DIV>
+
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html" TARGET="_top">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/refList/refNSPR/prlink.html&amp;rev=&amp;root=/cvsroot/">Last modified July 17,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

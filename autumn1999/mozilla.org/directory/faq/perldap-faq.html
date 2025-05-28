@@ -1,0 +1,1404 @@
+<HTML>
+<HEAD>
+<TITLE>PerLDAP: Frequently Asked Questions</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+
+<CENTER>
+<H2>PerLDAP: Frequently Asked Questions</H2>
+<I>$Revision: 1.50 $</I><BR><BR>
+Contact: Leif Hedstrom<BR>
+&lt;<A href="mailto:leif@netscape.com">leif@netscape.com</A>&gt;<BR>
+Discussion: 
+<A href="news://news.mozilla.org/netscape.public.mozilla.directory">
+netscape.public.mozilla.directory</A>
+</CENTER>
+<P>
+
+<HR NOSHADE size=1>
+
+<P>
+These are the most Frequently Asked Questions about the PerLDAP source and
+distributions from mozilla.org. A few of these questions will most likely
+be merged into the official POD documentation, in a later release. The
+questions are divided into these sections:
+</P>
+
+<FONT size="+1">
+<OL>
+  <LI><A href="#_gen">General information about PerLDAP</A>.
+  <SPACER type=vertical size=5>
+  <LI><A href="#_bld">Using and building PerLDAP from the source</A>.
+  <SPACER type=vertical size=5>
+  <LI><A href="#_bin">Binary distributions and released versions</A>.
+  <SPACER type=vertical size=5>
+  <LI><A href="#_src">Working with the source, CVS and bug reports</A>.
+  <SPACER type=vertical size=5>
+  <LI><A href="#_ldap">LDAP related questions</A>.
+  <SPACER type=vertical size=5>
+  <LI><A href="#_frm">Platform, Perl and version specific problems</A>.
+  <SPACER type=vertical size=5>
+  <LI><A href="#_bugs">Known bugs and problems</A>.
+  <SPACER type=vertical size=5>
+  <LI><A href="#_mis">Missing features and modules</A>.
+  <SPACER type=vertical size=5>
+</OL>
+</FONT>
+
+<HR NOSHADE SIZE=1>
+<H2>Recent changes to this document</H2>
+<B>1999-08-27</B>:<BR>
+<UL>
+  <LI>Added a bunch of 1.4 information.
+  <SPACER type=vertical size=3>
+  <LI>Removed old information dealing with 1.0.
+</UL>
+
+<B>1999-03-09</B>:<BR>
+<UL>
+  <LI>Cleaned up a bunch of the FAQs, to clarify v1.2/v1.2.1/issues.
+  <SPACER type=vertical size=3>
+  <LI>Added <A href="#_ldap_10">Q-5.10</A>, giving an example how to do
+      simple authentication of users against the LDAP server.
+  <SPACER type=vertical size=3>
+  <LI>Added <A href="#_frm_9">Q-6.9</A>, describing how to compile and install
+      PerLDAP in a non-standard directory.
+  <SPACER type=vertical size=3>
+  <LI>Added possible (partial) solution for memory issues to
+      <A href="#_bugs_2">Q-7.2</A>.
+  <SPACER type=vertical size=3>
+</UL>
+
+<B>1999-01-30</B>:<BR>
+<UL>
+  <LI>Updated a lot of text for the release of PerLDAP v1.2, changing from
+  v1.0 and v1.1 where appropriate.
+  <SPACER type=vertical size=3>
+  <LI>Added more CVS tags to <A href="#_src_4">Q-4.4</A>.
+  <SPACER type=vertical size=3>
+</UL>
+
+<HR NOSHADE SIZE=1>
+
+<H2>1. <A name="_gen" href="#_gen_0">
+General information about PerLDAP</A></H2>
+
+<OL>
+  <LI><A href="#_gen_1">What is PerLDAP</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_gen_2">Where can I get source code for PerLDAP</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_gen_3">Where can I get binary distributions</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_gen_4">Where do I send bug reports, or ask for help</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_gen_6">Does PerLDAP support SSL</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_gen_7">Do you have some links to relevant LDAP sites or books</A>?
+  <SPACER type=vertical size=2>
+</OL>
+
+<H2>2. <A name="_bld" href="#_bld_0">
+Using and building PerLDAP from the source</A></H2>
+<OL>
+  <LI><A href="#_bld_1">How do I get the source code</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_bld_2">What do I need to build PerLDAP</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_bld_3">What's the latest PerLDAP version</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_bld_4">Where are the beta/development releases</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_bld_5">Do I really need the C-SDK</A>?
+  <SPACER type=vertical size=2>
+</OL>
+
+<H2>3. <A name="_bin" href="#_bin_0">
+Binary distributions and released versions</A></H2>
+<OL>
+  <LI><A href="#_bin_1">Where can I find a binary distribution for
+  platform &lt;XXX&gt;</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_bin_3">I can't get the binaries to work, who do I turn to</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_bin_5">Where are the C-SDK binaries</A>?
+  <SPACER type=vertical size=2>
+</OL>
+
+<H2>4. <A name="_src" href="#_src_0">
+Working with the source, CVS and bug reports</A></H2>
+<OL>
+  <LI><A href="#_src_1">What the heck is CVS? How do I use it? Where can I
+  get it</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_src_2">How do I check out the latest, stable released
+  code</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_src_3">How do I check out a beta/development branch</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_src_4">Is there a list of all development branches</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_src_5">What CVS modules are available and relevant to
+  PerLDAP</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_src_6">Where do I send patches or new code I'd like to
+  contribute</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_src_7">How do I report a bug I just found</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_src_8">Where can I read about known, open bugs</A>?
+  <SPACER type=vertical size=2>
+</OL>
+
+<H2>5. <A name="_ldap" href="#_ldap_0">
+LDAP related questions</A></H2>
+<OL>
+  <LI><A href="#_ldap_1">How do I "browse" an LDAP entry when I know its
+  DN</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_2">How can I manage my Netscape DS-4 server
+  information with PerLDAP</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_3">What is the "manage DSA IT" control? Can I use it
+  with PerLDAP</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_4">Does PerLDAP support all LDAP v3 features</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_5">How do I search for something? What is an LDAP
+  filter</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_6">How do I specify/limit what attributes are
+  retrieved in a search</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_7">How can I call an LDAP API function, when it needs
+  the internal C SDK structures</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_8">How can I count the number of entries a search
+  found</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_9">How do I create a new LDAP entry</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_10">How do I authenticate a user against the LDAP
+       server</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_11">How do I limit the number of entries
+  returned</a>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_12">How do I add binary data to an entry</a>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_13">How do I print out a JPEG image from my
+  directory to an HTML page</a>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_ldap_14">How do I add a user to a group</a>?
+  <SPACER type=vertical size=2>
+   </OL>
+
+<H2>6. <A name="_frm" href="#_frm_0">
+Platform, Perl and version specific problems</A></H2>
+<OL>
+  <LI><A href="#_frm_1">What Perl versions are supported</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_frm_2">Which Perl version is recommended</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_frm_3">Which Unix and Windows platforms are supported,
+  and which versions</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_frm_4">How do I get PerLDAP to build on my Windows/NT
+  machine? Why can't NT find libldap.dll</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_frm_5">What C SDKs are supported? What about SSL</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_frm_6">What is the build options for DecUnix/OSF? What is
+  "-taso"</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_frm_7">What link options are used/needed for Irix</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_frm_8">Why are there missing symbols when linking PerLDAP
+  on Windows/NT</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_frm_9">How do I compile and install PerLDAP in a test
+       environment</A>?
+  <SPACER type=vertical size=2>
+</OL>
+
+<H2>7. <A name="_bugs" href="#_bugs_0">
+Known bugs and problems</A></H2>
+<OL>
+  <LI><A href="#_bugs_1">I can't get PerLDAP to work with ActivePerl</A>.
+  <SPACER type=vertical size=2>
+  <LI><A href="#_bugs_2">Is it just me, or is PerLDAP very memory
+  intensive</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_bugs_3">I can't get LDAP controls to work</a>.
+  <SPACER type=vertical size=2>
+</OL>
+
+<H2>8. <A name="_mis" href="#_mis_0">
+Missing features and modules</A></H2>
+<OL>
+  <LI><A href="#_mis_1">What about LDAP controls</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_mis_2">How can I use and support the LDAP v3 password
+  management control</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_mis_3">Does PerLDAP support VLV indexes</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_mis_4">The LDIF module seems horky, what gives</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_mis_5">Are there any PerLDAP code to manage LDAP
+  schemas</A>?
+  <SPACER type=vertical size=2>
+  <LI><A href="#_mis_6">What are the plans for the next PerLDAP
+  version</A>?
+  <SPACER type=vertical size=2>
+</OL>
+
+<HR NOSHADE SIZE=1>
+
+<H2><A name="_gen_0">1. General information about PerLDAP</A></H2>
+<OL>
+  <B><LI><A name="_gen_1">What is PerLDAP?</A></B>
+  <P>
+  PerLDAP, Perl-LDAP, is made up of two main components to write LDAP
+  clients: An interface to the C SDK API, and a set of Object Oriented
+  Perl classes. The API interface is almost 100% compatible with
+  Netscape's C SDK, but it's harder to use than the OO layer. The Object
+  oriented interface is ment to be an easier way to write most common LDAP
+  clients. For more information, see the
+  <A href="http://www.mozilla.org/directory/"> Mozilla Directory
+  project</A> home page.
+  </P>
+  <P>
+  I've also prepared a PerLDAP presentation in
+  <A href="http://www.perldap.org/preso/PerLDAP-1.2/PerLDAP-1.2.ppt">
+  PowerPoint</A>, which is available in
+  <A href="http://www.perldap.org/preso/PerLDAP-1.2/">HTML</A> as well.
+  <P>
+  <B><LI><A name="_gen_2">Where can I get source code for PerLDAP?</A></B>
+  <P>
+  The source is available via both CVS and FTP. You can use
+  <A href="http://www.mozilla.org/cvs.html">Mozilla's CVS server</A>
+  to easily keep up to date with latest releases and development. For more
+  information about relevant CVS modules to check out, see
+  <A href="#_src_5">question 4.5</A>.
+  </P><P>
+  If you don't have access to CVS, or want to quickly get the latest CVS
+  release, you can <A href="ftp://ftp.mozilla.org/pub/directory/perldap">
+  FTP a source</A> distribution. After unpacking such a distribution, you
+  can again use CVS to get updates etc.
+  </P>
+
+  <B><LI><A name="_gen_3">Where can I get binary distributions?</A></B>
+  <P>
+  See the section on <A HREF="#_bin_0">Binary Distributions</a>.
+  </P>
+
+  <B><LI><A name="_gen_4">Where do I send bug reports, or ask for
+  help?</A></B>
+  <P>
+  Please use the
+  <A href="news://news.mozilla.org/netscape.public.mozilla.directory">News
+  Discussion group </A> as much as possible - the PerLDAP team reads this constantly. You can also use Bugzilla,
+  see <A href="#_src_7">question 4.7</A> for details. Here's the list of all 
+  <A href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Directory&component=PerLDAP&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">currently open PerLDAP bugs</A> and RFEs.
+  </P>
+
+  <B><LI><A name="_gen_6">Does PerLDAP support SSL?</A></B>
+  <P>
+  Yes! But only if the C SDK you have installed supports SSL, PerLDAP
+  itself does not have any SSL code or encryption code. As such, PerLDAP
+  source can be distributed without any export restrictions.
+  </P>
+
+  <B><LI><A name="_gen_7">Do you have some links to relevant LDAP
+  sites or books?</A></B>
+  <P>
+  Absolutely, how about:
+  </P>
+  <UL>
+    <LI>The official <A href="http://www.mozilla.org/directory"> Mozilla
+    Directory</A> source code home page.
+    <SPACER type=vertical size=3>
+
+    <LI>Netscape DevEdge
+    <A href="http://developer.netscape.com/tech/directory/">Directory
+    Developer Central</A>.
+    <SPACER type=vertical size=3>
+
+    <LI>My private <A href="http://www.ogre.com/ldap/">LDAP central</A>
+    pages.
+    <SPACER type=vertical size=3>
+
+    <LI>The <A href="http://www.perldap.org/">PerLDAP home page</A>, not
+    much there yet, but I'm working on it...
+    <SPACER type=vertical size=3>
+
+    <LI><A
+    HREF="http://www.amazon.com/exec/obidos/ASIN/1578700000/ref=sim_books/002-7591421-7693019">LDAP:
+    Programming Directory Enabled Applications with Lightweight Directory
+    Access Protocol</a> and <A
+    HREF="http://www.amazon.com/exec/obidos/ASIN/1578700701/o/qid=935688237/sr=8-1/002-7591421-7693019">Understanding
+    and Deploying LDAP Directory Services</a> are two good books from Tim Howes, Mark Smith, and Gordon Good.
+  </UL>
+
+</OL>
+
+<HR NOSHADE SIZE=1>
+
+<H2><A name="_bld_0">2. Using and building PerLDAP from the source</A></H2>
+<OL>
+  <B><LI><A name="_bld_1">How do I get the source code?</A></B>
+  <P>
+  CVS is your friend! You can use
+  <A href="http://www.mozilla.org/cvs.html">Mozilla's CVS server</A>
+  to easily keep up to date with latest releases and development. The CVS
+  module for PerLDAP is named <B>PerLDAP</B>. The tip of the tree is the
+  latest stable release, and all development is being done on
+  branches. If you know absolutely nothing about CVS, see <A
+  HREF="#_src_1">Q4.1</a> which discusses how to use CVS.  You can also use
+  <A href="ftp://ftp.mozilla.org/pub/directory/perldap">FTP</A> to get a
+  packaged source distribution.
+  </P>
+
+  <B><LI><A name="_bld_2">What do I need to build PerLDAP?</A></B>
+  <P>
+  At a minimum you'll need
+  <UL>
+    <LI>An ANSI compatible <B>C</B> compiler (e.g. gcc or Visual C++).
+    <LI>A <B>make</B> tool, like GNU make, or nmake.
+    <LI>Perl version 5.004 or later, including ActiveState's latest Perl
+    distribution, but not ActivePerl v5.003 or earlier.
+    <LI>A C SDK, either a binary distribution from Netscape's DevEdge, or
+    the Mozilla source.
+  </UL>
+  </P>
+
+  <B><LI><A name="_bld_3">What's the latest PerLDAP version?</A></B>
+  <P>
+  The latest official release is v1.4, released 08/21/99.
+  The tip of the CVS tree
+  is always the latest official release, development is done on
+  branches. We strongly encourage everyone to upgrade to 1.4
+  as soon as possible as it fixes a number of bugs and has many
+  improvements.  You can check out the <A HREF="http://www.mozilla.org/directory/perlrelease.txt">1.4 Release Notes for specifics</a>.
+  </P>
+
+  <B><LI><A name="_bld_4">Where are the beta/development releases?</A></B>
+  <P>
+  The beta releases and development branches are only available via
+  CVS. The current beta/development branch is <B>devel-branch-1_9</B>,
+  which is the branch for v2.x. PerLDAP v1.4 has
+  been merged onto the main trunk, and is also tagged as v1.4.
+  </P><P>
+  I'll make snapshots of the development branches available every now
+  and then, or upon request. These can easiest be downloaded from my
+  <A href="ftp://ftp.perldap.org/pub/perldap/v1.9/">private FTP site</A>.
+  </P>
+
+  <B><LI><A name="_bld_5">Do I really need the C-SDK?</A></B>
+  <P>
+  Absolutely! If you intend to build PerLDAP, you will need a Netscape C-SDK
+  distribution, period. Mozilla distributes the source to this SDK, which
+  will build and run on a number of platforms. Unfortunately this source does
+  not have any encryption support, so you can't use SSL.
+  </P><P>
+  Netscape's <A href="http://developer.netscape.com/">DevEdge Online</A>
+  provides precompiled (binary) distributions of the C SDK. You can get it
+  from the <A href="http://developer.netscape.com/tech/directory/">Directory
+  Developer Central</A>.
+  </P>
+
+</OL>
+
+<HR NOSHADE SIZE=1>
+
+<H2><A name="_bin_0">3. Binary distributions and released versions</A></H2>
+<OL>
+  <B><LI><A name="_bin_1">Where can I find a binary distribution for platform
+  &lt;XXX&gt;?</A></B>
+  <P>
+  Currently there are 4 different binary distributions for PerLDAP 1.4:<br>
+  <UL>
+  <LI><A HREF="ftp://ftp.perldap.org/pub/perldap/Binaries/perldap-win32-5.005_03.zip">Windows/NT for Perl 5.005_03</a>
+  <LI><A HREF="ftp://ftp.perldap.org/pub/perldap/Binaries/perldap-win32-5.004_05.zip">Windows/NT for Perl 5.004_05</a>
+  <LI><A
+  HREF="ftp://ftp.perldap.org/pub/perldap/Binaries/perldap-rhl6.i386.rpm">Redhat
+  Linux 6.0 for Perl 5.005_03</a> - installed using "rpm -i perldap-rhl6.i386.rpm"
+  <LI><A
+  HREF="ftp://ftp.perldap.org/pub/perldap/Binaries/perldap-solaris2-sparc.pkg.gz">Solaris-2.x
+  for Perl 5.005_03</a> - installed using "pkgadd -d
+  perldap-solaris2-sparc.pkg" after ungzipped.
+  </UL>
+  <P>
+  There also are binary packages for ActiveState Perl build 519.  These
+  can be found at <A HREF="ftp://ftp.perldap.org/pub/perldap/PPM/">ftp://ftp.perldap.org/pub/perldap/PPM/</a>
+  </P>
+
+  <B><LI><A name="_bin_3">I can't get the binaries to work, who do I turn to</A></B>
+  <P>
+  The binaries are unsupported and provided "as-is".  If you are having
+  trouble, then post something to the <A HREF="news://news.mozilla.org/netscape.public.mozilla.directory">netscape.public.mozilla.directory</a>
+  newsgroup, or download the source code and build your own binaries.
+  </P>
+
+  <B><LI><A name="_bin_5">Where are the C-SDK binaries?</A></B>
+  <P>
+  At Netscape's DevEdge site at <A
+  HREF="http://developer.netscape.com/tech/directory/downloads.html#c">http://developer.netscape.com/tech/directory/downloads.html#c</a>.  
+  <P>
+</OL>
+
+<HR NOSHADE SIZE=1>
+
+<H2><A name="_src_0">4. Working with the source, CVS and bug reports</A></H2>
+<OL>
+  <B><LI><A name="_src_1">What the heck is CVS? How do I use it? Where can
+  I get it?</A></B>
+  <P>
+  CVS is a source code version control system, used to manage large
+  software projects with many developers. It's built on top of RCS, and is
+  available for free for most Unix and Windows platforms. Source for the
+  latest CVS version (currently v1.10.7) can be FTP'd from the
+  <A href="ftp://download.cyclic.com/pub/">Cyclic FTP repository</A> for
+  instance. The source includes documentation, which I've also made
+  available on my
+  <A href="http://www.ogre.com/stuff/gnu/cvs/">Web site</A>.
+  </P><P>
+  I've also made a few, unsupported, binary distributions available, for:
+  </P><UL>
+    <LI><A href="ftp://ftp.ogre.com/pub/linux/RPMS/cvs-1.10.5-1.i386.rpm">Linux</A>
+    (install with "rpm -i cvs-1.10.5-1.i386.rpm").
+    <SPACER type=vertical size=3>
+
+    <LI><A href="ftp://ftp.ogre.com/pub/solaris/PKGS/GNUcvs-1.10.5.pkg.gz">Solaris</A>
+    (gunzip the file, and install with "pkgadd -d GNUcvs-1.10.5.pkg").
+    <SPACER type=vertical size=3>
+
+    <LI><A href="ftp://ftp.ogre.com/pub/win-nt/prog/cvs-1.10.5.zip">Windows/NT</A>
+    (use your favorite "unzip" application to extract the cvs.exe binary).
+    <SPACER type=vertical size=3>
+
+  </UL>
+ <P>
+  Note that you might have to &lt;shift&gt;-click on the links above
+  to get the download dialog. Alternatively, you can
+  <A href="http://www.ogre.com/ftp/">use HTTP</A> to get these
+  files. Again, these are not Mozilla "blessed"
+  builds, I'm just providing them for your convenience.
+  </P>
+
+  <B><LI><A name="_src_2">How do I check out the latest, stable released
+  code?</A></B>
+  <P>
+  You can use anonymous CVS to the mozilla CVS server, logging in with the
+  username <B>anonymous</B>, password <B>anonymous</B>. For instance, to
+  login and check out the tip of the PerLDAP module, you'll do
+  <PRE><CODE>
+% cvs -d :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot login
+(Logging in to anonymous@cvs-mirror.mozilla.org)
+CVS password:  [you type anonymous]
+%
+% cvs -z3 -d :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot co PerLDAP
+
+cvs server: Updating mozilla/directory/perldap
+U mozilla/directory/perldap/API.pm
+U mozilla/directory/perldap/API.xs
+U mozilla/directory/perldap/ChangeLog
+.
+  </CODE></PRE>
+  </P><P>
+  Remember that you usually only have to <B>login</B> the first time you
+  use CVS, the authentication credentials are stored in your ~/.cvspass
+  file. The "-z3" option tells CVS to use compression, make sure your
+  version of CVS has support for this (some versions apparently chokes
+  badly with this option).
+  </P><P>
+  The following releases are available, please use the main trunk when
+  possible (to get the latest, stable code):
+  </P></P>
+
+  <UL>
+    <LI><B>release-1_0</B>: First, original, PerLDAP release (quite shaky...).
+    <SPACER type=vertical size=3>
+    <LI><B>release-1_2_2</B>: The last and most stable release in the 1.2 series.
+    <SPACER type=vertical size=3>
+    <LI><B>release-1_4</B>: Latest release with lots of bug fixes.
+    <SPACER type=vertical size=3>
+  </UL>
+  </P>
+
+  <B><LI><A name="_src_3">How do I check out a beta/development
+  branch?</A></B>
+  <P>
+  Just as above, but also specify a specific branch to check out. For
+  instance, to update your source to the v1.9 branch, you can do something
+  like
+  <PRE><CODE>
+% cd mozilla/directory/perldap
+% cvs -z3 update -r devel-branch-1_9
+cvs server: Updating .
+P API.pm
+P API.xs
+.
+  </CODE></PRE>
+  </P>
+  <P>
+  We will continuously tag the development branch with snapshots, e.g.
+  <B>devel-release-1_9_1</B>, <B>devel-release-1_9_2</B> and so on.
+  Hopefully we'll also get these snapshots packaged up automatically and
+  added to the Mozilla FTP server. For now I'm making them available on
+  the <A href="ftp://ftp.perldap.org/pub/perldap/v1.9/">PerLDAP</A> site.
+  </P>
+
+  <B><LI><A name="_src_4">Is there a list of all development
+  branches?</A></B>
+  <P>
+  Of course:
+  </P>
+
+  <UL>
+    <LI><B>devel-branch-1_3</B>: This is closed and has been merged to the
+    trunk.
+    <SPACER type=vertical size=3>
+    <LI><B>devel-branch-1_9</B>: The development branch for PerLDAP v2.0,
+    and the currently used one.
+    <SPACER type=vertical size=3>
+  </UL>
+  <P>
+  It's recommended that you use the main trunk (<B>release-1_4</B>) in
+  production use, and <B>devel-branch-1_9</B> for PerLDAP development.
+  <P>
+  Also, you can get a list of all the CVS tags for a file or module by doing a "cvs
+  status -v".
+  </P>
+
+  <B><LI><A name="_src_5">What CVS modules are available and relevant to
+  PerLDAP?</A></B>
+  <P>
+  The PerLDAP module is named <B>PerLDAP</B>. You can also check out the
+  entire "directory" source, with something like
+  <PRE><CODE>
+% cvs -d :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot co mozilla/directory
+  </CODE></PRE>
+  </P><P>
+  The above gives you everything, if you're only intersted in say the C
+  SDK source, you can limit the checkout to the module
+  <B>DirectorySDKSourceC</B>. A list of all available modules is in the
+  <B>modules</B> files in the CVSROOT directory.
+  </P>
+
+  <B><LI><A name="_src_6">Where do I send patches or new code I'd like to
+  contribute?</A></B>
+  <P>
+  Post it to the
+  <A href="news://news.mozilla.org/netscape.public.mozilla.directory">
+  News group</A>.
+  </P>
+
+  <B><LI><A name="_src_7">How do I report a bug I just found?</A></B>
+  <P>
+  Post it to the
+  <A href="news://news.mozilla.org/netscape.public.mozilla.directory">
+  News group</A>. If you have access to
+  <A href="http://www.mozilla.org/bugs/report.html">Bugzilla</A>, file a
+  bug against me.  Here's the list of all 
+  <A
+  href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Directory&component=PerLDAP&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">currently open PerLDAP bugs</A> and RFEs.
+  </P>
+
+  <B><LI><A name="_src_8">Where can I read about known, open bugs?</A></B>
+  <P>
+  See <A href="#_src_7">previous question</A>, Q-4.7.
+  </P>
+
+</OL>
+
+<HR NOSHADE SIZE=1>
+
+<H2><A name="_ldap_0">5. LDAP related questions</A></H2>
+<OL>
+  <B><LI><A name="_ldap_1">How do I "browse" an LDAP entry when I know
+  its DN?</A></B>
+  <P>
+  New with the PerLDAP 1.4 release is the browse() method which sets some
+  default values (such as (filter=objectclass=*), scope=BASE, and so on).
+  This makes it easy to return an entire entry if you know the DN: 
+  <PRE><CODE>
+use Getopt::Std;
+use Mozilla::LDAP::Conn;
+  
+$DN = "uid=leif, ou=People, dc=netscape, dc=com";
+$conn = new Mozilla::LDAP::Conn(\%ld);
+die "Could't connect to LDAP server $ld{host}" unless $conn;
+$entry = $conn->browse($DN);
+
+if ($entry) {
+  # We found one entry
+} else {
+  # We did not find an entry, the DN is invalid.
+}
+  </PRE></CODE>
+  For versions previous to 1.4, you do a base search with the DN as the baseDN, and a filter of
+  <B>(objectclass=*)</B>. For example:
+  <PRE><CODE>
+# Same code as above but include other code to parse arguments etc...
+# And replace the browse() call with:
+
+$entry = $conn->search($DN, "base", "(objectclass=*)");
+  </CODE></PRE>
+  </P>
+
+  <B><LI><A name="_ldap_2">How can I manage my Netscape DS-4 server
+  information with PerLDAP?</A></B>
+  <P>
+  Right now there's no code ready for this, but we are working on a DS-4
+  management module using PerLDAP.
+  </P>
+
+  <B><LI><A name="_ldap_3">What is the "manage DSA IT" control? Can I use
+  it with PerLDAP?</A></B>
+  <P>
+  This control can be used to manage Smart Referrals for instance. For
+  more information, see the
+  <A href="http://developer.netscape.com:80/docs/manuals/dirsdk/csdk30/controls.htm#2850212">
+  DevEdge documentation</A>. PerLDAP has support for controls, but the OO
+  layers do not use (or support) them at this point.  There's a slight
+  problem with LDAP controls in PerLDAP 1.4, see <A HREF="#_bugs_3">Q-7.3</a>.
+  </P>
+
+  <B><LI><A name="_ldap_4">Does PerLDAP support all LDAP v3
+  features?</A></B>
+  <P>
+  Yep, the API.pm package does. The OO layers (Conn.pm, Entry.pm etc.)
+  do not use an LDAP v3 features, yet. We'll be working on this in the
+  next few months, hopefully adding cool features like LDAP controls,
+  VLV indexes and so on.  There's a slight
+  problem with LDAP controls in PerLDAP 1.4, see <A HREF="#_bugs_3">Q-7.3</a>.
+  </P>
+
+  <B><LI><A name="_ldap_5">How do I search for something? What is an LDAP
+  filter?</A></B>
+  <P>
+  RTFM, perhaps from one of the <A href="#_gen_7">links above</A>.
+  </P>
+
+  <B><LI><A name="_ldap_6">How do I specify/limit what attributes are
+  retrieved in a search?</A></B>
+  <P>
+  By default a PerLDAP search operation will retrieve all attributes that
+  an entry has, assuming you have read permission to the entry (and/or
+  the attributes). You can limit the number of attributes by specifying an
+  array of attribute types, for instance
+  <PRE><CODE>
+@attr = ("cn", "uid", "mail");
+$entry = $conn->search($base, "sub", $filter, 0, @attr);
+  </CODE></PRE>
+  </P><P>
+  The <B>0</B> parameter in the example is a flag, which if set to <B>1</B>,
+  ("True") tells the search function to only retrieve the attribute types,
+  not the actual values. In most cases you want to set this flag to <B>0</B>
+  ("False"). Remember that just because you explicitly asked for an
+  attribute, doesn't necessarily mean you'll get it (either because the
+  entry doesn't have such a user attribute value, or perhaps because you
+  don't have access to it).
+  </P><P>
+  Some attributes, typically operational attributes, are not returned by
+  default, and you might have to explicitly ask for them. An example of
+  such an attribute is the <B>modifiersName</B> attribute. If you want
+  to get all user attributes, <I>and</I> an operational attribute, you
+  can do
+  <PRE><CODE>
+@attr = ("*", "modifiersName");
+$entry = $conn->search($base, "sub", $filter, 0, @attr);
+  </CODE></PRE>
+  </P><P>
+  The attribute "*" matches all attributes. If you don't want to retrive
+  any attributes at all, specify the attribute "1.1" (there is no such OID,
+  so no attributes can be returned). This is useful if you need the DN
+  only, and no attribute values.
+  <PRE><CODE>
+@attr = ("1.1");
+$entry = $conn->search($base, "sub", $filter, 0, @attr);
+  </CODE></PRE>
+  </P>
+
+  <B><LI><A name="_ldap_7">How can I call an LDAP API function, when it needs
+  the internal C SDK structures?</A></B>
+  <P>
+  This is not generally recommended when using the OO modules
+  (e.g. Conn.pm) . But there are two methods to retrieve
+  the internala handles from the Mozilla::LDAP::Conn object:
+  <PRE><CODE>
+$cld = $conn->getLD();
+$result = $conn->getRes();
+  </CODE></PRE>
+  </P><P>
+  The first method returns the LDAP connection handle, and the second
+  returns the handle to the last result message. Use these with care, and
+  remember that this might cause your code to break in future version of
+  PerLDAP. Also, the getRes() method is only available as of PerLDAP v1.2,
+  for PerLDAP v1.0 you could instead use an even uglier solution:
+  <PRE><CODE>
+$cld = $conn->{"ld"};
+$res = $conn->{"ldres"};
+  </CODE></PRE>
+  </P>
+
+  <B><LI><A name="_ldap_8">How can I count the number of entries a
+  search found?</A></B>
+  <P>
+  Using the information from the previous question, the answer is of course:
+  <PRE><CODE>
+$cld = $conn->getLD();
+$res = $conn->getRes();
+$count = Mozilla::LDAP::API::ldap_count_entries($cld, $res);
+  </CODE></PRE>
+  </P><P>
+  Again, this is not really recommended, and this might change in future
+  releases. One possibility is to add this feature as a native method, but
+  I need to investigate this further, since v2.0 of PerLDAP might use
+  asynchronous LDAP calls (for much better scalability).
+  </P>
+  <P>Another common task is to decide if a search returns exactly one
+  entry, no more, no less. That can easily be done with the existing
+  modules, for instance
+  <PRE><CODE>
+$entry = $conn->search($base, $scope, $filter);
+if ($entry && !$conn->nextEntry()) {
+   # We found exactly one entry, go ahead
+}
+  </CODE></PRE>
+  </P>
+
+  <B><LI><A name="_ldap_9">How do I create a new LDAP entry?</A></B>
+  <P>
+  There are several options, the easiest are
+
+   then <I>please</I> change it to be one of
+  <PRE><CODE>
+$entry = $conn->newEntry();
+$entry = Mozilla::LDAP::Conn->newEntry();
+  </CODE></PRE>
+  You can (as of PerLDAP v1.2.1) also use the <B>new</B>() method in the
+  Entry package, like
+  <PRE><CODE>
+$entry = new Mozilla::LDAP::Entry;
+  </CODE></PRE>
+       
+  $conn is your ::Conn object, as usual.
+  </P><P>
+  The outline to create a new object is, as of PerLDAP v1.2, something
+  like:
+  <PRE><CODE>
+$conn = new Mozilla::LDAP::Conn(\%main::ld);
+$entry = Mozilla::LDAP::Conn->newEntry();
+
+$entry->setDN("uid=$UID, $PEOPLE, $BASE");
+$entry->{objectclass} = [ "top", "person", "inetOrgPerson", "mailRecipient" ];
+$entry->addValue("uid", $UID);
+$entry->addValue("cn", "Leif Hedstrom");
+$entry->addValue("cn", "The Swede");
+.
+.
+.
+$conn->add($entry);
+  </CODE></PRE>
+  </P>
+
+  <B><LI><A name="_ldap_10">How do I authenticate a user against the LDAP
+     server?</A></B>
+  <P>
+  Easy, first bind as the anonymous user, find the DN for the person you
+  wish to authenticate, get the DN, and rebind using the DN and password.
+  This example, which requires PerLDAP v1.2 or later, shows how to do
+  flexible user authentication:
+
+  <PRE><CODE>
+#!/usr/bin/perl5
+
+use Mozilla::LDAP::Conn;
+
+#
+# Configuration part, change this
+#
+$BASE = "dc=netscape,dc=com";
+$USER = $ARGV[0];
+$PASS = $ARGV[1];
+
+$conn = new Mozilla::LDAP::Conn({ "host" => "localhost",
+				  "port" => "389"} );
+die "Can't get an LDAP connection" unless $conn;
+
+
+#
+# Try to find the user using the UID, CN and last MAIL attributes.
+#
+$entry = $conn->search($BASE, "SUB", "(uid=$USER)", 0, ("1.1"));
+if (!$entry || $conn->nextEntry()) {
+  $entry = $conn->search($BASE, "SUB", "(cn=$USER)", 0, ("1.1"));
+  if (!$entry || $conn->nextEntry()) {
+    $entry = $conn->search($BASE, "SUB", "(mail=$USER)", 0, ("1.1"));
+    $dn = $entry->getDN() if ($entry && ! $conn->nextEntry());
+  } else {
+    $dn = $entry->getDN();
+  }
+} else {
+  $dn = $entry->getDN();
+}
+
+#
+# Now let's verify the authentication credentials, by rebinding with the
+# users DN and password. Note that this leaves the connection bound
+# as the user, do another simpleAuth() to rebind as anonymous again.
+#
+my $authenticated = 0;
+if (($PASS ne "") && ($dn ne "") && ($conn->simpleAuth($dn, $PASS))) {
+  print "WhooHoo, authentication is good!\n";
+  $authenticated = 1;
+}
+
+print "Wrong username or password, dude.\n" unless $authenticated;
+  </CODE></PRE>
+  </P>
+
+  <B><LI><A name="_ldap_11">How do I limit the number of entries returned?</A></B>
+  <P>
+  You can do this using C syntax, and using the API.  This example returns
+  10 entries.
+<PRE><CODE>
+#!/usr/local/bin/perl
+
+use Mozilla::LDAP::Conn;
+use Mozilla::LDAP::API qw ( /.+/ );
+
+my ( $conn, $search_base, $search_scope, $res, @attrs, $return );
+
+$search_base = "o=Airius.com";
+$search_scope = "subtree";
+
+@attrs = ();
+
+#
+#       Open LDAP Connection
+#
+$conn = new Mozilla::LDAP::Conn ( "ldap", 389, "", "" );
+
+die ( "$0: Cannot open LDAP Connection!" ) unless $conn;
+
+#
+#       Set sizelimit
+#
+ldap_set_option ( $conn->getLD (), LDAP_OPT_SIZELIMIT, 10 );
+
+#
+#       Do a C style search ( from API )
+#
+$return = ldap_search_s ( $conn->getLD(), $search_base, 
+        Mozilla::LDAP::Utils::str2Scope ( $search_scope ),
+        "(cn=a*)", \@attrs, 0, $res );
+
+if ( $return == LDAP_SIZELIMIT_EXCEEDED )
+{
+        #
+        #       More then 10 results returned!
+        #
+}
+
+#
+#       Set the PerLDAP maintenance attributes (these are internal to PerLDAP,
+#       messing with them can be icky and cause undesired results if changed)
+#
+$conn->{'ldfe'} = 1;
+$conn->{'ldres'} = $res;
+
+$entry = $conn->nextEntry ();
+
+#
+#       Proceed as normal
+#
+
+while ( $entry )
+{
+        ...
+}
+
+$conn->close ();
+</CODE></PRE>
+Thanks to Michael Konopka (konopka@netscape.com) for this code.
+</P>
+
+  <B><LI><A name="_ldap_12">How do I add binary data to an entry?</A></B>
+  <P>
+  Very easily.  As an example, we'll add a JPEG image to our directory entry.
+  <BR>
+  <PRE><CODE> 
+  # all the standard configuration stuff, including opening a connection,
+  # and getting an entry.
+
+  if ($entry) {
+    binmode(JPEG);
+    open(JPEG, "/u/mwyner/b5.jpg") || die;
+    
+    # read the data from the filehandle into a variable.
+
+    while (sysread JPEG, $tmp, 1024) {
+    	$jpegimage .= $tmp;
+    }
+    $entry->setValue("jpegphoto", $jpegimage);
+    $conn->update($entry) && print "modified\n";
+  } 
+  </CODE></PRE>
+ 
+  The "binmode" call is only needed for MS-DOS and Windows.  This
+  correctly translates the end of the line character.  It's not needed
+  under UNIX, MacOS, etc..., because all those systems use a "\n" at the end
+  of a line, which is considered a single character in C.
+  </P>
+
+  <B><LI><A name="_ldap_13">How do I print out a JPEG image from my
+  directory to an HTML page?</A></B>
+  <P>
+  
+  The key to this is to remember to change the content/type attribute for
+  your page before printing it out. 
+  <PRE><CODE>
+  print "Content-type: image/jpeg\n\n";
+  print $entry->{jpegphoto}[0];
+  </CODE></PRE> 
+
+  Or, if you're using the CGI.pm Perl module, you change the content/type
+  in the header:
+  <PRE><CODE>
+  print $query->header(-type=>'image/jpeg');
+  
+  #some random code
+
+  print $entry->{jpegphoto}[0];
+  </PRE></CODE>
+  If you're using Windows, you may need to add
+  <PRE><CODE>
+  binmode(STDOUT);
+  </PRE></CODE>
+  before you print.
+  </P>
+  <B><LI><A name="_ldap_14">How do I add a user to a group</a>?</B>
+  <P>
+  If you know the name of the group, you can search to make sure the group
+  exists via its CN entry.  If you've got a group that has the same CN has
+  a person, then you can also search to see if there's an
+  "objectclass=groupofuniquenames" attached to the entry.<p>
+  
+  Once you've got the group, you can add someone's DN to the group via the
+  group's "uniquemember" attribute.  See the following:
+
+  <PRE><CODE>
+$entry = $conn->search("o=mcom.com","subtree","uid=mwyner");
+
+if (!$entry) {
+  die "No one found";
+} 
+
+# Make sure we only got 1 entry back
+
+elsif ($entry && !$conn->nextEntry()) {
+  $groupentry = $conn->search("o=mcom.com","subtree","cn=PD Managers");
+  
+  if (!$groupentry) {
+    die "no group found";
+  }
+
+# Make sure we only got 1 back
+
+ elsif ($groupentry && !$conn->nextEntry()) {
+    $groupentry->addValue("uniquemember",$entry->getDN());
+    $conn->update($groupentry) && print "group updated\n";
+  } 
+} 
+
+  </CODE></PRE>
+</OL>
+</P>
+<HR NOSHADE SIZE=1>
+
+<H2><A name="_frm_0">6. Platform and Perl version specific problems</A></H2>
+<OL>
+  <B><LI><A name="_frm_1">What Perl versions are supported?</A></B>
+  <P>
+  Any Perl version from v5.004 or later. The binaries prepared will only
+  work with the Perl version used during the build, see README and INSTALL
+  information for more details on the distribution.
+  </P>
+
+  <B><LI><A name="_frm_2">Which Perl version is recommended?</A></B>
+  <P>
+  Perl v5.005_03.
+  </P>
+
+  <B><LI><A name="_frm_3">Which Unix and Windows platforms are
+  supported, and which versions?</A></B>
+  <P>
+  I know PerLDAP v1.4 and later should work on at least these platform and
+  version combinations:
+  </P>
+  <CENTER>
+    <TABLE cellpadding=3 cellspacing=0 border=2 bgcolor="#FEFFE6">
+    <TR align=center>
+      <TD>&nbsp</TD>
+      <TD><FONT size="+1"><B>&nbsp Perl 5.004 &nbsp</FONT></B></TD>
+      <TD><FONT size="+1"><B>&nbsp Perl 5.005 &nbsp</FONT></B></TD>
+      <TD><FONT size="+1"><B>&nbsp <A href="http://www.activestate.com/ActivePerl/">ActivePerl 519</A> &nbsp</FONT></B></TD>
+      </FONT>
+    </TR>
+    <TR align=center>
+      <TD align=left>&nbsp Solaris-2.x&nbsp</TD>
+      <TD>Yes</TD><TD>Yes</TD><TD>-</TD>
+     </TR>
+     <TR align=center>
+       <TD align=left>&nbsp Linux/glibc&nbsp</TD>
+       <TD>Yes</TD><TD>Yes</TD><TD>-</TD>
+     </TR>
+     <TR align=center>
+       <TD align=left>&nbsp Irix-6.x&nbsp</TD>
+       <TD>Yes</TD><TD>???</TD><TD>-</TD>
+     </TR>
+     <TR align=center>
+       <TD align=left>&nbsp Windows/NT4 SP3&nbsp</TD>
+       <TD>Yes</TD><TD>Yes</TD><TD>Yes</TD>
+     </TR>
+     <TR align=center>
+       <TD align=left>&nbsp Windows/NT4 SP4&nbsp</TD>
+      <TD>Yes</TD><TD>Yes</TD><TD>Yes</TD>
+    </TR>
+    </TABLE>
+  </CENTER>
+  <BR><BR>
+  </P><P>
+  If you are using PerLDAP on another platform, please <A
+  href="news://news.mozilla.org/netscape.public.mozilla.directory">
+  let us know</A>.
+  </P>
+
+  <B><LI><A name="_frm_4">How do I get PerLDAP to build on my Windows/NT
+  machine? Why can't NT find libldap.dll?</A></B>
+  <P>
+  I've succesfully compiled Perl and PerLDAP using <B>nmake</B> and Visual
+  C++. Your mileage might vary, if you have build details we want to hear
+  about it.
+  </P><P>
+  One common problem seems to be where to put the C SDK libldap
+  DLL. I've found that copying the DLL to the perl "bin" directory,
+  where the <B>perl.exe</B> resides, works well. Another good alternative
+  is to add the C-SDK library folder to your PATH environment variable.
+  </P><P>
+  As of Perl v5.005, it seems that you should put the libldap DLL in the
+  "site" directory, and not the the "bin" directory. For instance, if you
+  installed ActiveState build 509 in <B>C:\perl</B>, put the LDAP DLL in
+  <B>C:\perl\site</B>.
+  </P>
+
+  <B><LI><A name="_frm_5">What C SDKs are supported? What about
+  SSL?</A></B>
+  <P>
+  All released C SDK versions are supported in PerLDAP v1.2 and later. In
+  v1.0 we only verified SDK v1.2 and SDK v3.0. As of v1.2, the Mozilla C
+  SDK source should also work out of the box with PerLDAP.
+  </P></P>
+  PerLDAP has full support for SSL, but only if your C SDK has support for
+  it. The Mozilla C SDK source on mozilla.org does <B>not</B> have SSL
+  support, but the DevEdge binary distributions do.
+  </P>
+
+  <B><LI><A name="_frm_6">What is the build options for DecUnix/OSF? What
+  is "-taso"?</A></B>
+  <P>
+  The -taso/-xtaso compile options are used for 32 bit
+  compatibility. Specificially
+  </P>
+  <UL>
+    <LI><B>-taso</B> ensures that the code is 32 bit compatible,
+    specfically, the linker forces loading of a library or module into the
+    lower 31 bits of virtual memory.  It is useful in porting from 32-bit
+    architectures.
+    <SPACER type=vertical size=3>
+
+    <LI><B>-xtaso</B> extends the 32 bit <B>-taso</B> style builds to
+    optionally use 32-bit pointers. This requires using #pragma
+    pointer_size in the code and linking with <B>-taso</B> and
+    <B>-xtaso</B> objects.
+    <SPACER type=vertical size=3>
+
+  </UL>
+  </P><P>
+  What does this mean? Well, apparently there can be a mismatch in how you
+  compiled Perl for instance, causing the dynamic loader to misbehave. If
+  someone can give more information exactly how to compile PerLDAP for
+  OSF, I'd be happy to put that in here (post something to the
+  <A href="news://news.mozilla.org/netscape.public.mozilla.directory">
+  News group</A>).
+  </P>
+
+  <B><LI><A name="_frm_7">What link options are used/needed for
+  Irix?</A></B>
+  <P>
+  I don't know, I saw something about some special linker options, someone
+  who knows Irix please let me know.
+  </P>
+
+  <B><LI><A name="_frm_8">Why are there missing symbols when linking PerLDAP
+  on Windows/NT?</A></B>
+  <P>
+  With Perl v5.005, I had to remove the link option <B>-nodefaultlib</B>
+  from the LINK_FLAGS definition in the Makefile (when building Perl
+  itself). I don't know why this was added in v5.005, but at least this
+  solved the problem for me.
+  </P><P>
+  There are several alternatives to solve this problem, like
+  </P>
+  <OL>
+    <LI>Modify the Makefile for Perl as described above, and rebuild Perl.
+    <SPACER type=vertical size=3>
+
+    <LI>Modify the Config.pm file in the Perl5 installation.
+    <SPACER type=vertical size=3>
+
+    <LI>Modify the Makefile as generated for PerLDAP.
+    <SPACER type=vertical size=3>
+
+  </OL>
+
+  <B><LI><A name="_frm_9">How do I compile and install PerLDAP in a test
+  environment?</A></B>
+  <P>
+  Easy, give an option like "LIB=/u/leif/lib" to the Makefile.PL script
+  during the installation and configuration, like
+  <PRE><CODE>
+% perl5 Makefile.PL LIB=/u/leif/lib
+  </PRE></CODE>
+  Then in your perl script, add a line like
+  <PRE><CODE>
+use lib '/u/leif/lib';
+  </PRE></CODE>
+  </P>       
+</OL>
+
+<HR NOSHADE SIZE=1>
+
+<H2><A name="_bugs_0">7. Known bugs and problems</A></H2>
+<OL>
+  <B><LI><A name="_bugs_1">I can't get PerLDAP to work with
+  ActivePerl.</A></B>
+  <P>
+  Definitely make sure you're using ActivePerl build 519, along with
+  PerLDAP 1.4 if you're having problems.  1.4 in conjunction with build
+  519 seems to fix a bunch of the ActivePerl issues.   
+  </P>
+
+  <B><LI><A name="_bugs_2">Is it just me, or is PerLDAP very memory
+  intensive?</A></B>
+  <P>
+  It can be, depending on how large a database you are searching or
+  retrieving, however the main memory leaks have been fixed.
+
+  <B><LI><A name="_bugs_3">I can't get LDAP controls to work</A></B>
+  <P>
+  This is a known problem in API.xs and is being worked on.  A fix will be
+  included in v2.0.  For more information about using LDAP v3 controls,
+  see the DevEdge
+  <A href="http://developer.netscape.com:80/docs/manuals/dirsdk/csdk30/controls.htm">
+documentation site</A>. 
+  </OL>
+<HR NOSHADE SIZE=1>
+
+<H2><A name="_mis_0">8. Missing features and modules</A></H2>
+<OL>
+  <B><LI><A name="_mis_1">What about LDAP controls?</A></B>
+  <P>
+  Refer to <A HREF="#_bugs_3">Q-7.3</a>.
+  </P>
+
+  <B><LI><A name="_mis_2">How can I use and support the LDAP v3 password
+  management control?</A></B>
+  <P>
+  Yes, if you write code using the API directly. An OO module will be
+  added in v2.0.
+  </P>
+
+  <B><LI><A name="_mis_3">Does PerLDAP support VLV indexes?</A></B>
+  <P>
+  Yes, if you use API directly. We will have a VLV OO module for v2.0.
+  </P>
+
+  <B><LI><A name="_mis_4">The LDIF module seems horky, what gives?</A></B>
+  <P>
+  Upgrade to v1.4.  We
+  have a completely new LDIF.pm module, written by Netscape LDAP
+  guru John Kristian 
+  &lt;<A href="mailto:kristian@netscape.com">kristian@netscape.com</A>&gt;
+  </P>
+
+  <B><LI><A name="_mis_5">Are there any PerLDAP code to manage LDAP
+  schemas?</A></B>
+  <P>
+  Not any specific code, yet. Hopefully a new schema package, and a
+  Netscape Console module will be developed by Netscape's Allen Tom 
+  &lt;<A href="mailto:atom@netscape.com">atom@netscape.com</A>&gt;
+  </P>
+
+  <B><LI><A name="_mis_6">What are the plans for the next PerLDAP
+  version?</A></B>
+  <P>
+  Tons of new stuff. Check out some of these cool new feature ideas for v2.0.
+  </P>
+
+  <UL>
+    <LI>Rewrite to use/support asynchronous LDAP, which should improvem
+    performance and reduce memory usage when doing very large searches.
+    <SPACER type=vertical size=3>
+
+    <LI>Support for SASL, with client authentication at least.
+    <SPACER type=vertical size=3>
+
+    <LI>A group management module, similar to the one I wrote for Ldapp.
+    <SPACER type=vertical size=3>
+
+    <LI>A framework for LDAP v3 controls, with some sample controls
+    (e.g. password control, Manage DsaIT control etc).
+    <SPACER type=vertical size=3>
+
+    <LI>VLV indexes support (requires LDAP v3 controls I think).
+    <SPACER type=vertical size=3>
+
+    <LI>An Oracle database synchronization module.
+    <SPACER type=vertical size=3>
+
+    <LI>A module, or extension to Entry.pm, to synchronize, compare,
+    "diff", join etc. two Entry objects.
+    <SPACER type=vertical size=3>
+
+    <LI>Schema discovery and management.
+    <SPACER type=vertical size=3>
+
+    <LI>A module to manage Netscape Directory Server configurations,
+    schema discovery etc. This one might be capable of managing all
+    Netscape Console enabled servers, assuming they store the
+    configurations in LDAP. An example script using this module would be
+    to "synchronize" two LDAP server, making sure all (or selected)
+    configuration parameters are identical.
+    <SPACER type=vertical size=3>
+
+    <LI>A configuration module, to make it easy to configure appropriate
+    default values (like base-DN etc). This could be used by all tools,
+    including the existing modules/methods (like that argument parser).
+    <SPACER type=vertical size=3>
+
+    <LI>Extend the argument parser to support all standard LDAP arguments
+    as used by Netscape's command line tools (as of DS-v4.x).
+    <SPACER type=vertical size=3>
+
+    <LI>Support/use new features of LDAP v3 which are not covered by other
+    modules?
+    <SPACER type=vertical size=3>
+
+  </UL>
+
+</OL>
+
+<HR NOSHADE SIZE=1>
+
+<ADDRESS>
+  <A href="mailto:mwyner@netscape.com">Problems with this page?</A>
+</ADDRESS>
+
+<!-- Created: Tue Nov 10 01:50:04 PDT 1998 -->
+<!-- hhmts start -->
+Last modified: Sat Sep  4 00:56:00 1999
+<!-- hhmts end -->
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/directory/faq/perldap-faq.html&amp;rev=&amp;root=/cvsroot/">Last modified September  4,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

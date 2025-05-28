@@ -1,0 +1,211 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla DPI Issues on Unix</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+<H2>
+Mozilla DPI Issues on Unix
+</H2>
+<P>
+
+<a name="dpi"><b>What do I do if fonts look too big or too small in seamonkey ?</b></a>
+
+<p>
+  We have some known issues with dpi
+  settings -- gecko, unlike previous browsers,
+  sets fonts according to the X server's dpi settings.
+
+<p>
+  To find out what your server thinks your dpi settings are,
+  run the program <tt>xdpyinfo</tt>:
+</p>
+
+<pre>
+$ xdpyinfo | grep resolution
+</pre>
+
+<p>
+  Check the dimensions in pixels and millimeters and
+  the resolution in dpi. 
+  Compare to what you're actually using.
+</p>
+
+<p>
+  If the values are significantly different, then
+  your X server is confused about your monitor size.
+  You can work around that temporarily for mozilla,
+  by setting an environment variable:
+<br><blockquote><code>
+    setenv GECKO_FONT_SIZE_FACTOR 1.75
+</code></blockquote>
+
+<p>
+  Or you can fix the server's dpi by doing one of the following:
+</p>
+
+<ol>
+  <li>
+    <b>If you use the graphical login screen:</b> <br>
+    
+    <pre>
+$ su - root
+$ xemacs /etc/X11/xdm/Xservers
+    </pre>
+
+    <p>
+  	Change:
+    </p>
+
+    <p>
+  	<tt>:0 local /usr/X11R6/bin/XSomething</tt>
+    </p>
+
+    <p>
+  	to
+    </p>
+
+    <p>
+  	<tt>:0 local /usr/X11R6/bin/XSomething -dpi 100</tt>
+    </p>
+
+    <p>
+  	You need to restart xdm for this to work.
+    </p>
+
+    <pre>
+$ su - root
+$ telinit 3
+$ telinit 5
+    </pre>
+   <li>
+      <b>If you use Redhat and use gdm:</b> <br>
+      <pre>
+$ su - root
+$xemacs /etc/X11/gdm/gdm.conf
+      </pre>
+
+      <p>
+          Change:
+      </p>
+
+      <p><tt>0=/usr/bin/X11/X</tt></p>
+
+      <p>to</p>
+
+      <p><tt>0=/usr/bin/X11/X -dpi 100</tt></p>
+
+      <p> You will need to restart gdm for this to work</p>
+
+  <li>
+    <b>If you startx from the command line:</b> <br>
+
+    <pre>
+$ startx -- -dpi 100
+    </pre>
+  </li>
+ 
+  <li>
+    <b>As a last resort</b><br>
+
+   <p> Edit your prefs.js file and add</p>
+   <p><tt>user_pref("browser.screen_resolution", 120);</tt></p>
+   <p>You may change the number to any resolution you like, or to 0 to use the Xserver dpi.</p>
+
+</ol>
+
+<HR>
+Last modified: November 25, 1999
+<br>
+<AUTHOR>
+<A HREF="mailto:sford3@swbell.net">sford3@swbell.net</A>
+</AUTHOR>
+<br>or ask in the newsgroup<a href="../community.html"> mozilla.unix</a>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/dpi.html&amp;rev=&amp;root=/cvsroot/">Last modified November 29,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

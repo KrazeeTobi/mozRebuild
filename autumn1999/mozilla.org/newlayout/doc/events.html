@@ -1,0 +1,273 @@
+<HTML>
+<HEAD>
+<TITLE>NGLayout Event Model</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+   
+   
+
+
+
+<hr WIDTH="100%"><b><font face="Verdana"><font color="#008080">The NGLayout
+Event Model</font></font></b>
+<br><font face="Verdana"><font size=-1>Authors: <a href="mailto:joki@netscape.com">Tom
+Pixley</a></font></font>
+<br><font face="Verdana"><font size=-1>Last update: October 7, 1998</font></font>
+<hr WIDTH="100%">
+<br>&nbsp;
+<table COLS=1 WIDTH="70%" >
+<tr BGCOLOR="#FFFFCC">
+<td><b><font face="Verdana"><font size=-1>Overview</font></font></b></td>
+</tr>
+</table>
+<font face="Verdana"><font size=-1>The NGLayout Event Model has been designed
+to comply with the DOM Level 2 Event Model currently being developed with
+the DOM W3C Working Group.&nbsp; It design and schedules are closely tied
+to NGLayout's implementation of the DOM Level 1.</font></font>
+<p><font face="Verdana"><font size=-1>The NGLayout engine will implement
+a union of the DOM Level 0 and DOM Level 2 Event Models.&nbsp; DOM Level
+0 is itself a combination of the <a href="http://developer.netscape.com/docs/technote/index.html?content=javascript/eventhandler/eventhandler.htm">Communicator
+4.0 Event Model</a> and Microsoft's Internet Explorer 4.0 event model.&nbsp;
+It will attempt to maintain backwards compatibilty, whenever possible,
+and be fully compliant with the forthcoming DOM Event Model specification.&nbsp;
+Additionally, sufficient enhancements will be provided to meet all requirements
+of DOM clients such as the Composer product.</font></font>
+<br>&nbsp;
+<table COLS=1 WIDTH="70%" >
+<tr BGCOLOR="#FFFFCC">
+<td><b><font face="Verdana"><font size=-1>Major Components</font></font></b></td>
+</tr>
+</table>
+
+<p><font face="Verdana"><font size=-1>The major components of the NGLayout
+event model consist of the event listener interfaces by which customers
+of the event model receive events and the internal event dispatch system
+which handles event bubbling, capturing, and ordering of event delivery.</font></font><font face="Verdana"><font size=-1></font></font>
+<p><b><font face="Verdana"><font size=-1>Event Listener Interfaces</font></font></b><font face="Verdana"><font size=-1></font></font>
+<p><font face="Verdana"><font size=-1>The event listener interfaces are
+separated by event class into a number of interfaces, each containing a
+group of related event handlers.&nbsp; The current event listeners consist
+of the following interfaces:</font></font>
+<ul>
+<li>
+<font face="Verdana"><font size=-1>nsIDOMEventListener - The main event
+listener interface from which the others derive.</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>nsIDOMMouseListener</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>nsIDOMMouseMotionListener</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>nsIDOMKeyListener</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>nsIDOMFocusListener</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>nsIDOMFormListener</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>nsIDOMLoadListener</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>nsIDOMDragListener</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>nsIDOMPaintListener</font></font></li>
+</ul>
+<font face="Verdana"><font size=-1>The listeners are largely used to handle
+UI events and DOM Level 0 Events.&nbsp; Additional interfaces will be created
+to handle document mutation events.</font></font><font face="Verdana"><font size=-1></font></font>
+<p><font face="Verdana"><font size=-1>Objects which can dispatch events
+implement the nsIDOMEventReceiver interface.&nbsp; All content objects,
+the document object (nsDocument), and the window object (nsGlobalWindow)
+implement this nsIDOMEventReceiver.&nbsp; Through this interface, an event
+model customer wishing to receive events of a given class dispatched by
+that element can register the appropriate event listener interface through
+the nsIDOMEventReceiver::AddEventListener interface.&nbsp; The registered
+interface will then receive all events of the appropriate type dispatched
+by that object.&nbsp; Currently, ordering of event delivery among multiple
+event listeners on the same object is determined by the order in which
+the customers register themselves.</font></font><font face="Verdana"><font size=-1></font></font>
+<p><font face="Verdana"><font size=-1>Currently, there is one internal
+customer of the event listener interfaces, the JavaScript event handler
+model.&nbsp; When JavaScript event handlers are detected either inside
+a script or embedded in the HTML tags of a page, an nsIDOMEventListener
+interface is registered on the specified object.&nbsp; This interface is
+implemented by the translation layer between native code and JavaScript.</font></font><font face="Verdana"><font size=-1></font></font>
+<p><font face="Verdana"><font size=-1>Detection of JavaScript event listener's
+is currently accomplished from number of locations.&nbsp; Checking for
+event handlers within HTML tags is done during the SetAttribute methods
+in nsGenericHTMLElement and nsGenericDOMDataNode.&nbsp; The detection of
+event handlers declared inside the JavaScript code itself is done inside
+the JavaScript SetProperty method.&nbsp;&nbsp; This method is exposed to
+the implementing object via the nsIJSScriptObject interface.&nbsp; Currently
+nsGenericHTMLElement, nsDocument, and nsGlobalWindow all make use of this
+method to check for JavaScript event handler registration.</font></font><font face="Verdana"><font size=-1></font></font>
+<p><b><font face="Verdana"><font size=-1>Event Dispatch System</font></font></b><b><font face="Verdana"><font size=-1></font></font></b>
+<p><b><font face="Verdana"><font size=-1>Event Object</font></font></b><b><font face="Verdana"><font size=-1></font></font></b>
+<p><font face="Verdana"><font size=-1>Information about each individual
+event is passed along to the event listener by way of the event object.&nbsp;
+This object is passed along as the first parameter to the event handler
+when the event is dispatched.&nbsp; This information is accessed through
+the nsIDOMEvent interface (or as properties of the Event object in JavaScript).</font></font><font face="Verdana"><font size=-1></font></font>
+<p><font face="Verdana"><font size=-1>Internally, the nsIDOMEvent interface
+is implemented by the nsDOMEvent object.&nbsp; When an nsDOMEvent is created
+it takes a pointer to an nsGUIEvent struct.&nbsp; The nsGUIEvent struct
+is the main event struct used internally inside NGLayout.&nbsp; The nsDOMEvent
+holds onto this pointer and accesses its contents when queried for information.&nbsp;
+The nsGUIEvent struct is temporary object and must be copied to make it
+persistent when the lifetime of the nsDOMEvent exceeds the initial event
+delivery process.</font></font>
+<br>&nbsp;
+<table COLS=1 WIDTH="70%" >
+<tr BGCOLOR="#FFFFCC">
+<td><b><font face="Verdana"><font size=-1>Roadmap</font></font></b></td>
+</tr>
+</table>
+
+<p><b><font face="Verdana"><font size=-1>Remaining design issues</font></font></b><font face="Verdana"><font size=-1></font></font>
+<p><font face="Verdana"><font size=-1>The DOM Level 2 Event Model is still
+in its design phase.&nbsp; A number of changes are likely before the final
+form of the model is determined.&nbsp; Among those are the nature of the
+native code event handling.&nbsp; The current event listener interface
+model, the specific interfaces, and their component event types are based
+on assumptions of what form the DOM model will take.&nbsp; If the DOM model
+goes in a different direction we will support its methods for native event
+handling.&nbsp; This may or may not include changing our current event
+listener interface model.&nbsp; JavaScript event handling is unlikely to
+change significantly as its requirements are based on backwards compatibility
+with Level 0.</font></font><font face="Verdana"><font size=-1></font></font>
+<p><font face="Verdana"><font size=-1>Additionally, the full level of backwards
+compatibility has not been decided.&nbsp; The combination of the bubbling
+and capturing has created some small changes in the behavior of the event
+model as compared to Netscape Communicator 4.0.&nbsp; Design decisions
+made for NGLayout have also had an effect on the event system.&nbsp; Whether
+these changes are significant has not yet been fully determined.&nbsp;
+If the variations are found to have a large effect on backwards compatibility
+with existing content, changes will be considered.</font></font>
+<br>&nbsp;
+<table COLS=1 WIDTH="70%" >
+<tr BGCOLOR="#FFFFCC">
+<td><b><font face="Verdana"><font size=-1>Known Bugs</font></font></b></td>
+</tr>
+</table>
+
+<ul>
+<li>
+<font face="Verdana"><font size=-1>Event capture has not yet been implemented.</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>Some events currently bubble which are
+specified as non-bubbling.</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>Some data fields in the Event object
+are currently inaccurate.</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>Currently unimplemented events:</font></font></li>
+
+<ul>
+<li>
+<font face="Verdana"><font size=-1>Unload</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>Abort</font></font></li>
+
+<li>
+<font face="Verdana"><font size=-1>DragDrop</font></font></li>
+</ul>
+</ul>
+
+<table COLS=1 WIDTH="70%" >
+<tr BGCOLOR="#FFFFCC">
+<td><b><font face="Verdana"><font size=-1>Schedule</font></font></b></td>
+</tr>
+</table>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/newlayout/doc/events.html&amp;rev=&amp;root=/cvsroot/">Last modified October 29,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

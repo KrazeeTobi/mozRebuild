@@ -1,0 +1,2071 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+                      "http://www.w3c.org/TR/REC-html40/loose.dtd">
+
+<html>
+	<head>
+		<title>The Complete nsCOMPtr User's Manual</title>
+		<link rel="StyleSheet" href="Standard.css" type="text/css">
+	</head>
+
+	<body>
+<h1>The Complete <span class="source-code">nsCOMPtr</span> User's Manual</h1>
+
+<div class="author-note">
+	<p>by <a href="http://ScottCollins.net/">Scott Collins</a><!-- /p -->
+	<p>last modified 9 November 1999<!-- /p -->
+</div>
+
+
+
+<p>
+	The latest public version of this document is available at
+</p>
+<ul>
+	<li>&lt;<a href="http://www.mozilla.org/projects/xpcom/nsCOMPtr.html">http://www.mozilla.org/projects/xpcom/nsCOMPtr.html</a>&gt;</li>
+</ul>
+<p>
+	Please direct all comments and contributions to
+		<a href="news://news.mcom.com/netscape.public.mozilla.xpcom">news:netscape.public.mozilla.xpcom</a>
+		and/or <a href="mailto:scc@netscape.com">Scott Collins &lt;scc@netscape.com&gt;</a>.
+</p>
+
+<h2><a name="status">Status, Recent Changes, and Plans</a></h2>
+
+<div class="author-note">
+	<p>
+		I'm sorry this section is in the way for first-time readers.
+		You may want to skip ahead to the <a href="#contents">table of contents</a>,
+			or directly to the <a href="#users_guide">Getting Started Guide</a>,
+			the <a href="#reference_manual">Reference Manual</a>,
+			or the <a href="#FAQ">FAQ</a>.
+		I put this section at the top so that checking for recent changes will be easy.
+	</p>
+</div>
+
+<h3>Recent changes to <span class="source-code">nsCOMPtr</span></h3>
+<p>Most recent first</p>
+<ul>
+  <li>Added <span class="source-code">do_CreateInstance()</span>.</li>
+  <li>Added <span class="source-code">do_GetService()</span>.</li>
+	<li>Eliminated the need to cast <span class="source-code">getter_AddRefs()</span> when an <span class="source-code">nsISupports**</span> is needed.</li>
+  <li>Relaxed the invariant for <span class="source-code">nsCOMPtr&lt;nsISupports&gt;</span>, so that it is now a pointer to any [XP]COM interface.</li>
+	<li>Added <a href="#ref_do_QueryReferent"><span class="source-code">do_QueryReferent()</span></a> to make using <a href="http://www.mozilla.org/projects/xpcom/weak_references.html"><span class="source-code">nsIWeakReference</span>s</a> easier.</li>
+</ul>
+<h3>Plans for <span class="source-code">nsCOMPtr</span></h3>
+<ul>
+	<li>
+		Move the factored <span class="source-code">nsCOMPtr</span> routines into their own library,
+			to reduce <span class="source-code">nsCOMPtr</span> clients' dependency on the XPCOM library.
+	</li>
+	<li>
+		Make <a href="#ref_getter_AddRefs"><span class="source-code">getter_AddRefs( nsCOMPtr&amp; )</span></a> apply
+		the same <a href="#ref_assert_NoQueryNeeded">type-safety check</a> that the simple assignment forms do.
+	</li>
+	<li>
+		Consider (by measuring) eliminating (the private) <span class="source-code">class nsGetterAddRefs&lt;T&gt;</span> and making
+			the <span class="source-code">getter_AddRefs()</span> function do <em>all</em> the work.
+		This would have to be for optimized builds only,
+			to preserve the type-test performed by <span class="source-code">~nsGetterAddRefs</span>.
+	</li>
+</ul>
+<h3>Plans for this document</h3>
+<p>
+	This document is not yet final.
+	There are still sections that need to be filled in.
+	Please send me any additions, omissions, corrections, changes, clarifications, etc.,
+		that you think this document needs.
+	I want it to be useful as soon as possible.
+</p>
+
+
+
+
+<h2><a name="contents">Contents</a></h2>
+
+<p>
+	This document is the sum total of everything written down about <span class="source-code">nsCOMPtr</span>.
+	It comprises three major parts:
+<!-- /p -->
+<div class="contents">
+	<ul>
+		<li><a href="#users_guide">Getting Started Guide</a></li>
+		<li><a href="#reference_manual">Reference Manual</a></li>
+		<li><a href="#FAQ">Frequently Asked Questions</a></li>
+	</ul>
+</div>
+<p>
+	If you have a question about <span class="source-code">nsCOMPtr</span>, and this document doesn't answer it,
+		there probably isn't a document that answers it.
+	You'll have to turn to
+		<a href="news://news.mcom.com/netscape.public.mozilla.xpcom">the xpcom newgroup</a>,
+		<a href="mailto:scc@netscape.com">email me</a>,
+		or another experienced <span class="source-code">nsCOMPtr</span> user,
+		or find the answer by experimentation.
+	I'll add new questions and answers to this document as they are asked,
+		and I'll try to keep it in synch with <span class="source-code">nsCOMPtr</span>'s implementation as it changes.
+</p>
+
+<p>
+	If you've never used <span class="source-code">nsCOMPtr</span> before, you're starting in the right place.
+	Just keep reading.
+	You'll know when to stop.
+	After you've been using <span class="source-code">nsCOMPtr</span>s for a while,
+		and you reach unfamiliar territory,
+		or run into compiler errors;
+		you may want to return to this document to get help from the
+		<a href="#reference_manual">Reference Manual</a>, or the <a href="#FAQ">FAQ</a>.
+</p>
+
+
+
+
+
+<hr>
+<h1><a name="users_guide">Getting Started Guide</a></h1>
+
+<div class="author-note">
+	<p>
+		If you have never used <span class="source-code">nsCOMPtr</span>s before,
+			this section is for you.
+		If you're already familiar with <span class="source-code">nsCOMPtr</span>s,
+			then you might want to skip ahead to the <a href="#reference_manual">Reference Manual</a>
+			or the <a href="#FAQ">FAQ</a>.
+		Don't worry; the Getting Started Guide is short.
+	</p>
+</div>
+
+<div class="contents">
+	<ul>
+		<li><a href="#guide_introduction">Introduction</a></li>
+		<li><a href="#guide_how_to">Using <span class="source-code">nsCOMPtr</span></a></li>
+		<li><a href="#guide_summary">Summary</a></li>
+	</ul>
+</div>
+
+	<h2><a name="guide_introduction">Introduction</a></h2>
+
+	<h3><a name="guide_what_is">What is <span class="source-code">nsCOMPtr</span>?</a></h3>
+<p>
+	<span class="source-code">nsCOMPtr</span> is a tool to help prevent leaks.
+</p>
+<p>
+	<span class="source-code">nsCOMPtr</span> is a `smart-pointer'.
+	It is a template class that acts, syntactically,
+    just like an ordinary pointer in C or C++, i.e., you can apply <span class="source-code">*</span> or <span class="source-code">-&gt;</span> to it to
+    `get to' what it points at.
+	<span class="source-code">nsCOMPtr</span> is smart in that, unlike a raw [XP]COM
+    interface pointer, <span class="source-code">nsCOMPtr</span> manages <span class="source-code">AddRef()</span>, <span class="source-code">Release()</span>, and <span class="source-code">QueryInterface()</span>
+    <EM>for</EM> you.
+	<span class="source-code">nsCOMPtr</span> is defined in the source files[<a href="#link_source">#</a>]:
+<!-- /p -->
+<ul>
+	<li><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/base/nsCOMPtr.h">xpcom/base/nsCOMPtr.h</a></li>
+	<li><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/base/nsCOMPtr.cpp">xpcom/base/nsCOMPtr.cpp</a></li>
+</ul>
+<p>
+	...though you probably don't want to look in there, just yet.
+</p>
+<p>
+	With <span class="source-code">nsCOMPtr</span>,
+		you can write code that is shorter, cleaner, clearer, and safer,
+		than you can with raw [XP]COM interface pointers.
+</p>
+
+	<h3><a name="guide_basics">[XP]COM Basics: Ownership and Reference Counting</a></h3>
+<p>
+	This is a quick refresher on some fundamental issues of [XP]COM.
+	You should already know this, and should be able to just skim this short section.
+	If this is unfamiliar material, you're not ready for <span class="source-code">nsCOMPtr</span>s yet.
+	A good place to learn about the basic rules and reasoning behind COM is
+		in <a href="http://www.amazon.com/exec/obidos/ASIN/0201634465">Essential COM</a>[<a href="#link_essentialcom">#</a>]
+		by <a href="http://www.develop.com/dbox/">Don Box</a>[<a href="#link_donbox">#</a>].
+	Don Box gets into more of the details, traps, and pitfalls of COM in
+		<a href="http://www.amazon.com/exec/obidos/ASIN/0201379686">Effective COM</a>[<a href="#link_effectivecom">#</a>].
+	You should also have a reasonable knowledge of C++.
+	Probably the three most helpful books on this topic are
+		<a href="http://www.amazon.com/exec/obidos/ASIN/0201889544">The C++ Programming Language</a>[<a href="#link_cppprogramminglanguage">#</a>] by Bjarne Stroustrup,
+		<a href="http://www.amazon.com/exec/obidos/ASIN/0201924889">Effective C++</a>[<a href="#link_effectivecpp">#</a>], and
+		<a href="http://www.amazon.com/exec/obidos/ASIN/020163371X">More Effective C++</a>[<a href="#link_moreeffectivecpp">#</a>] by Scott Meyers.
+</p>
+
+<p>
+	All [XP]COM objects are allocated on the heap.
+	Clients don't get to know much about the implementation of any such object.
+	They reference it only through a pointer to an `interface',
+		i.e., the static type of the pointer is a pointer to an abstract base class,
+		the actual object pointed to is a class derived from that abstract base class.
+	The [XP]COM object is said to `implement that interface'.
+	The clients reference to the object is typically called `an interface pointer'.
+</p>
+<p>
+	An object may implement many interfaces.
+	Each interface is (at least conceptually) separately `reference counted'.
+	That is, the interface keeps a count of the number of clients holding references to it.
+	When that count goes to zero,
+		the interface may <span class="source-code">delete</span> itself.
+	Clients are expected to keep this reference count accurate by incrementing it
+		when they acquire a reference to the interface,
+		and decrementing it before they let go.
+	To facilitate this,
+		all interfaces inherit from an abstract base class that provides the member functions
+		<span class="source-code">AddRef()</span>, and <span class="source-code">Release()</span>.
+</p>
+<p>
+	A rule of [XP]COM is that any function that creates or returns an interface pointer
+		will have already <span class="source-code">AddRef()</span>ed it.
+	The caller can then hold onto the reference indefinitely,
+		calling <span class="source-code">Release()</span> when it no longer needs it.
+	When the last pointer to an interface is <span class="source-code">Release()</span>d,
+		the iterface (and consequently, typically the underlyting object) will <span class="source-code">delete</span> itself.
+	As long as there is an outstanding <span class="source-code">AddRef()</span> against the interface, it continues to exist.
+	If you forget to call <span class="source-code">Release()</span>, the object will leak,
+		i.e., the storage for that object will never be reclaimed.
+	Leaks are bad <span class="source-code">:-)</span>.
+</p>
+
+<p>
+	A reference through which you will call <span class="source-code">AddRef()</span> and <span class="source-code">Release()</span> is called an
+		<strong>owning reference</strong>.
+	It holds a stake in the underlying object.
+	That object cannot go away until the owning reference has relinquished its claim.
+	Not all references need to be owning references.
+	In fact,
+		if two object somehow end up owning each other (even transitively)
+		it becomes difficult for either of those object to be reclaimed
+		without adding some `out-of-band' mechanism for breaking the ownership cycle.
+	The document <a href="http://www.mozilla.org/projects/xpcom/Ownership.html">Some COM Ownership Guidelines</a>[<a href="#link_ownershipguidelines">#</a>]
+		provides some hints on when ownership is needed.
+	The following lists are good starting point,
+		but by no means complete.
+</p>
+
+<p>
+	You use an owning reference when
+<!-- /p -->
+<ul>
+	<li>you created the object;</li>
+	<li>
+		you got the object from a function that <em>might</em> have created it,
+			e.g., any `getter' function,
+			such as <span class="source-code">QueryInterface()</span>, or <span class="source-code">CreateInstance()</span>.
+		All good getters <span class="source-code">AddRef()</span> the interface pointers they produce,
+			thus providing you with an owning reference;
+	</li>
+	<li>
+		you will hold onto the reference longer than the scope of the function in
+			which you acquired it,
+			e.g., you got it as a parameter, but you're hanging onto it in a member variable
+			[see, for example, <a href="#comparison1">Comparison 1</a>, below].
+	</li>
+</ul>
+
+<p>
+	You don't need an owning reference when
+<!-- /p -->
+<ul>
+	<li>
+		the object is passed in as a parameter,
+			and you <em>don't</em> need to keep it any longer than the scope of this function;
+	</li>
+
+	<li>
+		the object's lifetime is known to contain yours in some well defined way,
+			e.g., in the nodes of a tree,
+			parent nodes keep owning references to their children,
+			children need not keep owning references to their parents.
+	</li>
+</ul>
+
+<p>
+	It turns out that reference counting by hand is hard for programmers to get right.
+	It may sound simple,
+		but in practice it's very easy to forget to <span class="source-code">Release()</span> at the appropriate moment.
+	Or to <span class="source-code">AddRef()</span> too many or too few times.
+</p>
+
+	<h3><a name="guide_so_what">How does <span class="source-code">nsCOMPtr</span> help?</a></h3>
+
+<p>
+	<span class="source-code">nsCOMPtr</span> manages <span class="source-code">AddRef()</span>, <span class="source-code">Release()</span>, and other red-tape for you.
+	An <span class="source-code">nsCOMPtr</span> looks and acts as much like a raw [XP]COM interface pointer as C++ allows,
+		but it knows it owns the object it points to.
+	This takes a little getting used to on your part,
+		but ends up with less typing,
+		clearer, safer code, and less leaks.
+</p>
+
+<p>
+	For instance, here is a typical snippet of code (at its most compact)
+		where you assign a [XP]COM interface pointer into a member variable,
+		i.e., the body of a `setter' function,
+		side-by-side using raw [XP]COM interface pointers and <span class="source-code">nsCOMPtr</span>s.
+<!-- /p -->
+<a  name="comparison1">
+<table cols="2">
+<caption align="bottom">Comparison 1. Setting a member variable.</caption>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// raw [XP]COM interface pointers...</span>
+<span class="comment">// given: |nsIFoo* mFooPtr;|</span>
+
+<span class="comment">/*
+  |Release()| the old value, if any,
+  before over-writing it (and therefore
+  leaking it).
+
+  Assign in the new value, and if it's
+  not |NULL|, |AddRef()| it, since we'll
+  be holding on to it for a while.
+*/</span >
+
+<span class="notice">NS_IF_RELEASE(mFooPtr);
+if (</span> mFooPtr = aFooPtr <span class="notice">)
+  NS_ADDREF(mFooPtr);</span>
+</pre>
+</div>
+</td>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// |nsCOMPtr|...</span>
+<span class="comment">// given: |nsCOMPtr&lt;nsIFoo&gt; mFooPtr;|</span>
+
+<span class="comment">/*
+  This assignment automatically
+  |Release()|s the old value in
+  |mFooPtr|, if any, and |AddRef()|s the
+  new one.
+*/</span >
+
+
+
+
+
+mFooPtr = aFooPtr;
+
+</pre>
+</div></td></tr></table></a>
+
+
+<p>
+	Additionally, the class using raw [XP]COM interface pointers
+		will need a destructor to <span class="source-code">Release()</span> <span class="source-code">mFooPtr</span>;
+		and a constructor to ensure that <span class="source-code">mFooPtr</span> is initially set to <span class="source-code">NULL</span>
+		(or some other reasonable value).
+</p>
+
+<p>
+	<span class="source-code">nsCOMPtr</span> helps you write code that is
+		leak-proof,
+		exception safe,
+		and significantly less verbose
+		than you would with raw [XP]COM interface pointers.
+	With <span class="source-code">nsCOMPtr</span>,
+		you may never have to call <span class="source-code">AddRef()</span>, <span class="source-code">Release()</span>, or <span class="source-code">QueryInterface()</span> by hand.
+</p>
+
+<p>
+	You still have to understand [XP]COM.
+	You still have to know which functions return interface pointers that have already been <span class="source-code">AddRef()</span>ed and which don't.
+	You still have to ensure your program logic doesn't produce circularly referencing garbage.
+	<span class="source-code">nsCOMPtr</span> is not a panacea.
+	It is, however, helpful, easy to use, well-tested, and polite.
+	It doesn't require that a function author cooperate with you, nor does
+		your use force others to use it.
+</p>
+
+	<h2><a name="guide_how_to">Using <span class="source-code">nsCOMPtr</span></a></h2>
+
+<h3>The Basics</h3>
+
+<p>
+	In most cases, you'll use an <span class="source-code">nsCOMPtr</span> exactly as you would a raw [XP]COM interface pointer.
+	Note the slight difference in declaration.
+<!-- /p -->
+<a  name="">
+<table cols="2">
+<caption align="bottom">Comparison 2. Similarities: <span class="source-code">nsCOMPtr</span> is syntactically similar to raw [XP]COM interface pointers.</caption>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// raw [XP]COM interface pointers...</span>
+
+nsIFoo<span class="notice">*</span> fooPtr <span class="notice">= 0</span>;
+<span class="comment">// ...</span>
+fooPtr-&gt;SomeFunction(x, y, z);
+AnotherFunction(fooPtr);
+
+if ( fooPtr )
+  <span class="comment">// ...</span>
+
+if ( fooPtr == foo2Ptr )
+  <span class="comment">// ...</span>
+</pre>
+</div>
+</td>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// |nsCOMPtr|...</span>
+
+<span class="notice">nsCOMPtr&lt;</span>nsIFoo<span class="notice">&gt;</span> fooPtr;
+<span class="comment">// ...</span>
+fooPtr-&gt;SomeFunction(x, y, z);
+AnotherFunction(fooPtr);
+
+if ( fooPtr )
+  <span class="comment">// ...</span>
+
+if ( fooPtr == foo2Ptr )
+  <span class="comment">// ...</span>
+</pre>
+</div></td></tr></table></a>
+
+
+<p>
+	There are two main differences.
+	First: you no longer need, nor are you allowed, to call <span class="source-code">AddRef()</span> or <span class="source-code">Release()</span>.
+<!-- /p -->
+<table cols="2">
+<caption align="bottom">Comparison 3. Differences: <span class="source-code">AddRef()</span> and <span class="source-code">Release()</span> are illegal for <span class="source-code">nsCOMPtr</span>s.</caption>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// raw [XP]COM interface pointers...</span>
+<span class="comment">// given: |nsIFoo* mFooPtr;|</span>
+
+
+
+
+
+
+
+NS_IF_RELEASE(mFooPtr);
+
+mFooPtr = aFooPtr;
+NS_IF_ADDREF(mFooPtr);
+
+</pre>
+</div>
+</td>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// |nsCOMPtr|...</span>
+<span class="comment">// given: |nsCOMPtr&lt;nsIFoo&gt; mFooPtr;|</span>
+
+  <span class="comment">/*
+    You no longer need, nor will the
+    compiler let you, call |AddRef()|,
+    or |Release()|.
+  */</span >
+
+<span class="warning">NS_IF_RELEASE(mFooPtr);</span>
+  <span class="comment">// Error: |Release()| is private</span>
+mFooPtr = aFooPtr;
+<span class="warning">NS_IF_ADDREF(mFooPtr);</span>
+  <span class="comment">// Error: |AddRef()| is private</span>
+</pre>
+</div></td></tr></table>
+
+<p>
+	Second: you can't just pass the address of an <span class="source-code">nsCOMPtr</span> to a getter
+		expecting to return a result through a raw [XP]COM interface pointer parameter.
+	You have to `annotate' the <span class="source-code">nsCOMPtr</span> with the <a href="#ref_getter_AddRefs"><span class="source-code">getter_AddRefs()</span></a> directive.
+<!-- /p -->
+<a  name="comparison4">
+<table cols="2">
+<caption align="bottom">Comparison 4. Differences: apply <span class="source-code">getter_AddRefs()</span> when using an <span class="source-code">nsCOMPtr</span> as a `out parameter'.</caption>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// raw [XP]COM interface pointers...</span>
+
+nsIFoo* foo;
+
+GetFoo(<span class="notice">&amp;</span>foo);
+</pre>
+</div>
+</td>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// |nsCOMPtr|s...</span>
+
+nsCOMPtr&lt;nsIFoo&gt; foo;
+
+GetFoo(<span class="notice">getter_AddRefs(</span>foo<span class="notice">)</span>);
+</pre>
+</div></td></tr></table></a>
+
+<p>
+	That's it.
+	You now know enough to start using <span class="source-code">nsCOMPtr</span>s.
+	There are a few other details you will want to know as you use <span class="source-code">nsCOMPtr</span> in more complicated situations,
+		but what you've just learned will cover 90% of your uses.
+	There are a couple of `accidental' differences,
+		due to bugs in some of our compilers.
+	These are things you want to avoid, so that you don't break somebody elses build.
+	The unfortunate truth about these differences is that they probably compile on your platform.
+	I wish they compiled everywhere, but they don't, so beware.
+<!-- /p -->
+<a  name="comparison5">
+<table cols="2">
+<caption align="bottom">Comparison 5. Avoid these compiler traps.</caption>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Things some of our compilers hate...</span>
+
+nsIFoo* rawFooPtr;
+nsCOMPtr&lt;nsIFoo&gt; foo;
+
+<span class="comment">// ...</span>
+
+  <span class="comment">// Don't start a comparison with |0|,</span>
+  <span class="comment">//  or |NS_NULL|...</span>
+if ( <span class="warning">NS_NULL != foo</span> )
+  <span class="comment">// ...</span>
+
+  <span class="comment">// Similarly, |==|.</span>
+
+
+  <span class="comment">// Avoid comparing an |nsCOMPtr| to</span>
+  <span class="comment">//  a raw [XP]COM interface pointer</span>
+if ( <span class="warning">foo == rawFooPtr</span> )
+  <span class="comment">// ...</span>
+
+  <span class="comment">// Similarly, |!=|, or re-ordering</span>
+</pre>
+</div>
+</td>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// ...so do it this way, instead.</span>
+
+nsIFoo* rawFooPtr;
+nsCOMPtr&lt;nsIFoo&gt; foo;
+
+<span class="comment">// ...</span>
+
+
+  <span class="comment">// ...prefer the implicit test</span>
+if ( foo )
+  <span class="comment">// ...</span>
+
+if ( !foo )
+  <span class="comment">// ...</span>
+
+
+  <span class="comment">// ...prefer two raw pointers</span>
+if ( foo<span class="notice">.get()</span> == rawFooPtr )
+  <span class="comment">// ...</span>
+
+
+</pre>
+</div></td></tr></table></a>
+
+
+<h3>A Few Details</h3>
+
+<p>
+	There are a couple more things that will help you get the most out of <span class="source-code">nsCOMPtr</span>.
+</p>
+
+<p>
+	Very often, you first get an interface pointer by calling <span class="source-code">QueryInterface()</span>.
+	<span class="source-code">QueryInterface()</span> is a getter like any other,
+		and you already know one way to call it,
+		applying the <span class="source-code">getter_AddRefs()</span> rule,
+		as described above.
+<!-- /p -->
+<table>
+<caption align="bottom">The hard way to <span class="source-code">QueryInterface()</span> into an <span class="source-code">nsCOMPtr</span>.</caption>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// A way (though not the best way) to |QueryInterface()| into an |nsCOMPtr|...</span>
+
+nsCOMPtr&lt;nsIFoo&gt; foo;
+
+nsresult rv = bar-&gt;QueryInterface(NS_GET_IID(nsIFoo), getter_AddRefs(foo));
+
+  <span class="comment">// Or, if you're a savvy [XP]COM programmer,</span>
+  <span class="comment">//  you use the type-safe version...</span>
+nsresult rv = CallQueryInterface(bar, getter_AddRefs(foo));
+</pre>
+</div></td></tr></table>
+<p>
+	<span class="source-code">QueryInterface()</span> is used so frequently, though,
+		that <span class="source-code">nsCOMPtr</span> has a special facility to call it.
+	This facility is type-safe, and it enables an <span class="source-code">nsCOMPtr</span> to be directly constructed
+		from the result of <span class="source-code">QueryInterface()</span>.
+	Construction from the correct value is more efficient that
+		construction followed by assignment.
+	This facility is the <a href="#quad2"><span class="source-code">do_QueryInterface()</span></a> directive.
+	Using <span class="source-code">do_QueryInterface()</span>, the sample above would look like this
+<!-- /p -->
+<table>
+<caption align="bottom">How to <span class="source-code">QueryInterface()</span> into an <span class="source-code">nsCOMPtr</span>.</caption>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// The best way to |QueryInterface()| into an |nsCOMPtr|...</span>
+
+nsresult rv;
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">do_QueryInterface(</span>bar, &amp;rv<span class="notice">)</span>;
+
+  <span class="comment">// Or, if you don't care about the |nsresult|</span>
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">do_QueryInterface(</span>bar<span class="notice">)</span>;
+</pre>
+</div></td></tr></table>
+
+<p>
+	<span class="source-code">nsCOMPtr</span> happily calls <span class="source-code">AddRef()</span> and <span class="source-code">Release()</span> implicitly.
+	This same favor is <em>not</em> extended to <span class="source-code">QueryInterface()</span>.
+	<span class="source-code">nsCOMPtr</span> does not <span class="source-code">QueryInterface()</span> on assignment without your explicit permission
+		in the form of the <span class="source-code">do_QueryInterface()</span> directive.
+	You need never worry about hidden queries.
+	However,
+		be aware that if you <em>should</em> have queried but didn't,
+		e.g., when assigning in a raw pointer where C++ allows the assignment, but [XP]COM wouldn't,
+	<span class="source-code">nsCOMPtr</span> will <a href="#ref_assert_NoQueryNeeded">assert at runtime</a>.
+	Use <span class="source-code">do_QueryInterface()</span> whenever you assign in a pointer to a [XP]COM interface of a different type,
+		even if that type happens to derive from the base type of the <span class="source-code">nsCOMPtr</span>
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<a  name="comparison6">
+<table cols="2">
+<caption align="bottom">Comparison 6. <span class="source-code">do_QueryInterface()</span> prevents [XP]COM type errors.</caption>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+class nsIBar
+  : public nsIFoo ... { ... };
+
+nsIBar* p = ...;
+
+  <span class="comment">// C++ thinks every |nsIBar*| is an</span>
+  <span class="comment">//  |nsIFoo*|, therefore, C++ allows</span>
+  <span class="comment">//  this...</span>
+nsCOMPtr&lt;nsIFoo&gt; <span class="warning">foo = p;</span>
+  <span class="comment">//  ...even though it is an [XP]COM</span>
+  <span class="comment">//  type error</span>
+</pre>
+</div>
+</td>
+<td>
+<div class="source-code">
+<pre class="source-code">
+class nsIBar
+  : public nsIFoo ... { ... };
+
+nsIBar* p = ...;
+
+
+
+  <span class="comment">// No type error here...</span>
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">do_QueryInterface(</span>p<span class="notice">)</span>;
+
+
+</pre>
+</div></td></tr></table></a>
+
+<p>
+	Remember, the C++ type system and the [XP]COM type system are really two independent things.
+	Because [XP]COM interfaces are expressed as abstract C++ base classes,
+		you may be tempted to let C++ handle the differences,
+		or to use C++ casts to navigate between interface types.
+	This is wrong.
+	The only sanctioned way to get between [XP]COM types is with <span class="source-code">QueryInterface()</span>.
+	In the example above,
+		there is no reason to assume that the <span class="source-code">nsIFoo*</span> C++ pulls out of <span class="source-code">p</span>
+		would be the same one that <span class="source-code">p-&gt;QueryInterface()</span> would return.
+</p>
+
+<p>
+	<a href="#quad3"><span class="source-code">dont_AddRef()</span></a> is a similar directive that helps you when you assign in a pointer that
+		has already been <span class="source-code">AddRef()</span>ed,
+		e.g., because you called a getter that returned the pointer as its function result.
+<!-- /p -->
+<table>
+<caption align="bottom">Using <span class="source-code">dont_AddRef()</span>.</caption>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">dont_AddRef(</span>CreateFoo()<span class="notice">)</span>;
+  <span class="comment">// |CreateFoo()| |AddRef()|s its result, as all good getters do</span>
+</pre>
+</div></td></tr></table>
+
+<h3>Something <span class="source-code">nsCOMPtr</span> <em>Doesn't</em> Do</h3>
+
+<p>
+	An <span class="source-code">nsCOMPtr</span> does all that is necessary to behave as an owning reference.
+	A given <span class="source-code">nsCOMPtr</span> does not, however, cooperate in making <em>other</em> owning pointers.
+	After learning how <span class="source-code">nsCOMPtr</span> automatically <span class="source-code">AddRef()</span>s a pointer as it is being
+		assigned <em>in</em>,
+		the natural assumption is that it does the same thing when assigning <em>out</em>.
+	Here is a snippet of code that demonstrates this misconception.
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Incorrect assumptions about |nsCOMPtr|...</span>
+
+nsresult
+nsCacheRecord::GetFileSpec( nsIFileSpec** aFileSpecResult )
+    <span class="comment">/*
+      ...fills in the callers |nsFileSpec*| (which the caller supplied
+      the address of) with a copy of my member variable |mFileSpec|,
+      an |nsCOMPtr|.  I.e., this function is a `getter'.
+
+      Remember: good [XP]COM getters always |AddRef()| their result.
+    */</span >
+  {
+    <span class="comment">// ...</span>
+    *aFileSpec = mFileSpec;
+      <span class="warning"><span class="comment">// the |nsCOMPtr| should take care of the refcount here, right?</span></span>
+    return NS_OK;
+  }
+</pre>
+</div></td></tr></table>
+<p>
+	Plainly, the author believed (though perhaps with some question) that the <span class="source-code">nsCOMPtr</span>,
+		<span class="source-code">mFileSpec</span>, would <span class="source-code">AddRef()</span> automatically as it was assigned into <span class="source-code">*aFileSpec</span>.
+	This is <em>not</em> the case.
+	An <span class="source-code">nsCOMPtr</span> automatically calls <span class="source-code">AddRef()</span> and <span class="source-code">Release()</span> (only) on its <em>own</em> behalf.
+	In all other situations, it is designed to be a drop in replacement for a raw [XP]COM pointer.
+	Where ever an <span class="source-code">nsCOMPtr</span> is used in a situation where a raw pointer is needed,
+		the <span class="source-code">nsCOMPtr</span> automatically provides one.
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// |nsCOMPtr| produces a raw pointer when needed...</span>
+
+nsCOMPtr&lt;nsIFoo&gt; foo = ...;
+
+  <span class="comment">// 1.  Assigning into a raw pointer</span>
+nsIFoo* raw_foo = foo;
+
+  <span class="comment">// 2.  Assigning into another |nsCOMPtr|</span>
+nsCOMPtr&lt;nsIFoo&gt; foo2 = foo;
+
+  <span class="comment">// 3.  As a parameter</span>
+SetFoo(foo);
+
+  <span class="comment">// 4.  Testing the value in an |if| expression</span>
+  <span class="comment">// 5.  Calling a member function</span>
+if ( foo )
+  foo-&gt;DoSomething();
+</pre>
+</div></td></tr></table>
+<p>
+	In all of these cases,
+		pretty much the exact same code is executed
+		(case 2 is slightly different, but the intent is the same).
+	In each case,
+		you are essentially extracting the raw pointer value for your own purpose.
+	If the <span class="source-code">nsCOMPtr</span> <span class="source-code">AddRef()</span>ed the value each time you did that,
+		cases 4 and 5 would obviously always generate leaks.
+	<span class="source-code">SetFoo()</span>, from case 3, would have to be written two different ways
+		when given an <span class="source-code">nsCOMPtr</span>, it would know the value was already <span class="source-code">AddRef()</span>ed,
+		and when given a raw pointer it would assume the value was not <span class="source-code">AddRef()</span>ed.
+	Actually the contradictions run deeper than that.
+	All these cases show that automatically <span class="source-code">AddRef()</span>ing on `output'
+		makes <span class="source-code">nsCOMPtr</span>s and raw-pointers act differently from the point of view
+			of the clients.
+	The goal is to make them act the same so that <span class="source-code">nsCOMPtr</span>s can
+		be a drop in replacement (modulo managing its own `ownership').
+</p>
+<p>
+	Given what you now know,
+		the rule is predictable.
+	As described above,
+		and unless you tell it otherwise,
+		an <span class="source-code">nsCOMPtr</span> <span class="source-code">AddRef()</span>s when you assign <em>in</em> to it.
+	It does nothing when you assign <em>out</em> of it.
+</p>
+
+
+<h3>Where should I use <span class="source-code">nsCOMPtr</span>s?</h3>
+<p>
+	You should use an <span class="source-code">nsCOMPtr</span> any place you use an interface pointer as an owning reference,
+		i.e., where you call <span class="source-code">AddRef()</span> and <span class="source-code">Release()</span> on it.
+	You should use <span class="source-code">nsCOMPtr</span> as a member variable,
+		where it will simplify setters,
+		and eliminate constructors, destructors, and assignment operators.
+	You should use <span class="source-code">nsCOMPtr</span> on the stack,
+		where it makes calling <span class="source-code">QueryInterface()</span> almost pleasant,
+		and eliminates the complex logic that falls out of error handling.
+</p>
+
+<h3>Where shouldn't I use <span class="source-code">nsCOMPtr</span>s?</h3>
+<p>
+	Don't use <span class="source-code">nsCOMPtr</span>s where you don't need an owning reference.
+	See <a href="http://www.mozilla.org/projects/xpcom/Ownership.html">Some COM Ownership Guidelines</a>[<a href="#link_ownershipguidelines">#</a>].
+	Don't use an <span class="source-code">nsCOMPtr</span> to point to something other than an [XP]COM interface.
+	Don't use <span class="source-code">nsCOMPtr</span>s in [XP]COM interfaces,
+		or in such a way that your use forces them on others.
+	Don't use them in plain old C code;
+		<span class="source-code">nsCOMPtr</span>s are, of course, a C++ only construct.
+</p>
+
+<h2><a name="guide_summary">Summary</a></h2>
+
+<p>
+	An <span class="source-code">nsCOMPtr</span> is an owning reference.
+	Whatever it points to has been <span class="source-code">AddRef()</span>ed,
+		counting the <span class="source-code">nsCOMPtr</span> as one of its `owners'.
+	An <span class="source-code">nsCOMPtr</span> always calls <span class="source-code">Release()</span> before letting go,
+		whether the <span class="source-code">nsCOMPtr</span> is letting go so that it can point to a different object,
+		or because the <span class="source-code">nsCOMPtr</span> is going out of scope.
+	Any time a new value is assigned into an <span class="source-code">nsCOMPtr</span>,
+		the <span class="source-code">nsCOMPtr</span> automatically always
+		<span class="source-code">Release()</span>s its old referent, if any, and
+		(unless you tell it you already have) <span class="source-code">AddRef()</span>s the new.
+</p>
+
+<p>
+	You use an <span class="source-code">nsCOMPtr</span> exactly as you would a raw [XP]COM interface pointer in almost all cases
+		[though note the compiler problems shown in <a href="#comparison5">Comparison 5</a>].
+	You won't have to explictly call <span class="source-code">AddRef()</span> or <span class="source-code">Release()</span> through it,
+		nor will the compiler allow it.
+	The only place you can't use an <span class="source-code">nsCOMPtr</span> without change
+		is where a raw [XP]COM interface pointer is an `out' parameter.
+	In this case,
+		you wrap the <span class="source-code">nsCOMPtr</span> with <a href="#ref_getter_AddRefs"><span class="source-code">getter_AddRefs()</span></a>
+		[see <a href="#comparison4">Comparison 4</a>].
+</p>
+
+<p>
+	When assigning into an <span class="source-code">nsCOMPtr</span>,
+		you will usually just supply another pointer
+		(either a raw [XP]COM interface pointer or an <span class="source-code">nsCOMPtr</span>),
+		with no additional directives
+		[see, e.g., the <span class="source-code">nsCOMPtr</span> side of <a href="#comparison1">Comparison 1</a>].
+	As stated above,
+		with no directives, the <span class="source-code">nsCOMPtr</span> will <span class="source-code">Release()</span> its old referent, if any,
+		and <span class="source-code">AddRef()</span> the new.
+	This is appropriate when the thing you're assigning in
+		hasn't yet been <span class="source-code">AddRef()</span>ed to account for the new reference.
+	This is typically the case when you are assigning in a pointer that you
+		<EM>didn't</EM> call a function to get,
+		e.g., one that was passed in as a parameter, or that you pulled out of a structure.
+</p>
+
+<p>
+	You can tell <span class="source-code">nsCOMPtr</span> it doesn't need to <span class="source-code">AddRef()</span> the new value on assignment
+		by wrapping the new value in <a href="#quad3"><span class="source-code">dont_AddRef()</span></a>.
+	Do this, for example, when you got the new value from a function
+		which, like all good [XP]COM getters, 
+		already called <span class="source-code">AddRef()</span> on your behalf.
+</p>
+
+<p>
+	You may not assign in a pointer to a different interface type;
+		you must first query it to the right type
+		[see, e.g., <a href="#comparison6">Comparison 6.</a> and the surrounding discussion].
+	<span class="source-code">nsCOMPtr</span> <em>never</em> calls <span class="source-code">QueryInterface()</span> implicitly,
+		i.e., you must call it yourself, or explictly ask <span class="source-code">nsCOMPtr</span> to call it with <a href="#quad2"><span class="source-code">do_QueryInterface()</span></a>.
+	The <span class="source-code">do_QueryInterface()</span> directive allows you to do the query as part of the assignment.
+	This better facilitates constructing an <span class="source-code">nsCOMPtr</span> directly from the right value,
+		rather than constructing it and assigning in the correct value later.
+	Construction alone is more efficient than construction followed by assignment.
+	Prefer construction over assignment whereever reasonable.
+	Be careful not to apply <span class="source-code">do_QueryInterface()</span> to a function returning an <span class="source-code">AddRef()</span>ed pointer
+		[see <a href="#quad4">this short section</a> for an explanation]
+</p>
+
+<p>
+	For more details, continue on to the <a href="#reference_manual">Reference Manual</a>.
+</p>
+
+
+<hr>
+<h1><a name="reference_manual">Reference Manual</a></h1>
+
+<div class="author-note">
+	<p>
+		This section will help you if you're already familiar with <span class="source-code">nsCOMPtr</span> but you need details.
+		If you've never use <span class="source-code">nsCOMPtr</span>s before,
+			you might want to read the <a href="#users_guide">Getting Started Guide</a> first.
+		If you're trying to fix a broken build,
+			the <a href="#FAQ">FAQ</a> might lead you to the answer more quickly.
+	</p>
+</div>
+
+<div class="contents">
+	<ul>
+		<li><a href="#ref_basics">Tbe Basics</a></li>
+		<li><a href="#ref_assignment">Intitialization and Assignment</a></li>
+		<li><a href="#ref_parameters">Using an <span class="source-code">nsCOMPtr&lt;T&gt;</span> as a <span class="source-code">T*</span></a></li>
+		<li><a href="#ref_efficiency">Efficiency and Correctness</a></li>
+		<li><a href="#ref_annoyances">Compiler Annoyances</a></li>
+	</ul>
+</div>
+
+<h2><a name="ref_basics">The Basics</a></h2>
+
+<h3>Design</h3>
+<p>
+	An <span class="source-code">nsCOMPtr</span> is designed to be a complete replacement for raw [XP]COM interface pointers
+		where they are used as owning references.
+	Almost any place you could use a raw [XP]COM interface pointer,
+		you should be able to use an <span class="source-code">nsCOMPtr</span>.
+	An <span class="source-code">nsCOMPtr</span> is the exact same size and shape as a raw [XP]COM interface pointer.
+	It can be used as a member variable without introducing bloat.
+</p>
+
+<p>
+	Most of the work of being an owning reference can be done in
+		the constructor, destructor, and assignment operators of <span class="source-code">nsCOMPtr</span>.
+	Whenever you `point' the <span class="source-code">nsCOMPtr</span> at a different [XP]COM object
+		(by assignment or initialization),
+		it must <span class="source-code">Release()</span> its old value, if any,
+		and <span class="source-code">AddRef()</span> the new.
+	At its own destructor time it must <span class="source-code">Release()</span> as well.
+	<span class="source-code">nsCOMPtr</span> only does exactly the work you would have done,
+		if you always remembered to do the right thing.
+</p>
+
+<h3>Safety Features</h3>
+
+<h4><a name="ref_assert_NoQueryNeeded">Type Safeguards</a></h4>
+<p>
+	It is an invariant of <span class="source-code">nsCOMPtr</span> that it holds the [XP]COM-correct interface pointer
+		for it's underlying type.
+	E.g., an <span class="source-code">nsCOMPtr&lt;nsIFoo&gt;</span> will always hold the pointer that would be returned
+		by <span class="source-code">QueryInterface()</span>, when querying an [XP]COM object for its <span class="source-code">nsIFoo</span> interface.
+	In debug builds, if you subvert this invariant with one of the assignment forms that
+		doesn't call <span class="source-code">QueryInterface()</span>, <span class="source-code">nsCOMPtr</span> will assert at runtime in the bad
+		assignment.
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Given two un-related interfaces |nsIFoo| and |nsIBar|...</span>
+nsIBar* bar = ...;
+<span class="comment">// ...</span>
+
+<span class="warning">nsCOMPtr&lt;nsIFoo&gt; foo = bar;</span>
+  <span class="comment">// NS_ASSERTION: "QueryInterface needed"</span>
+
+  <span class="comment">// ...even assuming you can get the line to compile</span>
+  <span class="comment">//  (either by casting, or because the types are related by C++)</span>
+</pre>
+</div></td></tr></table>
+
+<p>
+	This invariant is relaxed for <span class="source-code">nsCOMPtr&lt;nsISupports&gt;</span>.
+	Like <span class="source-code">nsISupports*</span> (or even <span class="source-code">void*</span>), people generally use <span class="source-code">nsCOMPtr&lt;nsISupports&gt;</span> to mean `any [XP]COM interface'.
+	It would be annoying if <span class="source-code">nsCOMPtr</span> forced you to <span class="source-code">QueryInterface()</span> to the [XP]COM-correct <span class="source-code">nsISupports</span> within an
+		object in places where you don't care to know the exact type.
+</p>
+
+<h4><span class="source-code">NULL</span>-dereference Safeguards</h4>
+<p>
+	An <span class="source-code">nsCOMPtr</span> will also assert at runtime if you try to dereference it when it is void, e.g.,
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+nsCOMPtr&lt;nsIFoo&gt; foo;
+  <span class="comment">// Note: default initialized to |0|</span>
+
+<span class="warning">foo-&gt;DoSomething();</span>
+  <span class="comment">// NS_PRECONDITION: "You can't dereference a NULL nsCOMPtr with operator-&gt;()"</span>
+</pre>
+</div></td></tr></table>
+<p>
+	A similar precondition intervenes on behalf of <span class="source-code">operator*()</span>.
+</p>
+
+<h4>Reference-Counting Safeguards</h4>
+<p>
+	All of the operations that extract the underlying raw pointer out of an <span class="source-code">nsCOMPtr</span>
+		use a C++ trick to implement another safety feature.
+	The pointer returned cannot be <span class="source-code">AddRef()</span>ed, <span class="source-code">Release()</span>d, or <span class="source-code">delete</span>d.
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+nsCOMPtr&lt;nsIFoo&gt; foo = ...;
+
+<span class="warning">foo-&gt;AddRef();</span>     <span class="comment">// Error: |AddRef()| is private</span>
+<span class="warning">delete foo.get();</span>  <span class="comment">// Error: |operator delete()| is private</span>
+<span class="warning">NS_RELEASE(foo);</span>   <span class="comment">// Error: |Release()| is private</span>
+</pre>
+</div></td></tr></table>
+
+<p>
+	Of course, the most important safety feature provided by <span class="source-code">nsCOMPtr</span> is
+		that it <span class="source-code">AddRef()</span>s and <span class="source-code">Release()</span>s automatically at the appropriate times.
+</p>
+
+<h3>Casting</h3>
+<p>
+	Never use old-style C/C++ casts on an <span class="source-code">nsCOMPtr</span>.
+	An old-style cast is guaranteed to compile, even if it can't do the right thing.
+	Old-style casts degenerate into the equivalent of <span class="source-code">reinterpret_cast</span> if no conversion is defined.
+	Such a cast can easily by-pass <span class="source-code">nsCOMPtr</span>s machinery,
+		causing leaks, type mismatches, and other calamities.
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Old-style C/C++ casts by-pass |nsCOMPtr|s machinery and cause leaks...</span>
+
+nsresult rv;
+nsCOMPtr&lt;nsIFoo&gt; foo = ...;
+
+<span class="comment">// ...</span>
+rv = GetFoo( <span class="warning">&amp;(nsIFoo*)foo</span> );
+rv = GetFoo( <span class="warning">(nsIFoo**)&amp;foo</span> );
+  <span class="comment">// Sure, they compile; but now you leak.</span>
+</pre>
+</div></td></tr></table>
+
+<h3>Implementation Details and Debugging Machinery</h3>
+
+<p>
+	Although it is a class, <span class="source-code">nsCOMPtr</span> has no virtual methods, and therefore, no vtable or vptr.
+	Because a few key routines are factored out into a common non-template base class,
+		the actual underlying pointer is stored as an <span class="source-code">nsISupports*</span>
+		(except in debug builds where <span class="source-code">NSCAP_FEATURE_DEBUG_PTR_TYPES</span> is turned on).
+	It is because of these factored routines that <span class="source-code">nsCOMPtr</span> users must link with the
+		XPCOM library.
+</p>
+
+<p>
+	<a name="NSCAP_FEATURE_DEBUG_PTR_TYPES">
+	When <span class="source-code">NSCAP_FEATURE_DEBUG_PTR_TYPES</span> is turned on,
+		instead of holding its underlying pointer in a variable of type <span class="source-code">nsISupports*</span>,
+		the <span class="source-code">nsCOMPtr</span> holds it in a pointer matching the underlying type.
+	This allows source level debuggers to more easily `follow' the pointer.
+	However, the routines that would normally be factored into a base class now must
+		become template-specific inlines.
+	There is no factored base class.
+	This implies that the entire application must be compiled with the same setting
+		of <span class="source-code">NSCAP_FEATURE_DEBUG_PTR_TYPES</span>, else some parts will be expecting a base class
+		and others will not.
+	The app will not link.
+	</a>
+</p>
+
+<h3>Unit Tests</h3>
+<p>
+	The unit tests for <span class="source-code">nsCOMPtr</span> can be found in the file
+</p>
+<ul>
+	<li>
+		<a href="http://lxr.mozilla.org/seamonkey/source/xpcom/tests/TestCOMPtr.cpp">xpcom/tests/TestCOMPtr.cpp</a>
+	</li>
+</ul>
+
+
+
+<h2><a name="ref_assignment">Initialization and Assignment</a></h2>
+
+<h3>Built-in forms</h3>
+
+<p>
+	Assignment into, or initialization of an <span class="source-code">nsCOMPtr</span> is easy to understand.
+	The <span class="source-code">nsCOMPtr</span> <span class="source-code">Release()</span>s its old value, if any,
+		and then assigns in the new value,
+		<span class="source-code">AddRef()</span>ing it and/or calling <span class="source-code">QueryInterface()</span> as you direct by `annotating'
+		the assignment with directives like <span class="source-code">dont_AddRef</span>.
+	This section describes each of the possibilities, though the directives can be more succinctly
+		described in the <a href="#table_assignmentdirectives">table below</a>.
+</p>
+
+<p>
+	You can construct an <span class="source-code">nsCOMPtr</span> from, or assign into it any of the following
+<!-- /p -->
+<ul>
+	<li>the value <span class="source-code">0</span></li>
+	<li>another <span class="source-code">nsCOMPtr</span> of the same type</li>
+	<li>a raw [XP]COM interface pointer of the same type</li>
+	<li>a raw [XP]COM interface pointer of the same type, annotated with the <a href="#quad1"><span class="source-code">dont_QueryInterface()</span></a> directive</li>
+	<li>a raw [XP]COM interface pointer of the same type, annotated with the <a href="#quad3"><span class="source-code">dont_AddRef()</span></a> directive or a synonym</li>
+
+	<li>any interface pointer (either <span class="source-code">nsCOMPtr</span> or a raw [XP]COM interface pointer) of any type, annotated with the <a href="#quad2"><span class="source-code">do_QueryInterface()</span></a> directive</li>
+	<li>a <a href="#ref_do_QueryReferent"><span class="source-code">do_QueryReferent()</span></a> directive</li>
+</ul>
+<p>
+	The first three of these are simple and obvious.
+	The fourth (applying the <span class="source-code">dont_QueryInterface()</span> directive) is a synonym for just assigning in
+		a raw [XP]COM interface pointer of the same type.
+	The remaining directives provide some additional control in special situations.
+	Additionally, you can construct an <span class="source-code">nsCOMPtr</span> without supplying an initial value,
+		in which case it is initialized to <span class="source-code">0</span>.
+	Just like a primitive pointer,
+		an <span class="source-code">nsCOMPtr</span> with the value <span class="source-code">0</span> points to no object,
+		and can be tested with expressions like <span class="source-code">if (foo)</span> and <span class="source-code">if (!foo)</span>.
+</p>
+<p>
+	The directives mentioned above may make more sense in this table
+</p>
+
+<a name="table_assignmentdirectives">
+<table>
+	<caption align="bottom">
+		Table 1. Options for assigning into an <span class="source-code">nsCOMPtr</span>.
+	</caption>
+	<tr>
+		<td></td>
+		<td>don't QI</td>
+		<td>QI</td>
+	</tr>
+	<tr>
+		<td><span class="source-code">AddRef()</span></td>
+		<td bgcolor="#dddddd"><a href="#quad1">T*,<br><span class="source-code">dont_QueryInterface(T*)</span></a></td>
+		<td bgcolor="#dddddd"><a href="#quad2"><span class="source-code">do_QueryInterface(nsISupports*)</span>,
+			<br><span class="source-code">do_QueryInterface(nsISupports*, nsresult*)</span></a>
+			<a href="#ref_do_QueryReferent"><span class="source-code">do_QueryReferent(nsIWeakReference*)</span>,
+			<br><span class="source-code">do_QueryReferent(nsIWeakReference*, nsresult*)</span></a></td>
+	</tr>
+	<tr>
+		<td>don't <span class="source-code">AddRef()</span></td>
+		<td bgcolor="#dddddd"><a href="#quad3"><span class="source-code">dont_AddRef(T*)</span>,<br><span class="source-code">getter_AddRefs(T*)</span></a></td>
+		<td bgcolor="#dddddd"><a href="#quad4">n/a</a></td>
+	</tr>
+</table>
+</a>
+
+<p>
+	E.g., one of the possibilities for assigning into an <span class="source-code">nsCOMPtr</span>, but you don't want to <span class="source-code">AddRef()</span> the pointer
+		you are assigning (because it has already been <span class="source-code">AddRef()</span>ed for some reason) is <span class="source-code">dont_AddRef(T*)</span> found at
+		the intersection of "don't <span class="source-code">AddRef()</span>" and "don't QI".
+	Here is a sample demonstrating the various positions these `annotations' can appear in,
+		using <span class="source-code">dont_AddRef</span>
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Controlling assignment into an |nsCOMPtr|...</span>
+
+  <span class="comment">// in constructors...</span>
+nsCOMPtr&lt;nsIFoo&gt; foo1 = <span class="notice">dont_AddRef(</span>rawFoo1Ptr<span class="notice">)</span>;
+nsCOMPtr&lt;nsIFoo&gt; foo2( <span class="notice">dont_AddRef(</span>rawFoo2Ptr<span class="notice">)</span> )
+  <span class="comment">// Note that the assignment form and the function form of a constructor have</span>
+  <span class="comment">//  identical meaning</span>
+
+nsCOMPtr&lt;nsIFoo&gt; foo3;
+
+  <span class="comment">// in a normal assignment...</span>
+foo3 = <span class="notice">dont_AddRef(</span>rawFoo3Ptr<span class="notice">)</span>;
+
+  <span class="comment">// The annotations described in the table apply to both forms of constructor,</span>
+  <span class="comment">//  and to plain-old assignment</span>
+</pre>
+</div></td></tr></table>
+<p>
+	Any of the annotations shown in the table can appear in all the positions
+		demonstrated with <span class="source-code">dont_AddRef</span>.
+	The sections that follow describe each possibility.
+</p>
+
+
+	<h4><a name="quad1"><span class="source-code">nsCOMPtr&lt;T&gt; = T*</span>,<br><span class="source-code">nsCOMPtr&lt;T&gt; = dont_QueryInterface( T* )</span></a></h4>
+<p>
+	The default behavior, shown in the table as <span class="source-code">T*</span>, is to <span class="source-code">AddRef()</span> the new value,
+		but not to call <span class="source-code">QueryInterface()</span> against it.
+	This is what happens when no `annotation' is present, e.g.,
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+nsCOMPtr&lt;nsIFoo&gt; foo = aFooPtr;
+  <span class="comment">// ...will call |AddRef()| but not |QueryInterface()|</span>
+
+  <span class="comment">// A more explicit synonym for this is...</span>
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">dont_QueryInterface(</span>aFooPtr<span class="notice">)</span>;
+</pre>
+</div></td></tr></table>
+<p>
+	By using this form, you are promising that the pointer you are assigning in
+		is already a pointer to the [XP]COM-correct interface matching the <span class="source-code">nsCOMPtr</span>s
+		underlying type, in this case, <span class="source-code">nsIFoo</span>.
+</p>
+
+	<h4><a name="quad2"><span class="source-code">nsCOMPtr&lt;T&gt; = do_QueryInterface( nsISupports* )</span>,<br><span class="source-code">nsCOMPtr&lt;T&gt; = do_QueryInterface( nsISupports*, nsresult* )</span></a></h4>
+<p>
+	If you can't satisfy the above promise, you can `annotate' the assignment
+		to tell the <span class="source-code">nsCOMPtr</span> it needs to call <span class="source-code">QueryInterface()</span>, e.g.,
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">do_QueryInterface(</span>aBarPtr<span class="notice">)</span>;
+  <span class="comment">// ..._will_ call |QueryInterface()| (and therefore, |AddRef()|)</span>
+
+  <span class="comment">// Of course, since you're calling |QueryInterface()|, you might need the</span>
+  <span class="comment">//  error result...</span>
+nsresult rv;
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">do_QueryInterface(</span>aBarPtr<span class="notice">, &amp;rv)</span>;
+</pre>
+</div></td></tr></table>
+
+	<h4><a name="quad3"><span class="source-code">nsCOMPtr&lt;T&gt; = dont_AddRef( T* )</span>,<br><span class="source-code">nsCOMPtr&lt;T&gt; = getter_AddRefs( T* )</span></a></h4>
+<p>
+	Sometimes, you happen to have a pointer lying around that's already <span class="source-code">AddRef()</span>ed,
+		but you want to put it into an <span class="source-code">nsCOMPtr</span>.
+	This often happens with getters that return the <span class="source-code">AddRef()</span>ed pointer as their result
+		(rather than an <span class="source-code">nsresult</span>);
+		or in the efficiency transformations.
+	<span class="source-code">dont_AddRef</span> is the perfect remedy to situations like this.
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+nsIFoo* temp;
+nsresult rv = GetFoo(&amp;temp);
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">dont_AddRef(</span>temp<span class="notice">)</span>;
+  <span class="comment">// |temp| has already been |AddRef()|ed, but we want to manage it with an</span>
+  <span class="comment">//  |nsCOMPtr|.</span>
+
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">getter_AddRefs(</span>CreateAFoo()<span class="notice">)</span>;
+  <span class="comment">// |getter_AddRefs| is a synonym for |dont_AddRef| that may look better to</span>
+  <span class="comment">//  you when applied to functions that return |AddRef()|ed pointers</span>
+
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">dont_AddRef(</span>CreateAFoo()<span class="notice">)</span>;
+  <span class="comment">// or, maybe you don't like it better...</span>
+</pre>
+</div></td></tr></table>
+
+	<h4><a name="quad4"><span class="source-code">nsCOMPtr&lt;T&gt; = </span>/* call <span class="source-code">QueryInterface()</span> but don't <span class="source-code">AddRef()</span> */</a></h4>
+<p>
+	You'll notice this quadrant of the table is marked `n/a'.
+	There is no explicit directive that means "call <span class="source-code">QueryInterface()</span>, but don't <span class="source-code">AddRef()</span> the result".
+	This option corresponds to the situation where you are calling a getter that returns an object of the
+		wrong type.
+	It has already <span class="source-code">AddRef()</span>ed the object, so you don't want to,
+		but you need to get a different interface out of it.
+	Well, you can't have it.
+	<span class="source-code">QueryInterface()</span> always <span class="source-code">AddRef()</span>s it's result,
+		and there is no substitute for calling <span class="source-code">QueryInterface()</span> to get the right type.
+	The solution is a two step process.
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// ...</span>
+
+  <span class="comment">// The getter returns an already |AddRef()|ed object (of the wrong type)...</span>
+nsCOMPtr&lt;nsIBar&gt; bar = <span class="notice">getter_AddRefs(</span>CreateBar()<span class="notice">)</span>;
+  <span class="comment">// ...which I must query for the right type</span>
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="notice">do_QueryInterface(</span>bar<span class="notice">)</span>;
+</pre>
+</div></td></tr></table>
+
+<p>
+	One unfortunate trap that people fall into in this case is forgetting that their getter function
+		<span class="source-code">AddRef()</span>ed the result.
+	Which leads them to type in code that looks like this:
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="warning">do_QueryInterface(CreateBar())</span>;
+  <span class="comment">// Oops!  The interface returned by |CreateBar()| leaks.</span>
+  <span class="comment">//  You _must_ handle this case with the two step solution shown above.</span>
+
+  <span class="comment">// Seems unlikely, you say?  You're more likely to see it in a form like this</span>
+nsCOMPtr&lt;nsIFoo&gt; foo = <span class="warning">do_QueryInterface(aList-&gt;ElementAt(i))</span>;
+  <span class="comment">// |ElementAt()|, like all good getters, |AddRefs()| it's result</span>
+  <span class="comment">//  which would be dropped on the floor, after querying it for the needed</span>
+  <span class="comment">//  interface</span>
+</pre>
+</div></td></tr></table>
+<p>
+	Bugzilla <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=8221">bug# 8221</a>
+		is specifically about finding and fixing this particular kind of leak.
+</p>
+
+	<h3><span class="source-code">nsCOMPtr</span> helpers</h3>
+<p>
+</p>
+	<h4><a name="ref_do_QueryReferent"><span class="source-code">nsCOMPtr&lt;T&gt; = do_QueryReferent( nsIWeakReference* )</span>,<br><span class="source-code">nsCOMPtr&lt;T&gt; = do_QueryReferent( nsIWeakReference*, nsresult* )</span></a></h4>
+<p>
+	<span class="source-code">do_QueryReferent()</span> exists to facilitate weak references based on <a href="http://www.mozilla.org/projects/xpcom/weak_references.html"><span class="source-code">nsIWeakReference</span></a>.
+	An <span class="source-code">nsIWeakReference</span> is an [XP]COM object that acts as a proxy for another object.
+	The <span class="source-code">nsIWeakReference</span> and this other object have a special relationship.
+	They know about each other,
+		but neither holds an owning reference to the other.
+	The two objects cooperate to ensure that neither ever holds a dangling pointer to the other.
+	Holding an owning reference on the <span class="source-code">nsIWeakReference</span> object
+		allows you to get to this other object when you need to,
+		but does not require it to go on living, just for you.
+	To get to the object,
+		you ask the <span class="source-code">nsIWeakReference</span> object to <span class="source-code">QueryInterface()</span> it on your behalf.
+	If the object still exists and supports the requested interface,
+		you will (hopefully, temporarily) hold an owning reference to it.
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+nsIWeakReference* weakPtr = ...;
+
+weakPtr-&gt;QueryReferent(
+</pre>
+</div></td></tr></table>
+
+	<h2><a name="ref_parameters">Using an <span class="source-code">nsCOMPtr&lt;T&gt;</span> as a <span class="source-code">T*</span></a></h2>
+
+<p>
+</p>
+	<h3><a name="ref_pointer">Using an <span class="source-code">nsCOMPtr</span> as a pointer</a></h3>
+
+	<h3>`In' Parameters</h3>
+
+	<h3><a name="ref_getter_AddRefs">`Out' Parameters: <span class="source-code">getter_AddRefs()</span></a></h3>
+<p>
+	Assignment into an <span class="source-code">nsCOMPtr</span> is fairly easy to understand.
+	The <span class="source-code">nsCOMPtr</span> <span class="source-code">Release()</span>s its old value, if any, and then assigns in the
+		new value, <span class="source-code">AddRef()</span>ing, and/or calling <span class="source-code">QueryInterface()</span> as you specified with
+		the directives described above.
+	These rules apply equally to the `assignment' that happens when copying
+		parameters or function results that are declared to be <span class="source-code">nsCOMPtr</span>s.
+	If we want <span class="source-code">nsCOMPtr</span>s to be a viable substitute for raw [XP]COM interface pointers,
+		however, we will need to deal with the issue of `out' parameters.
+	Many [XP]COM functions return interface pointers as results through parameters, e.g.,
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Getters can return interface pointers through `out' parameters...</span>
+
+nsresult GetFoo( nsIFoo** );     <span class="comment">// a standard getter</span>
+nsresult GetFoo2( nsIFoo*&amp; );    <span class="comment">// a non-standard getter</span>
+nsresult GetSomething( void** ); <span class="comment">// an `un-typed' getter</span>
+  <span class="comment">// Note: |QueryInterface()| is an example of a `un-typed' getter</span>
+</pre>
+</div></td></tr></table>
+
+<p>
+	We must be able to pass <span class="source-code">nsCOMPtr</span>s
+		by pointer or reference,
+		into routines for use as `out' parameters.
+	The problem is, that inside the getter there is no knowledge of <span class="source-code">nsCOMPtr</span>s.
+	It thinks it's getting a pointer (or a reference) to a raw [XP]COM interface pointer.
+	<span class="source-code">nsCOMPtr</span>s smart assignment operators will not be called.
+	The old value, if any, will be leaked.
+</p>
+<p>
+	This is where the <span class="source-code">getter_AddRefs( nsCOMPtr&amp; )</span> comes in.
+	<span class="source-code">getter_AddRefs</span> <span class="source-code">Release()</span>s the old value, if any, clears it out,
+		and returns a pointer to it, allowing the getter to fill in
+		your <span class="source-code">nsCOMPtr</span> with a new <span class="source-code">AddRef()</span>ed value.
+	We use <span class="source-code">getter_AddRefs()</span> as a sort of replacement for the <span class="source-code">&</span> that we would apply to
+		a raw [XP]COM interface pointer in these situations.
+	<span class="source-code">getter_AddRefs()</span> packages up all the magic we normally get
+		from <span class="source-code">nsCOMPtr</span>s constructors and assignment operators.
+<!-- /p -->
+<table cols="2">
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// raw [XP]COM interface pointers...</span>
+
+nsIFoo<span class="notice">*</span> foo;
+
+GetFoo(<span class="notice">&amp;</span>foo);
+GetFoo2(foo);
+GetSomething(<span class="notice">(void**)&amp;</span>foo);
+</pre>
+</div>
+</td>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// |nsCOMPtr|s...</span>
+
+<span class="notice">nsCOMPtr&lt;</span>nsIFoo<span class="notice">&gt;</span> foo;
+
+GetFoo(<span class="notice">getter_AddRefs(</span>foo<span class="notice">)</span>);
+GetFoo2(<span class="notice">*getter_AddRefs(</span>foo<span class="notice">)</span>);
+GetSomething(<span class="notice">getter_AddRefs(</span>foo<span class="notice">)</span>);
+</pre>
+</div></td></tr></table>
+
+<p>
+	Why not just overload <span class="source-code">operator&amp;()</span> to do this work?
+	Several reasons:
+		it would become inconvenient take the address of an <span class="source-code">nsCOMPtr</span> in all other situations;
+		the name `<span class="source-code">getter_AddRefs</span>' enforces the notion that a certain behavior is required of the getter;
+		and once upon a time, there was another possibility (as you're about to learn).
+</p>
+
+<p>
+	Is there a <span class="source-code">getter_doesnt_AddRef( nsCOMPtr&amp; )</span> for getters that return non-<span class="source-code">AddRef()</span>ed results through a parameter?
+	No, there isn't.
+	Once upon a time, there was, but it went away for three reasons:
+<!-- /p -->
+<ul>
+	<li>
+		It is against the rules of [XP]COM for a getter to return a non-<span class="source-code">AddRef()</span>ed interface pointer through a parameter
+			(if you see it, report a bug).
+	</li>
+	<li>
+		<span class="source-code">getter_doesnt_AddRef()</span> had complex ramifications that ended up making <span class="source-code">nsCOMPtr</span>s either
+			bigger or slower than raw [XP]COM interface pointers.
+	</li>
+	<li>
+		You can still call such a getter and put the result into an <span class="source-code">nsCOMPtr</span> with a temporary, e.g.,
+	</li>
+</ul>
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Calling a getter that (illegally) doesn't |AddRef()| its result...</span>
+
+nsIFoo* temp;
+nsresult rv = <span class="warning">GetFoo_WithoutAddRef(</span>&amp;temp<span class="warning">)</span>;
+  <span class="comment">// Note to self: must report |GetFoo_WithoutAddRef()| as a bug, all getters</span>
+  <span class="comment">//  must |AddRef()|</span>
+nsCOMPtr&lt;nsIFoo&gt; foo = temp;
+</pre>
+</div></td></tr></table>
+
+<h3>`In/Out' Parameters</h3>
+
+<p>
+	What about `in/out' parameters?
+</p>
+
+
+
+
+<h2><a name="ref_efficiency">Efficiency and Correctness</a></h2>
+
+<h3>The Costs of <span class="source-code">nsCOMPtr</span></h3>
+
+<p>
+	<span class="source-code">nsCOMPtr</span> is tuned to be a viable replacement for raw [XP]COM interface pointers,
+		anywhere you would use one as an owning reference.
+	<span class="source-code">nsCOMPtr</span>s performance is generally slightly <em>more</em> efficient that raw pointers in space,
+		and negligably less efficient in time.
+	Performance concerns should not deter you from using <span class="source-code">nsCOMPtr</span>.
+	The patterns presented throughout this section will help you get the most out of <span class="source-code">nsCOMPtr</span>. 
+</p>
+
+<h4>Space</h4>
+
+<p>
+	In general, <span class="source-code">nsCOMPtr</span> <em>can</em> be more efficient in space than using raw [XP]COM pointers.
+	This is primarily because it factors its destructor,
+		and the more complicated constructors and assignment operators.
+	By following the optimization tips in this section,
+		you will write code that generates fewer bytes of object than you might with raw pointers.
+	Even if you don't follow these suggestions,
+		your <span class="source-code">nsCOMPtr</span> code may still end up smaller,
+		or at worst only negligable bulkier than the raw pointer version.
+	See <a href="http://www.mozilla.org/projects/xpcom/nsCOMPtr/bloat.html">Code Bloat [LONG, summary at top]</a>
+		for details,
+		though the recommendations from that document are re-iterated here.
+</p>
+
+<h4>Time</h4>
+
+<p>
+	<span class="editor-note">[[More time-performance measurements are needed.]]</span>
+</p>
+<p>
+	In places where two or more subroutines calls are required,
+		i.e., of <span class="source-code">AddRef()</span>, <span class="source-code">Release()</span>, and <span class="source-code">QueryInterface()</span>,
+		some <span class="source-code">nsCOMPtr</span> routines are factored,
+		and hence, require additional time corresponding to invoking a subroutine.
+	This time is negligable,
+		especially in the face of work done by <span class="source-code">QueryInterface()</span>,
+		and the work that may be done by <span class="source-code">Release()</span>.
+</p>
+<p>
+	In all other cases, <span class="source-code">nsCOMPtr</span> does only the work you would have done by hand.
+	The bulk of the work for which an <span class="source-code">nsCOMPtr</span> is used is
+		dereferencing with <span class="source-code">operator-&gt;()</span>, just as it is with a primitive pointer.
+	On every platform, this operation generates the exact same code,
+		and takes the same time, as performing this operation on a raw [XP]COM interface pointer.
+	The destructor, which corresponds to client code calling <span class="source-code">Release()</span> against a raw [XP]COM interface pointer,
+		is factored, requiring the extra time required to invoke a subroutine call,
+		though this is balanced against the cost already present in both cases of calling <span class="source-code">Release()</span>
+			which may, in turn, invoke <span class="source-code">delete</span> and the referents destructor.
+	All <span class="source-code">nsCOMPtr</span>s constructors and assignment operators are inline.
+	The simple constructors, i.e., those that don't query,
+		do only exactly the same work that you would do by hand.
+	Any routines that call more than one of <span class="source-code">AddRef()</span>, <span class="source-code">Release()</span>, or <span class="source-code">QueryInterface()</span>,
+		are factored, and hence have the additional cost of invoking a subroutine call.
+</p>
+
+<p>
+	Only the fact that some routines are factored, thus introducing the overhead of an additional subroutine call,
+		and that initialization cannot be by-passed, cause any extra run-time cost for <span class="source-code">nsCOMPtr</span> over raw [XP]COM
+		interface pointers.
+	Space and time trade-offs are finely balanced in <span class="source-code">nsCOMPtr</span>.
+	The factored routines are the direct result of bloat measurements.
+</p>
+
+<h3><a name="ref_prefer_construction">Prefer Construction to Assignment</a></h3>
+
+<p>
+	The most efficient way, in both time and space, to get a value into an <span class="source-code">nsCOMPtr</span> is at construction time.
+	Prefer construction over assignment whenever reasonable.
+	Initialize member <span class="source-code">nsCOMPtr</span>s in the member initialization clause of your constructor.
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Initialize member |nsCOMPtr|s in the member initialization clause of your</span>
+<span class="comment">//  constructor...</span>
+
+class Bar
+  {
+    public:
+      Bar( nsIFoo* initial_fooPtr );
+      <span class="comment">// ...</span>
+    private:
+      nsCOMPtr&lt;nsIFoo&gt; mFooPtr;
+  };
+
+Bar::Bar( nsIFoo* initial_fooPtr )
+    : <span class="notice">mFooPtr(initial_fooPtr)</span> <span class="comment">// initialize it _here_</span>
+  {
+    <span class="comment">// not here</span>
+  }
+</pre>
+</div></td></tr></table>
+
+<p>
+	Additionally, there is an optimization pattern using a temporary that converts assignment form to construction form.
+<!-- /p -->
+<table cols="2">
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Default construction, followed by</span>
+<span class="comment">//  assignment is not as efficient...</span>
+
+nsCOMPtr&lt;nsIFoo&gt; foo;
+nsresult rv=GetFoo(getter_AddRefs(foo));
+
+
+
+
+
+</pre>
+</div>
+</td>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// ...as construction alone.</span>
+
+<span class="notice">nsIFoo* temp;</span>
+nsresult rv=GetFoo(<span class="notice">&amp;temp</span>);
+nsCOMPtr&lt;nsIFoo&gt; foo<span class="notice">=dont_AddRef(temp);</span>
+
+  <span class="comment">// Remember this `raw-pointer, call</span>
+  <span class="comment">//  getter, assign |dont_AddRef|'</span>
+  <span class="comment">//  pattern.  It  crops up in many</span>
+  <span class="comment">//  efficiency discussions.</span>
+</pre>
+</div></td></tr></table>
+<p>
+	In both cases you end up with <span class="source-code">foo</span>, a valid <span class="source-code">nsCOMPtr</span> whose value was set with
+		the product of <span class="source-code">GetFoo</span>, and <span class="source-code">rv</span> the status returned by <span class="source-code">GetFoo</span>.
+	The case using the temporary, however, uses construction to put the value into the
+		<span class="source-code">nsCOMPtr</span>, which (though slightly more complicated in source) is more efficient than
+		default construction followed by assignment, the course of events followed by
+		the simpler example.
+</p>
+
+<h3><a name="ref_prefer_destruction">Prefer Destruction to Assignment</a></h3>
+
+<p>
+</p>
+
+<h3>Prefer <span class="source-code">do_QueryInterface()</span> to calling <span class="source-code">QueryInterface()</span></h3>
+
+<h3>Iterating</h3>
+
+<p>
+There is a very common idiom for iterating over data-structures with normal pointers, e.g.,
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Iterating with pointers to non-[XP]COM objects...</span>
+
+Node* p = ...;
+while ( p )
+  {
+    <span class="comment">// ...</span>
+    p = p-&gt;next;
+  }
+</pre>
+</div></td></tr></table>
+
+<p>
+	One often sees this pattern expressed as a <span class="source-code">for</span> loop, as well.
+	Consider, however, what would happen if you were trying to do this with a raw [XP]COM interface pointer.
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Iterating with raw [XP]COM interface pointers...</span>
+
+nsIDOMNode* p = ...;
+while ( p )
+  {
+    <span class="comment">// ...</span>
+    <span class="warning">p-&gt;GetNext(&amp;p);</span>
+      <span class="comment">// Trouble!  We overwrote |p| without |Release()|ing it.</span>
+  }
+</pre>
+</div></td></tr></table>
+
+<p>
+	Oops!
+	We just failed to <span class="source-code">Release()</span> <span class="source-code">p</span> before putting a new pointer into it.
+	People do this a lot,
+		and it turns out to be a big source of leaks in normal [XP]COM code.
+	Well, could we do this instead?
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Iterating with raw [XP]COM interface pointers...</span>
+
+nsIDOMNode* p = ...;
+while ( p )
+  {
+    <span class="comment">// ...</span>
+    <span class="warning">NS_RELEASE(p);
+    p-&gt;GetNext(&amp;p);</span>
+      <span class="comment">// Trouble!  We tried to call a member function of a pointer</span>
+      <span class="comment">//  that may be dangling or |NULL|.</span>
+  }
+</pre>
+</div></td></tr></table>
+
+<p>
+	Unfortunately, not.
+	After the <span class="source-code">Release()</span>, <span class="source-code">p</span> <EM>could</EM> be dangling.
+	In fact, if you used the <span class="source-code">NS_RELEASE</span> macro,
+		<span class="source-code">p</span> would be <span class="source-code">NULL</span> by the time you got to the <span class="source-code">GetNext</span> call.
+</p>
+
+<p>
+	Now imagine that you've written the same thing with <span class="source-code">nsCOMPtr</span>.
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Iterating with |nsCOMPtr|s...</span>
+
+nsCOMPtr&lt;nsIDOMNode&gt; p = ...;
+while ( p )
+  {
+    <span class="comment">// ...</span>
+    <span class="warning">p-&gt;GetNext( getter_AddRefs(p) );</span>
+      <span class="comment">// Trouble!  We tried to call a member function through a |NULL| pointer.</span>
+  }
+</pre>
+</div></td></tr></table>
+<p>
+	Using <span class="source-code">nsCOMPtr</span> is exactly like using raw [XP]COM interface pointers, here.
+	<span class="source-code">getter_AddRefs</span> <span class="source-code">Release()</span>s and clears out <span class="source-code">p</span> before you assign into it,
+		i.e., before <span class="source-code">GetNext</span> is called.
+	Which means that by the time we get around to calling <span class="source-code">GetNext</span>,
+		we are trying to call it through a <span class="source-code">NULL</span> pointer.
+	Unlike raw [XP]COM interface pointers,
+		<span class="source-code">nsCOMPtr</span> will fire an <span class="source-code">assert()</span> instead of
+		blindly trying to call <span class="source-code">GetNext</span> through a <span class="source-code">NULL</span> pointer.
+</p>
+
+<p>
+	That's the problem.
+	So what's the solution?
+	If this were raw [XP]COM interface pointers,
+		we'd probably introduce a temporary.
+	We can do the same thing with <span class="source-code">nsCOMPtr</span>.
+<!-- /p -->
+<table cols="2">
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Safe iterating with raw [XP]COM</span>
+<span class="comment">//  interface pointers...</span>
+
+nsIDOMNode<span class="notice">*</span> p = ...;
+while ( p )
+  {
+    <span class="comment">// ...</span>
+
+      <span class="comment">// Introduce a temporary so we</span>
+      <span class="comment">//  don't stomp on |p|</span>
+    nsIDOMNode<span class="notice">*</span> temp = p;
+    temp-&gt;GetNext(<span class="notice">&amp;</span>p);
+    <span class="notice">NS_RELEASE(temp);</span>
+  }
+</pre>
+</div>
+</td>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Safe iterating with |nsCOMPtr|...</span>
+
+
+<span class="notice">nsCOMPtr&lt;</span>nsIDOMNode<span class="notice">&gt;</span> p = ...;
+while ( p )
+  {
+    <span class="comment">// ...</span>
+
+      <span class="comment">// Introduce a temporary so we</span>
+      <span class="comment">//  don't stomp on |p|</span>
+    <span class="notice">nsCOMPtr&lt;</span>nsIDOMNode<span class="notice">&gt;</span> temp = p;
+    temp-&gt;GetNext(<span class="notice">getter_AddRefs(</span>p<span class="notice">)</span>);
+  }
+
+</pre>
+</div></td></tr></table>
+
+<p>
+	Although the <span class="source-code">nsCOMPtr</span> parallel is easy to understand,
+		it suffers from doing one extra <span class="source-code">AddRef()</span> and one extra <span class="source-code">Release()</span>
+		compared to the raw pointer scheme.
+	A slight transformation makes the code uglier, but (possibly negligably) more efficient.
+<!-- /p -->
+<!-- ----<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span>---------<span class="source-code">---------</span> -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// Safe, efficient, iterating with |nsCOMPtr|...</span>
+
+nsCOMPtr&lt;nsIDOMNode&gt; p = ...;
+while ( p )
+  {
+    <span class="comment">// ...</span>
+    nsIDOMNode* next;
+    p-&gt;GetNext(&amp;next);
+    p = dont_AddRef(next);
+  }
+
+  <span class="comment">// Look!  It's our friend, the `raw pointer, call getter, assign</span>
+  <span class="comment">//  |dont_AddRef|' pattern.</span>
+</pre>
+</div></td></tr></table>
+
+<h3>Writing Getters</h3>
+<p>
+</p>
+
+<h2><a name="ref_annoyances">Compiler Annoyances</a></h2>
+
+<hr>
+<h1><a name="FAQ">Frequently Asked Questions</a></h1>
+
+<div class="author-note">
+	<p>
+		This section will help you if you're fixing a broken build,
+			or have what you think is a quick obvious question,
+			and you don't have time to read the <a href="#reference_manual">Reference Manual</a>.
+		This FAQ usually just refers back directly to the appropriate answer, there. 
+		If you're looking here just to learn about <span class="source-code">nsCOMPtr</span>s,
+			you'll get a better introduction in the <a href="#users_guide">Getting Started Guide</a>.
+	</p>
+</div>
+
+<div class="contents">
+	<ul>
+		<li><a href="#FAQ_buildtime_errors">Buildtime Errors</a></li>
+		<li><a href="#FAQ_runtime_errors">Runtime Errors</a></li>
+		<li><a href="#FAQ_how_to">How do I...</a></li>
+		<li><a href="#FAQ_general">General</a></li>
+	</ul>
+</div>
+
+<p>
+	The FAQ is divided into sections to help you find what you're looking for faster.
+	In most cases, the answer will just refer back into the reference manual, above.
+	No need to explain things twice <span class="source-code">:-)</span>.
+</p>
+
+	<h2><a name="FAQ_buildtime_errors">Buildtime Errors</a></h2>
+<p>
+	The build just broke.
+	It's not in your code, or it's not on your platform,
+		but there's an <span class="source-code">nsCOMPtr</span> on the line where the error is and you're suspicious.
+	You're looking in the right place.
+</p>
+
+		<h3>comparing an <span class="source-code">nsCOMPtr</span> to a raw [XP]COM interface pointer</h3>
+		<h3>declaring an <span class="source-code">nsCOMPtr</span> to a forward-declared class</h3>
+		<h3>not linking to XPCOM</h3>
+		<h3>not including nsCOMPtr.h</h3>
+		<h3>different settings of <span class="source-code">NSCAP_FEATURE_DEBUG_PTR_TYPES</span></h3>
+
+	<h2><a name="FAQ_runtime_errors">Runtime Errors</a></h2>
+		<h3><span class="source-code">NS_ASSERTION</span> "QueryInterface needed"</h3>
+		<h3><span class="source-code">NS_PRECONDITION</span> "You can't dereference a NULL nsCOMPtr with operator->()"</h3>
+		<h3><span class="source-code">NS_PRECONDITION</span> "You can't dereference a NULL nsCOMPtr with operator*()"</h3>
+
+
+	<h2><a name="FAQ_how_to">How do I...</a></h2>
+		<h3>initialize an <span class="source-code">nsCOMPtr</span>?</h3>
+
+		<h3><span class="source-code">Release()</span> an <span class="source-code">nsCOMPtr</span> before it goes out of scope?</h3>
+<p>
+	Assign <span class="source-code">0</span> into it.
+	Whenever an <span class="source-code">nsCOMPtr</span> takes on a new value,
+		it always <span class="source-code">Release()</span>s its old value, if any.
+	Assigning in the value <span class="source-code">0</span> is just like assigning in a raw pointer that happens to be <span class="source-code">NULL</span>.
+	The old referent will be <span class="source-code">Release()</span>d.
+	[See <a href="#ref_assignment">Initialization and Assignment</a> for more details]
+</p>
+
+<p>
+	You should note, though, that there is a small performance penalty for this.
+	The <span class="source-code">nsCOMPtr</span> will still exercize logic in its destructor to attempt to <span class="source-code">Release()</span> the value
+		it has at that time.
+	The optimal solution is to arrange the lifetime of your <span class="source-code">nsCOMPtr</span> to correspond
+		to exactly how long you want to hold the reference.
+	E.g., using blocks as in this sample
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+<span class="comment">// The most efficient scheme is to scope your |nsCOMPtr| to live exactly as long</span>
+<span class="comment">//  as you need to hold the reference</span>
+
+nsresult
+SomeLongFunction( nsIBar* aBar )
+  {
+    nsresult rv;
+    <span class="comment">// ...</span>
+
+    {
+      <span class="comment">// I only need the |nsIFoo| interface for a short time</span>
+      <span class="comment">//  so I control its lifetime by declaring it inside</span>
+      <span class="comment">//  a block statement.</span>
+
+      nsCOMPtr&lt;nsIFoo&gt; foo = do_QueryInterface(aBar, &amp;rv);
+      if ( foo )
+        foo-&gt;DoSomeFooThing();
+
+      <span class="comment">// |foo| goes out of scope, and so |Release()|s its referent, here</span>
+    }
+
+    <span class="comment">// ...tons of stuff here, during which I don't need an |nsIFoo|</span>
+
+    return rv;
+  }
+</pre>
+</div></td></tr></table>
+<div class="editor-note">
+	<p>
+		[[Move this discussion to the <a href="#ref_efficiency">efficiency section</a>, and link to it from here.]]
+	</p>
+</div>
+
+		<h3>make an <span class="source-code">nsCOMPtr</span> leak (for a debug test)?</h3>
+		<h3>call a getter that uses a raw [XP]COM interface pointer as an `in/out' parameter?</h3>
+		<h3>call a getter that fills in an <span class="source-code">nsIFoo*&amp;</span> parameter?</h3>
+
+		<h3>call a getter that doesn't <span class="source-code">AddRef()</span> its result?</h3>
+<p>
+	Any [XP]COM function that returns an interface pointer, i.e., a `getter',
+		must have already <span class="source-code">AddRef()</span>ed that pointer.
+	If it didn't, you should probably report it as a bug.
+	No matter which code pattern you use to solve this problem,
+		you should comment it, e.g., <span class="source-code"><span class="comment">// Warning: this getter doesn't AddRef() its result</span></span>.
+	If the getter returns the new pointer as its function result,
+		no worries,
+<!-- /p -->
+<table>
+<tr>
+<td>
+<div class="source-code">
+<pre class="source-code">
+  
+</pre>
+</div></td></tr></table>
+
+
+	<h2><a name="FAQ_general">General</a></h2>
+		<h3>Does <span class="source-code">nsCOMPtr</span> bloat the code?</h3>
+		<h3>Are <span class="source-code">nsCOMPtr</span>s fast?  Can I use them in tight loops?</h3>
+
+
+
+
+<hr>
+<h2><a name="links">Bibliography</a></h2>
+
+	<h3>Web Resources</h3>
+
+<a name="link_source">
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/base/nsCOMPtr.h">nsCOMPtr.h</a></span>, and
+	<span class="doc-title"><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/base/nsCOMPtr.cpp">nsCOMPtr.cpp</a></span>
+		are the source to <span class="source-code">nsCOMPtr</span>.
+		You can examine the source to <span class="source-code">nsCOMPtr</span> online using (the wonderful) <a href="http://lxr.mozilla.org/">LXR</a>.
+		Exploring this code is not an adventure for the faint of heart.
+</div>
+</a>
+
+<a name="link_ownershipguidelines">
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.mozilla.org/projects/xpcom/Ownership.html">Some COM Ownership Guidelines</a></span>.
+</div>
+</a>
+
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.develop.com/dbox/cxx/InterfacePtr.htm">Interface Pointers Considered Harmful</a></span>
+		by Don Box
+		originally appeared in the September 1995 issue of "The C++ Report".
+</div>
+
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.develop.com/dbox/cxx/SmartPtr.htm">COM Smart Pointers Even More Harmful</a></span>
+		by Don Box
+		is a follow-up article
+		that originally appeared in the February 1996 issue of "The C++ Report".
+</div>
+
+	<h3>Books</h3>
+
+<a name="link_essentialcom">
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.amazon.com/exec/obidos/ASIN/0201634465">Essential COM</a></span>
+		by Don Box.
+</div>
+</a>
+
+<a name="link_effectivecom">
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.amazon.com/exec/obidos/ASIN/0201379686">Effective COM</a></span>
+		by Don Box, et al.
+</div>
+</a>
+
+<a name="link_cppprogramminglanguage">
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.amazon.com/exec/obidos/ASIN/0201889544">The C++ Programming Language (3rd Edition)</a></span>
+		by Bjarne Stroustrup.
+</div>
+</a>
+
+<a name="link_effectivecpp">
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.amazon.com/exec/obidos/ASIN/0201924889">Effective C++ (2nd Edition): 50 Specific Ways to Improve Your Programs and Designs</a></span>
+		by Scott Meyers.
+</div>
+</a>
+
+<a name="link_moreeffectivecpp">
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.amazon.com/exec/obidos/ASIN/020163371X">More Effective C++: 35 New Ways to Improve Your Programs and Designs</a></span>
+		by Scott Meyers.
+</div>
+</a>
+
+<a name="link_effectivecd">
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.amazon.com/exec/obidos/ASIN/0201310155">Effective C++ CD: 85 Specific Ways to Improve Your Programs and Designs</a></span>
+	by Scott Meyers.
+</div>
+</a>
+
+	<h3>People</h3>
+
+<a name="link_donbox">
+<div class="biblio-entry"><p>
+	<span class="doc-title"><a href="http://www.develop.com/dbox/">Don Box</a></span>
+		is a smart guy who has been writing about COM programming for a long time.
+</div>
+</a>
+
+<!--
+<h2>Colophon</h2>
+-->
+
+<div class="author-note">
+	<hr>
+	Copyright&copy; 1999 by the Mozilla organization; use is subject to the <a href="http://www.mozilla.org/NPL/">NPL</a>.
+</div>
+
+
+	</body>
+</html>

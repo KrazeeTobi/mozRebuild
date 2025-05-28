@@ -1,0 +1,155 @@
+<HTML>
+<HEAD>
+  <TITLE>Primitive Graph Control Scheduling Proof</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Primitive Graph Format</H2>
+
+
+<H2>Control Layer</H2>
+
+
+<H2>Control Scheduling</H2>
+
+
+<H2><FONT SIZE=+4>Proof</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="control_schedule_example.html"><IMG SRC="../arrows/left.gif" ALIGN=
+"BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="control_schedule.html"><IMG SRC=
+"../arrows/up.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A><A HREF="data_layer.html"><IMG SRC="../arrows/right.gif" ALIGN=
+"BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>Here we prove that <A HREF="control_schedule.html#phase3d">phase 3d</A>
+of our scheduling algorithm will (1) terminate and (2) not get stuck.</P>
+
+<H2>Termination</H2>
+
+
+<P>The algorithm terminates because at each point either:</P>
+
+<OL>
+  <LI>The number of elements in W goes down by one, possibly increasing the
+  size of the stack T, or
+  <LI>The number of elements on the stack T goes down by one.
+</OL>
+
+<P>By induction, since both the size of W and the size of T are initially
+positive and finite, both must eventually reach zero.</P>
+
+<H2>Liveness</H2>
+
+
+<P>The algorithm does not get stuck if, as long as at least one of T and
+W isn't empty, we can choose one of the three alternatives in <A HREF="control_schedule.html#phase3d">phase
+3d</A>. We will prove that, in fact, either alternative 2 or alternative
+3 will apply.</P>
+
+<P>Let LOOPS be the set of immediately nested loops in REG that contain
+at least one working node.</P>
+
+<P>Let CLIQUES be the set of cliques obtained by scheduling LOOPS.</P>
+
+<P><B>Lemma 1.</B> <I>Every short edge incoming to a node in R originates
+from a node in R or from the last node of some clique in CLIQUES.</I> This
+holds because of conditions 1 and 5 in <A HREF="control_schedule.html#phase3b">phase
+3b</A> and because once an edge is designated a long edge it is never changed
+to a short edge.</P>
+
+<P><B>Lemma 2.</B> <I>Every short edge incoming to a node in W originates
+from either W, the current node P, the last node of some clique on the stack
+T, or the last node of some clique in the schedule S<FONT SIZE=-2>L</FONT>,
+where L's header is in W</I>. We can prove this by induction. By lemma 1,
+it holds in the base case when W is R - {H}, P is H, and every immediate
+subloop's header is in W. For the induction case, we note that:</P>
+
+<OL>
+  <LI>Each time we assign a new value to P, we make every outgoing edge from
+  the old P node into a long edge.
+  <LI>Each time we remove a node N from W that is not the header of a subloop,
+  we assign P := N.
+  <LI>Each time we remove a node N from W that is the header of a subloop
+  L, we take one of L's cliques and assign its last node to P and we push
+  the remaining cliques of L onto the stack T.
+  <LI>Each time we pop a clique from the stack T, we assign its last node
+  to P.
+</OL>
+
+<P>In each of the above cases, if the induction hypothesis held before our
+action, it will hold after it as well.</P>
+
+<P><B>Lemma 3.</B> <I>Let F be the subgraph of the function's control graph
+consisting only of forward, exception, and return edges. F is acyclic ,
+every node in F is reachable from the function's begin node via edges in
+F, and the short edges form subgraph of F</I>. F is acyclic by constraint
+<A HREF="control_layer.html#CYCLES1">CYCLES1</A> on the control flow graph.
+Every node in F is reachable from the function's begin node via edges in
+F by constraint <A HREF="control_layer.html#CONNECTED1">CONNECTED1</A> on
+the control flow graph. The short edges form a subgraph of F by the initial
+construction of short edges in <A HREF="control_schedule.html#phase3b">phase
+3b</A>, where we defined every backward edge to be a long edge.</P>
+
+<P><B>Liveness.</B> Let us assume that we are stuck (none of the three alternatives
+applies) and we will show that we have scheduled all nodes in R. Let T be
+our current stack and W be our current subset of R - {H}. T must be empty;
+otherwise we could apply alternative 2 and we would not be stuck.</P>
+
+<P>Let F be as defined in lemma 3. Since F is acyclic, we can number all
+nodes in the control graph with unique numbers such that the source of any
+edge E in F has a number lower than the target of E. By lemma 3, the source
+of any short edge has a number strictly less than the target of that edge.</P>
+
+<P>If W is nonempty, let X be the node in W with the smallest number. By
+lemma 2, the only short edges pointing to X must be from one of the following
+sources:</P>
+
+<OL>
+  <LI>a node in W
+  <LI>P,
+  <LI>the last node of some clique on the stack T, or
+  <LI>the last node of some clique in the schedule S<FONT SIZE=-2>L</FONT>,
+  where L's header is in W.
+</OL>
+
+<P>Case 1 cannot apply because X's predecessor would be in W and yet have
+a smaller number than X, contradicting our choice of X. Case 3 cannot apply
+because T is empty.</P>
+
+<P>Suppose case 4 applies to X. Let L be any immediate subloop of REG that
+contains a node A such that A-&gt;X is a short edge, and let H<FONT SIZE=-2>L</FONT>
+be the header of loop L. By the definition of a loop, H<FONT SIZE=-2>L</FONT>
+dominates A, so H<FONT SIZE=-2>L</FONT>'s number must be less than or equal
+to A's number, which in turn is strictly less than X's number. Now, since
+case 4 applied to X, H<FONT SIZE=-2>L</FONT> is itself a member of W with
+a number less than X, which contradicts our choice of X. Hence case 4 cannot
+apply.</P>
+
+<P>Suppose case 2 applies to X. In this case node X is ready with respect
+to P, so we can choose alternative 3, contradicting the assumption that
+we are stuck. Thus, case 4 cannot apply to X either.</P>
+
+<P>Since none of the cases can apply to X, there must be no such X, implying
+that W is empty and we have already scheduled all nodes in R.<HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

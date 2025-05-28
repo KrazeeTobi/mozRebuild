@@ -1,0 +1,444 @@
+<HTML>
+<HEAD>
+<TITLE>Verification Process</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+	
+	
+
+
+
+
+<P>
+<H2><B>Mozilla Tree Verification Process</B></H2>
+<P><B>Author:</B> Chris Yeh<BR>
+Last updated: October 11th, 1999<BR>
+<BR>
+This document describes the verification process of the mozilla source tree which
+happens every weekday starting at 8 AM, US Pacific Time. It explains why we use this
+process, what happens during the process and who is involved.<BR>
+<BR>
+The format of this document is in a question/answer format. It can be read as either
+a whole document or as a FAQ.<BR>
+
+<HR>
+<BR>
+<BR>
+<A HREF="#How does the verification proces">How does the verification process work?</A>
+
+
+<BLOCKQUOTE>
+	<P><A HREF="#How does the verification proces">Wow. So all of the developers can't
+	check in code during this time period?</A><BR>
+	<BR>
+	<A HREF="#Isn't that terribly expensive in">Isn't that terribly expensive in terms
+	of development time?</A><BR>
+	<BR>
+	<A HREF="#Why not let people check in duri">Why not let people check in during the
+	verification?</A><BR>
+	<BR>
+	<A HREF="#Why not shift the time of the ve">Why not shift the time of the verification
+	earlier so that the time spent pulling and building a tree burns time when no one
+	is up at night?</A><BR>
+	<BR>
+	<A HREF="#Is there anything you can do to ">Is there anything you can do to make
+	the verification process take less time?</A><BR>
+	<BR>
+	<A HREF="#So do you really hold up all the">So do you really hold up all the developers
+	if a single platform is dead? What about the people working on other platforms?</A>
+
+</BLOCKQUOTE>
+
+<P><A HREF="#Where did the verification proce">Where did the verification process
+come from?</A><BR>
+<BR>
+<A HREF="#Why is the verification process ">Why is the verification process used?</A><BR>
+<BR>
+<A HREF="#What problem does the verificati">What problems does the verification process
+attempt to solve?</A><BR>
+<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="How does the verification proces"></A><B>How does the verification process
+work?</B><BR>
+<BR>
+The verification process starts by  &quot;closing&quot; the tree at 8 AM, Pacific
+Standard time. At this time, no developers are to commit source code changes to the
+revision control system.<BR>
+<BR>
+At 8:05 AM, a set of automated verification machines begin pulling a source code
+tree to build it.<BR>
+<BR>
+If there is a problem building the product on any of the verification machines, the
+machines page the release team informing of them of a problem. The release team member
+in charge of the verification will examine the build logs and determine the compile
+error that caused the build to stop. If the release engineer can determine the problem
+and implement a fix, a fix is committed to the source tree and the build is restarted.<BR>
+<BR>
+After the builds are complete on all verification machines, a set of runtime tests
+(called smoke tests) are performed on the binaries. The smoke tests are a subset
+of the full QA test suite. Tests are executed to look for feature or performance
+regressions in key areas.<BR>
+<BR>
+If the smoke tests fail on a particular platform (or in some cases, the binary crashes
+on startup) then the release engineer reports test failures to all of the engineers
+that checked in since the last verification build (known as &quot;The Hook&quot;
+as in being on the hook). The release engineer then looks at the last at the source
+changes and attempts to find the source check-in and engineer that may have caused
+the regression. If the release engineer can't find the cause quickly, the release
+engineer is then empowered to find a software engineer to assist him in tracking
+down the regression.<BR>
+<BR>
+Once the cause of the regression has been found, the release engineer and the
+software engineer find an owner for the bug and evaluate how long it will take
+to fix the problem. The estimated time to fix the bug is communicated to all developers.<BR>
+<BR>
+If a fix for the regression is ready, then the fix is  checked into the tree
+and the verification builds are rebuilt. When the builds are complete, the builds
+are then re-tested to verify the fix and ensure that another regression hasn't
+been introduced.<BR>
+<BR>
+If the fix is good, the builds are delivered to QA and the source tree is &quot;opened&quot;
+for code changes. Developers are free to commit source code changes to the revision
+control system.<BR>
+<BR>
+If a fix for the regression is not found, the release engineer and a group of
+developers re-evaluate the bug and decide if it is worth keeping the tree &quot;closed&quot;
+to additional changes. In some cases there has been sufficient progress in the bug
+investigation and the tree will re-open. In other cases it is determined that the
+regression have a workaround or are not critical features and the tree will re-open.
+In some rare cases the bug will be deemed so bad, so severe that the tree will remain
+closed (for sometimes days at a time) until a fix is found. Once a fix is found,
+the code is rebuilt and redelivered to QA.<BR>
+<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="Wow. So all of the developers ca"></A><B>Wow. So all of the developers can't
+check in code during this time period?</B><BR>
+<BR>
+Yes. Occasionally the release engineer in charge of the verification will grant exceptions
+to this rule. In most cases, we let people commit changes into the source tree that
+are not a part of the primary make process.<BR>
+<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="Isn't that terribly expensive in"></A><B>Isn't that terribly expensive in
+terms of development time?</B><BR>
+<BR>
+Yes. The verification process effectively prevents a large number of engineers from
+being able to commit changes to the source code. There are approximately 130 active
+Mozilla contributors (as of October 1999), so every minute the tree is closed equals
+130 minutes of development time that is lost.<BR>
+<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="Why not let people check in duri"></A><B>Why not let people check in during
+the verification?</B><BR>
+<BR>
+Letting people check in during the verification process destroys the ability to create
+a known baseline of performance and stability. More importantly, it makes the verification
+process take longer.<BR>
+<BR>
+The whole point of the verification is to verify buildability and create a stable
+platform for feature development. So let's assume that we allow changes to the source
+code during the verification:<BR>
+<BR>
+8:00 tree closes<BR>
+8:05 tree is built<BR>
+10:00 builds are being tested.<BR>
+10:10 engineers check in changes to source tree<BR>
+10:30 builds are verified to be okay, tree opens.<BR>
+<BR>
+What happens if the changes that were checked in at 10:10 caused the builds to crash
+at startup? One hundred engineers will pull a tree, thinking that they will get a
+stable platform to develop on when instead they will waste two hours building and
+have nothing to work with.<BR>
+<BR>
+In addition to failing to establish a baseline, you also make the investigation process
+harder if the regression fails. For example:<BR>
+<BR>
+8:00 tree closes<BR>
+8:05 tree is built<BR>
+10:00 builds are being tested.<BR>
+10:05 build fails tests, investigation starts into bug.<BR>
+10:10 other engineers check in changes to source tree<BR>
+10:30 fix in hand for failed test.<BR>
+10:35 rebuild verifications<BR>
+11:00 re-test builds, fail again.<BR>
+<BR>
+Now did we fail because the original fix was bad? Or because someone checked in new
+bugs?<BR>
+<BR>
+Complicating this is the cross platform nature of the code. Any fixes need to be
+tested on all platforms, because of compiler and runtime differences. So even fixes
+to address a bug on a particular platform could cause a regression on another platform.<BR>
+<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="Why not shift the time of the ve"></A><B>Why not shift the time of the verification
+earlier so that the time spent pulling and building a tree burns time when no one
+is up at night?</B><BR>
+<BR>
+The source code takes two hours to pull and build on the verification machines. The
+thinking is that this time can be used during the early morning hours when no one
+will be committing changes to the tree anyway. (The theory being that engineers are
+asleep during this time.)<BR>
+<BR>
+First, Mozilla is a global project. There are people working on the code at all times
+during the day. Secondly, geeks are notorious for staying up for ridiculous amounts
+of time to finish something. Third, it assumes that the verification goes off without
+any problems.<BR>
+<BR>
+Let's assume that engineers start work at 10:30 am Pacific Time and that we've moved
+the verification time to start at 6 am Pacific Time.<BR>
+<BR>
+6:00 tree closes<BR>
+6:05 tree is built<BR>
+8:00 builds are being tested.<BR>
+<BR>
+If there aren't any problems:<BR>
+<BR>
+8:30 open the tree.<BR>
+<BR>
+If we encounter a problem, then it looks like this:<BR>
+<BR>
+8:30 tests fail. wait until:<BR>
+10:30 start investigation with engineers.<BR>
+<BR>
+So you lose 120 minutes because no one is around to start the investigation and bug
+fixing. It's a false savings. You're betting that there won't be any problem. If
+there isn't a problem the tree is closed for 2.5 hours. If there is a problem, the
+tree is closed for at least 4.5 hours.<BR>
+<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="Is there anything you can do to "></A><B>Is there anything you can do to
+make the verification process take less time?</B><BR>
+<BR>
+The only constant in the process is the amount of time required to pull and build
+the tree on all verification platforms. This is where we throw money at the problem
+in the form of ultra-fast machines with lots of RAM, multiple CPU's and disk arrays.<BR>
+<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="So do you really hold up all the"></A><B>So do you really hold up all the
+developers if a single platform is dead? What about the people working on other platforms?</B><BR>
+<BR>
+In Mozilla, the reference platforms (Linux, Macintosh, Win32) are all equal. If one
+of them goes, we hold the tree.<BR>
+<BR>
+During the development Netscape Navigator and Netscape Communicator it was argued
+many times that based upon shipping deadlines and marketshare, we should care less
+about a particular set of platforms and fix regressions on the &quot;second-class&quot;
+platforms later. We tried this once. The reason why we don't have Netscape Communicator
+on Win16 was the result of putting off the recovery of that platform until later.
+After a couple of weeks recovery became impossible.<BR>
+<BR>
+If you have a regression on a platform, allowing other platforms to continue checking
+into a common codebase ends up stacking the deck against the one dead platform. The
+problems will stack up behind the original one as the codebase moves forward and
+it never catches up.<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="Where did the verification proce"></A><B>Where did the verification process
+come from?</B><BR>
+<BR>
+The verification process is the result of four years of development on Netscape Navigator
+and Netscape Communicator. Netscape Communicator was a large cross platform application
+built on shared library code on over 30 different computing platforms. It also had
+a large number of developers modifying into the code base at the same time.<BR>
+<BR>
+We use this process in Mozilla because the software has the same qualities. It is
+a large application that has shared code that must build and run on multiple platforms.
+As an open source project, it also has a large body of engineers contributing code.<BR>
+<BR>
+The verification process is a constantly evolving one as new challenges and problems
+arise. It's undergone at least four major changes as the software and the number
+of engineers on the project increased in size. It should be expected that it will
+change in the future to address scalability issues in the future.<BR>
+<BR>
+The verification process is just a part of what could be called &quot;The Mozilla
+Development Process&quot;. A more detailed document outlining the history and development
+of that process can be found here.<BR>
+<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="Why is the verification process "></A><B>Why is the verification process
+used?</B><BR>
+<BR>
+During the development of Netscape Navigator and Netscape Communicator we learned
+that developing a cross platform application with shared code was a tremendous undertaking.
+In order to be able to meet our deadlines and ship the software, this process was
+developed to ensure daily deliveries to QA and also provide developers a stable development
+platform on which to develop new features.<BR>
+<BR>
+
+<HR>
+<BR>
+<BR>
+<A NAME="What problem does the verificati"></A><B>What problems does the verification
+process attempt to solve?</B><BR>
+<BR>
+The verification process was developed in order to deliver builds to QA on a daily
+basis and ensure that developers had a stable code base with which to develop new
+features and bug fixes across multiple platforms. <BR>
+<BR>
+The verification process tries to address two problems: build/compile problems and
+runtime stability.<BR>
+<BR>
+<B>Build and Compile Problems</B><BR>
+<BR>
+This may sound easy, but in reality keeping the source tree building and compiling
+is a hard task. There are a number of issues that will stop your ability to compile
+the code across all platforms:<BR>
+<BR>
+<B>Compiler differences</B><BR>
+Each compiler implements the C/C++standard in a different way.
+This isn't merely code generation (which is going to be different across platforms)
+but also how the compiler handles errors and warnings. Some compilers are rather
+strict, while other compilers are rather forgiving. We try to set the error and warning
+levels to the same as much as possible, but even the settings are implemented differently
+from compiler to compiler.<BR>
+<BR>
+As a result, code that will happily compile under one compiler will cause another
+compiler to spew two pages of error warnings or even crash. Code that executes fine
+under one compiler causes a crash on another compiler because of differences in the
+implementation of 'int'.<BR>
+<BR>
+<B>Build system differences.</B><BR>
+<BR>
+This could alternatively titled &quot;Build Lore differences.&quot; The reference
+platforms that Mozilla uses (currently Macintosh PPC, Linux glibc, and Win32) have
+different build systems because the build tools and platform dictate it. As a result,
+it can be difficult to remember what needs to be done on each platform. Documentation
+alleviates some of this but it doesn't replace hard technical knowledge of each platform's
+idiosyncrasies.<BR>
+<BR>
+<B>Broken dependencies</B><BR>
+<BR>
+The majority of developers pull a tree, make changes to the code and then commit
+them to the revision control system. Then they update their source code and do a
+depend build in their current tree. In a perfect system all dependencies would be
+known and accounted for and everything would get rebuilt when it needed to. <BR>
+<BR>
+However, the world is far from perfect. There have been occasions where we've discovered
+holes in the build system where you can't build from a tree pulled from scratch.<BR>
+<BR>
+<B>Debug vs. Optimized</B><BR>
+<BR>
+Developers build debug. QA wants to test optimized. Occasionally changes made to
+the build system will work on debug and not on optimized builds. <BR>
+<BR>
+<B>Runtime stability.</B><BR>
+<BR>
+The program has be stable enough to serve as a platform to code new features. You
+can't verify new features if the program is crashing at startup or has major runtime
+flaws. Being able to pull a tree and build it is useless unless you can execute the
+program long enough create and debug new code.
+
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/build/verification.html&amp;rev=&amp;root=/cvsroot/">Last modified October 25,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

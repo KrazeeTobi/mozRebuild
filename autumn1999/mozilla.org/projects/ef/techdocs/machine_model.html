@@ -1,0 +1,168 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Physical Machine Model</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#ff0000">Electrical Fire</FONT></H2>
+
+
+<H2>Requirements</H2>
+
+
+<H2><FONT SIZE=+4>Physical Machine Model</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"electricalfire.gif" ALIGN="BOTTOM"></A>  <A HREF="performance.html"><IMG SRC="arrows/left.gif" ALIGN="BOTTOM"></A><A
+HREF="requirements.html"><IMG SRC="arrows/up.gif" WIDTH="37" HEIGHT="37"
+ALIGN="BOTTOM" NATURALSIZEFLAG="3"></A><A HREF="design.html"><IMG SRC="arrows/right.gif"
+ALIGN="BOTTOM"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P></P>
+
+<P><FONT COLOR="#996633">Updated May 15, 1997.</FONT></P>
+
+<P>We make the following assumptions and requirements on the implementation
+of the Java virtual machine:</P>
+
+<H3>General</H3>
+
+
+<UL>
+  <LI>All values will use their native endian conventions and alignments.
+  <LI>All floating-point arithmetic will be done using IEEE arithmetic using
+  the precision and rounding as specified by the Java specification <A HREF=
+  "bibliography.html#GJS96">[GJS96]</A>. On processors such as the x86 this
+  means that we'll have to generate extra code to reduce the 80-bit precision
+  of intermediate results down to Java's IEEE 64 or 32-bit formats.
+  <LI>We will <I>initialize</I> a Java class only lazily, at its first active
+  use (<A HREF="bibliography.html#GJS96">[GJS96]</A> page 223), but we reserve
+  the right to do eager or partially eager class <I>resolution</I> (<A HREF=
+  "bibliography.html#GJS96">[GJS96]</A> page 217). This means that when a
+  Java class C1 is run, other classes referenced, directly or indirectly,
+  from C1 may be verified and resolved (but not initialized) even if C1 has
+  not yet actively used them. This is consistent with the spirit and the
+  letter of the Java specification. We realize that there may be user-visible
+  advantages in doing class resolution lazily, and we'll try to reach a compromise
+  between the users' ability to run programs that are incomplete (specifically,
+  not strictly resolvable) in various ways and the implementation complexity
+  that supporting this would require.
+</UL>
+
+<H3>Java Objects</H3>
+
+
+<UL>
+  <LI>The compiled code refers to Java objects via pointers. No double indirection
+  is needed.
+  <LI>Each Java object consists of a small, fixed-size header and instance
+  fields; we can access these via fixed offsets from the object's pointer.
+  All data in an object is contiguous.
+  <LI>Fields of Java type <CODE>boolean</CODE>, <CODE>byte</CODE>, <CODE>char</CODE>,
+  <CODE>short</CODE>, <CODE>int</CODE>, <CODE>long</CODE>, <CODE>float</CODE>,
+  <CODE>double</CODE> and <CODE>Object</CODE> (or any subclass thereof) are
+  laid out exactly like the target system's C compiler would lay out <CODE>struct</CODE>
+  fields of type <CODE>char</CODE>, <CODE>int8</CODE>, <CODE>uint16</CODE>,
+  <CODE>int16</CODE>, <CODE>int32</CODE>, <CODE>int64</CODE>, <CODE>float32</CODE>,
+  <CODE>float64</CODE>, and <CODE>void*</CODE> respectively.
+  <LI>Java <CODE>null</CODE> is represented by a zero pointer.
+  <LI>A Java array consists of a small, fixed-size header (in the same format
+  and offset as a non-array object's header), an element count word, and
+  the contents of the array. The number of elements in an array is set when
+  the array is created and cannot be changed afterwards. No double indirection
+  is needed to access an array element.
+  <LI><CODE>boolean</CODE> arrays use one byte per element, just like <CODE>byte</CODE>
+  arrays. (We can implement packed <CODE>boolean</CODE> arrays in the future.)
+  <LI>An object's header contains information that can be used to quickly
+  find the object's class and that class's method lookup tables.
+</UL>
+
+<H3>Calling Conventions</H3>
+
+
+<UL>
+  <LI>Compiled methods use the native C++ parameter and result-passing conventions.
+  When the native C and C++ parameter and result-passing conventions differ,
+  we will use the C++ conventions because they are generally more efficient.
+  <LI>Compiled methods use the native C/C++ register saving and restoring
+  conventions.
+  <LI>Compiled methods use the native C++ register frame layout conventions.
+  <LI>Unless doing so would be a burden or inefficient, the virtual machine
+  will use the preferred native means for examining frames on the stack (for
+  purposes such as security checks).
+  <LI>Unless doing so would be a burden or inefficient, the virtual machine
+  will use the same exception-throwing and stack-unwinding conventions as
+  the native C++ compiler. This reduces the complexity of unwinding thrown
+  exceptions past native stack frames.
+  <LI>It is our intent that no stubs will be required to call between native
+  and Java methods.
+</UL>
+
+<H3>Method Dispatching</H3>
+
+
+<UL>
+  <LI>We will use vtables for dispatching method calls on methods defined
+  in classes. We have not yet specified an approach for dispatching method
+  calls on methods defined in interfaces.
+</UL>
+
+<H3>Synchronization</H3>
+
+
+<UL>
+  <LI>We assume that context switches between threads or processes can happen
+  at any time, even in the middle of executing a native instruction (this
+  might happen if we're running on a multiprocessor). We assume that the
+  only atomic operations are the native instructions that specifically guarantee
+  synchronization.
+  <LI>We will assume some reasonable standard model about consistency between
+  memory operations of native threads running concurrently. For instance,
+  we could assume that all memory accesses can be put into a total chronological
+  order that is consistent with the partial order that each native thread
+  perceives. However, if desirable, we could choose to assume a less demanding
+  shared memory model.
+  <LI>We do not assume that the operating system lets us run any special
+  code when context switching.
+  <LI>On some or all platforms we may want to have a fast way to reach thread-local
+  storage from an executing thread.
+</UL>
+
+<H3>Garbage Collection</H3>
+
+
+<UL>
+  <LI>We will provide enough information so that the run-time system can
+  determine the exact type of every instance field of every Java object and
+  array; thus Java objects and arrays can be scanned nonconservatively.
+  <LI>We may or may not be able to provide exact typing information for data
+  in registers and on the stack.
+  <LI>We intend to never have a situation where an object is live but the
+  only pointers to it are interior pointers (i.e. point to its middle instead
+  of its beginning). Hence, a conservative garbage collector can safely ignore
+  pointers that don't point to the beginning of an object (assuming that
+  native methods follow the same convention).
+  <LI>To reduce the possibility of an integer masquerading as a pointer to
+  the beginning of an object, we are able to offset all object field accesses
+  by a small constant (thus making all true object pointers end in a bit
+  pattern other than 00). We'd only do this if the garbage collector so desires.
+  <LI>To eliminate stale object pointers on the stack, we could provide information
+  about which stack slots are live and/or clear dead slots. Note, however,
+  that the latter would lead to a loss of performance.
+</UL>
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

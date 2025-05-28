@@ -1,0 +1,112 @@
+
+// Event handler for display togglers in Table of Contents
+function toggleDisplay(event)
+{
+  var img = event.target;
+  var div = img.nextSibling.nextSibling; 
+
+  // Change the display: property of the container to
+  // hide and show the container.
+  if (div.style.display == "none") {
+    div.style.display = "block";
+    img.src = "minus.gif";
+  }
+  else {
+    div.style.display = "none";
+    img.src = "plus.gif";
+  }
+}
+
+// Function that recurses down the tree, looking for 
+// structural elements. For each structural element,
+// a corresponding element is created in the table of
+// contents.
+var searchTags = new Array("book", "chapter", "section");
+var tocTags = new Array("level1", "level2", "level3");
+function addToToc(root, tocFrame)
+{
+  var i;
+  var newTocFrame = tocFrame;
+  var newTocElement = null;
+  var link = null;
+
+  for (i=0; i < searchTags.length; i++) {
+    if (root.tagName == searchTags[i]) {
+      // If we've found a structural element, create the
+      // equivalent TOC element.
+      newTocElement = document.createElement(tocTags[i]);
+
+      // The link element contains the title text and
+      // acts as a link to the corresponding structural element
+      link = document.createElement("toclink");
+      link.setAttribute("xml:link", "simple");
+      link.setAttribute("href", "#"+ root.getAttribute("id"));
+      link.setAttribute("show", "replace");
+      newTocElement.appendChild(link);
+
+      // Create the image and toggling container in the table of contents
+      if (i < searchTags.length-1) {
+        // DOM Level 1 does not have a way to specify the namespace
+        // of an element at creation time. The W3C DOM Working Group is 
+        // considering such a mechanism for DOM Level 2. In the interim, 
+        // we've created the one used below. It will be removed in favor 
+        // of the standard version in Level 2.
+        var img = document.createElementWithNameSpace("img", "http://www.w3.org/TR/REC-html40");
+        img.src = "minus.gif";
+        img.onmouseup = toggleDisplay;
+        newTocElement.insertBefore(img, link);
+
+        newTocFrame = document.createElementWithNameSpace("div", "http://www.w3.org/TR/REC-html40");
+        newTocElement.appendChild(newTocFrame);
+      }
+      else {
+        newTocFrame = null;
+      }
+
+      tocFrame.appendChild(newTocElement);
+
+      break;
+    }
+  }
+
+  // Recurse down through the childNodes list
+  for (i=0; i < root.childNodes.length; i++) {
+    var child = root.childNodes[i];
+    if (child.nodeType == Node.ELEMENT_NODE) {
+      if ((newTocElement != null) && (child.tagName == "title")) {
+        var text = child.firstChild.cloneNode(true);
+        link.appendChild(text);
+      }
+      else {
+        addToToc(child, newTocFrame);
+      }
+    }
+  }
+}
+
+// Create the root table of contents element (a fixed element)
+// and its contents.
+function createToc()
+{
+  if (document.getElementsByTagName("toc").length == 0) {
+    var toc = document.createElement("toc");
+    var title = document.createElement("title");
+    title.appendChild(document.createTextNode("Table of Contents"));
+    toc.appendChild(title);
+
+    // Recurse down and build up the document element
+    addToToc(document.documentElement, toc);
+  
+    // Since we've created the toc element as a fixed element,
+    // insert a rule that shifts over the document element by
+    // the width of the toc element.
+    document.styleSheets[0].insertRule("book {margin-left:12em;}", 0);
+    document.documentElement.appendChild(toc);
+  }
+}
+
+function initiateCreateToc()
+{
+   setTimeout(createToc, 0);
+}
+

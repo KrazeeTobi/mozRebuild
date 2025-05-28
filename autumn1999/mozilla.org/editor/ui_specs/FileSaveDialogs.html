@@ -1,0 +1,620 @@
+<HTML>
+<HEAD>
+<TITLE>File Save Dialogs</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<h1>
+File Saving Dialogs</h1>
+
+<div align=right><font size=-1>Last updated 1/20/99 by Charles Manske</font>
+<br><font size=-1>(<a href="mailto:cmanske@netscape.com">cmanske@netscape.com</a>)</font></div>
+
+<h2>
+1.&nbsp;<a NAME="SaveChanges"></a>Save Changes</h2>
+
+<table BORDER=0 CELLSPACING=2 CELLPADDING=2 >
+<tr VALIGN=TOP>
+<td>Windows:</td>
+
+<td>Mac:</td>
+
+<td>UNIX:</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><img SRC="SaveChangesDlg_W.gif" BORDER=0 height=119 width=230></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<h3>
+Invoke</h3>
+
+<blockquote>The current document is not a new document (it is a remote
+or local file URL) that has been changed and the user attempts to:
+<ul>
+<li>
+Exit the app: File | Exit or during shut down of the computer</li>
+
+<li>
+Close the Composer window: File | Close or the OS-specific close window
+button</li>
+
+<li>
+Preview page in Browser: File | Browse Page or the Preview toolbar button</li>
+
+<li>
+Edit page in an external editor: Edit | HTML Source</li>
+</ul>
+</blockquote>
+
+<h3>
+Initialization</h3>
+
+<blockquote>The current URL is inserted as the second line of the message.</blockquote>
+
+<h3>
+Actions</h3>
+
+<blockquote>Current behavior:
+<table BORDER COLS=2 WIDTH="80%" >
+<tr>
+<th WIDTH="100">Click Button</th>
+
+<th>Response</th>
+</tr>
+
+<tr>
+<td>Yes</td>
+
+<td>Save the file to a local disk then continue with original requested
+action. If the original location is a remote URL, then this brings up the
+OS-specific "Save As" dialog so user can enter a local filename and select
+the folder to place a local copy of the document.
+<br>If the file already existed on a local disk, this will cause the&nbsp;
+<br>Note: If original location is remote URL, this action is not necessarily
+what the user wants. See suggested changes below.</td>
+</tr>
+
+<tr>
+<td>No</td>
+
+<td>Don't save the file and continue with the requested action.
+<br>Note: This could cause some problems if editing with an external editor
+-- see the&nbsp; <a href="EditChangesDlg.html">Select Edit Changes Dialog</a></td>
+</tr>
+
+<tr>
+<td>Cancel</td>
+
+<td>Don't save the file and don't continue with the requested action.</td>
+</tr>
+</table>
+</blockquote>
+
+<h3>
+Enhancements</h3>
+
+<ol>
+<li>
+The current implementation uses the generic "FE_Alert" mechanism, which
+always uses the application name (such as the "Mozilla" shown above) as
+the dialog caption. We suggest enhancing this so a custom caption string
+can be used, such as "Save Changes," or implement this as a custom dialog
+so we can use that string as the dialog caption.</li>
+
+<li>
+Suggested change in buttons when the document being edited is a remote
+URL (this might be best implemented as a separate dialog):</li>
+</ol>
+
+<blockquote>&nbsp;
+<table BORDER COLS=2 WIDTH="80%" >
+<tr>
+<th WIDTH="100">Click Button</th>
+
+<th>Response</th>
+</tr>
+
+<tr>
+<td>Save locally...</td>
+
+<td>Bring up the "Save As" dialog to save the file to a local disk then
+continue with original requested action (same as current "Yes" action)</td>
+</tr>
+
+<tr>
+<td>Publish...</td>
+
+<td>Bring up the Publish dialog so user can publish back to the original
+location</td>
+</tr>
+
+<tr>
+<td>Don't save</td>
+
+<td>Same as the current "No" action</td>
+</tr>
+
+<tr>
+<td>Cancel</td>
+
+<td>Same as the current "Cancel" action</td>
+</tr>
+</table>
+</blockquote>
+
+<h2>
+
+<hr ALIGN=LEFT WIDTH="100%">2.&nbsp;<a NAME="SaveNewPage"></a>Save New
+Page</h2>
+
+<table BORDER=0 CELLSPACING=2 CELLPADDING=2 >
+<tr VALIGN=TOP>
+<td>Windows:</td>
+
+<td>Mac:</td>
+
+<td>UNIX:</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><img SRC="SaveOrPublishDlg_W.gif" BORDER=0 height=124 width=306></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<h3>
+Invoke</h3>
+
+<blockquote>The user has created and edited a new document and then tries
+to:
+<ul>
+<li>
+Preview page in Browser: File | Browse Page or the Preview toolbar button</li>
+
+<li>
+Edit page in an external editor: Edit | HTML Source:</li>
+</ul>
+</blockquote>
+
+<h3>
+Initialization</h3>
+
+<blockquote>Nothing special</blockquote>
+
+<h3>
+Actions</h3>
+
+<blockquote>&nbsp;
+<table BORDER COLS=2 WIDTH="80%" >
+<tr>
+<th WIDTH="100">Click Button</th>
+
+<th>Response</th>
+</tr>
+
+<tr>
+<td>Save...</td>
+
+<td>Terminate this dialog and bring up OS-specific "Save As" dialog to
+let user save locally, then continue with Preview or Edit page action.</td>
+</tr>
+
+<tr>
+<td>Publish...</td>
+
+<td>Terminate this dialog and bring up the Publishing Dialog.
+<br>This does <i>not</i> continue with the Preview or Edit page action
+(although that would be a good thing to do!)</td>
+</tr>
+
+<tr>
+<td>Cancel</td>
+
+<td>Cancel saving the document and don't continue with the Preview or Edit
+page action.</td>
+</tr>
+</table>
+</blockquote>
+
+<h2>
+
+<hr ALIGN=LEFT WIDTH="100%">3.&nbsp;<a NAME="ConfirmSaveFile"></a>Confirm
+Save File</h2>
+
+<table BORDER=0 CELLSPACING=2 CELLPADDING=2 >
+<tr VALIGN=TOP>
+<td>Windows:</td>
+
+<td>Mac:</td>
+
+<td>UNIX:</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b>A. </b>The following version is built into the OS:
+<br><img SRC="ConfirmSaveDlg_W.gif" BORDER=0 height=119 width=275>
+<p><b>B. </b>This version is used when saving an HTML page&nbsp;
+<br>including images:
+<br><img SRC="ConfirmSaveFile2_W.gif" height=153 width=381></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<h3>
+Invoke</h3>
+
+<blockquote>During file saving on a local disk if the file already exists:
+File | Save As. Note: File | Save or the toolbar Save button will also
+invoke the "Save As" dialog if the page is a new document that hasn't been
+saved or published before.
+<ol TYPE=A>
+<li>
+Version <b>A </b>occurs when user is currently in the built-in, OS-specific
+"Save As" dialog and tries to save to a file that already exists.</li>
+
+<li>
+Version <b>B</b> occurs when we are saving an HTML file that has images
+and the "Keep images with page" preference (Edit | Preferences | Composer
+| Publishing) is checked. Thus we are copying image files to a destination
+where file(s) with the same name already exist. It is invoked separately
+for each existing image filename encountered, unless user selects "Yes
+to All" or "No to All" during the file saving process.</li>
+</ol>
+</blockquote>
+
+<h3>
+Initialization</h3>
+
+<blockquote>Current filename is inserted as the first line of text in the
+dialog. (Current version uses bold text, but we may not want to do that
+in the new version.)</blockquote>
+
+<h3>
+Actions</h3>
+
+<blockquote>&nbsp;
+<table BORDER COLS=2 WIDTH="80%" >
+<tr>
+<th WIDTH="100">Click Button</th>
+
+<th>Response</th>
+</tr>
+
+<tr>
+<td>Yes</td>
+
+<td>Overwrite existing file with the same name</td>
+</tr>
+
+<tr>
+<td>Yes to All</td>
+
+<td>Overwrite this file and all others that may already exist at the destination
+location (Version <b>B</b> only)</td>
+</tr>
+
+<tr>
+<td>No</td>
+
+<td>Version <b>A:</b> Simply put the user back in the "Save As" dialog
+so user can type or select a different filename
+<br>Version <b>B:</b> Don't overwrite existing file and continue checking
+other files.</td>
+</tr>
+
+<tr>
+<td>No to All</td>
+
+<td>Don't overwrite this file or any others that may already exist.&nbsp;
+(Version <b>B</b> only)</td>
+</tr>
+
+<tr>
+<td>Cancel</td>
+
+<td>Stop saving this and all other image files&nbsp; (Version <b>B</b>
+only)</td>
+</tr>
+</table>
+</blockquote>
+
+<h2>
+
+<hr ALIGN=LEFT WIDTH="100%"><a NAME="SavingPublishingPage"></a>4. Saving
+/ Publishing Page</h2>
+
+<table BORDER=0 CELLSPACING=2 CELLPADDING=2 >
+<tr VALIGN=TOP>
+<td>Windows:</td>
+
+<td>Mac:</td>
+
+<td>UNIX:</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><img SRC="ProgessSave_W.gif" BORDER=0 height=129 width=381><img SRC="ProgressPublish_W.gif" BORDER=0 height=129 width=381></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<h3>
+Invoke</h3>
+
+<blockquote>
+<li>
+During the copying of files during saving or publishing: Create the dialog
+at the beginning of the file save or publish process.</li>
+
+<li>
+This is a technically a non-modal dialog, in that it is created at the
+beginning of saving, then updated as saving progresses, then it is destroyed
+automatically when saving is finished.</li>
+
+<li>
+The user is not allowed to interact with the document while files are being
+saved, so to the user the dialog appears to be modal.</li>
+</blockquote>
+
+<h3>
+Initialization</h3>
+
+<ol>
+<li>
+Set the dialog caption and message appropriate to usage: Saving to local
+disk or Publishing.</li>
+
+<li>
+When dialog is created, pass in the URL of the HTML file being copied and
+the total number of files being copied (1 for the HTML file + number of
+images in the document.) Display this URL in the center of the dialog and
+format the file-count message in the upper right corner to show: "File
+1 of x", where x is total number of files.</li>
+
+<li>
+</li>
+</ol>
+
+<h3>
+Dialog Rules</h3>
+
+<ol>
+<li>
+For each image copied, notify the the dialog so the URL of the image and
+the "File y of x" text can be updated to show which file is being copied.</li>
+
+<li>
+After the last file is copied, destroy the dialog automatically and remove
+suppression of user interaction.</li>
+</ol>
+
+<h3>
+Actions</h3>
+
+<blockquote>&nbsp;
+<table BORDER COLS=2 WIDTH="80%" >
+<tr>
+<th WIDTH="100">Click Button</th>
+
+<th>Response</th>
+</tr>
+
+<tr VALIGN=TOP>
+<td>Cancel</td>
+
+<td>Abort the saving/publishing process. All files already copied are not
+affected.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td></td>
+
+<td></td>
+</tr>
+</table>
+</blockquote>
+
+<h2>
+
+<hr ALIGN=LEFT WIDTH="100%"><a NAME="PageTitle"></a>5. Page Title</h2>
+
+<table BORDER=0 CELLSPACING=2 CELLPADDING=2 >
+<tr VALIGN=TOP>
+<td>Windows:</td>
+
+<td>Mac:</td>
+
+<td>UNIX:</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><img SRC="PageTitleDlg_W.gif" BORDER=0 height=202 width=363></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<h3>
+Invoke</h3>
+
+<blockquote>After user selects a filename to save a file to local disk,
+but only if the current document does not have a title (usually only after
+saving a new document.)</blockquote>
+
+<h3>
+Initialization</h3>
+
+<blockquote>
+<ol>
+<li>
+Get the filename from the document's URL (strip out all host and directory
+prefix, and file extension after the name.) Use the filename as the initial
+value of the page title editbox.</li>
+
+<li>
+All other strings in the dialog are static.</li>
+</ol>
+</blockquote>
+
+<h3>
+Actions</h3>
+
+<blockquote>&nbsp;
+<table BORDER COLS=2 WIDTH="80%" >
+<tr>
+<th WIDTH="100">Click Button
+<br>User Action</th>
+
+<th>Response</th>
+</tr>
+
+<tr VALIGN=TOP>
+<td>OK</td>
+
+<td>Set the document data to the user-enterred title. Also update other
+places where the title is used, such as on the window caption bar.
+<br>Continue saving the file</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>Cancel</td>
+
+<td>Continue saving the file with an empty title (no TITLE tag should be
+written).
+<br><i>Do no use a Cancel button at all if we want to force a title.</i></td>
+</tr>
+</table>
+</blockquote>
+
+<h3>
+Enhancements</h3>
+
+<blockquote>According the the <a href="http://www.w3.org/TR/REC-html40/struct/global.html#h-7.4.2">HTML
+4.0 specification</a>, "Every HTML document must have a TITLE element in
+the HEAD section."
+<br>It is certainly a good idea and we should strongly encourage users
+to at least accept the default filename supplied by this dialog. If we
+want to require the user to enter a title, then we should:
+<ol>
+<li>
+Disable the OK button if the editbox is empty</li>
+
+<li>
+Eliminate the Cancel button since the user cannot cancel the action.</li>
+</ol>
+</blockquote>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/editor/ui_specs/FileSaveDialogs.html&amp;rev=&amp;root=/cvsroot/">Last modified January 25,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

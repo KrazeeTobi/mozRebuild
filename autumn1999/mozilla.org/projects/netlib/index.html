@@ -1,0 +1,315 @@
+<HTML>
+<HEAD>
+<TITLE>Necko: A new netlib kernel architecture (it's wafer thin)</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<center><img SRC="neccoroll.jpg" HSPACE=5 BORDER=0 height=63 width=200></center>
+
+<center>
+<h1>
+necko: the new netlib project</h1></center>
+
+<center>
+<h2>
+<i>"it's wafer thin"</i></h2></center>
+Last updated: 4/14/99
+<br>Author: Warren Harris &amp; Rick Potts
+<p>Mozilla's current networking library is in a sorry state. Remnants of
+the old "mozilla classic" codebase pervade, and coupled with the fact that
+it was designed for a radically different non-threaded world where it was
+the primary scheduler for the browser (and performance is abysmal because
+this is no longer the case causing us to have to "poll" netlib to get any
+work done) -- we decided that it was about time to take the situation under
+control. [<a href="history.html">historical reference</a>]
+<h2>
+overview</h2>
+The main function that the netlib kernel serves is to act as an efficient
+data pipe between multiple physical transports (ie. file system, network,
+etc.) and a standardized stream abstraction which protocol handlers consume.
+<h2>
+goals</h2>
+There are three main design goals in the Necko kernel architecture - footprint,
+maintainability and performance.
+<p>It is hoped that both the disk and memory footprint of Necko will be
+substantially smaller than the existing netlib.&nbsp; Existing dead code
+will be eliminated and the new modular design will allow "just enough"
+networking support to be loaded at any one time.&nbsp; This is in contrast
+to the existing netlib which is monolithic (500k for the core, not including
+mail/news protocols).
+<p>It is hoped that the new modular design and implementation of Necko
+will prove more maintainable than the existing code base.&nbsp; The biggest
+maintenance issues with the existing code base are its age (almost 5 years
+old) and the fact that the code was designed for a very different client
+architecture than Gecko. This new design is tailored toward a component-based
+client and is well suited to an open source environment where individuals
+can contribute new custom functionality to augment the core kernel implementation.
+<p>The implementation of Necko will include instrumentation mechanisms
+allowing a quantitive analysis of performance.&nbsp; Also, the pluggable
+nature of this architecture allows for custom (platform dependent) implementations
+to be substituted for the XP reference implementations provided within
+the netlib kernel.&nbsp; For example, a custom Win32 specific transport
+module could be written to maximize the performance of file I/O by utilizing
+platform specific APIs...
+<h2>
+architecture</h2>
+The netlib kernel can be divided into several functional pieces.
+<ul>
+<li>
+URLs</li>
+
+<li>
+Protocol handlers</li>
+
+<li>
+Protocol connections</li>
+
+<li>
+Transports</li>
+
+<li>
+Supporting services</li>
+</ul>
+The following diagram illustrates the basic architecture:
+<center><img SRC="ArchDiagram.jpg" height=464 width=503></center>
+
+<p>The application program initiates a network request by consructing a
+URL object and loading it. The network service (nsINetService) is a global
+singleton object obtained from the service manager that facilitates the
+construction and opening of URLs. The network service also provides functionality
+needed to support plug-in protocol implementations.
+<p>The network service extracts the scheme of the URL (the protocol name
+portion, e.g. "http:") and looks up a protocol handler to field the request.
+The protocol handler begins by constructing a URL object designed to work
+hand-in-hand with the protocol. The URL object can be an implementation
+supporting
+custom parsing code for that protocol's specified URL syntax, or a can
+be a "typical" URL implementation (one that only supports the accessors
+of nsIUrl, e.g. host, port, path, etc.) if that is all that is required
+by the protocol.
+<p>After building the URL object, the network service again contacts the
+protocol handler to load the URL. The protocol handler is then responsible
+for constructing a protocol connection object (nsIProtocolConnection) for
+the URL request. There is a one-to-one correspondence between protocol
+connections and URL load requests.
+<p>The protocol connection provides any protocol-specific accessors required
+by the protocol. For example, for the http protocol these include accessing
+the headers, making byte range requests, posting, etc. Any protocol-specific
+interfaces are obtained by calling QueryInterface on the protocol connection.
+<h3>
+transports and threading</h3>
+Within the protocol connection's implementation, transport objects (nsITransport)
+are used to make actual physical connections to the sources of data. The
+two most prominent examples of transports are socket transports for reading
+and writing to network sockets, and file transports for reading and writing
+to the file system. Others might include a JAR-file transport (for accessing
+data from JAR or ZIP files), or perhaps a timer transport (for getting
+periodic callbacks). Some protocols like http may reuse open transports
+for "keep alive" requests.
+<p>Transports will run in their own logical thread, thereby allowing the
+application thread(s) to run asynchronously. When data comes in for a transport,
+the transport thread will marshal that data over to the application thread.
+The application thread will actually deal with parsing the incoming data
+(the protocol packet), and then pass application-specific data contained
+therein up to the application through a "protocol event sink." For the
+http protocol, the event sink will call the html parser as well as deliver
+progress and status notifications. For protocols like IMAP, the event sink
+will notify of events like new folder creation or incoming message arrival.
+<p>For socket transport requests, there will most likely be a single socket
+transport thread managing a pool of file descriptors for all outstanding
+socket requests. When data comes in for a socket, the socket transport
+thread will marshal that data over to the application thread. For file
+transport requests, there will be a default implementation of the file
+transport service that manages a pool of threads. Each incoming file transport
+request will be dispatched to the next available file transport thread.
+The number of file transport threads will be small (like 4), and is a tuning
+parameter. Again, when data comes in from a file, the file transport thread
+will marshal the data over to the application thread.
+<p>Applications received the marshaled data in one of two ways: synchronously
+or asynchronously. By requesting an input or output stream from a connection,
+applications can operate synchronously with respect to the protocol, blocking
+on read and write operations, respectively. This technique is used by protocol
+implementations that run in their own thread and can afford to block (and
+do nothing else) while waiting for data to come in from the transport.
+By making an asynchronous read or write request, applications can share
+their thread between parsing the protocol and performing other activities
+(such as running the UI). Using this technique, events will be delivered
+to the thread's event loop when data arrives, calling a stream listener
+(nsIStreamListener) that was supplied when the asynchronous request was
+made. Protocol-specific accesses can be done is a similar way, either synchronously
+or asynchronously. These will manifest themselves as "outbound commands"
+on the connection, or as asynchronous requests and "inbound events" on
+the application's event sink respectively (see the diagram, above).
+<p>Isolating the transport from the protocol handlers provides a single
+point where platform specific optimizations can be performed on a per transport
+basis.&nbsp; For example, a custom Win32 implementation of the file transport
+using overlapped file I/O could be written without disturbing the rest
+of the netlib implementation. Each transport is responsible for efficiently
+scheduling its transport requests. In general, a transport implementation
+will run in its own thread to avoid polling. Transport implementations
+are responsible for timing out requests which have not been fulfilled within
+a specific amount of time. The transport layer also provides a central
+point to perform resource throttling (ie. limiting the number of simultaneous
+connections) and connection pooling such as reusing open connections for
+subsequent requests.
+<h2>
+getting involved</h2>
+Here's a brief list of some initial ways you could get involved in the
+Necko project:
+<ul>
+<li>
+provide general feedback on our design and implementation</li>
+
+<li>
+build stand-alone tests for the file and socket transport layers</li>
+
+<li>
+build a general stand-alone test harness for testing the various protocols</li>
+
+<li>
+write a wrapper to allow the Microsoft inet.dll to work under the Necko
+APIs</li>
+
+<li>
+write a wrapper to allow whatever inet-equivalent networking code that
+may exist on the Mac to work under the Necko APIs</li>
+
+<li>
+measure performance and provide optimizations</li>
+
+<li>
+implement platform-specific async-I/O to replace thread-pool based file
+transport</li>
+
+<li>
+implement miscellaneous protocols, e.g. WAIS, Gopher (after protocol architecture
+is further along)</li>
+
+<li>
+implement a telnet protocol and terminal window that fits into the general
+XUL-based browser UI (extra credit)</li>
+
+<li>
+help us compile a document describing networking "gotchas" that we need
+to keep in mind as we proceed</li>
+
+<li>
+<i>you tell us what you'd like to do...</i></li>
+</ul>
+Here's a list of the current team members and what they're up to in case
+you'd like to contact them about specific questions and issues (please
+use the newsgroup, below):
+<ul>
+<li>
+Rick Potts -- core architecture, socket transport</li>
+
+<li>
+Gagan Saksena -- http protocol, cache architecture</li>
+
+<li>
+Hubert Shaw -- security issues</li>
+
+<li>
+Gordon Sheridan -- async dns implementation</li>
+
+<li>
+Judson Valeski -- ftp protocol</li>
+
+<li>
+Warren Harris -- core architecture, file transort, http protocol</li>
+</ul>
+Please join the Necko design descussions at <a href="news://news.mozilla.org/netscape.public.mozilla.netlib">netscape.public.mozilla.netlib</a>.
+<br>Tour our lovely source tree at&nbsp; <a href="http://cvs-mirror.mozilla.org/webtools/bonsai/rview.cgi?cvsroot=/cvsroot&dir=mozilla/netwerk&module=MozillaSource">Repository
+Directory /cvsroot/mozilla/netwerk</a>.
+<br>Or visit our sponsor and raison d'&ecirc;tre: <a href="http://www.necco.com/index.html">www.necco.com</a>.
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/netlib/index.html&amp;rev=&amp;root=/cvsroot/">Last modified November 18,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

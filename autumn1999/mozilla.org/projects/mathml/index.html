@@ -1,0 +1,201 @@
+<HTML>
+<HEAD>
+<TITLE>MathML in Mozilla</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<H2 ALIGN=CENTER>MathML in Mozilla</H2>
+<DL><DT><B>Mozilla Volunteers</B><DD>
+Roger B. Sidje 
+&lt;<a href="mailto:rbs@maths.uq.edu.au">rbs@maths.uq.edu.au</a>&gt;<BR>
+David Fiddes 
+&lt;<a href="mailto:D.J.Fiddes@hw.ac.uk">D.J.Fiddes@hw.ac.uk</a>&gt;<BR>
+P. S. Karthikeyan 
+&lt;<a href="mailto:ae95015@aero.iitm.ernet.in">ae95015@aero.iitm.ernet.in</a>&gt;
+</DL>
+<H2><A HREF="update.html">Update: Progress report - Sep 18, 1999</A></H2>
+
+<H2>The Big Picture</H2>
+Both the output and input of <a
+href="http://www.w3.org/Math">MathML</a> 
+will be investigated in this project.
+
+<UL>
+<LI> The priority of the project will be to provide a compact and fast
+engine that will process MathML and enable 
+<a href="../../newlayout/">Gecko</a> 
+to render mathematical expressions
+<tt>&lt;MATH&gt;...&lt;/MATH&gt;</tt> in graphical form.
+<P>
+
+<LI> Another goal is to provide a <TT>WYSIWYG</TT> interface to MathML.  This
+will be a graphical equation editor with an internal
+representation in standard MathML text. It will
+therefore provide a basis for:
+     <UL>
+     <LI> an equation editor button on <a href="../../editor/">Composer</a>;
+     <LI> the support of an input field <BR><tt>&lt;FORM&gt;
+&lt;OBJECT TYPE="text/mathml"&gt;...&lt;/OBJECT&gt; &lt;/FORM&gt;</tt><P>
+     </UL>
+
+<LI> <a href="../../blue-sky/extension/199805/preprocess.html">Transformation
+Services</a> are also <a
+href="http://www.bucksch.com/projects/mozilla/">of interest</a>.  The
+<i>lingua franca</i> for formula-intensive documents is <a
+href="http://www.tug.org/">TeX/LaTeX</a> and the use of MathML is not
+yet widespread. Hence it would be useful to have a TeX-to-MathML
+equation converter.  There are other notations for which converters to
+MathML can be useful. In order to keep the core MathML engine compact
+and fast, no format other than MathML will be supported. It is
+envisaged that proper modular design principles will be adopted so
+that interested parties can contribute separate converters which can
+be chained to the core MathML engine. This will provide a better
+alternative to cumbersome inline gifs and Java applets that are often
+used to represent equations.
+</UL>
+
+<H2>Implementation</H2> 
+
+A mathematical expression can be represented as an aggregate set of
+boxes. These are the bounding boxes that would enclose mathematical
+entities (literal symbol, operator, delimiter, etc). With
+rules governing the positioning of these entities (subscript,
+superscript, fraction, etc), it is possible to construct the box-model in
+a recursive manner by traversing the parsing tree of the expression.
+<P>
+With the object-oriented paradigm, each box can be viewed as an object
+that has its own specific properties and shares a common set of properties
+with other objects.
+With the CSS paradigm, each box can be viewed as a CSS frame that possibly
+embeds other CSS frames. Hence there is a direct correspondence between
+the two paradigms.
+<P>
+MathML offers two formats for representing an equation: 
+<a href="http://www.w3.org/TR/REC-MathML/chap3_1.html">presentational tags</a>
+and
+<a href="http://www.w3.org/TR/REC-MathML/chap4_1.html">semantic/content tags</a>.
+Given an equation in either format, the MathML project will
+ultimately aim at constructing a lump of CSS frames that can then be
+passed onto <a href="../../newlayout/">Gecko</a> for
+layout and display.
+<P>
+The graphical input component of the project will seek to provide a
+point-and-click authoring tool for creating and editing mathematical
+expressions. But beneath the graphical outward appearance, there will
+be plain MathML text that could therefore go in 
+<a href="../../editor/">Composer</a> or in the input
+field of a 
+<a href="../../newlayout/doc/forms.html">form</a>.
+<P>
+What about style sheets, JavaScripting, cut'n paste and the likes? 
+As you see, in addition to getting the foundation right,
+there are many open issues to the project awaiting
+your input and help!
+
+<H2>Discussion Forum</H2>
+
+Discussions related to MathML are carried out in the newsgroup 
+<a href="news://news.mozilla.org/netscape.public.mozilla.mathml">netscape.public.mozilla.mathml</a>.
+Messages sent to the Mozilla  
+<a href="news://news.mozilla.org/netscape.public.mozilla.mathml">MathML newsgroup</a>
+are forwarded to the Mozilla 
+<a href="mailto:mozilla-mathml@mozilla.org?subject=Message">MathML mailing list</a>, 
+and vice-versa. You can 
+<a href="mailto:mozilla-mathml-request@mozilla.org?subject=subscribe">subscribe</a> 
+or
+<a href="mailto:mozilla-mathml-request@mozilla.org?subject=unsubscribe">unsubscribe</a>
+to the mailing list (leave the body blank).
+
+<H2>Links</H2>
+<a href="http://www.w3.org/MarkUp/HTMLPlus/htmlplus_45.html">MathML++</a>
+<font size=1>(small print: this was 1993 and never recommended!)</font>
+<P><font size=2>
+<hr>Last modified Wed May 13 1999
+<br>Maintained by <I><a href="mailto:rbs@maths.uq.edu.au">rbs@maths.uq.edu.au</a></I>
+</font>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/mathml/index.html&amp;rev=&amp;root=/cvsroot/">Last modified September 18,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

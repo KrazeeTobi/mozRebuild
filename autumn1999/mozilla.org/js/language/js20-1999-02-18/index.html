@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>JavaScript 2.0</TITLE>
+<LINK rel=stylesheet href="../styles.css">
+<LINK rel=Next href="motivation.html">
+<SCRIPT type="text/javascript" language="JavaScript1.2" src="../unicodeCompatibility.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+<TR>
+  <TD valign=TOP nowrap>
+    <DIV class=title2><SPAN class=draft-title>February 1999 Draft</SPAN></DIV>
+    <DIV class=title1><SPAN class=draft-title>JavaScript 2.0</SPAN></DIV>
+  </TD>
+  <TD valign=TOP nowrap align=RIGHT><A href="../js20/index.html"><IMG src="../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="motivation.html"><IMG src="../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+</TR>
+</TABLE>
+
+<P class=mod-date>Tuesday, February 16, 1999</P>
+
+<H1>Introduction</H1>
+
+<P>JavaScript 2.0 is an <I>experimental</I> proposal maintained by <A href="mailto:waldemar@netscape.com">waldemar</A> for
+future changes in the JavaScript language. At this stage the emphasis is on developing the broad concepts of the language;
+many of the details will be worked out later. The eventual language may differ significantly from this proposal, but the goal
+is to move in the directions indicated here and do so via a coordinated plan rather than adding miscellaneous features ad
+hoc on a release-by-release basis.</P>
+
+<!--CONTENTS--><UL>
+  <LI><A href="motivation.html">Motivation</A></LI>
+  <LI>Overview
+    <UL>
+      <LI><A href="types.html">Types</A></LI>
+      <LI><A href="declarations.html">Declarations</A></LI>
+      <LI><A href="variables.html">Variables</A></LI>
+      <LI><A href="functions.html">Functions</A></LI>
+      <LI><A href="classes.html">Classes</A></LI>
+      <LI><A href="packages.html">Packages</A></LI>
+      <LI><A href="versions.html">Versions</A></LI>
+      <LI><A href="error-recovery.html">Error Recovery</A></LI>
+    </UL>
+  </LI>
+  <LI>Standard Libraries
+    <UL>
+      <LI><A href="operator-overloading.html">Operator Overloading</A></LI>
+    </UL>
+  </LI>
+  <LI>Details
+    <UL>
+      <LI><A href="tokens.html">Tokens</A></LI>
+      <LI><A href="expressions.html">Expressions</A></LI>
+      <LI><A href="statements.html">Statements</A></LI>
+    </UL>
+  </LI>
+  <LI>Appendices
+    <UL>
+      <LI>Lexer</LI>
+      <LI><A href="grammar.html">Grammar</A> (also available as <A href="grammar.rtf">Word 98 rtf</A>)</LI>
+      <LI><A href="compatibility.html">Compatibility</A></LI>
+    </UL>
+  </LI>
+</UL><!--/CONTENTS-->
+
+<H1>Notation</H1>
+
+<H2>Informal Syntax</H2>
+
+<P>The main body of this proposal uses an informal syntax to describe language constructs. An example is the following:</P>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>VersionsAndRenames</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;[<CODE class=terminal-keyword>&lt;</CODE>&nbsp;<VAR class=nonterminal>VersionRange</VAR>&nbsp;[<CODE class=terminal-keyword>:</CODE>&nbsp;<VAR class=nonterminal>Identifier</VAR>]&nbsp;<CODE class=terminal-keyword>,</CODE>&nbsp;...&nbsp;<CODE class=terminal-keyword>,</CODE>&nbsp;<VAR class=nonterminal>VersionRange</VAR>&nbsp;[<CODE class=terminal-keyword>:</CODE>&nbsp;<VAR class=nonterminal>Identifier</VAR>]&nbsp;<CODE class=terminal-keyword>&gt;</CODE>]</DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>VersionRange</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal>Version</VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;[<VAR class=nonterminal>Version</VAR>]&nbsp;<CODE class=terminal-keyword>..</CODE>&nbsp;[<VAR class=nonterminal>Version</VAR>]</DIV>
+</DIV>
+<P><VAR class=nonterminal>VersionsAndRenames</VAR> and <VAR class=nonterminal>VersionRange</VAR> are the names of the grammar
+rules. The black square brackets represent optional items, and the black ... together with its neighbors represents optional
+repetition of zero or more items, so a <VAR class=nonterminal>VersionsAndRenames</VAR> can have zero or more sets of <VAR class=nonterminal>VersionRange</VAR>&nbsp;[<CODE class=terminal-keyword>:</CODE>&nbsp;<VAR class=nonterminal>Identifier</VAR>]
+separated by commas. A black | indicates that either its left or right alternative may be present, but not both; |'s have
+the lowest metasymbol precedence. Syntactic tokens to be typed literally are in a <CODE class=terminal-keyword>bold blue
+monospaced font</CODE>. Grammar nonterminals are in <VAR class=nonterminal>green italic</VAR> and correspond to the nonterminals
+in the <A href="grammar.html">grammar appendix</A>.</P>
+
+<P>The informal syntax descriptions sometimes list only the general or simplified syntax. Please refer to the <A href="grammar.html">grammar
+appendix</A> for the actual syntax.</P>
+
+<H2><A name="grammar-syntax"></A>Grammar Syntax</H2>
+
+<P>The LR(1) grammar rules have the format shown below. All of the grammar rules are listed in the <A href="grammar.html">grammar
+appendix</A>.</P>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>SampleList</VAR>&nbsp; <SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>
+  </DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE class=terminal-keyword>...</CODE>&nbsp;<VAR class=nonterminal>Identifier</VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>SampleListPrefix</VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>SampleListPrefix</VAR>&nbsp;<CODE class=terminal-keyword>,</CODE>&nbsp;<CODE class=terminal-keyword>...</CODE>&nbsp;<VAR class=nonterminal>Identifier</VAR></DIV>
+</DIV>
+<P>This sample rule states that the nonterminal <VAR class=nonterminal>SampleList</VAR> can represent one of four kinds of
+sequences of program tokens:</P>
+
+<UL>
+  <LI>It can represent nothing (indicated by the &#171;empty&#187; alternative);</LI>
+  <LI>It can represent the token <CODE class=terminal-keyword>...</CODE> followed by some expansion of the nonterminal <VAR class=nonterminal>Identifier</VAR>;</LI>
+  <LI>It can represent an expansion of the nonterminal <VAR class=nonterminal>SampleListPrefix</VAR>;</LI>
+  <LI>It can represent an expansion of the nonterminal <VAR class=nonterminal>SampleListPrefix</VAR> followed by the tokens
+    <CODE class=terminal-keyword>,</CODE> and <CODE class=terminal-keyword>...</CODE> and an expansion of the nonterminal
+    <VAR class=nonterminal>Identifier</VAR>.</LI>
+</UL>
+<P>A number of rules in the grammar occur in groups of analogous rules. Rather than list them individually, these groups have
+been summarized using the shorthand illustrated by the example below:</P>
+
+<P>Metastatements such as</P>
+
+<DIV class=grammar-argument><VAR class=nonterminal><SPAN class=nonterminal-argument><SPAN class=symbol>a</SPAN></SPAN></VAR>&nbsp;
+  <SCRIPT type="text/javascript">document.write(U_isin)</SCRIPT> &nbsp;{<VAR class=nonterminal><SPAN class=nonterminal-attribute>normal</SPAN></VAR>,&nbsp;<VAR class=nonterminal><SPAN class=nonterminal-attribute>initial</SPAN></VAR>}</DIV>
+<DIV class=grammar-argument><VAR class=nonterminal><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></VAR>&nbsp;
+  <SCRIPT type="text/javascript">document.write(U_isin)</SCRIPT> &nbsp;{<VAR class=nonterminal><SPAN class=nonterminal-attribute>allowIn</SPAN></VAR>,&nbsp;<VAR class=nonterminal><SPAN class=nonterminal-attribute>noIn</SPAN></VAR>}</DIV>
+<P>introduce grammar arguments <VAR class=nonterminal><SPAN class=nonterminal-argument><SPAN class=symbol>a</SPAN></SPAN></VAR>
+and <VAR class=nonterminal><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></VAR>. If these arguments later
+parametrize the nonterminal on the left side of a rule, that rule is implicitly replicated into a set of rules in each of
+which a grammar argument is consistently substituted by one of its variants. For example,</P>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>a</SPAN></SPAN>,<SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR>&nbsp;
+    <SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal>ConditionalExpression<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>a</SPAN></SPAN>,<SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>a</SPAN></SPAN></SUP></VAR>&nbsp;<CODE class=terminal-keyword>=</CODE>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>a</SPAN></SPAN></SUP></VAR>&nbsp;<VAR class=nonterminal>CompoundAssignment</VAR>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR></DIV>
+</DIV>
+<P>expands into the following four rules:</P>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR>&nbsp;
+    <SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal>ConditionalExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN></SUP></VAR>&nbsp;<CODE class=terminal-keyword>=</CODE>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN></SUP></VAR>&nbsp;<VAR class=nonterminal>CompoundAssignment</VAR>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>noIn</SPAN></SUP></VAR>&nbsp;
+    <SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal>ConditionalExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>noIn</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN></SUP></VAR>&nbsp;<CODE class=terminal-keyword>=</CODE>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>noIn</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN></SUP></VAR>&nbsp;<VAR class=nonterminal>CompoundAssignment</VAR>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>noIn</SPAN></SUP></VAR></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>initial</SPAN>,<SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR>&nbsp;
+    <SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal>ConditionalExpression<SUP><SPAN class=nonterminal-attribute>initial</SPAN>,<SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-attribute>initial</SPAN></SUP></VAR>&nbsp;<CODE class=terminal-keyword>=</CODE>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-attribute>initial</SPAN></SUP></VAR>&nbsp;<VAR class=nonterminal>CompoundAssignment</VAR>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>initial</SPAN>,<SPAN class=nonterminal-attribute>noIn</SPAN></SUP></VAR>&nbsp;
+    <SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal>ConditionalExpression<SUP><SPAN class=nonterminal-attribute>initial</SPAN>,<SPAN class=nonterminal-attribute>noIn</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-attribute>initial</SPAN></SUP></VAR>&nbsp;<CODE class=terminal-keyword>=</CODE>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>noIn</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal>LeftSideExpression<SUP><SPAN class=nonterminal-attribute>initial</SPAN></SUP></VAR>&nbsp;<VAR class=nonterminal>CompoundAssignment</VAR>&nbsp;<VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>noIn</SPAN></SUP></VAR></DIV>
+</DIV>
+<P><VAR class=nonterminal>AssignmentExpression<SUP><SPAN class=nonterminal-attribute>normal</SPAN>,<SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR>
+is now an unparametrized nonterminal and processed normally by the grammar.</P>
+
+<P>Some of the expanded rules (such as the fourth one in the example above) may be unreachable from the starting nonterminal
+<VAR class=nonterminal>Program</VAR>; these are ignored.</P>
+
+<HR>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TD valign=BOTTOM nowrap>
+      <ADDRESS><A href="mailto:waldemar@netscape.com">Waldemar Horwat</A><BR>
+      Last modified Tuesday, February 16, 1999</ADDRESS>
+    </TD>
+    <TD valign=TOP nowrap align=RIGHT><A href="../js20/index.html"><IMG src="../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="motivation.html"><IMG src="../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+  </TR>
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,330 @@
+<HTML>
+<HEAD>
+<TITLE>rdf: aggregating the in-memory datasource</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+<style>
+code {
+  font-weight: bold;
+}
+
+div.code {
+  border: solid thin;
+  padding: 1em;
+  background: #eee;
+}
+</style>
+
+
+
+<center>
+<h1>rdf: aggregating the in-memory datasource</h1>
+</center>
+
+Contacts:<br>
+<a href="mailto:waterson@netscape.com">Chris Waterson</a> (waterson@netscape.com)<br>
+<BR>
+
+<p>
+You can use XPCOM aggregation[<a href="#1">1</a>] with the in-memory
+datasource. Why would you want to do this? Say you were writing a
+datasource[<a href="#2">2</a>], and the way you chose to implement it
+was to "wrap" the in-memory datasource; i.e.,
+</p>
+
+<div class="code">
+<pre>
+MyClass : public nsIMyInterface, public nsIRDFDataSource {
+private:
+    nsCOMPtr&lt;nsIRDFDataSource&gt; mInner;
+
+public:
+    // nsIRDFDataSource methods
+    NS_IMETHOD Init(const char* aURI) {
+        return mInner-&gt;Init(aURI);
+    }
+
+    NS_IMETHOD GetURI(char* *aURI) {
+        return mInner-&gt;GetURI(aURI);
+    }
+
+    // etc., for each method in nsIRDFDataSource!
+};
+</pre>
+</div>
+
+<p>
+Very painful, prone to errors, and fragile as the interfaces are still in
+flux (a wee bit). Aggregation to the rescue! Here are the gory details on
+how.
+</p>
+
+<h3>disclaimer: when it won't work</h3>
+
+<p>
+Although this magic is terribly convenient to use, it <i>won't
+work</i> in the case that you want to "override" some of the in-memory
+datasource's methods. For example, while writing the
+
+<a href="http://lxr.mozilla.org/seamonkey/src/xpfe/components/bookmarks/src/nsBookmarksService.cpp">bookmarks datasource</a>,
+
+I wanted to be able to trap <code>Assert()</code> to enforce the
+bookmarks datasource would only accept "bookmarks related"
+assertions. If I'd just delegated to the in-memory datasource,
+<code>Assert()</code> would've taken any old random
+garbage. Similarly, I wanted to trap <code>Flush()</code> so that I
+could write the <code>bookmarks.html</code> file back to disk.
+</p>
+
+<p>
+In short, the only case where this technique is useful is when you're
+implementing a datasource to get "read-only reflection". That is, you
+want to reflect the contents of something as an RDF graph (presumably
+so that it can be aggregated with other information or displayed as
+styled content).
+</p>
+
+<h3>technical details</h3>
+
+<p>
+As before, have an <code>nsCOMPtr</code> as your delegate, but this time
+around, <i>don't</i> derive from <code>nsIRDFDataSource</code>. Also,
+instead of keeping an <code>nsCOMPtr&lt;nsIRDFDataSource&gt;</code>,
+you'll just want an <code>nsCOMPtr&lt;nsISupports&gt;</code>:
+</p>
+
+<div class="code">
+<pre>
+class MyClass : public nsIMyInterface {
+    ...
+private:
+    nsCOMPtr&lt;nsISupports&gt; mInner;
+};
+</pre>
+</div>
+
+<p>
+</p>
+
+<p>
+Construct the datasource delegate when your object is constructed (or, at
+worst, when somebody QI's for it):
+</p>
+
+<div class="code">
+<pre>
+rv = nsComponentManager::CreateInstance(
+        kRDFInMemoryDataSourceCID,
+        this, /* the "outer" */
+        nsCOMTypeInfo&lt;nsISupports&gt;::GetIID(),
+        getter_AddRefs(mInner));
+</pre>
+</div>
+
+<p>
+Note passing <code>this</code> as the "outer" parameter.
+</p>
+
+<p>
+Now, if the in-memory datasource's implementation of
+<code>QueryInterface()</code> fails because it doesn't support the
+requested interface, it will <i>forward</i> the query interface to its
+"outer" (which is "us"). This preserves the symmetrical property of
+<code>QueryInterface()</code>.
+
+<p>
+For <i>us</i> to preserve symmetry, our <code>QueryInterface()</code>
+implementation needs to forward <code>nsIRDFDataSource</code> to the
+delegate [<a href="#3">3</a>]:
+</p>
+
+<div class="code">
+<pre>
+NS_IMETHODIMP
+MyClass::QueryInterface(REFNSIID aIID, void** aResult)
+{
+  NS_PRECONDITION(aResult != nsnull, "null ptr");
+  if (! aResult)
+    return NS_ERROR_NULL_POINTER;
+
+  if (aIID.Equals(nsCOMTypeInfo&lt;nsIMyInterface&gt;::GetIID()) ||
+      aIID.Equals(nsCOMTypeInfo&lt;nsISupports&gt;::GetIID())) {
+    *aResult = NS_STATIC_CAST(nsIGlobalHistory*, this);
+  }
+  else if (aIID.Equals(nsCOMTypeInfo&lt;nsIRDFDataSource&gt;::GetIID())) {
+    return mInner->QueryInterface(aIID, aResult);
+  }
+  else {
+    *aResult = nsnull;
+    return NS_NOINTERFACE;
+  }
+
+  NS_ADDREF(NS_STATIC_CAST(nsISupports*, aResult));
+  return NS_OK;
+}
+</pre>
+</div>
+
+<p>
+The only other thing that you'll need to be aware of is that you'll
+need to <code>QueryInterface()</code> from <code>nsISupports</code> to
+<code>nsIRDFDataSource</code> before you can actually do anything
+useful with the datasource from within your object. For example:
+</p>
+
+<div class="code">
+<pre>
+NS_IMETHODIMP
+MyClass::DoSomething()
+{
+  nsCOMPtr&lt;nsIRDFDataSopurce&gt; ds = do_QueryInterface(mInner);
+
+  rv = ds->Assert(/* something useful here */);
+
+  // etc...
+
+  return NS_OK;
+}
+</pre>
+</div>
+
+<p>
+It may be tempting to keep a pointer to the aggregate's
+<code>nsIRDFDataSource</code> in a member variable, but <i>you can't
+do that</i>. Why? Because if you did, you'd hold a circular reference
+that would never unwind.
+</p>
+
+<h3>notes</h3>
+
+<ol>
+
+<a name="1"></a>
+<li>
+<p>
+Describing all of the vagaries of XPCOM aggregation is beyond the
+scope of this document. The basic idea is to overload
+QueryInterface(), allowing it to return a <i>delegate</i> object that
+supports the interface. There is some trickery involved on the
+delegate's part to ensure that reference counting is done sanely, and
+that the reflexive, symmetric, and transitive properties of
+<code>QueryInterface()</code> are preserved. If you're really
+interested, I'd recommend reading about it in a COM book.
+</p>
+</li>
+
+<a name="2"></a>
+<li>
+<p>
+For more information on writing a datasource, see the
+
+<a href="datasource-howto.html"><i>Datasource Howto</i></a>
+
+document.
+</p>
+</li>
+
+<li><a name="3"></a> 
+<p>
+You could also forward other interfaces to the <code>mInner</code>
+that you <i>know</i> it can support; however, this is <b>extremely
+risky</b>. It's risky because another implementation of the same
+object might <i>not</i> support those interfaces. Then the
+<code>QueryInterface()</code> will be forwarded back to you, and we'll
+recurse off to infinity (and beyond!...)
+</p>
+</li>
+
+</ol>
+
+<hr>
+<small>
+Last Updated: $Id: aggregate.html,v 1.2 1999/08/23 23:59:06 waterson%netscape.com Exp $
+</small>
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/rdf/doc/aggregate.html&amp;rev=&amp;root=/cvsroot/">Last modified August 24,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

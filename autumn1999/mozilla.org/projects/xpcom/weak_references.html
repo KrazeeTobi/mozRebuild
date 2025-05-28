@@ -1,0 +1,277 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<HTML>
+  <HEAD>
+    <TITLE>nsIWeakReference</TITLE>
+    <!-- LINK REL=StyleSheet HREF="Standard.css" TYPE="text/css" -->
+    <LINK REL=StyleSheet HREF="http://www.mozilla.org/projects/xpcom/Standard.css" TYPE="text/css">
+  </HEAD>
+
+  <BODY>
+    <H1>nsIWeakReference</H1>
+
+<DIV class=author-note>
+  <P>by <A HREF="http://ScottCollins.net/">Scott Collins</A><!-- /P -->
+  <P>last modified 12 August 1999</P>
+</DIV>
+
+<DIV class="document-label">
+  <A name="abstract">
+    <STRONG>Abstract:</STRONG>
+    Everything you ever wanted to know about <SPAN class="source-code">nsIWeakReference</SPAN> and friends.
+  </A>
+</DIV>
+
+<DIV class="document-label">
+  <P>
+    <STRONG>Document Status:</STRONG> Draft.
+		There is still much work to be done;
+			but this document needs to be public so people can start using weak references.
+  </P>
+</DIV>
+
+
+<H2>Why do I need this?</H2>
+<P>
+</P>
+
+<H2>How do I use it?</H2>
+<P>
+  Here's a sample.  The new and interesting things are highlighted.
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="warning">#include "nsWeakPtr.h"</SPAN>
+
+<SPAN class="comment">// ...</SPAN>
+
+  <SPAN class="comment">// it's easy to get a weak reference...</SPAN>
+<SPAN class="warning">nsWeakPtr</SPAN> weakPtr = getter_AddRefs( <SPAN class="warning">NS_GetWeakReference(</SPAN>aFooPtr<SPAN class="warning">)</SPAN> );
+
+<SPAN class="comment">// ...</SPAN>
+
+{   <SPAN class="comment">// ...but to use my weak reference, I'll need a (short lived) owning reference</SPAN>
+  nsCOMPtr&lt;nsIFoo&gt; tempFooPtr = <SPAN class="warning">do_QueryReferent(</SPAN>weakPtr<SPAN class="warning">)</SPAN>;
+  if ( tempFooPtr )
+    tempFooPtr-&gt;SomeFooMethod(...);
+  <SPAN class="comment">// else, the `real' object has gone away</SPAN>
+}
+</PRE>
+</DIV>
+<P>
+	In a real world example, however, you are more likely to be holding a weak reference
+		in a member variable.
+	In the following example, an <SPAN class="source-code">nsObservable</SPAN> must keep some kind of a reference to
+		each observer, in order to report events.
+	The <SPAN class="source-code">nsObservable</SPAN> doesn't want to keep the observers alive just to prevent a dangling pointer,
+		however.
+	So, instead of holding an owning reference to an <SPAN class="source-code">nsIObserver</SPAN>, it holds a weak reference.
+	The weak reference doesn't artificially extend the life of the observer, and yet, it can never dangle.
+</P>
+<P>
+	The following assumes that any <SPAN class="source-code">nsIObserver</SPAN> that is passed in also implements <SPAN class="source-code">nsISupportsWeakReference</SPAN>.
+	You can extrapolate from managing a single observer to managing a list of observers.
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+class nsObservable
+  {
+    public:
+      <SPAN class="comment">// ...</SPAN>
+      nsresult AddObserver( nsIObserver* );
+      nsresult NotifyObservers( nsIMessage* );
+      <SPAN class="comment">// ...</SPAN>
+    private:
+      nsWeakPtr mObserver;
+        <SPAN class="comment">// ...or imagine a list of observers here</SPAN>
+  };
+
+<SPAN class="comment">// ...</SPAN>
+
+nsresult
+nsObservable::AddObserver( nsIObserver* aObserver )
+  {
+    mObserver = getter_AddRefs( NS_GetWeakReference(aObserver) );
+      <SPAN class="comment">// ...or append this to the list of observers</SPAN>
+    return NS_OK;
+  }
+
+nsresult
+nsObservable::NotifyObservers( nsIMessage* aMessage )
+  {
+    nsCOMPtr&lt;nsIObserver&gt; observer = do_QueryReferent(mObserver);
+    if ( observer )
+      observer-&gt;NoticeMessage(aMessage);
+    else
+      mObserver = 0;
+      <SPAN class="comment">// or remove this observer from the list, he's gone away</SPAN>
+    return NS_OK;
+  }
+
+<SPAN class="comment">// ...</SPAN>
+</PRE>
+</DIV>
+
+<P>
+	It's key to note that an <SPAN class="source-code">nsWeakPtr</SPAN> has exactly the same interface as an <SPAN class="source-code">nsCOMPtr</SPAN>.
+	In fact, <SPAN class="source-code">nsWeakPtr</SPAN> is defined like this
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+typedef nsCOMPtr&lt;nsIWeakReference&gt; nsWeakPtr;
+</PRE>
+</DIV>
+<P>
+	...
+</P>
+
+<!-- CODE>
+class nsObservable
+	{
+		// ...
+		private:
+			list<nsWeakPtr> mObservers;
+	};
+
+// ...
+
+nsresult
+nsObservable::AddObserver( nsIObserver* aObserver )
+	{
+		nsWeakPtr weakP = getter_AddRefs( NS_GetWeakReference(aObserver) );
+		mObservers.append(weakP);
+		return NS_OK;
+	}
+
+nsresult
+nsObservable::NotifyObservers( nsIMessage* aMessage )
+	{
+		list<nsWeakPtr>::iterator next = mObservers.first();
+		for ( list<nsWeakPtr>::iterator p = next++; p != mObservers.last(); p = next++ )
+			{
+				nsCOMPtr<nsIObserver> observer = do_QueryReferent(*p);
+				if ( observer )
+					observer->NoticeMessage(aMessage);
+				else
+					mObservers.erase(p);
+			}
+	}
+
+// ...
+</CODE -->
+
+<H2>Well this sucks!</H2>
+<P>
+  By now you've probably noticed that this particular weak reference implementation doesn't give you
+    exactly the interface you were hoping for.
+</P>
+<H3>Why can't I just directly call my interfaces methods on the weak reference?</H3>
+<P>
+  You really want this weak reference scheme to give you a pointer that implements the interface
+    you actually care about, e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">// Note: _not_ the implementation we have...</SPAN>
+nsWeakPtr&lt;nsIFoo&gt; weakFooPtr = fooPtr;
+<SPAN class="comment">// ...</SPAN>
+if ( weakFooPtr )
+  status = weakFooPtr-&gt;SomeFooMethod(...);
+</PRE>
+</DIV>
+<P>
+  This is a reasonable thing to want.
+  It's expensive to implement automatically, however.
+  Neither inheritance, nor templates, nor macros can help automatically forward all the method calls
+    to the real object.
+  XPIDL could write an implementation for you (if we modified it), or you could write one by hand as I discuss below.
+  There are other, mostly negligable, costs:
+    it's an extra indirection per call, and
+    the easy implementation requires adding an extra pointer per interface to the target implementation.
+</P>
+
+<H3>Why can't I just QueryInterface between the pair?</H3>
+<P>
+  It really feels like the <SPAN class="source-code">nsIWeakReference</SPAN> that you are holding is just another interface on the target object.
+  It seems reasonable to want to simply <SPAN class="source-code">QueryInterface</SPAN> between the two.
+  Why these extra calls: <SPAN class="source-code">GetWeakReference</SPAN> and <SPAN class="source-code">QueryReferent</SPAN>?
+  This would be possible if the weak reference was actually aggregated to the target object.
+</P>
+
+<P>
+  The problem here is <SPAN class="source-code">QueryInterface</SPAN>.
+  <SPAN class="source-code">QueryInterface</SPAN> must satisfy many requirements to allow COM to work.
+  Among these requirements is that
+    every call to QueryInterface against the same (aggragate) object
+    for the same interface must yield the same result,
+    no matter what interface pointer you call it through, and no matter when you call it.
+  This is impossible in our situation, since we explicitly rely on the the fact that
+    part of the aggregate can be destroyed.
+  Subsequent attempts to reach that part must return <SPAN class="source-code">NULL</SPAN>.
+  Sometimes our <SPAN class="source-code">QueryInterface</SPAN> through the weak pointer would return a pointer to the `real' interface,
+    and sometimes it would return <SPAN class="source-code">NULL</SPAN>.
+  We just broke COM.
+</P>
+
+<P>
+  It's clear, therefore, that the weak reference can't be aggregated to the target object.
+  Hence, we can't use <SPAN class="source-code">QueryInterface</SPAN> to move between them.
+  I know this sounds more convenient, but the global routine <SPAN class="source-code">NS_GetWeakReference</SPAN> makes it easy to
+    go from the target object to the weak reference;
+    and <SPAN class="source-code">nsIWeakReference::QueryReferent</SPAN> gives you the same functionality as <SPAN class="source-code">QueryInterface</SPAN> for
+    getting back.
+  Additionally, <SPAN class="source-code">nsCOMPtr</SPAN> now supports the new key <SPAN class="source-code">do_QueryReferent</SPAN> to simplify life even further.
+</P>
+
+<H2>How do I make a class support weak references?</H2>
+<H3>The easy way</H3>
+<P>
+	Just roll in <SPAN class="source-code">nsSupportsWeakReference</SPAN>, a mix-in class that does all the work,
+		and adjust your <SPAN class="source-code">QueryInterface</SPAN> accordingly, e.g.,
+<!-- /P -->
+<DIV class="source-code">
+<PRE class="source-code">
+<SPAN class="comment">//...</SPAN>
+<SPAN class="warning">#include "nsWeakReference.h"</SPAN>
+
+class nsFoo : public nsIFoo, ...<SPAN class="warning">, public nsSupportsWeakReference</SPAN> { ... };
+
+<SPAN class="comment">// ...</SPAN>
+
+NS_IMETHODIMP
+nsFoo::QueryInterface( REFNSIID aIID, void** aInstancePtr )
+  {
+    <SPAN class="comment">// ...</SPAN>
+    <SPAN class="warning">else if ( aIID.Equals(nsCOMTypeInfo&lt;nsISupportsWeakReference&gt;::GetIID()) )
+      *aInstancePr = NS_STATIC_CAST(nsISupportsWeakReference* this);</SPAN>
+    <SPAN class="comment">// ...</SPAN>
+  }
+</PRE>
+</DIV>
+
+<H3>The hard way</H3>
+<P>
+</P>
+
+<H2>How does it work?</H2>
+
+<H2>Alternatives</H2>
+<P>
+  ...
+</P>
+
+
+
+<DIV class="author-note">
+  <HR>
+    <!-- A HREF="http://validator.w3.org/">
+      <IMG BORDER=0 align=left SRC="http://validator.w3.org/images/vh40.gif" ALT="Valid HTML 4.0!" HEIGHT=31 WIDTH=88>
+    </A>
+    <A HREF="http://www.w3.org/Style/CSS/Buttons">
+      <IMG BORDER=0 align=left SRC="http://www.w3.org/Style/CSS/Buttons/cssos" ALT="CSS" HEIGHT=31 WIDTH=88>
+    </A -->
+    Copyright&copy; 1998-1999 by Netscape; use is subject to the <A HREF="http://www.mozilla.org/NPL/">NPL</A>.
+</DIV>
+  <BODY>
+</HTML>

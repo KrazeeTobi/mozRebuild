@@ -1,0 +1,217 @@
+<HTML>
+<HEAD>
+<TITLE>IRC in Mozilla</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+  
+  
+
+  
+    <h1>IRC in Mozilla, aka ChatZilla</h1>
+
+      <H2>Goals</H2>
+        The goals of ChatZilla are to implement an IRC client using the
+        framework provided by Mozilla.  ChatZilla will NOT be required
+        to run Mozilla.  The ChatZilla codebase will be as close to 100%
+        JavaScript and XUL as possible.  Additional features, such as HTML
+        styled messages, and per-channel styles [<a href="#note1">1</a>] will
+        be implemented in a way that does not interfere with non-ChatZilla 
+        clients.
+      <P>
+
+      <H2>Architecture Overview</H2>
+          <b>
+<a href="http://lxr.mozilla.org/mozilla/source/extensions/irc/libbs/">libbs</a></b>
+          <br>
+          libbs, the 'Basic Socket' library, is the <b>only</b> part
+          of ChatZilla that is compiled.  Once built, libbs resides as an
+          <a href="http://www.mozilla.org/projects/xpcom/">XPCOM</a> 
+          component on your system, providing socket access to local
+          programs and scripts which
+          request it.  Web content will not have access to the socket
+          component for security reasons.
+          The libbs source is located in extensions/irc/libbs, the component
+          gets installed to the BINDIR/components directory, where BINDIR
+          is the directory where the mozilla binary gets installed.
+        <p>
+          libbs itself is seperated into two sections, one is an ANSI C
+          socket library, ready to be included in other (non-Mozilla)
+          projects.  This C library is a platform independant way to create
+          multiple socket connections, with a minimum of 
+<a href="http://lxr.mozilla.org/mozilla/source/extensions/irc/libbs/main.c">
+          implementation details</a>.  It does (of course) depend on
+          <a href="http://www.mozilla.org/docs/refList/refNSPR/">NSPR</a>
+          for the platform independant sockets, but adds intelligence for
+          line buffering, and callback-style notification of pending data on
+          multiple sockets.
+        <p>
+          The second section is an 
+<a href="http://lxr.mozilla.org/mozilla/source/extensions/irc/libbs/bsIConnection.idl">
+          XPCOM wrapper</a> around the C API.  It is this wrapper that lets
+          JavaScript (as well as other XPCOM aware clients) access the bslib.
+        <p>
+          Finally, it should be said that while the bslib seemed like a good
+          idea at the time, a better approach for Mozilla integration is
+          to use some (so far non-existant) socket transport provided
+          by <a href="http://lxr.mozilla.org/mozilla/source/netwerk">
+          necko</a>.  Hopefully this will happen in the not-so-distant
+          future.<br>
+          &nbsp;<br>
+        <p>
+<b><a href="http://lxr.mozilla.org/mozilla/source/extensions/irc/js/lib/utils.js">utils.js</a></b><br>
+          This file contains general purpose JavaScript routines, that have
+          nothing in particualr to do with IRC.  When a
+          potentially reusable function is created, it is placed in this 
+          file.  Hopefully this will be moved into an area that makes it easier
+          to include in other projects someday soon.
+
+        <p>
+<b><a href="http://lxr.mozilla.org/mozilla/source/extensions/irc/js/lib/irc.js">irc.js</a></b><br>
+          irc.js is the JSIRC library.  This library provides a JavaScript
+          interface to the IRC protocol.  Instead of reading and writing
+          directly to the IRC server via a socket, you can create objects,
+          invoke methods, and listen for events defined by this library.
+          Documentation specific to this library still needs to be written.
+          While irc.js is clearly aimed at the IRC protocol, the object model
+          it exposes is meant to be generic.  If you are considering
+          implementing another chat or IM protocol in JavaScript, it would
+          be worth your while to check out the details here.  Following a
+          similar model could mean that the ChatZilla client would need only
+          minimal modifications to work with your protocol.
+          
+        <p>
+          <b>test<i>n</i>*</b><br>
+          The files in 
+<a href="http://lxr.mozilla.org/mozilla/source/extensions/irc/xul/tests/">extensions/irc/xul/tests</a>
+          are sample IRC clients using bslib and the JSIRC library.  Currently
+          there are three incarnations.  These are described in the
+<a href="http://lxr.mozilla.org/mozilla/source/extensions/irc/xul/tests/index.html">IRC client test page</a>,
+          which provides instructions on using the clients, and links to
+          launch them (assuming you are in Mozilla.)  Don't bother following
+          the links on the test clients page from non-Mozilla browsers, they
+          won't work.
+        <p>
+          <b>NOTE:</b><i> Web
+          content does not have access to XPCOM components, for this reason,
+          the link provided above will NOT be able to launch the clients.  You
+          must load your local copy of the file by typing
+          "resource:///irc/tests/index.html" into the Mozilla
+          location bar for the page to work properly.</i>        
+
+        
+      <H2>Building ChatZilla</H2>
+          <b>Unix</b><br>
+          In autoconf environments such as Unix, configure your build with
+          --with-extensions=irc to create the necessary makefiles, and rebuild.
+          If your tree is already built, you only need to gmake in
+          extentions/irc (after configuring) to add the IRC client.
+        <p>
+          <b>Windows</b><br>
+          Until the IRC client becomes part of the default build, you will
+          need to nmake in extensions/irc to build the IRC Client.
+        <p>
+          <b>Mac</b><br>
+          There is no make-magic for the Mac yet.  Please feel free to check it
+          in, or submit a patch to <a href="mailto:rginda@ndcico.com">Rob
+          Ginda</a>.
+
+      <H2>Running ChatZilla</H2>
+          Start Mozilla and load <tt>resource:///irc/tests/index.html</tt>.
+          This page introduces the various test clients, explains how to
+          use them, and offers links to start them.
+        
+    <hr>
+      <H2>Footnotes</H2>
+        <a name="note1"></a>
+        [1] These features are all vaporware at the moment.  But additions like
+        these, which leverage Mozilla code, without disturbing
+        existing clients, will hopefully become the strongest reasons to use
+        ChatZilla. 
+    <hr>
+    <address><a href="mailto:rginda@ndcico.com"></a></address>
+<!-- Created: Wed Sep 22 22:43:33 XXX 1999 -->
+<!-- hhmts start -->
+<!-- hhmts end -->
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/rt-messaging/chatzilla/index.html&amp;rev=&amp;root=/cvsroot/">Last modified November 15,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

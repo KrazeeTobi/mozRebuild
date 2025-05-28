@@ -1,0 +1,349 @@
+<HTML>
+<HEAD>
+<TITLE>grendel</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+<!-- created by jwz, 8-Sep-98 -->
+
+
+<H1 ALIGN=CENTER>grendel overview
+<BR><FONT SIZE="3">by <a href="mailto:jwz@mozilla.org">Jamie Zawinski</A>
+<BR>8-Sep-1998
+</FONT></H1>
+
+<UL>
+
+    <P>You may recall that in 1997, Netscape embarked on a project to rewrite
+    Navigator/<WBR>Communicator in Java.  This project (code named ``Xena,''
+    but sometimes referred to by the press as ``Javagator'') was cancelled
+    before completion.
+
+    <P>Some of us have been lobbying to give away the source to the whole
+    project; this may yet happen, but navigating the legal issues involved
+    has proven to be slow going.
+
+    <P>In the mean time, we have gotten permission to release the source to
+    <B>Grendel</B>, the mail/news client component of the Xena project.
+
+</UL>
+<P><B><FONT SIZE="+1">where it was.</FONT></B>
+<UL>
+
+    <P>Grendel was pretty close to being a beta-level mail reader at the
+    time the project was cancelled; we were disappointed that we didn't
+    have the opportunity to finish it, but these things happen.
+
+    <P>Just before the end, we had:
+
+    <P><UL>
+
+	<P><LI>A GUI with a three-pane view (of folders, message threads, and 
+	message bodies.)
+
+	<P><LI>A basic set of mail reading commands.
+
+	<P><LI>The ability to parse and display local (Berkeley mbox) mail
+	folders.
+
+	<P><LI>The ability to fetch mail from POP3 servers.
+
+	<P><LI>The ability to display remote IMAP folders (if memory serves,
+	this was too slow to use, but it didn't need too much more work.)
+
+	<P><LI>The ability to compose and deliver plain-text messages.
+
+	<P><LI>A full-featured extensible MIME parser and display module,
+	capable of converting MIME messages to HTML for display.
+
+    </UL>
+
+    <P>The most notable feature missing was the ability to display message
+    bodies.  That's because Grendel, like its predecessor Communicator,
+    displayed messages by converting them to HTML for presentation, and then
+    handing that off to an HTML displayer.  Well, the Xena HTML displayer was
+    farther from completion than Grendel was (in particular, it didn't work
+    on Unix), so Grendel was only able to display messages in their raw
+    state.  However, conversion of message to HTML worked: it was just that
+    there was no way to display the HTML.
+
+</UL>
+<P><B><FONT SIZE="+1">where it is.</FONT></B>
+<UL>
+
+    <P>The currently released Grendel source is not in as usable a state as
+    what was described above.  There are a few reasons for this:
+
+    <P><UL>
+
+        <P><LI>Getting Grendel to build in the absence of the rest of the
+	packages in the Xena project was a little tricky.  I removed the
+	dependencies from most of the back-end libraries, but extricating
+	the GUI code proved harder, so most of the GUI stuff doesn't build
+	right now.
+
+	<P><LI>Parts of Grendel were built on top of Sun's 
+	<A HREF="http://java.sun.com/products/javamail/">JavaMail</A>
+	API.  However, when we were developing Grendel, JavaMail hadn't
+	been released to the public yet; we had a pre-release version.
+	Well, JavaMail 1.0 and 1.1 have since been released, and they are
+	slightly incompatible with the pre-release we were working with.
+	That pre-release is no longer available on Sun's web site.
+	So I went through and tried to port the code to work with the
+	released versions of the JavaMail API.  I haven't tested it
+	extensively, so chances are there are still problems.  (I'd
+	be especially suspicious of the code having to do with Flags.)
+
+	<P><LI>Since I didn't get the GUI stuff working, I don't know what
+	other dependencies remain hidden beyond that.  Without the GUI,
+	most features are not terribly accessible, so they would have been
+	hard to test.
+
+    </UL>
+
+    <P>That said, there is a lot of good stuff in there, waiting for someone
+    to pick it up and put it back together, especially the mailbox and MIME
+    parsers, and the message-<WBR>threading algorithm.
+    
+    <P>Since this was my third rewrite of the MIME parser, it's structured
+    a lot better than the existing 
+    <A HREF="http://lxr.mozilla.org/source/lib/libmime/">
+    Mozilla MIME library</A>.  It might even be worthwhile for someone to
+    try and port Grendel's MIME parser from Java to C, so that it could be
+    used in Mozilla.
+
+</UL>
+<P><B><FONT SIZE="+1">other documentation.</FONT></B>
+<UL>
+
+    <P><LI><A HREF="http://java.sun.com/products/javamail/javadocs/">Sun's
+    JavaMail API documenation</A>.
+
+    <P><LI><A HREF="arch.html">A high-level description of the Grendel
+    architecture</A>, and how its components fit together.
+
+    <P><LI><A HREF="filters.html">Some thoughts</a> on message filtering.
+
+    <P><LI><A HREF="natives.html">Native methods</a> that Grendel will
+    require in order to function properly (required services that can't
+    be implemented in pure Java code.)
+
+    <P><LI><A HREF="dbreqs.html">Database requirements</a> for mail/news
+    message stores.
+
+    <P><LI><A HREF="classes.html">A very early design document</A>, which is
+    probably fairly out of date at this point, but which might make
+    interesting reading anyway.  (Among other things, this document was
+    written before we had heard of, let alone adopted, the JavaMail API.)
+
+    <P><LI><A HREF="javadoc/">JavaDoc of the Grendel sources</A>, including
+    both public and private members.
+
+    <P><LI><A
+    HREF="http://lxr.mozilla.org/source/grendel/">
+    hyperlinked grendel sources</A>.
+
+</UL>
+<P><B><FONT SIZE="+1">downloading and building grendel.</FONT></B>
+<UL>
+
+    <P>Currently the Grendel sources are only available via CVS.  You can check
+    out the source by doing
+
+<PRE>
+    cvs checkout mozilla/grendel
+</PRE>
+
+    <P>Please see our <A HREF="../../cvs.html">CVS page</A> for information on
+    using our CVS server.
+
+    <P>We are only distributing <TT>.java</TT> files, not <TT>.class</TT>
+    or <TT>.jar</TT> files, so you'll need a working Java compiler.  There
+    are gmake-style Makefiles included, but note that the dependencies are
+    all wrong (since we don't know of a version of <B>makedepend</B> that
+    understands Java.)  Grendel requires JDK 1.1 or newer.
+
+    <P>You will also need to download these 3rd-party Java packages, and
+    add them to your <TT>$CLASSPATH</TT> to compile or run Grendel:
+
+    <P><UL>
+
+        <P><LI>The <A HREF="http://java.sun.com/products/javamail/">
+        JavaMail API</A>, version 1.1;
+
+        <P><LI>The <A HREF="http://java.sun.com/beans/glasgow/jaf.html#download">
+	JavaBeans Activation Framework</A>, version 1.0;
+        
+	<P><LI>The <A HREF="http://java.sun.com/products/jfc/#download-swing">
+	Java Foundation Classes</A>, version 1.1 (Swing version 1.0.3.)
+
+    </UL>
+
+    <P>You will also probably need to add both the <TT>mozilla/</TT> and
+    <TT>mozilla/grendel/</TT> directories to your <TT>$CLASSPATH</TT>.
+
+    <P>Now type <TT>gmake -k</TT> and watch all the errors scroll by.
+    Remember when I said that the GUI stuff didn't build?  Well, I haven't
+    (yet) hacked the Makefiles to avoid trying to build the stuff that is
+    unbuildable, so we need to suffer through it.
+
+    <P>The interesting stuff that <I>does</I> build is in the
+    <TT>storage</TT>, <TT>view</TT>, and <TT>mime</TT> directories.
+
+</UL>
+<P><B><FONT SIZE="+1">running grendel.</FONT></B>
+<UL>
+
+    <P>If the GUI stuff was in a working state, you would launch it by doing:
+
+    <P><UL><TT>java grendel.Main</TT></UL>
+
+    <P>but it's not, so you can't.
+
+    <P>I hacked together a rough demo that lets you point Grendel at a local
+    mail folder, list the threaded contents, and select and extract a raw
+    message from it.  This demo isn't much to look at, but it does pass
+    through several interesting pieces of code: the folder parser, the
+    parsing and maintenance of the summary files, the message threading
+    algorithm, and the folder-<WBR>message-<WBR>extractor.  You can run
+    this demo like so:
+
+    <P><UL><TT>java grendel.TestFolderViewer <I>/full/path/of/mbox/file</I></TT></UL>
+
+    <P>To demo the MIME parser, do this:
+
+    <P><UL><TT>java grendel.mime.TestMime <I>input-file</I></TT></UL>
+
+    <P>The <I>input-file</I> should contain a single message; an HTML
+    presentation of that message will be written to stdout.
+
+
+</UL>
+<P><B><FONT SIZE="+1">what now?</FONT></B>
+<UL>
+
+    <P>Nobody is currently working on Grendel.  Would you like to?
+    There are several tasks one could take on:
+
+    <UL>
+
+      <P><LI>Port the grendel.mime class from Java to C, so that it can
+      be used in Mozilla.  (It can't be used in Mozilla as-is, since Mozilla
+      doesn't currently include a JVM.)
+
+      <P><LI>Get the GUI part of Grendel working again, or write a new one,
+      resulting in a working Java mail reader.
+
+      <P><LI>Figure out how to get Grendel to display HTML (perhaps by
+      borrowing from one of the other Java web browsers, or perhaps by
+      writing an <A HREF="javadoc/grendel.mime.IMimeOperator.html">
+      IMimeOperator</A> that converts from MIME to text/plain instead of
+      to text/html.
+
+      <P><LI>Build other Java-<WBR>based mailbox-<WBR>oriented tools on top
+      of this, such as <A HREF="../../blue-sky/misc/199805/intertwingle.html">
+      Intertwingle</A>.
+
+    </UL>
+
+    <P>There's a lot of good code in here; surely you can find something
+    to do with it!
+
+</UL>
+<P><B><FONT SIZE="+1">other relevant documents.</FONT></B>
+<UL>
+
+    <LI>
+    <A HREF="http://www.georgetown.edu/labyrinth/library/oe/texts/a4.1.html">
+    Beowulf (Original)</A>
+
+    <LI>
+    <A HREF="http://www.alcyone.com/max/lit/beowulf/prelude.html">
+    Beowulf (Translation)</A>
+
+    <LI>
+    <A HREF="http://saturn.uaamath.alaska.edu/~jt/newdbd.htm">
+    Devil By the Deed (Graphic Novel)</A>
+
+</UL>
+
+<P>
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/grendel/announce.html&amp;rev=&amp;root=/cvsroot/">Last modified March 10,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

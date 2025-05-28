@@ -1,0 +1,340 @@
+<HTML>
+<HEAD>
+<TITLE>nsITransactionListener Class</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+Date last modified: Tue Jun 01 16:03:33 PST 1999
+<p>
+<hr>
+<H1>Transaction Listener Interface Class:</H1>
+<pre>
+class nsITransactionListener : public nsISupports {
+public:
+
+  virtual nsresult <a href="#WILLDO">WillDo</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction) = 0;
+  virtual nsresult <a href="#DIDDO">DidDo</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction, nsresult aDoResult) = 0;
+  virtual nsresult <a href="#WILLUNDO">WillUndo</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction) = 0;
+  virtual nsresult <a href="#DIDUNDO">DidUndo</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction, nsresult aUndoResult) = 0;
+  virtual nsresult <a href="#WILLREDO">WillRedo</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction) = 0;
+  virtual nsresult <a href="#DIDREDO">DidRedo</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction, nsresult aRedoResult) = 0;
+  virtual nsresult <a href="#WILLBEGINBATCH">WillBeginBatch</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager) = 0; 
+  virtual nsresult <a href="#DIDBEGINBATCH">DidBeginBatch</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, nsresult aResult) = 0; 
+  virtual nsresult <a href="#WILLENDBATCH">WillEndBatch</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager) = 0;
+  virtual nsresult <a href="#DIDENDBATCH">DidEndBatch</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, nsresult aResult) = 0;
+  virtual nsresult <a href="#WILLMERGE">WillMerge</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTopTransaction, <a href="nsITransaction.html">nsITransaction</a> *aTransactionToMerge) = 0;
+  virtual nsresult <a href="#DIDMERGE">DidMerge</a>(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTopTransaction, <a href="nsITransaction.html">nsITransaction</a> *aTransactionToMerge, PRBool aDidMerge, nsresult aMergeResult) = 0;
+};
+
+</pre>
+
+<hr>
+
+<H1>Transaction Listener Interface Methods:</H1>
+
+<p>
+<a name="WILLDO"><h2>nsresult WillDo(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction)</h2></a>
+<p>
+Called before a transaction manager calls a transaction's
+Do() method.
+<p>
+<b>Parameters</b>
+<p>
+aManager - The transaction manager doing the transaction.
+<p>
+aTransaction - The transaction being done.
+<p>
+<b>Return Values</b>
+<p>
+NS_OK should be used to indicate no error, proceed with normal control
+flow. NS_COMFALSE can be returned by the listener to indicate no error,
+interrupt normal control flow.
+
+<p>
+<a name="DIDDO"><h2>nsresult DidDo(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction, nsresult aDoResult)</h2></a>
+<p>
+Called after a transaction manager calls the Do() method of
+a transaction.
+<p>
+<b>Parameters</b>
+<p>
+aManager the - Transaction manager that did the transaction.
+<p>
+aTransaction - The transaction that was done.
+<p>
+aDoResult - The nsresult returned after doing the transaction.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener.
+
+
+<a name="WILLUNDO"><h2>nsresult WillUndo(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction)</h2></a>
+<p>
+Called before a transaction manager calls the Undo() method of
+a transaction.
+<p>
+<b>Parameters</b>
+<p>
+aManager - The transaction manager undoing the transaction.
+<p>
+aTransaction - The transaction being undone.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener. NS_OK
+should be used to indicate no error, proceed with normal control
+flow. NS_COMFALSE can be returned by the listener to
+indicate no error, interrupt normal control flow.
+
+
+<p>
+<a name="DIDUNDO"><h2>nsresult DidUndo(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction, nsresult aUndoResult)</h2></a>
+<p>
+Called after a transaction manager calls the Undo() method of
+a transaction.
+<p>
+<b>Parameters</b>
+<p>
+<p>
+aManager - The transaction manager undoing the transaction.
+<p>
+aTransaction - The transaction being undone.
+<p>
+aUndoResult - The nsresult returned after undoing the transaction.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener.
+
+<p>
+<a name="WILLREDO"><h2>nsresult WillRedo(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction)</h2></a>
+<p>
+Called before a transaction manager calls the Redo() method of a transaction.
+<p>
+<b>Parameters</b>
+<p>
+aManager the transaction manager redoing the transaction.
+<p>
+@param aTransaction the transaction being redone.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener. NS_OK
+should be used to indicate no error, proceed with normal control
+flow. NS_COMFALSE can be returned by the listener to
+indicate no error, interrupt normal control flow.
+
+<p>
+<a name="DIDREDO"><h2>nsresult DidRedo(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTransaction, nsresult aRedoResult)</h2></a>
+<p>
+Called after a transaction manager calls the Redo() method of
+a transaction.
+<p>
+<b>Parameters</b>
+<p>
+aManager - The transaction manager redoing the transaction.
+<p>
+aTransaction - The transaction being redone.
+<p>
+aRedoResult - The nsresult returned after redoing the transaction.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener.
+
+<p>
+<a name="WILLBEGINBATCH"><h2>nsresult WillBeginBatch(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager)</h2></a>
+<p>
+Called before a transaction manager begins a batch.
+<p>
+<b>Parameters</b>
+<p>
+aManager - The transaction manager beginning a batch.
+<p>
+<b>Return Values</b>
+Error status returned by the listener. NS_OK
+should be used to indicate no error, proceed with normal control
+flow. NS_COMFALSE can be returned by the listener to
+indicate no error, interrupt normal control flow.
+
+<p>
+<a name="DIDBEGINBATCH"><h2>nsresult DidBeginBatch(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, nsresult aResult)</h2></a>
+<p>
+Called after a transaction manager begins a batch.
+<p>
+<b>Parameters</b>
+<p>
+aManager - The transaction manager that began a batch.
+<p>
+aResult - The nsresult returned after beginning a batch.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener.
+
+<p>
+<a name="WILLENDBATCH"><h2>nsresult WillEndBatch(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager)</h2></a>
+<p>
+Called before a transaction manager ends a batch.
+<p>
+<b>Parameters</b>
+<p>
+aManager - The transaction manager ending a batch.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener. NS_OK
+should be used to indicate no error, proceed with normal control
+flow. NS_COMFALSE can be returned by the listener to
+indicate no error, interrupt normal control flow.
+
+<p>
+<a name="DIDENDBATCH"><h2>nsresult DidEndBatch(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, nsresult aResult)</h2></a>
+<p>
+Called after a transaction manager ends a batch.
+<p>
+<b>Parameters</b>
+<p>
+aManager - The transaction manager ending a batch.
+<p>
+aResult - The nsresult returned after ending a batch.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener.
+
+<p>
+<a name="WILLMERGE"><h2>nsresult WillMerge(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTopTransaction, <a href="nsITransaction.html">nsITransaction</a> *aTransactionToMerge)</h2></a>
+<p>
+Called before a transaction manager tries to merge
+a transaction, that was just executed, with the
+transaction at the top of the undo stack.
+<p>
+<b>Parameters</b>
+<p>
+aManager - The transaction manager ending a batch.
+<p>
+aTopTransaction - The transaction at the top of the undo stack.
+<p>
+aTransactionToMerge - The transaction to merge.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener. NS_OK
+should be used to indicate no error, proceed with normal control
+flow. NS_COMFALSE can be returned by the listener to
+indicate no error, interrupt normal control flow.
+
+<p>
+<a name="DIDMERGE"><h2>nsresult DidMerge(<a href="nsitransactionmanager.html">nsITransactionManager</a> *aManager, <a href="nsITransaction.html">nsITransaction</a> *aTopTransaction, <a href="nsITransaction.html">nsITransaction</a> *aTransactionToMerge, PRBool aDidMerge, nsresult aMergeResult)</h2></a>
+<p>
+Called after a transaction manager tries to merge
+a transaction, that was just executed, with the
+transaction at the top of the undo stack.
+<p>
+<b>Parameters</b>
+<p>
+aManager - The transaction manager ending a batch.
+<p>
+aTopTransaction - The transaction at the top of the undo stack.
+<p>
+aTransactionToMerge - The transaction to merge.
+<p>
+aDidMerge - True if transaction was merged, else false.
+<p>
+aMergeResult - The nsresult returned after the merge attempt.
+<p>
+<b>Return Values</b>
+<p>
+Error status returned by the listener. NS_OK
+should be used to indicate no error, proceed with normal control
+flow. NS_COMFALSE can be returned by the listener to
+indicate no error, interrupt normal control flow.
+
+
+<hr>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/editor/txmgr/nsitransactionlistener.html&amp;rev=&amp;root=/cvsroot/">Last modified June  1,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

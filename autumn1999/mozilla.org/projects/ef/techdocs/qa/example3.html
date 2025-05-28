@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Sample Test Case 3</TITLE>
+<!-- CHANGED BY: PATRICK DIONISIO,  9-APR-1997 -->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Quality Assurance</H2>
+
+
+<H2><FONT SIZE=+4>Sample Test 3</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="example2.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="../qa.html"><IMG SRC="../arrows/up.gif"  ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="../bibliography.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+<P></P>
+This simple test checks if an index is within the bounds of the array.
+if it isn't then aaload should throw an ArrayIndex-OutOfBounds-Exception.
+<P>
+<PRE>
+class IndexOutOfBounds
+{
+	static final int len=10;
+
+	int method()
+	{
+		Object arrayref[] = new Object[len];
+		Oject obj;
+
+		try {
+			obj = arrayref[-1];
+			return 2;
+		} catch (ArrayIndexOutOfBoundsException e){
+			}
+		
+		try {
+			obj = arrayref[len];
+			return 2;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			}
+
+		return 0;
+	}
+	
+	public static void main(String[] args)
+	{
+		if ( method() == 0 ) System.out.println("passed");
+		else System.out.println("failed");
+	}
+
+}
+<P>
+</PRE>
+</BODY>
+</HTML>
+

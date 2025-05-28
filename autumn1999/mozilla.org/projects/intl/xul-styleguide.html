@@ -1,0 +1,834 @@
+<HTML>
+<HEAD>
+<TITLE>XUL Coding Style Guidelines</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<center>
+<h1>
+XUL Coding Style Guidelines</h1></center>
+
+<center>by Tao Cheng&lt; <a href="mailto:tao@netscape.com">tao@netscape.com</a>
+></center>
+
+<h2>
+Document History</h2>
+
+<ul>
+<li>
+10/05/99: Add <a href="#locnotes">Localization Notes</a> .</li>
+
+<li>
+07/12/99: Add <a href="#ent2dtd">Moving entities to DTDs</a>.</li>
+
+<li>
+06/22/99: Rework certain paragraph. Also bring it up-to-date.</li>
+</ul>
+
+<h2>
+Introduction</h2>
+XUL, pronounced as /zool/, stands for "XML-based User Interface Language",
+is a cross platform way of describing user interface. It could contain
+XUL specific element types for UI controls, HTML4 markups for content data,
+and even JavaScript for user event handling. To make XUL files easy to
+read and maintain, localization friendly, and portable across user agents,
+we need to have a set of coding style guidelines to ensure our objectives
+are achievable.
+<p>The author has collected a set of guidelines from various sources as
+listed in the <b><a href="#secref">References</a></b> section. While some
+of the guidelines are recommended practices, the others are mandatory.
+<p>In the following sections, several issues will be discussed.
+<ul>
+<li>
+<a href="#genguide">XML, XUL, HTML, and XHTML guidelines</a> including</li>
+
+<ul>
+<li>
+<a href="#html2xul">Handling HTML files.</a></li>
+
+<li>
+<a href="#xmldecla">The XML declaration.</a></li>
+
+<li>
+<a href="#namespace">Namespace</a>.</li>
+
+<li>
+<a href="#casesens">Case sensitivity</a>.</li>
+
+<li>
+<a href="#jsguide">JavaScript code</a>.</li>
+
+<li>
+<a href="#dtddeclar">DTD declaration</a>.</li>
+
+<li>
+<a href="#charent">Predefined Entities</a>.</li>
+
+<li>
+<a href="#xhtmlguide">Other guidelines</a>.</li>
+</ul>
+
+<li>
+<a href="#l10nxul">Making XUL localizable</a>. This contains two sub-sections</li>
+
+<ul>
+<li>
+<a href="#l10nres">&nbsp;What shall be localizable?</a></li>
+
+<ul>
+<li>
+Widget resources</li>
+
+<li>
+Content data</li>
+
+<li>
+Style info</li>
+
+<li>
+Layout geometry</li>
+</ul>
+
+<li>
+&nbsp;<a href="#l10nhow">How to make them localizable?</a></li>
+
+<ul>
+<li>
+<a href="#howwdgt">Widget resources</a></li>
+
+<li>
+<a href="#howcntnt">Content data</a></li>
+
+<li>
+<a href="#howstyle">Style info</a></li>
+
+<li>
+<a href="#howlayout">Layout geometry</a></li>
+
+<li>
+<a href="#locnotes">Localization Notes</a></li>
+
+<li>
+<a href="#dontlocz">Files not to be localized</a></li>
+</ul>
+</ul>
+</ul>
+
+<h2>
+<a NAME="genguide"></a>XML, XUL, HTML, and XHTML guidelines</h2>
+The following are considered good coding style for XML/XUL documents. Disobeying
+them might not cause any parsing error for now, however, it might cause
+future maintenance headache.
+<ul>
+<li>
+<a NAME="html2xul"></a><b>Convert HTML files to XUL files.</b> All UI descriptions
+written in HTML shall be converted into XUL. Currently, we do not have
+a clean way of localizing HTML files. XUL is our UI description language.
+In addition, there are certain XUL specific features, such as XUL fragments,
+which are supported in XUL content model only.</li>
+
+<li>
+<a NAME="xmldecla"></a>The <b>XML declaration.</b> All XML declaration
+shall contain the following information:</li>
+
+<ul>
+<li>
+<i>Version number.</i> Version number indicates that this XML document
+conforms to a particular version of XML specification. It is provided as
+a means to allow the possibility of automatic version recognition, should
+it become necessary. Processors may signal an error if they receive documents
+labeled with versions they do not support [<a href="http://www.w3.org/TR/1998/REC-xml-19980210#sec-prolog-dtd">Prolog
+and Document Type Declaration</a> ].</li>
+
+<li>
+<i>UTF-8 encoding</i>. Wherever applicable, the recommended encoding of
+the content data and attribute values is <b>UTF-8</b>. [<a href="http://www.w3.org/TR/1998/REC-xml-19980210#NT-EncodingDecl">EncodingDecl</a>
+]. In Mozilla, when such information is not specified, UTF-8 is the default
+encoding of all XML, XUL, and RDF documents. Note that&nbsp; since ASCII
+is a subset of UTF-8, ordinary ASCII entities do not strictly need an encoding
+declaration.</li>
+
+<li>
+<i>Style sheet.</i> An XML file must have a style sheet associated with
+it, otherwise, it won't know how to display the document. Note that, as
+suggested below in "Configurable Chrome", chrome type URLs shall be used
+to reference the style sheet. For details, see the "XUL File Preamble"
+section of David Matejka's&nbsp; <a href="http://www.mozilla.org/xpfe/languageSpec.html">XUL
+Language</a>&nbsp; spec.</li>
+</ul>
+
+<li>
+<a NAME="namespace"></a><b>Namespace</b>. In XUL documents, namespace shall
+default to "xul" and be declared in the root element. Other namespace referenced
+shall be declared before use and preferably in the root element of the
+document. See the sample XUL declaration below for illustration.</li>
+
+<li>
+<a NAME="casesens"></a><b>Case sensitivity</b>. Be aware that XML is case
+sensitive. In compliance with XHTML working draft, all element names and
+attribute names shall be in lower case.</li>
+
+<p><br><a NAME="xulSample"></a><u>Sample XUL declaration </u>(stolen from
+<a href="http://www.mozilla.org/xpfe/languageSpec.html">XUL
+Language</a> )
+<ul>&lt;?xml version="1.0" encoding='UTF-8' ?>
+<br>&lt;?xml-stylesheet href="xul.css" type="text/css"?>
+<br>&lt;!DOCTYPE window>
+<br>&lt;window xmlns:html="http://www.w3.org/TR/REC-html40"
+<br>&nbsp; xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"></ul>
+
+<li>
+<a NAME="chromreg"></a><b>Configurable Chrome.</b> Please refer to <a href="http://www.mozilla.org/xpfe/ConfigChromeSpec.html">Configurable
+Chrome</a> for details about the concept of Configurable Chrome and the
+usage of chrome registry.</li>
+
+<p><br>Three XUL style guidelines are proposed:
+<ul>
+<li>
+All resource reference in XUL shall use the chrome type URLs instead of
+hardwired URLs.</li>
+
+<li>
+Place all platform and language neutral files in content/ and skin/ directories.</li>
+
+<li>
+Place all locale and platform sensitive files under their specific sub-directories
+such as "navigator/locale/en" and "navigator/platform/unix". Note that
+all languages and platforms are treated equally and stored in their respective
+sub-directories. Candidates of such files are platform-specific style sheets
+and language-specific DTD files.</li>
+</ul>
+Why is it important to put language-specific files in locale-specific sub-directories?
+Because we want to be able to switch between languages on the same user
+machine. This is essential on UNIX and maybe on other Operating systems.
+It would also facilitate the implementation of downloadable chrome customized
+to a user's language and platform characteristics.
+<p>Also note that the support of locale type chrome URLs is not in place,
+yet. You can start playing with content and skin URLs, though. The earlier
+we use the chrome URLs for XUL authoring, the sooner we can identify potential
+problems and fix them.
+<p>A close view of the "Directory Structure" outlined in David Hyatt's
+Configurable Chrome spec.
+<br>Directory Structure Outline:
+<p>[Mozilla]
+<blockquote>[chrome]
+<blockquote>[navigator]
+<blockquote>[skin]
+<blockquote>[default] navigatorSkin.jar
+<br>... other files bundled with navigator
+<br>... ... other skins used by users for navigator ...</blockquote>
+[content]
+<blockquote>[default]
+<br>navigatorContent.jar
+<br>... other files bundled with navigator ...</blockquote>
+[platform]
+<blockquote>[unix]
+<br>[win]
+<br>[mac]</blockquote>
+[locale]
+<blockquote>[en]
+<br>[es]
+<br>[fr]
+<br>[ja]
+<br>[ko]
+<br>[zh]</blockquote>
+
+<p><br>/*... ... ... subdirectories for other specific window types ...
+*/</blockquote>
+
+<p><br>[messenger] ...</blockquote>
+</blockquote>
+
+<li>
+<a NAME="jsguide"></a><b>JavaScript</b> code shall be moved out of XUL.
+Therefore, in stead of puttinig them inline as</li>
+
+<br>&nbsp;
+<ul>&nbsp;&lt;html:script>
+<br>&nbsp;&nbsp;&nbsp;&nbsp; ...
+<br>&nbsp;&nbsp;&nbsp;&nbsp; ...
+<br>&nbsp;&nbsp;&nbsp;&nbsp; /* JavaScript code */
+<br>&nbsp;&nbsp;&nbsp;&nbsp; ...
+<br>&nbsp;&nbsp;&nbsp;&nbsp; ...
+<p>&nbsp;&lt;/html:script></ul>
+We move them into a foo.js file and declare its URI in the start tag like
+this
+<ul>&lt;html:script src="foo.js" encoding="UTF-8" /></ul>
+
+<ul>(Refer to <a href="http://www.w3.org/TR/REC-html40/interact/scripts.html#edef-SCRIPT">SCRIPT</a>
+for the official&nbsp; spec of this syntax)</ul>
+The advantages of this are
+<ul>
+<li>
+Legibility. The main purpose of the XUL is to describe the UI content.
+As style information shall be in style sheet, JavaScript code shall be
+in *.js as well to keep the main XUL file clean. In some XUL files, JavaScript
+code takes up 20-25% of the length of the file. Often times, we need to
+go to the very bottom of the file to find the UI descriptions.</li>
+
+<li>
+Maintainability. By putting JavaScript code in external files, we can isolate
+the function declaration in a separate file. The developer does not need
+to touch the main XUL to change its runtime behavior.</li>
+
+<li>
+Flexibility. Since the JavaScript code is in an external file, customization
+can be achieved by switching the JS file. With chrome registry, developers,
+content providers, or even the end users will be able to edit the registry
+table to use a customized JS code for their browser client.</li>
+</ul>
+
+<li>
+<a NAME="dtddeclar"></a><b>DTD declaration</b>. The following are extracted
+from <a href="#xmlbk1">XML Applications</a></li>
+
+<ul>
+<li>
+Comment declaration shall be included copiously.</li>
+
+<p><br>&lt;!-- There's no such thing as too many comments. -->
+<li>
+Comment declarations describing the purpose of a DTD to be included at
+the start.</li>
+
+<li>
+Each declaration is presented on a separate line. For example,</li>
+
+<ul>&nbsp;
+<br>&lt;!ELEMENT e1 (...) >
+<br>&lt;!ELEMENT e1 (...) ></ul>
+rather than
+<ul>&nbsp;
+<br>&lt;!ELEMENT e1 (...) > &lt;!ELEMENT e1 (...) ></ul>
+
+<li>
+Element declaration precedes any attribute list associated with it.</li>
+
+<ul>&nbsp;
+<br>&lt;!ELEMENT e1 (...) >
+<br>&lt;!ATTLIST&nbsp;&nbsp;&nbsp; e1 (...) ></ul>
+rather than
+<ul>&nbsp;
+<br>&lt;!ATTLIST&nbsp;&nbsp;&nbsp; e1 (...) >
+<br>&lt;!ELEMENT e1 (...) ></ul>
+</ul>
+
+<li>
+<a NAME="charent"></a><b>Predefined Entities.</b> The following are <a href="http://www.w3.org/TR/1998/REC-xml-19980210#sec-predefined-ent">predefined
+entities</a> and shall not be redefined in any XUL:</li>
+
+<table BORDER NOSAVE >
+<tr ALIGN=CENTER NOSAVE>
+<td WIDTH="10%" NOSAVE><b>Entity Name/Reference</b></td>
+
+<td WIDTH="10%" NOSAVE><b>Name</b></td>
+
+<td WIDTH="10%" NOSAVE><b>Symbol</b></td>
+
+<td WIDTH="10%" NOSAVE><b>Value</b></td>
+</tr>
+
+<tr ALIGN=CENTER NOSAVE>
+<td NOSAVE>&amp;lt;</td>
+
+<td>less than</td>
+
+<td>&lt;</td>
+
+<td>"&amp;#38;#60;"</td>
+</tr>
+
+<tr ALIGN=CENTER NOSAVE>
+<td NOSAVE>&amp;gt;</td>
+
+<td>greater than</td>
+
+<td>></td>
+
+<td>"&amp;#62;"</td>
+</tr>
+
+<tr ALIGN=CENTER NOSAVE>
+<td NOSAVE>&amp;amp;</td>
+
+<td>ampersand</td>
+
+<td>&amp;</td>
+
+<td>"&amp;#38;#38;"</td>
+</tr>
+
+<tr ALIGN=CENTER NOSAVE>
+<td NOSAVE>&amp;apos;</td>
+
+<td>apostrophe</td>
+
+<td>'</td>
+
+<td>"&amp;#39;"</td>
+</tr>
+
+<tr ALIGN=CENTER NOSAVE>
+<td NOSAVE>&amp;quot;</td>
+
+<td>quote</td>
+
+<td>"</td>
+
+<td>"&amp;#34;"</td>
+</tr>
+</table>
+
+<p>We also define the entity for EURO SIGN as follows.
+<blockquote>&lt;!ENTITY euro "&amp;#x20AC;" ></blockquote>
+
+<li>
+<a NAME="xhtmlguide"></a>Other guidelines mentioned in&nbsp; <a href="http://www.w3.org/TR/WD-html-in-xml/">XHTML
+Working Draft</a> help you write HTML content in XML documents that are
+portable across conforming parsers.</li>
+
+<ul>
+<li>
+&nbsp;<a href="http://www.w3.org/TR/WD-html-in-xml/#diffs">Differences
+with HTML 4.0</a></li>
+
+<li>
+&nbsp;<a href="http://www.w3.org/TR/WD-html-in-xml/#guidelines">Guidelines</a></li>
+</ul>
+</ul>
+
+<h2>
+<a NAME="l10nxul"></a>Making XUL localizable -- mandatory</h2>
+In the past, UI (display) related resource descriptions are stored in *.rc
+(for Windows client) or *.ad (for UNIX client) so that they can be localized
+for a specific language or culture. In the new world, Mozilla 5.0, this
+is
+not true any more. Most of the windows and dialogs in Mozilla will be described
+using <a href="#refxul">XUL</a>.
+<p>To make XUL stream/file localizable, several guidelines need to be adopted
+and followed to make the translation work easier and less error-prone.
+<h3>
+<a NAME="l10nres"></a>What resources are localizable?</h3>
+The rule of thumb is- "all resources that contribute to the appearance
+of the chrome are localizable". Let's take a close look at them.
+<ul>
+<li>
+<a NAME="whatwdgt"></a>Widget resources</li>
+
+<ul>
+<li>
+All texts in the graphical user interface are localizable. Examples include
+menu label strings, dialog and windows title strings, tooltip strings,
+status text, etc.</li>
+
+<li>
+URLs to localizable images. While some icon images in one culture are popularly
+used, they might not be appropriate in other cultures. We need the ability
+to customize them to fit local cultures. Note that it is the URL to the
+image that we will localize instead of the image data itself.</li>
+</ul>
+
+<li>
+<a NAME="whatcntnt"></a>Content data. This includes both plain text and
+HTML tagged data.</li>
+
+<li>
+<a NAME="whatstyle"></a>Style information such as font, size, and color,
+may need to be localized. For example, while color white is the symbol
+of purity in one culture, it is a color of sorrow and sadness in another.</li>
+
+<li>
+<a NAME="whatlayout"></a>The geometric layout. We may (rarely we hope)
+need to modify the layout. For example, some English radio buttons are
+laid out horizontally, but their German version could make them too wide.
+Under such circumstance, we might want to arrange them vertically.</li>
+</ul>
+
+<h3>
+<a NAME="l10nhow"></a>How to make them localizable?</h3>
+In this section, recommendation of how to make XUL based user interface
+localizable/customizable is presented.
+<h4>
+<a NAME="howwdgt"></a>Widget resources -- text entities and their naming
+convention</h4>
+To make a widget attribute localizable, its value string must be declared
+as the value of a text entity and referenced by its entity name.. <a href="#l10nex1">See
+the example below for illustration.</a> More information about the proposed
+solution of XUL localizability can be found <a href="http://www.mozilla.org/projects/intl/xul-l10n.html#pro1">here</a>.
+<p>In addition, to increase the readability of the XUL file and make entity
+names self-explanatory, a hierarchical naming scheme is proposed:
+<blockquote>The entities to substitute attribute values of a widget shall
+be named after the widget ID (or widget element names if no ID is assigned.)</blockquote>
+For example, if a command button is named backCmd, then its label string
+resource shall be named as "backCmd.label" and defined as &lt;!ENTITY backCmd.label
+"Back" > in the external DTD. The general form is
+<br>&nbsp;
+<blockquote><b><font color="#000000">elementName.</font></b><i>attributeName</i></blockquote>
+
+<p><br><a href="#l10nex1">See the example below for illustration.</a>
+<br>&nbsp;
+<blockquote><a NAME="l10nex1"></a><b><i>Example:</i></b> a browser.xul
+and its browser.dtd:</blockquote>
+
+<blockquote>
+<blockquote><b><i><u>browser.xml</u></i></b>
+<br>&lt;button id="backCmd"
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; img="&amp;backCmd.img;"
+tooltip="&amp;backCmd.tooltip;" status="&amp;backCmd.status;">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &amp;backCmd.label; &lt;/button>
+<p><b><i><u>browser.dtd</u></i></b>
+<br>&lt;!ENTITY backCmd.label&nbsp;&nbsp;&nbsp; "Back">
+<br>&lt;!ENTITY backCmd.tooltip "Back to previous page">
+<br>&lt;!ENTITY backCmd.status "Back to the previous page">
+<br>&lt;!ENTITY backCmd.img&nbsp;&nbsp;&nbsp;&nbsp; "chrome://navigator/skin/TB_Back.gif"></blockquote>
+</blockquote>
+<a NAME="ent2dtd"></a><i><u>Moving entities to DTDs</u></i>
+<p>If you used to declare entities within XUL files, here is a perl <a href="http://www.mozilla.org/projects/intl/ent2dtd.pl">script</a>
+to move them to external DTD files for you.
+<p>What you need to do is:
+<ol>
+<li>
+Save the this perl script to move entities from the internal DTD block
+to an external DTD file. The script, ent2dtd.pl, works like this:</li>
+
+<p><br>Usage: ent2dtd.pl [-h] xulORrdf | directory
+<ul>ent2dtd.pl takes one or more filenames or directories as input. arguments.
+It moves entities in 'xulORrdf' into a DTD file in the same directory 'xulORrdf'
+resides.
+<p>If 'xulORrdf' is a XUL file, the generated DTD file will be named 'xulORrdf.dtd'.
+If 'xulORrdf' is a RDF file, it will be named 'xulORrdf-rdf.dtd'. All original
+files are renamed as 'xulORrdf.org' and 'xulORrdf-rdf.org' respectively.
+<p>ent2dtd.pl enters a given directory and its sub-directories to process
+all *.xul and *.rdf files encountered.</ul>
+Options:
+<ul>-h Print help (this message)
+<br>-p package_name use package_name in composing the system id. the default
+is 'l10n'.</ul>
+Note:
+<p>Please do not run the script on a processed file!
+<li>
+Assuming the target XUL file is navigator.xul, the script will move all
+entities into navigator.dtd and assign "chrome://l10n/locale/navigator.dtd"
+as the system id to this DTD file. You will need to replace the "l10n"
+part to your package name.</li>
+
+<li>
+Modify your makefile (config) to 'install' navigator.dtd into chrome/navigator/locale/en-US/.</li>
+
+<li>
+Manually add the locale provider to your package in the chrome registry.&nbsp;<chrome about="chrome://navigator/">...
+...&nbsp;<locale><RDF:Description about="chrome://navigator/locale/"><name>en-US</name>&nbsp;</RDF:Description></loacle></chrome></li>
+
+<li>
+Optionally, take out the base entry since they REALLY shall not be there.</li>
+
+<li>
+Test your changes and check them (including the *.dtd) in.</li>
+</ol>
+
+<h4>
+<a NAME="howcntnt"></a>Content data</h4>
+Content data, either in plain text or HTML/XML tagged, need to be declared
+as general entities in the external DTD and referenced in XUL stream.
+<p>In addition,&nbsp; recommendation of grouping content data and HTML
+tagged data is provided below.
+<ul>
+<li>
+Content containing markups shall be separated from plain text data. Localizing
+plain text is much easier (and cheaper) than localizing markup tagged data.
+See the example for illustrations.
+<a href="#l10nex2">See the example for
+illustrations.</a></li>
+
+<li>
+Content text forming a complete sentence shall be declared in one single
+entity. We try to avoid placing markups in entity declaration; but the
+rule, "forming a complete sentence", takes precedence when there is a conflict.
+Translating broken sentences is not only painful but also error-prone.
+Here are examples of HTML tagged data which shall be declared as one entity:</li>
+
+<br>&nbsp;
+<ul>
+<li>
+A list item (as opposed to the whole list.)</li>
+
+<li>
+A table cell (as opposed to the whole table.)</li>
+
+<li>
+A paragraph (as opposed to the whole chapter).</li>
+
+<li>
+And many others (such as framesets...).</li>
+</ul>
+
+<ul>&nbsp;
+<br><b><i>Example:</i></b>
+<p><u>A sample HTML tagged content data:</u>
+<p><a NAME="l10nex2"></a>&lt;html:i>This document is modified but not saved.
+You will have choices about what to do with it:&lt;/html:i>
+<br>&lt;html:ul>
+<br>&lt;html:li>Save it and exit.&lt;/html:li>
+<br>&lt;html:li>Save it but do not exit.&lt;/html:li>
+<br>&lt;html:li>Exit without saving it&lt;/html:li>
+<br>&lt;html:li>&lt;html:b>Don't&lt;/html:b> exit.&lt;/html:li>
+<br>&lt;/html:ul>
+<p><u>Entities to be declared for the document:</u>
+<p>&lt;!ENTITY prompt&nbsp; "This document is modified but not saved. You
+will have choices about what to do with it:" >
+<br>&lt;!ENTITY saveNexit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"Save it and exit." >
+<br>&lt;!ENTITY saveNotExit&nbsp;&nbsp;&nbsp;&nbsp; "Save it but do not
+exit." >
+<br>&lt;!ENTITY exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"Exit without saving it" >
+<br>&lt;!ENTITY dontExit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"&lt;html:b>Don't&lt;/html:b> exit." >
+<p><u>The XUL will be sent to the parser</u>
+<br>&lt;html:i> &amp;prompt; &lt;/html:i>
+<br>&lt;html:ul>
+<br>&lt;html:li>&amp;saveNexit;&lt;/html:li>
+<br>&lt;html:li>&amp;saveNotExit;&lt;/html:li>
+<br>&lt;html:li>&amp;saveNotExit;&lt;/html:li>
+<br>&lt;html:li>&amp;exit;&lt;/html:li>
+<br>&lt;html:li>&amp;dontExit;&lt;/html:li>
+<br>&lt;/html:ul>
+<br>&nbsp;</ul>
+Note that we try to avoid including markups in entity values unless the
+markups are within a complete sentence. The rule of thumb is <b>use your
+judgment.</b></ul>
+
+<h4>
+<a NAME="howstyle"></a>Style information</h4>
+Style information shall be described in style sheets such as Cascade Style
+Sheet, (CSS ), XSL (if supported in the future), etc... Any UI preferences
+in the XUL must be localizable. References to style sheets must be in chrome
+URLs.
+<br>&nbsp;
+<h4>
+<a NAME="howlayout"></a>Layout Geometry</h4>
+Layout shall be described in stylesheet, currently, the Cascade style Sheet
+(CSS).
+<br>&nbsp;
+<h4>
+<a NAME="locnotes"></a>Localization Notes</h4>
+Localization notes are the XUL&nbsp;writers' notes to the localizers/translators.
+They are placed above the actual entity string in the format:
+<blockquote>&lt;!-- LOCALIZATION NOTE&nbsp; (entity.name): content --></blockquote>
+where the "entity.name" is the entity name (id) for the string (entity
+value) to be localized, and the content provides helpful hints to the localizers.
+For example:
+<blockquote>&lt;!-- LOCALIZATION NOTE&nbsp; homeBtn.label : Do not translate
+the entity value "Home". -->
+<br>&lt;!-- ENTITY homeBtn.label "Home" -->
+<br>&nbsp;</blockquote>
+Properties files are very similar, but use the pound sign instead of &lt;!--
+xxxxx-->:
+<blockquote># LOCALIZATION NOTE&nbsp; entity name : content</blockquote>
+We recognize that translation is a subset of localization even though we've
+consistently referred to our notes as "LOCALIZATION NOTE".
+<h2>
+<a NAME="dontlocz"></a>Files not to be localized?</h2>
+Some files live in the tree but aren't really part of the build; they're
+just there as programming examples or a kind of source documentation. To
+prevent them from being localized, you may insert a line of comment following
+the XML declaration as follows.
+<p>&nbsp;&nbsp;&nbsp; &lt;?xml version="1.0" encoding='UTF-8' ?>
+<br>&nbsp;&nbsp;&nbsp;<font color="#FF0000"> &lt;!-- DO NOT localize this
+file: [reason...] it isn't part of the build; --></font>
+<p>When translators see this line, they won't bother to look at the rest
+of the file.
+<br>&nbsp;
+<h2>
+<a NAME="secref"></a>References</h2>
+
+<ul>
+<li>
+&nbsp;<a NAME="refxul"></a>XUL is discussed in depth in&nbsp;&nbsp; <a href="http://www.mozilla.org/xpfe/languageSpec.html">XUI
+Language Spec</a>&nbsp; and&nbsp;&nbsp; <a href="http://www.mozilla.org/xpfe/dialogs.html">XUI
+Window Language</a> .</li>
+
+<li>
+&nbsp;<a href="http://www.mozilla.org/projects/intl/xul-l10n.html">XUL
+Localizability issues</a></li>
+
+<li>
+&nbsp;<a href="http://www.w3.org/TR/WD-html-in-xml/">XHTML Working Draft</a></li>
+
+<li>
+&nbsp;<a href="http://www.w3.org/TR/REC-xml-names/">Namespace</a></li>
+
+<li>
+&nbsp;<a href="http://www.w3.org/TR/1998/REC-xml-19980210">Extensible Markup
+Language (XML) 1.0</a></li>
+
+<li>
+&nbsp;<a href="http://www.unicode.org/unicode/reports/tr8.html#2.0 Euro Sign">The
+Unicode Standard&reg;, Version 2.1</a></li>
+
+<li>
+&nbsp;<a NAME="xmlbk1"></a>"XML Applications" by Frank Boumphrey. Published
+by Wrox Press Inc. ISBN 1-861001-52-5.</li>
+</ul>
+
+<h2>
+Document History (obsolete)</h2>
+
+<ul>
+<li>
+05/27/99: Add</li>
+
+<ul>
+<li>
+Handling <a href="#html2xul">HTML</a> files shall be converted into XUL
+files.</li>
+
+<li>
+Use HTML shorthand "&lt; />" to end JS script inclusion.</li>
+
+<li>
+All language/culture/platform specific files will be referenced by <a href="#chromreg">chrome
+urls</a> so that their real location can be customized.</li>
+
+<li>
+How to mark files as<a href="#dontlocz"> do-not-localize</a>?</li>
+</ul>
+
+<li>
+04/13/99: Add <a href="#chromreg">tentative proposal of the install directory
+and chrome registry.</a></li>
+
+<li>
+04/12/99: Add <a href="#jssigned">tentative solution of the security concern
+in JavaScript.</a>.</li>
+
+<li>
+04/06/99: Add suggestion of <a href="#jsguide">moving JavaScript code out
+of XUL files</a>.</li>
+
+<li>
+03/24/99: Open issues: how and where to localize style information and
+layout geometry.</li>
+
+<li>
+03/16/99: Finishing up the first draft. Request for peer review.</li>
+
+<li>
+03/08/99: Include predefined entity declaration.</li>
+
+<li>
+03/01/99: Held an internal meeting. The proposal of using property file
+was ruled out; however, naming convention was adopted.</li>
+
+<h2>
+02/26/99: first draft.</h2>
+</ul>
+
+<h2>
+Obsolete</h2>
+
+<ul>
+<li>
+<b><font color="#FF0000">(obsolete; ruled out) Using property files. UI</font></b>
+developers will place localizable resources in a Java-like-property file.
+I18/L10n teams will provide <b><i>a utility tool to parse the property
+file and generate a DTD file </i></b>containing all the entity definition
+needed for the main XUL stream.</li>
+
+<li>
+<b><font color="#FF0000">(obsolete; ruled out) </font><i><u>browser.property</u></i></b></li>
+
+<br>backCmd.label:Back
+<br>backCmd.img:TB_Back.gif
+<br>backCmd.tooltip:Back to previous page
+<br>backCmd.status:Back to the previous page</ul>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/intl/xul-styleguide.html&amp;rev=&amp;root=/cvsroot/">Last modified October  6,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

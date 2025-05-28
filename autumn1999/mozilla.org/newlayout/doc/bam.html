@@ -1,0 +1,516 @@
+<HTML>
+<HEAD>
+<TITLE>New Layout: BAM Roadmap</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<HR WIDTH="100%">
+<h2>
+<a href="/newlayout">New Layout</a>: BAM Roadmap</h2>
+<BR>Author: <A HREF="mailto:jevering">James
+Everingham</A>
+<BR>Updated: April 28, 1998<br><Br>
+<i>eds. note: BAM stands for "Born Again Modularization," not the Flintstones character.</i>
+<HR WIDTH="100%">
+<BR>
+<TABLE BORDER=0 WIDTH="100%" BGCOLOR="#FFFFCC">
+<TR>
+<TD><B>Overview</B></TD>
+</TR>
+</TABLE>
+
+<P>The goal of the BAM modularization
+effort is to separate key modules for shared use by both NGLayout and the
+5.0 code base. The BAM effort is driven by the need to integrate
+the new NGLayout engine while achieving a more maintainable and modular
+architecture. This will be achieved by targeting strategic
+areas: the network support library (netlib), the layout engine
+(layout), and the image library (imglib). The netlib effort
+will involve breaking the current implementation into several different
+DLLs and libraries, each of which will expose one or more XPCOM components.
+The layout effort involves defining a set of layout specific XPCOM apis
+(webwidget), and integration of the NGLayout engine into the current 5.0
+source code base. Imglib separation includes defining an imglib
+XPCOM interface and re-integration back into the 5.0 source code base.
+<BR>
+<TABLE BORDER=0 WIDTH="100%" BGCOLOR="#FFFFCC" >
+<TR>
+<TD><B>Major Components</B></TD>
+</TR>
+</TABLE>
+
+<P><B>Netlib</B>
+<BLOCKQUOTE><B>Netlib Engine DLL</B>
+<P>This DLL will contain the core networking
+functionality including the networking utilities required by all consumers
+of Netlib. New code such as NGLayout will program directly to the
+new XPCOM APIs exposed by the engine.
+<P><B>Netlib Client static library</B>
+<P>This library will contain the legacy
+code needed by the Mozilla client to utilize Netlib. Ultimately,
+this code should decrease as more and more of the client is reworked to
+utilize the new XPCOM APIs...
+<P><B>Streams DLL</B>
+<P>This DLL will contain the various
+stream implementations used by Netlib...
+<P><B>Netlib Protocol DLLs</B>
+<P>The protocols supported by Netlib
+will be broken out into separate dynamically loaded DLLs. This will
+allow new protocols to be dynamically added.
+<BR></BLOCKQUOTE>
+
+<TABLE BORDER=0 WIDTH="100%" BGCOLOR="#FFFFCC" >
+<TR>
+<TD><B>Implementation</B></TD>
+</TR>
+</TABLE>
+
+<P>During the BAM process, the two code
+bases will be in the following states:
+<BR>
+<CENTER><TABLE BORDER COLS=2 WIDTH="49%" BGCOLOR="#CCFFFF" >
+<TR BGCOLOR="#C0C0C0">
+<TD><B>5.0 Source Base</B></TD>
+
+<TD><B>NGLayout Source Base</B></TD>
+</TR>
+
+<TR>
+<TD>integrated imagelib
+<BR>integrated netlib
+<BR>integrated layout</TD>
+
+<TD>modular layout integrated into standalone
+test suite
+<BR>modular netlib
+<BR>modular imglib</TD>
+</TR>
+
+<TR>
+<TD>modular imagelib
+<BR>integrated netlib
+<BR>integrated layout</TD>
+
+<TD>modular layout integrated into standalone
+test suite
+<BR>modular netlib
+<BR>modular imglib</TD>
+</TR>
+
+<TR>
+<TD>modular imagelib
+<BR>modular netlib
+<BR>integrated layout</TD>
+
+<TD>modular layout integrated into standalone
+test suite and 5.0 source base
+<BR>modular netlib
+<BR>modular imglib</TD>
+</TR>
+
+<TR>
+<TD>modular imagelib
+<BR>modular netlib
+<BR>modular layout</TD>
+
+<TD>modular imagelib
+<BR>modular netlib
+<BR>modular layout</TD>
+</TR>
+</TABLE></CENTER>
+
+<P>Below is the proposed directory structure
+of the Netlib code.
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD><B>Directory</B></TD>
+
+<TD><B>Description</B></TD>
+</TR>
+
+<TR>
+<TD>mozilla/network</TD>
+
+<TD>The root networking directory</TD>
+</TR>
+
+<TR>
+<TD>mozilla/network/protocols</TD>
+
+<TD>The root directory for all protocol
+implementations</TD>
+</TR>
+
+<TR>
+<TD>mozilla/network/protocols/&lt;your
+favorite protocol implementation></TD>
+
+<TD>There is a directory per protocol
+implementation</TD>
+</TR>
+
+<TR>
+<TD>mozilla/network/engine</TD>
+
+<TD>The core Netlib implementation</TD>
+</TR>
+
+<TR>
+<TD>mozilla/network/client</TD>
+
+<TD>The legacy code needed by the Mozilla
+client...</TD>
+</TR>
+
+<TR>
+<TD>mozilla/network/stream</TD>
+
+<TD>The implementations of various streams..</TD>
+</TR>
+
+<TR>
+<TD>mozilla/network/tests</TD>
+
+<TD>Standalone tests</TD>
+</TR>
+</TABLE>
+
+<P><B>Netlib</B>
+<P>Netlib will first be broken out into static libraries and
+reintegrated
+into Mozilla to show compatibility. The libraries will then
+be individually put behind new interface API's on branches and then landed
+back on the Mozilla trunk in short intervals. The end result should
+be a restructured code base with far fewer dependencies. A remote
+upgrade capability with interface based DLL's, and the ability to do third
+party plugin protocols and stream converters.
+<P><B>Layout</B>
+<P>After the standalone netlib implementation is up and working, a set
+of APIs will be defined to allow the NGLayout layout engine to plug into
+the current Mozilla code base. After a certain degree of stability
+and feature richness is achieved, the old layout code will be excised from
+the Mozilla code base. This will leave a partially componentized
+product with both a modular layout, netlib, and imagelib.
+<BR>
+<BR>
+<BR>
+<TABLE BORDER=0 WIDTH="100%" BGCOLOR="#FFFFCC" >
+<TR>
+<TD><B>Dependencies</B></TD>
+</TR>
+</TABLE>
+
+<P><B>Layout</B>
+<UL>
+<LI>
+Working standalone Netlib and reintegration
+into Gromit</LI>
+
+<LI>
+Further completion of DOM</LI>
+
+<UL>
+<LI>
+Event model</LI>
+
+<LI>
+Style model</LI>
+
+<LI>
+W3C Range proposal</LI>
+</UL>
+
+<LI>
+NGLayout running on Mac and UNIX</LI>
+
+<LI>
+Landing of XPCOM on the tip</LI>
+</UL>
+
+<TABLE BORDER=0 WIDTH="100%" BGCOLOR="#FFFFCC" >
+<TR>
+<TD><B>Roadmap</B></TD>
+</TR>
+</TABLE>
+
+<P><B>Netlib</B>
+<UL>
+<LI>
+Move nsIURL and the nsURL implementation
+into netlib</LI>
+
+<LI>
+Support HTTP POST requests by supplying
+an OutputStream on the nsIURL component</LI>
+
+<LI>
+Finish the nsIStreamNotification implementation</LI>
+
+<LI>
+Move mozilla/lib/libnet code into the
+new mozilla/network hierarchy</LI>
+
+<LI>
+Make the Mozilla client work with the
+new mozilla/network code</LI>
+
+<LI>
+Break out the core Netlib code into
+the Netlib engine DLL</LI>
+
+<LI>
+Make NGLayout work with the new Netlib
+engine DLL</LI>
+
+<LI>
+Start carving up the rest of the mozilla/network
+code into separate DLLs and libraries</LI>
+
+<UL>
+<LI>
+main set of framework routines and includes</LI>
+
+<UL>
+<LI>
+protocol plugin framework</LI>
+
+<LI>
+tcp helper routines</LI>
+
+<LI>
+network utility function</LI>
+</UL>
+
+<LI>
+protocols</LI>
+
+<UL>
+<LI>
+http</LI>
+
+<LI>
+gopher</LI>
+
+<LI>
+ftp</LI>
+
+<LI>
+abouturls</LI>
+
+<LI>
+file</LI>
+
+<LI>
+dataurls</LI>
+
+<LI>
+mocha</LI>
+
+<LI>
+marimba</LI>
+
+<LI>
+remote (telnet/rlogin)</LI>
+
+<LI>
+mail protocols</LI>
+</UL>
+
+<LI>
+cache</LI>
+
+<LI>
+net converters</LI>
+
+<UL>
+<LI>
+gunzip</LI>
+
+<LI>
+view-source</LI>
+
+<LI>
+save to disk</LI>
+</UL>
+
+<LI>
+C stream functions (declaration, registry,
+utility functions for older C based netlib streams)</LI>
+
+<LI>
+C++ stream functions</LI>
+</UL>
+
+<LI>
+Thread-safety. We need to finalize
+the threading model and make the Netlib engine DLL and multithreaded.
+Probably, the protocol DLLs will need to be multithreaded as well...</LI>
+</UL>
+<B>Layout</B>
+<UL>
+<LI>
+First pass spec of WebWidget API (5/4)</LI>
+
+<LI>
+Bare-bones demo of NGLayout running
+in Gromit chrome on Windows (5/13)</LI>
+
+<LI>
+Landing IMGLIB branch on the tip (5/15)</LI>
+
+<LI>
+Finish dependencies document (ongoing)</LI>
+
+<LI>
+Prototype of type-in using NGLayout,
+in conjunction with the Editor group (5/29)</LI>
+
+<LI>
+First pass editor design (6/1)</LI>
+</UL>
+
+<UL>
+<LI>
+contextual menus</LI>
+
+<LI>
+session history</LI>
+
+<LI>
+Keyboard navigation</LI>
+
+<LI>
+Status messages</LI>
+
+<LI>
+Cut,Copy,Paste</LI>
+
+<LI>
+Bookmarks</LI>
+
+<LI>
+HTML Dialogs</LI>
+
+<LI>
+Window management, multiple browser
+windows</LI>
+
+<LI>
+Preferences, service and UI</LI>
+
+<LI>
+Printing</LI>
+
+<LI>
+JavaScript-Application interaction</LI>
+
+<LI>
+Find text</LI>
+
+<LI>
+Plugins</LI>
+</UL>
+<B>Imglib</B>
+<UL>
+<LI>
+Integration into the Mozilla code base</LI>
+</UL>
+<B>XPCOM</B>
+<UL>
+<LI>
+MAC Build (5/15)</LI>
+
+<LI>
+Unix Verification (5/15)</LI>
+
+<LI>
+Land XPCOM on tip (5/15)</LI>
+</UL>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/newlayout/doc/bam.html&amp;rev=&amp;root=/cvsroot/">Last modified July 15,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

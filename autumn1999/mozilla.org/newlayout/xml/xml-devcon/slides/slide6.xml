@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="slides.css" type="text/css"?>
+<?xml-stylesheet href="test2.css" type="text/css"?>
+<!DOCTYPE Slide>
+
+<Slide xmlns:html="http://www.w3.org/TR/REC-html40">
+
+  <html:img src="nscp.gif" width="40" height="40" id="logo" />
+
+  <SlideBody>
+    <Heading>
+      XML in Gecko
+    </Heading>
+    <SubHeading>
+      Simple example - first line and first letter
+    </SubHeading>
+
+    <Example>
+      <chapter>
+        <para>
+          "Four score and twenty years ago our forefathers brough
+          forth on this content, a new nation, conceived in Liberty, and
+          dedicated to the proposition that all men are created equal."
+        </para>
+      </chapter>
+    </Example>
+
+    <Column>     
+        The XML:      
+      <ShortCode>
+<![CDATA[<chapter>
+  <para>
+    "Four score and twenty years 
+    ago our forefathers brough
+    forth on this content...."
+  </para>
+</chapter>
+
+]]>
+      </ShortCode>
+    </Column>
+
+    <Column>      
+        The CSS:      
+      <ShortCode>
+<![CDATA[para:first-line {
+  font-weight: bold;
+  font-color: maroon;
+}
+para:first-letter {
+  font-size: 200%;
+  font-style: italic;
+  color: green;
+}]]>
+      </ShortCode>
+    </Column>
+
+  </SlideBody>
+
+  <Bar>
+    <DemoButton xml:link="simple" show="new" href="firstletter.xml">Demo</DemoButton>
+    <Button xml:link="simple" href="slide5.xml">Prev</Button>
+    <Button xml:link="simple" href="slide7.xml">Next</Button>
+  </Bar>
+
+</Slide>

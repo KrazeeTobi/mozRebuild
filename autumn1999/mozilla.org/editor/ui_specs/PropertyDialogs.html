@@ -1,0 +1,437 @@
+<HTML>
+<HEAD>
+<TITLE>Composer 5.0 Property Dialogs</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<h2>
+Writing Property Dialogs for Mozilla Composer</h2>
+
+<div align=right><font size=-1>Last updated 9/3/99 by Charles Manske</font>
+<br><font size=-1>(<a href="mailto:cmanske@netscape.com">cmanske@netscape.com</a>)</font></div>
+<h3>
+<font size=+0>Introduction</font></h3>
+This document describes the rules to follow when writing a property dialog
+in XUL, in such a manner so that the "Advanced Edit" feature will work.
+The Advanced Edit button in property dialogs brings up a dialog that allows
+editing any attribute, including JavaScript and inline style. I will use
+the Named Anchor Properties dialog as an example, as it is a very simple
+property dialog.
+<br>&nbsp;
+<h3>
+<font size=+0>XUL for a Typical Property Dialog:</font></h3>
+<font size=+0>The contents of EdNamedAnchorProps.xul (<font color="#000099">extra
+comments are in blue</font><font color="#000000">):</font></font>
+<br><tt>&lt;?xml version="1.0"?></tt>
+<p><tt>&lt;!-- [NPL license message goes here] --></tt>
+<p><tt>&lt;?xml-stylesheet href="chrome://global/skin/" type="text/css"?></tt>
+<br><font color="#000099">CSS needed for dialog layout is in this file:</font>
+<br><tt>&lt;?xml-stylesheet href="chrome://editor/skin/EditorDialog.css"
+type="text/css"?></tt>
+<br><font color="#000099">This overlay file contains the OK, Cancel buttons:</font>
+<br><tt>&lt;?xul-overlay href="chrome://global/content/dialogOverlay.xul"?></tt>
+<br><tt>&lt;?xul-overlay href="chrome://editor/content/EdDialogOverlay.xul"?></tt>
+<br><font color="#000099">All strings that need to be translated (localized)
+must be put here:</font>
+<br><tt>&lt;!DOCTYPE window SYSTEM "chrome://editor/locale/EdNamedAnchorProperties.dtd"></tt>
+<p><tt>&lt;xul:window class="dialog" title="&amp;windowTitle.label;"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; xmlns:xul ="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; xmlns="http://www.w3.org/TR/REC-html40"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; onload = "Startup()"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; align="vertical"></tt>
+<p><tt>&nbsp; &lt;!-- Methods common to all editor dialogs --></tt>
+<br><font color="#000099">The JS for onAdvancedEdit buttons as well as
+many utility methods are here:</font>
+<br><tt>&nbsp; &lt;script language="JavaScript" src="chrome://editor/content/EdDialogCommon.js"></tt>
+<br><tt>&nbsp; &lt;/script></tt>
+<br><font color="#000099">The JS for this particular dialog:</font>
+<br><tt>&nbsp; &lt;script language="JavaScript" src="chrome://editor/content/EdNamedAnchorProps.js"></tt>
+<br><tt>&nbsp; &lt;/script></tt>
+<br><font color="#000099">The JS for the OK, Cancel buttons:</font>
+<br><tt>&nbsp; &lt;script language="JavaScript" src="chrome://global/content/dialogOverlay.js"
+/></tt>
+<p><font color="#000099">This XUL for this specific element:</font>
+<br><tt>&nbsp; &lt;label class="spacedtext" for="nameInput"> &amp;anchorNameEditField.label;
+&lt;/label></tt>
+<br><tt>&nbsp; &lt;input type="text" id="nameInput" size="30" maxlength="255"
+/></tt>
+<br>&nbsp;
+<p><tt>&nbsp; &lt;!-- from EdDialogOverlay --></tt>
+<br><tt>&nbsp; &lt;xul:box id="advancedEditButton"/></tt>
+<br><tt>&nbsp; &lt;!-- from global dialogOverlay --></tt>
+<br><tt>&nbsp; &lt;xul:box id="okCancelButtons"/></tt>
+<p><tt>&lt;/xul:window></tt>
+<p>Here are the contents of EdNamedAnchorProps.dtd, showing the syntax
+for the entity strings:
+<br><tt>&lt;!ENTITY windowTitle.label "Named Anchor Properties"></tt>
+<br><tt>&lt;!ENTITY anchorNameEditField.label "Anchor Name:"></tt>
+<p>Here is the EdDialogOverlay.xul file:
+<br><tt>&lt;?xml version="1.0"?></tt>
+<p><tt>&lt;!DOCTYPE window SYSTEM "chrome://editor/locale/EdDialogOverlay.dtd"></tt>
+<p><tt>&lt;overlay id="EdDialogOverlay"</tt>
+<br><tt>&nbsp;&nbsp; xmlns:html="http://www.w3.org/TR/REC-html40"</tt>
+<br><tt>&nbsp;&nbsp; xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"></tt>
+<p><tt>&nbsp; &lt;box id="advancedEditButton" align="vertical"></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;box align="horizontal" style="margin-top:
+0.2em"></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton class="hspaced"
+id="AdvancedEdit" onclick="onAdvancedEdit()" value="&amp;AdvancedEditButton.label;"/></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;/box></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;html:div>&lt;html:hr width="100%"/>&lt;/html:div></tt>
+<br><tt>&nbsp; &lt;/box></tt>
+<p><tt>&lt;/overlay></tt>
+<h3>
+<font size=+0>Java Script for a Property Dialog:</font></h3>
+<font size=+0>Each property dialog that will use AdvancedEdit must have
+the following methods, which perform these actions:</font>
+<ol>
+<li>
+<font size=+0><b>Startup()</b> [this may be called by another name -- it
+is the value of the onload attribute on the XUL Window]</font></li>
+
+<ol>
+<li>
+<font size=+0>Do&nbsp; EditorShell initialization.</font></li>
+
+<li>
+<font size=+0>Set variables for controls that we use in the dialog</font></li>
+
+<li>
+<font size=+0>Get the element we will edit from the document or create
+a new one to insert.</font></li>
+
+<li>
+<font size=+0>Copy this element to the global "globalElement" for use by
+the Advanced Edit dialog</font></li>
+
+<li>
+<font size=+0>Initialize the dialog widgets from this globalElement</font></li>
+</ol>
+
+<li>
+<b>InitDialog()</b></li>
+
+<ol>
+<li>
+Fill dialog widgets with attribute values from globalElement</li>
+</ol>
+
+<li>
+<b>ValidateData()</b></li>
+
+<ol>
+<li>
+Get the values from each widget and validate them for things like:</li>
+
+<ul>
+<li>
+Is a required field empty?</li>
+
+<br>Use the helper ShowInputErrorMessage(GetString("errorName")) to display
+an error message. Note that you must use GetString() to get the message,
+which you must define in the Editor.properties file.
+<li>
+Is a number field within the allowable range?</li>
+
+<br>Use ValidateNumberString(value, min, max) to test for a range. It will
+display an error message and return false if there was an error, or true
+if it was valid.</ul>
+
+<li>
+For each attribute, if value is valid, set that attribute on the globalElement.</li>
+
+<li>
+If all attributes are valid, return true, else return false.</li>
+</ol>
+
+<li>
+<b>onOK()</b></li>
+
+<ol>
+<li>
+Call ValidateData() and if result is true:</li>
+
+<li>
+Call editorShell.CloneAttributes() to copy all values set on the globalElement
+to the element we are editing (already in the document) or the new one
+we created for inserting.</li>
+
+<li>
+If we are inserting a new element, call the appropriate editorShell method,
+usually InsertElement().</li>
+
+<li>
+Return true if the data was valid and everything went OK.</li>
+</ol>
+</ol>
+<font size=+0>Note that onCancel() is supplied by EdDialogCommon.js and
+it simply closes the dialog window.</font><font size=+0></font>
+<p><font size=+0>Here is the example EdNamedAnchor.js:</font>
+<br><tt><font size=+0>var insertNew = true;</font></tt>
+<br><tt><font size=+0>var tagName = "anchor";</font></tt>
+<br><tt><font size=+0>var anchorElement = null;</font></tt>
+<br><tt><font size=+0>var nameInput;</font></tt>
+<p><tt><font size=+0>// dialog initialization code</font></tt>
+<br><tt><font size=+0>function Startup()</font></tt>
+<br><tt><font size=+0>{</font></tt>
+<br><tt><font size=+0>&nbsp; if (!InitEditorShell())</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; return;</font></tt>
+<p><font color="#000099"><font size=+0>Set the method for the OK and Cancel
+buttons supplied in the globalOverlay file:</font></font>
+<br><tt><font size=+0>&nbsp; doSetOKCancel(onOK, null);</font></tt>
+<p><font color="#000099"><font size=+0>Get the widgets that we will use
+often:</font></font>
+<br><tt><font size=+0>&nbsp; nameInput = document.getElementById("nameInput");</font></tt>
+<br><tt><font size=+0>&nbsp; dump("tagName = "+tagName+"\n");</font></tt>
+<p><tt><font size=+0>&nbsp; // Get a single selected element of the desired
+type</font></tt>
+<br><tt><font size=+0>&nbsp; anchorElement = editorShell.GetSelectedElement(tagName);</font></tt>
+<p><tt><font size=+0>&nbsp; if (anchorElement) {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // We found an element and don't
+need to insert one</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; insertNew = false;</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; dump("Found existing anchor\n");</font></tt>
+<br><tt><font size=+0>&nbsp; } else {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; insertNew = true;</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // We don't have an element selected,</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; //&nbsp; so create one with default
+attributes</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; dump("Element not selected - calling
+createElementWithDefaults\n");</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; anchorElement = editorShell.CreateElementWithDefaults(tagName);</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // Use the current selection as
+suggested name</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; var name = GetSelectionAsText();</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // Get 40 characters of the selected
+text and don't add "..."</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; name = TruncateStringAtWordEnd(name,
+40, false);</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // Replace whitespace with "_"</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; name = ReplaceWhitespace(name,
+"_");</font></tt>
+<p><tt><font size=+0>&nbsp;&nbsp;&nbsp; //Be sure the name is unique to
+the document</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; if (AnchorNameExists(name))</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name += "_"</font></tt>
+<p><tt><font size=+0>&nbsp;&nbsp;&nbsp; anchorElement.setAttribute("name",name);</font></tt>
+<br><tt><font size=+0>&nbsp; }</font></tt>
+<p><tt><font size=+0>&nbsp; if(!anchorElement)</font></tt>
+<br><tt><font size=+0>&nbsp; {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; dump("Failed to get selected element
+or create a new one!\n");</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; window.close();</font></tt>
+<br><tt><font size=+0>&nbsp; }</font></tt>
+<p><tt><font size=+0>&nbsp; // Make a copy to use for AdvancedEdit</font></tt>
+<br><tt><font size=+0>&nbsp; globalElement = anchorElement.cloneNode(false);</font></tt>
+<p><tt><font size=+0>&nbsp; InitDialog();</font></tt>
+<p><tt><font size=+0>&nbsp; nameInput.focus();</font></tt>
+<br><tt><font size=+0>}</font></tt>
+<p><tt><font size=+0>function InitDialog()</font></tt>
+<br><tt><font size=+0>{</font></tt>
+<br><tt><font size=+0>&nbsp; nameInput.value = globalElement.getAttribute("name");</font></tt>
+<br><tt><font size=+0>}</font></tt>
+<p><tt><font size=+0>function AnchorNameExists(name)</font></tt>
+<br><tt><font size=+0>{</font></tt>
+<br><tt><font size=+0>&nbsp; anchorList = editorShell.editorDocument.anchors;
+// getElementsByTagName("A");</font></tt>
+<br><tt><font size=+0>&nbsp; if (anchorList) {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; dump("We have an anchor list\n");</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; for (i=0; i &lt; anchorList.length;
+i++) {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dump("Anchor name:
+"+anchorList[i].name+"\n");</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (anchorList[i].name
+== name)</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+true;</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; }</font></tt>
+<br><tt><font size=+0>&nbsp; }</font></tt>
+<br><tt><font size=+0>&nbsp; return false;</font></tt>
+<br><tt><font size=+0>}</font></tt>
+<p><tt><font size=+0>// Get and validate data from widgets.</font></tt>
+<br><tt><font size=+0>// Set attributes on globalElement so they can be
+accessed by AdvancedEdit()</font></tt>
+<br><tt><font size=+0>function ValidateData()</font></tt>
+<br><tt><font size=+0>{</font></tt>
+<br><tt><font size=+0>&nbsp; var name = TrimString(nameInput.value);</font></tt>
+<br><tt><font size=+0>&nbsp; if (name.length == 0) {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ShowInputErrorMessage(GetString("MissingAnchorNameError"));</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nameInput.focus();</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;</font></tt>
+<br><tt><font size=+0>&nbsp; } else {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // Replace spaces with "_" else
+it causes trouble in URL parsing</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; name = ReplaceWhitespace(name,
+"_");</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; if (AnchorNameExists(name)) {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ShowInputErrorMessage("\""+name+"\"
+"+GetString("DuplicateAnchorNameError"));</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nameInput.focus();</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; }</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; globalElement.setAttribute("name",name);</font></tt>
+<br><tt><font size=+0>&nbsp; }</font></tt>
+<br><tt><font size=+0>&nbsp; return true;</font></tt>
+<br><tt><font size=+0>}</font></tt>
+<p><tt><font size=+0>function onOK()</font></tt>
+<br><tt><font size=+0>{</font></tt>
+<br><tt><font size=+0>&nbsp; if (ValidateData())</font></tt>
+<br><tt><font size=+0>&nbsp; {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // Copy attributes to element
+we are changing or inserting</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; editorShell.CloneAttributes(anchorElement,
+globalElement);</font></tt>
+<p><tt><font size=+0>&nbsp;&nbsp;&nbsp; if (insertNew) {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Don't delete selected
+text when inserting</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; editorShell.InsertElement(anchorElement,
+false);</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; }</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; return true;</font></tt>
+<br><tt><font size=+0>&nbsp; }</font></tt>
+<br><tt><font size=+0>&nbsp; return false;</font></tt>
+<br><tt><font size=+0>}</font></tt>
+<br>&nbsp;
+<h3>
+<font size=+0>The Advanced Edit Dialog</font></h3>
+<font size=+0>If the above is supplied correctly, the onAdvancedEdit()
+method for the button supplied by the EdDialogOverlay.xul file can use
+the globalElement as the element to edit and call the appropriate methods
+when finished. It will try to immediately exit the "parent" dialog, but
+it may not succeed if there is a validation error. Note that we <i>don't</i>
+validate attributes enterred in the AdvancedEdit dialog itself that are
+not shared with the parent dialog (or at least we don't plan to for the
+initial version.) We assume "advanced" users know what they are doing!</font>
+<p><font size=+0>Here is the onAdvancedEdit method from EdDialogCommon.js:</font>
+<br><tt><font size=+0>function onAdvancedEdit()</font></tt>
+<br><tt><font size=+0>{</font></tt>
+<br><tt><font size=+0>&nbsp; // First validate data from widgets in the
+"simpler" property dialog</font></tt>
+<br><tt><font size=+0>&nbsp; if (ValidateData()) {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // Set true if OK is clicked in
+the Advanced Edit dialog</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; window.AdvancedEditOK = false;</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // Open the AdvancedEdit dialog,
+passing in the element to be edited</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; //&nbsp; (the copy named "globalElement")</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; window.openDialog("chrome://editor/content/EdAdvancedEdit.xul",
+"AdvancedEdit", "chrome,close,titlebar,modal", "", globalElement);</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; if (window.AdvancedEditOK) {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dump("Advanced Dialog
+closed with OK\n");</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Copy edited attributes
+to the dialog widgets:</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; to setup
+for validation</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InitDialog();</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Try to just close
+the parent dialog as well,</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; but this
+will do validation first</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (onOK()) {</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // I'm
+not sure why, but calling onOK() from JS doesn't trigger closing</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;
+automatically as it does when you click on the OK button!</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.close();</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; }</font></tt>
+<br><tt><font size=+0>&nbsp;&nbsp;&nbsp; // Should we Cancel the parent
+dialog if user Cancels in AdvancedEdit?</font></tt>
+<br><tt><font size=+0>&nbsp; }</font></tt>
+<br><tt><font size=+0>}</font></tt>
+<p><font size=+0>The design and implementation of the Advanced Edit dialog
+is being done by our good mozilla friend Ben Goodger (</font><a href="mailto:rgoodger@ihug.co.nz">rgoodger@ihug.co.nz</a>
+).
+<br>We will supply details about this dialog as his work progresses.
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/editor/ui_specs/PropertyDialogs.html&amp;rev=&amp;root=/cvsroot/">Last modified September  3,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

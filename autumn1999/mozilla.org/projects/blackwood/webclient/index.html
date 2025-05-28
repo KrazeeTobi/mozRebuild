@@ -1,0 +1,374 @@
+<HTML>
+<HEAD>
+<TITLE>Java API for WebShell</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+  
+  
+
+  
+      <h1>Java API for WebShell</h1>
+
+    This document describes the Java API for WebShell, also known as the
+    java webclient.
+
+    <UL>
+
+      <LI> <A HREF="#Overview">Overview</A>
+
+      <LI> <A HREF="#History">History</A>
+
+      <LI> <A HREF="#Requirements">Requirements</A>
+
+      <LI> <A HREF="#Code">Getting and Building the Code</A><BR>
+	<B>NEW:</B> <A HREF="#CodeBinary">webclient win32 binary available</A></BR>
+
+      <LI> <A HREF="#Using">Using the webclient</A>
+
+      <LI> <A HREF="#Reqs">Requirements Specification</A>
+
+      <LI> <A HREF="#Analysis">Requirements Analysis</A>
+
+      <LI> <A HREF="#Status">Status</A>
+
+      <LI> <A HREF="#References">References</A>
+
+
+    </UL>
+
+    <H2><A NAME="Overview">Overview</A></H2>
+
+            <table width="75%" align="center" cellpadding="10">
+        <tr bgcolor="#CCCCCC"> 
+          <td><b><font size="4">Mission Statement:<br>
+            </font></b> <br>
+            The webclient project aims to provide the premier browser-neutral 
+            Java API that enables generic web browsing capability. This capability 
+            includes, but is not limited to: web content rendering, navigation, 
+            a history mechanism, and progress notification. The actual capabilities 
+            implemented depend on the underlying browser implementation. </td>
+        </tr>
+      </table>
+
+    <H2><A NAME="History">Pre mozilla.org history</A></H2>
+
+    <UL>
+
+      This project was started by Kirk Baker &lt;<A
+      href="mailto:kbaker@eb.com">kbaker@eb.com</A>&gt and Ian Wilkinson
+      &lt;<A href="mailto:iw@ennoble.com">iw@ennoble.com</A>&gt; and was
+      originally called <A
+      HREF="http://www.mozillazine.org/talkback.html?article=517">RaptorCanvas</A>.
+      In the first quarter of 1999, the AOL/Netscape/Sun deal closed and
+      a group at Sun started the <A HREF="..">blackwood project</A>, to
+      better integrate Java and Mozilla.  One of the subprojects in
+      blackwood was to provide a Java API to the mozilla webshell, which
+      Kirk and Ian had already done.  Thus, <A
+      HREF="http://www.mozillazine.org/talkback.html?article=656">Sun
+      has joined forces with Kirk and Ian</A> to produce webclient.
+      
+    </UL>
+
+    <H2><A NAME="Requirements">Requirements</A></H2>
+
+    This section describes the requirements you need before building the
+    webclient project.
+
+    <UL>
+
+      <UL>
+
+      <LI> JDK1.1.7 or later (on Linux, you will need JDK1.2 or later)
+
+      <LI> a built mozilla tree from later than 5 October 1999
+
+      <LI> a built mozilla <A HREF="../java-util/">java util package</A>
+
+      </UL>
+
+    </UL>
+
+    <H2><A NAME="Code">Getting and Building the Code</A></H2>
+
+
+    <H3>Getting the Code</H3>
+
+    <OL>
+
+      <LI> You must first grab the latest mozilla and webclient code
+	This can be found at <A
+	  HREF="../../../cvs.html">http://www.mozilla.org/cvs.html</A>, but instead of <code>cvs checkout SeaMonkeyAll</code> use <code><B>cvs checkout SeaMonkeyBlackwood</B></code><P>
+
+    </OL> <P>
+
+    <h3>Building the Code</H3>
+
+    <OL>
+    
+      <LI> Build the Mozilla tree using the instructions found at <A
+	  HREF="../../../build/">http://www.mozilla.org/build/</A> <P>
+
+      <LI> Follow the steps in the mozilla/java/README and
+      mozilla/java/webclient/README files. <P>
+
+    </OL>
+
+    <B>NOTE:</B> At this point only debug builds (MOZ_DEBUG=1) are known
+    to work.  Also, the build is only currently designed for NT4.0 and
+    Linux, but Solaris support is coming soon.  If you make changes to the 
+    build to get it to work on other platforms, mail them to me.<P>
+
+      <H4><A NAME="CodeBinary">Webclient</A> Binaries</H4>
+
+    If you're unable to compile webclient's native code, we have made
+    binaries available on the following platforms.  They are provided as
+    a convenience and are not guaranteed to work. <P></P>
+
+    	<UL>
+
+	  <LI> win32: built with 10/29/99 mozilla.  Place the dll in the
+	  mozilla bin directory.<BR> <A
+	  HREF="bin/win32/webclient.dll">webclient.dll</A></BR> Then
+	  examine the <CODE>install</CODE> target of
+	  <CODE>webclient/src/Makefile.win</CODE> to discern how to
+	  invoke the main class properly.
+	  </LI>
+
+	</UL>
+
+    <h2><A NAME="Using">Using the webclient</A></H2>
+
+    <UL>
+
+      There is an example browser in the java-webclient distribution
+      that illustrates how to use the basic webclient features.  This
+      class is included by reference here [<A
+      HREF="EmbeddedMozilla.html">1</A>] for your convenience.  Note
+      that the referenced document may be out of date with respect to
+      the actual source tree. <P>
+
+      You may also want to visit the web presentation, given at <A
+      HREF="../../newlayout/signup.html">Codestock</A>, about
+      webclient.  <A HREF="codestock/index.htm">http://www.mozilla.org/projects/blackwood/webclient/codestock/index.htm</A> <P>
+
+      Basically, you create yourself a
+      <CODE>BrowserControlCanvas</CODE>, which is a subclass of
+      <CODE>java.awt.Canvas</CODE>, and add it into your display
+      hierarchy.<P>
+
+</UL>
+
+      <PRE><CODE>
+
+	// Create the browser
+	BrowserControlCanvas browser  = 
+	               BrowserControlCanvasFactory.newBrowserControlCanvas();
+	add(browser,      BorderLayout.CENTER);
+
+	
+      </CODE></PRE>
+
+    <UL>
+
+    Then you can control the embedded mozilla via the <A
+    HREF="">BrowserControl interface</A>. <P>
+
+    </UL>
+
+      <PRE><CODE>
+
+public void actionPerformed (ActionEvent evt) {
+    String command = evt.getActionCommand();
+    
+    try {
+	if (command.equals("Back")) {
+	    if (browserControl.canBack()) {
+		browserControl.back();
+		int index = browserControl.getHistoryIndex();
+		String newURL = browserControl.getURL(index);
+		
+		System.out.println(newURL);
+		
+		urlField.setText(newURL);
+	    }
+	}
+	else if (command.equals("Forward")) {
+	    if (browserControl.canForward()) {
+		browserControl.forward();
+		int index = browserControl.getHistoryIndex();
+		String newURL = browserControl.getURL(index);
+		
+		System.out.println(newURL);
+		
+		urlField.setText(newURL);
+	    }
+	}
+	else if (command.equals("Stop")) {
+	    browserControl.stop();
+	}
+	else {
+	    browserControl.loadURL(urlField.getText());
+	}
+    }
+    catch (Exception e) {
+	System.out.println(e.toString());
+    }
+} // actionPerformed()
+
+	
+      </CODE></PRE>
+
+    API documentation is available here, [<A HREF="api/">2</A>].
+
+
+    <h2><A NAME="Reqs">Requirements Specification</A></H2>
+
+    <UL>
+
+      The webclient requirements specification is available at <A
+      HREF="RequirementsSpec.html">http://www.mozilla.org/projects/blackwood/webclient/RequirementsSpec.html</A>
+      We welcome feedback on the requirements specification.  Post all
+      feedback to the <code>newsgroup
+      netscape.public.mozilla.java</code>.  Use the subject:
+      <code>webclient spec</code>.
+
+
+    </UL>
+
+    <h2><A NAME="Analysis">Requirements Analysis</A></H2>
+
+    <UL>
+
+      For webclient, Requirements Analysis, will be the process of
+      takeing the Requirements Spec, and seeing what can realistically
+      be built with today's browser API technology.  The webclient
+      requirements analysis document is available at <A
+      HREF="RequirementsAnalysis.html">http://www.mozilla.org/projects/blackwood/webclient/RequirementsAnalysis.html</A>
+
+    </UL>
+
+    <h2><A NAME="Status">Current Status</A></H2>
+
+    <UL>
+
+      <DL>
+
+	  <DT>29 October 1999</DT>
+
+	  <DD>Completed Requirements Analysis. </DD>
+
+	  <DT>15 October 1999</DT>
+
+	  <DD>Working on Requirements Analysis. </DD>
+
+	  <DT>23 September 1999</DT>
+
+	  <DD>Working on, and gathering feedback on Requirements
+	  Specification.</DD>
+
+      </DL><P></P>
+
+    </UL>
+
+
+
+    <H2><A NAME="References">References</A></H2>
+
+    <ul>
+
+      <LI> 1. <A HREF="EmbeddedMozilla.html">org.mozilla.webclient.test.EmbeddedMozilla</A>
+      <LI> 2. <A HREF="api/">api docs</A>
+
+    </ul>
+
+
+      <hr>
+      <address><a href="mailto:Ed Burns <ed.burns@sun.com>">Ed Burns</a></address>
+<!-- Created: Wed Jul 28 17:53:07 PDT 1999 -->
+<!-- hhmts start -->
+Last modified: Mon Nov 01 10:53:08 Pacific Standard Time 1999
+<!-- hhmts end -->
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/blackwood/webclient/index.html&amp;rev=&amp;root=/cvsroot/">Last modified November  1,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

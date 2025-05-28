@@ -1,0 +1,192 @@
+<HTML>
+<HEAD>
+<TITLE>download mozilla source</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="./"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+<!-- created by jwz, 3-feb-98 -->
+<!-- updated by leaf, 14-dec-98> -->
+
+
+<H1 ALIGN=CENTER>download mozilla source</H1>
+
+<P>
+If you'd like to help by testing our software and submitting 
+bug reports, then download a <A HREF="binaries.html">binary</A>. 
+If you're a developer then read on to find out how to get the source.  
+
+<UL>
+
+<P><LI><I>Please</I> try one of our many 
+<A HREF="mirrors.html"><B><FONT SIZE="+1">mirror sites</FONT></B></A> before
+downloading the following from our FTP server.  The bandwidth you save will
+be your own.
+
+<P><LI>Understand that this is <I>for developers only.</I>  If you have
+never compiled and debugged a very large C/C++ program before, all 
+this will do for you is use up a lot of disk space. 
+
+<P><LI>This code is covered by the <A HREF="NPL/">Netscape Public License</A>.
+Please read the license before downloading it.
+
+<P><LI>If you're just beginning to work with mozilla then its recommended
+to start with a tarball from the most recent milestone build. Milestone
+builds occur on branches of the main cvs tree and have undergone QA and
+bug fixing to make them relatively stable. Later on, if you want to move
+off the branch and synchonize with the tip, do the following from the 
+parent directory of your tree to remove the <A HREF="cvs.html">CVS</A> 
+branch tags from your tree:
+<TT><NOBR>cvs co -A SeaMonkeyAll</NOBR></TT> 
+
+<P><LI>For the most up-to-date tarball, grab the daily snapshot. Depending
+on the current state of the tree, this may not build, or it may be extremely 
+buggy. However, it will update the most quickly with 
+<A HREF="cvs.html">CVS</A>.
+
+<P><LI> 
+To unpack a <b><tt>.tar.gz</tt></b> file on Windows, either use WinZip, or
+download the win32 versions of tar and gzip from 
+<A HREF=ftp://go.cygnus.com/pub/sourceware.cygnus.com/cygwin/latest/>Cygnus</A>.
+
+
+
+</UL>
+
+
+
+<P>
+<CENTER>
+<TABLE>
+<TR><TD><FONT SIZE="+3">Mozilla source<BR></FONT>
+  <FONT SIZE="+1">
+    <A HREF="projects/seamonkey/">SeaMonkey</A></FONT></TD>
+<TD>
+<TABLE BORDER=2 BGCOLOR="#FEFFE6" cellpadding=20>
+ <TR>
+  <TD ALIGN=CENTER VALIGN=CENTER>
+   <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=10>
+
+    <TR><TD ALIGN=RIGHT><P>
+     <B><A HREF="ftp://ftp.mozilla.org/pub/mozilla/releases/m10/src/mozilla-source-M10.tar.gz">
+      <FONT SIZE="+1">Milestone 10</FONT></B></TD>
+     <TD VALIGN=TOP ALIGN=RIGHT NOWRAP><FONT SIZE="+1">20 M </FONT></TD></TR>
+
+    <TR><TD ALIGN=RIGHT><P>
+     <B><A HREF="ftp://ftp.mozilla.org/pub/mozilla/nightly/latest/mozilla-source.tar.gz">
+      <FONT SIZE="+1">Daily Snapshot</FONT></B></TD>
+     <TD VALIGN=TOP ALIGN=RIGHT NOWRAP><FONT SIZE="+1">21+ M</FONT></TD></TR>
+
+    <TR><TD ALIGN=RIGHT><P>
+     <B><A HREF="ftp://ftp.mozilla.org/pub/mozilla/source/wintools.zip">
+      Windows Build Tools</B></TD>
+     <TD VALIGN=TOP ALIGN=RIGHT NOWRAP><FONT SIZE="+1">1.1 M</FONT></TD></TR>
+
+   </TABLE>
+  </TD>
+ </TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+</CENTER>
+
+<P> Build instructions are available for the following platforms:
+
+<P><UL>
+  <LI><A HREF="build/unix.html"><B>Unix</B></A>
+  <LI><A HREF="build/win32.html"><B>Win32</B></A>
+  <LI><A HREF="build/mac.html"><B>MacPPC</B></A>
+</UL>
+
+<P> While you're waiting for the download (actually, ``before you even think
+about downloading anything,'' but who are we kidding) you should familiarize
+yourself with the <A HREF="docs/">developer documentation</A> we have
+compiled to date.
+
+<P> The source is also available through several other methods, including
+CVS; see the <A HREF="source.html">Source Code</A> page for details.
+
+<P>
+And finally, a huge 
+<A HREF="331-thanks.html"><FONT SIZE="+1"><B>thank you</B></FONT></A>
+to all the people and organizations who made the initial release possible!
+
+<P>
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/download-mozilla.html&amp;rev=&amp;root=/cvsroot/">Last modified November  9,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

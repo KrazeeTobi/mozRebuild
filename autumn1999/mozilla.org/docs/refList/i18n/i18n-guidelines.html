@@ -1,0 +1,355 @@
+<HTML>
+<HEAD>
+<TITLE>I18N Guidelines</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+   
+
+
+
+<H1 ALIGN=CENTER>I18N Guidelines</H1>
+
+<CENTER>
+Contact: Erik van der Poel &lt;<A HREF="mailto:erik@netscape.com">erik@netscape.com</A>&gt;<BR>
+Discussion:
+<A HREF="news://news.mozilla.org/netscape.public.mozilla.i18n">netscape.public.mozilla.i18n</A> or
+<A HREF="mailto:mozilla-i18n@mozilla.org">mozilla-i18n@mozilla.org</A>
+<BR>Last Update: April 22, 1998
+</CENTER>
+<H3>Contents</H3>
+
+
+<UL>
+<LI>
+<A HREF="#intro">Introduction</A></LI>
+
+<LI>
+<A HREF="#general">General I18N Guidelines</A></LI>
+
+<LI>
+<A HREF="#standards">Standards Compliance</A></LI>
+
+<LI>
+<A HREF="#coming">Coming Soon to a Page Near Here</A></LI>
+
+<LI>
+<A HREF="#ideas">Ideas for the Future</A></LI>
+
+<LI>
+<A HREF="#resources">Resources of I18N Information</A></LI>
+
+<LI>
+<A HREF="#seeAlso">See Also</A></LI>
+</UL>
+
+<H3><A NAME="intro"></A>Introduction</H3>
+
+This document provides some I18N (internationalization) guidelines for
+Mozilla. These guidelines should be followed by all Mozilla programmers,
+regardless of country of residence.
+
+<P>There is a related document, called the <A HREF="l12yGuidelines.html">Localizability
+Guidelines</A>.
+<H3><A NAME="general"></A>General I18N Guidelines</H3>
+
+<I>One code base for the world.</I> The localization process is simplified
+if recompilation from source code is not necessary. Only the (external)
+resource files need to be altered. This means that there cannot be any
+conditional compilation for specific languages. For example, <TT>#ifdef
+JAPANESE</TT> is not allowed. This model is different from that used in
+the past in the PC world. It is possible, for example, to browse Japanese
+Web pages even if you are using the English version of the client. It is
+also possible to browse Chinese pages even if your OS is not Chinese.
+
+<P><I>8-bit clean.</I> Do not assume that the 8th bit of a byte is unused,
+and can therefore be employed for your own purposes. Many character encodings
+use the 8th bit for non-ASCII characters.
+
+<P><I>Character != byte.</I> A character is not necessarily one byte. In
+Asian "multibyte" character encodings, some characters take up 2 bytes
+or more, while others are one byte each. Do not jump directly into the
+middle of a byte array. Do not increment a <TT>char *</TT> pointer by one
+to move to the next character. Use the <A HREF="libi18n/FindingCharacterBoundaries.html">libi18n
+functions</A> to find character boundaries and to walk strings (see also
+<TT>ns/include/libi18n.h</TT>):
+<UL>
+<LI>
+INTL_NextChar</LI>
+
+<LI>
+INTL_CharLen</LI>
+
+<LI>
+INTL_NextCharIdxInText</LI>
+
+<LI>
+INTL_PrevCharIdxInText</LI>
+
+<LI>
+<A HREF="libi18n/FindingCharacterBoundaries.html">etc</A></LI>
+</UL>
+Also, take care when reading text into fixed-size buffers. For example,
+if you read some text into a 512-byte buffer, the last byte might be a
+partial character. You cannot pass this buffer to another module that expects
+whole characters.
+
+<P><I>Locale-sensitive operations.</I> Converting a date/time integer into
+a string is a locale-sensitive operation. There are various date/time formatting
+conventions used around the world. Use <TT>XP_StrfTime()</TT> to produce
+a string in the appropriate format. Similarly, textual sorting rules vary
+depending on the country. Use the appropriate collation function: <TT>XP_StrColl()</TT>.
+
+<P><I>English protocol elements.</I> Some protocols use strings that are
+in English. For example, email headers use strings like <TT>"Subject:"</TT>.
+These should not be presented directly to the user. Instead, a localized
+version of the string should be retrieved from the resources. The protocol
+itself must still be honored, though. The string <TT>"Subject:"</TT> should
+still be used <I>on-the-wire</I>, while the translated version is presented
+to the user in the UI.
+
+<P><I>Special encodings of non-ASCII text.</I> Some protocols apply a special
+encoding to non-ASCII text in order to protect it while it is in transit
+over the Net. For example, RFC 2047 specifies the standard to use for transmitting
+non-ASCII text in email headers. These encoded strings look like this:
+
+<P><TT>=?ISO-8859-1?Q?Andr=E9?=</TT>
+
+<P>These strings should not be directly presented to the user. They should
+first be decoded. Conversely, strings must be <I>en</I>coded before sending
+them out onto the Net.
+
+<P><I>Use libi18n.</I> Use <A HREF="libi18n-desc.html">libi18n</A> wherever
+possible.
+<H3><A NAME="standards"></A>Standards Compliance</H3>
+
+Mozilla should adhere to all relevant standards. There are a number of
+RFCs from the IETF, Recommendations from W3C, and other specifications.
+Here is <A HREF="http://people.netscape.com/erik/internet-intl.html">a
+list</A> of some of the relevant specifications.
+<H3><A NAME="coming"></A>Coming Soon to a Page Near Here</H3>
+
+
+<UL>
+<LI>
+Adding a New Character Set or Language</LI>
+
+<LI>
+Layout</LI>
+
+<LI>
+Front Ends (FEs)</LI>
+
+<UL>
+<LI>
+Windows (winfe)</LI>
+
+<LI>
+Macintosh (macfe)</LI>
+
+<LI>
+Unix (xfe)</LI>
+</UL>
+
+<LI>
+LibNet</LI>
+</UL>
+
+<H3><A NAME="ideas"></A>Ideas for the Future</H3>
+
+
+<UL>
+<LI>
+Multilingual Widgets</LI>
+
+<LI>
+Complex Language Support</LI>
+
+<UL>
+<LI>
+BiDi, Thai, Indic, etc.</LI>
+</UL>
+
+<LI>
+Non-Latin Layout Styles</LI>
+
+<UL>
+<LI>
+Vertical</LI>
+
+<LI>
+Ruby  (see Internet Draft <A HREF="ftp://ftp.ietf.org/internet-drafts/draft-duerst-ruby-01.txt">Ruby
+in the Hypertext Markup Language</A>)</LI>
+</UL>
+
+<LI>
+Platform Independent IME Support</LI>
+
+<LI>
+Natural Language Dictionary Lookup</LI>
+
+<LI>
+Proofing API (in addition to spell checking)</LI>
+</UL>
+
+<H3><A NAME="resources"></A>Resources of I18N Information</H3>
+
+
+<DL>
+<UL>
+<LI>
+<A HREF="http://home.netscape.com/menu/intl/">Netscape Communicator Information
+for International Users</A> provides  information on using the international
+features of Communicator</LI>
+
+<LI>
+<A HREF="http://wwwwbs.cs.tu-berlin.de/~czyborra/charsets/">The ISO 8859
+Alphabet Soup</A> describes the ISO-8859-1 through ISO8859-10 character
+set encodings and includes images of the glyphs for each encoding</LI>
+
+<LI>
+<A HREF="ftp://ftp.ora.com/pub/examples/nutshell/ujip/doc/cjk.inf">ftp://ftp.ora.com/pub/examples/nutshell/ujip/doc/cjk.inf</A>:
+"This online document provides information on CJK (that is, Chinese, Japanese,
+and Korean) character set standards and encoding systems. In short, it
+provides detailed information on how CJK text is handled electronically."
+This plain text file is the online companion to "Understanding Japanese
+Information Processing" by Ken Lunde.</LI>
+
+<UL>
+<LI>
+ENGLISH: 1993, O'Reilly &amp; Associates, Inc., ISBN 1-56592-043-0</LI>
+
+<LI>
+JAPANESE: 1995, SOFTBANK Corporation, ISBN 4-89052-708-7</LI>
+</UL>
+
+<LI>
+W3C's <A HREF="http://www.w3.org/International/">Non-western Character
+sets, Languages, and Writing Systems</A></LI>
+
+<UL>
+<LI>
+<A HREF="http://www.w3.org/International/Activity.html">W3C activity: Internationalization</A></LI>
+
+<LI>
+<A HREF="http://www.w3.org/International/O-misc-mlists.html">W3C Internationalization
+/ Localization mailing lists</A></LI>
+</UL>
+
+<LI>
+<A HREF="http://www.unicode.org/">The Unicode Consortium</A></LI>
+
+<LI>
+<A HREF="news:comp.software.international">Discussion of international
+software</A> newsgroup</LI>
+
+<LI>
+<A HREF="news:comp.std.internat">Discussion of international standards</A>
+newsgroup</LI>
+</UL>
+
+<H3><A NAME="seeAlso"></A>See Also</H3>
+
+
+<UL>
+<LI>
+<A HREF="./">Introduction to I18N and L10N</A></LI>
+
+<LI>
+<A HREF="libi18n-desc.html">LibI18N Module Description</A></LI>
+
+<LI>
+<A HREF="l12yGuidelines.html">Localizability Guidelines</A></LI>
+
+<LI>
+<A HREF="i18n-history.html">Mozilla I18N History</A></LI>
+</UL>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+</DL>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/refList/i18n/i18n-guidelines.html&amp;rev=&amp;root=/cvsroot/">Last modified January 15,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,205 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla IRIX build</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<H2>
+Mozilla IRIX build
+</H2>
+Last update: Mar 16, 1999
+<BR>
+<A HREF="mailto:jasonh@sgi.com">jasonh@sgi.com</A>
+<P>
+The "viewer" and "apprunner" should build if you use
+egcs 1.1.1 and build for N32.  We have built it here
+on IRIX 6.2 and IRIX 6.5.3.   I would
+recommend grabbing the lastest patch set for IRIX 6.2
+just to be safe because early versions of IRIX 6.2 had
+some issues with pthreads.  If you need it, the latest
+patch set can be found on
+<A HREF="http://support.sgi.com">Supportfolio Online</A>.
+<P>
+For now, you will need to have the IRIX native compilers
+in order to build the NSPR library and you will probably
+need it to bootstrap egcs 1.1.1.  When the Freeware CD
+is updated you may no longer need them.  If you want to
+do development on Mozilla on IRIX and you don't have the
+IRIX compilers then contact me and I'll try to send you
+the prebuilt NSPR libs and egcs 1.1.1.
+<P>
+Several of the Makefiles and configure scripts assume
+that the libraries are always located in /xxx/lib and
+not /xxx/lib32 so this can be a bit of a problem.  I
+have fixed up several of them, but the easiest thing to
+do is probably to just install your libs into /usr/lib32
+(or install them somewhere else and symlink them there)
+so you don't have to do anything special to get the
+configure script to find them.
+<P>
+You will need some freeware tools and I'd recommend just
+grabbing them from
+<A HREF="http://freeware.sgi.com">http://freeware.sgi.com</A>
+<P>
+Grab these packages: fw_autoconf (v 2.12), fw_cvs, fw_gawk,
+fw_m4, fw_make, fw_texinfo.
+<P>
+Do not grab the gtk+ and glib you see there.
+You will need a newer version of glib and gtk+ than the one
+on the SGI Freeware site, so get that from
+<A HREF="http://gtk.org">http://gtk.org</A>,
+build it, and put the libraries in /usr/lib32
+<P>
+You will need egcs 1.1.1 from
+<A HREF="http://www.cygnus.com">http://www.cygnus.com</A>.
+I built mine as follows for IRIX 6.5 (just make the obvious
+substitutions for IRIX 6.2)
+<PRE>
+    set path = ( $path /usr/freeware/bin )
+    cd egcs-1.1.1
+    mkdir mips-sgi-irix6.5
+    ../configure --prefix=/usr/freeware --enable-threads mips-sgi-irix6.5
+    gmake MAKEINFO="makeinfo --no-split" bootstrap-lean
+    su
+    gmake install prefix=/usr/freeware MAKEINFO="makeinfo --no-split"
+</PRE>
+<P>
+This will put egcs and libstdc++ into /usr/freeware.
+<P>
+A future Freeware CD will include all these packages to make life easier.
+<P>
+<I>
+Note: if you are behind a firewall and using socks v4,
+you might want to install pcp_gifts.sw.pcp_socks (if you
+have it) as the program "pmsocks" can help 
+cvs to get through the firewall.   Write a small
+wrapper script called "cvs" which calls pmsocks and the
+real cvs program so you can get out the firewall.
+</I>
+<P>
+<H3>
+Build NSPR with IRIX native N32 compilers, v7.2.1
+</H3>
+Install the libs into /usr/local/nspr/lib32
+<PRE>
+  % cd mozilla
+  % gmake -C nsprpub DIST=/usr/local/nspr NSDISTMODE=copy \
+        MOZILLA_CLIENT=0 NO_MDUPDATE=1 NS_USER_NATIVE= \
+        USE_PTHREADS=1 export
+</PRE>
+and then make some symlinks from /usr/lib32 to these libraries
+which are now in /usr/local/nsprlib/lib32 (if you find the
+libraries in /usr/local/nsprlib/lib instead, you may need to
+move them to lib32 -- I have sent in some patches for NSPR to
+install in the correct dir for IRIX N32.)
+<P>
+If you get errors about "invalid WHIRL file" when compiling NSPR
+then you may be using older compilers, so make sure you are
+using the MipsPro C compiler &gt= 7.2.1
+<P>
+<H3>Build the rest of Mozilla with egcs 1.1.1</H3>
+<PRE>
+   % cd mozilla
+   % autoconf -l build/autoconf
+   % mkdir -p ../obj-mips-sgi-irix6.5
+   % cd ../obj-mips-sgi-irix6.5
+   % ../mozilla/configure --enable-debug --cache-file=/dev/null
+   % gmake depend
+   % gmake
+</PRE>
+You're done!  Run as follows
+<PRE>
+   % cd dist/bin
+   % setenv LD_LIBRARYN32_PATH .
+   % ./apprunner
+</PRE>
+<P>
+<HR>
+<AUTHOR>
+<A HREF="mailto:jasonh@sgi.com">jasonh@sgi.com</A>
+</AUTHOR>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/irix.html&amp;rev=&amp;root=/cvsroot/">Last modified March 16,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

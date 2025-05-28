@@ -1,0 +1,292 @@
+<HTML>
+<HEAD>
+<TITLE>mozilla.org content and cvs</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="./"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+<P ALIGN=CENTER><B><FONT SIZE="+3">mozilla.org content and cvs</FONT><BR>
+by Mike Shaver
+ &lt<A HREF="mailto:shaver@netscape.com">shaver@netscape.com</A>&gt;,
+<BR>Jamie Zawinski,
+<BR>and Terry Weissman
+ &lt<A HREF="mailto:terry@mozilla.org">terry@mozilla.org</A>&gt;
+</B></P>
+
+<P> Important things you should know about adding content to a subtree of
+the <A HREF="http://www.mozilla.org/">mozilla.org</A> website follow.
+Read them, know them, become one with them, for if you break your
+section of the website, you will have only yourself to blame.  (Unless
+our instructions suck, of course, in which case we'll have to help you
+fix it, and you may mock us mercilessly.)
+
+<OL>
+
+<P><LI>
+
+      All files that are checked in to the CVS repository anywhere under
+      the <TT><B>html</B></TT> directory will be visible on the web site.
+
+<P><LI>
+
+      By default, HTML files will have the standard mozilla.org left-edge
+      menu appended to them; those HTML files listed in the
+      <TT><B>NOWRAP</B></TT> file in the same directory will not be wrapped.
+      (Only HTML files will ever be wrapped, so you needn't list images in
+      <TT><B>NOWRAP</B></TT>.)
+
+<P><LI>
+
+      You must <B>``<TT>cvs add</TT>''</B> everything, and you should follow
+      all the other rules of good CVS hygiene as well, such as properly
+      tagging binary files with <TT><B>-kb</B></TT> to avoid corruption, etc.
+
+<P><LI>
+
+      In general, you are expected to behave responsibly, and to not
+      modify files that you know nothing about.
+
+     <p>
+     
+      There are a few files (in particular, mozilla-org/html/index.html
+      and mozilla-org/html/news.html) that are tightly controlled; any
+      attempt to check in changes to these files will fail.  If you
+      really need to make a change and the system refuses you, send
+      mail to <a href="mailto:staff@mozilla.org">staff@mozilla.org</a>.
+
+<P><LI>
+
+      When adding or removing files, or altering the <TT>NOWRAP</TT> file
+      in any way, you
+      <FONT SIZE="+2"><B><I><FONT COLOR="#EE0000">must</FONT></I></B></FONT> 
+      ensure that running <B>``<TT><NOBR>gmake</NOBR></TT>''</B> from
+      the top-level directory completes successfully.  This will regenerate
+      the <TT><B>Makefile</B></TT> to take into account the new files.
+
+      <P> If you do something that horks the ``make'' process, then no new
+      content can show up <I>anywhere</I> on mozilla.org until it is fixed.
+      Breaking things in this way is therefore a fairly big deal, so don't
+      do it.
+
+      <P> You wouldn't check in source code without making sure it compiled
+      first, would you?  Of course not.  This is the same situation.
+
+      <P> You will need perl5 to be in your path (perl5.004 seems necessary,
+      on Solaris at least).  Check out the entire <TT><B>mozilla-org</B></TT>
+      hierarchy, and then run <TT><B>gmake</B></TT> from the top-level
+      <TT><B>mozilla-org</B></TT> directory (the one with the
+      <TT><B>Makefile</B></TT> in it).  The munged files will be created in
+      the <TT><B>output</B></TT> subdirectory.
+
+     <P> <I>Special note to non-Unix people:</I> All of the magic was
+     written by a bunch of Unix heads.  However, we have since made
+     efforts to make this work on other OS's, too.
+
+     <p> On Win32 machines:
+     <ul>
+       <li> If you can't get gmake to work, just run "perl5
+	    tools/munge.pl".
+       <li> It's up to you to find a working perl5 for your system.
+	    We really have bent over backwards to stop using
+	    Unix-dependant things.
+     </ul>
+
+     <p> On Macintoshes (thanks to <a
+      href="mailto:mcmullen@netscape.com">John McMullen</a>):
+
+     <ul>
+       <li> To run the munge.pl script on Macintosh, first run
+	    MacPerl. Then select "Run Script.." from the Script menu,
+	    and browse to munge.pl, which is in the tools subdirectory
+	    of the mozilla-org directory. 
+       <li> If you compile the entire mozilla-org site, the script
+	    will use a lot of memory. We suggest increasing MacPerl's
+	    "Preferred Memory" size to 8MB. However, if the script
+	    does run out ot memory, it will simply print a diagnostic,
+	    and not crash. Then you can run it a second time, and it
+	    will figure out where it left off and carry on
+	    processing. 
+     </ul>
+
+     <p> If you have suggestions for further improvements to make things
+      more friendly to non-Unix systems, please send mail to <A
+      HREF="mailto:terry@mozilla.org">terry</A>.
+
+<P><LI>
+
+      <B>``<TT>gmake fascist</TT>''</B> will do some superficial checks on all
+      of the files to check lack of conformance with the style guidelines in
+      <A HREF="README-style.html"><TT><B>README-style.html</B></TT></A>.
+
+<P><LI>
+
+      A staging script runs every <I>n</I> minutes (<I>n</I> is
+      currently 5) on 
+      <A HREF="http://www.mozilla.org/">www.mozilla.org</A> to make the
+      CVS-committed content visible to the waiting hordes.
+
+<P><LI>
+
+      The CVS repository is accessed in one of two ways: with ``ssh'', or 
+      with ``pserver.''  Whoever created your account should have told you
+      which one you are to use.  (If you still don't know, ``pserver''
+      is a good guess.)
+
+      <P><UL>
+        <P><LI><B>To use pserver:</B>
+	<P>
+	<UL>
+	Make your <TT><B>$CVSROOT</B></TT> variable be:<BR>
+	<B><TT>:pserver:<I>your%address</I>@gila.mozilla.org:/cvsroot</TT></B>
+	</UL>
+
+	<P><LI><B>To use ssh:</B>
+	<P>
+	<UL>
+	Make your <TT><B>$CVSROOT</B></TT> variable be:<BR>
+	<B><TT><I>your%address</I>@gila.mozilla.org:/cvsroot</TT></B>
+
+	<P> You should also set your <TT><B>$CVS_RSH</B></TT> to 
+	<B>``<TT>ssh</TT>''</B>, and make sure that you have
+<UL><B><PRE>
+Host gila.mozilla.org
+   Port 24
+</PRE></B></UL><P>
+
+	in your <B><TT>.ssh/config</TT></B>.
+	</UL>
+     </UL>
+
+     <P>Where it says <B><I>your%address</I></B> above, you would substitute
+     your canonical email address, but replacing the ``at'' character
+     (<B><TT>@</TT></B>) with ``percent'' (<B><TT>%</TT></B>).  For example,
+     if your email address was <B><TT>foo@bar.com</TT></B>, your 
+     <B><TT>$CVSROOT</TT></B> would be either:<BR>
+
+	<p><ul>
+	<table cellpadding=0 cellspacing=0><tr><td></td><td>
+     <B><TT>:pserver:foo%bar.com@gila.mozilla.org:/cvsroot</TT></B>
+	</td></tr><tr><td>or<tt>&nbsp;</tt></td><td>
+     <B><TT>foo%bar.com@gila.mozilla.org:/cvsroot</TT></B>
+	</tr></table>
+	</ul>
+
+     <P>Once <B><TT>$CVSROOT</TT></B> is set properly, check out using
+
+<P><UL><TT><B>
+           cvs -z3 co MozillaOrgTrim
+</B></TT></UL><P>
+
+      The <B><TT>-z3</TT></B> is to compress things during transit.
+      <B><TT>-z3</TT></B> seems optimal.
+
+The MozillaOrgTrim module checks out a partial version of the web 
+site that's missing some of the larger pieces. The MozillaOrg
+module checks out the entire web site.  Other modules
+include Newlayout, Documentation, Grendel, MathML and Quality. For a complete 
+list of modules type: 
+<P><UL><TT><B>
+           cvs co -c
+</B></TT></UL><P>
+
+
+<P><LI>
+
+      Your files should look like the ones in the <B><TT>html</TT></B>
+      directory, in that they should have only your content, and not the menu
+      bar hackery.  The menu bar hackery gets added through the dark magic of
+      Perl.
+
+<P><LI>
+
+      If you want something added to the left-side menu, you have to
+      ask <a href="mailto:staff@mozilla.org">One Of Us</a>
+      to do it, at least until we figure out a better system.  (If you
+      want to go off and figure out such a better system, that would be
+      great: all the current magic is in the Makefile and the files it
+      references, especially <B><TT>template.html</TT></B>.)
+
+</OL>
+
+<P> Good luck...
+<P>
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/README-cvs.html&amp;rev=&amp;root=/cvsroot/">Last modified November 17,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

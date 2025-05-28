@@ -1,0 +1,186 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR: Abrupt termination</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<H2>
+NSPR: Position on abrupt thread termination</H2>
+This memo describes my position on a facility that is currently under discussion
+for inclusion in NSPR, the ability of a thread to abruptly exit. I
+resist including this function in NSPR because it results in bad programming
+practice and unsupportable programs.
+
+<P><A HREF="mailto:freier@netscape.com">Alan O. Freier</A>
+
+<UL><I>Threads are not processes.</I></UL>
+
+<P>Abrupt termination has been available in the UNIX/C environment for
+some time (<B>exit()</B>), and I assume that the basic semantics defined
+there are applicable here. In that environment, exit() may be called and
+any time, and results in the calling thread's immediate termination. In
+the situation where it was defined (UNIX), which has only a single thread
+of execution, that is equivalent to terminating the process. The process
+abstraction is then responsible for closing all open files and reclaiming
+all storage that may have been allocated during the process' lifetime.
+
+<P>This practice does not extend to threads. Threads run within the confines
+of a process (or similar abstractions in other environments). Threads are
+lightweight because they do not maintain the full protection domain provided
+by a process. So in a threaded environment, what is the parallel to UNIX'
+<B>exit()</B>?
+
+<P>NSPR has defined a function, callable by any thread within a process
+at any time, called <B>PR_ProcessExit()</B>. This is identical to UNIX
+<B>exit()</B> and was so named in an effort to make the obvious even more
+so. When called, the process exits, closing files and reclaiming the process'
+storage.
+
+<P>Certain people have been disappointed when NSPR did not provide a functional
+equivalent to exit just a particular thread. Apparently they have failed
+to consider the ramifications. If a thread was to abruptly terminate, there
+is no recording of what resources it owns and should therefore be reclaimed.
+Those resources are in fact, owned by the process and shared by all the
+threads within the process.
+
+<P>In the general course of events when programming with threads, it is
+very advantageous for a thread to have resources that it and only it knows
+about. In the natural course of events, these resources will be allocated
+by a thread, used for some period of time, and then freed as the stack
+unwinds. In these cases, the presence of the data is recorded only on the
+stack, known only to the single thread (normally referred to as <I>encapsulated</I>).
+
+<P>The problem with abrupt termination is that it can happen at any time,
+to a thread that is coded correctly to handle both normal and exceptional
+situations, but will be unable to do so since it will be denied the opportunity
+to complete execution. It can happen because it called out of its own scope
+into some lazily implemented library.
+
+<P>NSPR's answer to this is that there is no abrupt thread termination.
+All threads must unwind and return from their root function. If they cannot,
+because of some state corruption, then they must assume that the corruption,
+like the state, is shared, and their only resource is for the process to
+terminate.
+
+<P>To make this solution work requires that a function that encounters
+an error be designed such that it first repairs its immediate state, and
+then reports that error to its caller. If the caller cannot deal with the
+failure, it must do the same. This process continues until the thread either
+recovers from the malady or returns from the root function. This is not
+all that difficult (though having done it a number of times to already
+existing code, I will admit it isn't much fun either).
+
+<P>The implementation of either strategy within the NSPR runtime is not difficult. 
+That is not what this memo is about. This is about providing an API that coaxes people
+to do the right thing in as many ways as possible. The existence of <B>exit()</B>
+in the UNIX/C environment is a perfect example of how programmers will
+employ the most expediant solution available. The definition of the language
+C is such that returning from <B>main() </B>is a perfectly fine thing to
+do. But what percentage of C programs actually bother? In UNIX, with its
+complex definition of a protection domain, it happens to work (one might
+even say it's more efficient) to exit from anywhere. But threads are not
+processes. If threads have to maintain the same type of resource knowledge
+as a process, they loose all of their benefit.
+
+<P>Threads are an implementation strategy to provide the illusion of concurrency
+within a process. They are alternatives to large state machines with mostly
+non-blocking library functions. When the latter is used to provide concurrency,
+calling <B>exit()</B> will terminate the entire process. Why would anyone
+expect a thread to behave differently? Threads are not processes.
+<DIV ALIGN=right><BR>
+<BR>
+
+<HR WIDTH="100%"></DIV>
+
+<DIV ALIGN=right><I><FONT SIZE=-1>Last updated: Thu Dec 17 16:50:11 PST 1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright © 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-1999 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/refList/refNSPR/abruptexit.html&amp;rev=&amp;root=/cvsroot/">Last modified December 17,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>
