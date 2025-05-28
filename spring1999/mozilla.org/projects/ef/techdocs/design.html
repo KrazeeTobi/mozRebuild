@@ -1,0 +1,228 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Design</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000" SIZE=+4>Electrical Fire</FONT></H2>
+
+
+<H2><FONT SIZE=+4>Design</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC="electricalfire.gif" ALIGN=
+"BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A>  <A HREF="machine_model.html"><IMG SRC=
+"arrows/left.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A><A HREF="index.html"><IMG SRC="arrows/up_dark.gif" WIDTH="37"
+HEIGHT="37" ALIGN="BOTTOM" NATURALSIZEFLAG="3"></A><A HREF="design/primitive_graph.html"><IMG SRC=
+"arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+
+<DL>
+  <DT><P ALIGN=RIGHT><A HREF="design/primitive_graph.html"><FONT SIZE=+2>Primitive
+  Graph Format</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="design/runtime.html"><FONT SIZE=+2>Runtime</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="design/optimizations.html"><FONT SIZE=+2>Optimizations</FONT></A>
+</DL>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P><FONT COLOR="#FF7F00">All information below is preliminary and is changing
+frequently. </FONT>Updated 2/3/97.</P>
+
+<H2>Translator Phases</H2>
+
+
+<P>The translator's translation of Java bytecodes to native machine language
+instructions may be divided into the following phases. This is only a logical
+division to help in identifying data structures and abstractions; some of
+the phases may run concurrently or interleaved.</P>
+
+<P>Phases in <FONT COLOR="#007F00">green</FONT> are optional and may be
+done later.</P>
+
+<UL>
+  <LI>Process bytecodes
+  <UL>
+    <LI>Create control flow graph from the bytecodes
+    <LI>Parse bytecodes into a canonical form
+    <LI><FONT COLOR="#007F00">Some verification may take place here as well,
+    if desired.</FONT>
+  </UL>
+  <LI>Generate <A HREF="design/primitive_graph.html">primitive intermediate
+  format</A>
+  <UL>
+    <LI>Analyze Java virtual machine stack usage
+    <LI>Detect subroutines and either expand <FONT COLOR="#007F00">or convert
+    to subordinate functions</FONT>
+    <LI><FONT COLOR="#007F00">Perform additional verification while analyzing
+    stack usage, if desired.</FONT>
+    <LI>Translate bytecodes into primitive graph nodes; convert complex bytecodes
+    into trees of primitive nodes to allow optimization.
+    <LI>Detect and annotate asynchronous exception points
+    <LI>Detect and annotate volatile references
+    <LI>Construct SSA dataflow graph
+    <LI>Annotate dataflow graph with control and memory dependencies
+    <LI><FONT COLOR="#007F00">Optionally perform simple optimizations to reduce
+    the amount of work done by the rest of the translator</FONT>
+    <LI>Generate argument-moving code if using stack calling conventions
+  </UL>
+  <LI><FONT COLOR="#007F00">Optimize</FONT>
+  <UL>
+    <LI><FONT COLOR="#007F00">Perform restricted dataflow optimizations for
+    primitive nodes that were parts of more complex bytecodes</FONT>
+    <UL>
+      <LI><FONT COLOR="#007F00">Optimize null pointer checks for field accesses
+      and method calls</FONT>
+      <LI><FONT COLOR="#007F00">Optimize array bounds checks</FONT>
+      <LI><FONT COLOR="#007F00">Optimize multiple requests for the size of the
+      same array</FONT>
+      <LI><FONT COLOR="#007F00">Optimize checked casts</FONT>
+    </UL>
+  </UL>
+  <LI>Generate code
+  <UL>
+    <LI>Split basic blocks directed acyclic graphs (DAGs) into trees
+    <LI>Use a BURS tree matcher to generate templates for machine instructions
+    <UL>
+      <LI><FONT COLOR="#007F00">Strength-reduce machine instructions</FONT>
+    </UL>
+    <LI><FONT COLOR="#007F00">Check whether instruction patterns with more
+    than one output can apply (i.e. instructions that generate both a value
+    in a register and set the condition codes as well as instructions that
+    use autoincrement or autodecrement addressing modes) and substitute them
+    as appropriate. These instruction patterns cannot be represented in BURS
+    because they aren't trees.</FONT>
+  </UL>
+  <LI>Schedule code
+  <UL>
+    <LI>Linearize the dataflow graphs inside basic blocks according to their
+    internal dependencies<FONT COLOR="#007F00">, balancing the following:</FONT>
+    <UL>
+      <LI><FONT COLOR="#007F00">Avoid generating code that causes pipeline stalls</FONT>
+      <LI><FONT COLOR="#007F00">Try to generate code that uses execution units
+      in a balanced manner so that it executes well on a superscalar machine</FONT>
+      <LI>Try to generate code that uses as few temporary registers as possible
+    </UL>
+  </UL>
+  <LI>Allocate registers
+  <UL>
+    <LI>Compute preferences for incoming arguments, the outgoing result, and
+    the arguments and results of any called functions
+    <LI>Combine phi-nodes from dataflow graph
+    <LI><FONT COLOR="#007F00">Preallocate intra-basic-block temporaries</FONT>
+    <LI>Allocate local variables to registers using either a graph coloring
+    scheme or a priority register assignment scheme
+    <LI>Generate spill code
+    <UL>
+      <LI><FONT COLOR="#007F00">Minimize spill points</FONT>
+      <LI><FONT COLOR="#007F00">Schedule spill code to avoid pipeline stalls
+      and execution unit conflicts</FONT>
+      <LI><FONT COLOR="#007F00">On CISC machines try to combine loads and/or
+      stores of spilled values with instructions that reference them (i.e. make
+      use of memory-to-register arithmetic instructions, etc.)</FONT>
+    </UL>
+  </UL>
+  <LI>Postprocess
+  <UL>
+    <LI>Generate function header and epilogue
+    <LI>Generate exception tables
+    <LI><FONT COLOR="#007F00">Generate debugging tables, if desired</FONT>
+    <LI>Copy code templates to the code's final location in the code cache,
+    filling in all fields
+    <LI>Link generated code into the rest of the Java runtime
+  </UL>
+</UL>
+
+<H2>Translator Subsystems</H2>
+
+
+<P>Important translator abstractions include:</P>
+
+<H4>Abstract Containers</H4>
+
+
+<UL>
+  <LI>Bit sets; incremental bit sets
+  <LI>Red-black trees
+  <LI>Algorithmic heaps
+  <LI>Interval maps
+  <LI>Directed graphs
+</UL>
+
+<H4>Concrete Containers</H4>
+
+
+<UL>
+  <LI>Register maps
+  <LI>The processed bytecode format. This format presents the same information
+  as in the bytecodes in a slightly easier-to-use manner. Control flow edges
+  are explicit. Alternative variants of bytecode instructions (for example,
+  variants of bytecodes that read local variables) are reduced into one common
+  format.
+  <LI>The menu of primitive node types
+  <LI><A HREF="design/primitive_graph.html">The primitive graph format</A>
+  <LI>Templates for machine instructions
+</UL>
+
+<H4>Algorithms</H4>
+
+
+<UL>
+  <LI>Graph walkers
+  <LI>Forward and reverse dataflow analyzers over the intermediate dataflow
+  graph formats
+  <LI>Incremental and/or lazy dataflow analyzers
+  <LI>BURS pattern matcher
+</UL>
+
+<H4>Converters</H4>
+
+
+<UL>
+  <LI>The bytecode processor
+  <LI>The dataflow graph generator
+  <LI>The optimizer
+  <LI>The instruction generator
+  <LI>The instruction scheduler
+  <LI>The register allocator
+  <LI>The postprocessor
+</UL>
+
+<H4>Debugging</H4>
+
+
+<UL>
+  <LI>Compiler data structure inspection and dumping interface
+  <LI>Byte code and native code disassemblers
+  <LI>Bytecode-to-native-code mapper
+  <LI>Variable location mapper
+</UL>
+
+<H2>Runtime Subsystems</H2>
+
+
+<P>Electrical Fire needs a few subsystems that are not part of the translator
+proper but are needed to support it. These include:</P>
+
+<UL>
+  <LI>A code cache manager
+  <LI>A synchronous exception handler
+  <LI>An asynchronous exception handler. This one is complicated because
+  it needs to emulate the thread receiving the exception until the next synchronization
+  point.
+  <LI>Profilers for making compilation and quality-of-compilation decisions
+</UL>
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

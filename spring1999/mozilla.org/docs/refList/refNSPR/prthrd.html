@@ -1,0 +1,1249 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Threads</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=3>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+<P><BR>
+
+
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prtyp.html">[Previous]</A> <A HREF="prinit.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<HR>
+<A NAME="1003024">
+<P></A><CENTER><H2>Chapter 3<BR><A NAME="1015494">
+Threads</H2>
+</A></CENTER>
+<A NAME="1037974">
+NSPR provides an execution environment that promotes the use of lightweight threads. Each thread is an execution entity that is scheduled independently from other threads in the same process. This chapter describes the basic NSPR threading API.<P></A>
+<A NAME="1037978">
+<A HREF="prthrd.html#1015579">Threading Types and Constants</A><br><A HREF="prthrd.html#1027137">Threading Functions</A><P></A>
+<A NAME="1019834">
+A thread has a limited number of resources that it truly owns. These resources include a stack and the CPU registers (including PC). To an NSPR client, a thread is represented by a pointer to an opaque structure of type <A HREF="prthrd.html#1015580"><CODE>PRThread</CODE></A>. A thread is created by an explicit client request and remains a valid, independent execution entity until it returns from its root function or the process abnormally terminates. Threads are critical resources and therefore require some management. To synchronize the termination of a thread, you can <B>join</B> it with another thread (see <A HREF="prthrd.html#1017185"><CODE>PR_JoinThread</CODE></A>). Joining a thread provides definitive proof that the target thread has terminated and has finished with<B> </B>both the resources to which the thread has access and the resources of the thread itself.<P></A>
+<A NAME="1035918">
+For an overview of the NSPR threading model and sample code that illustrates its use, see <A HREF="printro.html#1015494">Chapter 1, "Introduction to NSPR."</A><P></A>
+<A NAME="1035916">
+For API reference information related to thread synchronization, see <A HREF="prlock.html#1007115">Chapter 5, "Locks,"</A> and <A HREF="prcvar.html#1007115">Chapter 6, "Condition Variables."</A><P></A>
+
+<A NAME="Threading Types and Constants"></A>
+<A NAME="1015579">
+<H2> Threading Types and Constants</H2>
+</A>
+<A NAME="1032322">
+<A HREF="prthrd.html#1015580">PRThread</A> <br><A HREF="prthrd.html#1034521">PRThreadType</A> <br><A HREF="prthrd.html#1019019">PRThreadScope</A> <br><A HREF="prthrd.html#1015593">PRThreadState</A> <br><A HREF="prthrd.html#1018364">PRThreadPriority</A> <br><A HREF="prthrd.html#1026848">PRThreadPrivateDTOR</A> <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1015580">
+<H4> PRThread</H4>
+</A>
+
+<A NAME="1018694">
+An NSPR thread.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1022202">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1040986">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1017868">
+<PRE>typedef struct PRThread PRThread;</PRE></A><A NAME="Head4;"></A>
+<A NAME="1022207">
+<H5> Description</H5>
+</A>
+
+<A NAME="1022213">
+In NSPR, a thread is represented by a pointer to an opaque structure of type <CODE>PRThread</CODE>. This pointer is a required parameter for most of the functions that operate on threads.<P></A>
+<A NAME="1034519">
+A <CODE>PRThread*</CODE> is the successful result of creating a new thread. The identifier remains valid until it returns from its root function and, if the thread was created joinable, is joined.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1034521">
+<H4> PRThreadType</H4>
+</A>
+
+<A NAME="1018672">
+The type of an NSPR thread, specified as a parameter to <A HREF="prthrd.html#1015609"><CODE>PR_CreateThread</CODE></A>.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1022669">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041006">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1015583">
+<PRE>
+typedef enum PRThreadType {
+    PR_USER_THREAD,
+    PR_SYSTEM_THREAD
+} PRThreadType; </PRE>
+</A><A NAME="Head4;"></A>
+<A NAME="1019008">
+<H5> Enumerators</H5>
+</A>
+
+<A NAME="1019018">
+<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1019011">
+<PRE>PR_USER_THREAD</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1019013">
+<A HREF="prinit.html#1019243"><CODE>PR_Cleanup</CODE></A> blocks until the last thread of type <CODE>PR_USER_THREAD</CODE> terminates. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1019015">
+<PRE>PR_SYSTEM_THREAD</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1019017">
+NSPR ignores threads of type <CODE>PR_SYSTEM_THREAD</CODE> when determining when a call to <A HREF="prinit.html#1019243"><CODE>PR_Cleanup</CODE></A> should return.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1022673">
+<H5> Description</H5>
+</A>
+
+<A NAME="1037997">
+Threads can be either user threads or system threads. NSPR allows the client to synchronize the termination of all user threads and ignores those created as system threads. This arrangement implies that a system thread should not have volatile data that needs to be safely stored away. The applicability of system threads is somewhat dubious; therefore, they should be used with caution.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1019019">
+<H4> PRThreadScope</H4>
+</A>
+
+<A NAME="1018630">
+The scope of an NSPR thread, specified as a parameter to <A HREF="prthrd.html#1015609"><CODE>PR_CreateThread</CODE></A> or returned by <A HREF="prthrd.html#1015754"><CODE>PR_GetThreadScope</CODE></A>.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018403">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041020">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1018337">
+<PRE>typedef enum PRThreadScope {
+    PR_LOCAL_THREAD,
+    PR_GLOBAL_THREAD,
+    PR_GLOBAL_BOUND_THREAD
+} PRThreadScope; </PRE></A>
+<A NAME="Head4;"></A>
+<A NAME="1022949">
+<H5> Enumerators</H5>
+</A>
+
+<A NAME="1019789">
+<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1019792">
+<PRE>PR_LOCAL_THREAD</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1019794">
+A local thread, scheduled locally by NSPR within the process.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1019796">
+<PRE>PR_GLOBAL_THREAD</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1019798">
+A global thread, scheduled by the host OS.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1019796">
+<PRE>PR_GLOBAL_BOUND_THREAD</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1019798">
+A global bound (kernel) thread, scheduled by the host OS.</A></P>
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1022959">
+<H5> Description</H5>
+</A>
+
+<A NAME="1022922">
+An enumerator of type <CODE>PRThreadScope</CODE> specifies how a thread is scheduled: either locally by NSPR within the process (a local thread) or globally by the host (a global thread).<P></A>
+<A NAME="1023165">
+Global threads are scheduled by the host OS and compete with all other threads on the host OS for resources. They are subject to fairly sophisticated scheduling techniques. <P></A>
+<A NAME="1032857">
+Local threads are scheduled by NSPR within the process. The process is assumed to be globally scheduled, but NSPR can manipulate local threads without system intervention. In most cases, this leads to a significant performance benefit. <P></A>
+<A NAME="1032858">
+However, on systems that require NSPR to make a distinction between global and local threads, global threads are invariably required to do any form of I/O. If a thread is likely to do a lot of I/O, making it a global thread early is probably warranted.<P></A>
+<A NAME="1032928">
+On systems that don't make a distinction between local and global threads, NSPR silently ignores the scheduling request. To find the scope of the thread, call <A HREF="prthrd.html#1015754"><CODE>PR_GetThreadScope</CODE></A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1015593">
+<H4> PRThreadState</H4>
+</A>
+
+<A NAME="1018661">
+A thread's thread state is either joinable or unjoinable.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1023595">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041030">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1018340">
+<PRE>
+typedef enum PRThreadState {
+    PR_JOINABLE_THREAD,
+    PR_UNJOINABLE_THREAD
+} PRThreadState; </PRE>
+</A><A NAME="Head4;"></A>
+<A NAME="1023871">
+<H5> Enumerators</H5>
+</A>
+
+<A NAME="1023881">
+<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1023874">
+<PRE>PR_UNJOINABLE_THREAD</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1036602">
+Thread termination happens implicitly when the thread returns from the root function. The time of release of the resources assigned to the thread cannot be determined in advance. Threads created with a <CODE>PR_UNJOINABLE_THREAD</CODE> state cannot be used as arguments to <A HREF="prthrd.html#1017185"><CODE>PR_JoinThread</CODE></A>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1023878">
+<PRE>PR_JOINABLE_THREAD</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1036678">
+Joinable thread references remain valid after they have returned from their root function until <A HREF="prthrd.html#1017185"><CODE>PR_JoinThread</CODE></A> is called. This approach facilitates management of the process' critical resources.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1023696">
+<H5> Description</H5>
+</A>
+
+<A NAME="1023718">
+A thread is a critical resource and must be managed. <P></A>
+<A NAME="1023973">
+The lifetime of a thread extends from the time it is created to the time it returns from its root function. What happens when it returns from its root function depends on the thread state passed to <A HREF="prthrd.html#1015609"><CODE>PR_CreateThread</CODE></A> when the thread was created. <P></A>
+<A NAME="1024013">
+If a thread is created as a joinable thread, it continues to exist after returning from its root function until another thread joins it. The join process permits strict synchronization of thread termination and therefore promotes effective resource management.<P></A>
+<A NAME="1023727">
+If a thread is created as an unjoinable (also called detached) thread, it terminates and cleans up after itself after returning from its root function. This results in some ambiguity after the thread's root function has returned and before the thread has finished terminating itself.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1018364">
+<H4> PRThreadPriority</H4>
+</A>
+
+<A NAME="1025490">
+A thread's priority setting.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1018584">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041036">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1031970">
+<PRE>
+typedef enum PRThreadPriority
+{
+    PR_PRIORITY_FIRST  = 0,
+    PR_PRIORITY_LOW = 0,
+    PR_PRIORITY_NORMAL = 1,
+    PR_PRIORITY_HIGH = 2,
+    PR_PRIORITY_URGENT = 3,
+    PR_PRIORITY_LAST = 3
+} PRThreadPriority;
+</PRE></A>
+<A NAME="Head4;"></A>
+<A NAME="1031971">
+<H5> Enumerators</H5>
+</A>
+
+<A NAME="1025084">
+<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1025074">
+<PRE>PR_PRIORITY_FIRST</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1025076">
+Placeholder.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1025078">
+<PRE>PR_PRIORITY_LOW</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1025083">
+The lowest possible priority. This priority is appropriate for threads that are expected to perform intensive computation.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1025108">
+<PRE>PR_PRIORITY_NORMAL</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1025110">
+The most commonly expected priority.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1025104">
+<PRE>PR_PRIORITY_HIGH</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1037294">
+Slightly higher priority than <CODE>PR_PRIORITY_NORMAL</CODE>. This priority is for threads performing work of high urgency but short duration.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1025100">
+<PRE>PR_PRIORITY_URGENT</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1025102">
+Highest priority. Only one thread at a time typically has this priority.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1031999">
+<PRE>PR_PRIORITY_LAST</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1032001">
+Placeholder</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1025033">
+<H5> Description</H5>
+</A>
+
+<A NAME="1025463">
+In general, an NSPR thread of higher priority has a statistically better chance of running relative to threads of lower priority. However, because of the multiple strategies NSPR uses to implement threading on various host platforms, NSPR priorities are not precisely defined. At best they are intended to specify a preference in the amount of CPU time that a higher-priority thread might expect relative to a lower-priority thread. This preference is still subject to resource availability and must not be used in place of proper synchronization. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="1025465">
+<H5> See Also</H5>
+</A>
+
+<A NAME="1032244">
+<A HREF="printro.html#1035650">Setting Thread Priorities</A>.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1026848">
+<H4> PRThreadPrivateDTOR</H4>
+</A>
+
+<A NAME="1026921">
+The destructor function passed to <A HREF="prthrd.html#1027535"><CODE>PR_NewThreadPrivateIndex</CODE></A> that is associated with the resulting thread private index. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="1026894">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041042">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1027128">
+<PRE>typedef void (PR_CALLBACK *PRThreadPrivateDTOR)(void *priv);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1027136">
+<H5> Description</H5>
+</A>
+
+<A NAME="1027177">
+Until the data associated with an index is actually set with a call to <A HREF="prthrd.html#1016738"><CODE>PR_SetThreadPrivate</CODE></A>, the value of the data is <CODE>NULL</CODE>. If the data associated with the index is not <CODE>NULL</CODE>, NSPR passes a reference to the data to the destructor function when the thread terminates.<P></A>
+
+<A NAME="Threading Functions"></A>
+<A NAME="1027137">
+<H2> Threading Functions</H2>
+</A>
+<A NAME="1039554">
+Most of the functions described here accept a pointer to the thread as an argument. NSPR does not check for the validity of the thread. It is the caller's responsibility to ensure that the thread is valid. The effects of these functions on invalid threads are undefined. <P></A>
+<A NAME="1036015">
+<A HREF="prthrd.html#1025616">Creating, Joining, and Identifying Threads</A><br><A HREF="prthrd.html#1025812">Controlling Thread Priorities</A><br><A HREF="prthrd.html#1029043">Interrupting and Yielding</A><br><A HREF="prthrd.html#1028331">Setting Global Thread Concurrency</A><br><A HREF="prthrd.html#1028527">Getting a Thread's Scope</A><P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1025616">
+<H3> Creating, Joining, and Identifying Threads</H3>
+</A>
+
+<ul><P>
+<A NAME="1028550">
+<LI><A HREF="prthrd.html#1015609"><CODE>PR_CreateThread</CODE></A> creates a new thread.</LI>
+</A><P>
+<A NAME="1028555">
+<LI><A HREF="prthrd.html#1017185"><CODE>PR_JoinThread</CODE></A> blocks the calling thread until a specified thread terminates.</LI>
+</A><P>
+<A NAME="1028642">
+<LI><A HREF="prthrd.html#1016381"><CODE>PR_GetCurrentThread</CODE></A> returns the current thread object for the currently running code.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="1015609">
+<H4> PR_CreateThread</H4>
+</A>
+
+<A NAME="1016124">
+Creates a new thread.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016125">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041062">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1016126">
+<PRE>
+PRThread* PR_CreateThread(
+    PRThreadType type,
+    void (*start)(void *arg),
+    void *arg,
+    PRThreadPriority priority,
+    PRThreadScope scope
+    PRThreadState state,
+    PRUint32 stackSize);
+</PRE></A>
+<A NAME="Head4;"></A>
+<A NAME="1016101">
+<H5> Parameters</H5>
+</A>
+
+<A NAME="1017117">
+<CODE>PR_CreateThread</CODE> has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017094">
+<PRE>type</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017096">
+Specifies that the thread is either a user thread (<CODE>PR_USER_THREAD</CODE>) or a system thread (<CODE>PR_SYSTEM_THREAD</CODE>).</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017098">
+<PRE>start</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017100">
+A pointer to the thread's root function, which is called as the root of the new thread. Returning from this function is the only way to terminate a thread.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1024183">
+<PRE>arg</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1024185">
+A pointer to the root function's only parameter. NSPR does not assess the type or the validity of the value passed in this parameter.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017102">
+<PRE>priority</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017104">
+The initial priority of the newly created thread.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017106">
+<PRE>scope</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017108">
+Specifies your preference for making the thread local (<CODE>PR_LOCAL_THREAD</CODE>), global (<CODE>PR_GLOBAL_THREAD</CODE>) or global bound (<CODE>PR_GLOBAL_BOUND_THREAD</CODE>). However, NSPR may override this preference if necessary.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017110">
+<PRE>state</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017112">
+Specifies whether the thread is joinable (<CODE>PR_JOINABLE_THREAD</CODE>) or unjoinable <CODE>(PR_UNJOINABLE_THREAD)</CODE>. </A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017114">
+<PRE>stackSize</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017116">
+Specifies your preference for the size of the stack, in bytes, associated with the newly created thread. If you pass zero in this parameter, <CODE>PR_CreateThread</CODE> chooses the most favorable machine-specific stack size.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1017118">
+<H5> Returns</H5>
+</A>
+
+<a name="1017119">
+The function returns one of the following values:
+</blockquote>
+</a>
+<ul><P>
+<A NAME="1039776">
+<LI>If successful, a pointer to the new thread. This pointer remains valid until the thread returns from its root function.</LI>
+</A><P>
+<A NAME="1039850">
+<LI>If unsuccessful, (for example, if system resources are unavailable), <CODE>NULL</CODE>. </LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="1015620">
+<H5> Description</H5>
+</A>
+
+<a name="1016205">
+If you want the thread to start up waiting for the creator to do something, enter a lock 
+before creating the thread and then have the thread's roof function enter and exit the 
+same lock. When you are ready for the thread to run, exit the lock. For more information 
+on locks and thread synchronization, see <A HREF="printro.html#1015494">Chapter 1, "Introduction to NSPR."</A>
+</blockquote>
+</a>
+<A NAME="1015626">
+If you want to detect the completion of the created thread, make it joinable. You can then use <A HREF="prthrd.html#1017185"><CODE>PR_JoinThread</CODE></A> to synchronize the termination of another thread.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1017185">
+<H4> PR_JoinThread</H4>
+</A>
+
+<A NAME="1017186">
+Blocks the calling thread until a specified thread terminates. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="1017187">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041128">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1016299">
+<PRE>PRStatus PR_JoinThread(PRThread *thread);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1015643">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="1016349">
+<CODE>PR_JoinThread</CODE> has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1016346">
+<PRE>thread</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1016348">
+A valid identifier for the thread that is to be joined.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016350">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1016351">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1040423">
+<LI>If successful, <CODE>PR_SUCCESS</CODE></LI>
+</A><P>
+<A NAME="1040430">
+<LI>If unsuccessful--for example, if no joinable thread can be found that corresponds to the specified target thread, or if the target thread is unjoinable--<CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="1015648">
+<H5> Description</H5>
+</A>
+
+<a name="1016401">
+<CODE>PR_JoinThread</CODE> is used to synchronize the termination of a thread. The function is 
+synchronous in that it blocks the calling thread until the target thread is in a joinable 
+state. <CODE>PR_JoinThread</CODE> returns to the caller only after the target thread returns from its 
+root function.
+</blockquote>
+</a>
+<A NAME="1037731">
+Several threads cannot wait for the same thread to complete. One of the calling threads operates successfully, and the others terminate with the error <CODE>PR_FAILURE</CODE>. <P></A>
+<A NAME="1017226">
+The calling thread is not blocked if the target thread has already terminated.<P></A>
+<A NAME="1032991">
+<CODE>PR_JoinThread</CODE> is interruptible.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1016381">
+<H4> PR_GetCurrentThread</H4>
+</A>
+
+<A NAME="1015657">
+Returns the current thread object for the currently running code.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1015658">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041130">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1016539">
+<PRE>PRThread* PR_GetCurrentThread(void);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1040596">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1040597">
+Always returns a valid reference to the calling thread--a self-identity.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1040598">
+<H5> Description</H5>
+</A>
+
+<A NAME="1016546">
+The currently running thread may discover its own identity by calling <CODE>PR_GetCurrentThread</CODE>.<P></A>
+<BLOCKQUOTE><B>NOTE: </B><a name="1025929">
+This is the only safe way to establish the identity of a thread. Creation and enumeration 
+are both subject to race conditions. 
+</blockquote>
+</a>
+
+<A NAME="Head2;"></A>
+<A NAME="1025812">
+<H3> Controlling Thread Priorities</H3>
+</A>
+
+<A NAME="1026006">
+For an overview of the way NSPR controls thread priorities, see <A HREF="printro.html#1035650">Setting Thread Priorities</A>. <P></A>
+<A NAME="1026023">
+You set a thread's NSPR priority when you create it with <A HREF="prthrd.html#1015609"><CODE>PR_CreateThread</CODE></A>. After a thread has been created, you can get and set its priority with these functions:<P></A>
+<A NAME="1028801">
+<A HREF="prthrd.html#1016549"><CODE>PR_GetThreadPriority</CODE></A> <br><A HREF="prthrd.html#1015669"><CODE>PR_SetThreadPriority</CODE></A><P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1016549">
+<H4> PR_GetThreadPriority</H4>
+</A>
+
+<A NAME="1015664">
+Returns the priority of a specified thread.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016565">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041137">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1015666">
+<PRE>PRThreadPriority PR_GetThreadPriority(PRThread *thread);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1017328">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="1017329">
+<CODE>PR_GetThreadPriority</CODE> has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017341">
+<PRE>thread</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017343">
+A valid identifier for the thread whose priority you want to know.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1015669">
+<H4> PR_SetThreadPriority</H4>
+</A>
+
+<A NAME="1016575">
+Sets the priority of a specified thread.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016583">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041319">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1015671">
+<PRE>void PR_SetThreadPriority(
+    PRThread *thread,
+    PRThreadPriority priority);
+</PRE></A>
+<A NAME="Head4;"></A>
+<A NAME="1017435">
+<H5> Parameters</H5>
+</A>
+
+<A NAME="1017436">
+<CODE>PR_SetThreadPriority</CODE> has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017499">
+<PRE>thread</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017501">
+A valid identifier for the thread whose priority you want to set.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017503">
+<PRE>priority</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017505">
+The priority you want to set.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1017516">
+<H5> Description</H5>
+</A>
+
+<A NAME="1017573">
+Modifying the priority of a thread other than the calling thread is risky. It is difficult to ensure that the state of the target thread permits a priority adjustment without ill effects. It is preferable for a thread to specify itself in the <CODE>thread</CODE> parameter when it calls <CODE>PR_SetThreadPriority</CODE>.<P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1026179">
+<H3> Controlling Per-Thread Private Data</H3>
+</A>
+
+<A NAME="1026245">
+You can use these functions to associate private data with each of the threads in a process:<P></A>
+<ul><P>
+<A NAME="1028846">
+<LI><A HREF="prthrd.html#1027535"><CODE>PR_NewThreadPrivateIndex</CODE></A> allocates a unique index. If the call is successful, every thread in the same process is capable of associating private data with the new index. </LI>
+</A><P>
+<A NAME="1027529">
+<LI><A HREF="prthrd.html#1016738"><CODE>PR_SetThreadPrivate</CODE></A> associates private thread data with an index.</LI>
+</A><P>
+<A NAME="1027916">
+<LI><A HREF="prthrd.html#1027559"><CODE>PR_GetThreadPrivate</CODE></A> retrieves data associated with an index. </LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="1027535">
+<H4> PR_NewThreadPrivateIndex</H4>
+</A>
+
+<A NAME="1017584">
+Returns a new index for a per-thread private data table and optionally associates a destructor with the data that will be assigned to the index.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1017597">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041329">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1016700">
+<PRE>
+PRStatus PR_NewThreadPrivateIndex(
+    PRUintn *newIndex,
+    PRThreadPrivateDTOR destructor);
+</PRE>
+</A><A NAME="Head4;"></A>
+<A NAME="1016591">
+<H5> Parameters</H5>
+</A>
+
+<A NAME="1026643">
+<CODE>PR_NewThreadPrivateIndex</CODE> has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1026636">
+<PRE>newIndex</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1026638">
+On output, an index that is valid for all threads in the process. You use this index with <A HREF="prthrd.html#1016738"><CODE>PR_SetThreadPrivate</CODE></A> and <A HREF="prthrd.html#1027559"><CODE>PR_GetThreadPrivate</CODE></A>.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1026640">
+<PRE>destructor</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1026642">
+Specifies a destructor function <A HREF="prthrd.html#1026848"><CODE>PRThreadPrivateDTOR</CODE></A> for the private data associated with the index. This function can be specified as <CODE>NULL</CODE>.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016677">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1016678">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1040613">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A><P>
+<A NAME="1040604">
+<LI><CODE>I</CODE>f the total number of indices exceeds 128, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="1016599">
+<H5> Description </H5>
+</A>
+
+<A NAME="1027648">
+If <CODE>PR_NewThreadPrivateIndex</CODE> is successful, every thread in the same process is capable of associating private data with the new index. Until the data for an index is actually set, the value of the private data at that index is <CODE>NULL</CODE>. You pass this index to <A HREF="prthrd.html#1016738"><CODE>PR_SetThreadPrivate</CODE></A> and <A HREF="prthrd.html#1027559"><CODE>PR_GetThreadPrivate</CODE></A> to set and retrieve data associated with the index.<P></A>
+<A NAME="1027782">
+When you allocate the index, you may also register a destructor function of type <A HREF="prthrd.html#1026848"><CODE>PRThreadPrivateDTOR</CODE></A>. If a destructor function is registered with a new index, it will be called at one of two times, as long as the private data is not <CODE>NULL</CODE>:<P></A>
+<ul><P>
+<A NAME="1033255">
+<LI>when replacement private data is set with <A HREF="prthrd.html#1016738"><CODE>PR_SetThreadPrivate</CODE></A> </LI>
+</A><P>
+<A NAME="1033260">
+<LI>when a thread exits</LI>
+</A></ul><A NAME="1038759">
+The index maintains independent data values for each binding thread. A thread can get access only to its own thread-specific data. There is no way to deallocate a private data index once it is allocated.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1016738">
+<H4> PR_SetThreadPrivate</H4>
+</A>
+
+<A NAME="1017692">
+Sets per-thread private data.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1017693">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041342">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1017694">
+<PRE>PRStatus PR_SetThreadPrivate(PRUintn index, void *priv);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1015704">
+<H5> Parameters</H5>
+</A>
+
+<A NAME="1016778">
+<CODE>PR_SetThreadPrivate</CODE> has the following parameters:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1016769">
+<PRE>index</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1016771">
+An index into the per-thread private data table.</A></P>
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1016773">
+<PRE>priv</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1016775">
+The per-thread private data, or more likely, a pointer to the data. </A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016814">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1040713">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1040648">
+<LI>If successful, <CODE>PR_SUCCESS</CODE>.</LI>
+</A><P>
+<A NAME="1040649">
+<LI><CODE>I</CODE>f the index is invalid, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="1033482">
+<H5> Description</H5>
+</A>
+
+<A NAME="1038966">
+If the thread already has non-<CODE>NULL</CODE> private data associated with it, and if the destructor function for the index is known (not <CODE>NULL</CODE>), NSPR calls the destructor function associated with the index before setting the new data value. The pointer at the index is swapped with <CODE>NULL</CODE>. If the swapped out value is not <CODE>NULL</CODE>, the destructor function is called. On return, the private data associated with the index is reassigned the new private data's value, even if it is <CODE>NULL</CODE>. The runtime provides no protection for the private data. The destructor is called with the runtime holding no locks. Synchronization is the client's responsibility. <P></A>
+<A NAME="1038967">
+The only way to eliminate thread private data at an index prior to the thread's termination is to call <CODE>PR_SetThreadPrivate</CODE> with a <CODE>NULL</CODE> argument. This causes the index's destructor function to be called, and afterwards assigns a <CODE>NULL</CODE> in the table. A client must not delete the referant object of a non-<CODE>NULL </CODE>private data without first eliminating it from the table.<P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1027559">
+<H4> PR_GetThreadPrivate</H4>
+</A>
+
+<A NAME="1027560">
+Recovers the per-thread private data for the current thread.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016843">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041352">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1016842">
+<PRE>void* PR_GetThreadPrivate(PRUintn index);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1016824">
+<H5> Parameter </H5>
+</A>
+
+<A NAME="1016834">
+<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1016853">
+<PRE>index</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1016855">
+The index into the per-thread private data table. </A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<CODE>PR_GetThreadPrivate</CODE> has the following parameters:<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1015719">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1016858">
+<CODE>NULL</CODE> if the data has not been set.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1028958">
+<H5> Description</H5>
+</A>
+
+<A NAME="1029037">
+<CODE>PR_GetThreadPrivate</CODE> may be called at any time during a thread's execution. A thread can get access only to its own per-thread private data. Do not delete the object that the private data refers to without first clearing the thread's value.<P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1029043">
+<H3> Interrupting and Yielding</H3>
+</A>
+
+<ul><P>
+<A NAME="1027959">
+<LI><A HREF="prthrd.html#1015726"><CODE>PR_Interrupt</CODE></A> requests an interrupt of another thread. Once the target thread has been notified of the request, the request stays with the thread until the notification either has been delivered exactly once or is cleared. </LI>
+</A><P>
+<A NAME="1027968">
+<LI><A HREF="prthrd.html#1015738"><CODE>PR_ClearInterrupt</CODE></A> clears a previous interrupt request.</LI>
+</A><P>
+<A NAME="1027987">
+<LI><A HREF="prthrd.html#1015744"><CODE>PR_Sleep</CODE></A> causes a thread to yield to other threads for a specified number of ticks.</LI>
+</A></ul>
+<A NAME="Head3;"></A>
+<A NAME="1015726">
+<H4> PR_Interrupt</H4>
+</A>
+
+<A NAME="1015727">
+Sets the interrupt request for a target thread. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016879">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041364">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1015730">
+<PRE>PRStatus PR_Interrupt(PRThread *thread);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1017758">
+<H5> Parameter </H5>
+</A>
+
+<A NAME="1017764">
+<CODE>PR_Interrupt</CODE> has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017761">
+<PRE>thread</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017763">
+The thread whose interrupt request you want to set. </A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1028137">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1040735">
+The function returns one of the following values:<P></A>
+<ul><P>
+<A NAME="1040736">
+<LI>If the specified thread is currently blocked, <CODE>PR_SUCCESS</CODE>.</LI>
+</A><P>
+<A NAME="1040737">
+<LI>Otherwise, <CODE>PR_FAILURE</CODE>.</LI>
+</A></ul><A NAME="Head4;"></A>
+<A NAME="1016906">
+<H5> Description</H5>
+</A>
+
+<A NAME="1028145">
+The purpose of <CODE>PR_Interrupt</CODE> is to request that a thread performing some task stop what it is doing and return to some control point. It is assumed that a control point has been mutually arranged between the thread doing the interrupting and the thread being interrupted. When the interrupted thread reaches the prearranged point, it can communicate with its peer to discover the real reason behind the change in plans.<P></A>
+<A NAME="1028236">
+The interrupt request remains in the thread's state until it is delivered exactly once or explicitly canceled. The interrupted thread returns <CODE>PR_FAILURE</CODE> (-1) with an error code (see <A HREF="prerr.html#1035678"><CODE>PR_GetError</CODE></A>) for blocking operations that return a <CODE>PRStatus</CODE> (such as I/O operations, monitor waits, or waiting on a condition). To check whether the thread was interrupted, compare the result of <CODE>PR_GetError</CODE> with <CODE>PR_PENDING_INTERRUPT_ERROR</CODE>.<P></A>
+<A NAME="1028224">
+<CODE>PR_Interrupt</CODE> may itself fail if the target thread is invalid.<P></A>
+
+<A NAME="Head4;"></A>
+<H5> Bugs</H5>
+
+<CODE>PR_Interrupt</CODE> has the following limitations
+and known bugs:<P>
+<ul><P>
+<LI>There can be a delay for a thread to be interrupted from
+a blocking I/O function.  In all NSPR implementations, the
+maximum delay is at most five seconds.  In the pthreads-based
+implementation on Unix, the maximum delay is 0.1 seconds.</LI>
+<P>
+<LI>File I/O is considered instantaneous, so file I/O
+functions cannot be interrupted.  Unfortunately the
+standard input, output, and error streams are treated
+as files by NSPR, so a <CODE>PR_Read</CODE> call on
+<CODE>PR_STDIN</CODE> cannot be interrupted even though
+it may block indefinitely.</LI>
+<P>
+<LI>In the NT implementation, <CODE>PR_Connect</CODE>
+cannot be interrupted.</LI>
+<P>
+<LI>In the NT implementation, a file descriptor is
+not usable and must be closed after an I/O function
+on the file descriptor is interrupted. See the memo
+<A HREF="ntiotimeoutinterrupt.html">"Using IO Timeout
+and Interrupt on NT"</A> for details.</LI>
+</ul>
+
+<A NAME="Head3;"></A>
+<A NAME="1015738">
+<H4> PR_ClearInterrupt</H4>
+</A>
+
+<A NAME="1017782">
+Clears the interrupt request for the calling thread. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="1017783">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041374">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1029829">
+<PRE>void PR_ClearInterrupt(void);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1017785">
+<H5> Description</H5>
+</A>
+
+<A NAME="1033582">
+Interrupting is a cooperative process, so it's possible that the thread passed to <A HREF="prthrd.html#1015726"><CODE>PR_Interrupt</CODE></A> may never respond to the interrupt request. For example, the target thread may reach the agreed-on control point without providing an opportunity for the runtime to notify the thread of the interrupt request. In this case, the request for interrupt is still pending with the thread and must be explicitly canceled. Therefore it is sometimes necessary to call <CODE>PR_ClearInterrup</CODE>t to clear a previous interrupt request.<P></A>
+<A NAME="1028212">
+If no interrupt request is pending, <CODE>PR_ClearInterrup</CODE>t is a no-op. <P></A>
+
+<A NAME="Head3;"></A>
+<A NAME="1015744">
+<H4> PR_Sleep</H4>
+</A>
+
+<A NAME="1016955">
+Causes the current thread to yield for a specified amount of time. <P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016954">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041384">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1016962">
+<PRE>PRStatus PR_Sleep(PRIntervalTime ticks);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1016967">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="1016968">
+<CODE>PR_Sleep</CODE> has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1017793">
+<PRE>ticks</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1017795">
+The number of ticks you want the thread to sleep for (see <A HREF="prinrvl.html#1018377"><CODE>PRIntervalTime</CODE></A>). </A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016987">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1016989">
+Calling <CODE>PR_Sleep</CODE> with a parameter equivalent to <CODE>PR_INTERVAL_NO_TIMEOUT</CODE> is an error and results in a <CODE>PR_FAILURE</CODE> error.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1016988">
+<H5> Description</H5>
+</A>
+
+<A NAME="1028322">
+<CODE>PR_Sleep</CODE> simply waits on a condition for the amount of time specified. If you set <CODE>ticks</CODE> to <CODE>PR_INTERVAL_NO_WAIT</CODE>, the thread yields. <P></A>
+<A NAME="1033606">
+If <CODE>ticks</CODE> is not <CODE>PR_INTERVAL_NO_WAIT</CODE>, <CODE>PR_Sleep</CODE> uses an existing lock, but has to create a new condition for this purpose. If you have already created such structures, it is more efficient to use them directly.<P></A>
+<A NAME="1039125">
+Calling <CODE>PR_Sleep</CODE> with the value of <CODE>ticks</CODE> set to <CODE>PR_INTERVAL_NO_WAIT</CODE> simply surrenders the processor to ready threads of the same priority. All other values of ticks cause <CODE>PR_Sleep</CODE> to block the calling thread for the specified interval.<P></A>
+<A NAME="1039156">
+Threads blocked in <CODE>PR_Sleep</CODE> are interruptible. <P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1028331">
+<H3> Setting Global Thread Concurrency</H3>
+</A>
+
+
+<A NAME="Head3;"></A>
+<A NAME="1028350">
+<H4> PR_SetConcurrency</H4>
+</A>
+
+<A NAME="1028396">
+Sets the number of global threads used by NSPR to create local threads.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1028351">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041390">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1028356">
+<PRE>void PR_SetConcurrency(PRUintn numCPUs);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1028433">
+<H5> Parameter</H5>
+</A>
+
+<A NAME="1028439">
+<CODE>P</CODE>R_SetConcurrency has the following parameter:<P><B></B>
+<TABLE BORDER="0">
+<TR><TD VALIGN=baseline ALIGN=left><A NAME="1028436">
+<PRE>numCPUs</PRE></A><TD VALIGN=baseline ALIGN=left><A NAME="1028438">
+The number of concurrent global threads desired.</A></P>
+
+</TABLE>
+<TABLE>
+<TR><TD>
+</TABLE>
+<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1028440">
+<H5> Description</H5>
+</A>
+
+<A NAME="1028499">
+NSPR attempts to match the complexion of the thread set to the needs of the application and the capabilities of the host OS and hardware. Global threads are more expensive than local threads, but the latter are unable to take advantage of the scheduling being offered by the host OS. NSPR creates just enough global threads to match the capabilities of the host, for example to match the number of processors available plus one or two. This allows true concurrency in that there are truly multiple execution streams operating simultaneously. <P></A>
+<A NAME="1028516">
+You can use <CODE>PR_SetConcurrency</CODE> to exercise similar fine-grained control over the number of global threads that NSPR utilizes. The default value of concurrency is 1. There's no harm in setting the number larger than the number of physical processors available. <P></A>
+
+<A NAME="Head2;"></A>
+<A NAME="1028527">
+<H3> Getting a Thread's Scope</H3>
+</A>
+
+
+<A NAME="Head3;"></A>
+<A NAME="1015754">
+<H4> PR_GetThreadScope</H4>
+</A>
+
+<A NAME="1017004">
+Gets the scoping of the current thread.<P></A>
+<A NAME="Head4;"></A>
+<A NAME="1015755">
+<H5> Syntax</H5>
+</A>
+
+<A NAME="1041396">
+<PRE>#include &lt;prthread.h&gt;</PRE></A><A NAME="1015756">
+<PRE>PRThreadScope PR_GetThreadScope(void);</PRE></A><A NAME="Head4;"></A>
+<A NAME="1015524">
+<H5> Returns</H5>
+</A>
+
+<A NAME="1017815">
+A value of type <A HREF="prthrd.html#1019019"><CODE>PRThreadScope</CODE></A> indicating whether the thread is local or global.<P></A>
+
+<P><HR>
+<A HREF="contents.html">[Contents]</A> <A HREF="prtyp.html">[Previous]</A> <A HREF="prinit.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<P ALIGN=right>
+
+<FONT SIZE=-2><I>Last Updated: Mon Jul 13 17:27:15 PDT 1998</I></FONT>
+
+<HR SIZE=4>
+
+<P> <CENTER>Copyright © 1998
+<A HREF="http://home.netscape.com/misc/contact_info.html"
+TARGET=_top>Netscape Communications Corporation</A></FONT>
+</CENTER>
+<P>
+<P>
+
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

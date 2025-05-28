@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+  <HEAD>
+    <TITLE>A Reference Implementation of QueryInterface</TITLE>
+    <!-- LINK REL=StyleSheet HREF="http://www.meer.net/ScottCollins/xpfe/Standard.css" TYPE="text/css" -->
+    <LINK REL=StyleSheet HREF="Standard.css" TYPE="text/css">
+  </HEAD>
+
+  <BODY>
+    <H1>A Reference Implementation of <SPAN class="source-code">QueryInterface</SPAN></H1>
+
+<DIV class=author-note>
+  <P>by <A HREF="http://www.meer.net/ScottCollins/">Scott Collins</A><!-- /P -->
+  <P>last modified 3 May 1999</P>
+</DIV>
+
+<DIV class="document-label">
+  <A name="abstract">
+    <STRONG>Abstract:</STRONG>
+    The right way to write <SPAN class="source-code">QueryInterface()</SPAN>.
+  </A>
+</DIV>
+
+<DIV class="document-label">
+  <P>
+    <STRONG>Document Status:</STRONG> Draft.
+    More explanation needed.
+  </P>
+</DIV>
+
+
+<H2>The Implementation</H2>
+
+<DIV class="source-code">
+<PRE class="source-code">
+NS_IMETHODIMP
+nsMyImplementation::QueryInterface( REFNSIID aIID, void** aInstancePtr )
+  {
+    if ( !aInstancePtr )
+      return NS_ERROR_NULL_POINTER;
+
+    if ( aIID.Equals(nsIX::GetIID()) )
+      *aInstancePtr = NS_STATIC_CAST(nsIX*, this);
+    else if ( aIID.Equals(nsIY::GetIID()) )
+      *aInstancePtr = NS_STATIC_CAST(nsIY*, this);
+
+    <SPAN class="comment">// ...as many cases as needed...</SPAN>
+
+    else if ( aIID.Equals(kISupportsIID) )
+      *aInstancePtr = NS_STATIC_CAST(nsISupports*, NS_STATIC_CAST(nsIX*, this));
+    else
+      *aInstancePtr = 0;
+
+
+    nsresult status;
+    if ( !*aInstancePtr )
+      status = NS_NOINTERFACE;
+    else
+      {
+        NS_ADDREF( NS_REINTERPRET_CAST(nsISupports*, *aInstancePtr) );
+        status = NS_OK;
+      }
+
+    return status;
+  }
+</PRE>
+</DIV>
+
+<H2>What's So Good About It?</H2>
+
+<UL>
+  <LI>It's clear and simple.</LI>
+  <LI>
+		OK.  It has more than one return, but the primary return is at the end of the function as expected;
+		and the additional return is clear and alone at the top of the function.
+	</LI>
+  <LI>It only has one <SPAN class="source-code">AddRef</SPAN></LI>
+  <LI>It <SPAN class="source-code">AddRef</SPAN>s the resulting interface, not <SPAN class="source-code">this</SPAN>, thus following the COM-correct way (particularly important in aggregation)</LI>
+  <LI>It uses <SPAN class="source-code">T::GetIID()</SPAN> instead of <SPAN class="source-code">kTIID</SPAN> thus saving a global declaration and global space</LI>
+	<LI>
+		It uses C++'s <SPAN class="source-code">static_cast</SPAN>, via <SPAN class="source-code">NS_STATIC_CAST</SPAN>,
+			which detects errors when you can't really get to the desired interface.
+	</LI>
+	<LI>It clears the result, <SPAN class="source-code">*aInstancePtr</SPAN>, (if supplied) when returning an error.</LI>
+</UL>
+
+<DIV class="author-note">
+  <HR>
+    <A HREF="http://validator.w3.org/check?uri=http://www.mozilla.org/projects/xpcom/QI.html">
+      <IMG BORDER=0 align=left SRC="http://validator.w3.org/images/vh40.gif" ALT="Valid HTML 4.0!" HEIGHT=31 WIDTH=88>
+    </A>
+    <A HREF="http://www.w3.org/Style/CSS/Buttons">
+      <IMG BORDER=0 align=left SRC="http://www.w3.org/Style/CSS/Buttons/cssos" ALT="CSS" HEIGHT=31 WIDTH=88>
+    </A>
+    Copyright&copy; 1999 by Netscape; use is subject to the <A HREF="http://www.mozilla.org/NPL/">NPL</A>.
+</DIV>
+  </BODY>
+</HTML>

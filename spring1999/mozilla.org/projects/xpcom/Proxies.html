@@ -1,0 +1,464 @@
+<HTML>
+<HEAD>
+<TITLE>nsISupports Proxies</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=3>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+<P><BR>
+
+
+
+
+   
+   
+   
+
+
+
+<center><font size=+3>nsISupports Proxies</font>
+<br><a href="mailto:dougt@netscape.com">Doug Turner</a></center>
+
+<h3>Introduction</h3>
+<p>First and foremost, this is a work in progress.&nbsp; It is only a reflection
+of nsISupports Proxies as of this writing.
+<p>A "Proxy", in this context, is a stub object which enables a method
+of any class which is derived from nsISupports to be called on any in-process
+thread.&nbsp; "Proxy" itself is possibly not the correct word to use, but
+this I use it for historical reasons.&nbsp; nsISupports Proxies is the
+umbrella name under which the nsProxyEvent class and ProxyObjects live.&nbsp;
+ProxyObjects are all objects that uses the nsProxyEvent class and the typelib
+together to make a generic and dynamic proxy.&nbsp; This is what most people
+will be using.&nbsp; The nsProxyEvent class are usually handwritten and
+are relatively low level.
+<p>The main reason for nsISupports Proxies is that Javascript and UI are
+on a single thread.&nbsp; When one is busy, the other is blocked. A great
+example of this is XPInstall.&nbsp; Its installation scripts differ from
+the majority of Javascripts, which are small and can be quickly run.&nbsp;
+XPInstall installation scripts are sometime very complex and can require
+long execution time due to unzipping or native file system actions.&nbsp;&nbsp;
+If XPInstall ran on the UI thread, the product would appear frozen until
+the script was complete.&nbsp; This is definitely bad.&nbsp; Because of
+this, XPInstall was moved to its own thread.&nbsp; Now XPInstall can do
+its installations while the product renders, but now XPInstall can not
+access UI elements such as a progress meter or a confirmation dialog.&nbsp;
+How can a separate non-UI thread act as if it was on the UI thread?&nbsp;
+Herein lays the utility of nsISupports Proxies.
+<p>I believe that other people working on Seamonkey need similar solutions.&nbsp;
+In this document, I will try to explain how nsISupports Proxies work.
+<br>&nbsp;
+<h3>How does it work?</h3>
+<p>The foundation of nsISupports Proxies is the plevent which is here:
+<p><a href="http://lxr.mozilla.org/seamonkey/source/nsprpub/lib/ds/plevent.c">http://lxr.mozilla.org/seamonkey/source/nsprpub/lib/ds/plevent.c</a>
+<br><a href="http://lxr.mozilla.org/seamonkey/source/nsprpub/lib/ds/plevent.h">http://lxr.mozilla.org/seamonkey/source/nsprpub/lib/ds/plevent.h</a>
+<p>The header file describes in detail exactly how plevents work.&nbsp;
+It basically is a process that allows you to post events to a queue and
+have a handler called when they are removed.&nbsp; It would benefit you
+to read this.
+<p>Directly above this layer is the nsProxyObject, which Alec Flett designed
+and developed.&nbsp; I encapsulated his work into a C++ object, but all
+praise and many kudos go to him.
+<p>Most users of nsISupport Proxies will never have to use nsProxyObject
+or PLEvents directly.&nbsp; One might only if a class that does not use
+the xpidl/typelib. If this case, you will have to create a handwritten
+proxy.&nbsp; This is not hard, but there are certain pitfalls that you
+should be aware of.&nbsp; More on handwritten proxies later.
+<p>From a user point of view, the next layer is the nsIProxyObjectManager.
+You call GetService to obtain it:
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#CCFFFF" >
+<tr>
+<td><tt>nsIProxyObjectManager*&nbsp; proxyObjectManager;</tt>
+<p><tt>rv = servMgr->GetService(kProxyObjectManagerCID,&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsIProxyEventManager::GetIID(),&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(nsISupports**)&amp; proxyObjectManager);</tt></td>
+</tr>
+</table>
+
+<p>The only API, which is implemented, is:
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#CCFFFF" >
+<tr>
+<td><tt>NS_IMETHOD GetProxyObject( PLEventQueue *destQueue,&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+REFNSIID aIID,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsISupports* aObj,&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+void** aProxyObject);</tt></td>
+</tr>
+</table>
+
+<p>Given an event queue to execute methods on, nsISupports object that
+has been created and an IID which describes the object, a new nsISupports
+proxy object will be returned.&nbsp; (Of course there is room for further
+development here.&nbsp; A method, which allocates an object for you, would
+be a simple example of how we can expand this manager.)
+<p>Once you have a proxy object, you may use it as if it is the "real"
+object.&nbsp; All the methods that are in the "real" object are stubbed
+into the proxy object.&nbsp; Here is a snippet of code which creates a
+proxy object and uses it:
+<br>&nbsp;
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#CCFFFF" >
+<tr>
+<td><tt>nsIProxyObjectManager*&nbsp; proxyObjectManager;</tt>
+<p><tt>nsComponentManager::CreateInstance(kProxyObjectManagerCID,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsnull,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsIProxyObjectManager::GetIID(),</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(void**)&amp;proxyObjectManager);</tt>
+<p><tt>if (proxyObjectManager == nsnull) return;&nbsp; // handle error
+here</tt>
+<p><tt>nsITestXPCFoo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *proxyObject;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// This is just an interface pointer</tt>
+<br><tt>nsTestXPCFoo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*foo&nbsp; = new nsTestXPCFoo(); // This is the class</tt>
+<p><tt>if (foo == nsnull) return; // handle error here</tt>
+<p><tt>proxyObjectManager->GetProxyObject( argsStruct->queue, // This is
+somehow obtained*&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsITestXPCFoo::GetIID(),&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+foo,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(void**)&amp;proxyObject);</tt>
+<p><tt>int a;</tt>
+<br><tt>nsresult rv = proxyObject->Test(threadNumber, 0, &amp;a);</tt></td>
+</tr>
+</table>
+
+<p>When you are finished with a proxy object, you can call NS_RELEASE on
+it.&nbsp; It will take care of freeing the "real" object as well as itself.
+<p>A point here to bring up is how do we supply the event queue to GetProxyObject?&nbsp;
+In the above example, I passed the struct argsStruct to this function.&nbsp;
+This is probably not the most graceful way of doing it.&nbsp; Since a common
+use of proxies may be to get or control UI, it would be very nice to have
+something in the nsIEventQueueService possibly which will return the UI
+thread.&nbsp; In this manner, we could do away with passing an event queue
+pointer around.&nbsp; (Is there a better way to do this??)
+<p>Getting back to the example, when you make a call on a nsISupports Proxy,
+with the magic of typelib and xptcall, your parameters and method information
+are marshaled across the thread via PLEvents.&nbsp; Once it is posted to
+the other thread, the caller (i.e. the user of nsISupports Proxy) will
+block.&nbsp; The receiving event queue will process the event and the event
+handler will invoke your method.
+<p>Yes, it is that easy.&nbsp; Given that you have your interface already
+in the typelib format.&nbsp; If you do not, we must examine Handwritten
+Proxies.
+<h3>Handwritten Proxies</h3>
+<p>Before we start off a word of caution.&nbsp; <i>DON'T DO THIS</i>.&nbsp;
+It is really evil.&nbsp; You will go out of sync with your proxy and core
+dump ever where it is used.&nbsp; Make a xpidl, run it through the compiler,
+and create a typelib.&nbsp; You will be happier, I will be happier, the
+universe will be happier.
+<p>If you are still reading I will assume that you love living on the cutting
+edge.&nbsp; Well, okay here goes: Handwritten proxies are pretty trivial
+to create.&nbsp; It is maintenance, which may get you into trouble.&nbsp;
+For instance, if you change your interface around (of course you have not
+published it yet) and forget to change your handwritten proxy, you will
+blow up.&nbsp; There is zero type checking when using handwritten proxies
+(as well as non-handwritten proxy, but you are less likely to go out of
+sync).
+<p>What you need to do to create a proxy?&nbsp; One way to learn this is
+to look at an example-handwritten class.&nbsp; We are going to look at
+the nsAppShellService.&nbsp; You can take a look at the real header here:
+<p><a href="http://lxr.mozilla.org/seamonkey/source/xpfe/appshell/public/nsIAppShellService.h">http://lxr.mozilla.org/seamonkey/source/xpfe/appshell/public/nsIAppShellService.h</a>
+<p>We will create a new class that implements this interface above and
+for each meathod class directly into nsProxyEvent.&nbsp; Some macros are
+provided to help you out.
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#CCFFFF" >
+<tr>
+<td>static NS_DEFINE_IID(kIAppShellServiceIID,&nbsp;&nbsp; NS_IAPPSHELL_SERVICE_IID);
+<br>&nbsp;
+<p>NS_IMPL_PROXY(nsAppShellService, nsIAppShellService);&nbsp;&nbsp; //
+our macro
+<br>NS_IMPL_ISUPPORTS(nsAppShellService, kIAppShellServiceIID);
+<br>&nbsp;
+<p>NS_IMETHODIMP nsAppShellService::Initialize(void)&nbsp;
+<br>{
+<br>&nbsp;&nbsp;&nbsp; return mProxyObject.Post( 3,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// call meathod number
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+number of params
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsnull&nbsp; );&nbsp;&nbsp;&nbsp; //&nbsp; parameters
+<p>}</td>
+</tr>
+</table>
+
+<p>The macro NS_IMPL_PROXY will setup the construct for in handwritten
+proxy object.&nbsp; The constructor looks something like this:
+<p>nsAppShellService::nsAppShellService (PLEventQueue *destQueue, nsISupports
+*realObject)
+<p>Again, you have to know the event queue that this object will proxy
+to as well as the real object. If you would like the proxy to create the
+realObject for you, you can alternately use the following API:
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#CCFFFF" >
+<tr>
+<td><tt>nsProxyObject::nsProxyObject( PLEventQueue *destQueue,&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+const nsCID &amp;aClass,&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsISupports *aDelegate,&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+const nsIID &amp;aIID);</tt></td>
+</tr>
+</table>
+
+<p>Of course you may be wondering about the parameters fields of the Post()
+method.&nbsp; This is where you have to do your own data marshalling of
+sorts.&nbsp; Here is my example for CreateTopLevelWindow():
+<br>&nbsp;
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#CCFFFF" >
+<tr>
+<td><tt>NS_IMETHODIMP nsAppShellProxy::CreateTopLevelWindow(nsIWebShellWindow
+* aParent,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsIURL* aUrl,&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsString&amp; aControllerIID,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsIWebShellWindow*&amp; aResult,&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsIStreamObserver* anObserver,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsIXULWindowCallbacks *aCallbacks,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRInt32 aInitialWidth,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRInt32 aInitialHeight)</tt>
+<br><tt>{</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; nsXPTCVariant var[8];</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; var[0].flags&nbsp;&nbsp; = nsXPTCVariant::PTR_IS_DATA;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[0].ptr&nbsp;&nbsp;&nbsp;&nbsp; = aParent;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; var[1].flags&nbsp;&nbsp; = nsXPTCVariant::PTR_IS_DATA;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[1].ptr&nbsp;&nbsp;&nbsp;&nbsp; = aUrl;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; var[2].flags&nbsp;&nbsp; = nsXPTCVariant::PTR_IS_DATA;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[2].ptr&nbsp;&nbsp;&nbsp;&nbsp; = &amp;aControllerIID;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; var[3].flags&nbsp;&nbsp; = nsXPTCVariant::PTR_IS_DATA;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[3].ptr&nbsp;&nbsp;&nbsp;&nbsp; = &amp;aResult;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; var[4].flags&nbsp;&nbsp; = nsXPTCVariant::PTR_IS_DATA;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[4].ptr&nbsp;&nbsp;&nbsp;&nbsp; = anObserver;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; var[5].flags&nbsp;&nbsp; = nsXPTCVariant::PTR_IS_DATA;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[5].ptr&nbsp;&nbsp;&nbsp;&nbsp; = aCallbacks;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; var[6].flags&nbsp;&nbsp; = 0;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[6].type&nbsp;&nbsp;&nbsp; = nsXPTType::T_I32;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[6].val.i32 = aInitialWidth;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; var[7].flags&nbsp;&nbsp; = 0;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[7].type&nbsp;&nbsp;&nbsp; = nsXPTType::T_I32;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var[7].val.i32 = aInitialHeight;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; nsresult rv = mProxyObject.Post( 6,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// call meathod number</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+8,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+number of params</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+var&nbsp; );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; parameters</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; // store the out parameters</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; aResult =&nbsp; *((nsIWebShellWindow **)var[3].ptr);</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; return rv;</tt>
+<br><tt>}</tt></td>
+</tr>
+</table>
+
+<p>Yuck is right.&nbsp; You should have taken my advice above and generated
+yourself a typelib.&nbsp; It really is not that bad.&nbsp; You just have
+to stuff your variables into a <tt>nsXPTCVariant.</tt>&nbsp;&nbsp; There
+is bug in the above example.&nbsp; Can you point it out?&nbsp; Well, the
+<tt>nsXPTCVariant</tt>
+is allocated on the stack. Even though <tt>Post()</tt> blocks, var is sometime
+stepped on.&nbsp; My advice is to allocate this in the heap.
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

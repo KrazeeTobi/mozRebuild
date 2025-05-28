@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<TITLE>Key Binding</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Key Binding</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="events.html">Previous: Focus and Command Dispatching</a>]
+[<a href="popups.html">Next: Popup Content</a>]
+<p>
+<b>Feature Owners:</b> <a href="mailto:sdagley@netscape.com">Steve Dagley</a>, 
+<a href="mailto:saari@netscape.com">Chris Saari</a><br>
+<p>
+<font color=red>[This spec has been partially implemented, but the feature really isn't ready
+yet.  When it is, I'll be sure to update the document and post to the newsgroup. - Dave]</font>
+<p>
+<i>Key bindings</i> are convenience nodes that can be used to easily set up key event handlers
+on nodes without having to write the JavaScript to check for various keys being down (when
+those keys might even need to be different on multiple platforms).
+<p>
+A set of key bindings is defined using the <font color=green>keyset</font> tag.  It is assumed
+that all key bindings that occur within the <font color=green>keyset</font> are bound to the
+parent node of the key set.
+<p>
+A keyset contains <font color=green>key</font> nodes as its children, where each node represents
+a single key binding.  Key nodes contain several relevant attributes: the <font color=red>key</font>
+attribute is used to specify the primary key of the binding (e.g., the key that could potentially
+be used in conjunction with zero or more <i>modifier</i> keys).  The value of this attribute is
+case-insensitive, so "S" means the same thing as "s". <font color=red>[Do we need to worry about
+representing special keys like ENTER or SPACE, or is this sufficient for the first release? - Dave]
+</font>
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>&lt;window ... &gt;
+  &lt;keyset&gt;
+    &lt;key id="saveKey" key="s"/&gt;
+    &lt;key id="newKey" key="n"/&gt;
+  &lt;/keyset&gt;
+...
+&lt;/window&gt;
+</table>
+<p>
+Modifier conditions can also be specified, in which case the key binding only applies if the keys
+represented by the modifier conditions are down at the time the primary key is triggered.  There
+are three different attributes used to represent the modifier keys (and to provide a cross-platform
+abstraction): <font color=red>command</font>, <font color=red>shift</font>, and
+<font color=red>alt</font>.  The attribute's value is <font color=orange>true</font> if
+the modifier should be present.  If the attribute is not present, then it is assumed that the
+ modifier is not required.
+<p>
+For GTK, Mac, and Windows, the equivalent keys for the modifier attributes are shown below.  
+<p>
+<table width=80% bgcolor=#d0d0d0 border=1 cellspacing=0 cellpadding=0 align=center>
+<tr><th>Modifier</th><th>GTK</th><th>Macintosh</th><th>Windows</th></tr>
+<tr><th>command</th><td>control</td><td>command</td><td>control</td></tr>
+<tr><th>alt</th><td>alt</td><td>option</td><td>alt</td></tr>
+<tr><th>shift</th><td>shift</td><td>shift</td><td>shift</td></tr>
+</table>
+<p>
+Key nodes can have key event handlers placed on them that will fire in the context of the
+<font color=green>keyset</font> node's parent if the conditions set up on the
+<font color=green>key</font> node are satisfied.
+<p>
+The three possible event handlers are <font color=purple>keydown</font>, <font color=purple>keyup</font>,
+and <font color=purple>keypress</font>.  They can be added to the key nodes through script or as
+attributes (<font color=red>onkeydown</font>, <font color=red>onkeyup</font>, <font color=red>onkeypress</font>).
+The event handlers refer to the primary key in the key binding and not to the modifier keys.
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>&lt;window ... &gt;
+  &lt;keyset&gt;
+    &lt;key id="saveKey" key="s" command="true" onkeydown="performSave()"/&gt;
+    &lt;key id="newKey" key="n" command="true" onkeydown="openFile()"/&gt;
+  &lt;/keyset&gt;
+...
+&lt;/window&gt;
+</table>
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="events.html">Previous: Focus and Command Dispatching</a>]
+[<a href="popups.html">Next: Popup Content</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

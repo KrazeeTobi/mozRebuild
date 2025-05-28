@@ -1,0 +1,1973 @@
+--- mozilla/base/Makefile.cls	Mon Jul 27 21:42:04 1998
++++ mozilla/base/Makefile	Fri Jul 31 14:20:21 1998
+@@ -17,7 +17,11 @@
+ 
+ DEPTH = ..
+ 
+-DIRS = public src tests
++DIRS = public src
++
++ifdef ENABLE_TESTS
++DIRS += tests
++endif
+ 
+ include $(DEPTH)/config/config.mk
+ 
+--- mozilla/include/xp_core.h.cls	Mon Jul 27 21:42:09 1998
++++ mozilla/include/xp_core.h	Fri Jul 31 14:20:21 1998
+@@ -190,6 +190,7 @@
+      *  been #undef-ing Bool before including this file.
+      *  Can we just #undef Bool here? <mailto:mcafee> (help from djw, converse)
+      */
++    #undef Bool
+     typedef char Bool;
+     typedef char XP_Bool;
+ #endif
+--- mozilla/js/Makefile.cls	Mon Jul 27 21:42:12 1998
++++ mozilla/js/Makefile	Fri Jul 31 14:20:21 1998
+@@ -34,6 +34,10 @@
+ # See top-level makefile for details
+ #
+ 
+-DIRS = src jsj tests
++DIRS = src jsj
++
++ifdef ENABLE_TESTS
++DIRS += tests
++endif
+ 
+ include $(DEPTH)/config/rules.mk
+--- mozilla/lib/layout/Makefile.cls	Mon Jul 27 21:42:25 1998
++++ mozilla/lib/layout/Makefile	Fri Jul 31 14:20:21 1998
+@@ -61,7 +61,6 @@
+ EXPORTS		+= laylayer.h
+ endif
+ 
+-ifdef EDITOR
+ CSRCS		+= layedit.c \
+ 		  layfree.c \
+ 		  layimage.c \
+@@ -73,6 +72,7 @@
+ 		  layutil.c \
+ 		  $(NULL)
+ 
++ifdef EDITOR
+ CPPSRCS		= streams.cpp \
+ 		  fsfile.cpp \
+ 		  editor.cpp \
+--- mozilla/lib/libmime/mimefilt.c.cls	Mon Jul 27 21:42:49 1998
++++ mozilla/lib/libmime/mimefilt.c	Fri Jul 31 14:20:21 1998
+@@ -357,9 +357,9 @@
+ {
+   static char f[1024];
+   if (vers <= 2)
+-	sprintf(f, "%s/.netscape/key.db", getenv("HOME"));
++	sprintf(f, "%s/%s/key.db", getenv("HOME"), MOZ_USER_DIR);
+   else
+-	sprintf(f, "%s/.netscape/key%d.db", getenv("HOME"), vers);
++	sprintf(f, "%s/%s/key%d.db", getenv("HOME"), MOZ_USER_DIR, vers);
+   return f;
+ }
+ 
+--- mozilla/lib/libstyle/Makefile.cls	Mon Jul 27 21:42:52 1998
++++ mozilla/lib/libstyle/Makefile	Fri Jul 31 14:20:21 1998
+@@ -35,6 +35,7 @@
+ 
+ include $(DEPTH)/config/rules.mk
+ 
++ifdef ENABLE_TESTS
+ TEST_LIBS	= $(LIBRARY) \
+ 		  $(DIST)/lib/liburl.$(LIB_SUFFIX) \
+ 		  $(DIST)/lib/libsec-us.$(LIB_SUFFIX) \
+@@ -44,6 +45,7 @@
+ 
+ CSS_TEST_LIBS	= $(LIBRARY) \
+ 		  $(DIST)/lib/libxp.$(LIB_SUFFIX)
++endif
+ 
+ ifeq ($(OS_ARCH),OS2)
+ $(OBJDIR)/csstab.o: csstab.c
+@@ -51,6 +53,7 @@
+ 	$(CC) -Fo$@ -Sa -c $(CFLAGS) $<
+ endif
+ 
++ifdef ENABLE_TESTS
+ test:
+ 	$(CC) -g -o $(OBJDIR)/style_test $(CFLAGS) -DSS_TEST stystruc.c $(TEST_LIBS)
+ 	$(CC) -g -o $(OBJDIR)/stack_test $(CFLAGS) -DTEST_STYLESTACK stystack.c $(TEST_LIBS)
+@@ -58,3 +61,4 @@
+ css_test:
+ 	rm -f $(OBJDIR)/css_test
+ 	$(CC) -g -o $(OBJDIR)/css_test $(CFLAGS) -DTEST_CSS_TRANSLATION csstojs.c $(CSS_TEST_LIBS)
++endif
+--- mozilla/lib/xp/xp_trace.c.cls	Mon Jul 27 21:42:55 1998
++++ mozilla/lib/xp/xp_trace.c	Fri Jul 31 14:20:21 1998
+@@ -65,7 +65,7 @@
+ FILE *real_stderr = stderr;
+ #endif /* XP_UNIX */
+ 
+-#if defined(XP_UNIX) && defined(DEBUG)
++#if defined(XP_UNIX)
+ void FE_Trace (const char* buffer)
+ {
+ #if defined(DEBUG_warren)
+@@ -73,7 +73,7 @@
+     fwrite(buffer, 1, len, real_stderr);
+ #endif
+ }
+-#endif /* defined(XP_UNIX) && defined(DEBUG) */
++#endif /* defined(XP_UNIX) */
+ 
+ /*-----------------------------------------------------------------------------
+ 	Macintosh FE_Trace
+--- mozilla/modules/edtplug/classes/netscape/Makefile.cls	Mon Jul 27 21:42:58 1998
++++ mozilla/modules/edtplug/classes/netscape/Makefile	Fri Jul 31 14:20:21 1998
+@@ -16,6 +16,10 @@
+ # 
+ 
+ DEPTH	= ../../../..
+-DIRS	= plugin test
++DIRS	= plugin
++
++ifdef ENABLE_TESTS
++DIRS += test
++endif
+ 
+ include $(DEPTH)/config/rules.mk
+--- mozilla/modules/libimg/src/dither.cpp.cls	Mon Jul 27 21:43:02 1998
++++ mozilla/modules/libimg/src/dither.cpp	Fri Jul 31 14:20:21 1998
+@@ -19,11 +19,27 @@
+ #include "if.h"
+ #include "il.h"
+ 
++#ifdef notdef
+ #include "jinclude.h"
++#include "jpegint.h"
++#else
+ #include "jpeglib.h"
+ #include "jerror.h"
+-#include "jpegint.h"
++#endif
+ 
++/* FIXME: This needs to be defined somewhere reasonable other
++ * than "jinclude.h" -cls, 05/25/98 
++ */
++#ifdef RIGHT_SHIFT_IS_UNSIGNED
++#define SHIFT_TEMPS     INT32 shift_temp;
++#define RIGHT_SHIFT(x,shft)  \
++	((shift_temp = (x)) < 0 ? \
++	 (shift_temp >> (shft)) | ((~((INT32) 0)) << (32-(shft))) : \
++     (shift_temp >> (shft)))
++#else
++#define SHIFT_TEMPS
++#define RIGHT_SHIFT(x,shft)     ((x) >> (shft))
++#endif
+ 
+ /* BEGIN code adapted from jpeg library */
+ 
+@@ -53,7 +69,7 @@
+ 		return TRUE;
+ 
+ 	/* lost for ever */
+-	table = (JSAMPLE *)PR_MALLOC((5 * (MAXJSAMPLE+1) + CENTERJSAMPLE) * SIZEOF(JSAMPLE));
++	table = (JSAMPLE *)PR_MALLOC((5 * (MAXJSAMPLE+1) + CENTERJSAMPLE) * sizeof(JSAMPLE));
+ 	if (!table) 
+ 	{
+ 		ILTRACE(1,("il: range limit table lossage"));
+@@ -64,7 +80,7 @@
+ 	the_sample_range_limit = table;
+ 
+ 	/* First segment of "simple" table: limit[x] = 0 for x < 0 */
+-	XP_BZERO(table - (MAXJSAMPLE+1), (MAXJSAMPLE+1) * SIZEOF(JSAMPLE));
++	XP_BZERO(table - (MAXJSAMPLE+1), (MAXJSAMPLE+1) * sizeof(JSAMPLE));
+ 
+ 	/* Main part of "simple" table: limit[x] = x */
+ 	for (i = 0; i <= MAXJSAMPLE; i++)
+@@ -78,9 +94,9 @@
+ 
+ 	/* Second half of post-IDCT table */
+ 	XP_BZERO(table + (2 * (MAXJSAMPLE+1)),
+-			(2 * (MAXJSAMPLE+1) - CENTERJSAMPLE) * SIZEOF(JSAMPLE));
++			(2 * (MAXJSAMPLE+1) - CENTERJSAMPLE) * sizeof(JSAMPLE));
+ 	XP_MEMCPY(table + (4 * (MAXJSAMPLE+1) - CENTERJSAMPLE),
+-			the_sample_range_limit, CENTERJSAMPLE * SIZEOF(JSAMPLE));
++			the_sample_range_limit, CENTERJSAMPLE * sizeof(JSAMPLE));
+ 
+ 	return TRUE;
+ }
+@@ -107,7 +123,7 @@
+     }
+ 
+     cquantize = (my_cquantize_ptr) ic->quantize;
+-    arraysize = (size_t) ((ic->image->header.width + 2) * SIZEOF(FSERROR));
++    arraysize = (size_t) ((ic->image->header.width + 2) * sizeof(FSERROR));
+     for (i = 0; i < 3; i++) 
+ 	{
+ 		cquantize->fserrors[i] = (FSERRPTR) PR_Calloc(1, arraysize);
+@@ -215,7 +231,7 @@
+             *output_ptr++ &= ~*maskp++;
+     } else {
+         XP_BZERO((void XP_HUGE *) output_buf,
+-                 (size_t) (width * SIZEOF(JSAMPLE)));
++                 (size_t) (width * sizeof(JSAMPLE)));
+     }
+ 
+     input_ptr = input_buf;
+--- mozilla/modules/libimg/src/jpeg.cpp.cls	Mon Jul 27 21:43:02 1998
++++ mozilla/modules/libimg/src/jpeg.cpp	Fri Jul 31 14:20:21 1998
+@@ -40,9 +40,13 @@
+ #endif
+ 
+ PR_BEGIN_EXTERN_C
++
++#ifdef notdef
+ #include "jinclude.h"
++#else
+ #include "jpeglib.h"
+ #include "jerror.h"
++#endif
+ 
+ extern int MK_OUT_OF_MEMORY;
+ PR_END_EXTERN_C
+--- mozilla/modules/libimg/src/ipng.cpp.cls	Mon Jul 27 21:43:02 1998
++++ mozilla/modules/libimg/src/ipng.cpp	Fri Jul 31 14:20:21 1998
+@@ -42,14 +42,14 @@
+ 
+ extern void il_create_alpha_mask( il_container *, int, int, int ); 
+ 
+-
++#if PNG_LIBPNG_VER < 100
+ extern png_structp png_create_read_struct(png_charp user_png_ver, png_voidp, png_error_ptr, png_error_ptr);
+ extern png_infop png_create_info_struct(png_structp png_ptr);
+ 
+ extern void png_destroy_read_struct(png_structpp, png_infopp, png_infopp);
+ extern void png_set_progressive_read_fn(png_structp, png_voidp, png_progressive_info_ptr, png_progressive_row_ptr, png_progressive_end_ptr);
+ extern void png_process_data(png_structp, png_infop, png_bytep, png_size_t);
+-
++#endif
+ 
+ /*-----------------------------*/
+ int
+--- mozilla/modules/libimg/src/png_png.cpp.cls	Mon Jul 27 21:43:02 1998
++++ mozilla/modules/libimg/src/png_png.cpp	Fri Jul 31 14:20:21 1998
+@@ -22,7 +22,7 @@
+ 
+ #include "png.h"
+ #include "ipng.h"
+-#include "png.h"
++/* #include "png.h" */
+ 
+ 
+ #define OK 1
+--- mozilla/modules/libimg/src/Makefile.cls	Mon Jul 27 21:43:02 1998
++++ mozilla/modules/libimg/src/Makefile	Fri Jul 31 14:20:21 1998
+@@ -76,9 +76,22 @@
+ 
+ REQUIRES	= jtools java zlib nspr dbm jpeg util img png layer js xpcom
+ 
+-LOCAL_INCLUDES	= -I../png -I. -I$(DEPTH)/dist/public/zlib
++LOCAL_INCLUDES	= -I.
++EXTRA_LIBS	= 
+ 
+-EXTRA_LIBS	= $(DIST)/lib/libzlib.a $(DIST)/lib/libpng.a
++ifdef MOZ_NATIVE_PNG
++EXTRA_LIBS	+= -lpng
++else
++LOCAL_INCLUDES	+= -I../png
++EXTRA_LIBS	+= $(DIST)/lib/libpng.a
++endif
++
++ifdef MOZ_NATIVE_ZLIB
++EXTRA_LIBS	+= -lz
++else
++LOCAL_INCLUDES	+= -I$(DEPTH)/dist/public/zlib
++EXTRA_LIBS 	+= $(DIST)/lib/libzlib.a
++endif
+ 
+ #
+ # Generate MIMGCB.c (and similar sources) here.
+--- mozilla/modules/libimg/Makefile.cls	Mon Jul 27 21:43:01 1998
++++ mozilla/modules/libimg/Makefile	Fri Jul 31 14:20:21 1998
+@@ -19,10 +19,24 @@
+ 
+ ifdef STANDALONE_IMAGE_LIB
+ DIRS = png public src
++EXTRA_LIBS = libzlib.a libpng.a
+ else
+-DIRS = png classes public src
++DIRS = classes public src
++
++EXTRA_LIBS =
++
++ifdef MOZ_NATIVE_PNG
++EXTRA_LIBS	+= -lpng
++else
++DIRS		+= png
++EXTRA_LIBS	+= libpng.a
+ endif
+ 
+-EXTRA_LIBS	= libzlib.a libpng.a
++ifdef MOZ_NATIVE_ZLIB
++EXTRA_LIBS	+= -lz
++else
++EXTRA_LIBS	+= libzlib.a
++endif
++endif
+ 
+ include $(DEPTH)/config/rules.mk
+--- mozilla/modules/libpref/src/unix/unixpref.c.cls	Mon Jul 27 21:43:07 1998
++++ mozilla/modules/libpref/src/unix/unixpref.c	Fri Jul 31 14:20:21 1998
+@@ -26,8 +26,6 @@
+ #include "jsbuffer.h"
+ #include "xpassert.h"
+ 
+-#include <Xm/Xm.h>
+-
+ extern PRLibrary* pref_LoadAutoAdminLib(void);
+ extern PRLibrary* m_AutoAdminLib;
+ 
+@@ -79,6 +77,10 @@
+     }
+ }
+ 
++/* Code moved to where it should have been. */
++extern
++XP_Bool
++FE_GetLabelAndMnemonic(char* name, char** str, void* v_xm_str, void* v_mnemonic);
+ 
+ /*
+  * PREF_GetLabelAndMnemonic
+@@ -86,43 +88,8 @@
+ XP_Bool
+ PREF_GetLabelAndMnemonic(char* name, char** str, void* v_xm_str, void* v_mnemonic)
+ {
+-    XmString *xm_str = (XmString*)v_xm_str;
+-    KeySym *mnemonic = (KeySym*)v_mnemonic;
+-    char buf[256];
+-    char* _str;
+-    char* p1;
+-    char* p2;
+-
+-    XP_ASSERT(name);
+-    XP_ASSERT(str);
+-    XP_ASSERT(xm_str);
+-
+-    if ( name == NULL || str == NULL || xm_str == NULL ) return FALSE;
+-
+-    _str = NULL;
+-	*str = NULL;
+-    *xm_str = NULL;
+-    *mnemonic = '\0';
+-
+-    strncpy(buf, name, 200);
+-    strcat(buf, ".label");
+-
+-    PREF_CopyConfigString(buf, &_str);
+-
+-    if ( _str == NULL || *_str == '\0' ) return FALSE;
+-
+-    /* Strip out ampersands */
+-    if ( strchr(_str, '&') != NULL ) {
+-        for ( p1 = _str, p2 = _str; *p2; p1++, p2++ ) {
+-            if ( *p1 == '&' && *(++p1) != '&' ) *mnemonic = *p1;
+-            *p2 = *p1;
+-        }
+-    }
+-
+-    *str = _str;
+-    *xm_str = XmStringCreateLtoR(_str, XmFONTLIST_DEFAULT_TAG);
+-
+-    return ( *xm_str != NULL );
++    /* Code moved to where it should have been. */
++    return FE_GetLabelAndMnemonic(name, str, v_xm_str, v_mnemonic);
+ }
+ 
+ 
+--- mozilla/modules/softupdt/src/su_unix.c.cls	Mon Jul 27 21:43:21 1998
++++ mozilla/modules/softupdt/src/su_unix.c	Fri Jul 31 14:20:21 1998
+@@ -54,14 +54,14 @@
+ 				XP_STRCAT(Path, "plugins/");
+ 			}
+ 			else
+-			{ 	/* Use local plugins path: $HOME/.netscape/plugins/ */
++			{ 	/* Use local plugins path: $HOME/MOZ_USER_DIR/plugins/ */
+ 
+ 				char *Home = getenv ( "HOME" );
+ 				if (!Home) 
+ 					Home = "";
+ 				else if (!strcmp (Home, "/"))
+ 					Home = "";
+-    				PR_snprintf(Path, MAXPATHLEN, "%.900s/.netscape/plugins/", Home);
++    				PR_snprintf(Path, MAXPATHLEN, "%.900s/%s/plugins/", Home, MOZ_USER_DIR);
+ 			}
+ 			directory = XP_STRDUP( Path );
+ 		}
+@@ -141,7 +141,7 @@
+ 				else if (!strcmp (Home, "/"))
+ 					Home = "";
+ 			
+-   				PR_snprintf(Path, MAXPATHLEN, "%.900s/.netscape/java/download/", Home);
++   				PR_snprintf(Path, MAXPATHLEN, "%.900s/%s/java/download/", Home, MOZ_USER_DIR);
+ 			}
+ 			directory = XP_STRDUP( Path );
+ 		}
+--- mozilla/modules/Makefile.cls	Mon Jul 27 21:49:12 1998
++++ mozilla/modules/Makefile	Fri Jul 31 14:20:22 1998
+@@ -31,10 +31,13 @@
+ 	rdf \
+ 	xml \
+ 	schedulr \
+-    zlib \
+     li \
+     progress \
+ 	$(NULL)
++
++ifndef MOZ_NATIVE_ZLIB
++DIRS += zlib
++endif
+ 
+ ifndef MOZ_SECURITY
+ DIRS +=	security
+--- mozilla/network/cache/extcache.h.cls	Mon Jul 27 21:43:27 1998
++++ mozilla/network/cache/extcache.h	Fri Jul 31 14:20:22 1998
+@@ -23,6 +23,9 @@
+ #include "mcom_db.h"
+ #endif
+ 
++#undef PRBool
++#define PRBool XP_Bool
++
+ #ifdef EXT_DB_ROUTINES
+ #define PRBool char
+ #define uint32 unsigned int
+--- mozilla/network/cnvts/cvview.c.cls	Mon Jul 27 21:43:29 1998
++++ mozilla/network/cnvts/cvview.c	Fri Jul 31 14:20:22 1998
+@@ -438,12 +438,12 @@
+ 		 * 0  No, don't stream data, play from the file
+ 		 * 1  Yes, stream the data from the network
+ 		 */
+-		int XFE_AskStreamQuestion(MWContext * window_id); /* definition */
++		int FE_AskStreamQuestion(MWContext* window_id); /* definition */
+ 
+ 		if (NET_URL_Type (URL_s->address) == ABOUT_TYPE_URL)
+ 		  yes_stream = 1;
+ 		else
+-		  yes_stream = XFE_AskStreamQuestion(window_id);
++		  yes_stream = FE_AskStreamQuestion(window_id);
+ 
+ 		if(yes_stream == -1)
+ 		  {
+--- mozilla/network/main/Makefile.cls	Mon Jul 27 21:43:29 1998
++++ mozilla/network/main/Makefile	Fri Jul 31 14:20:22 1998
+@@ -72,6 +72,7 @@
+ 
+ include $(DEPTH)/config/rules.mk
+ 
++ifdef ENABLE_TESTS
+ TEST_LIBS	= $(LIBRARY) \
+ 		  $(DIST)/lib/liburl.$(LIB_SUFFIX) \
+ 		  $(DIST)/lib/libsec-us.$(LIB_SUFFIX) \
+@@ -82,3 +83,4 @@
+ test:
+ 	$(CC) -g -o $(OBJDIR)/style_test $(CFLAGS) -DSS_TEST stystruc.c $(TEST_LIBS)
+ 	$(CC) -g -o $(OBJDIR)/stack_test $(CFLAGS) -DTEST_STYLESTACK stystack.c $(TEST_LIBS)
++endif
+--- mozilla/nsprpub/config/rules.mk.cls	Mon Jul 27 21:43:35 1998
++++ mozilla/nsprpub/config/rules.mk	Fri Jul 31 14:20:22 1998
+@@ -47,9 +47,12 @@
+ #			($OBJDIR automatically prepended to it)
+ #
+ ################################################################################
++ifndef topsrcdir
++topsrcdir = $(MOD_DEPTH)
++endif
+ 
+ ifndef NSPR_CONFIG_MK
+-include $(MOD_DEPTH)/config/config.mk
++include $(topsrcdir)/config/config.mk
+ endif
+ 
+ #
+@@ -148,6 +151,10 @@
+ 			  $(NOSUCHFILE) \
+ 			  so_locations
+ 
++ifdef USE_AUTOCONF
++ALL_TRASH		:= $(filter-out $(OBJDIR), $(ALL_TRASH))
++endif
++
+ ifdef DIRS
+ LOOP_OVER_DIRS		=					\
+ 	@for d in $(DIRS); do					\
+@@ -180,7 +187,11 @@
+ 	+$(LOOP_OVER_DIRS)
+ 
+ clobber::
++ifdef USE_AUTOCONF
++	rm -rf $(OBJS) $(TARGETS) $(GARBAGE) so_locations $(NOSUCHFILE)
++else
+ 	rm -rf $(OBJS) $(TARGETS) $(OBJDIR) $(GARBAGE) so_locations $(NOSUCHFILE)
++endif
+ 	+$(LOOP_OVER_DIRS)
+ 
+ realclean clobber_all::
+@@ -335,18 +346,18 @@
+ 	$(CC) -Fo$@ -c $(CFLAGS) $*.c
+ endif
+ else
+-	$(CC) -o $@ -c $(CFLAGS) $*.c
++	$(CC) -o $@ -c $(CFLAGS) $<
+ endif
+ 
+ $(OBJDIR)/%.$(OBJ_SUFFIX): %.s
+ 	@$(MAKE_OBJDIR)
+-	$(AS) -o $@ $(ASFLAGS) -c $*.s
++	$(AS) -o $@ $(ASFLAGS) -c $<
+ 
+ %.i: %.c
+ 	$(CC) -C -E $(CFLAGS) $< > $*.i
+ 
+ %: %.pl
+-	rm -f $@; cp $*.pl $@; chmod +x $@
++	rm -f $@; cp $< $@; chmod +x $@
+ 
+ ################################################################################
+ # Special gmake rules.
+--- mozilla/nsprpub/config/config.mk.cls	Mon Jul 27 21:43:35 1998
++++ mozilla/nsprpub/config/config.mk	Fri Jul 31 14:20:22 1998
+@@ -16,14 +16,18 @@
+ # Reserved.
+ #
+ 
++ifndef topsrcdir
++topsrcdir = $(MOD_DEPTH)
++endif
++
+ # Configuration information for building in the NSPR source module
+ 
+ # Define an include-at-most-once-flag
+ NSPR_CONFIG_MK	= 1
+ 
+-include $(MOD_DEPTH)/config/module.df
++include $(topsrcdir)/config/module.df
+ 
+-include $(MOD_DEPTH)/config/arch.mk
++include $(topsrcdir)/config/arch.mk
+ 
+ ifndef NSDEPTH
+ NSDEPTH = $(MOD_DEPTH)/..
+@@ -48,7 +52,19 @@
+ NOMD_CFLAGS	= $(OPTIMIZER) $(NOMD_OS_CFLAGS) $(XP_DEFINE) $(DEFINES) $(INCLUDES) \
+ 				$(XCFLAGS)
+ 
+-include $(MOD_DEPTH)/config/$(OS_TARGET).mk
++ifdef USE_AUTOCONF
++OPTIMIZER	= $(ACCFLAGS)
++DEFINES		+=  -UDEBUG -DNDEBUG -DTRIMMED
++endif
++
++ifdef MOZ_DEBUG
++OPTIMIZER	= -g
++JAVA_OPTIMIZER	= -g
++DEFINES		= -DDEBUG -UNDEBUG -DDEBUG_$(shell $(WHOAMI)) -DTRACING
++XBCFLAGS	= -FR$*
++endif
++
++include $(topsrcdir)/config/$(OS_TARGET).mk
+ 
+ # Figure out where the binary code lives.
+ BUILD		= $(OBJDIR_NAME)
+@@ -59,8 +75,17 @@
+ MOZ_DIST	= $(NSDEPTH)/dist/WIN16D_D.OBJ
+ endif
+ 
++ifdef USE_AUTOCONF
++EMACS			= $(ACEMACS)
++PERL			= $(ACPERL)
++RANLIB			= $(ACRANLIB)
++UNZIP_PROG		= $(ACUNZIP)
++WHOAMI			= $(ACWHOAMI)
++ZIP_PROG		= $(ACZIP)
++else
+ VPATH		= $(OBJDIR)
+ DEPENDENCIES	= $(OBJDIR)/.md
++endif
+ 
+ ifdef BUILD_DEBUG_GC
+ DEFINES		+= -DDEBUG_GC
+--- mozilla/nsprpub/config/UNIX.mk.cls	Mon Jul 27 21:43:35 1998
++++ mozilla/nsprpub/config/UNIX.mk	Fri Jul 31 17:41:23 1998
+@@ -21,6 +21,7 @@
+ DLL_SUFFIX	= so
+ AR		= ar cr $@
+ 
++ifndef USE_AUTOCONF
+ ifdef BUILD_OPT
+ OPTIMIZER	= -O
+ DEFINES		= -UDEBUG -DNDEBUG
+@@ -32,7 +33,8 @@
+ endif
+ 
+ # Name of the binary code directories
+-OBJDIR_NAME	= $(OS_CONFIG)$(CPU_ARCH_TAG)$(COMPILER_TAG)$(IMPL_STRATEGY)$(OBJDIR_TAG).OBJ
++OBJDIR_NAME	= Linux2.0.35_x86_DBG.OBJ
++endif # !USE_AUTOCONF
+ 
+ MKDEPEND_DIR    = $(DEPTH)/config/mkdepend
+ MKDEPEND 	= $(MKDEPEND_DIR)/$(OBJDIR_NAME)/mkdepend
+--- mozilla/nsprpub/config/SunOS.mk.cls	Mon Jul 27 21:43:35 1998
++++ mozilla/nsprpub/config/SunOS.mk	Fri Jul 31 14:20:22 1998
+@@ -20,7 +20,7 @@
+ # 4 and 5 are vastly different, so we use 2 different files.
+ #
+ ifeq ($(basename $(OS_RELEASE)),4.1)
+-include $(MOD_DEPTH)/config/SunOS4.mk
++include $(topsrcdir)/config/SunOS4.mk
+ else
+-include $(MOD_DEPTH)/config/SunOS5.mk
++include $(topsrcdir)/config/SunOS5.mk
+ endif
+--- mozilla/nsprpub/config/nsinstall.c.cls	Mon Jul 27 21:43:35 1998
++++ mozilla/nsprpub/config/nsinstall.c	Fri Jul 31 14:20:22 1998
+@@ -24,6 +24,7 @@
+ #include <stdio.h>  /* OSF/1 requires this before grp.h, so put it first */
+ #include <assert.h>
+ #include <fcntl.h>
++#include <errno.h>
+ #include <grp.h>
+ #include <pwd.h>
+ #include <stdio.h>
+@@ -78,7 +79,8 @@
+ {
+     char *cp;
+     struct stat sb;
+-    
++    int res;
++
+     while (*path == '/' && path[1] == '/')
+ 	path++;
+     while ((cp = strrchr(path, '/')) && cp[1] == '\0')
+@@ -91,7 +93,11 @@
+ 	}
+ 	*cp = '/';
+     }
+-    return mkdir(path, mode);
++    res = mkdir(path, mode);
++    if ((res != 0) && (errno == EEXIST))
++      return 0;
++    else
++      return res;
+ }
+ 
+ static uid_t
+--- mozilla/nsprpub/config/Linux.mk.cls	Mon Jul 27 21:43:35 1998
++++ mozilla/nsprpub/config/Linux.mk	Fri Jul 31 14:20:22 1998
+@@ -52,7 +52,11 @@
+ PLATFORM_FLAGS		= -ansi -Wall -pipe -DLINUX -Dlinux
+ PORT_FLAGS		= -D_POSIX_SOURCE -D_BSD_SOURCE -DHAVE_STRERROR
+ 
++ifdef USE_AUTOCONF
++OS_CFLAGS		= $(DSO_CFLAGS) -include $(MOD_DEPTH)/include/config.h
++else
+ OS_CFLAGS		= $(DSO_CFLAGS) $(PLATFORM_FLAGS) $(PORT_FLAGS)
++endif
+ 
+ ######################################################################
+ # Version-specific stuff
+--- mozilla/nsprpub/lib/msgc/Makefile.cls	Mon Jul 27 21:43:35 1998
++++ mozilla/nsprpub/lib/msgc/Makefile	Fri Jul 31 14:20:22 1998
+@@ -19,7 +19,11 @@
+ 
+ include $(MOD_DEPTH)/config/config.mk
+ 
+-DIRS = include src tests
++DIRS = include src
++
++ifdef ENABLE_TESTS
++DIRS += tests
++endif
+ 
+ include $(MOD_DEPTH)/config/rules.mk
+ 
+--- mozilla/xpcom/tests/Makefile.cls	Mon Jul 27 21:43:48 1998
++++ mozilla/xpcom/tests/Makefile	Fri Jul 31 14:20:22 1998
+@@ -26,13 +26,27 @@
+ 
+ INCLUDES=-I../src -I$(DIST)/include
+ 
++ifndef NO_SHARED_LIB
+ DIRS = dynamic 
++endif
+ 
+ OBJS	= $(CPPSRCS:.cpp=.o)
+ 
+-EX_LIBS = \
++EX_LIBS = 
++
++ifndef NO_SHARED_LIB
++EX_LIBS += \
+         $(DIST)/bin/libreg.$(DLL_SUFFIX)	\
+-	$(DIST)/bin/libxpcom.$(DLL_SUFFIX)	\
++	$(DIST)/bin/libxpcom.$(DLL_SUFFIX)
++else
++ifndef NO_STATIC_LIB
++EX_LIBS += \
++        $(DIST)/lib/libreg.a \
++	$(DIST)/lib/libxpcom.a
++endif
++endif
++
++EX_LIBS += \
+ 	$(DIST)/lib/libplc21.a	\
+ 	$(DIST)/lib/libplds21.a	\
+ 	$(DIST)/lib/libnspr21.a	\
+--- mozilla/xpcom/Makefile.cls	Mon Jul 27 21:43:44 1998
++++ mozilla/xpcom/Makefile	Fri Jul 31 14:20:22 1998
+@@ -15,6 +15,10 @@
+ # Reserved.
+ 
+ DEPTH	= ..
+-DIRS	= src tests
++DIRS	= src
++
++ifdef ENABLE_TESTS
++DIRS += tests
++endif
+ 
+ include $(DEPTH)/config/rules.mk
+--- mozilla/cmd/stubfe/Makefile.cls	Mon Jul 27 21:48:28 1998
++++ mozilla/cmd/stubfe/Makefile	Fri Jul 31 14:20:22 1998
+@@ -299,10 +299,8 @@
+ BASIC_LIBS	= $(DIST)/lib/lib$(LITE_PREFIX)net.a \
+ 		  $(DIST)/lib/lib$(LITE_PREFIX)lay.a \
+ 		  $(DIST)/lib/libimg.a \
+-		  $(DIST)/lib/libpng.a \
+ 		  $(DIST)/lib/libli.a \
+ 		  $(DIST)/lib/libjmc.a \
+-		  $(DIST)/lib/libjpeg.a \
+ 		  $(DIST)/lib/libhook.a \
+ 		  $(DIST)/lib/libparse.a \
+ 		  $(DIST)/lib/lib$(LITE_PREFIX)pref.a \
+@@ -311,6 +309,18 @@
+ 		  $(DIST)/lib/libpwcac.a \
+ 		  $(DIST)/lib/libdbm.a
+ 
++ifdef MOZ_NATIVE_PNG
++BASIC_LIBS	+= -lpng
++else
++BASIC_LIBS	+= $(DIST)/lib/libpng.a
++endif
++
++ifdef MOZ_NATIVE_JPEG
++BASIC_LIBS	+= -ljpeg
++else
++BASIC_LIBS	+= $(DIST/lib/libjpeg.a
++endif
++
+ ifndef MOZ_LITE
+ BASIC_LIBS	+= $(DIST)/lib/libmsg.a \
+ 		  $(DIST)/lib/libnet.a \
+@@ -368,8 +378,13 @@
+ 		  $(DIST)/lib/libmariner.a \
+ 		  $(NULL)
+ 
++ifdef MOZ_NATIVE_ZLIB
++BASIC_LIBS	+= -lz \
++		$(NULL)
++else
+ BASIC_LIBS	+= $(DIST)/lib/libzlib.a \
+ 		$(NULL)
++endif
+ endif
+ 
+ ifndef NO_MOCHA
+--- mozilla/cmd/xfe/XfeWidgets/Makefile.cls	Mon Jul 27 21:48:33 1998
++++ mozilla/cmd/xfe/XfeWidgets/Makefile	Fri Jul 31 14:20:22 1998
+@@ -26,12 +26,14 @@
+ 
+ DEPTH			= ../../..
+ 
++ifdef ENABLE_TESTS
+ ifdef XFE_WIDGETS_BUILD_TESTS
+ TEST_DIRS		= \
+ 				XfeTest \
+ 				tests \
+ 				$(NULL)
+ endif
++endif
+ 
+ DIRS			= \
+ 				Xfe \
+@@ -40,5 +42,7 @@
+ 
+ include $(DEPTH)/config/rules.mk
+ 
++ifdef ENABLE_TESTS
+ tests::
+ 	@$(MAKE) all XFE_WIDGETS_BUILD_TESTS=1
++endif
+--- mozilla/cmd/xfe/icons/Makefile.cls	Mon Jul 27 21:48:37 1998
++++ mozilla/cmd/xfe/icons/Makefile	Fri Jul 31 14:20:22 1998
+@@ -136,24 +136,36 @@
+ MKICONS_LIB	=  \
+ 		  $(DIST)/lib/libimg.a \
+ 		  $(JAVA_JMC) \
+-		  $(DIST)/lib/libpng.a \
+-		  $(DIST)/lib/libzlib.a \
+ 		  $(DIST)/lib/libnspr.a \
+-		  $(DIST)/lib/libjpeg.a \
+ 		  $(DIST)/lib/libutil.a \
+ 		  $(DIST)/lib/libxp.a
+ else
+ MKICONS_LIB	=  \
+ 		  $(DIST)/lib/libimg.a \
+ 		  $(JAVA_JMC) \
+-		  $(DIST)/lib/libpng.a \
+-		  $(DIST)/lib/libzlib.a \
+ 		  $(DIST)/lib/libnspr21.a \
+-		  $(DIST)/lib/libjpeg.a \
+ 		  $(DIST)/lib/libutil.a \
+ 		  $(DIST)/lib/libxp.a \
+ 		  $(DIST)/lib/libplc21.a \
+ 		  $(DIST)/lib/libxpcom.a
++endif
++
++ifdef MOZ_NATIVE_JPEG
++MKICONS_LIB	+= -ljpeg
++else
++MKICONS_LIB	+= $(DIST)/lib/libjpeg.a
++endif
++
++ifdef MOZ_NATIVE_PNG
++MKICONS_LIB	+= -lpng
++else
++MKICONS_LIB	+= $(DIST)/lib/libpng.a
++endif
++
++ifdef MOZ_NATIVE_ZLIB
++MKICONS_LIB	+= -lz
++else
++MKICONS_LIB	+= $(DIST)/lib/libzlib.a
+ endif
+ 
+ GARBAGE		+= $(MKICONS_EXE) \
+--- mozilla/cmd/xfe/plugins/textplugin/README.cls	Mon Jul 27 21:48:40 1998
++++ mozilla/cmd/xfe/plugins/textplugin/README	Fri Jul 31 14:20:22 1998
+@@ -91,7 +91,7 @@
+ in the list of directories as specified by the environment variable
+ NPX_PLUGIN_PATH. This variable can be set to a ':' separated list of
+ directories. The default path if this environment variable is not set
+-is "/usr/local/lib/netscape/plugins/:$HOME/.netscape/plugins/"
++is "/usr/local/lib/netscape/plugins/:$HOME/MOZ_USER_DIR/plugins/"
+ 
+         NOTE: On SunOS4.1.3, if there are any non-loadable modules in
+               any of the directories specified by NPX_PLUGIN_PATH, then
+@@ -124,7 +124,7 @@
+            a platform specific dynamically loadable module.
+ 
+         4. Install the dynamically loadable module in NPX_PLUGIN_PATH,
+-	   "/usr/local/lib/netscape/plugins/:$HOME/.netscape/plugins/"
++	   "/usr/local/lib/netscape/plugins/:$HOME/MOZ_USER_DIR/plugins/"
+ 	   by default.
+ 
+         5. Start the navigator. From now on, whenever the MIME type
+@@ -148,20 +148,20 @@
+ How to run the sample text plugin
+ ----------------------------------------------------------------------
+         1. Compile the text plugin code to get a libtextplugin.so
+-        2. Make a directory say, $HOME/.netscape/plugins
++        2. Make a directory say, $HOME/MOZ_USER_DIR/plugins
+ 
+-                mkdir $HOME/.netscape/plugins
++                mkdir $HOME/MOZ_USER_DIR/plugins
+ 
+         3. Copy the libtextplugin.so to that directory
+ 
+-                cp libtextplugin.so $HOME/.netscape/plugins
++                cp libtextplugin.so $HOME/MOZ_USER_DIR/plugins
+ 
+         4. Set NPX_PLUGIN_PATH to that directory
+ 
+             for csh:
+-                setenv NPX_PLUGIN_PATH $HOME/.netscape/plugins
++                setenv NPX_PLUGIN_PATH $HOME/MOZ_USER_DIR/plugins
+             for ksh/sh:
+-                NPX_PLUGIN_PATH=$HOME/.netscape/plugins; export NPX_PLUGIN_PATH
++                NPX_PLUGIN_PATH=$HOME/MOZ_USER_DIR/plugins; export NPX_PLUGIN_PATH
+ 
+         5. Invoke the netscape that is plugin enabled. In the location
+            field type in the file URL address of Test1.html
+--- mozilla/cmd/xfe/src/MozillaApp.cpp.cls	Mon Jul 27 21:48:58 1998
++++ mozilla/cmd/xfe/src/MozillaApp.cpp	Fri Jul 31 14:20:22 1998
+@@ -1060,7 +1060,7 @@
+ fe_config_directory(char* buf)
+ {
+   static XP_Bool initted = FALSE;
+-  const char *dir = ".netscape";
++  const char *dir = MOZ_USER_DIR;
+   char *home;
+   if (initted)
+ 	return buf;
+--- mozilla/cmd/xfe/src/plugin.cpp.cls	Mon Jul 27 21:49:11 1998
++++ mozilla/cmd/xfe/src/plugin.cpp	Fri Jul 31 14:20:22 1998
+@@ -745,7 +745,7 @@
+        else
+ 	       Build up a colon-delimited search string like
+              /usr/local/lib/netscape/plugins:$MOZILLA_HOME/plugins:
+-             $HOME/.netscape/plugins
++             $HOME/MOZ_USER_DIR/plugins
+            with last directory overriding other directories, since
+            they all get searched. */
+     if(npxPluginPath) {
+@@ -766,16 +766,17 @@
+ 			strncat(buf, "plugins", sizeof(buf)-1 - strlen(buf));
+ 			buf[sizeof(buf)-1] = '\0';
+ 
+-			pluginPath = PR_smprintf("%s:%s:%.900s/.netscape/plugins",
++			pluginPath = PR_smprintf("%s:%s:%.900s/%s/plugins",
+ 									 DEFAULT_LEGACY_PLUGIN_PATH,
+ 									 buf,
+-									 home);			
++									 home,
++									 MOZ_USER_DIR);			
+ 		}
+     }
+ 
+-    PR_snprintf(filename, sizeof(filename), "%.900s/.netscape/plugin-list", home);
+-    PR_snprintf(newFilename, sizeof(newFilename), "%.900s/.netscape/plugin-list.new", home);
+-    PR_snprintf(oldFilename, sizeof(oldFilename), "%.900s/.netscape/plugin-list.BAK", home);
++    PR_snprintf(filename, sizeof(filename), "%.900s/%s/plugin-list", home,MOZ_USER_DIR);
++    PR_snprintf(newFilename, sizeof(newFilename), "%.900s/%s/plugin-list.new", home,MOZ_USER_DIR);
++    PR_snprintf(oldFilename, sizeof(oldFilename), "%.900s/%s/plugin-list.BAK", home,MOZ_USER_DIR);
+ 
+     if (pluginList == NULL) {
+         pluginList = getPluginList(32);
+--- mozilla/cmd/xfe/src/Netcaster.cpp.cls	Mon Jul 27 21:48:58 1998
++++ mozilla/cmd/xfe/src/Netcaster.cpp	Fri Jul 31 14:20:22 1998
+@@ -153,7 +153,7 @@
+  *	loaded into a browser window to start
+  *	Netcaster by checking
+  *	the following locations in order:
+- *		$HOME/.netscape/netcast/tab.htm
++ *		$HOME/MOZ_USER_DIR/netcast/tab.htm
+  *		$MOZILLA_HOME/netcast/tab.htm
+  *		Version Registry via VR_GetPath()
+  *		fe_GetProgramDirectory()/netcast/tab.htm
+@@ -212,7 +212,7 @@
+ 
+ 
+   //
+-  // CHECK $HOME/.netscape
++  // CHECK $HOME/MOZ_USER_DIR
+   //
+   home = getenv("HOME");
+   if (home)
+@@ -220,7 +220,7 @@
+ 	  XP_STRCPY(private_xfe_netcaster_path, home);
+ 	  if (xfe_last_character(private_xfe_netcaster_path) != '/')
+ 		XP_STRCAT(private_xfe_netcaster_path,"/");
+-	  XP_STRCAT(private_xfe_netcaster_path,".netscape/");
++	  XP_STRCAT(private_xfe_netcaster_path, MOZ_USER_DIR);
+ 	  XP_STRCAT(private_xfe_netcaster_path,netcasterTabHtmlPath);
+ 	  if (xfe_path_exists(private_xfe_netcaster_path))
+ 		{
+--- mozilla/cmd/xfe/src/SpellHandler.cpp.cls	Mon Jul 27 21:49:02 1998
++++ mozilla/cmd/xfe/src/SpellHandler.cpp	Fri Jul 31 14:20:22 1998
+@@ -420,11 +420,12 @@
+ 	if (home = getenv("HOME")) {
+ 		XP_MEMSET(buf, '\0', sizeof(buf));
+ 
+-		// Form "$HOME/.netscape/spell/" into buf...
++		// Form "$HOME/MOZ_USER_DIR/spell/" into buf...
+ 		//
+ 		XP_STRNCPY_SAFE(buf, home, sizeof(buf)-1);
+-		XP_STRNCAT_SAFE(buf, "/.netscape/spell/",
+-						sizeof(buf)-1 - XP_STRLEN(buf));
++		XP_STRNCAT_SAFE(buf, "/", sizeof(buf)-1 - XP_STRLEN(buf));
++		XP_STRNCAT_SAFE(buf, MOZ_USER_DIR, sizeof(buf)-1 - XP_STRLEN(buf));
++		XP_STRNCAT_SAFE(buf, "/spell/", sizeof(buf)-1 - XP_STRLEN(buf));
+ 		buf[sizeof(buf)-1] = '\0';
+ 		
+ 		if (fe_isDir(buf)) {
+@@ -483,10 +484,11 @@
+ 
+ 	if (home = getenv("HOME"))
+ 	{
+-		/* Form "$HOME/.netscape/custom.dic" into buf */
++		/* Form "$HOME/MOZ_USER_DIR/custom.dic" into buf */
+ 		XP_STRNCPY_SAFE(buf, home, sizeof(buf)-1);
+-		XP_STRNCAT_SAFE(buf, "/.netscape/custom.dic",
+-						sizeof(buf)-1 - XP_STRLEN(buf));
++		XP_STRNCAT_SAFE(buf, "/", sizeof(buf)-1 - XP_STRLEN(buf));
++		XP_STRNCAT_SAFE(buf, MOZ_USER_DIR, sizeof(buf)-1 - XP_STRLEN(buf));
++		XP_STRNCAT_SAFE(buf, "/custom.dic", sizeof(buf)-1 - XP_STRLEN(buf));
+ 		buf[sizeof(buf)-1] = '\0';
+ 	}
+ 
+--- mozilla/cmd/xfe/src/URLBar.cpp.cls	Mon Jul 27 21:49:03 1998
++++ mozilla/cmd/xfe/src/URLBar.cpp	Fri Jul 31 14:20:22 1998
+@@ -423,7 +423,7 @@
+ 	XtVaGetValues(m_urlComboBox, XmNtextField, &text_field, 0);
+ 		  
+ 	/* Loads the previous session history list from a 
+-	   designated file ("~/.netscape/history.list") */
++	   designated file ("~/MOZ_USER_DIR/history.list") */
+ 	readUserHistory();
+ 		  
+ 	XtAddCallback(text_field, 
+--- mozilla/cmd/xfe/icons.c.cls	Mon Jul 27 21:48:30 1998
++++ mozilla/cmd/xfe/icons.c	Fri Jul 31 14:20:23 1998
+@@ -2709,15 +2709,15 @@
+ 	      a = strdup (
+ #ifdef JAVA
+ #ifndef MOZ_COMMUNICATOR_ABOUT
+-#		          include "../../l10n/us/xp/about-java-lite.h"
++#		          include "xp/about-java-lite.h"
+ #else
+-#		          include "../../l10n/us/xp/about-java.h"
++#		          include "xp/about-java.h"
+ #endif
+ #else
+ #ifndef MOZ_COMMUNICATOR_ABOUT
+-#		          include "../../l10n/us/xp/about-lite.h"
++#		          include "xp/about-lite.h"
+ #else
+-#		          include "../../l10n/us/xp/about.h"
++#		          include "xp/about.h"
+ #endif
+ #endif
+ 		         );
+@@ -2737,15 +2737,15 @@
+ 	      a = strdup (
+ #ifdef JAVA
+ #ifndef MOZ_COMMUNICATOR_ABOUT
+-#		          include "../../l10n/us/xp/splash-java-lite.h"
++#		          include "xp/splash-java-lite.h"
+ #else
+-#		          include "../../l10n/us/xp/splash-java.h"
++#		          include "xp/splash-java.h"
+ #endif
+ #else
+ #ifndef MOZ_COMMUNICATOR_ABOUT
+-#		          include "../../l10n/us/xp/splash-lite.h"
++#		          include "xp/splash-lite.h"
+ #else
+-#		          include "../../l10n/us/xp/splash.h"
++#		          include "xp/splash.h"
+ #endif
+ #endif
+ 		         );
+@@ -2755,7 +2755,7 @@
+ 	{
+ 	  ever_loaded_map = TRUE;
+ 	  a = strdup (
+-#		      include "../../l10n/us/xp/authors2.h"
++#		      include "xp/authors2.h"
+ 		     );
+ 	}
+       else if (!strcmp (which,"license"))
+@@ -2776,7 +2776,7 @@
+       else if (!strcmp (which,"mozilla"))
+ 	{
+ 	  a = strdup (
+-#		      include "../../l10n/us/xp/mozilla.h"
++#		      include "xp/mozilla.h"
+ 		      );
+ 	}
+       else if (!strcmp (which,
+@@ -2792,7 +2792,7 @@
+      else
+      {
+ 		  a = strdup (
+-#		      include "../../l10n/us/xp/mail.h"
++#		      include "xp/mail.h"
+ 		      );
+      }
+ 	}
+@@ -2817,7 +2817,7 @@
+ 	  else
+ 	    {
+ 	      a = strdup (
+-#		          include "../../l10n/us/xp/aboutplg.h"
++#		          include "xp/aboutplg.h"
+ 		         );
+ 	    }
+ 	}
+--- mozilla/cmd/xfe/Makefile.cls	Mon Jul 27 21:48:28 1998
++++ mozilla/cmd/xfe/Makefile	Fri Jul 31 14:20:23 1998
+@@ -177,6 +177,7 @@
+ CCLD		= $(CCC)
+ LDFLAGS		= $(CFLAGS)
+ NOMD_LDFLAGS	= $(NOMD_CFLAGS)
++CFLAGS		+= -DMOZ_USER_DIR=$(MOZ_USER_DIR)
+ 
+ ifdef MOZILLA_GPROF
+ CSRCS		+= gmon.c
+@@ -260,11 +261,16 @@
+ 		  $(DIST)/lib/lib$(LITE_PREFIX)rdf.a \
+ 		  $(DIST)/lib/lib$(LITE_PREFIX)xml.a \
+ 		  $(DIST)/lib/lib$(LITE_PREFIX)lay.a \
+-		  $(DIST)/lib/libpng.a \
+ 		  $(DIST)/lib/libmariner.a \
+ 		  $(DIST)/lib/libimg.a \
+ 		  $(NULL)
+ 
++ifdef MOZ_NATIVE_PNG
++BASIC_LIBS	+= -lpng
++else
++BASIC_LIBS	+= $(DIST)/lib/libpng.a
++endif
++
+ ifdef MOZ_PRIVACY
+ BASIC_LIBS	+= $(DIST)/lib/libprivacy.a 
+ REQUIRES	+= privacy
+@@ -279,9 +285,7 @@
+ endif
+ 
+ BASIC_LIBS	+= \
+-		  $(DIST)/lib/libpng.a \
+ 		  $(JAVA_JMC) \
+-		  $(DIST)/lib/libjpeg.a \
+ 		  $(DIST)/lib/libhook.a \
+ 		  $(DIST)/lib/libparse.a \
+ 		  $(DIST)/lib/lib$(LITE_PREFIX)pref.a \
+@@ -320,6 +324,12 @@
+ 		$(NULL)
+ endif
+ 
++ifdef MOZ_NATIVE_JPEG
++BASIC_LIBS	+= -ljpeg
++else
++BASIC_LIBS	+= $(DIST)/lib/libjpeg.a
++endif
++
+ ifdef MOZ_MAIL_NEWS
+ BASIC_LIBS	+= \
+ 		  $(DIST)/lib/libmozmsg.a \
+@@ -440,7 +450,11 @@
+ 
+ endif  # JAVA_OR_OJI
+ 
++ifdef MOZ_NATIVE_ZLIB
++BASIC_LIBS	+= -lz
++else
+ BASIC_LIBS	+= $(DIST)/lib/libzlib.a
++endif
+ 
+ ifndef NO_MOCHA
+ BASIC_LIBS	+= $(DIST)/lib/libjs.a $(DIST)/lib/libjsj.a $(DIST)/lib/libmocha.a
+@@ -530,7 +544,8 @@
+ 
+ INCLUDES	+= -Isrc -I. -I$(DEPTH)/dist/public/nls -I$(DEPTH)/dist/public/security \
+ 		-I$(DEPTH)/lib/libmsg -I$(DEPTH)/dist/public/ldap \
+-		-I$(DEPTH)/modules/libimg/public
++		-I$(DEPTH)/modules/libimg/public \
++		-I$(DEPTH)/l10n/us
+ 
+ 
+ #######################################################################
+@@ -971,7 +986,7 @@
+ 	@echo ';' >> $@
+ 
+ $(OBJDIR)/Netscape-nis-export.ad $(OBJDIR)/Netscape-export.ad: Makefile resources versionn.h strs make-resources $(LOCALE_MAP)
+-	@./make-resources $@ Netscape Netscape "" export $(LOCALES)
++	@./make-resources $@ Netscape Netscape versionn.h strs resources $(MOZ_USER_DIR) "" export $(LOCALES)
+ 
+ #######################################################################
+ # The "-export" targets
+--- mozilla/cmd/xfe/xfe.h.cls	Mon Jul 27 21:48:32 1998
++++ mozilla/cmd/xfe/xfe.h	Fri Jul 31 14:20:23 1998
+@@ -39,10 +39,8 @@
+  *    X11/Xlib.h "define"s Bool to be int. 
+  *    So.. Undef it here, so that the XP type
+  *    gets used...djw
++ *    Removed -cls
+  */
+-#ifdef Bool
+-#undef Bool
+-#endif
+ 
+ #include "rosetta.h"
+ #include <X11/Shell.h>
+@@ -87,11 +85,6 @@
+ #define X11STRING_LIMIT 600
+ 
+ #define NO_HELP
+-
+-/* and again*/
+-#ifdef Bool
+-#undef Bool
+-#endif
+ 
+ #include "prefs.h"
+ #include "icondata.h"
+--- mozilla/cmd/xfe/make-resources.cls	Mon Jul 27 21:48:31 1998
++++ mozilla/cmd/xfe/make-resources	Fri Jul 31 14:20:23 1998
+@@ -19,10 +19,15 @@
+ DEST=$1; shift
+ NAME=$1; shift
+ CLASS=$1; shift
++VERSIONN=$1; shift
++STRS=$1; shift
++RESOURCES=$1; shift
++MOZ_USER_DIR=$1; shift
+ VSUFFIX=$1; shift
+ SS=$1; shift
+ LOCALE_MAP=$1
+ 
++
+ if test $# -eq 2
+ then
+ 	shift
+@@ -37,7 +42,7 @@
+ 
+ echo "Generating ${DEST} from resources..."
+ 
+-VN=`sed -n 's/^#define VERSION_NUMBER *\(.*\)$/\1/p' versionn.h`
++VN=`sed -n 's/^#define VERSION_NUMBER *\(.*\)$/\1/p' ${VERSIONN}`
+ VERS=`echo ${VN}${VSUFFIX}`
+ 
+ SGIP=`echo ${DEST} | sed -n 's/.*IRIX.*/TRUE/p'`
+@@ -66,7 +71,7 @@
+ fi
+ 
+ rm -f ${DEST}
+-cat resources ${LOCALE_MAP} strs | sed \
++cat ${RESOURCES} ${LOCALE_MAP} ${STRS} | sed \
+ 	"s/@NAME@/${NAME}/g;
+ 	 s/@CLASS@/${CLASS}/g;
+ 	 s/@PROGNAME@/${PROGNAME}/g;
+@@ -81,5 +86,6 @@
+ 	 s:@LIBDIR@:${LOC_LIB_DIR}:g;
+ 	 s/@MAIL_IM_HACK@/${MAIL_IM_HACK}/g;
+ 	 s/@NEWS_IM_HACK@/${NEWS_IM_HACK}/g;
+-	 s/@URLVERSION@/${VERS}/g" > ${DEST}
++	 s/@URLVERSION@/${VERS}/g;
++	 s/@MOZ_USER_DIR@/${MOZ_USER_DIR}/g" > ${DEST}
+ 
+--- mozilla/cmd/xfe/resources.cls	Mon Jul 27 21:48:31 1998
++++ mozilla/cmd/xfe/resources	Fri Jul 31 14:20:23 1998
+@@ -11,7 +11,7 @@
+ !      on the Preferences dialogs under the Options menu first.
+ !      Most things are customizable from there.  Things which are
+ !      settable via the Preferences dialog boxes are stored in
+-!      the ~/.netscape/preferences file, and not in X resources.
++!      the ~/@MOZ_USER_DIR@/preferences file, and not in X resources.
+ !      ==========================================================
+ !
+ ! This file lists the default resources built in to @NAME@.
+@@ -216,7 +216,7 @@
+ 
+ 
+ ! By default, the geometries of components (browsers, mail, address book, etc)
+-! are saved in ~/.netscape/preferences.js.  If this pisses you off, uncomment
++! are saved in ~/@MOZ_USER_DIR@/preferences.js.  If this pisses you off, uncomment
+ ! the following line and Mozilla will not remember component geometries.
+ !
+ ! Equivalent to using the '-dont-save-geometry-prefs' startup flag.
+--- mozilla/cmd/xfe/addrbk.c.cls	Mon Jul 27 21:48:28 1998
++++ mozilla/cmd/xfe/addrbk.c	Fri Jul 31 14:20:23 1998
+@@ -84,7 +84,7 @@
+ 
+   	if (!home) home = "";
+ 
+-	PR_snprintf(oldFile, sizeof (oldFile), "%.900s/.netscape/addrbook.db", home); 
++	PR_snprintf(oldFile, sizeof (oldFile), "%.900s/%s/addrbook.db", home, MOZ_USER_DIR); 
+ 	oldFp = XP_FileOpen(oldFile, xpAddrBook, "r");
+ 	if (oldFp) {
+ 		char    newFile[256];
+@@ -118,7 +118,7 @@
+ 
+ 	DIR_GetServerPreferences (&directories, tmp);
+ 	PR_snprintf(tmp, sizeof (tmp), 
+-				"%.900s/.netscape/address-book.html", home); 
++				"%.900s/%s/address-book.html", home, MOZ_USER_DIR); 
+ 	{
+ #ifndef MOZ_NEWADDR
+ 		DIR_Server *pabDir = NULL;
+--- mozilla/cmd/xfe/prefs.c.cls	Mon Jul 27 21:48:31 1998
++++ mozilla/cmd/xfe/prefs.c	Fri Jul 31 14:20:23 1998
+@@ -43,6 +43,8 @@
+ #include <stddef.h>
+ #include <pwd.h>
+ 
++#include <Xm/Xm.h>
++
+ #include "mozilla.h"
+ #include "xfe.h"
+ #include "fonts.h"
+@@ -582,7 +584,8 @@
+     struct stat st;
+     char buf[1024];
+     char* home_dir;
+-    char* filenames[] = {"%s/.netscape/preferences",
++    char* filenames[] = { "%s/" MOZ_USER_DIR "/preferences.js",
++			 "%s/" MOZ_USER_DIR "/preferences",
+                          "%s/.netscape-preferences",
+                          "%s/.MCOM-preferences",};
+ 
+@@ -1908,4 +1911,47 @@
+ 	else {
+ 		return (XFE_SavePrefs ((char *) fe_globalData.user_prefs_file, prefs));
+ 	}
++}
++
++extern
++XP_Bool
++FE_GetLabelAndMnemonic(char* name, char** str, void* v_xm_str, void* v_mnemonic) 
++{
++    XmString *xm_str = (XmString*)v_xm_str;
++    KeySym *mnemonic = (KeySym*)v_mnemonic;
++    char buf[256];
++    char* _str;
++    char* p1;
++    char* p2;
++
++    XP_ASSERT(name);
++    XP_ASSERT(str);
++    XP_ASSERT(xm_str);
++
++    if ( name == NULL || str == NULL || xm_str == NULL ) return FALSE;
++
++    _str = NULL;
++	*str = NULL;
++    *xm_str = NULL;
++    *mnemonic = '\0';
++
++    strncpy(buf, name, 200);
++    strcat(buf, ".label");
++
++    PREF_CopyConfigString(buf, &_str);
++
++    if ( _str == NULL || *_str == '\0' ) return FALSE;
++
++    /* Strip out ampersands */
++    if ( strchr(_str, '&') != NULL ) {
++        for ( p1 = _str, p2 = _str; *p2; p1++, p2++ ) {
++            if ( *p1 == '&' && *(++p1) != '&' ) *mnemonic = *p1;
++            *p2 = *p1;
++        }
++    }
++
++    *str = _str;
++    *xm_str = XmStringCreateLtoR(_str, XmFONTLIST_DEFAULT_TAG);
++
++    return ( *xm_str != NULL );
+ }
+--- mozilla/cmd/xfe/xfe.c.cls	Mon Jul 27 21:48:32 1998
++++ mozilla/cmd/xfe/xfe.c	Fri Jul 31 14:20:23 1998
+@@ -3388,7 +3388,7 @@
+ 	if (!home) home = "";
+ 	if (!name) return NULL;
+ 
+-	PR_snprintf(tmp, sizeof(tmp), "%.900s/.netscape/", home);
++	PR_snprintf(tmp, sizeof(tmp), "%.900s/%s/", home, MOZ_USER_DIR);
+ 
+ #ifdef _XP_TMP_FILENAME_FOR_LDAP_
+ 	/* we need to write this */
+--- mozilla/cmd/xfe/mozilla.c.cls	Mon Jul 27 21:48:31 1998
++++ mozilla/cmd/xfe/mozilla.c	Fri Jul 31 14:20:23 1998
+@@ -2384,7 +2384,7 @@
+ #ifdef OLD_UNIX_FILES
+         ".netscape-preferences"
+ #else
+-        ".netscape/preferences.js"
++        MOZ_USER_DIR "/preferences.js"
+ #endif
+ 		);
+ 
+@@ -2675,7 +2675,7 @@
+       else 
+ 	{
+ 	  char *fmt = NULL;
+-	  char *lock = name ? name : ".netscape/lock";
++	  char *lock = name ? name : MOZ_USER_DIR "/lock";
+ 
+ 	  fmt = PR_sprintf_append(fmt, XP_GetString(XFE_APP_HAS_DETECTED_LOCK),
+ 				  XP_AppName, lock);
+@@ -2790,9 +2790,9 @@
+ 
+ {
+     char buf [1024];
+-    PR_snprintf (buf, sizeof (buf), "%s/%s", fe_home_dir, ".netscape/user.js");
++    PR_snprintf (buf, sizeof (buf), "%s/%s", fe_home_dir, MOZ_USER_DIR "/user.js");
+     PREF_ReadUserJSFile(buf);
+-    PR_snprintf (buf, sizeof (buf), "%s/%s", fe_home_dir, ".netscape/hook.js");
++    PR_snprintf (buf, sizeof (buf), "%s/%s", fe_home_dir, MOZ_USER_DIR "/hook.js");
+     HK_ReadHookFile(buf);
+ }
+ 
+@@ -3556,7 +3556,7 @@
+   struct stat st;
+   XP_Bool exists;
+ 
+-  dir = PR_smprintf ("%s/.netscape", fe_home_dir);
++  dir = PR_smprintf ("%s/" MOZ_USER_DIR, fe_home_dir);
+   if (!dir)
+     return FALSE;
+ 
+@@ -3592,7 +3592,7 @@
+ 
+   if (!exists)
+     {
+-      /* ~/.netscape/ does not exist.  Create the directory.
++      /* ~/MOZ_USER_DIR/ does not exist.  Create the directory.
+        */
+       if (mkdir (dir, 0700) < 0)
+ 	{
+@@ -3792,15 +3792,15 @@
+ /* This does several things that need to be done before the preferences
+    file is loaded:
+ 
+-   - cause the directory ~/.netscape/ to exist,
++   - cause the directory ~/MOZ_USER_DIR/ to exist,
+      and warn if it couldn't be created
+ 
+    - cause these files to be *copied* from their older
+      equivalents, if there are older versions around
+ 
+-     ~/.netscape/preferences
+-     ~/.netscape/bookmarks.html
+-     ~/.netscape/cookies
++     ~/MOZ_USER_DIR/preferences
++     ~/MOZ_USER_DIR/bookmarks.html
++     ~/MOZ_USER_DIR/cookies
+  */
+ static XP_Bool fe_copied_init_files = FALSE;
+ 
+@@ -3814,7 +3814,7 @@
+   char *s1, *s2;
+ 
+   if (!fe_config_dir)
+-    /* If we were unable to cause ~/.netscape/ to exist, give up now. */
++    /* If we were unable to cause ~/MOZ_USER_DIR/ to exist, give up now. */
+     return;
+ 
+   PR_snprintf (file1, sizeof (file1), "%s/", fe_home_dir);
+@@ -3844,16 +3844,16 @@
+ 
+   FROB(".netscape-preferences",
+        ".MCOM-preferences",
+-       ".netscape/preferences",
++       MOZ_USER_DIR "/preferences",
+        0)
+   FROB(".netscape-bookmarks.html",
+        ".MCOM-bookmarks.html",
+-       ".netscape/bookmarks.html",
++       MOZ_USER_DIR "/bookmarks.html",
+        0)
+ 
+   FROB(".netscape-cookies",
+        ".MCOM-HTTP-cookie-file",
+-       ".netscape/cookies",
++       MOZ_USER_DIR "/cookies",
+        (S_IRUSR | S_IWUSR))		/* rw only by owner */
+ 
+ #undef FROB
+@@ -3890,7 +3890,7 @@
+   /* spider begin */
+   /* TODO: where does this string get free'd? */
+   if (fe_globalPrefs.sar_cache_dir) free (fe_globalPrefs.sar_cache_dir);
+-  PR_snprintf (buf, sizeof (buf), "%s/.netscape/archive/", fe_home_dir);
++  PR_snprintf (buf, sizeof (buf), "%s/%s/archive/", fe_home_dir, MOZ_USER_DIR);
+   fe_globalPrefs.sar_cache_dir = strdup (buf);
+   /* spider end */
+ 
+@@ -3900,11 +3900,11 @@
+   /* History and cache always go in the new place by default,
+      no matter what they were set to before. */
+   if (fe_globalPrefs.history_file) free (fe_globalPrefs.history_file);
+-  PR_snprintf (buf, sizeof (buf), "%s/.netscape/history.db", fe_home_dir);
++  PR_snprintf (buf, sizeof (buf), "%s/%s/history.db", fe_home_dir, MOZ_USER_DIR);
+   fe_globalPrefs.history_file = strdup (buf);
+ 
+   if (fe_globalPrefs.cache_dir) free (fe_globalPrefs.cache_dir);
+-  PR_snprintf (buf, sizeof (buf), "%s/.netscape/cache/", fe_home_dir);
++  PR_snprintf (buf, sizeof (buf), "%s/%s/cache/", fe_home_dir, MOZ_USER_DIR);
+   fe_globalPrefs.cache_dir = strdup (buf);
+ 
+   /* If they were already keeping their bookmarks file in a different
+@@ -3914,8 +3914,8 @@
+       !XP_STRCMP (fe_globalPrefs.bookmark_file, buf))
+     {
+       if (fe_globalPrefs.bookmark_file) free (fe_globalPrefs.bookmark_file);
+-      PR_snprintf (buf, sizeof (buf), "%s/.netscape/bookmarks.html",
+-		   fe_home_dir);
++      PR_snprintf (buf, sizeof (buf), "%s/%s/bookmarks.html",
++		   fe_home_dir, MOZ_USER_DIR);
+       fe_globalPrefs.bookmark_file = strdup (buf);
+     }
+ 
+@@ -3927,8 +3927,8 @@
+       !XP_STRCMP (fe_globalPrefs.home_document, buf))
+     {
+       if (fe_globalPrefs.home_document) free (fe_globalPrefs.home_document);
+-      PR_snprintf (buf, sizeof (buf), "file:%s/.netscape/bookmarks.html",
+-		   fe_home_dir);
++      PR_snprintf (buf, sizeof (buf), "file:%s/%s/bookmarks.html",
++		   fe_home_dir, MOZ_USER_DIR);
+       fe_globalPrefs.home_document = strdup (buf);
+     }
+ 
+--- mozilla/cmd/xfe/gmon.c.cls	Mon Jul 27 21:48:30 1998
++++ mozilla/cmd/xfe/gmon.c	Fri Jul 31 14:20:23 1998
+@@ -46,7 +46,7 @@
+ #include <stdlib.h>
+ #include <ctype.h>
+ #include <string.h>
+-#include <mon.h>
++#include "gmon.h"
+ #include <unistd.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+--- mozilla/cmd/xfe/dialogs.c.cls	Mon Jul 27 21:48:29 1998
++++ mozilla/cmd/xfe/dialogs.c	Fri Jul 31 14:20:24 1998
+@@ -5623,7 +5623,7 @@
+  */
+ 
+ int
+-XFE_AskStreamQuestion (MWContext *context)
++FE_AskStreamQuestion (MWContext *context)
+ {
+   struct fe_confirm_data data;
+   Widget mainw = CONTEXT_WIDGET (context);
+--- mozilla/config/rules.mk.cls	Mon Jul 27 21:44:27 1998
++++ mozilla/config/rules.mk	Fri Jul 31 14:20:24 1998
+@@ -63,12 +63,15 @@
+ #			(output goes into the _jmc sub-dir)
+ #
+ ################################################################################
++ifndef topsrcdir
++topsrcdir = $(DEPTH)
++endif
+ 
+ #
+ # Common rules used by lots of makefiles...
+ #
+ ifndef NS_CONFIG_MK
+-include $(DEPTH)/config/config.mk
++include $(topsrcdir)/config/config.mk
+ endif
+ 
+ ifdef PROGRAM
+@@ -130,6 +133,10 @@
+ LIBRARY			= $(NULL)
+ endif
+ 
++ifdef NO_SHARED_LIB
++DLL_SUFFIX		= a
++endif
++
+ ifndef TARGETS
+ TARGETS			= $(LIBRARY) $(SHARED_LIBRARY) $(PROGRAM)
+ endif
+@@ -255,11 +262,21 @@
+ # Since the NSPR folks won't help, we'll fix things the sneaky way.
+ #
+ tweak_nspr:
++ifdef USE_AUTOCONF
++	@( cp $(topsrcdir)/nsprpub/config/UNIX.mk $(DEPTH); \
++		cd $(DEPTH)/nsprpub/config; \
++		if test -f UNIX.mk.orig; then rm -f UNIX.mk; mv UNIX.mk.orig UNIX.mk; fi; \
++		cp ../../UNIX.mk UNIX.mk.orig; \
++		awk '/^OBJDIR_NAME[ 	]*=/ { \
++			printf("OBJDIR_NAME\t= %s%s%s%s%s%s.OBJ\n","$(OS_CONFIG)","$(OS_VERSION)","$(PROCESSOR_ARCHITECTURE)","$(COMPILER)","$(IMPL_STRATEGY)","$(OBJDIR_TAG)"); next} {print}' UNIX.mk.orig > UNIX.mk); \
++		rm -f $(DEPTH)/UNIX.mk
++else
+ 	@(cd $(DEPTH)/nsprpub/config; \
+ 		if test -f UNIX.mk.orig; then rm -f UNIX.mk; mv UNIX.mk.orig UNIX.mk; fi; \
+ 		mv UNIX.mk UNIX.mk.orig; \
+ 		awk '/^OBJDIR_NAME[ 	]*=/ { \
+ 			printf("OBJDIR_NAME\t= %s%s%s%s%s%s.OBJ\n","$(OS_CONFIG)","$(OS_VERSION)","$(PROCESSOR_ARCHITECTURE)","$(COMPILER)","$(IMPL_STRATEGY)","$(OBJDIR_TAG)"); next} {print}' UNIX.mk.orig > UNIX.mk)
++endif
+ 
+ ifdef ALL_PLATFORMS
+ all_platforms:: $(NFSPWD)
+@@ -397,37 +414,37 @@
+ $(OBJDIR)/%: %.c
+ 	@$(MAKE_OBJDIR)
+ ifneq (,$(filter OS2 WINNT,$(OS_ARCH)))
+-	$(CC) -Fo$@ -c $(CFLAGS) $*.c
++	$(CC) -Fo$@ -c $(CFLAGS) $<
+ else
+-	$(CCF) $(LDFLAGS) -o $@ $*.c
++	$(CCF) $(LDFLAGS) -o $@ $<
+ endif
+ 
+ $(OBJDIR)/%.o: %.c
+ 	@$(MAKE_OBJDIR)
+ ifneq (,$(filter OS2 WINNT,$(OS_ARCH)))
+-	$(CC) -Fo$@ -c $(CFLAGS) $*.c
++	$(CC) -Fo$@ -c $(CFLAGS) $<
+ else
+-	$(CC) -o $@ -c $(CFLAGS) $*.c
++	$(CC) -o $@ -c $(CFLAGS) $<
+ endif
+ 
+ $(OBJDIR)/%.o: %.s
+ 	@$(MAKE_OBJDIR)
+-	$(AS) -o $@ $(ASFLAGS) -c $*.s
++	$(AS) -o $@ $(ASFLAGS) -c $<
+ 
+ $(OBJDIR)/%.o: %.S
+ 	@$(MAKE_OBJDIR)
+-	$(AS) -o $@ $(ASFLAGS) -c $*.S
++	$(AS) -o $@ $(ASFLAGS) -c $<
+ 
+ $(OBJDIR)/%: %.cpp
+ 	@$(MAKE_OBJDIR)
+-	$(CCC) -o $@ $(CFLAGS) $*.c $(LDFLAGS)
++	$(CCC) -o $@ $(CFLAGS) $< $(LDFLAGS)
+ 
+ #
+ # Please keep the next two rules in sync.
+ #
+ $(OBJDIR)/%.o: %.cc
+ 	@$(MAKE_OBJDIR)
+-	$(CCC) -o $@ -c $(CFLAGS) $*.cc
++	$(CCC) -o $@ -c $(CFLAGS) $<
+ 
+ $(OBJDIR)/%.o: %.cpp
+ 	@$(MAKE_OBJDIR)
+@@ -437,9 +454,9 @@
+ 	rm -f $(OBJDIR)/t_$*.cc
+ else
+ ifneq (,$(filter OS2 WINNT,$(OS_ARCH)))
+-	$(CCC) -Fo$@ -c $(CFLAGS) $*.cpp
++	$(CCC) -Fo$@ -c $(CFLAGS) $<
+ else
+-	$(CCC) -o $@ -c $(CFLAGS) $*.cpp
++	$(CCC) -o $@ -c $(CFLAGS) $<
+ endif
+ endif #STRICT_CPLUSPLUS_SUFFIX
+ 
+@@ -450,10 +467,10 @@
+ 	$(CC) -C -E $(CFLAGS) $< > $*.i
+ 
+ %: %.pl
+-	rm -f $@; cp $*.pl $@; chmod +x $@
++	rm -f $@; cp $< $@; chmod +x $@
+ 
+ %: %.sh
+-	rm -f $@; cp $*.sh $@; chmod +x $@
++	rm -f $@; cp $< $@; chmod +x $@
+ 
+ ifdef DIRS
+ $(DIRS)::
+@@ -485,7 +502,7 @@
+ ifneq ($(JSRCS),)
+ ifdef JAVA_OR_OJI
+ export:: $(JAVA_DESTPATH) $(JAVA_DESTPATH)/$(PACKAGE)
+-	list=`$(PERL) $(DEPTH)/config/outofdate.pl $(PERLARG)	\
++	list=`$(PERL) $(topsrcdir)/config/outofdate.pl $(PERLARG)	\
+ 		    -d $(JAVA_DESTPATH)/$(PACKAGE) $(JSRCS)`;	\
+ 	if test "$$list"x != "x"; then				\
+ 	    echo $(JAVAC) $$list;				\
+@@ -514,7 +531,7 @@
+ 		if test -d $$d; then						\
+ 			set $(EXIT_ON_ERROR);					\
+ 			files=`echo $$d/*.java`;				\
+-			list=`$(PERL) $(DEPTH)/config/outofdate.pl $(PERLARG)	\
++			list=`$(PERL) $(topsrcdir)/config/outofdate.pl $(PERLARG)	\
+ 				    -d $(JAVA_DESTPATH)/$(PACKAGE) $$files`;	\
+ 			if test "$${list}x" != "x"; then			\
+ 			    echo Building all java files in $$d;		\
+@@ -677,6 +694,10 @@
+ 
+ ################################################################################
+ 
++
++ifdef USE_AUTOCONF
++ALL_TRASH := $(filter-out $(OBJDIR), $(ALL_TRASH))
++else
+ -include $(DEPENDENCIES)
+ 
+ ifneq (,$(filter-out OS2 WINNT,$(OS_ARCH)))
+@@ -711,6 +732,7 @@
+ 		exit(1);                                                      \
+ 	    }'
+ endif
++endif # USE_AUTOCONF
+ 
+ #############################################################################
+ # X dependency system
+--- mozilla/config/config.mk.cls	Mon Jul 27 21:44:26 1998
++++ mozilla/config/config.mk	Fri Jul 31 14:20:24 1998
+@@ -22,9 +22,12 @@
+ # appropriate platform-specific .mk file, then defines all (most?)
+ # of the generic macros.
+ #
++ifndef topsrcdir
++topsrcdir = $(DEPTH)
++endif
+ 
+ # This wastes time.
+-include $(DEPTH)/config/common.mk
++include $(topsrcdir)/config/common.mk
+ 
+ #
+ # Important internal static macros
+@@ -106,7 +109,7 @@
+ # Relative pathname from top-of-tree to current source directory
+ #
+ ifneq (,$(filter-out OS2 WINNT,$(OS_ARCH)))
+-REVDEPTH	:= $(DEPTH)/config/revdepth
++REVDEPTH	:= $(topsrcdir)/config/revdepth
+ SRCDIR		= $(shell $(PERL) $(REVDEPTH).pl $(DEPTH))
+ endif
+ 
+@@ -212,6 +215,12 @@
+ endif
+ endif
+ 
++ifdef USE_AUTOCONF
++OPTIMIZER	= $(ACCFLAGS)
++DEFINES		=  -UDEBUG -DNDEBUG -DTRIMMED
++XBCFLAGS	=
++else
++
+ #
+ # Debug by default.
+ #
+@@ -259,6 +268,14 @@
+ endif
+ endif
+ endif
++endif # !USE_AUTOCONF
++
++ifdef MOZ_DEBUG
++OPTIMIZER	= -g
++JAVA_OPTIMIZER	= -g
++DEFINES		= -DDEBUG -UNDEBUG -DDEBUG_$(shell $(WHOAMI)) -DTRACING
++XBCFLAGS	= -FR$*
++endif
+ 
+ #
+ # XXX For now, we're including $(DEPTH)/include directly instead of
+@@ -266,7 +283,7 @@
+ # be put in the library directories where it belongs so that it can
+ # get exported to dist properly.
+ #
+-INCLUDES	= $(LOCAL_PREINCLUDES) $(MODULE_PREINCLUDES) -I$(DEPTH)/include $(LOCAL_INCLUDES) $(OS_INCLUDES)
++INCLUDES	= $(LOCAL_PREINCLUDES) $(MODULE_PREINCLUDES) -I$(topsrcdir)/include $(LOCAL_INCLUDES) $(OS_INCLUDES)
+ 
+ LIBNT		= $(DIST)/lib/libnt.$(LIB_SUFFIX)
+ LIBAWT		= $(DIST)/lib/libawt.$(LIB_SUFFIX)
+@@ -317,7 +334,7 @@
+ # Include the binary distrib stuff, if necessary.
+ #
+ ifdef NS_BUILD_CORE
+-include $(DEPTH)/config/coreconf.mk
++include $(topsrcdir)/config/coreconf.mk
+ endif
+ 
+ #
+@@ -328,7 +345,7 @@
+ ifneq (,$(filter Linux,$(OS_ARCH)))
+ MOZILLA_DETECT			= 1
+ MOZILLA_DETECT_DIR		= $(DEPTH)/config/mkdetect
+-MOZILLA_DETECT_IDENT	= $(shell $(MOZILLA_DETECT_DIR)/detect_hostident.sh)
++MOZILLA_DETECT_IDENT	= $(shell $(topsrcdir)/config/mkdetect/detect_hostident.sh)
+ MOZILLA_DETECT_NAME		= detect_$(MOZILLA_DETECT_IDENT)_gen.mk
+ MOZILLA_DETECT_GEN		= $(MOZILLA_DETECT_DIR)/$(MOZILLA_DETECT_NAME)
+ endif
+@@ -336,7 +353,7 @@
+ #
+ # Now include the platform-specific stuff.
+ #
+-include $(DEPTH)/config/$(OS_ARCH).mk
++include $(topsrcdir)/config/$(OS_ARCH).mk
+ 
+ #
+ # Some platforms (Solaris) might require builds using either
+@@ -349,12 +366,24 @@
+ #
+ # Name of the binary code directories
+ #
++ifndef USE_AUTOCONF
+ ifeq ($(OS_ARCH)_$(PROCESSOR_ARCHITECTURE),WINNT_x86)
+ OBJDIR_NAME	= $(OS_CONFIG)$(OS_VERSION)$(OBJDIR_TAG).OBJ
+ else
+ OBJDIR_NAME	= $(OS_CONFIG)$(OS_VERSION)$(PROCESSOR_ARCHITECTURE)$(COMPILER)$(IMPL_STRATEGY)$(OBJDIR_TAG).OBJ
+ endif
+ 
++else
++# We're autoconf freaks here
++# Override defaults
++EMACS			= $(ACEMACS)
++PERL			= $(ACPERL)
++RANLIB			= $(ACRANLIB)
++UNZIP_PROG		= $(ACUNZIP)
++WHOAMI			= $(ACWHOAMI)
++ZIP_PROG		= $(ACZIP)
++endif
++
+ # Figure out where the binary code lives. It either lives in the src
+ # tree (NSBUILDROOT is undefined) or somewhere else.
+ ifdef NSBUILDROOT
+@@ -372,8 +401,10 @@
+ # all public include files go in subdirectories of PUBLIC:
+ PUBLIC		= $(XPDIST)/public
+ 
++ifndef USE_AUTOCONF
+ VPATH		= $(OBJDIR)
+ DEPENDENCIES	= $(OBJDIR)/.md
++endif
+ 
+ ifneq ($(OS_ARCH),WINNT)
+ MKDEPEND_DIR	= $(DEPTH)/config/mkdepend
+@@ -420,8 +451,11 @@
+ MOZ_NAV_BUILD_PREFIX = 1
+ endif
+ ifdef MOZ_MEDIUM
+-DEFINES		+= -DEDITOR -DMOZ_COMMUNICATOR_IIDS
++DEFINES		+= -DMOZ_COMMUNICATOR_IIDS
++ifndef NO_EDITOR
++DEFINES		+= -DEDITOR 
+ EDITOR		= 1
++endif
+ MOZ_JSD		= 1
+ MOZ_COMMUNICATOR_IIDS	= 1
+ MOZ_COMMUNICATOR_CONFIG_JS	= 1
+@@ -431,10 +465,13 @@
+ endif
+ endif
+ ifdef MOZ_DARK
+-DEFINES += -DEDITOR -DMOZ_COMMUNICATOR_IIDS -DMOZ_MAIL_NEWS -DMOZ_OFFLINE \
++DEFINES += -DMOZ_COMMUNICATOR_IIDS -DMOZ_MAIL_NEWS -DMOZ_OFFLINE \
+                    -DMOZ_TASKBAR -DMOZ_LDAP -DMOZ_NEO 
+ #-DMOZ_CALENDAR
++ifndef NO_EDITOR
++DEFINES	+= -DEDITOR 
+ EDITOR		= 1
++endif
+ MOZ_JSD		= 1
+ MOZ_COMMUNICATOR_IIDS	= 1
+ MOZ_COMMUNICATOR_CONFIG_JS	= 1
+@@ -557,6 +594,16 @@
+ ifdef MODULAR_NETLIB
+ DEFINES 	+= -DMODULAR_NETLIB
+ endif
++
++ifndef MOZ_FE
++MOZ_FE = x
++endif
++
++ifndef MOZ_USER_DIR
++MOZ_USER_DIR = \".netscape\"
++endif
++
++DEFINES 	+= -DMOZ_USER_DIR=$(MOZ_USER_DIR)
+ 
+ ######################################################################
+ 
+--- mozilla/config/SunOS.mk.cls	Mon Jul 27 21:44:26 1998
++++ mozilla/config/SunOS.mk	Fri Jul 31 14:20:24 1998
+@@ -19,7 +19,7 @@
+ # Config stuff for SunOS.  4 and 5 are vastly different, so we use 2 different files.
+ #
+ ifeq ($(OS_RELEASE),4.1)
+-include $(DEPTH)/config/SunOS4.mk
++include $(topsrcdir)/config/SunOS4.mk
+ else
+-include $(DEPTH)/config/SunOS5.mk
++include $(topsrcdir)/config/SunOS5.mk
+ endif
+--- mozilla/config/Linux.mk.cls	Mon Jul 27 21:44:26 1998
++++ mozilla/config/Linux.mk	Fri Jul 31 14:20:24 1998
+@@ -51,7 +51,11 @@
+ PORT_FLAGS		= -D_POSIX_SOURCE -D_BSD_SOURCE -DSW_THREADS -DNEED_ENDIAN_H -DNEED_GETOPT_H -DNEED_IOCTL_H -DUSE_NODL_TABS -DHAVE_SIGNED_CHAR -DNEED_SYS_TIME_H -DHAVE_SYS_BITYPES_H -DNEED_UINT_T
+ PDJAVA_FLAGS		= -mx128m
+ 
++ifdef USE_AUTOCONF
++OS_CFLAGS		= -include $(DEPTH)/include/config.h
++else
+ OS_CFLAGS		= $(PLATFORM_FLAGS) $(PORT_FLAGS) $(MOVEMAIL_FLAGS)
++endif
+ 
+ LOCALE_MAP		= $(DEPTH)/cmd/xfe/intl/linux.lm
+ EN_LOCALE		= C
+--- mozilla/config/nsinstall.c.cls	Mon Jul 27 21:44:26 1998
++++ mozilla/config/nsinstall.c	Fri Jul 31 14:20:24 1998
+@@ -23,6 +23,7 @@
+ #include <stdio.h>  /* OSF/1 requires this before grp.h, so put it first */
+ #include <assert.h>
+ #include <fcntl.h>
++#include <errno.h>
+ 
+ #ifndef XP_OS2
+ #include <grp.h>
+@@ -110,6 +111,7 @@
+ {
+     char *cp;
+     struct stat sb;
++    int res;
+ 
+     while (*path == '/' && path[1] == '/')
+ 	path++;
+@@ -123,7 +125,12 @@
+ 	}
+ 	*cp = '/';
+     }
+-    return mkdir(path, mode);
++    
++    res = mkdir(path, mode);
++    if ((res != 0) && (errno == EEXIST))
++      return 0;
++    else
++      return res;
+ }
+ 
+ #ifndef XP_OS2
+--- mozilla/sun-java/stubs/include/manifest.mn.cls	Mon Jul 27 21:46:06 1998
++++ mozilla/sun-java/stubs/include/manifest.mn	Fri Jul 31 14:20:24 1998
+@@ -44,3 +44,7 @@
+ 		  typedefs_md.h        \
+ 		  zip.h                \
+ 		  $(NULL)
++ifdef USE_AUTOCONF
++EXPORTS		:= $(addprefix $(srcdir)/, $(EXPORTS))
++endif
++
+--- mozilla/sun-java/stubs/jri/manifest.mn.cls	Mon Jul 27 21:46:06 1998
++++ mozilla/sun-java/stubs/jri/manifest.mn	Fri Jul 31 14:20:24 1998
+@@ -28,3 +28,8 @@
+ EXPORTS         = java_lang_String.h   \
+ 		  jdk_java_lang_String.h \
+ 		  $(NULL)
++
++ifdef USE_AUTOCONF
++EXPORTS		:= $(addprefix $(srcdir)/, $(EXPORTS))
++endif
++
+--- mozilla/Makefile.cls	Mon Jul 27 21:49:11 1998
++++ mozilla/Makefile	Fri Jul 31 14:20:24 1998
+@@ -25,7 +25,11 @@
+ DIRS_JS		= js
+ endif
+ 
+-DIRS		= config coreconf $(NSPRDIR) jpeg dbm xpcom network
++DIRS		= config coreconf $(NSPRDIR) dbm xpcom network
++
++ifndef MOZ_NATIVE_JPEG
++DIRS		+= jpeg
++endif
+ 
+ ifdef MOZ_NETCAST
+ DIRS		+= netcast
+@@ -48,7 +52,14 @@
+ DIRS		+= modules lib l10n cmd
+ 
+ ifeq ($(STAND_ALONE_JAVA),1)
+-DIRS		= config lib/xp $(NSPRDIR) jpeg modules/zlib sun-java ifc js ifc/tools sun-java/java
++DIRS		= config lib/xp $(NSPRDIR) sun-java ifc js ifc/tools sun-java/java
++ifndef MOZ_NATIVE_JPEG
++DIRS		+= jpeg
++endif
++
++ifndef MOZ_NATIVE_ZLIB
++DIRS		+= modules/zlib
++endif
+ endif
+ 
+ include $(DEPTH)/config/rules.mk

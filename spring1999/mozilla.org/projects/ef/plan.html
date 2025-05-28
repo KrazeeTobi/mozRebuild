@@ -1,0 +1,237 @@
+<HTML>
+<HEAD>
+   <META NAME="Author" CONTENT="Scott Furman">
+   <TITLE>ElectricalFire Development Roadmap</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER><B>ElectricalFire Compiler</B></CENTER>
+
+<H1 ALIGN=CENTER>Development Roadmap</H1>
+
+<CENTER>Author: <A HREF="mailto:Scott%20Furman%20%3Cfur@netscape.com%3E">Scott
+Furman</A>
+<BR>Last Modified:<SCRIPT>document.write(document.lastModified);</SCRIPT>
+</CENTER>
+
+<HR WIDTH="30%">
+
+<P>In keeping with the philosophy of open source, ElectricalFire development
+will proceed in the direction and manner chosen by those who contribute
+to the project.&nbsp; So, consider the following document as a skeleton
+- one possible future for ElectricalFire out of many.&nbsp; We'll put flesh
+on these bones (or add new bones) as the project progresses.
+<H2>Overall project organization</H2>
+
+
+<H4>Phase 1 - Getting organized</H4>
+
+
+<UL>
+  <LI>Identify initial set of <a href="#Developers">developers</a>
+  <LI> Set up automated <A HREF="http://mozilla.org/tinderbox.html">Tinderbox</A> 
+    automated builds 
+  <LI> Identify source(s) for Java regression/conformance <a href="#Testing">tests</a> 
+  <LI> Initiate <a href="#Testing">automated testing</a> 
+  <LI> Agree on <A HREF="coding_style.html">coding and style standards</A> 
+  <LI> Agreement on major project decisions, such as 
+    <UL>
+      <LI> Select <a href="#runtime">origin of Java runtime library</a>: Classpath, 
+        JDK1.2 or both ? 
+      <LI><a href="winbuild.html"> Win32 build</a> system: gmake+egcs, i.e. like 
+        the unix platforms, or MSVC project files ? 
+      <LI> Mixed interpreter/compiler mode or pure compiler ? 
+    </UL>
+</UL>
+
+<H4>Phase 2 - Stability/Completeness/Porting</H4>
+
+
+<UL>
+  <LI>Integrate runtime libraries with VM 
+  <LI>Finish <a href="#Exception_Support">exception support</a>, including async 
+    exception-handling 
+  <li> JNI API support 
+  <li> Integrate <a href="#GC">garbage-collection</a> code 
+  <LI>Finish Java bytecode verifier support, so that EF can safely be used inside 
+    a browser, e.g. as an OJI plugin 
+  <LI> Debugging support 
+  <LI> Make it easier for new back-ends to be added 
+  <LI> <a href="#Porting">Porting</a> to other architectures/compilers/OS 
+</UL>
+
+<H4>Phase 3 - Performance Optimization</H4>
+
+
+<UL>
+  <LI> Replace naive <a href="#Register_Allocator">register allocator</a> 
+  <LI> Caching of generated code 
+  <LI> Faster SSA generation 
+  <LI> Intermediate and instruction-level <a href="#Optimizations">optimizations</a>
+</UL>
+
+<H2><a name="Developers"></a>Developers and Module Owners</H2>
+<p>ElectricalFire is a big enough project that it needs to broken up into several 
+  parts, each with a coordinator, or &quot;<a href="http://www.mozilla.org/owners.html">module 
+  owner</a>&quot;, in mozilla-speak. Initially, some of the owners will come from 
+  the original ElectricalFire development team, but that will likely change as 
+  other developers come up to speed on the code.</p>
+<p>A first cut at the partitioning might look like this:</p>
+<table border="1" width="75%">
+  <tr bgcolor="#e0f0ff"> 
+    <th> 
+      <div align="center">Module</div>
+    </th>
+    <th> 
+      <div align="center">Owner</div>
+    </th>
+  </tr>
+  <tr> 
+    <td>Overall project administration</td>
+    <td>Scott Furman</td>
+  </tr>
+  <tr> 
+    <td>Intermediate code generation and optimization</td>
+    <td>Waldemar Horwat</td>
+  </tr>
+  <tr> 
+    <td>x86 back-end</td>
+    <td>Bjorn Carlson</td>
+  </tr>
+  <tr> 
+    <td>Java runtime libraries</td>
+    <td><i>TBD</i></td>
+  </tr>
+</table>
+<p>In addition, we'll need one module owner for each additional back-end targeting 
+  a new architecture.</p>
+<H2><a name="runtime"></a>Runtime Library</H2>
+<P>The lack of Java runtime libraries is the single largest hole in the ElectricalFire 
+  effort.&nbsp; EF provides partial implementations of the "core" Java libraries, 
+  i.e. java.lang, java.lang.reflect and java.io, but has no code for AWT or any 
+  of the other dozens of subsystems supported by Sun's JDK. The two most obvious 
+  suppliers for EF's runtime are the <a href="http://www.classpath.org/">GNU Classpath</a> 
+  effort and Sun's JDK 1.2 (under the new <a href="http://java.sun.com/features/1998/12/source_license_QA.html">community 
+  licensing policy</a>). To the extent possible, EF should support both, but the 
+  legal requirement to avoid tainting Classpath and ElectricalFire with Sun code 
+  may cause problems, e.g. if a developer looks at the Sun runtime library sources 
+  then they can't contribute to the Classpath effort. </P>
+<H4>JNI Methods</H4>
+<P>One significant subtask in getting runtime libraries to work is completing 
+  implementation of the <A HREF="http://java.sun.com/products/jdk/1.1/docs/guide/jni/spec/jniTOC.doc.html">JNI 
+  method</A>s. Most JNI methods today are merely stubs. The JNI source code lives 
+  <A HREF="http://lxr.mozilla.org/ef/source/ef/Runtime/NativeMethods/Jni.cpp">here</A>. 
+</P>
+<H2><a name="Testing"></a>Compiler Tests</H2>
+
+
+<P>More than most other types of programs, compiler code is notorious for having 
+  insidious and subtle bugs. Even worse, it's difficult to quantify a compiler's 
+  quality or that of a compiler test suite. For this reason, compiler suites tend 
+  to be quite large so as to take advantage of any shotgun effect. Unfortunately, 
+  there appears to be no way we can get free access to the tens of thousands of 
+  test that make up Sun's JCK.
+<P>However, EF can benefit tremendously from the library functional tests being 
+  provided by the <a href="http://sourceware.cygnus.com/mauve/">Mauve project</a>, 
+  and perhaps also from <a href="http://www.japhar.org">Japhar</a>'s tests. We'll 
+  need to provide a small set of low-level regression tests that can be run quickly 
+  so as to give developers confidence in checking in their changes. In particular, 
+  we'll need some low-level bytecode instruction tests. Finally, it would be nice 
+  to incorporate a few large Java applications into the test suite. 
+<h2><a name="Testing"></a>Automated Testing</h2>
+<p>Worse than introducing a regression is not discovering it until sometime after 
+  it's introduced. When ElectricalFire was a commercial product, an automated 
+  report was generated every day, which provided summary statistics and identified 
+  test regressions. Assuming we can come up with the tests to run, it shouldn't 
+  be too difficult to resurrect this machinery. Another type of automated testing 
+  that we planned to do, but never got around to, was performance tracking, so 
+  as to catch slowdowns in the compilation process or in compiled code.</p>
+<H2><a name="Porting"></a>Porting</H2>
+Only the x86 code generator is reasonably close to working order.&nbsp; The others 
+(PowerPC, Sparc, PA-RISC, MIPS) are in various states of disrepair, as the original 
+development tea, temporarily shed them to concentrate on the x86. At one point,&nbsp; 
+<a href="mailto:Scott%20Silver%20%3Cscott.m.silver@alum.dartmouth.org%3E">Scott 
+Silver</a> was working on a tool to make it easier to specify instruction selection 
+rules. He would be a good person to contact when starting up a port to another 
+architecture. 
+<H2><A NAME="Exception_Support"></A>Exception Support</H2>
+
+ElectricalFire's exception-handling code was nearly complete when the original
+EF project was cancelled.&nbsp; Some of the remaining tasks:
+<UL>
+  <LI> Convert native C++ exceptions thrown by the compiler, e.g. IncompatibleClassChangeError, 
+    into Java exceptions at the boundary between the compiled Java caller and 
+    the native code callee. This is done in some places, but not all.
+  <LI> Add support for x86 integer exceptions, e.g. divide-by-zero errors. 
+  <LI> Fix the bytecode verifier's overzealousness.&nbsp; Right now, it does not 
+    allow methods without an explicit return or throw as final bytecode, even 
+    if that code is dead. This breaks some Java classes.
+  <LI> Asyncronous exception handling needs to be addressed.&nbsp; (Or maybe not. 
+    Isn't Thread.Stop() deprecated now ?) 
+</UL>
+
+<H2><A NAME="Register_Allocator"></A>Register Allocator</H2>
+
+The existing register allocator, which is a variant on the classic coloring algorithm, 
+suffers from unacceptably slow compilation performance for some methods. Unfortunately, 
+the SSA intermediate form used in EF tends to produce lots of temporaries and 
+this drives up the cost of register allocation. (The complexity of computing the 
+register interference graph goes up as the square of the number of registers. 
+<I>Editor: Is this right ?&nbsp; I seem to remember that our algorithm has an 
+N<SUP>^4</SUP> component to it.</I>)&nbsp; In some extreme cases, compilation 
+of a single very large function could take 20 minutes. We need an algorithm that 
+is both more scalable and that makes better assignment/spilling decisions.&nbsp; 
+A hierarchical allocator is needed, i.e. one that operates depth-first on the 
+control-flow graph.&nbsp; Prior to the cancellation of the EF commercial project, 
+a developer was working on a replacement allocator based on Proebsting et al's 
+probability-based register allocation algorithm.&nbsp; Believe it or not, we seem 
+to have lost the source code for the replacement allocator and we have not been 
+successful at locating the developer.&nbsp; (<I>Anyone seen Laurent Morichetti 
+?</I>) 
+<H2><a name="GC"></a>Garbage Collection</H2>
+ElectricalFire's <A HREF="techdocs/design/gc.html">garbage collector</A>, codenamed 
+"Sport Model", is substantially complete, but it is not yet integrated with the 
+rest of the compiler.&nbsp; Doing that integration is a massive task, since the 
+GC must become intimately entwined with the compiler and runtime, e.g. by constraining 
+the object layout and by requiring access to the stack and registers. Now might 
+be a good time to review some of the Sport Model design decisions to see if a 
+simpler initial implementation is possible.&nbsp; For example, the current design 
+in which object headers are segregated onto their own memory pages might be an 
+optimization for a future release.&nbsp; The conservative versus non-conservative 
+GC question is another good way to start a fist-fight among the GC cognoscenti. 
+<H2><a name="Optimizations"></a>Optimizing Code Generation</H2>
+I'm not even going to attempt an exhaustive list of all the optimizations that 
+might be implemented in EF.&nbsp; Even when source Java bytecodes are optimized 
+prior to compilation, there are still many optimizations that can be done at the 
+primitive graph or instruction level.&nbsp; Some obvious candidate optimizations 
+would seek to lower the overhead that Java imposes (versus C++) by reducing/eliminating: 
+<UL>
+<LI>
+null-reference checks
+
+<LI>
+array bounds checks
+
+<LI>
+checked narrowing of types
+</UL>
+Many of the traditional optimizations are also useful:
+<UL>
+  <LI> invariant loop hoisting and other types of code motion 
+  <LI>
+common subexpression (CSE) elimination
+
+<LI>
+better <A HREF="#Register_Allocator">register allocation</A>
+
+<LI>
+instruction scheduling
+</UL>
+When inlining is added to the compiler's arsenal, most of the traditional compiler 
+optimizations also become important. 
+<P>Waldemar <A HREF="techdocs/design/optimizations.html">wrote</A> some more about 
+  optimizations a long time ago.
+<P>&nbsp;
+</BODY>
+</HTML>

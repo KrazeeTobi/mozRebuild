@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<TITLE>XUL Fragments</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">XUL Fragments</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="popups.html">Previous: Popup Content</a>]
+[<a href="sharing.html">Next: Persistence and Sharing</a>]
+<p>
+<b>Feature Owner:</b> <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>
+<p>
+<font color=red>[XUL Fragments are in flux and there are numerous bugs which make them dangerous
+to use right now. Dangerous elements include boxes (and therefore anything that derives from
+box, like toolbar, tab, and toolbox), tables (and trees), and menus.]</font>
+<p>
+It will commonly be the case that a piece of UI has been designed using XUL, and the UI designer
+wants to share this UI in many different types of windows, without having to cut and paste
+the UI into the windows each time.  The designer would like to 
+reference the UI description from the various files describing the windows and only have
+to worry about editing one file when the UI description changes.
+<p>
+<i>XUL fragments</i> address this problem.  A XUL fragment file describes a 
+XUL subtree that
+can be included in other XUL documents (that can themselves be fragments).  A fragment is
+included by placing the <font color=red>include</font> attribute on a XUL tag.  The value of
+this attribute is the URL of the fragment that should be included as a subtree of the
+XUL tag.  This URL can point to a fragment in the same document (using #), or it can point to
+a fragment in an external <i>XUL fragment file</i>.  
+<p>
+XUL fragments can be used on any nodes in the XUL or HTML namespace. 
+<p>
+<table align=center border=1 width=80% bgcolor=#d0d0d0>
+<tr><td><pre>&lt;toolbar include="chrome://global/content/mainToolbar.xul"/&gt;
+</table>
+<p>
+A XUL fragment file has a <font color=green>fragment</font> tag as its root.  Namespaces must
+be set up again in the fragment file (since you have no idea what namespaces might have been
+defined in the place where you do the include). 
+The contents of a fragment are the children that will be placed underneath any node that 
+references the fragment.
+<p>
+<table align=center border=1 width=80% bgcolor=#d0d0d0>
+<tr><td><pre>&lt;fragment xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
+  &lt;titledbutton value="Back"/&gt;
+  &lt;titledbutton value="Forward"/&gt;
+  ...
+&lt;/fragment&gt;
+</table>
+<p>
+A node that specifies the inclusion of a fragment may also overlay additional children of its own.
+<font color=red>[At the moment these children can only be placed in front of the children in the 
+fragment.]</font>
+<p>
+<table align=center border=1 width=80% bgcolor=#d0d0d0>
+<tr><td><pre>&lt;toolbar include="chrome://global/content/mainToolbar.xul"&gt;
+  &lt;titledbutton value="I come first! Bwa-ha-ha!"/&gt;
+&lt;/toolbar&gt;
+</table>
+<p>
+<font color=red>[Not yet implemented]</font>
+Fragments can also be declared directly in a document and used more than once within the
+same document.
+<p>
+<table align=center border=1 width=80% bgcolor=#d0d0d0>
+<tr><td><pre>&lt;fragment xmlns="(etc.etc.)" id="format"&gt;
+[contents of menu]
+&lt;/fragment&gt;
+...
+&lt;menubar&gt;
+  ...
+  &lt;menu name="Paragraph Format" include="#format"/&gt;
+  ...
+&lt;/menubar&gt;
+...
+&lt;popup id="formatContextMenu"&gt;
+  &lt;menu include="#format&gt;
+&lt;/popup&gt;
+</table>
+<p>
+If attributes are set on a fragment node, they will be placed on the node that is including
+the fragment, e.g., the name of the format menu in the example above could have been placed
+directly on the fragment.
+<p>
+</td></tr>
+</table>
+
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="popups.html">Previous: Popup Content</a>]
+[<a href="sharing.html">Next: Persistence and Sharing</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,603 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Formatted printing</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=3>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+<P><BR>
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prbit.html">[Previous]</A> <A HREF="prlog.html">Next</A> <A HREF="last.html">[Last]</A>
+
+<HR WIDTH="100%">
+<CENTER>
+<H2>
+<A NAME="Chapter 17"></A>Chapter 17<BR>
+Formatted printing</H2></CENTER>
+NSPR contains formatted printing facilities modeled after Ansi-C's stdlib
+offering. The routines offered are thread aware and do place extra burdens
+on the clients to deal with resource allocation and deallocation.
+<H3>
+<A NAME="Formatting specification"></A>Formatting specification</H3>
+The output functions translate internal value to characters under the control
+of a <TT>format</TT> string. The <TT>format</TT> string contains two types
+of objects: ordinary characters, which are copied to the output stream,
+and conversion specifications, each which causes conversion and printing
+of the next successive argument of the calling function. Each conversion
+specification begins with a <TT>%</TT> and ends with a conversion character.
+Between the <TT>%</TT> and the conversion character there may be, in order:
+<BLOCKQUOTE>
+<LI>
+A minus sign, which specifies left adjustment of the converted argument.</LI>
+
+<LI>
+A number that specifies the minimum field width. The converted argument
+will be printed in a field at least this wide. If necessary, it will be
+padded on the left (or right, if left adjustment is called for) to make
+up the field width.</LI>
+
+<LI>
+A period, which separates the field width from the precision.</LI>
+
+<LI>
+A number, the precision, that specifies the maximum number of characters
+to be printed for a string, or the number of digits after the decimal point
+of a floating point value, or the minimum number of digits for an integer.</LI>
+
+<LI>
+An <TT>h</TT> if the integer is to be printed as a 16 bit value, an <TT>l</TT>
+if as 32 bits, or <TT>ll</TT> if 64 bits.</LI>
+</BLOCKQUOTE>
+The conversion characters are in the following table.
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><U>Character</U></B></TD>
+
+<TD><B><U>Argument type; Printed as</U></B></TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>d</TT></B></TD>
+
+<TD><B><TT><A HREF="prtyp.html#1027670">PRIntn</A></TT></B>; Signed decimal
+number</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>o</TT></B></TD>
+
+<TD><B><TT><A HREF="prtyp.html#1027670">PRUintn</A></TT></B>; Unsigned octal
+number</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>x</TT></B>, <B><TT>X</TT></B></TD>
+
+<TD><B><TT><A HREF="prtyp.html#1027670">PRUintn</A></TT></B>; Unsigned hexadecimal
+number, lower and upper case, respectively</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>u</TT></B></TD>
+
+<TD><B><TT><A HREF="prtyp.html#1027670">PRUintn</A></TT></B>; Unsigned decimal
+number</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>c</TT></B></TD>
+
+<TD><B><TT><A HREF="prtyp.html#1027605">PRInt8</A></TT></B>; Single character</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>s</TT></B></TD>
+
+<TD><B><TT>char*</TT></B>; Print characters from the string until a '\0'
+or the number of characters given by the precision</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>f</TT></B>, <B><TT>g</TT></B></TD>
+
+<TD><B><TT><A HREF="prtyp.html#1027660">PRFloat64</A></TT></B>;</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>p</TT></B></TD>
+
+<TD><B><TT>void*</TT></B>; pointer (implementation dependent representation)</TD>
+</TR>
+</TABLE>
+
+<H3>
+<A NAME="Output functions"></A>Output functions</H3>
+
+<H4>
+<A NAME="PR_snprintf"></A>PR_snprintf</H4>
+<B><TT>PR_nsprintf </TT></B>formats the output into a fixed size buffer.
+It guarantees that a <TT>NULL</TT> is at the end of the buffer.
+<BLOCKQUOTE><TT><A HREF="prtyp.html#1027634">PRUint32</A> PR_snprintf(char
+*out, <A HREF="prtyp.html#1027634">PRUint32</A> outlen, const char *fmt,
+...);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>out</TT></B></TD>
+
+<TD>The character buffer that will hold the result of the translation.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>outlen</TT></B></TD>
+
+<TD>The length (in bytes) of the previously specified buffer.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>fmt</TT></B></TD>
+
+<TD>The string that is used as the formatting specification.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>...</TT></B></TD>
+
+<TD>An arbitrary number of parameters. The number and type of the parameters
+are governed by the <TT>fmt</TT> string.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Return</H5>
+The function returns the length of the written output, NOT including the
+<TT>NULL</TT>, or <TT>(<A HREF="prtyp.html#1027634">PRUint32</A>)-1</TT>
+if an error occurs.
+<H4>
+<A NAME="PR_smprintf"></A><TT>PR_smprintf</TT></H4>
+<B><TT>PR_smprintf()</TT></B> is identical to<TT> <B>PR_nsprintf()</B></TT>
+except that rather than having the caller present the output buffer, it
+is allocated by the runtime. If the return is successful, the buffer must
+be freed by the caller (see <B>PR_smprintf_free()</B>).
+<BLOCKQUOTE><TT>char* PR_smprintf(const char *fmt, ...);</TT></BLOCKQUOTE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>fmt</TT></B></TD>
+
+<TD>The string that is used as the formatting specification.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>...</TT></B></TD>
+
+<TD>An arbitrary number of parameters. The number and type of the parameters
+are governed by the <TT>fmt</TT> string.</TD>
+</TR>
+</TABLE>
+<H5>
+Result</H5>
+If the translation is successful, a non-NULL character pointer is returned
+that must ultimately be freed by the client. The string is guaranteed to
+have a <TT>NULL</TT> termination. A <TT>NULL</TT> return value indicates
+an error in processing. The reason for the error can be retrieve by calling
+<B><TT>PR_GetError()</TT></B>.
+<H4>
+<A NAME="PR_sprintf_append"></A><TT>PR_sprintf_append</TT></H4>
+<B><TT>PR_sprintf_append()</TT></B><I>appends</I> the translation to an
+existing string. The runtime will extend the buffer as it is needed, using
+standard heap allocators. If the value of <TT>last</TT> is not <TT>NULL</TT>,
+the runtime will attempt to <I>reallocate</I> a new buffer sufficient to
+hold the existing string plus the result off the new translation. The result
+must ultimately be freed by the client.
+<BLOCKQUOTE><TT>char* PR_sprintf_append(char *last, const char *fmt, ...);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>last</TT></B></TD>
+
+<TD>This is a string that was previously returned from <B><TT>PR_sprintf_append()</TT></B>
+or a <TT>NULL</TT> (implying the first call).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>fmt</TT></B></TD>
+
+<TD>The string that is used as the formatting specification.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>...</TT></B></TD>
+
+<TD>An arbitrary number of parameters. The number and type of the parameters
+are governed by the <TT>fmt</TT> string.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+If the transformation is successful, a non-<TT>NULL</TT> value will be
+returned. The string it points to will contain the contents of the string
+passed in as the parameter <TT>last</TT>, plus the result of the current
+transformation. The result should be treated as a new string. The string
+defined by <TT>last</TT> will be deleted if it is not <TT>NULL</TT>.
+<H4>
+<A NAME="PR_sxprintf"></A><TT>PR_sxprintf</TT></H4>
+Format internal data according the the standard transformation rules. Call
+the <I>stuff</I> function the transformed string and a pointer to an object
+that contains the state needed to handle that string. The <I>stuff </I>function
+has the following signature: <A NAME="StuffFunc"></A>
+<BLOCKQUOTE><TT>typedef <A HREF="prtyp.html#1027670">PRIntn</A> (*PRStuffFunc)(void
+*arg, const char *s, <A HREF="prtyp.html#1027634">PRUint32</A> slen);</TT></BLOCKQUOTE>
+The <I>stuff function</I> may be called more than once for each call to
+<B><TT>PR_sxprintf()</TT></B>. Each call should return the number
+of bytes actually accepted by the stuff function for that particular call,
+or -1 if the function fails.
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>arg</TT></B></TD>
+
+<TD>A pointer to an object referenced by the caller of <B><TT>PR_sxprintf()</TT></B>
+that contains sufficient state for the <I>stuff function</I> to know when
+to put the new transformed fragment.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>s</TT></B></TD>
+
+<TD>A transformed fragment that is to be added to the state of the object
+referenced by <TT>arg</TT>.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>slen</TT></B></TD>
+
+<TD>The length of the transformed fragment, <TT>s</TT>.</TD>
+</TR>
+</TABLE>
+
+<BLOCKQUOTE><TT><A HREF="prtyp.html#1027634">PRUint32</A> PR_sxprintf(<A HREF="#StuffFunc">PRStuffFunc</A>
+f, void *arg, const char *fmt, ...);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>f</TT></B></TD>
+
+<TD>The <I>stuff function</I> that will be called for each transformation
+indicated by the formatting string, <TT>fmt</TT>.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>arg</TT></B></TD>
+
+<TD>A pointer to a client managed object that possess enough state to deal
+with the multiple calls to the <I>stuff function</I>. This argument is
+passed directly through and not interpreted by the runtime.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>fmt</TT></B></TD>
+
+<TD>The string that is used as the formatting specification.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>...</TT></B></TD>
+
+<TD>An arbitrary number of parameters. The number and type of the parameters
+are governed by the <TT>fmt</TT> string.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Results</H5>
+The value returned from <B><TT>PR_sxprintf()</TT></B>will be the total
+number of bytes in the transformed area or <TT>0xffffffff</TT> if the transformation
+fails.
+<H4>
+<A NAME="PR_fprintf"></A><TT>PR_fprintf</TT></H4>
+<B><TT>PR_fprintf()</TT></B> is a function with similar characteristics
+as the previous formatting function, except the output is directed through
+a file descriptor using <B><TT>PR_Write()</TT></B>.
+<BLOCKQUOTE><TT><A HREF="prtyp.html#1027634">PRUint32</A> PR_fprintf(struct
+<A HREF="priotyp.html#420111">PRFileDesc</A>* fd, const char *fmt, ...);</TT></BLOCKQUOTE>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>fd</TT></B></TD>
+
+<TD>A valid, open file descriptor. The result of the transformation will
+be directed through the file descriptor using PR_Write(). The output function
+may be called multiple times.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>fmt</TT></B></TD>
+
+<TD>The string that is used as the formatting specification.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>...</TT></B></TD>
+
+<TD>An arbitrary number of parameters. The number and type of the parameters
+are governed by the <TT>fmt</TT> string.</TD>
+</TR>
+</TABLE>
+The result of the function call is the total number of bytes written to
+the file descriptor or <TT>0xffffffff</TT> if the transformation fails.
+
+<P><B>Note</B>: Some transformed bytes might be written to the file and
+then the function fail.
+<H4>
+<A NAME="va_list versions"></A><TT>va_list</TT> versions</H4>
+The following function prototypes define <TT>va_list</TT> forms of the
+functions previously described.
+<BLOCKQUOTE><TT><A HREF="prtyp.html#1027634">PRUint32</A> PR_vsnprintf(char
+*out, <A HREF="prtyp.html#1027634">PRUint32</A> outlen, const char *fmt,
+va_list ap);</TT>
+<BR><TT>char* PR_vsmprintf(const char *fmt, va_list ap);</TT>
+<BR><TT>char* PR_vsprintf_append(char *last, const char *fmt, va_list ap);</TT>
+<BR><TT><A HREF="prtyp.html#1027634">PRUint32</A> PR_vsxprintf(<A HREF="#StuffFunc">PRStuffFunc</A>
+f, void *arg, const char *fmt, va_list ap);</TT>
+<BR><TT><A HREF="prtyp.html#1027634">PRUint32</A> PR_vfprintf(struct <A HREF="priotyp.html#420111">PRFileDesc</A>*
+fd, const char *fmt, va_list ap);</TT></BLOCKQUOTE>
+
+<H3>
+<A NAME="Scanning functions"></A>Scanning functionss</H3>
+
+<H4>
+<A NAME="PR_sscanf"></A><TT>PR_sscanf</TT></H4>
+<B><TT>PR_sscanf()</TT></B> scans the input character string, performs
+data conversions, and stores the converted values in the data objects
+pointed to by its arguments according to the format control string.
+
+<P><B><TT>PR_sscanf()</TT></B> behaves the same way as the sscanf() function
+in the Standard C Library (stdio.h), with the following exceptions:
+<BLOCKQUOTE>
+<LI>
+<B><TT>PR_sscanf()</TT></B> handles the NSPR integer and floating point
+types, such as <TT><A HREF="prtyp.html#1027610">PRInt16</A></TT>, <TT><A HREF="prtyp.html#1027615">PRInt32</A></TT>,
+<TT><A HREF="prtyp.html#1027644">PRInt64</A></TT>, and <TT><A HREF="prtyp.html#1027661">PRFloat64</A></TT>,</LI>
+
+<LI>
+<B><TT>PR_sscanf()</TT></B> has no multibyte character support.</LI>
+
+
+<P><TT><A HREF="prtyp.html#1027615">PRInt32</A> PR_sscanf(const char *buf,
+const char *fmt, ...);</TT></BLOCKQUOTE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>buf</TT></B></TD>
+
+<TD>A character array holding the data to be scanned.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>fmt</TT></B></TD>
+
+<TD>The string that is used as the formatting specification.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>...</TT></B></TD>
+
+<TD>An arbitrary number of parameters. The number and type of the parameters
+are governed by the <TT>fmt</TT> string.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+<B><TT>PR_sscanf()</TT></B> returns the number of <I>items </I>scanned
+and stored or a -1 if the conversion failed.
+
+<P>
+<HR WIDTH="100%">
+
+<DIV ALIGN=right><I><FONT SIZE=-1>Last Updated: Tue Jul 14 16:12:23 PDT 1998</FONT></I></DIV>
+<A HREF="contents.html">[Contents]</A> <A HREF="prbit.html">[Previous]</A> <A HREF="prlog.html">Next</A> <A HREF="last.html">[Last]</A>
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

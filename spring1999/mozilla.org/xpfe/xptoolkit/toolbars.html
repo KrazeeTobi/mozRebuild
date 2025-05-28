@@ -1,0 +1,152 @@
+<HTML>
+<HEAD>
+<TITLE>Toolbars and Toolboxes</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Toolbars and Toolboxes</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="menus.html">Previous: Menu Bars and Menus</a>]
+[<a href="buttons.html">Next: Titled Buttons</a>]
+<p>
+<b>Feature Owner:</b> <a href="mailto:pinkerton@netscape.com">Mike Pinkerton</a><br>
+<p>
+A toolbar is a strip that contains a set of widgets called <i>toolbar
+items</i>.  The toolbar can lay out its components either horizontally or vertically, and it
+can optionally wrap to multiple rows/columns.  (In fact, a toolbar is really just an extension
+of the <font color=green>box</font> element.  See <a href="boxes.html">The Box System</a> for 
+details.)
+<p>
+The toolbar is specified using the <font color=green>toolbar</font> tag.  The attribute 
+<font color=red>align</font> is used to specify whether or not the toolbar is a <font color="orange">
+horizontal</font>
+toolbar or a <font color=orange>vertical</font> toolbar.  If this attribute is omitted, the
+toolbar will lay out its children horizontally.  <font color=red>[Note: The align attribute
+should be moved into CSS, but for now it must be specified as an attribute on the toolbar.]</font>
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;toolbar align="vertical"&gt;
+  &lt;html:button&gt;Button One&lt;/html:button&gt;
+  &lt;html:button&gt;Button Two&lt;/html:button&gt;
+  &lt;html:button&gt;Button Three&lt;/html:button&gt;   
+&lt;/toolbar&gt;
+</table>
+<p>
+<font color=red>[NOT YET IMPLEMENTED]</font> 
+Toolbars are capable of supporting drag and drop operations of DOM subtrees.  The drag and drop
+code for toolbars can provide feedback for insertion before or after other items on the toolbar.
+In order for this code to work, the contents of the toolbar (e.g., buttons and input fields) must
+be logically grouped into discrete <i>toolbar items</i> using the <font color=green>toolbaritem</font>
+tag.
+<p>
+A toolbar item is also an extension of a box and it can therefore contain arbitrary HTML and XUL
+content that is treated as a single toolbar item for the purposes of drag and drop, deletion operations
+on the toolbar, cut and paste of toolbar items, and context/popup menus on toolbar items.  
+<p>
+The toolbar
+item can lay out its contents horizontally or vertically (with horizontal being
+the default) using the <font color=red>align</font> attribute.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;toolbar&gt;
+  &lt;toolbaritem&gt;
+    &lt;html:button&gt;Button One&lt;/html:button&gt;
+  &lt;/toolbaritem&gt;
+  &lt;toolbaritem&gt;
+    &lt;html:button&gt;Button Two&lt;/html:button&gt;
+  &lt;/toolbaritem&gt;
+  &lt;toolbaritem&gt;
+    &lt;html:img src="icon.gif"/&gt;Input Label: &lt;html:input/&gt;
+  &lt;/toolbaritem&gt;
+&lt;/toolbar&gt;
+</table>
+<p>
+A toolbar's contents can be marked as unmodifiable by setting the <font color=red>readonly</font>
+attribute on the toolbar.  Toolbars with this attribute set will disallow any drops into their
+content area, and they will not allow their contents to be altered in any way.
+<p>
+Although toolbars can be embedded directly in the window, they are commonly placed inside another
+object called the <i>toolbox</i>.  The toolbox is represented using the <font color=green>toolbox</font>
+tag.  A toolbox contains one or more toolbars as children, and it surfaces the UI that allows the
+toolbars within the toolbox to be reordered and collapsed.
+<p>
+When a toolbar is placed inside of a toolbox, it acquires a stripe on its left hand side (if the toolbox
+stacks its components) or on its top side (if the toolbox is horizontal).  This stripe is
+affectionately referred to as the <font color=purple>grippy</font>, and it is the object that the
+user manipulates in order to move the toolbar around or to collapse it.
+<p>
+Collapsed toolbars appear in a thin strip at the bottom of the toolbox (if vertical) or the right of
+the toolbox (if horizontal).  This strip is only shown if at least one of the toolbars in the toolbox
+is collapsed.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+&lt;toolbox&gt;
+  &lt;toolbar id="Command Toolbar"&gt;
+    &lt;html:button&gt;Button One&lt;/html:button&gt;
+  &lt;/toolbar&gt;
+  &lt;toolbar id="Personal Toolbar&gt;
+    &lt;html:button&gt;Button Two&lt;/html:button&gt;
+  &lt;/toolbar&gt;
+  &lt;toolbar id="Location Toolbar&gt;
+    &lt;html:img src="icon.gif"/&gt;URL: &lt;html:input/&gt;
+  &lt;/toolbar&gt;
+&lt;/toolbox&gt;
+</pre>
+</table>
+<p>
+When a toolbar is collapsed, an attribute called <font color=red>collapsed</font> is set to 
+<font color=orange>true</font> on the toolbar element.  When the toolbar is shown again, this
+attribute is unset.  If this attribute is specified in the XUL file, it indicates that the
+initial state of the toolbar is to be collapsed inside the toolbox, although a new state may
+be stored persistently in order for the user's visibility preferences to be retained.  (See
+<a href="persistence.html">Persistence and Sharing</a> for details.) 
+<p>
+The <font color=red>collapsed</font> attribute is ignored
+if the toolbar is not contained in a toolbox.
+<p>
+The toolbar or toolbox can also be
+hidden using the standard mechanism (in both HTML and XUL) for
+hiding content elements: <font color=blue>myToolbar.style.display = none</font>. Showing
+the toolbar requires setting it back to its original display type (which for toolbars
+is <font color=purple>block</font>).
+<p>
+The look of the toolbox grippies can be customized using the pseudoelements
+<font color=purple>:toolbox-normal</font> and <font color=purple>:toolbox-rollover</font>.
+The former is used by default for the grippies, and the latter is used when the user
+mouses over the grippies.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=80% align=center>
+<tr><td>
+<pre>
+:toolbox-rollover {
+    background-color: #ccccff;
+    background-image: url("resource:/res/toolbar/TB_Tab_mo.gif");
+    background-repeat: no-repeat;
+    color: green;
+    border-bottom: solid darkGray 1px;
+    border-top: solid white 0px;
+    border-left: solid white 0px;
+    border-right: solid darkGray 1px;
+}
+</pre>
+</table>
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="menus.html">Previous: Menu Bars and Menus</a>]
+[<a href="buttons.html">Next: Titled Buttons</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<TITLE>Checkbox</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Checkbox (Tri-State)</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="meters.html">Previous: Progress Meter</a>]
+[<a href="boxes.html">Next: The Box System</a>]
+<p>
+<b>Feature Owner:</b> <a href="mailto:pinkerton@netscape.com">Mike Pinkerton</a><br>
+<p>
+The XUL checkbox is similar to its HTML counterpart with one notable exception.  It is capable
+of being placed into a "tri-state" mode, and in this mode it has three states: unchecked,
+checked, and mixed.
+<P>
+The checkbox is declared using the <font color=green>checkbox</font> tag.  The
+<font color=red>value</font> attribute can be set to change the checkbox's state.  Possible
+values are <font color=orange>0</font>, <font color=orange>1</font> and <font color=orange>2</font>.
+<p>
+Until the value is set to <font color=orange>2</font>, the checkbox behaves just like its
+HTML equivalent, and can be toggled between checked and unchecked states.  Once the value
+has been set to <font color=orange>2</font>, the checkbox goes into a mixed state, and from
+there on after, it behaves as tri-state checkbox, which toggles between checked, unchecked,
+and mixed (in that order).
+<p>
+Below is an example of XUL for both kinds of checkboxes. 
+The first checkbox behaves normally. 
+By setting the
+second checkbox's value to "2," it becomes a tristate checkbox from that moment on.
+<p>
+Notice that you must use the <font color=blue>getAttribute</font> and 
+<font color=blue>setAttribute</font> AOM functions to access the 
+<font color=red>value</font> attribute. 
+Because the checkbox is not HTML content, the <font color=purple>value</font> 
+property is not supported.
+<p>
+<table border=1 bgcolor=#d0d0d0 width=90% align=center>
+<tr><td>
+<pre>
+&lt;?xml version="1.0"?&gt; 
+&lt;?xml-stylesheet href="xul.css" type="text/css"?&gt; 
+
+&lt;!DOCTYPE window&gt; 
+
+&lt;window style="width: 100%; height: 100%" 
+  xmlns:html="http://www.w3.org/TR/REC-html40"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  onload="setTri()"&gt; 
+
+&lt;html:h1&gt;TriStateCheckbox Test 1&lt;/html:h1&gt;
+
+&lt;html:script&gt;
+
+function setTri()
+{
+  var tsbox = document.getElementById("tristate"); 
+              tsbox.setAttribute("value", "2");
+}
+
+&lt;/html:script&gt;
+
+&lt;html:hr/&gt;
+
+&lt;!-- this is a normal checkbox --&gt;
+&lt;checkbox/&gt;Dual state&lt;html:br/&gt;
+
+&lt;!-- this is a tristate checkbox after the setTri() 
+        function has been called --&gt;
+&lt;checkbox id="tristate"/&gt;Tri state baby!&lt;html:br/&gt;
+
+&lt;html:button onclick="setTri()"&gt;Click Me To Set TriState
+&lt;/html:button&gt;
+
+&lt;/window&gt;
+</table>
+<p>
+The checkbox's look on a mouse down inside the box can be controlled using CSS.  Currently
+an attribute called <font color=red>depress</font> is set, and this can be used to control
+the look on a mouse down.  <font color=red>[This will eventually be replaced with :active.]</font>
+<p>
+<table align=center width=80% bgcolor=#d0d0d0 border=1>
+<tr><td>
+<pre>
+checkbox {
+   display:inline;
+   border: 1px solid black;
+}
+
+checkbox[depress] {
+   background: darkGray;
+   border: 1px inset black;
+}
+</table>
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="meters.html">Previous: Progress Meter</a>]
+[<a href="boxes.html">Next: The Box System</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

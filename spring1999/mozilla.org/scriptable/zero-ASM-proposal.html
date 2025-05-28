@@ -1,0 +1,428 @@
+<HTML>
+<HEAD>
+<TITLE>A zero-ASM proposal for XPCOMConnect</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=3>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+<P><BR>
+
+
+
+
+
+
+<center><h2>A zero-ASM proposal for XPCOMConnect</h2></center>
+<center><a href="mailto:jband@netscape.com">John Bandhauer</a> - 20 Oct 1998</center>
+<p>
+Perhaps my goals for XPCOM-Connect are not the same as others' goals...
+<p>
+1) Neither of the entities on either side of an XPCOM interface should know or
+care which language was used to implement the entity on the other side.
+<p>
+2) Only interfaces that have been specified in IDL and whose generated code has
+been compiled need to be dealt with -- dynamic constructions of interfaces are
+not important.
+<p>
+3) Support for JavaScript communication to generic MS COM objects is not that
+important -- dealing with pre-built typelibs is not required (anytime soon).
+<p>
+4) Specifying interfaces to be used with XPCOM-Connect should not require
+specialized code to be written by hand or bloat the compiled code greatly. It
+should be the standard practice to specify ALL interesting interfaces in the
+client using IDL that enables XPCOM-Connect interaction.
+<p>
+5) We could live with some reasonable limitations on what sorts of parameters
+can be communicated over XPCOM-Connect interfaces (and any interfaces that might
+want to be used via XPCOM-Connect). Hopefully there will be few or no
+limitations of this sort.
+<p>
+This is a 3 way communication problem: C++ -> JS, JS -> C++, JS -> JS (C++ ->
+C++ makes no calls into XPCOM-Connect - though the IDL compiler is generating
+the .H file from which the interface declaration is compiled by the C++
+compiler)
+<p>
+I think that we can do this with these parts:
+<p>
+1) An appropriate IDL compiler that generates:
+<p>
+  a) a per interface C++ header file 
+<p>
+  b) a per method encoded type 'string'
+<p>  
+  c) a JS2COM proxy C++ class instantiated per object with per method entry 
+     points to allow JavaScript to talk to C++
+<p>
+  d) a COM2JS proxy C++ class instantiated per object with per method entry 
+     points to allow C++ to talk to JavaScript
+<p>
+  e) 'strawman' JS constructors demonstrating an implementation of the interface
+<p>
+2) an XPCOM-Connect runtime used by the proxies to do the grunt work.
+<p>
+C++ implementations of a given interface will use the headerfile generated by
+the IDL compiler, but the proxy classes are independent of user implementation
+-- they need only be compiled. There does need to be a registration process at
+startup of factories for these proxies such that a well known XPCOM-Connect
+runtime function can be later called by anyone and asked for a pointer to a new
+proxy (JS2COM or COM2JS) for a given uuid. The point is that for every
+XPCOM-Connectable interfaces there needs to be some module (either exe or dll)
+that knows how to instantiate the proxy objects for the interface's uuid. That
+module should have some startup function that registers the factory for the
+proxies compiled into the module. This would be the case even if there is no C++
+implementation of the interface itself at all. No changes to the C++
+implementation of a given interface needs to made to support (or use) these
+proxies.
+<p>
+So what do the proxies do?
+<p>
+ -- DISCLAIMER... all the below is heavily pseudo coded --
+<p>
+given IDL that looks something like:
+<pre>
+[object, uuid(some_uuid)] 
+interface IFoo : nsISupports { 
+[property] int        Prop;
+           NS_IMETHOD Method([in] int x, [out] nsString str); 
+}
+</pre>
+we might generate IFoo.h:
+<pre>
+UUID UUID_IFOO = {some_uuid};
+
+class IFoo : nsISupports { 
+public: 
+    NS_IMETHOD getProp(int& i) = 0;  
+    NS_IMETHOD setProp(int& i) = 0;
+
+    NS_IMETHOD Method(int x, nsString& str) = 0;
+}
+</pre>
+
+we might generate IFooConnectProxies.h:
+
+<pre>
+#include "IFoo.h"
+
+class IFooCOM2JSProxy : IFoo { 
+public: 
+    /* declare ctor (and 'init') method here */
+    /* */
+
+    /* implement IFoo */
+    NS_IMETHOD getProp(int& i);  
+    NS_IMETHOD setProp(int& i);
+
+    NS_IMETHOD Method(int x, nsString& str);
+
+    /* internals */
+private:
+    JSObject* self;
+    uint ref_count;
+}
+
+class IFooJS2COMProxy : IFoo { 
+public: 
+    /* declare ctor (and 'init') method here */
+    /* */
+
+    /* implement IFoo */
+    NS_IMETHOD getProp(int& i);  
+    NS_IMETHOD setProp(int& i);
+
+    NS_IMETHOD Method(int x, nsString& str);
+
+    /* internals */
+private:
+    IFoo* self;
+}
+</pre>
+
+we might generate IFooConnectProxies.cpp:
+
+<pre>
+#include "IFooConnectProxies.h"
+
+static const unitN type_getProp[] = /* binary rep of type info for method */
+static const unitN type_Method[] = /* binary rep of type info for method */
+
+/* generated ctor and setter of 'self' */
+
+NS_IMETHOD  
+IFooCOM2JSProxy::getProp(int& i) { 
+    struct {int v0} s; 
+    s.v0 = i;
+    return XPCOMConnectDispatch(self, this, s, type_getProp);
+}
+
+NS_IMETHOD
+IFooCOM2JSProxy::Method(int x, nsString& str) { 
+    struct {int v0, nsString& v1} s; 
+    s.v0 = i; 
+    s.v1 = str; 
+    return XPCOMConnectDispatch(self, this, s, type_Method);
+}
+</pre>
+
+... and so on ...
+<p>
+The points are:
+<p>
+The binary type info can be compiled into this proxy class implementation file.
+It represents:
+<p> 1) the name of the method to be called in JS
+<p> 2) the param types
+<p> 3) the param [in out] mods. 
+<p> 4) some termination value
+<p>
+We hand the XPCOM-Connect runtime function an 'array' of the params and an array
+of type information. That runtime function takes this data, converts it to an
+'array' of jsvals, finds and invokes the JS method of the indicated JSObject,
+converts [out] params and returns.
+<p>
+Some params could be interfaces for which JS2COM proxies need to be created on
+the fly - we may pool and recycle them where we can. I'll talk about them later.
+<p>
+COM2JSProxies are created by JS objects wishing to representing themselves as
+implementing an XPCOM interface. There has to be some XPCOM-Connect runtime 
+bootstrap code to make the JS universe visible to the COM universe at startup. 
+JS objects can call the XPCOM-Connect runtime (from the JS side) and present
+themselves as objects that claim to implement factory interfaces for a given
+class id. At some future point some COM object will ask for the factory and the
+runtime will call the JS object which will return a reference to itself or some
+other JS object. The runtime will automatically wrap the JS object in a
+COM2Proxy wrapper to be handed to COM. This same automatic wrapping happens any
+time a call from COM to JS needs to return an interface pointer. The runtime can
+figure out the type of wrapper needed based on the type of the expected
+interface pointer. In dynamic situations we can use the MS scheme of doing
+something like:
+<pre>
+  foo([in] IID iid, [out, iid_is(iid)] void** ppv)
+</pre>
+Here the type is available at runtime - it just takes a little extra work. The
+runtime could maintain tables of active COM2JSProxies for given interfaces on
+given objects so that it could return existing proxies where possible. This
+allows for not breaking the COM rule of returning the same interface pointer for
+QueryInterface of nsISupports for every interface on a given object.
+<p>
+QueryInterface calls on COM2JSProxy objects need to be routed down to the JS
+object (except for queries of nsISupports).
+<p>
+AddRef and Release calls should be routed to the runtime (along with a pointer
+to a counter uint in the Proxy object) so that the runtime can root/unroot the
+JS object as necessary
+<p>
+JS2COMProxy objects are created by the XPCOM-Connect runtime whenever COM is
+calling JS and handing along an interface pointer. They have methods with the
+normal JS native method signature. The runtime registers JS classes to
+represent them as necessary. On creation they AddRef the COM object they
+represent and Release it in their JS finalize method. 
+<p>
+JS2COMProxy C++ implementations are generated by the IDL compiler into the same
+c++ source file as the COM2JSProxy implementations for the given interface. They
+share the same type information representations.
+<p>
+This might look **SOMETHING*** like this:
+
+<pre>
+CALLBACK(JSBool) 
+IFooJS2COMProxy_Method(JSContext *cx, JSObject *obj, 
+                       uintN argc, jsval *argv, jsval *rval)
+{ 
+    IFooJS2COMProxy* This = JS_GetPrivate(cx, obj); 
+    struct {int v0, nsString& v1} s; 
+
+    if(! XPCOMConnectConvertArgsForJS2COM(cx, s, type_Method, argc, argv)) 
+        return JS_FALSE;
+    if(NS_FAILED(This->self->Method(v0,v1))) 
+        return JS_FALSE; 
+    return XPCOMConnectConvertRetValForJS2COM(cx, s, type_Method, rval))
+}
+</pre>
+
+I don't think that we need separate type libraries on disk. Though at some
+future point we might contemplate building these proxies based on MS typelibs we
+import.
+<p>
+There may be no way for (even the XPCOM-Connect runtime) to detect that both
+sides of an interface are implemented in JS. It may build two complementary
+proxies for this -- Oh well...
+<p>
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

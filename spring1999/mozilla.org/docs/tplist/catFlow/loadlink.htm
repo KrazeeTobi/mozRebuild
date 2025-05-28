@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 (Macintosh; I; PPC) [Netscape]">
+</HEAD>
+<BODY>
+These are notes of interviews with Garrett Blythe. I'm working on the real
+doc.
+
+<P>+&nbsp; Topic: Clicking on a link to load an HTML page, including a
+form, an image, and an applet.
+<BR>&nbsp; -&nbsp; The clicking is platform specific. When the click comes
+in o the window, which is running the event loop. Window receives the WM_LBUTTONDOWN.
+Don’t load on button down. On high level what happens could be dragging,
+selection of text. May not want to laod it. If the user really want to
+load it they release the mouse button &amp; the window (FE code in genview.cpp
+contains message handlers or these) receives a WM_LBUTTONUP. (WM is windows
+message).
+<BR>&nbsp; -&nbsp; On WM_LBUTTONUP. If they stay within the 4 pixel area,
+it’s a click, not a drag. At that point we start talking about cross-platform
+code.
+<BR>&nbsp; -&nbsp; Call into JavaScript to tell them that this URL had
+been clicked. In this case, let’s say their onClick handler is not defined
+or does nothing.
+<BR>&nbsp; -&nbsp; Message goes to the built-in handler by calling NET_GetURL.
+It has a queue of URLs &amp; it just appends it onto the end of the queue.
+It sets a timer of so many ms. The timer code is platform specific. The
+timer calls NET_ProcessNet. Eventually NET_ProcessNet turns off the timer
+after it has nothing left to do.
+<BR>&nbsp; -&nbsp; Eventually, NET_ProcessNet gets called. Within there
+it takes the next URL off the queue. Based on the protocol type (http,
+news, ftp, &amp;c). There are specific protocol handlers for each type.
+NET_ProcessNet is called continually from the platform-specific front end
+code by the timer.
+<BR>&nbsp; -&nbsp; If http, then it calls NET_ProcessHttp. It has a state
+machine. Called repeatedly with some state identifier such as LOAD_DISCONNECT
+[this may not be the riht identifier]. Once we’re connected the server
+will supply the MIME type in the HTTP header.
+<BR>&nbsp; -&nbsp; Once the netlib, has the MIME type is it creates a stream
+converter. The StreamConverter is a struct with function pointers. It Writes()
+data, has a Ready() function to say how many bytes to write, Complete()
+to tell when done, and Abort() to say user hit the stop button. There are
+many stream converters, one for each registered MIME type, such as cmimetype.c
+or as set up by the helper application that works off the preferences set
+by user in Communicator.
+<BR>&nbsp; -&nbsp; At the application launch all registration takes place
+by the InitInstance() function which calls the RegisterMimeTypes() function.
+They all call NET_RegisterContentTypeConverter(“text/html”, FO_PRESENT,
+&lt;functionPointer>); The fptr is a fct that creates the streamConverter
+struct.
+<BR>&nbsp;
+<BR>&nbsp;
+</BODY>
+</HTML>

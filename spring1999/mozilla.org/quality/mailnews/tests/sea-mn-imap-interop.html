@@ -1,0 +1,413 @@
+<HTML>
+<HEAD>
+<TITLE>IMAP Interoperability Feature Test Plan</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=3>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+<P><BR>
+
+
+
+
+
+
+<script LANGUAGE="JavaScript">
+  document.write("<CENTER><FONT COLOR=Red SIZE=-1>");
+  document.write("Last modified on ", document.lastModified);
+  document.write("</CENTER></FONT>");
+</script>
+
+<h2>
+Feature Test Spec</h2>
+<blockquote>
+<b> 5.0 Project (Sea-Monkey)</b>
+<br><b> Mail and News Component</b>
+<br><b></b><i> </i><b>IMAP: Interoperability</b>
+</blockquote>
+<p>Written by: <b><a href="mailto:scurtis@netscape.com">Stacey Curtis</a></b>
+<b></b>
+<p><b>References:</b>
+<br>UI Specification: TBD
+<br>Other: TBD
+<br>Approx. number of test cases: Lots
+<p>
+<hr WIDTH="100%">
+<br>Description: This test plan includes test cases for IMAP functionalities
+of the mail5 client while running against different types of IMAP servers.
+The table below reflects
+the servers that we plan to test against.
+In an ideal world, we would be able to
+test all listed functionalities against all servers in a completed product.
+<p>This test plan is comprised of five nearly-identical sections. Each
+section contains the test cases for one server type (each version of a
+given server type does not have its own test plan section). I decided to
+break up the test plan in this way because not uncommonly, the "notes"
+and/or "expected outcome" columns are significantly different for different
+servers. Although the test plan sections have many redundancies, this structure
+will allow the tester to execute a single section at a time against
+a given server without picking and choosing from many detailed notes, and
+perhaps to more easily track the completion of testing for each server
+type in the test plan section itself. I've turned the server-specific
+details in each section a nifty shade of <font color="#FF0000">red</font><font color="#FF6600">
+</font><font color="#000000">to make them easy to spot</font>.
+<p>The five sections are: <a href="sea-mn-imap-ms.html">Netscape
+Messaging Server</a>, <a href="sea-mn-imap-sims.html">SIMS</a>,
+<a href="sea-mn-imap-uw.html">University
+of Washington</a>, <a href="sea-mn-imap-exchange.html">Microsoft
+Exchange</a>, and <a href="sea-mn-imap-cyrus.html">Cyrus.</a>
+
+<P><H3>More Information</H3>
+
+<P><A HREF="http://www.imap.org/biblio.html"">RFCs</A>
+<P><A HREF="#logging">IMAP logging</A>
+<P><A HREF="#servers">Test Servers</A>
+
+<A NAME="logging"></A>
+<P><h4>About IMAP Logging with Netscape's mozilla mail application:</h4>
+<p>IMAP logging is turned on in the following manner:
+<p><i>Windows 95/98:</i> Insert the following lines into your autoexec.bat
+file:
+
+<P>Set NSPR_LOG_MODULES=IMAP:5
+<br>Set NSPR_LOG_FILE=[filename]
+
+<P>Make sure the path to the file you specify really exists. Reboot. 
+
+<p><i>WinNT:</i> Use the Control Panel | System | Environment tool to set
+the PRLOG env variables as above.
+
+<p><i>Mac:</i> TBD. 
+ 
+<p><i>Unix </i>(e.g., for csh shells):, 
+
+<P>setenv NSPR_LOG_MODULES IMAP:5
+<br>setenv NSPR_LOG_FILE [filename] 
+
+<P>(It's easiest to add those lines to your ~/.cshrc file.)
+
+<P>The 5 in the first variable above specifies the level of logging you want - the lower the number the less logging happens. (Temporarily, though, until further notice, it's going to use PR_LOG_ALWAYS.)
+
+<P>The numbers are supposed to have the following meaning: 
+<ul>
+<li>PR_LOG_NONE = 0,                /* nothing */ 
+<li>PR_LOG_ALWAYS = 1,              /* always printed */     
+<li>PR_LOG_ERROR = 2,               /* error messages */ 
+<li>PR_LOG_WARNING = 3,             /* warning messages */ 
+<li>PR_LOG_DEBUG = 4,               /* debug messages */ 
+</ul>
+
+<p>On all platforms, the log is written over every time you re-launch Communicator.<b><u></u></b>
+
+<A NAME="servers"></A>
+<H4>Test Servers</H4>
+<table BORDER WIDTH="100%" NOSAVE>
+<tr>
+<td></td>
+
+<td><b>IMAP servers</b></td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td>
+<center><b>Expected Outcome (if not obvious)</b></center>
+</td>
+</tr>
+
+<tr NOSAVE>
+<td NOSAVE>1</td>
+
+<td>Netscape Messaging Server 4.1 </td>
+
+<td>TBD</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Netscape Messaging Server 4.03</td>
+
+<td>Example (example servers available only within Netscape; sorry!): tintin</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Netscape Messaging Server 3.5</td>
+
+<td>Example: poisonivy (internal to Netscape)</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Netscape Messaging Server 3.0</td>
+
+<td>Example: zia (internal to Netscape)</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>SIMS 3.5</td>
+
+<td>Example: none.
+</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>SIMS 4.0</td>
+
+<td>Example: none. 
+</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>7</td>
+
+<td>University of Washington v. 11.241</td>
+
+<td>Example: wensleydale (internal to Netscape)</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>8</td>
+
+<td>University of Washington v. 12.247</td>
+
+<td>Example: UW's external server. See <a href="http://slip/client/mailnews/lab/testaccounts.html">test
+accounts</a> page (internal to Netscape).</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>9</td>
+
+<td>Microsoft Exchange v. 5.5</td>
+
+<td>Example: poisonoak (internal to Netscape)</td>
+
+<td>.</td>
+</tr>
+
+<tr>.
+<td>10</td>
+
+<td>Cyrus v. 1.5.2</td>
+
+<td>Example: buggy (internal to Netscape)
+<br>Note: Cyrus's public IMAP server is more recent: 1.5.21. 
+<td>.</td>
+</tr>
+
+<tr>
+<td>11</td>
+
+<td>Innosoft v. PMDF5.2</td>
+
+<td>Example: See internal test accounts page specified above.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<P><i>Note: For another test that should be done, but which may not manifest against any of the commonly-supported servers, see Bugzilla bug 351810. We may need an ISOCOR server to test it, as it requires an unsolicited FETCH response from the server. </i>
+
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

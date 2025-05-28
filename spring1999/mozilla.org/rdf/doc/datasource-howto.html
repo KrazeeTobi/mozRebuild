@@ -1,0 +1,643 @@
+<HTML>
+<HEAD>
+<TITLE>rdf: datasource howto</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP ROWSPAN=2><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH=600 HEIGHT=58 VSPACE=0 HSPACE=0></TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=2><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP><IMG ALT=""
+SRC="../../images/curve1.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve3.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD BGCOLOR="#DDDDDD" VALIGN=TOP COLSPAN=3>
+
+<BR><TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../..//"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../mission.html"> Our Mission</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../about.html"> Who We Are</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../get-involved.html"> Getting Involved</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../community.html"> Community</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../advocacy.html"> Editorials</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../news.html"> What's New</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../development.html"><B> Development</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../blue-sky/"> Blue Sky</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../projects.html"> Projects</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../status/"> Status</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../tools.html"> Tools</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../products.html"><B> Products</B></A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../source.html"> Source Code</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../binaries.html"> Binaries</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../docs/"> Documentation</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../NPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../bugs/"> Bug Reports</A></TD></TR>
+<TR><TD></TD><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=18><A HREF="../../quality/"> Quality</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=20><B></B></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../search.html"><B> Search</B></A></TD></TR>
+<TR><TD VALIGN=TOP><IMG SRC="../../images/bullet1.gif" ALT="" WIDTH=8 HEIGHT=8 HSPACE=2 VSPACE=3></TD><TD NOWRAP COLSPAN=19><A HREF="../../feedback.html"><B> Feedback</B></A></TD></TR>
+</TABLE><BR>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD VALIGN=TOP>
+<P><BR>
+
+
+
+
+
+
+<center>
+<h1>rdf: datasource howto</h1>
+</center>
+
+Contact:
+<a href="mailto:waterson@netscape.com">Chris Waterson</a> (waterson@netscape.com)<br>
+
+<!------------------------------------------------------------------------
+
+  Overview
+
+  ------------------------------------------------------------------------>
+
+<p>
+This document is a cookbook that describes how to create a <i>native,
+client-side datasource</i> that works with Mozilla's RDF
+implementation. It supercedes (and borrows from) the
+
+<a href="rdfdatasources.html">original document</a>
+
+put together by <a href="mailto:rjc@netscape.com">Robert
+Churchill</a>.
+</p>
+
+<ul>
+
+<li>
+<a href="#What_is_a_datasource">
+What is a datasource?
+</a>
+</li>
+
+<li>
+<a href="#Deciding_on_a_vocabulary">
+Deciding on a vocabulary
+</a>
+</li>
+
+<li>
+<a href="#Mapping_your_data_to_nodes_and_arcs">
+Mapping your data to nodes and arcs
+</a>
+</li>
+
+<li>
+<a href="#Implementing_the_nsIRDFDataSource_interface">
+Implementing the <tt>nsIRDFDataSource</tt> interface
+</a>
+</li>
+
+<li>
+<a href="#Registering_the_datasource_component">
+Registering the datasource component
+</a>
+</li>
+
+<li>
+<a href="#Displaying_RDF_as_content">
+Displaying RDF as content
+</a>
+</li>
+</ul>
+
+<!------------------------------------------------------------------------
+
+  What is a datasource?
+
+  ------------------------------------------------------------------------>
+
+<a name="What_is_a_datasource">
+<h3>What is a datasource?</h3>
+</a>
+
+<p>
+<b>[write me!]</b>
+</p>
+
+<!------------------------------------------------------------------------
+
+  Deciding on a vocabulary
+
+  ------------------------------------------------------------------------>
+
+<a name="Deciding_on_a_vocabulary">
+<h3>Deciding on a vocabulary</h3>
+</a>
+
+<p>
+The <i>vocabulary</i> is the set of properties that you will use to
+express relationships between elements (resources and literals) in
+your data model. The first question that you must answer is "should I
+use an existing vocabulary, or invent my own?" A reasonable answer is,
+"use an existing vocabulary unless you <i>absolutely must</i> invent
+your own." This will allow your datasource to be integrated with other
+datasources with a minimum of effort.
+</p>
+
+<p>
+There are several existing vocabularies of note, including:
+
+<ul>
+<li>
+<a href="http://www.w3.org/TR/PR-rdf-schema/">The RDF Schema Specification</a>.
+
+This vocabulary is a "meta vocabulary" that is used to specify other
+vocabularies.
+</li>
+
+<li>
+<a href="http://purl.oclc.org/dc/">The Dublin Core</a>.
+
+This vocabulary is useful for describing electronic resources. It
+contains elements for authorship, subject, publication date, etc.
+</li>
+
+</ul>
+
+</p>
+
+<!------------------------------------------------------------------------
+
+  Mapping your data to nodes and arcs
+
+  ------------------------------------------------------------------------>
+
+<a name="Mapping_your_data_to_nodes_and_arcs">
+<h3>Mapping your data to nodes and arcs</h3>
+</a>
+
+<p>
+<b>[write me!]</b>
+</p>
+
+<!------------------------------------------------------------------------
+
+  Implementing the nsIRDFDataSource interface
+
+  ------------------------------------------------------------------------>
+
+<a name="Implementing_the_nsIRDFDataSource_interface">
+<h3>Implementing the <tt>nsIRDFDataSource</tt> interface</h3>
+</a>
+
+<p>
+Your first chore will be to implement the
+
+<tt><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsRDFInterfaces.idl#186">nsIRDFDataSource</a></tt>
+
+interface. There are basically two approaches that you can take in
+this endeavor:
+</p>
+
+<ol>
+
+<li>
+<p>
+<i>Delegate to an inner proxy</i>. For example, you may choose to
+delegate to the <i>in-memory datasource</i>, which is a generic
+datasource that implements <tt>nsIRDFDataSource</tt>.
+</p>
+
+<p>
+Typically, you provide a parser for reading in some sort of static
+storage (e.g., a data file); the parser translates the datafile into a
+series of calls to <tt>Assert()</tt> to set up the in-memory
+datasource. When <tt>Flush()</tt> is called, or the last reference to
+the datasource is released, a routine walks the in-memory datasource
+and re-serializes the graph back to the original file format.  For
+examples of an implementation like this, look at the
+
+<a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/src/nsRDFXMLDataSource.cpp">RDF/XML datasource</a>
+
+or the 
+
+<a href="http://lxr.mozilla.org/seamonkey/source/rdf/datasource/src/nsBookmarkDataSource.cpp">bookmarks datasource</a>.
+</p>
+
+<p>
+You may want to choose this implementation if your primary goal is to
+"wrap" a legacy data store. This implementation may cause problems if
+your data store can be modified "on the fly" by other agents.
+</p>
+</li>
+
+<li>
+<p>
+<i>Implement the interface yourself</i>. If you choose this route,
+you'll need to implement each of the <tt>nsIRDFDataStore</tt> methods
+"by hand". Although this is more work, it is really the only way to
+create a "live" datasource that may be changed by some outside agent.
+</p>
+
+<p>
+The 
+
+<a href="http://lxr.mozilla.org/seamonkey/source/rdf/datasource/src/nsFileSystemDataSource.cpp">file system datasource</a>
+
+and
+
+<a href="http://lxr.mozilla.org/seamonkey/source/mailnews/local/src/nsMSGFolderDataSource.cpp">local mail datasource</a>
+
+are good examples of datasources that have been implemented this way.
+</p>
+
+<p>
+You'll probably need to choose this implementation if your datasource
+is "live", and may be modified or altered by some outside agent (e.g.,
+new mail arriving). You may also need to choose this implementation if
+the data set which your datasource is modeling is too large to fit in
+to memory (e.g., the entire file system structure).
+</p>
+
+</li>
+
+</ol>
+
+<p>
+<b>[More info on what each method needs to do <i>here</i>]</b>
+</p>
+
+<h4>RDF Commands</h4>
+
+<ul>
+<b>[Describe what commands are, and why you'd implement them.]</b>
+</ul>
+
+<!------------------------------------------------------------------------
+
+  Registering the datasource component
+
+  ------------------------------------------------------------------------>
+
+<a name="Registering_the_datasource_component">
+<h3>Registering the datasource component</h3>
+</a>
+
+<p>
+A datasource is an XPCOM component. As such, it must (currently, see
+[<a href="#1">1</a>]) have:
+
+<ol>
+
+<li>
+An XPCOM <i>CLSID</i> to identify the data source implementation
+</li>
+
+<li>
+An implementation class (that corresponds to the CLSID) whose
+code lives in a DLL. The DLL must be located in the XPCOM
+<tt>components</tt> directory
+</li>
+
+<li>
+A <i>factory</i> that is <i>registered</i> to an XPCOM
+<i>ProgID</i> in order to be instantiated from the repository.
+</li>
+
+</ol>
+</p>
+
+<p>
+Constructing a DLL for a component is beyond the scope of this
+document; the reader is referred to
+
+<a href="http://lxr.mozilla.org/seamonkey/source/rdf/build/nsRDFFactory.cpp">the RDF factory</a>
+
+as a guideline.
+</p>
+
+<p>
+Registering an RDF datasource is fairly simple: in the DLL's
+<tt>NSRegisterSelf()</tt> method, you simply call the <i>component
+manager</i>'s <tt>RegisterComponent()</tt> method:
+</p>
+
+<ul>
+<pre>
+extern "C" PR_IMPLEMENT(nsresult)
+NSRegisterSelf(nsISupports* aServiceManager, const char* aPath)
+{
+   nsresult rv;
+   ...
+   // Assume compMgr refers to the component manager
+   rv = compMgr->RegisterComponent(kMyDataSourceCID, 
+            "My Data Source",
+            NS_RDF_DATASOURCE_PROGID_PREFIX "my-datasource",
+            aPath, PR_TRUE, PR_TRUE);
+   ...
+}
+</pre>
+</ul>
+
+<p>
+Replace <tt>kMyDataSourceCID</tt> with your datasource's CLSID.
+Replace <tt>"My Data Source"</tt> with a descriptive string that
+should appear in the registry. Finally, replace
+<tt>"my-datasource"</tt> with a value appropriate for your
+datasource. This value, when prefixed with <tt>"rdf:"</tt>, is a
+<i>datasource identifier</i>, and may be used with
+
+<tt><a href="http://lxr.mozilla.org/seamonkey/source/rdf/base/idl/nsRDFInterfaces.idl#384">nsIRDFService::GetDataSource()</a></tt>
+
+to retrieve your datasource from the RDF service. For example, the
+above datasource would be accessable as follows:
+</p>
+
+<ul>
+<pre>
+nsIRDFService* rdf;
+rv = nsServiceManager::GetService(kRDFServiceCID,
+          kIRDFServiceIID,
+          (nsISupports**) &rdf);
+
+if (NS_SUCCEEDED(rv)) {
+    nsIRDFDataSource* myDataSource;
+    rv = rdf->GetDataSource("rdf:my-datasource",
+                 &myDataSource);
+
+    if (NS_SUCCEEDED(rv)) {
+        // ...do something to myDataSource here...
+        NS_RELEASE(myDataSource);
+    }
+    nsServiceManager::ReleaseService(kRDFServiceCID, rdf);
+}
+</pre>
+</ul>
+
+<!------------------------------------------------------------------------
+
+  Displaying RDF as content
+
+  ------------------------------------------------------------------------>
+
+<a name="Displaying_RDF_as_content">
+<h3>Displaying RDF as content</h3>
+</a>
+
+<p>
+Now that you've gone through all this pain to expose your information
+as a datasource, you probably want to <i>see</i> it. Using
+
+<a href="http://www.mozilla.org/xpfe/languageSpec.html">XUL</a>,
+
+you can display the contents of your datasource in a <i>tree
+control</i>, a <i>menu</i>, or a <i>toolbar</i>.
+</p>
+
+<p>
+The following XUL fragment illustrates how to instantiate a tree
+control whose body is "rooted" to a resource
+(<tt>http://foo.bar.com/</tt>) that your datasource describes:
+</p>
+
+<ul>
+<pre>
+&lt;window
+  xmlns:html="http://www.w3.org/TR/REC-html40"
+  xmlns:rdf="http://www.w3.org/TR/WD-rdf-syntax#"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
+
+  &lt;tree <b>datasources="rdf:my-datasource"&gt;</b>
+    <b>&lt;treecol rdf:resource="http://home.netscape.com/NC-rdf#Name" /&gt;</b>
+    <b>&lt;treecol rdf:resource="http://home.netscape.com/NC-rdf#URL" /&gt;</b>
+    &lt;treehead&gt;
+      &lt;treeitem&gt;
+        &lt;treecell&gt;Name&lt;/treecell&gt;
+        &lt;treecell&gt;URL&lt;/treecell&gt;
+      &lt;/treeitem&gt;
+    &lt;/treehead&gt;
+
+    &lt;treebody <b>id="http://foo.bar.com/"</b> 
+              <b>containment="http://www.foo.com/RDF#child"</b> /&gt;
+  &lt;/tree&gt;
+
+&lt;/window&gt;
+</pre>
+</ul>
+
+<p>
+The important "magic attributes" have been called out in bold, above:
+</p>
+
+<ul>
+
+<li>
+<p>
+<tt>datasources="rdf:my-datasource"</tt>. This is a space-separated
+list that may include internal XPCOM datasource "identifiers" (as
+described above) and URIs for local or remote RDF/XML documents. Each
+datasource that is listed will be loaded, and the assertions contained
+in the datasource will be made available to the tree control for
+display.
+</p>
+</li>
+
+<li>
+<p>
+<tt>treecol rdf:resource="..."</tt>. This specifies the property that
+will be traversed to compute the cell value for each row in the tree
+control.
+</p>
+</li>
+
+<li>
+<p>
+<tt>&lt;treebody id="..." containment="..."&gt;</tt>. The <tt>id="..."</tt>
+specifies the resource that "roots" the tree, and the
+<tt>containment="..."</tt> specifies the property (or properties, if
+more than one is specified) that will be treated as indicating
+"childhood".
+</p>
+</li>
+
+</ul>
+
+<p>
+<b>[example here]</b>
+</p>
+
+
+<!------------------------------------------------------------------------
+
+  Footnotes
+
+  ------------------------------------------------------------------------>
+
+<hr>
+
+<small>
+<p>
+<a name="1">1.</a>
+
+As of this writing, it is not currently possible to implement
+JavaScript XPCOM components; however, it may soon be possible to do so
+via <a href="http://www.mozilla.org/scriptable/">XPConnect</a>.
+</p>
+
+
+</small>
+
+
+<!------------------------------------------------------------------------
+
+  Footer
+
+  ------------------------------------------------------------------------>
+
+<small>
+Last Modified: $Id: datasource-howto.html,v 1.2 1999/04/13 19:06:18 waterson%netscape.com Exp $
+</small>
+
+
+
+
+<P><BR>
+</TD>
+
+
+<TD VALIGN=TOP ALIGN=RIGHT>
+</TD>
+
+
+<TD BGCOLOR="#000000" VALIGN=TOP><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+</TR>
+
+
+<TR>
+
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#DDDDDD" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+
+<TD VALIGN=BOTTOM COLSPAN=2><IMG ALT=""
+SRC="../../images/curve2.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/curve4.gif"
+WIDTH=16 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+
+<TD BGCOLOR="#000000" VALIGN=BOTTOM ALIGN=RIGHT><IMG ALT=""
+SRC="../../images/bit.gif"
+WIDTH=4 HEIGHT=16 HSPACE=0 VSPACE=0></TD>
+</TR>
+
+<TR>
+
+<TD BGCOLOR="#000000" COLSPAN=6><BR></TD>
+
+<TD BGCOLOR="#000000" VALIGN=TOP>
+
+<FONT COLOR="#AAAAAA" SIZE="-1">
+Copyright &copy; 1998 The Mozilla Organization.
+</FONT>
+
+</TD>
+
+<TD BGCOLOR="#000000" COLSPAN=2><BR></TD>
+</TR>
+
+</TABLE>
+<P>
+</BODY>
+</HTML>

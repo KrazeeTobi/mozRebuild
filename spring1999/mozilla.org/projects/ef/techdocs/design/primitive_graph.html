@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Primitive Graph Format</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2><FONT SIZE=+4>Primitive Graph Format</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="../design.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM" WIDTH=
+"37" HEIGHT="37" NATURALSIZEFLAG="3"><IMG SRC="../arrows/up.gif" ALIGN=
+"BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="control_layer.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+
+<DL>
+  <DT><P ALIGN=RIGHT><A HREF="control_layer.html"><FONT SIZE=+2>Control Layer</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="data_layer.html"><FONT SIZE=+2>Data Layer</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="example1.html"><FONT SIZE=+2>Example 1</FONT></A>
+</DL>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P></P>
+
+<P>Several of the translator's phases use the <EM>primitive graph format</EM>
+to represent the Java function being translated. This format is a static
+single assignment (SSA) control and data flow graph comprised of nodes and
+edges described below. The nodes represent various primitive operations,
+while the edges represent data and control connections between these primitive
+operations.</P>
+
+<P>See <A HREF="../bibliography.html#CFRWZ89">[CFRWZ89]</A> and <A HREF=
+"../bibliography.html#CFRWZ91">[CFRWZ91]</A> for more information about
+SSA graphs. Initially we intend to build the SSA graph directly out of the
+processed bytecodes; later we may use a DJ graph approach <A HREF="../bibliography.html#SreeGao95">[SreeGao95]</A><A
+HREF="../bibliography.html#Sreedhar95">[Sreedhar95]</A> to do it faster
+if needed.</P>
+
+<P>The format of primitive graphs is fairly complex, and we can think of
+it as comprised of several layers. In the next few pages we'll take a look
+at the individual layers (<A HREF="control_layer.html">control</A> and <A
+HREF="data_layer.html">data</A>) in detail, followed by a detailed <A HREF=
+"example1.html">example</A>.</P>
+
+<P><HR ALIGN=LEFT><P></P>
+
+<P>The editable sources for the figures (in ClarisDraw format) are in the <A HREF="graphics/ClarisDraw_sources/Primitive_Graphs">Primitive 
+  Graphs</A> and <A HREF="graphics/ClarisDraw_sources/Basic_Blocks">Basic Blocks</A> 
+  files; the <A HREF="graphics/ClarisDraw_sources/Background">Background</A> file 
+  is used as an intermediary to get around ClarisDraw's off-by-one error when 
+  copying selections to avoid getting a white border around the figures. 
+<HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

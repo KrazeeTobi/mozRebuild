@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<TITLE>Introduction to a XUL Document</TITLE>
+</HEAD>
+<BODY>
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Introduction to a XUL Document</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="overview.html">Previous: Overview of a Package</a>]
+[<a href="menus.html">Next: Menu Bars and Menus</a>]
+<p>
+Below is a sample XUL document that describes a window with a menu bar and an HTML content area.
+The menu bar has a menu, <i>File</i>, with a single menu item that dumps 
+<tt>Hello world!</tt> to the console when selected.
+<p>
+<table border=1 align=center width=80% bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;?xml version="1.0"?&gt; 
+&lt;?xml-stylesheet href="chrome://global/skin/xul.css" type="text/css"?&gt; 
+
+&lt;!DOCTYPE window&gt; 
+
+&lt;window id="main-window" xmlns:html="http://www.w3.org/TR/REC-html40"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt; 
+  &lt;menubar&gt;
+      &lt;menu name="File"&gt;
+        &lt;menuitem name="Hello World!" onclick="dump('Hello world!\n');"/&gt;
+      &lt;/menu&gt;
+  &lt;/menubar&gt; 
+  &lt;html:iframe id="content-frame" src="contentframe.html" flex="100%" /&gt;
+&lt;/window&gt;
+</table>
+<p>
+The first line of the XML file is standard and just indicates the version of XML.  The second line
+is a processing directive that loads XUL's global style sheet (a CSS file).  If you're curious about
+what the wacky <tt>chrome:</tt> URL means, you can skip ahead to <a href="packages.html">packages</a>.
+This CSS file contains rules
+that describe how the XUL components inside the XML file look by default.
+<p>
+You can load as many style sheets as you wish using repeated processing directives, although you
+should always make sure to load the xul.css file initially.
+<p>
+The root tag of the XUL document follows.  It sets up the XUL and HTML namespaces using the
+<tt>xmlns</tt> attribute.  The form specified above makes XUL the default namespace, which means
+that it isn't necessary to put <tt>xul:</tt> in front of any XUL tag names.  
+<p>
+A root tag of <font color=green>window</font> indicates that the XUL
+document is intended to be a top-level window or loaded inside an embedded HTML frame/iframe.  
+<p>
+Notice that the window tag has an <font color=red>id</font> attached to it.  Most nodes in XUL
+have these identifiers, which enable the nodes to be retrieved easily using the AOM's 
+<tt>getElementById</tt> method.
+<p>
+Identifiers are also useful for CSS, since rules can be applied to individual elements in XUL
+using the same # syntax that is possible for HTML elements.
+<pre><font color=orange>
+#main-window {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+</font></pre>
+<p>
+For example, the above style rule would apply to the main window and dictates that the 
+window should consume
+the full width and height available to it in a content area.
+<p>
+The next line of the XUL file declares the <font color=green>menubar</font>.  The menu bar contains
+a single <font color=green>menu</font> tag called <font color=red>File</font>.  This menu contains
+a single menu item that has a simple JavaScript <font color=red>onclick</font> handler attached to it.  This handler fires
+when the menu is selected by the user, and it dumps the text <font color=orange>Hello world!</font>
+to the console.  (See <a href="menus.html">Menu Bars and Menus</a> for details.)
+<p>
+Finally there is an HTML <font color=green>iframe</font>.  Note that the frame is qualified with the prefix <tt>html:</tt>, since
+it is an HTML object being used inside a default XUL namespace.
+The frame also has a special attribute called <font color=red>flex</font>, which indicates how much
+the frame is allowed to stretch to consume available space
+inside its window. (See <a href="boxes.html">The Box System</a> for
+details).
+<p>
+Notice that all attributes and tag names are in lower case.  This is a requirement.
+<font color=red>DO NOT USE UPPERCASE TAG NAMES OR ATTRIBUTE NAMES FOR HTML OR XUL ELEMENTS IN XML!</font>
+If you do they won't be recognized.
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="overview.html">Previous: Overview of a Package</a>]
+[<a href="menus.html">Next: Menu Bars and Menus</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+</BODY>
+</HTML>

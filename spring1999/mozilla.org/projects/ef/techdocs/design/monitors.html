@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Monitors and Hash Codes</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Runtime</H2>
+
+
+<H2><FONT SIZE=+4>Monitors and Hash Codes</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC="../electricalfire.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A>  <A HREF=
+"types.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT=
+"37" NATURALSIZEFLAG="3"></A><A HREF="runtime.html"><IMG SRC="../arrows/up.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="monitors_32.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+
+<DL>
+  <DT><P ALIGN=RIGHT><A HREF="monitors_32.html"><FONT SIZE=+2>32-Bit Implementation</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="monitors_64.html"><FONT SIZE=+2>64-Bit Implementation</FONT></A>
+</DL>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P></P>
+
+<H2>Monitors</H2>
+
+
+<P>Each Java object contains a monitor and a hash code. The object's monitor
+is acquired by entering a <CODE>synchronized</CODE> method invoked on the
+object or by entering a Java <CODE>synchronized</CODE> statement on that
+object. The object's monitor is released by leaving the <CODE>synchronized</CODE>
+method or <CODE>synchronized</CODE> statement. Finally, the <CODE>wait</CODE>
+method also releases and reacquires an object's monitor.</P>
+
+<P>A thread can acquire the same monitor multiple times; the thread must
+release the monitor the same number of times before another thread can acquire
+the monitor. A thread that attempts to acquire a monitor held by another
+thread blocks until that monitor becomes available or until the waiting
+thread is stopped using <CODE>Thread.stop</CODE>.</P>
+
+<H3>Block Structuring</H3>
+
+
+<P>In the Java source language all synchronization operations are balanced
+-- each object acquisition must be balanced by a release of the same object.
+This is enforced by Java's block structuring.</P>
+
+<P>On the other hand, Java class files can contain unstructured <CODE>monitorenter</CODE>
+and <CODE>monitorexit</CODE> bytecodes that acquire an object without releasing
+it or release one without acquiring it. To simplify our implementation the
+front end will analyze the bytecodes of a method and throw a verification
+error if it cannot determine that <CODE>monitorenter</CODE> and <CODE>monitorexit</CODE>
+calls are properly structured. Doing the precise analysis would be equivalent
+to solving the halting problem, so the front end does a conservative control
+and data graph analysis that ensures that:</P>
+
+<UL>
+  <LI>The set S of all <CODE>monitorenter</CODE> and <CODE>monitorexit</CODE>
+  bytecodes in a method can be divided into a set of disjoint subsets S<FONT
+   SIZE=-2>1</FONT>, S<FONT SIZE=-2>2</FONT>, ..., S<FONT SIZE=-2>n</FONT>.
+  <LI>S is the union of S<FONT SIZE=-2>1</FONT>, S<FONT SIZE=-2>2</FONT>,
+  ..., S<FONT SIZE=-2>n</FONT>.
+  <LI>All <CODE>monitorenter</CODE> and <CODE>monitorexit</CODE> bytecodes
+  in a subset S<FONT SIZE=-2>i</FONT> refer to the same data node when the
+  method is translated into the static single assignment form.
+  <LI>Each subset S<FONT SIZE=-2>i</FONT> contains exactly one <CODE>monitorenter</CODE>
+  bytecode E<FONT SIZE=-2>i</FONT>.
+  <LI>Each <CODE>monitorexit</CODE> bytecode X<FONT SIZE=-2>ij</FONT> in
+  subset S<FONT SIZE=-2>i</FONT> is dominated by S<FONT SIZE=-2>i</FONT>'s
+  <CODE>monitorenter</CODE> bytecode E<FONT SIZE=-2>i</FONT>.
+  <LI>Each control path starting at E<FONT SIZE=-2>i</FONT> that does not
+  visit E<FONT SIZE=-2>i</FONT> again contains at most one <CODE>monitorexit</CODE>
+  bytecode in S<FONT SIZE=-2>i</FONT>.
+  <LI>Each control path starting at E<FONT SIZE=-2>i</FONT> that leaves the
+  method and does not visit E<FONT SIZE=-2>i</FONT> again contains exactly
+  one <CODE>monitorexit</CODE> bytecode in S<FONT SIZE=-2>i</FONT>.
+</UL>
+
+<P>Every program that satisfies the above conditions has block-structured
+monitor usage. The converse is not necessarily true -- there are some programs
+that use <CODE>monitorenter</CODE> and <CODE>monitorexit</CODE> in a structured
+manner that do not satisfy the above conditions. It is our hope and expectation
+that Java-to-bytecode compilers will not produce such programs, as they
+would have to be rejected by our verifier. Current Java-to-bytecode compilers
+do not seem to produce such programs.</P>
+
+<H2>Hash Codes</H2>
+
+
+<P>Each Java object has a 32-bit integer hash code returned by the <CODE>hashCode</CODE>
+method. Hash codes are meant to be statistically distinct object identifiers.
+For some classes such as <CODE>String</CODE> the Java specification gives
+the value that the <CODE>hashCode</CODE> method should produce. For other
+classes the value is implementation-defined.</P>
+
+<P>We implement monitors and hash codes differently depending on whether
+we are working on a 32 or 64-bit address implementation. See the <A HREF=
+"monitors_32.html">32-bit implementation</A> and <A HREF="monitors_64.html">64-bit
+implementation</A> pages.</P>
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

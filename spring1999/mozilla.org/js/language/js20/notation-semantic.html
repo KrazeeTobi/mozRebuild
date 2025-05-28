@@ -1,0 +1,539 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>JavaScript 2.0 Semantic Notation</TITLE>
+<LINK rel=stylesheet href="../styles.css">
+<LINK rel=Start href="index.html">
+<LINK rel=Contents href="index.html">
+<LINK rel=Prev href="notation-grammar.html">
+<LINK rel=Next href="lexer-grammar.html">
+<SCRIPT type="text/javascript" language="JavaScript1.2" src="../unicodeCompatibility.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+<TR>
+  <TD valign=TOP nowrap>
+    <DIV class=title2><SPAN class=top-title>JavaScript 2.0</SPAN></DIV>
+    <DIV class=title2>Formal Description</DIV>
+    <DIV class=title1>Semantic Notation</DIV>
+  </TD>
+  <TD valign=TOP nowrap align=RIGHT><A href="notation-grammar.html"><IMG src="../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="index.html"><IMG src="../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="lexer-grammar.html"><IMG src="../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+</TR>
+</TABLE>
+
+<P class=mod-date>Wednesday, May 12, 1999</P>
+
+
+<H2>Introduction</H2>
+
+<P>To precisely specify the semantics of JavaScript 2.0, we use the notation described below to define the behavior of all
+JavaScript 2.0 constructs and their interactions. </P>
+
+<H2>Semantic Values</H2>
+
+<P>The semantics describe the meaning of a JavaScript 2.0 program in terms of operations on simpler objects called semantic
+values. These semantic values include, among others, booleans, integers, rational numbers, characters, and strings.</P>
+
+<P>Semantic values are held in semantic variables and can be passed to semantic functions. For documentation purposes we declare
+the semantic type of each semantic variable and function. A semantic type is a set of all semantic values that can be held
+in a semantic variable. Names of semantic types are shown in <SPAN class=type-name>Capitalized Red Small Caps</SPAN> (if
+your browser supports them), and compound semantic type expressions are in <SPAN class=type-expression>red</SPAN>.</P>
+
+<H3><A name="bottom"></A>Bottom</H3>
+
+<P>There is a special semantic value <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT> (pronounced as "bottom")
+that represents the result of an inconsistent or nonterminating computation. <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+is a member of every semantic type. Unless specified otherwise, applying any semantic operator (such as +, *, etc.) to <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+or calling a semantic function with <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT> as <I>any</I> argument
+also yields <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT> (in technical terms, semantic functions and operators
+are strict in all of their arguments unless specified otherwise).</P>
+
+<P>If interpreting a JavaScript program according to the semantics here gives a <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+result, an actual implementation executing that JavaScript program might signal a syntax error, throw an exception, fail to
+terminate, or return an implementation-defined result. Explanatory notes in the semantics specify in each case which of these
+behaviors an implementation should exhibit.</P>
+
+<H3><A name="T-Void"></A>Void</H3>
+
+<P>Semantic functions that do not return a useful value return the semantic value <SPAN class=global-variable>unit</SPAN>.
+The semantic type of <SPAN class=global-variable>unit</SPAN> is <SPAN class=type-name>Void</SPAN>. There are no operations
+defined on <SPAN class=global-variable>unit</SPAN>.</P>
+
+<H3><A name="T-Boolean"></A>Booleans</H3>
+
+<P>The semantic type <SPAN class=type-name>Boolean</SPAN> provides the semantic values <SPAN class=global-variable>true</SPAN>
+and <SPAN class=global-variable>false</SPAN>.</P>
+
+<P>Let <VAR>a</VAR> and <VAR>b</VAR> be be two <SPAN class=type-name>Boolean</SPAN> expressions. We use the following notation
+to indicate logical operations:</P>
+
+<DIV class=indent>
+  <TABLE border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Notation&nbsp;&nbsp;</TH>
+    <TH valign=TOP nowrap align=LEFT>Result&nbsp;Type&nbsp;&nbsp;</TH>
+    <TH valign=TOP align=LEFT>Result&nbsp;Value</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="logical-not"></A><SPAN class=semantic-keyword>not</SPAN>&nbsp;<VAR>a</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <VAR>a</VAR> is <SPAN class=global-variable>false</SPAN>; <SPAN class=global-variable>false</SPAN>
+      if <VAR>a</VAR> is <SPAN class=global-variable>true</SPAN>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="logical-and"></A><VAR>a</VAR>&nbsp;<SPAN class=semantic-keyword>and</SPAN>&nbsp;<VAR>b</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if both <VAR>a</VAR> and <VAR>b</VAR> are <SPAN class=global-variable>true</SPAN>;
+      <SPAN class=global-variable>false</SPAN> if at least one of <VAR>a</VAR> and <VAR>b</VAR> is <SPAN class=global-variable>false</SPAN>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="logical-or"></A><VAR>a</VAR>&nbsp;<SPAN class=semantic-keyword>or</SPAN>&nbsp;<VAR>b</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if at least one of <VAR>a</VAR> and <VAR>b</VAR> is <SPAN class=global-variable>true</SPAN>;
+      <SPAN class=global-variable>false</SPAN> if both <VAR>a</VAR> and <VAR>b</VAR> are <SPAN class=global-variable>false</SPAN>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="logical-xor"></A><VAR>a</VAR>&nbsp;<SPAN class=semantic-keyword>xor</SPAN>&nbsp;<VAR>b</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <VAR>a</VAR> is <SPAN class=global-variable>true</SPAN> and
+      <VAR>b</VAR> is <SPAN class=global-variable>false</SPAN> or <VAR>a</VAR> is <SPAN class=global-variable>false</SPAN>
+      and <VAR>b</VAR> is <SPAN class=global-variable>true</SPAN>; <SPAN class=global-variable>false</SPAN> if both <VAR>a</VAR>
+      and <VAR>b</VAR> are <SPAN class=global-variable>true</SPAN> or both <VAR>a</VAR> and <VAR>b</VAR> are <SPAN class=global-variable>false</SPAN>.</TD>
+  </TR>
+  </TABLE>
+
+</DIV>
+<P>Like most other operators, <SPAN class=semantic-keyword>and</SPAN>, <SPAN class=semantic-keyword>or</SPAN>, and <SPAN class=semantic-keyword>xor</SPAN>
+evaluate both operands before returning a result; these operators do not short-circuit. If either operand is <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>,
+the result is also <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>.</P>
+
+<H3><A name="T-Integer"></A>Integers</H3>
+
+<P>Unless specified otherwise, numbers in the semantics written without a slash or decimal point are mathematical integers:
+..., -3, -2, -1, 0, 1, 2, 3, .... The infinite set of all integers is called <SPAN class=type-name>Integer</SPAN>.</P>
+
+<P>Let <VAR>i</VAR> and <VAR>j</VAR> be be two <SPAN class=type-name>Integer</SPAN> expressions. We use the following notation
+to indicate arithmetic operations:</P>
+
+<DIV class=indent>
+  <TABLE border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Notation&nbsp;&nbsp;</TH>
+    <TH valign=TOP nowrap align=LEFT>Result&nbsp;Type&nbsp;&nbsp;</TH>
+    <TH valign=TOP align=LEFT>Result&nbsp;Value</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="integer-negate"></A>-<VAR>i</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Integer</SPAN></TD>
+    <TD valign=TOP>The mathematical negation of <VAR>i</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="integer-add"></A><VAR>i</VAR>&nbsp;+&nbsp;<VAR>j</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Integer</SPAN></TD>
+    <TD valign=TOP>The mathematical sum of <VAR>i</VAR> and <VAR>j</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="integer-subtract"></A><VAR>i</VAR>&nbsp;-&nbsp;<VAR>j</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Integer</SPAN></TD>
+    <TD valign=TOP>The mathematical difference of <VAR>i</VAR> and <VAR>j</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="integer-multiply"></A><VAR>i</VAR>&nbsp;*&nbsp;<VAR>j</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Integer</SPAN></TD>
+    <TD valign=TOP>The mathematical product of <VAR>i</VAR> and <VAR>j</VAR>.</TD>
+  </TR>
+  </TABLE>
+
+</DIV>
+
+<P>In addition to the operators above, all of the operators on rationals, such as <A href="#rational-divide">division</A>
+and comparisons, are also available for integers.</P>
+
+<H3><A name="T-Rational"></A>Rationals</H3>
+
+<P>Numbers in the semantics written with a slash are mathematical rational numbers. Every integer is also a rational. Rational
+numbers include 0, 1, 2, -1, 1/2, -12/7, and -24/14; the last two are different ways of writing the same rational number.
+The infinite set of all rational numbers is called <SPAN class=type-name>Rational</SPAN>, and it has <SPAN class=type-name>Integer</SPAN>
+as a subtype.</P>
+
+<P>Let <VAR>x</VAR> and <VAR>y</VAR> be be two <SPAN class=type-name>Rational</SPAN> expressions. We use the following notation
+to indicate arithmetic operations:</P>
+
+<DIV class=indent>
+  <TABLE border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Notation&nbsp;&nbsp;</TH>
+    <TH valign=TOP nowrap align=LEFT>Result&nbsp;Type&nbsp;&nbsp;</TH>
+    <TH valign=TOP align=LEFT>Result&nbsp;Value</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-negate"></A>-<VAR>x</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Rational</SPAN></TD>
+    <TD valign=TOP>The mathematical negation of <VAR>x</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-add"></A><VAR>x</VAR>&nbsp;+&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Rational</SPAN></TD>
+    <TD valign=TOP>The mathematical sum of <VAR>x</VAR> and <VAR>y</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-subtract"></A><VAR>x</VAR>&nbsp;-&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Rational</SPAN></TD>
+    <TD valign=TOP>The mathematical difference of <VAR>x</VAR> and <VAR>y</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-multiply"></A><VAR>x</VAR>&nbsp;*&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Rational</SPAN></TD>
+    <TD valign=TOP>The mathematical product of <VAR>x</VAR> and <VAR>y</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-divide"></A><VAR>x</VAR>&nbsp;/&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Rational</SPAN></TD>
+    <TD valign=TOP>The mathematical quotient of <VAR>x</VAR> and <VAR>y</VAR>; <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+      if <VAR>y</VAR>=0.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-eq"></A><VAR>x</VAR>&nbsp;=&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <VAR>x</VAR> and <VAR>y</VAR> are mathematically equal.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-ne"></A><VAR>x</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_ne)</SCRIPT>&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <VAR>x</VAR> and <VAR>y</VAR> are not mathematically equal.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-lt"></A><VAR>x</VAR>&nbsp;&lt;&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <VAR>x</VAR> is mathematically less than <VAR>y</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-le"></A><VAR>x</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_le)</SCRIPT>&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <VAR>x</VAR> is mathematically less than or equal to <VAR>y</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-gt"></A><VAR>x</VAR>&nbsp;&gt;&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <VAR>x</VAR> is mathematically greater than <VAR>y</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="rational-ge"></A><VAR>x</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_ge)</SCRIPT>&nbsp;<VAR>y</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <VAR>x</VAR> is mathematically greater than or equal to <VAR>y</VAR>.</TD>
+  </TR>
+  </TABLE>
+
+</DIV>
+
+<H3><A name="T-Double"></A>Doubles</H3>
+
+<P>Numbers in the semantics written with a decimal point are double-precision IEEE floating-point numbers, including distinct
++0.0, -0.0, <SPAN class=global-variable>+<SCRIPT type="text/javascript">document.write(U_infin)</SCRIPT></SPAN>, <SPAN class=global-variable>-<SCRIPT type="text/javascript">document.write(U_infin)</SCRIPT></SPAN>,
+and <SPAN class=global-variable>NaN</SPAN>. The finite set of all of these numbers is called <SPAN class=type-name>Double</SPAN>.
+These numbers are disjoint from integers and rationals; when writing <SPAN class=type-name>Double</SPAN> numbers in the semantics,
+we always include a decimal point to distinguish them from <SPAN class=type-name>Integer</SPAN> and <SPAN class=type-name>Rational</SPAN>
+numbers.</P>
+
+<H3><A name="T-Character"></A>Characters</H3>
+
+<P>We write single Unicode 16-bit code points enclosed in single quotes <SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT>
+and <SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>. The semantic type <SPAN class=type-name>Character</SPAN>
+is the set of all 65536 Unicode 16-bit code points: <SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE><SPAN class=control>&#171;u0000&#187;</SPAN></CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,
+<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE><SPAN class=control>&#171;u0001&#187;</SPAN></CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,
+...,<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE>A</CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,
+<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE>B</CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,
+<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE>C</CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,
+..., <SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE><SPAN class=control>&#171;uFFFF&#187;</SPAN></CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>
+(see also <A href="notation.html#character-notation">notation for non-ASCII characters</A>).</P>
+
+<P>Let <VAR>c</VAR> be a <SPAN class=type-name>Character</SPAN> and <VAR>i</VAR> be an <SPAN class=type-name>Integer</SPAN>.
+We use the following notation to indicate conversions between characters and integers:</P>
+
+<DIV class=indent>
+  <TABLE border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Notation&nbsp;&nbsp;</TH>
+    <TH valign=TOP nowrap align=LEFT>Result&nbsp;Type&nbsp;&nbsp;</TH>
+    <TH valign=TOP align=LEFT>Result&nbsp;Value</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="V-characterToCode"></A><SPAN class=global-variable>characterToCode</SPAN>(<VAR>c</VAR>)</TD>
+    <TD valign=TOP><SPAN class=type-name>Integer</SPAN></TD>
+    <TD valign=TOP>The number of the Unicode code point <VAR>c</VAR>.</TD>
+  </TR>
+   <TR>
+    <TD valign=TOP nowrap><A name="V-codeToCharacter"></A><SPAN class=global-variable>codeToCharacter</SPAN>(<VAR>i</VAR>)</TD>
+    <TD valign=TOP><SPAN class=type-name>Integer</SPAN></TD>
+    <TD valign=TOP>The Unicode code point number <VAR>c</VAR>, or <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+      if <VAR>i</VAR>&lt;0 or <VAR>i</VAR>&gt;65535.</TD>
+  </TR>
+ </TABLE>
+
+</DIV>
+
+<H3><A name="vector"></A>Vectors</H3>
+
+<P>A semantic vector contains zero or more elements, each of which is a semantic value of type <VAR class=type-name>t</VAR>.
+The semantic type of vectors whose elements have type <VAR class=type-name>t</VAR> is <SPAN class=type-expression><VAR class=type-name>t</VAR>[]</SPAN>.
+We write a vector value by enclosing a list of comma-separated values inside bold brackets:</P>
+
+<P class=indent><B>[</B><VAR>element<SPAN class=sub-num>0</SPAN></VAR>, <VAR>element<SPAN class=sub-num>1</SPAN></VAR>,
+... , <VAR>element<SPAN class=sub-num><VAR>n</VAR>-1</SPAN></VAR><B>]</B><SUB><VAR class=type-name>t</VAR></SUB></P>
+
+<P>The subscript following the close bracket denotes the type <VAR class=type-name>t</VAR> of the vector's elements. We
+omit this subscript when the type is clear from context.</P>
+
+<P>For example, the following semantic value is a vector of four strings and has the semantic type <SPAN class=type-expression><SPAN class=type-name>String</SPAN>[]</SPAN>:</P>
+
+<P class=indent><B>[</B><SCRIPT type="text/javascript">document.write("&#8220;")</SCRIPT><CODE>parsley</CODE><SCRIPT type="text/javascript">document.write("&#8221;")</SCRIPT>,&nbsp;<SCRIPT type="text/javascript">document.write("&#8220;")</SCRIPT><CODE>sage</CODE><SCRIPT type="text/javascript">document.write("&#8221;")</SCRIPT>,&nbsp;<SCRIPT type="text/javascript">document.write("&#8220;")</SCRIPT><CODE>rosemary</CODE><SCRIPT type="text/javascript">document.write("&#8221;")</SCRIPT>,&nbsp;<SCRIPT type="text/javascript">document.write("&#8220;")</SCRIPT><CODE>thyme</CODE><SCRIPT type="text/javascript">document.write("&#8221;")</SCRIPT><B>]</B><SUB><SPAN class=type-name>String</SPAN></SUB></P>
+
+<P>Let <VAR>v</VAR> = <B>[</B><VAR>e<SPAN class=sub-num>0</SPAN></VAR>, <VAR>e<SPAN class=sub-num>1</SPAN></VAR>, ...
+, <VAR>e<SPAN class=sub-num><VAR>n</VAR>-1</SPAN></VAR><B>]</B><SUB><VAR class=type-name>t</VAR></SUB>, <VAR>w</VAR> =
+<B>[</B><VAR>f<SPAN class=sub-num>0</SPAN></VAR>, <VAR>f<SPAN class=sub-num>1</SPAN></VAR>, ... , <VAR>f<SPAN class=sub-num><VAR>m</VAR>-1</SPAN></VAR><B>]</B><SUB><VAR class=type-name>u</VAR></SUB>, and <VAR>i</VAR> be an integer.
+We use the following notation to indicate operations on vectors:</P>
+
+<DIV class=indent>
+  <TABLE border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Notation&nbsp;&nbsp;</TH>
+    <TH valign=TOP nowrap align=LEFT>Result&nbsp;Type&nbsp;&nbsp;</TH>
+    <TH valign=TOP align=LEFT>Result&nbsp;Value</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="vector-append"></A><VAR>v</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<VAR>w</VAR></TD>
+    <TD valign=TOP nowrap><SPAN class=type-expression><VAR class=type-name>t</VAR>[]</SPAN></TD>
+    <TD valign=TOP>The concatenated vector <B>[</B><VAR>e<SPAN class=sub-num>0</SPAN></VAR>, <VAR>e<SPAN class=sub-num>1</SPAN></VAR>,
+      ... , <VAR>e<SPAN class=sub-num><VAR>n</VAR>-1</SPAN></VAR>, <VAR>f<SPAN class=sub-num>0</SPAN></VAR>, <VAR>f<SPAN class=sub-num>1</SPAN></VAR>,
+      ... , <VAR>f<SPAN class=sub-num><VAR>m</VAR>-1</SPAN></VAR><B>]</B><SUB><VAR class=type-name>t</VAR></SUB>. The
+      types <VAR class=type-name>t</VAR> and <VAR class=type-name>u</VAR> must be identical.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="V-length"></A><SPAN class=global-variable>length</SPAN>(<VAR>v</VAR>)</TD>
+    <TD valign=TOP><SPAN class=type-name>Integer</SPAN></TD>
+    <TD valign=TOP>The length <VAR>n</VAR> of the vector.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="V-empty"></A><SPAN class=global-variable>empty</SPAN>(<VAR>v</VAR>)</TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <SPAN class=global-variable>length</SPAN>(<VAR>v</VAR>)=0; <SPAN class=global-variable>false
+      </SPAN>if <SPAN class=global-variable>length</SPAN>(<VAR>v</VAR>)<SCRIPT type="text/javascript">document.write(U_ne)</SCRIPT>0.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="vector-read"></A><VAR>v</VAR>[<VAR>i</VAR>]</TD>
+    <TD valign=TOP><VAR class=type-name>t</VAR></TD>
+    <TD valign=TOP>The <VAR>i</VAR>th element <VAR>e<SPAN class=sub>i</SPAN></VAR>, or <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+      if <VAR>i</VAR>&lt;0 or <VAR>i</VAR><SCRIPT type="text/javascript">document.write(U_ge)</SCRIPT><VAR>n</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="V-first"></A><SPAN class=global-variable>first</SPAN>(<VAR>v</VAR>)</TD>
+    <TD valign=TOP><VAR class=type-name>t</VAR></TD>
+    <TD valign=TOP>The first element <VAR>e<SPAN class=sub-num>0</SPAN></VAR> of the vector, or <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+      if <VAR>n</VAR>=0.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="V-last"></A><SPAN class=global-variable>last</SPAN>(<VAR>v</VAR>)</TD>
+    <TD valign=TOP><VAR class=type-name>t</VAR></TD>
+    <TD valign=TOP>The last element <VAR>e<SPAN class=sub-num><VAR>n</VAR>-1</SPAN></VAR> of the vector, or <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+      if <VAR>n</VAR>=0.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="V-rest"></A><SPAN class=global-variable>rest</SPAN>(<VAR>v</VAR>)</TD>
+    <TD valign=TOP nowrap><SPAN class=type-expression><VAR class=type-name>t</VAR>[]</SPAN></TD>
+    <TD valign=TOP>A vector <B>[</B><VAR>e<SPAN class=sub-num>1</SPAN></VAR>,
+      ... , <VAR>e<SPAN class=sub-num><VAR>n</VAR>-1</SPAN></VAR><B>]</B><SUB><VAR class=type-name>t</VAR></SUB> consisting
+      of all elements of <VAR>v</VAR> except the first, or <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+      if <VAR>n</VAR>=0.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="V-butLast"></A><SPAN class=global-variable>butLast</SPAN>(<VAR>v</VAR>)</TD>
+    <TD valign=TOP nowrap><SPAN class=type-expression><VAR class=type-name>t</VAR>[]</SPAN></TD>
+    <TD valign=TOP>A vector <B>[</B><VAR>e<SPAN class=sub-num>0</SPAN></VAR>,
+      ... , <VAR>e<SPAN class=sub-num><VAR>n</VAR>-2</SPAN></VAR><B>]</B><SUB><VAR class=type-name>t</VAR></SUB> consisting
+      of all elements of <VAR>v</VAR> except the last, or <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+      if <VAR>n</VAR>=0.</TD>
+  </TR>
+  </TABLE>
+
+</DIV>
+
+
+<H3><A name="T-String"></A>Strings</H3>
+
+<P>A semantic string is merely a vector of characters. The semantic type <SPAN class=type-name>String</SPAN>
+is equivalent to <SPAN class=type-expression><SPAN class=type-name>Character</SPAN>[]</SPAN>. For notational convenience we
+can write a string literal as zero or more characters enclosed in double quotes. Thus,</P>
+
+<P class=indent><SCRIPT type="text/javascript">document.write("&#8220;")</SCRIPT><CODE>Wonder</CODE><CODE><SPAN class=control>&#171;LF&#187;</SPAN></CODE><SCRIPT type="text/javascript">document.write("&#8221;")</SCRIPT></P>
+
+<P>is equivalent to:</P>
+
+<P class=indent><B>[</B><SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE>W</CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,&nbsp;<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE>o</CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,&nbsp;<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE>n</CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,&nbsp;<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE>d</CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,&nbsp;<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE>e</CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,&nbsp;<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE>r</CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT>,&nbsp;<SCRIPT type="text/javascript">document.write("&#8216;")</SCRIPT><CODE><SPAN class=control>&#171;LF&#187;</SPAN></CODE><SCRIPT type="text/javascript">document.write("&#8217;")</SCRIPT><B>]</B><SUB><SPAN class=type-name>Character</SPAN></SUB></P>
+
+<P>In addition to the vector operations above, we can compare two <SPAN class=type-name>String</SPAN>s
+<VAR>c</VAR> and <VAR>d</VAR> for equality:</P>
+
+<DIV class=indent>
+  <TABLE border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Notation&nbsp;&nbsp;</TH>
+    <TH valign=TOP nowrap align=LEFT>Result&nbsp;Type&nbsp;&nbsp;</TH>
+    <TH valign=TOP align=LEFT>Result&nbsp;Value</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="string-eq"></A><VAR>c</VAR>&nbsp;=&nbsp;<VAR>d</VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <SPAN class=global-variable>length</SPAN>(<VAR>c</VAR>)&nbsp;=&nbsp;<SPAN class=global-variable>length</SPAN>(<VAR>d</VAR>),
+      and for every integer <VAR>i</VAR> between 0 inclusive and <SPAN class=global-variable>length</SPAN>(<VAR>c</VAR>)&nbsp;exclusive,
+      <VAR>c</VAR>[<VAR>i</VAR>] = <VAR>d</VAR>[<VAR>i</VAR>].</TD>
+  </TR>
+  </TABLE>
+
+</DIV>
+
+
+
+<H3><A name="tuple"></A>Tuples</H3>
+
+<P>A semantic tuple is an aggregate of several named semantic values with distinct semantic types. Tuples are sometimes called
+records or structures in other languages. A tuple's semantic type is written as</P>
+
+<P class=indent><SPAN class=type-expression><SPAN class=semantic-keyword>tuple</SPAN>&nbsp;{<VAR class=field-name>name<SPAN class=sub-num>1</SPAN></VAR>:&nbsp;<VAR class=type-name>type<SPAN class=sub-num>1</SPAN></VAR>; <VAR class=field-name>name<SPAN class=sub-num>2</SPAN></VAR>:&nbsp;<VAR class=type-name>type<SPAN class=sub-num>2</SPAN></VAR>; ... ; <VAR class=field-name>name<SPAN class=sub>n</SPAN></VAR>:&nbsp;<VAR class=type-name>type<SPAN class=sub>n</SPAN></VAR>}</SPAN></P>
+
+<P>where each <VAR class=field-name>name<SPAN class=sub>i</SPAN></VAR> is an identifier that names a field and each <VAR class=type-name>type<SPAN class=sub>i</SPAN></VAR>
+is the corresponding field's type.</P>
+
+<P>Let <VAR class=type-name>t</VAR> be the tuple type above. We write a tuple value of type <VAR class=type-name>t</VAR>
+using the notation</P>
+
+<P class=indent><B><SCRIPT type="text/javascript">document.write(U_lang)</SCRIPT></B><VAR>f<SPAN class=sub-num>1</SPAN></VAR>,
+<VAR>f<SPAN class=sub-num>2</SPAN></VAR>, ... , <VAR>f<SPAN class=sub>n</SPAN></VAR><B><SCRIPT type="text/javascript">document.write(U_rang)</SCRIPT></B><SUB><VAR class=type-name>t</VAR></SUB></P>
+
+<P>where each <VAR>f<SPAN class=sub>i</SPAN></VAR> is an expression of type <VAR class=type-name>type<SPAN class=sub>i</SPAN></VAR>
+that gives the corresponding field's value. The subscript following the close bracket denotes the tuple type <VAR class=type-name>t</VAR>.</P>
+
+<P> Let <VAR>w</VAR> be an expression that evaluates to a tuple <B><SCRIPT type="text/javascript">document.write(U_lang)</SCRIPT></B><VAR>f<SPAN class=sub-num>1</SPAN></VAR>,
+<VAR>f<SPAN class=sub-num>2</SPAN></VAR>, ... , <VAR>f<SPAN class=sub>n</SPAN></VAR><B><SCRIPT type="text/javascript">document.write(U_rang)</SCRIPT></B><SUB><VAR class=type-name>t</VAR></SUB>.
+We use the following notation to access its fields:</P>
+
+<DIV class=indent>
+  <TABLE border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Notation&nbsp;&nbsp;</TH>
+    <TH valign=TOP nowrap align=LEFT>Result&nbsp;Type&nbsp;&nbsp;</TH>
+    <TH valign=TOP align=LEFT>Result&nbsp;Value</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="tuple-read"></A><VAR>w</VAR>.<VAR class=field-name>name<SPAN class=sub>i</SPAN></VAR></TD>
+    <TD valign=TOP><VAR class=type-name>type<SPAN class=sub>i</SPAN></VAR></TD>
+    <TD valign=TOP>The value <VAR>f<SPAN class=sub>i</SPAN></VAR>.</TD>
+  </TR>
+  </TABLE>
+
+</DIV>
+
+
+<P>In the HTML versions of the semantics, each use of <VAR class=field-name>name<SPAN class=sub>i</SPAN></VAR> is linked
+back to its tuple type's definition.</P>
+
+<H3><A name="oneof"></A>Oneofs</H3>
+
+<P>A semantic oneof is a disjoint union of several named semantic values with distinct semantic types. Oneofs are sometimes
+called variants or tagged unions in other languages. A oneof's semantic type is written as</P>
+
+<P class=indent><SPAN class=type-expression><SPAN class=semantic-keyword>oneof</SPAN>&nbsp;{<VAR class=field-name>name<SPAN class=sub-num>1</SPAN></VAR>:&nbsp;<VAR class=type-name>type<SPAN class=sub-num>1</SPAN></VAR>;
+<VAR class=field-name>name<SPAN class=sub-num>2</SPAN></VAR>:&nbsp;<VAR class=type-name>type<SPAN class=sub-num>2</SPAN></VAR>;
+... ; <VAR class=field-name>name<SPAN class=sub>n</SPAN></VAR>:&nbsp;<VAR class=type-name>type<SPAN class=sub>n</SPAN></VAR>}</SPAN></P>
+
+<P>where each <VAR class=field-name>name<SPAN class=sub>i</SPAN></VAR> is an identifier that names an alternative and each
+<VAR class=type-name>type<SPAN class=sub>i</SPAN></VAR> is the corresponding alternative's type. For brevity, if some <VAR class=type-name>type<SPAN class=sub>i</SPAN></VAR>
+is <A href="#T-Void"><SPAN class=type-name>Void</SPAN></A>, we may omit that <VAR class=type-name>type<SPAN class=sub>i</SPAN></VAR>
+and its preceding colon when writing the oneof type. </P>
+
+<P>Let <VAR class=type-name>t</VAR> be the oneof type above. A oneof value of type <VAR class=type-name>t</VAR> can hold
+exactly one of its alternatives. We write a oneof value of type <VAR class=type-name>t</VAR> as</P>
+
+<P class=indent><VAR class=field-name>name<SPAN class=sub>i&nbsp;</SPAN></VAR><SUB><VAR class=type-name>t</VAR></SUB>&nbsp;<VAR>a</VAR></P>
+
+<P>where <VAR>a</VAR> is an expression of type <VAR class=type-name>type<SPAN class=sub>i</SPAN></VAR> that gives the corresponding
+alternative's value. The subscript following <VAR class=field-name>name<SPAN class=sub>i&nbsp;</SPAN></VAR> denotes the
+oneof type <VAR class=type-name>t</VAR>. For brevity, we omit this subscript when the type is clear from context. We also
+sometimes omit the value <VAR>a</VAR> when it is <SPAN class=global-variable>unit</SPAN>.</P>
+
+<P> Let <VAR>o</VAR> be an expression that evaluates to a oneof <VAR class=field-name>name<SPAN class=sub>i&nbsp;</SPAN></VAR><SUB><VAR class=type-name>t</VAR></SUB>&nbsp;<VAR>a</VAR>.
+We use the following notation to access <VAR>o</VAR>'s alternative. In addition to these, the <A href="#case">case statement</A>
+evaluates one of several expressions based on a oneof alternative.</P>
+
+<DIV class=indent>
+  <TABLE border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Notation&nbsp;&nbsp;</TH>
+    <TH valign=TOP nowrap align=LEFT>Result&nbsp;Type&nbsp;&nbsp;</TH>
+    <TH valign=TOP align=LEFT>Result&nbsp;Value</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="oneof-is"></A><VAR>w</VAR>&nbsp;<SPAN class=semantic-keyword>is</SPAN>&nbsp;<VAR class=field-name>name<SPAN class=sub>j</SPAN></VAR></TD>
+    <TD valign=TOP><SPAN class=type-name>Boolean</SPAN></TD>
+    <TD valign=TOP><SPAN class=global-variable>true</SPAN> if <VAR>i</VAR>=<VAR>j</VAR>; <SPAN class=global-variable>false</SPAN>
+      if <VAR>i</VAR><SCRIPT type="text/javascript">document.write(U_ne)</SCRIPT><VAR>j</VAR>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><A name="oneof-read"></A><VAR>w</VAR>.<VAR class=field-name>name<SPAN class=sub>j</SPAN></VAR></TD>
+    <TD valign=TOP><VAR class=type-name>type<SPAN class=sub>j</SPAN></VAR></TD>
+    <TD valign=TOP>The value <VAR>a</VAR> if <VAR>i</VAR>=<VAR>j</VAR>, or <SCRIPT type="text/javascript">document.write(U_perp)</SCRIPT>
+      if <VAR>i</VAR><SCRIPT type="text/javascript">document.write(U_ne)</SCRIPT><VAR>j</VAR>.</TD>
+  </TR>
+  </TABLE>
+
+</DIV>
+
+<P>In the HTML versions of the semantics, each use of <VAR class=field-name>name<SPAN class=sub>i</SPAN></VAR> is linked
+back to its oneof type's definition.</P>
+
+<H3><A name="function"></A>Functions</H3>
+
+<P>A semantic function performs operations and/or returns a result computed from its arguments. We write a semantic function
+with parameters .</P>
+
+<H2>Semantic Statements</H2>
+
+<H3><A name="let"></A>Let</H3>
+
+<H3><A name="if"></A>If</H3>
+
+<H3><A name="case"></A>Case</H3>
+
+<H2>Operator Precedence</H2>
+
+<P>The table below lists the semantic operators's precedences from highest (tightest-binding) to lowest (loosest-binding).
+Operators on the same level of the table have the same precedence and associate left-to-right, so, for example, 7-3-2 is interpreted
+as (7-3)-2 instead of 7-(3-2). When needed, parentheses are used to group expressions.</P>
+
+<H2>Semantic Definitions</H2>
+
+<H3> Type Definitions</H3>
+
+<P>A grammar can give a new name to a semantic type <VAR class=type-name>t</VAR> by using the <SPAN class=semantic-keyword>type</SPAN>
+definition, which should have the form:</P>
+
+<P class=semantics><SPAN class=semantic-keyword>type</SPAN>&nbsp;<VAR class=type-name>name</VAR>&nbsp;=&nbsp;<VAR class=type-name>t</VAR></P>
+
+<P>For example, the following notation defines <SPAN class=type-name>RegExp</SPAN> as a shorthand for <SPAN class=type-expression><SPAN class=semantic-keyword>tuple</SPAN>&nbsp;{<SPAN class=field-name>reBody</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>;&nbsp;<SPAN class=field-name>reFlags</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>}</SPAN>:</P>
+
+<P class=semantics><SPAN class=semantic-keyword>type</SPAN>&nbsp;<SPAN class=type-name>RegExp</SPAN>&nbsp;=&nbsp;<SPAN class=type-expression><SPAN class=semantic-keyword>tuple</SPAN>&nbsp;{<SPAN class=field-name>reBody</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>;&nbsp;<SPAN class=field-name>reFlags</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>}</SPAN></P>
+
+<P>In the HTML versions of the semantics, each reference to the semantic type name <VAR class=type-name>name</VAR> is linked
+back to <VAR class=type-name>name</VAR>'s definition.</P>
+
+<H3>Value Definitions</H3>
+
+<H3>Function Definitions</H3>
+
+<H3>Action Definitions</H3>
+
+<HR>
+<ADDRESS><A href="mailto:waldemar@netscape.com">Waldemar Horwat</A><BR>
+Last modified Wednesday, May 12, 1999</ADDRESS>
+</BODY>
+</HTML>
