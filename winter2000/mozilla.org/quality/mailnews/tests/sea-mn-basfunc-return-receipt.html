@@ -1,0 +1,496 @@
+<HTML>
+<HEAD>
+<TITLE>MDN Feature Test Plan</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+<script LANGUAGE="JavaScript"> 
+  document.write("<CENTER><FONT COLOR=Red SIZE=-1>"); 
+  document.write("Last modified on ", document.lastModified); 
+  document.write("</CENTER></FONT>"); 
+</script>
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>5.0 Project (Seamonkey)</b>
+<br><b>Mail and News Component</b>
+<br><b>Basic MN Functionality: Return Receipt</b>
+<br><b>(Also known as Message Disposition Notification)</b>
+<p>Originally document was written by: Peter Mock for 4.5 (Nova)
+<br>Modified by: <b><a href="mailto:fenella@netscape.com">Fenella Gor</a></b>
+for 5.0 (Seamonkey)
+<p><b>References:</b>
+<br>5.0 Seamonkey:
+<br>Test case Management Syetem: n/a
+<br>Approx. number of test cases: 50
+<p>
+<hr WIDTH="100%">
+<p>This feature designed for Mail messages only and not designed for News
+messages. We can loosely describe MDN as a read receipt but this feature
+contain additional functionality.
+<p>Description of feature from RFC: The MDN can be used to notify the sender
+of a message of any of several conditions that may occur after successful
+delivery, such as display of the message contents, printing of the message,
+deletion (without display) of the message, or the recipient's refusal to
+provide MDNs.
+<p>The difference between a Return Receipt in Communicator 4.0 and a MDN
+in 5.0 is that a Return Receipt is generated from the Messenger Server
+and a MDN is generated from the client. A MDN is a short header returned
+and the original message is not attached to the MDN replied. The sender
+can "request" that a MDN message to be returned from the recipient. But
+the recipients has the option to send or ignore sending a MDN back to the
+sender.
+<p>Notation: UA stands for User Agent
+<br>MDN stands for Message Disposition Notification
+<p>Pre setup information: Majority of tests will be performed in the Inbox
+folder.
+<ol TYPE=I>
+<li>
+Core MDN feature for Mails:</li>
+
+<ol TYPE=A>
+<li>
+<b>Sender</b>:</li>
+
+<ol>
+<li>
+Compose windows (Initiated from Option|Return Receipt)</li>
+
+<ol TYPE=a>
+<li>
+HTML Compose window</li>
+
+<li>
+Plain Text Compose window</li>
+</ol>
+
+<li>
+Setting for requesting a Return Receipt: ( from Edit|Preferences|Return
+Receipt). Verify that each of the following works according to your selections.</li>
+
+<ol TYPE=a>
+<li>
+"If I request a receipt when sending a message,I want:"</li>
+
+<ol TYPE=i>
+<li>
+DSN (A delevery receipt from the mail server, previous return receipt feature)</li>
+
+<li>
+MDN (A read receipt, notify me when receipients display the message)</li>
+
+<li>
+Both DSN and MDN</li>
+</ol>
+
+<li>
+"When a receipt arrives: "</li>
+
+<ol TYPE=i>
+<li>
+Leave in Inbox</li>
+
+<li>
+Move it to my Sent Mail Folder</li>
+</ol>
+</ol>
+
+<li>
+Type of Mail messages to send</li>
+
+<ol TYPE=a>
+<li>
+New Message (MDN is assumed to be sent to original sender)</li>
+
+<li>
+Replied (MDN is not sent if receiver replied the mail message with message
+pane closed)</li>
+
+<li>
+Forward (MDN is not sent if receiver replied the mail message with message
+pane closed)</li>
+</ol>
+
+<li>
+Sender requesting a MDN has the following characteristics</li>
+
+<ol TYPE=a>
+<li>
+Message ID is different from original message.</li>
+
+<li>
+MDN is NOT encrypted if the original message was encrypted.</li>
+
+<li>
+A MDN is sent even if you send yourself a message</li>
+
+<li>
+One MDN is sent per message</li>
+
+<li>
+Sender will receive a MDN from each platform where the receiver reads the
+message.</li>
+</ol>
+</ol>
+
+<li>
+<b>Receiver</b>:</li>
+
+<ol>
+<li>
+Receiver: verify that the type of message sent is correctly displayed in
+the Returned Receipt.</li>
+
+<ol TYPE=a>
+<li>
+HTML message</li>
+
+<li>
+Plain Text message</li>
+
+<li>
+Both HTML &amp; Plain Text message</li>
+</ol>
+
+<li>
+Receiver selects the options from Edit|Preferences|Return Receipt and verifies
+that each of the options works according to your selections.</li>
+
+<ol TYPE=a>
+<li>
+"When I receive a message and the sender requested a receipt (MDN)"</li>
+
+<ol TYPE=i>
+<li>
+Never return a receipt</li>
+
+<li>
+Customize - Return receipts for some messages</li>
+</ol>
+
+<li>
+Customizing return receipts</li>
+
+<ol TYPE=i>
+<li>
+Send a return receipt (if I'm not in the To or CC list of the message (such
+as when I am in the mailing list alias only)):</li>
+
+<ul>
+<li>
+Never Send</li>
+
+<li>
+Automatically Send</li>
+
+<li>
+Ask me</li>
+</ul>
+
+<li>
+Send a return receipt (when message comes from outside the domain netscape.com)</li>
+
+<ul>
+<li>
+Never Send</li>
+
+<li>
+Automatically Send</li>
+
+<li>
+Ask me</li>
+</ul>
+
+<li>
+Send a return receipt in all cases</li>
+
+<ul>
+<li>
+Never Send</li>
+
+<li>
+Automatically Send</li>
+
+<li>
+Ask me</li>
+</ul>
+</ol>
+
+<li>
+When the I have selected "Ask me" a receipt dialog should appear, verify
+the button works:</li>
+
+<ol TYPE=i>
+<li>
+Functions allowed in the dialog (OK, Cancel)</li>
+</ol>
+</ol>
+
+<li>
+When receiver receives the message, a MDN message will trigger a MDN to
+be sent to the sender when:</li>
+
+<ol TYPE=a>
+<li>
+<font color="#000000">Receiver reads the message with the Message pane
+open</font></li>
+</ol>
+
+<li>
+Verify that No MDN is generated when a new mail message is stored into
+the user's INBOX but is not read or processed such as:</li>
+
+<ol>
+<li>
+copy/move the message</li>
+
+<li>
+delete the message</li>
+
+<li>
+filtere the message</li>
+</ol>
+</ol>
+
+<li>
+<font color="#000000">Verifying MDN message:</font></li>
+
+<ol>
+<li>
+Use the View|Page Source to verify a MDN message the correct message/disposition-notification
+content-type, Original-Recipient field, and error state.</li>
+
+<ol TYPE=a>
+<li>
+Type of MDN ( The type depends on what the user did with the message.)</li>
+
+<ol TYPE=i>
+<li>
+Displayed (The message has been displayed by the UA to someone reading
+the recipient's mailbox. There is no guarantee that the content has been
+read or understood.)</li>
+
+<li>
+Dispatched (The message has been sent somewhere manner (e.g., printed,
+faxed, forwarded) without being displayed to the user. The user may or
+may not see the message later.)</li>
+
+<li>
+Processed (The message has been processed in some manner (i.e., by some
+sort of rules or server) without being displayed to the user. The user
+may or may not see the message later, or there may not even be a human
+user associated with the mailbox.)</li>
+
+<li>
+Deleted (The message has been deleted. The recipient may or may not have
+seen the message. The recipient might "undelete" the message at a later
+time and read the message.)</li>
+
+<li>
+Denied (The recipient does not wish the sender to be informed of the message's
+disposition. A UA may also silently ignore message disposition requests
+in this situation.)</li>
+
+<li>
+Failed (A failure occurred that prevented the proper generation of an MDN.)</li>
+</ol>
+
+<li>
+MDN disposition modes</li>
+
+<ol TYPE=a>
+<li>
+Manual-action/MDN-sent-manually</li>
+
+<li>
+<font color="#000000">Automatic action/MDN-sent-automatically</font></li>
+</ol>
+</ol>
+
+<li>
+<font color="#000000">Security (Not supported??)</font></li>
+
+<ol TYPE=a>
+<li>
+<font color="#000000">Requesting for MDN for a signed message</font></li>
+
+<li>
+<font color="#000000">Requesting for MDN for a encrypted message</font></li>
+
+<li>
+<font color="#000000">Requesting for MDN for a signed and encrypted message</font></li>
+
+<br></ol>
+</ol>
+</ol>
+
+<li>
+<font color="#000000">Core MDN feature for News:</font></li>
+
+<ol TYPE=A>
+<li>
+<font color="#000000">Setting for requesting for a Return Receipt (from
+</font>Edit|Preferences|Return
+Receipt):</li>
+
+<ol>
+<li>
+DSN (A delevery receipt from the mail server, previous return receipt feature)</li>
+
+<li>
+MDN (A read receipt, notify me when receipients display the message)</li>
+
+<li>
+Both DSN and MDN</li>
+</ol>
+
+<li>
+And verify that:</li>
+
+<ol>
+<li>
+you will expect a return receipt (DSN) from the server</li>
+
+<li>
+you will not expect a MDN from the client</li>
+
+<br></ol>
+</ol>
+
+<li>
+<font color="#000000">Core DSN feature both Mail and News:</font></li>
+
+<ol TYPE=A>
+<li>
+<font color="#000000">Select each of the following options from the </font>Edit|Preferences|Return
+Receipt and send out a mail/news message:</li>
+
+<ol>
+<li>
+DSN (A delevery receipt from the mail server, previous return receipt feature)</li>
+
+<li>
+Both DSN and MDN</li>
+</ol>
+
+<li>
+<font color="#000000">Verifying DSN message</font></li>
+
+<ol>
+<li>
+<font color="#000000">You will receive a Delivery receipt from the receiving
+server. (eg: Mail Administrator&lt;Postmaster@dredd.mcom.com)> with the
+following message: This Message was delivered to the following recipients:
+Mailbox userid</font></li>
+
+<li>
+<font color="#000000">Check for server MTA(message transfer agent) information,
+sender and receiver id as well as content type.</font></li>
+
+<br></ol>
+</ol>
+
+<li>
+Inter Operability</li>
+
+<ol TYPE=A>
+<li>
+Cross platform testing with other Communicator 5.0 platforms</li>
+
+<li>
+Testing 3rd party application that support MDN</li>
+
+<ol>
+<li>
+<font color="#000000">Eudora 4.0</font></li>
+</ol>
+</ol>
+</ol>
+
+<hr WIDTH="100%">
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-basfunc-return-receipt.html&amp;rev=&amp;root=/cvsroot/">Last modified May 20,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

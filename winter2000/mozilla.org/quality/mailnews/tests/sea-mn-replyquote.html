@@ -1,0 +1,1138 @@
+<HTML>
+<HEAD>
+<TITLE>Reply and Quoting Message Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>5.0 Project (seamonkey)</b>
+<br><b>Mail and News Component</b>
+<br><b>Reply and Quoting</b>
+<p>Written by: <b><a href="mailto:pmock@netscape.com">Peter Mock</a></b>
+<p><b>History:</b>
+<br>01021998&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Created
+<br>01091998&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Update
+<br>01081999&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Revised to match
+seamonkey spec
+<br>02202000&nbsp;&nbsp;&nbsp; Posted to mozilla.org
+<p><b>References:&nbsp;&nbsp;&nbsp; </b>Composition UI spec
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Master Messenger UI spec
+<p>
+<hr WIDTH="100%">
+<br>Descriptions: This test spec focusing on the act of quoting a mail
+or news message. Replying to a mail message can follow under three general
+areas which include: 1) reply to plain text message, 2) reply to html message,
+and 3) reply to a mixture of plain text and html.
+<p><b>Preferences</b>
+<br>Open the preference dialog controlling the how mail messages will be
+quoted.
+<ol TYPE=A>
+<li>
+Verify there is a separate preference for quoting for mail and news (new)</li>
+
+<li>
+Verify under quoting option for mail,</li>
+
+<ol>
+<li>
+Verify there is an option to enable or disable quoting</li>
+
+<li>
+When quoting is enabled, verify you have the option to:</li>
+
+<ol TYPE=a>
+<li>
+start reply above quoted text</li>
+
+<li>
+start reply below quoted text</li>
+
+<li>
+start reply by selecting the quoted text</li>
+</ol>
+</ol>
+
+<li>
+Repeat the previous section for news.</li>
+
+<li>
+Verify the default behavior for mail is to start the reply above the quoted
+text.</li>
+
+<li>
+Verify the default behavior for news is to start the reply below the quoted
+text.</li>
+</ol>
+
+<p><br><b>Replying to different message contents:</b>
+<ol TYPE=A>
+<li>
+Reply to the following Plain Text message. Verify the text is quoted correctly.</li>
+
+<ol>
+<li>
+Empty message area</li>
+
+<li>
+Space</li>
+
+<li>
+Multiple spaces</li>
+
+<li>
+Single character (non space)</li>
+
+<li>
+Word</li>
+
+<li>
+Sentence</li>
+
+<li>
+Paragraph</li>
+
+<li>
+Extended character (accented)</li>
+</ol>
+
+<li>
+Reply to the following HTML message. Verify the text is quoted correctly.</li>
+
+<ol>
+<li>
+Empty message area</li>
+
+<li>
+Space</li>
+
+<li>
+Multiple spaces</li>
+
+<li>
+Normal text</li>
+
+<li>
+Bold text</li>
+
+<li>
+Italic text</li>
+
+<li>
+Underline text</li>
+
+<li>
+Bold italic text</li>
+
+<li>
+Bullet list</li>
+
+<li>
+Number list</li>
+
+<li>
+Indented text</li>
+
+<li>
+Inserted image</li>
+
+<li>
+Table</li>
+
+<li>
+Color text</li>
+
+<li>
+Font size</li>
+</ol>
+</ol>
+<b>Replying to Plain Text Messages</b>
+<br>Set your default editor to use the plain text compose editor.
+<ol TYPE=A>
+<li>
+Replied to a message with Message preference set to NOT to automatically
+quote the original message when replying.&nbsp; Expected result: Verify
+the original text is not quoted.</li>
+
+<ol>
+<li>
+Reply to a Plain Text message using the Reply button then send</li>
+
+<li>
+Reply to a Plain Text message using the Reply All button then send</li>
+
+<li>
+Reply to a Plain Text message using the menu item to Reply then send</li>
+
+<li>
+Reply to a Plain Text message using the menu item Reply All then send</li>
+
+<li>
+Reply to a Plain Text message using the context menu to Reply then send</li>
+
+<li>
+Reply to a Plain Text message using the context menu to Reply All then
+send</li>
+
+<li>
+Reply to a forwarded Plain Text message using the Reply button then send</li>
+</ol>
+
+<li>
+Replied to a&nbsp; message with Message preference set to automatically
+quote the original message when replying and to start my reply <i>above</i>
+the quoted text.&nbsp; Expected results: 1) Verify the reply is above the
+quoted text.&nbsp; 2) Verify there is at least one blank line separating
+the reply and the new text.&nbsp; and 3) Verify there is a character (such
+as a ">" character) indicating that text has been quoted</li>
+
+<ol>
+<li>
+Reply to a Plain Text message with one recipient using the Reply button
+then send.</li>
+
+<li>
+Reply to a Plain Text message with one recipient using the menu item Reply
+then send</li>
+
+<li>
+Reply to a Plain Text message with one recipient using the context menu
+to Reply then.</li>
+
+<li>
+Reply to a Plain Text message with multiple recipients using the Reply
+button then send</li>
+
+<ol TYPE=a>
+<li>
+Also verify there are multiple people listed in the To: field</li>
+</ol>
+
+<li>
+Reply to a Plain Text message with multiple recipients using the menu item
+Reply All then send</li>
+
+<li>
+Reply to a Plain Text message with multiple recipients using the context
+menu Reply All then send</li>
+
+<li>
+Reply to a forwarded Plain Text message using the Reply button then send</li>
+</ol>
+
+<li>
+Replied to a&nbsp; message with Message preference set to automatically
+quote the original message when replying and to start my reply below the
+quoted text.&nbsp; Expected results: 1) Verify the reply is below the quoted
+text.&nbsp; 2) Verify there is at least one blank line separating the reply
+and the new text.&nbsp; and 3) Verify there is a character (such as a ">"
+character) indicating that text has been quoted</li>
+
+<ol>
+<li>
+Reply to a Plain Text message with one recipient using the Reply button
+then send.</li>
+
+<li>
+Reply to a Plain Text message with one recipient using the menu item Reply
+then send</li>
+
+<li>
+Reply to a Plain Text message with one recipient using the context menu
+to Reply then.</li>
+
+<li>
+Reply to a Plain Text message with multiple recipients using the Reply
+button then send</li>
+
+<ol TYPE=a>
+<li>
+Also verify there are multiple people listed in the To: field</li>
+</ol>
+
+<li>
+Reply to a Plain Text message with multiple recipients using the menu item
+Reply All then send</li>
+
+<li>
+Reply to a Plain Text message with multiple recipients using the context
+menu Reply All then send</li>
+
+<li>
+Reply to a forwarded Plain Text message using the Reply button then send</li>
+</ol>
+</ol>
+
+<p><br><b>Reply to HTML Mail Messages</b>
+<br>Repeat the above sections except reply to HTML mail messages and set
+your default editor to use the HTML compose editor.
+<ol TYPE=A>
+<li>
+Replied to a message with Message preference set to NOT to automatically
+quote the original message when replying.&nbsp; Expected result: Verify
+the original text is not quoted.</li>
+
+<ol>
+<li>
+Reply to a HTML message using the Reply button then send</li>
+
+<li>
+Reply to a HTML message using the Reply All button then send</li>
+
+<li>
+Reply to a HTML message using the menu item to Reply then send</li>
+
+<li>
+Reply to a HTML message using the menu item Reply All then send</li>
+
+<li>
+Reply to a HTML message using the context menu to Reply then send</li>
+
+<li>
+Reply to a HTML message using the context menu to Reply All then send</li>
+
+<li>
+Reply to a forwarded HTML message using the Reply button then send</li>
+</ol>
+
+<li>
+Replied to a&nbsp; message with Message preference set to automatically
+quote the original message when replying and to start my reply <i>above</i>
+the quoted text.&nbsp; Expected results: 1) Verify the reply is above the
+quoted text.&nbsp; 2) Verify there is at least one blank line separating
+the reply and the new text.&nbsp; and 3) Verify there is a blue bar indicating
+that text has been quoted in HTML.</li>
+
+<ol>
+<li>
+Reply to a HTML message with one recipient using the Reply button then
+send.</li>
+
+<li>
+Reply to a HTML message with one recipient using the menu item Reply then
+send</li>
+
+<li>
+Reply to a HTML message with one recipient using the context menu to Reply
+then.</li>
+
+<li>
+Reply to a HTML message with multiple recipients using the Reply button
+then send</li>
+
+<ol TYPE=a>
+<li>
+Also verify there are multiple people listed in the To: field</li>
+</ol>
+
+<li>
+Reply to a HTML message with multiple recipients using the menu item Reply
+All then send</li>
+
+<li>
+Reply to a HTML message with multiple recipients using the context menu
+Reply All then send</li>
+
+<li>
+Reply to a forwarded HTML message using the Reply button then send</li>
+</ol>
+
+<li>
+Replied to a&nbsp; message with Message preference set to automatically
+quote the original message when replying and to start my reply below the
+quoted text.&nbsp; Expected results: 1) Verify the reply is below the quoted
+text.&nbsp; 2) Verify there is at least one blank line separating the reply
+and the new text.&nbsp; and 3) Verify there is a blue bar indicating that
+text has been quoted in HTML.</li>
+
+<ol>
+<li>
+Reply to a HTML message with one recipient using the Reply button then
+send.</li>
+
+<li>
+Reply to a HTML message with one recipient using the menu item Reply then
+send</li>
+
+<li>
+Reply to a HTML message with one recipient using the context menu to Reply
+then.</li>
+
+<li>
+Reply to a HTML message with multiple recipients using the Reply button
+then send</li>
+
+<ol TYPE=a>
+<li>
+Also verify there are multiple people listed in the To: field</li>
+</ol>
+
+<li>
+Reply to a HTML message with multiple recipients using the menu item Reply
+All then send</li>
+
+<li>
+Reply to a HTML message with multiple recipients using the context menu
+Reply All then send</li>
+
+<li>
+Reply to a forwarded HTML message using the Reply button then send</li>
+</ol>
+</ol>
+
+<p><br><b>Reply to a combination of the previous two test sections.</b>
+<ol TYPE=A>
+<li>
+Combination of the above.&nbsp; Verify the message is quoted correctly
+and verify the message has been sent correctly.</li>
+
+<ol>
+<li>
+Reply to a HTML message using the Plain Text editor.</li>
+
+<li>
+Reply to a replied HTML message using the Plain Text editor.</li>
+
+<li>
+Reply to a replied Plain Text message using the Plain Text editor.</li>
+
+<li>
+Reply to a forwarded HTML message using the Plain Text editor.</li>
+
+<li>
+Reply to a Plain Text&nbsp; message using the HTML editor.</li>
+
+<li>
+Reply to a replied Plain Text message using the HTML editor.</li>
+
+<li>
+Reply to a replied HTML message using the HTML editor.</li>
+
+<li>
+Reply to a forwarded Plain Text messages using the HTML editor.</li>
+</ol>
+</ol>
+
+<p><br><b>Plain Text Quoting attributes (</b>Automatic quoting is enabled
+for all tests.&nbsp; These changes do not apply until you view a sent reply.)
+<ol TYPE=A>
+<li>
+Verify the font <b>style</b> can be changed on the quoted text.</li>
+
+<ol>
+<li>
+Change the style setting to 'Bold' and send a reply to a Plain Text message.&nbsp;
+Verify the quoted text is displayed as bold</li>
+
+<li>
+Change the style setting&nbsp; to 'Bold Italic' and send a reply to a Plain
+Text message.&nbsp; Verify the quoted text is displayed as bold italic</li>
+
+<li>
+Change the style setting to 'Regular' and send a reply to a Plain Text
+message.&nbsp; Verify the quoted text is displayed as regular</li>
+
+<li>
+Change the style setting to 'Italic' and send a reply to a Plain Text message.&nbsp;
+Verify the quoted text is displayed as italic</li>
+</ol>
+
+<li>
+Verify the font <b>size</b> can be changed on the quoted text.</li>
+
+<ol>
+<li>
+Change the size setting to 'Bigger' and send a reply to a Plain Text message.&nbsp;
+Verify the quoted text is displayed with bigger font size</li>
+
+<li>
+Change the size setting to 'Smaller' and send a reply to a Plain Text message.&nbsp;
+Verify the quoted text is displayed with smaller font size</li>
+
+<li>
+Change the size setting to 'Regular' and send a reply to a Plain Text message.&nbsp;
+Verify the quoted text is displayed with regular font size</li>
+</ol>
+
+<li>
+Verify the font <b>color</b> can be changed on the quoted text.</li>
+
+<ol>
+<li>
+Change the color setting from the default color to another color then send
+a reply to a Plain Text message.&nbsp; Verify the quoted text is displayed
+in the color that you specified</li>
+
+<li>
+Change the color setting to a different color then send a reply to a Plain
+Text message.&nbsp; Verify the quoted text is displayed in the color that
+your specified</li>
+
+<li>
+Change the color setting back to the default color then send a reply to
+a Plain Text message.&nbsp; Verify the quoted text is displayed in the
+color that your specified</li>
+</ol>
+
+<li>
+Verify the font <b>width</b> can change on the quoted text.</li>
+
+<ol>
+<li>
+Change the font width to Variable width font then send a reply to a Plain
+Text message.&nbsp; Verify the quoted text is displayed to variable width.&nbsp;
+(The width of the characters should be all different.)</li>
+
+<li>
+Change the font width to Fixed width font then send a reply to a Plain
+Text message.&nbsp; Verify the quoted text is displayed to variable width.&nbsp;
+(The width of the characters should be all the same.)</li>
+</ol>
+</ol>
+
+<p><br><b>Fonts</b>
+<ol TYPE=A>
+<li>
+Verify you can change the default fixed width font family (e.g.&nbsp; Courier
+New)</li>
+
+<ol>
+<li>
+Change the fixed width font family from the default font to a different
+font.&nbsp; Expected result: Verify the text is displayed in the font that
+you specified.&nbsp; The message should be changed but the font header
+remain unchanged.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+
+<li>
+Change the fixed width font family back to the default font.&nbsp; Expected
+result: Verify the text is displayed in the font that you specified.&nbsp;
+The message should be changed but the font header remain unchanged.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+</ol>
+
+<li>
+Verify you can change the default fixed width font size (e.g.&nbsp; 10
+points to 18 points)</li>
+
+<ol>
+<li>
+Change the fixed width font size from the default size to a different size.&nbsp;
+Expected result: Verify the text is displayed in the font size that you
+specified.&nbsp; The message should be changed but the font header remain
+unchanged.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+
+<li>
+Change the fixed width font size back to the default size.&nbsp; Expected
+result: Verify the text is displayed in the font size that you specified.&nbsp;
+The message should be changed but the font header remain unchanged.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+</ol>
+</ol>
+
+<p><br><b>Colors</b>
+<ol TYPE=A>
+<li>
+Verify you can change the <b>text</b> color of the font.</li>
+
+<ol>
+<li>
+Change the color setting from the default color to a different color.&nbsp;
+Expected result: Verify the text is displayed in the color that you specified.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+
+<li>
+Change the color setting back to the default color.&nbsp; Expected result:
+Verify the text is displayed in the color that you specified.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+</ol>
+
+<li>
+Verify you can change the <b>background</b> color of the message.</li>
+
+<ol>
+<li>
+Change the color setting from the default color to a different color.&nbsp;
+Expected result: Verify the background is displayed in the color that you
+specified.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+
+<li>
+Change the color setting back to the default color.&nbsp; Expected result:
+Verify the background is displayed in the color that you specified.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+</ol>
+
+<li>
+Verify the 'Use Windows colors' takes effect immediately&nbsp; <font color="#FF6666">(not
+sure how to test)</font></li>
+</ol>
+
+<p><br><b>Links</b>
+<ol TYPE=A>
+<li>
+Verify you can change the color of the <b>un-visited link</b>.</li>
+
+<ol>
+<li>
+Change the color setting from the default color to a different color.&nbsp;
+Expected result: Verify the un-visited link is displayed in the color that
+you specified.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+
+<li>
+Change the color setting back to the default color.&nbsp; Expected result:
+Verify the un-visited link is displayed in the color that you specified.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+</ol>
+
+<li>
+Verify you can change the color of the <b>visited links</b>.</li>
+
+<ol>
+<li>
+Change the color setting from the default color to a different color.&nbsp;
+Expected result: Verify the visited link is displayed in the color that
+you specified.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+
+<li>
+Change the color setting back to the default color.&nbsp; Expected result:
+Verify the visited link is displayed in the color that you specified.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+</ol>
+
+<li>
+Verify can change the option to underline the link or not</li>
+
+<ol>
+<li>
+Check the option to underline links.&nbsp; Expected results: Verify all
+links are underlined</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<li>
+View a Plain Text message that is a forward message.</li>
+</ol>
+
+<li>
+Uncheck the option to underline links.&nbsp; Expected results.&nbsp; Verify
+all links are not underlined.</li>
+
+<ol TYPE=a>
+<li>
+View a new Plain Text message that has no replies/forward.</li>
+
+<li>
+View a Plain Text message that is a reply message.</li>
+
+<br>View a Plain Text message that is a forward message.</ol>
+</ol>
+</ol>
+<b>Message Wrapping</b>
+<ol TYPE=A>
+<li>
+Send yourself a new Plain Text message and set the preference to 72 characters.&nbsp;
+Expected result: Verify the message is wrapped when viewed</li>
+
+<ol>
+<li>
+Type in a sentence greater than 72 characters and send.</li>
+
+<li>
+Type in a sentence less than 72 characters and send.</li>
+
+<li>
+Type in a sentence exactly 72 characters and send.</li>
+</ol>
+
+<li>
+Send yourself a new HTML message</li>
+
+<ol>
+<li>
+Verify the message wrapping preference is ignored</li>
+</ol>
+
+<li>
+Send yourself a new Plain Text message and set the preference to 10 characters.&nbsp;
+Expected result: Verify the message is wrapped when viewed</li>
+
+<ol>
+<li>
+Type in a sentence greater than 10 characters and send.</li>
+
+<li>
+Type in a sentence less than 10 characters and send.</li>
+
+<li>
+Type in a sentence exactly 10 characters and send.</li>
+</ol>
+
+<li>
+Send yourself a new Plain Text message and set the preference to 101 characters.&nbsp;
+Expected result: Verify the message is wrapped when viewed</li>
+
+<ol>
+<li>
+Type in a sentence greater than 101 characters and send.</li>
+
+<li>
+Type in a sentence less than 101 characters and send.</li>
+
+<li>
+Type in a sentence exactly 101 characters and send.</li>
+</ol>
+
+<li>
+Send yourself a reply to a Plain Text message that has sentences 72 characters
+long.&nbsp; (Preference to 72 characters.)&nbsp; Verify the reply to this
+message, the quoted text is wrapped cause the sentence to be broken onto
+the next line</li>
+
+<li>
+Send yourself a forward quote to a Plain Text message that has sentences
+72 characters long.&nbsp; (Preference to 72 characters.)&nbsp; Verify the
+reply to this message, the quoted text is wrapped cause the sentence to
+be broken onto the next line</li>
+
+<li>
+If you receive long continuous line if characters (e.g. 500 chars), we
+do not wrap the long lines when quoting. We</li>
+
+<br>preserve the original line format.
+<li>
+If you receive an long URL greater than what the preference, we should
+behave the same as Communicator 4.5</li>
+</ol>
+
+<p><br><b>Additional Tests for Message Wrap</b>
+<ol TYPE=A>
+<li>
+Quoting &amp; Wrap Long Lines vs View|Wrap Long Lines</li>
+
+<ol>
+<li>
+Verify View|Wrap Long Lines does not affect Quoting &amp; Wrap Long Lines</li>
+
+<li>
+Verify View|Wrap Long Lines affects only viewing</li>
+
+<li>
+Verify View|Wrap Long Lines affects printing</li>
+</ol>
+
+<li>
+Quoting &amp; Wrap Long Lines (test cases from Jefft to try)</li>
+
+<ol>
+<li>
+Quoting html to html &amp; send as plain text</li>
+
+<ol TYPE=a>
+<li>
+As long as there are no hard line breaks (user hit return/enter on purpose)
+when converting html to plain text we will use the "wrap long lines at
+xx characters" preference for wrapping lines. If there are hard line breaks
+we doomed. A typical example: John sent a plain text message (with 72 line
+width) to Lisa. Lisa replied the plain text message to John and cc to Akkana
+in html message. Akkana replied the message and force to send as plain
+text to John with wrap long lines at 68 characters.</li>
+</ol>
+
+<li>
+Quoting plain text to html &amp; send as plain text</li>
+
+<ol TYPE=a>
+<li>
+Quoting plain text to html does not reformat the original plain text message.
+Line formats are preserved via hard line breaks (&lt;CR>&lt;LF>). Line
+formats are preserved via hard line breaks. Backend remembers the maximum
+line width of the original plain text message when force sending html to
+plain text message we compare the recorded maximum line width with the
+"wrap long lines at xx characters" preference. We use the largest number
+for wrapping the lines so we won't cause the long/short lines to appear.
+One could argue that we are not using the "wrap long lines" preference
+in this case. But, what do you want? Saving unfinished composition message
+as draft will preserve the maximum line width information. Please make
+sure to test this feature.</li>
+</ol>
+
+<li>
+Quoting html to plain text &amp; send as plain text</li>
+
+<ol TYPE=a>
+<li>
+Quoting html to plain text we use the "wrap long lines at xx characters"
+preference to wrap lines. They appears in the plain&nbsp; text editor with
+hard line breaks. Subsequent adding more text to the plain text editor
+will get wrapped according to the preference at the send time. This is
+a little bit odd. Quoting html into plain text gives you a kind of what
+you see is what you get feeling. But typing additional text does not. It
+depends on how big your window is and reformats the additional text to
+the setting of the preference at the send time. But, what can we do better?</li>
+</ol>
+
+<li>
+Quoting plain text to plain text &amp; send as plain text</li>
+
+<ol TYPE=a>
+<li>
+Since plain text message come with hard line breaks quoting from plain
+text ot plain text the original message format are always preserved. Even
+with the much smaller "wrap long lines at xx characters" preference. As
+one can see if you receive a fairly long lines message, quote the message,
+add more text and send the plain text message you might see the following
+pattern:</li>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; > this is a
+very long line xxxxxxxxxx xxxxxxxxxxxxxxx yyyyyyyyyy zzzzzzzzzzzzzzzzzzzzzz
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; > this is a
+very long line xxxxxxxxxx xxxxxxxxxxxxxxx yyyyyyyyyy zzzzzzzzzzzzzzzzzzzzzz
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; > this is a
+very long line xxxxxxxxxx xxxxxxxxxxxxxxx yyyyyyyyyy zzzzzzzzzzzzzzzzzzzzzz
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this has been
+wrapped according to
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the preference.
+The preference is
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set to a small
+number.</ol>
+</ol>
+</ol>
+<b>View|Wrap Long Lines</b> (pertains to plain text messages that does
+not have carriage returns)&nbsp; Use an application such as Mac Netscape
+2.0 to send a message that does not auto wrap.&nbsp; These tests applies
+to both Mail and News.
+<ol TYPE=A>
+<li>
+View a message that does not wrap in the Message pane</li>
+
+<ol>
+<li>
+Verify the sentences trail off the screen</li>
+
+<li>
+Use the horizontal scroll bar to view the rest of the message</li>
+</ol>
+
+<li>
+View a message that does not wrap in the Message Window</li>
+
+<ol>
+<li>
+Verify the sentences trail off the screen</li>
+
+<li>
+Use the horizontal scroll bar to view the rest of the message</li>
+</ol>
+
+<li>
+Set the option to wrap long lines in the Message pane</li>
+
+<ol>
+<li>
+Verify that all the sentences are wrapped</li>
+
+<li>
+Verify that the horizontal scroll bar no longer appears</li>
+
+<li>
+Resize the Message pane</li>
+
+<li>
+Verify if the setting is persistent in the Message pane.&nbsp; Verify if
+the setting still applies</li>
+
+<ol TYPE=a>
+<li>
+Navigate to another message in the current Message pane</li>
+
+<li>
+Close and re-open the Messenger Window and select the same message</li>
+
+<li>
+Open another Messenger Window</li>
+
+<li>
+Exit and re-launch Communicator and select the same message</li>
+</ol>
+</ol>
+
+<li>
+Set the option to wrap long lines in the Message Window</li>
+
+<ol>
+<li>
+Verify that all the sentences are wrapped</li>
+
+<li>
+Verify that the horizontal scroll bar no longer appears</li>
+
+<li>
+Resize the Message Window</li>
+</ol>
+
+<ol>
+<li>
+Verify if the setting is persistent in the Message Window.&nbsp; Verify
+if the setting still applies</li>
+
+<ol>
+<li>
+Navigate to another message in the current Message Window</li>
+
+<li>
+Close and re-open the Message Window and select the same message</li>
+
+<li>
+Open another Message Window</li>
+
+<li>
+Exit and re-launch Communicator and select the same message</li>
+</ol>
+</ol>
+
+<li>
+Verify you can wrap long lines if the message contains no attachment</li>
+
+<li>
+Verify you can wrap long lines if the message contains an attachment</li>
+
+<ol>
+<li>
+Verify you can wrap long lines a message that has a file attachment</li>
+
+<li>
+Verify you can wrap long lines a message that has a Web attachment</li>
+
+<li>
+Verify you can wrap long lines a message that has a vcard attachment</li>
+
+<li>
+Verify you can wrap long lines a message that has a signature file</li>
+</ol>
+
+<li>
+Set the View option to not view attachments in line, verify the wrap long
+lines option still functions as expected</li>
+
+<li>
+Toggle the wrap long lines off and verify the setting takes effect</li>
+</ol>
+
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-replyquote.html&amp;rev=&amp;root=/cvsroot/">Last modified February 21,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

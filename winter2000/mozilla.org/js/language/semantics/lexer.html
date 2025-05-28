@@ -1,0 +1,815 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>Lexer Semantics</TITLE>
+<LINK rel=stylesheet href="../styles.css">
+<LINK rel=Start href="index.html">
+<LINK rel=Contents href="index.html">
+<LINK rel=Prev href="index.html">
+<LINK rel=Next href="grammar.html">
+<SCRIPT type="text/javascript" language="JavaScript1.2" src="../unicodeCompatibility.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+<TR>
+  <TD valign=TOP nowrap>
+    <DIV class=title2><SPAN class=top-title>Formal JavaScript Semantics</SPAN></DIV>
+    <DIV class=title1>Lexer</DIV>
+  </TD>
+  <TD valign=TOP nowrap align=RIGHT><A href="index.html"><IMG src="../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="index.html"><IMG src="../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="grammar.html"><IMG src="../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+</TR>
+</TABLE>
+
+<P class=mod-date>Thursday, July 22, 1999</P>
+
+<!--SEMANTICS-->
+
+<H2>Comments</H2>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-LineComment"></A><VAR class=nonterminal>LineComment</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>/</CODE>&nbsp;<CODE>/</CODE>&nbsp;<A href="#N-LineCommentCharacters"><VAR class=nonterminal>LineCommentCharacters</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-LineCommentCharacters"></A><VAR class=nonterminal>LineCommentCharacters</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-LineCommentCharacters"><VAR class=nonterminal>LineCommentCharacters</VAR></A>&nbsp;<A href="#N-NonTerminator"><VAR class=nonterminal>NonTerminator</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-UnicodeCharacter"></A><VAR class=nonterminal>UnicodeCharacter</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;Any
+Unicode character</DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NonTerminator"></A><VAR class=nonterminal>NonTerminator</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-UnicodeCharacter"><VAR class=nonterminal>UnicodeCharacter</VAR></A>&nbsp;<B>except</B>&nbsp;<A href="#N-LineTerminator"><VAR class=nonterminal>LineTerminator</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-SingleLineBlockComment"></A><VAR class=nonterminal>SingleLineBlockComment</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>/</CODE>&nbsp;<CODE>*</CODE>&nbsp;<A href="#N-BlockCommentCharacters"><VAR class=nonterminal>BlockCommentCharacters</VAR></A>&nbsp;<CODE>*</CODE>&nbsp;<CODE>/</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-BlockCommentCharacters"></A><VAR class=nonterminal>BlockCommentCharacters</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-BlockCommentCharacters"><VAR class=nonterminal>BlockCommentCharacters</VAR></A>&nbsp;<A href="#N-NonTerminatorOrSlash"><VAR class=nonterminal>NonTerminatorOrSlash</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-PreSlashCharacters"><VAR class=nonterminal>PreSlashCharacters</VAR></A>&nbsp;<CODE>/</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-PreSlashCharacters"></A><VAR class=nonterminal>PreSlashCharacters</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-BlockCommentCharacters"><VAR class=nonterminal>BlockCommentCharacters</VAR></A>&nbsp;<A href="#N-NonTerminatorOrAsteriskOrSlash"><VAR class=nonterminal>NonTerminatorOrAsteriskOrSlash</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-PreSlashCharacters"><VAR class=nonterminal>PreSlashCharacters</VAR></A>&nbsp;<CODE>/</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NonTerminatorOrSlash"></A><VAR class=nonterminal>NonTerminatorOrSlash</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-NonTerminator"><VAR class=nonterminal>NonTerminator</VAR></A>&nbsp;<B>except</B>&nbsp;<CODE>/</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NonTerminatorOrAsteriskOrSlash"></A><VAR class=nonterminal>NonTerminatorOrAsteriskOrSlash</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-NonTerminator"><VAR class=nonterminal>NonTerminator</VAR></A>&nbsp;<B>except</B>&nbsp;<CODE>*</CODE>&nbsp;|&nbsp;<CODE>/</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-MultiLineBlockComment"></A><VAR class=nonterminal>MultiLineBlockComment</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>/</CODE>&nbsp;<CODE>*</CODE>&nbsp;<A href="#N-MultiLineBlockCommentCharacters"><VAR class=nonterminal>MultiLineBlockCommentCharacters</VAR></A>&nbsp;<A href="#N-BlockCommentCharacters"><VAR class=nonterminal>BlockCommentCharacters</VAR></A>&nbsp;<CODE>*</CODE>&nbsp;<CODE>/</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-MultiLineBlockCommentCharacters"></A><VAR class=nonterminal>MultiLineBlockCommentCharacters</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-BlockCommentCharacters"><VAR class=nonterminal>BlockCommentCharacters</VAR></A>&nbsp;<A href="#N-LineTerminator"><VAR class=nonterminal>LineTerminator</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-MultiLineBlockCommentCharacters"><VAR class=nonterminal>MultiLineBlockCommentCharacters</VAR></A>&nbsp;<A href="#N-BlockCommentCharacters"><VAR class=nonterminal>BlockCommentCharacters</VAR></A>&nbsp;<A href="#N-LineTerminator"><VAR class=nonterminal>LineTerminator</VAR></A></DIV>
+</DIV>
+
+<H2>White space</H2>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-WhiteSpace"></A><VAR class=nonterminal>WhiteSpace</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-WhiteSpace"><VAR class=nonterminal>WhiteSpace</VAR></A>&nbsp;<A href="#N-WhiteSpaceCharacter"><VAR class=nonterminal>WhiteSpaceCharacter</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-WhiteSpace"><VAR class=nonterminal>WhiteSpace</VAR></A>&nbsp;<A href="#N-SingleLineBlockComment"><VAR class=nonterminal>SingleLineBlockComment</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-WhiteSpaceCharacter"></A><VAR class=nonterminal>WhiteSpaceCharacter</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE><SPAN class=control>&#171;TAB&#187;</SPAN></CODE>&nbsp;|&nbsp;<CODE><SPAN class=control>&#171;VT&#187;</SPAN></CODE>&nbsp;|&nbsp;<CODE><SPAN class=control>&#171;FF&#187;</SPAN></CODE>&nbsp;|&nbsp;<CODE><SPAN class=control>&#171;SP&#187;</SPAN></CODE></DIV>
+</DIV>
+
+<H2>Line breaks</H2>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-LineBreak"></A><VAR class=nonterminal>LineBreak</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-LineTerminator"><VAR class=nonterminal>LineTerminator</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-LineComment"><VAR class=nonterminal>LineComment</VAR></A>&nbsp;<A href="#N-LineTerminator"><VAR class=nonterminal>LineTerminator</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-MultiLineBlockComment"><VAR class=nonterminal>MultiLineBlockComment</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-LineTerminator"></A><VAR class=nonterminal>LineTerminator</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE><SPAN class=control>&#171;LF&#187;</SPAN></CODE>&nbsp;|&nbsp;<CODE><SPAN class=control>&#171;CR&#187;</SPAN></CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-LineBreaks"></A><VAR class=nonterminal>LineBreaks</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-LineBreak"><VAR class=nonterminal>LineBreak</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-LineBreaks"><VAR class=nonterminal>LineBreaks</VAR></A>&nbsp;<A href="#N-WhiteSpace"><VAR class=nonterminal>WhiteSpace</VAR></A>&nbsp;<A href="#N-LineBreak"><VAR class=nonterminal>LineBreak</VAR></A></DIV>
+</DIV>
+
+<H2>Tokens</H2>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NextToken"></A><VAR class=nonterminal>NextToken</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-WhiteSpace"><VAR class=nonterminal>WhiteSpace</VAR></A>&nbsp;<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Token"></A><VAR class=nonterminal>Token</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-LineBreaks"><VAR class=nonterminal>LineBreaks</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-IdentifierOrReservedWord"><VAR class=nonterminal>IdentifierOrReservedWord</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-NumericLiteral"><VAR class=nonterminal>NumericLiteral</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-StringLiteral"><VAR class=nonterminal>StringLiteral</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-EndOfInput"><VAR class=nonterminal>EndOfInput</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-EndOfInput"></A><VAR class=nonterminal>EndOfInput</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<SPAN class=terminal>End</SPAN></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-LineComment"><VAR class=nonterminal>LineComment</VAR></A>&nbsp;<SPAN class=terminal>End</SPAN></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><A name="T-Token"></A><SPAN class=semantic-keyword>type</SPAN>&nbsp;<SPAN class=type-name>Token</SPAN><BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=type-expression><SPAN class=semantic-keyword>oneof</SPAN>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=field-name>identifier</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=field-name>reservedWord</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=field-name>punctuator</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=field-name>number</SPAN>:&nbsp;<SPAN class=type-name>Double</SPAN>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=field-name>string</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=field-name>lineBreaks</SPAN>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=field-name>end</SPAN>}</SPAN></P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>Token</SPAN>[<A href="#N-NextToken"><VAR class=nonterminal>NextToken</VAR></A>]&nbsp;:&nbsp;<A href="#T-Token"><SPAN class=type-name>Token</SPAN></A></P>
+
+<P class=semantics-next><SPAN class=action-name>Token</SPAN>[<A href="#N-NextToken"><VAR class=nonterminal>NextToken</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-WhiteSpace"><VAR class=nonterminal>WhiteSpace</VAR></A>&nbsp;<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>Token</SPAN>[<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A>]</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>Token</SPAN>[<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A>]&nbsp;:&nbsp;<A href="#T-Token"><SPAN class=type-name>Token</SPAN></A></P>
+
+<P class=semantics-next><SPAN class=action-name>Token</SPAN>[<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-LineBreaks"><VAR class=nonterminal>LineBreaks</VAR></A>]&nbsp;=&nbsp;<A href="#T-Token"><SPAN class=field-name>lineBreaks</SPAN></A></P>
+
+<P class=semantics-next><SPAN class=action-name>Token</SPAN>[<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-IdentifierOrReservedWord"><VAR class=nonterminal>IdentifierOrReservedWord</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>Token</SPAN>[<A href="#N-IdentifierOrReservedWord"><VAR class=nonterminal>IdentifierOrReservedWord</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>Token</SPAN>[<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>]&nbsp;=&nbsp;<A href="#T-Token"><SPAN class=field-name>punctuator</SPAN></A>&nbsp;<SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>Token</SPAN>[<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-NumericLiteral"><VAR class=nonterminal>NumericLiteral</VAR></A>]&nbsp;=&nbsp;<A href="#T-Token"><SPAN class=field-name>number</SPAN></A>&nbsp;<SPAN class=action-name>DoubleValue</SPAN>[<A href="#N-NumericLiteral"><VAR class=nonterminal>NumericLiteral</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>Token</SPAN>[<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-StringLiteral"><VAR class=nonterminal>StringLiteral</VAR></A>]&nbsp;=&nbsp;<A href="#T-Token"><SPAN class=field-name>string</SPAN></A>&nbsp;<SPAN class=action-name>StringValue</SPAN>[<A href="#N-StringLiteral"><VAR class=nonterminal>StringLiteral</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>Token</SPAN>[<A href="#N-Token"><VAR class=nonterminal>Token</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-EndOfInput"><VAR class=nonterminal>EndOfInput</VAR></A>]&nbsp;=&nbsp;<A href="#T-Token"><SPAN class=field-name>end</SPAN></A></P>
+
+<H2>Keywords</H2>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-IdentifierName"></A><VAR class=nonterminal>IdentifierName</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-IdentifierLetter"><VAR class=nonterminal>IdentifierLetter</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-IdentifierName"><VAR class=nonterminal>IdentifierName</VAR></A>&nbsp;<A href="#N-IdentifierLetter"><VAR class=nonterminal>IdentifierLetter</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-IdentifierName"><VAR class=nonterminal>IdentifierName</VAR></A>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-IdentifierLetter"></A><VAR class=nonterminal>IdentifierLetter</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>A</CODE>&nbsp;|&nbsp;<CODE>B</CODE>&nbsp;|&nbsp;<CODE>C</CODE>&nbsp;|&nbsp;<CODE>D</CODE>&nbsp;|&nbsp;<CODE>E</CODE>&nbsp;|&nbsp;<CODE>F</CODE>&nbsp;|&nbsp;<CODE>G</CODE>&nbsp;|&nbsp;<CODE>H</CODE>&nbsp;|&nbsp;<CODE>I</CODE>&nbsp;|&nbsp;<CODE>J</CODE>&nbsp;|&nbsp;<CODE>K</CODE>&nbsp;|&nbsp;<CODE>L</CODE>&nbsp;|&nbsp;<CODE>M</CODE>&nbsp;|&nbsp;<CODE>N</CODE>&nbsp;|&nbsp;<CODE>O</CODE>&nbsp;|&nbsp;<CODE>P</CODE>&nbsp;|&nbsp;<CODE>Q</CODE>&nbsp;|&nbsp;<CODE>R</CODE>&nbsp;|&nbsp;<CODE>S</CODE>&nbsp;|&nbsp;<CODE>T</CODE>&nbsp;|&nbsp;<CODE>U</CODE>&nbsp;|&nbsp;<CODE>V</CODE>&nbsp;|&nbsp;<CODE>W</CODE>&nbsp;|&nbsp;<CODE>X</CODE>&nbsp;|&nbsp;<CODE>Y</CODE>&nbsp;|&nbsp;<CODE>Z</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>a</CODE>&nbsp;|&nbsp;<CODE>b</CODE>&nbsp;|&nbsp;<CODE>c</CODE>&nbsp;|&nbsp;<CODE>d</CODE>&nbsp;|&nbsp;<CODE>e</CODE>&nbsp;|&nbsp;<CODE>f</CODE>&nbsp;|&nbsp;<CODE>g</CODE>&nbsp;|&nbsp;<CODE>h</CODE>&nbsp;|&nbsp;<CODE>i</CODE>&nbsp;|&nbsp;<CODE>j</CODE>&nbsp;|&nbsp;<CODE>k</CODE>&nbsp;|&nbsp;<CODE>l</CODE>&nbsp;|&nbsp;<CODE>m</CODE>&nbsp;|&nbsp;<CODE>n</CODE>&nbsp;|&nbsp;<CODE>o</CODE>&nbsp;|&nbsp;<CODE>p</CODE>&nbsp;|&nbsp;<CODE>q</CODE>&nbsp;|&nbsp;<CODE>r</CODE>&nbsp;|&nbsp;<CODE>s</CODE>&nbsp;|&nbsp;<CODE>t</CODE>&nbsp;|&nbsp;<CODE>u</CODE>&nbsp;|&nbsp;<CODE>v</CODE>&nbsp;|&nbsp;<CODE>w</CODE>&nbsp;|&nbsp;<CODE>x</CODE>&nbsp;|&nbsp;<CODE>y</CODE>&nbsp;|&nbsp;<CODE>z</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>$</CODE>&nbsp;|&nbsp;<CODE>_</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-DecimalDigit"></A><VAR class=nonterminal>DecimalDigit</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>0</CODE>&nbsp;|&nbsp;<CODE>1</CODE>&nbsp;|&nbsp;<CODE>2</CODE>&nbsp;|&nbsp;<CODE>3</CODE>&nbsp;|&nbsp;<CODE>4</CODE>&nbsp;|&nbsp;<CODE>5</CODE>&nbsp;|&nbsp;<CODE>6</CODE>&nbsp;|&nbsp;<CODE>7</CODE>&nbsp;|&nbsp;<CODE>8</CODE>&nbsp;|&nbsp;<CODE>9</CODE></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>Name</SPAN>[<A href="#N-IdentifierName"><VAR class=nonterminal>IdentifierName</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>String</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>Name</SPAN>[<A href="#N-IdentifierName"><VAR class=nonterminal>IdentifierName</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-IdentifierLetter"><VAR class=nonterminal>IdentifierLetter</VAR></A>]&nbsp;=&nbsp;<B>[</B><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-IdentifierLetter"><VAR class=nonterminal>IdentifierLetter</VAR></A>]<B>]</B></P>
+
+<P class=semantics-next><SPAN class=action-name>Name</SPAN>[<A href="#N-IdentifierName"><VAR class=nonterminal>IdentifierName</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-IdentifierName">IdentifierName</A><SUB>1</SUB></VAR>&nbsp;<A href="#N-IdentifierLetter"><VAR class=nonterminal>IdentifierLetter</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>Name</SPAN>[<VAR class=nonterminal><A href="#N-IdentifierName">IdentifierName</A><SUB>1</SUB></VAR>]&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<B>[</B><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-IdentifierLetter"><VAR class=nonterminal>IdentifierLetter</VAR></A>]<B>]</B></P>
+
+<P class=semantics-next><SPAN class=action-name>Name</SPAN>[<A href="#N-IdentifierName"><VAR class=nonterminal>IdentifierName</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-IdentifierName">IdentifierName</A><SUB>1</SUB></VAR>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>Name</SPAN>[<VAR class=nonterminal><A href="#N-IdentifierName">IdentifierName</A><SUB>1</SUB></VAR>]&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<B>[</B><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]<B>]</B></P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-IdentifierLetter"><VAR class=nonterminal>IdentifierLetter</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>nil</SPAN>(<A href="#N-IdentifierLetter"><VAR class=nonterminal>IdentifierLetter</VAR></A>)</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>nil</SPAN>(<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>)</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>DecimalValue</SPAN>[<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>digitValue</SPAN>(<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>)</P>
+
+<P class=semantics><A name="V-keywords"></A><SPAN class=global-variable>keywords</SPAN>&nbsp;:&nbsp;<SPAN class=type-expression><SPAN class=type-name>String</SPAN>[]</SPAN><BR>
+&nbsp;&nbsp;=&nbsp;<B>[</B>&#8220;<CODE>break</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>case</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>catch</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>continue</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>default</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>delete</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>do</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>else</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>finally</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>for</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>function</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>if</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>in</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>new</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>return</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>switch</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>this</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>throw</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>try</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>typeof</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>var</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>void</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>while</CODE>&#8221;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8220;<CODE>with</CODE>&#8221;<B>]</B></P>
+
+<P class=semantics><A name="V-futureReservedWords"></A><SPAN class=global-variable>futureReservedWords</SPAN>&nbsp;:&nbsp;<SPAN class=type-expression><SPAN class=type-name>String</SPAN>[]</SPAN><BR>
+&nbsp;&nbsp;=&nbsp;<B>[</B>&#8220;<CODE>class</CODE>&#8221;,&nbsp;&#8220;<CODE>const</CODE>&#8221;,&nbsp;&#8220;<CODE>debugger</CODE>&#8221;,&nbsp;&#8220;<CODE>enum</CODE>&#8221;,&nbsp;&#8220;<CODE>export</CODE>&#8221;,&nbsp;&#8220;<CODE>extends</CODE>&#8221;,&nbsp;&#8220;<CODE>import</CODE>&#8221;,&nbsp;&#8220;<CODE>super</CODE>&#8221;<B>]</B></P>
+
+<P class=semantics><A name="V-literals"></A><SPAN class=global-variable>literals</SPAN>&nbsp;:&nbsp;<SPAN class=type-expression><SPAN class=type-name>String</SPAN>[]</SPAN>&nbsp;=&nbsp;<B>[</B>&#8220;<CODE>null</CODE>&#8221;,&nbsp;&#8220;<CODE>true</CODE>&#8221;,&nbsp;&#8220;<CODE>false</CODE>&#8221;<B>]</B></P>
+
+<P class=semantics><A name="V-reservedWords"></A><SPAN class=global-variable>reservedWords</SPAN>&nbsp;:&nbsp;<SPAN class=type-expression><SPAN class=type-name>String</SPAN>[]</SPAN>&nbsp;=&nbsp;<A href="#V-keywords"><SPAN class=global-variable>keywords</SPAN></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<A href="#V-futureReservedWords"><SPAN class=global-variable>futureReservedWords</SPAN></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<A href="#V-literals"><SPAN class=global-variable>literals</SPAN></A></P>
+
+<P class=semantics><A name="V-member"></A><SPAN class=global-variable>member</SPAN>(<SPAN class=local-variable>id</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>,&nbsp;<SPAN class=local-variable>list</SPAN>:&nbsp;<SPAN class=type-expression><SPAN class=type-name>String</SPAN>[]</SPAN>)&nbsp;:&nbsp;<SPAN class=type-name>Boolean</SPAN><BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=semantic-keyword>if</SPAN>&nbsp;|<SPAN class=local-variable>list</SPAN>|&nbsp;=&nbsp;0<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>then</SPAN>&nbsp;<SPAN class=global-variable>false</SPAN><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>else</SPAN>&nbsp;<SPAN class=semantic-keyword>let</SPAN>&nbsp;<SPAN class=local-variable>s</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>&nbsp;=&nbsp;<SPAN class=local-variable>list</SPAN>[0]<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>in</SPAN>&nbsp;<SPAN class=semantic-keyword>if</SPAN>&nbsp;<SPAN class=local-variable>id</SPAN>&nbsp;=&nbsp;<SPAN class=local-variable>s</SPAN><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>then</SPAN>&nbsp;<SPAN class=global-variable>true</SPAN><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>else</SPAN>&nbsp;<A href="#V-member"><SPAN class=global-variable>member</SPAN></A>(<SPAN class=local-variable>id</SPAN>,&nbsp;<SPAN class=local-variable>list</SPAN>[1&nbsp;...])</P>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-IdentifierOrReservedWord"></A><VAR class=nonterminal>IdentifierOrReservedWord</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-IdentifierName"><VAR class=nonterminal>IdentifierName</VAR></A></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>Token</SPAN>[<A href="#N-IdentifierOrReservedWord"><VAR class=nonterminal>IdentifierOrReservedWord</VAR></A>]&nbsp;:&nbsp;<A href="#T-Token"><SPAN class=type-name>Token</SPAN></A></P>
+
+<P class=semantics-next><SPAN class=action-name>Token</SPAN>[<A href="#N-IdentifierOrReservedWord"><VAR class=nonterminal>IdentifierOrReservedWord</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-IdentifierName"><VAR class=nonterminal>IdentifierName</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=semantic-keyword>let</SPAN>&nbsp;<SPAN class=local-variable>id</SPAN>:&nbsp;<SPAN class=type-name>String</SPAN>&nbsp;=&nbsp;<SPAN class=action-name>Name</SPAN>[<A href="#N-IdentifierName"><VAR class=nonterminal>IdentifierName</VAR></A>]<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>in</SPAN>&nbsp;<SPAN class=semantic-keyword>if</SPAN>&nbsp;<A href="#V-member"><SPAN class=global-variable>member</SPAN></A>(<SPAN class=local-variable>id</SPAN>,&nbsp;<A href="#V-reservedWords"><SPAN class=global-variable>reservedWords</SPAN></A>)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>then</SPAN>&nbsp;<A href="#T-Token"><SPAN class=field-name>reservedWord</SPAN></A>&nbsp;<SPAN class=local-variable>id</SPAN><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>else</SPAN>&nbsp;<A href="#T-Token"><SPAN class=field-name>identifier</SPAN></A>&nbsp;<SPAN class=local-variable>id</SPAN></P>
+
+<H2>Punctuators</H2>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Punctuator"></A><VAR class=nonterminal>Punctuator</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&gt;</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&lt;</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>=</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>=</CODE>&nbsp;<CODE>=</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&lt;</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>!</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>!</CODE>&nbsp;<CODE>=</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>,</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>!</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>~</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>?</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>:</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>.</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&amp;</CODE>&nbsp;<CODE>&amp;</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>|</CODE>&nbsp;<CODE>|</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>+</CODE>&nbsp;<CODE>+</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>-</CODE>&nbsp;<CODE>-</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>+</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>-</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>*</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>/</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&amp;</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>|</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>^</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>%</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&lt;</CODE>&nbsp;<CODE>&lt;</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>+</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>-</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>*</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>/</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&amp;</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>|</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>^</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>%</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&lt;</CODE>&nbsp;<CODE>&lt;</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>=</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>(</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>)</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>{</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>}</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>[</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>]</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>;</CODE></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>String</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&gt;</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&gt;</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&lt;</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&lt;</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>=</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>==</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>=</CODE>&nbsp;<CODE>=</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>===</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&lt;</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&lt;=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&gt;=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>!</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>!=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>!</CODE>&nbsp;<CODE>=</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>!==</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>,</CODE>]&nbsp;=&nbsp;&#8220;<CODE>,</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>!</CODE>]&nbsp;=&nbsp;&#8220;<CODE>!</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>~</CODE>]&nbsp;=&nbsp;&#8220;<CODE>~</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>?</CODE>]&nbsp;=&nbsp;&#8220;<CODE>?</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>:</CODE>]&nbsp;=&nbsp;&#8220;<CODE>:</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>.</CODE>]&nbsp;=&nbsp;&#8220;<CODE>.</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&amp;</CODE>&nbsp;<CODE>&amp;</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&amp;&amp;</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>|</CODE>&nbsp;<CODE>|</CODE>]&nbsp;=&nbsp;&#8220;<CODE>||</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>+</CODE>&nbsp;<CODE>+</CODE>]&nbsp;=&nbsp;&#8220;<CODE>++</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>-</CODE>&nbsp;<CODE>-</CODE>]&nbsp;=&nbsp;&#8220;<CODE>--</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>+</CODE>]&nbsp;=&nbsp;&#8220;<CODE>+</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>-</CODE>]&nbsp;=&nbsp;&#8220;<CODE>-</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>*</CODE>]&nbsp;=&nbsp;&#8220;<CODE>*</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>/</CODE>]&nbsp;=&nbsp;&#8220;<CODE>/</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&amp;</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&amp;</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>|</CODE>]&nbsp;=&nbsp;&#8220;<CODE>|</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>^</CODE>]&nbsp;=&nbsp;&#8220;<CODE>^</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>%</CODE>]&nbsp;=&nbsp;&#8220;<CODE>%</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&lt;</CODE>&nbsp;<CODE>&lt;</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&lt;&lt;</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&gt;&gt;</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&gt;&gt;&gt;</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>+</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>+=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>-</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>-=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>*</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>*=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>/</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>/=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&amp;</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&amp;=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>|</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>|=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>^</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>^=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>%</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>%=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&lt;</CODE>&nbsp;<CODE>&lt;</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&lt;&lt;=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&gt;&gt;=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>&gt;</CODE>&nbsp;<CODE>=</CODE>]&nbsp;=&nbsp;&#8220;<CODE>&gt;&gt;&gt;=</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>(</CODE>]&nbsp;=&nbsp;&#8220;<CODE>(</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>)</CODE>]&nbsp;=&nbsp;&#8220;<CODE>)</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>{</CODE>]&nbsp;=&nbsp;&#8220;<CODE>{</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>}</CODE>]&nbsp;=&nbsp;&#8220;<CODE>}</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>[</CODE>]&nbsp;=&nbsp;&#8220;<CODE>[</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>]</CODE>]&nbsp;=&nbsp;&#8220;<CODE>]</CODE>&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>Punctuator</SPAN>[<A href="#N-Punctuator"><VAR class=nonterminal>Punctuator</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>;</CODE>]&nbsp;=&nbsp;&#8220;<CODE>;</CODE>&#8221;</P>
+
+<H2>Numeric literals</H2>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NumericLiteral"></A><VAR class=nonterminal>NumericLiteral</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-DecimalLiteral"><VAR class=nonterminal>DecimalLiteral</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-HexIntegerLiteral"><VAR class=nonterminal>HexIntegerLiteral</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-OctalIntegerLiteral"><VAR class=nonterminal>OctalIntegerLiteral</VAR></A></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>DoubleValue</SPAN>[<A href="#N-NumericLiteral"><VAR class=nonterminal>NumericLiteral</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Double</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>DoubleValue</SPAN>[<A href="#N-NumericLiteral"><VAR class=nonterminal>NumericLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalLiteral"><VAR class=nonterminal>DecimalLiteral</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=global-variable>rationalToDouble</SPAN>(<SPAN class=action-name>RationalValue</SPAN>[<A href="#N-DecimalLiteral"><VAR class=nonterminal>DecimalLiteral</VAR></A>])</P>
+
+<P class=semantics-next><SPAN class=action-name>DoubleValue</SPAN>[<A href="#N-NumericLiteral"><VAR class=nonterminal>NumericLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-HexIntegerLiteral"><VAR class=nonterminal>HexIntegerLiteral</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=global-variable>rationalToDouble</SPAN>(<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-HexIntegerLiteral"><VAR class=nonterminal>HexIntegerLiteral</VAR></A>])</P>
+
+<P class=semantics-next><SPAN class=action-name>DoubleValue</SPAN>[<A href="#N-NumericLiteral"><VAR class=nonterminal>NumericLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-OctalIntegerLiteral"><VAR class=nonterminal>OctalIntegerLiteral</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=global-variable>rationalToDouble</SPAN>(<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-OctalIntegerLiteral"><VAR class=nonterminal>OctalIntegerLiteral</VAR></A>])</P>
+
+<P class=semantics><A name="V-expt"></A><SPAN class=global-variable>expt</SPAN>(<SPAN class=local-variable>base</SPAN>:&nbsp;<SPAN class=type-name>Rational</SPAN>,&nbsp;<SPAN class=local-variable>exponent</SPAN>:&nbsp;<SPAN class=type-name>Integer</SPAN>)&nbsp;:&nbsp;<SPAN class=type-name>Rational</SPAN><BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=semantic-keyword>if</SPAN>&nbsp;<SPAN class=local-variable>exponent</SPAN>&nbsp;=&nbsp;0<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>then</SPAN>&nbsp;1<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>else</SPAN>&nbsp;<SPAN class=semantic-keyword>if</SPAN>&nbsp;<SPAN class=local-variable>exponent</SPAN>&nbsp;&lt;&nbsp;0<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>then</SPAN>&nbsp;1/<A href="#V-expt"><SPAN class=global-variable>expt</SPAN></A>(<SPAN class=local-variable>base</SPAN>,&nbsp;-<SPAN class=local-variable>exponent</SPAN>)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=semantic-keyword>else</SPAN>&nbsp;<SPAN class=local-variable>base</SPAN>*<A href="#V-expt"><SPAN class=global-variable>expt</SPAN></A>(<SPAN class=local-variable>base</SPAN>,&nbsp;<SPAN class=local-variable>exponent</SPAN>&nbsp;-&nbsp;1)</P>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-DecimalLiteral"></A><VAR class=nonterminal>DecimalLiteral</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-Mantissa"><VAR class=nonterminal>Mantissa</VAR></A>&nbsp;<A href="#N-Exponent"><VAR class=nonterminal>Exponent</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Mantissa"></A><VAR class=nonterminal>Mantissa</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>&nbsp;<CODE>.</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>&nbsp;<CODE>.</CODE>&nbsp;<A href="#N-Fraction"><VAR class=nonterminal>Fraction</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>.</CODE>&nbsp;<A href="#N-Fraction"><VAR class=nonterminal>Fraction</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-DecimalIntegerLiteral"></A><VAR class=nonterminal>DecimalIntegerLiteral</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>0</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-NonZeroDecimalDigits"><VAR class=nonterminal>NonZeroDecimalDigits</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NonZeroDecimalDigits"></A><VAR class=nonterminal>NonZeroDecimalDigits</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-NonZeroDigit"><VAR class=nonterminal>NonZeroDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-NonZeroDecimalDigits"><VAR class=nonterminal>NonZeroDecimalDigits</VAR></A>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NonZeroDigit"></A><VAR class=nonterminal>NonZeroDigit</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>1</CODE>&nbsp;|&nbsp;<CODE>2</CODE>&nbsp;|&nbsp;<CODE>3</CODE>&nbsp;|&nbsp;<CODE>4</CODE>&nbsp;|&nbsp;<CODE>5</CODE>&nbsp;|&nbsp;<CODE>6</CODE>&nbsp;|&nbsp;<CODE>7</CODE>&nbsp;|&nbsp;<CODE>8</CODE>&nbsp;|&nbsp;<CODE>9</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Fraction"></A><VAR class=nonterminal>Fraction</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>RationalValue</SPAN>[<A href="#N-DecimalLiteral"><VAR class=nonterminal>DecimalLiteral</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Rational</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>RationalValue</SPAN>[<A href="#N-DecimalLiteral"><VAR class=nonterminal>DecimalLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-Mantissa"><VAR class=nonterminal>Mantissa</VAR></A>&nbsp;<A href="#N-Exponent"><VAR class=nonterminal>Exponent</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Mantissa"><VAR class=nonterminal>Mantissa</VAR></A>]*<A href="#V-expt"><SPAN class=global-variable>expt</SPAN></A>(10,&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-Exponent"><VAR class=nonterminal>Exponent</VAR></A>])</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Mantissa"><VAR class=nonterminal>Mantissa</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Rational</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Mantissa"><VAR class=nonterminal>Mantissa</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Mantissa"><VAR class=nonterminal>Mantissa</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>&nbsp;<CODE>.</CODE>]&nbsp;=&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Mantissa"><VAR class=nonterminal>Mantissa</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>&nbsp;<CODE>.</CODE>&nbsp;<A href="#N-Fraction"><VAR class=nonterminal>Fraction</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>]&nbsp;+&nbsp;<SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Fraction"><VAR class=nonterminal>Fraction</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Mantissa"><VAR class=nonterminal>Mantissa</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>.</CODE>&nbsp;<A href="#N-Fraction"><VAR class=nonterminal>Fraction</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Fraction"><VAR class=nonterminal>Fraction</VAR></A>]</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>0</CODE>]&nbsp;=&nbsp;0</P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-NonZeroDecimalDigits"><VAR class=nonterminal>NonZeroDecimalDigits</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-NonZeroDecimalDigits"><VAR class=nonterminal>NonZeroDecimalDigits</VAR></A>]</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-NonZeroDecimalDigits"><VAR class=nonterminal>NonZeroDecimalDigits</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-NonZeroDecimalDigits"><VAR class=nonterminal>NonZeroDecimalDigits</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-NonZeroDigit"><VAR class=nonterminal>NonZeroDigit</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>DecimalValue</SPAN>[<A href="#N-NonZeroDigit"><VAR class=nonterminal>NonZeroDigit</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-NonZeroDecimalDigits"><VAR class=nonterminal>NonZeroDecimalDigits</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-NonZeroDecimalDigits">NonZeroDecimalDigits</A><SUB>1</SUB></VAR>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;10*<SPAN class=action-name>IntegerValue</SPAN>[<VAR class=nonterminal><A href="#N-NonZeroDecimalDigits">NonZeroDecimalDigits</A><SUB>1</SUB></VAR>]&nbsp;+&nbsp;<SPAN class=action-name>DecimalValue</SPAN>[<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>DecimalValue</SPAN>[<A href="#N-NonZeroDigit"><VAR class=nonterminal>NonZeroDigit</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>digitValue</SPAN>(<A href="#N-NonZeroDigit"><VAR class=nonterminal>NonZeroDigit</VAR></A>)</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Fraction"><VAR class=nonterminal>Fraction</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Rational</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>RationalValue</SPAN>[<A href="#N-Fraction"><VAR class=nonterminal>Fraction</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]/<A href="#V-expt"><SPAN class=global-variable>expt</SPAN></A>(10,&nbsp;<SPAN class=action-name>NDigits</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>])</P>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Exponent"></A><VAR class=nonterminal>Exponent</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-ExponentIndicator"><VAR class=nonterminal>ExponentIndicator</VAR></A>&nbsp;<A href="#N-SignedInteger"><VAR class=nonterminal>SignedInteger</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-ExponentIndicator"></A><VAR class=nonterminal>ExponentIndicator</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>E</CODE>&nbsp;|&nbsp;<CODE>e</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-SignedInteger"></A><VAR class=nonterminal>SignedInteger</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>+</CODE>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>-</CODE>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-Exponent"><VAR class=nonterminal>Exponent</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-Exponent"><VAR class=nonterminal>Exponent</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;&#171;empty&#187;]&nbsp;=&nbsp;0</P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-Exponent"><VAR class=nonterminal>Exponent</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-ExponentIndicator"><VAR class=nonterminal>ExponentIndicator</VAR></A>&nbsp;<A href="#N-SignedInteger"><VAR class=nonterminal>SignedInteger</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-SignedInteger"><VAR class=nonterminal>SignedInteger</VAR></A>]</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-SignedInteger"><VAR class=nonterminal>SignedInteger</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-SignedInteger"><VAR class=nonterminal>SignedInteger</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-SignedInteger"><VAR class=nonterminal>SignedInteger</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>+</CODE>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-SignedInteger"><VAR class=nonterminal>SignedInteger</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>-</CODE>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]&nbsp;=&nbsp;-<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]</P>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-DecimalDigits"></A><VAR class=nonterminal>DecimalDigits</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN></P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>NDigits</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>DecimalValue</SPAN>[<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>NDigits</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]&nbsp;=&nbsp;1</P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-DecimalDigits">DecimalDigits</A><SUB>1</SUB></VAR>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;10*<SPAN class=action-name>IntegerValue</SPAN>[<VAR class=nonterminal><A href="#N-DecimalDigits">DecimalDigits</A><SUB>1</SUB></VAR>]&nbsp;+&nbsp;<SPAN class=action-name>DecimalValue</SPAN>[<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>NDigits</SPAN>[<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-DecimalDigits">DecimalDigits</A><SUB>1</SUB></VAR>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>NDigits</SPAN>[<VAR class=nonterminal><A href="#N-DecimalDigits">DecimalDigits</A><SUB>1</SUB></VAR>]&nbsp;+&nbsp;1</P>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-HexIntegerLiteral"></A><VAR class=nonterminal>HexIntegerLiteral</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>0</CODE>&nbsp;<A href="#N-HexIndicator"><VAR class=nonterminal>HexIndicator</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-HexIntegerLiteral"><VAR class=nonterminal>HexIntegerLiteral</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-HexIndicator"></A><VAR class=nonterminal>HexIndicator</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>X</CODE>&nbsp;|&nbsp;<CODE>x</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-HexDigit"></A><VAR class=nonterminal>HexDigit</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>0</CODE>&nbsp;|&nbsp;<CODE>1</CODE>&nbsp;|&nbsp;<CODE>2</CODE>&nbsp;|&nbsp;<CODE>3</CODE>&nbsp;|&nbsp;<CODE>4</CODE>&nbsp;|&nbsp;<CODE>5</CODE>&nbsp;|&nbsp;<CODE>6</CODE>&nbsp;|&nbsp;<CODE>7</CODE>&nbsp;|&nbsp;<CODE>8</CODE>&nbsp;|&nbsp;<CODE>9</CODE>&nbsp;|&nbsp;<CODE>A</CODE>&nbsp;|&nbsp;<CODE>B</CODE>&nbsp;|&nbsp;<CODE>C</CODE>&nbsp;|&nbsp;<CODE>D</CODE>&nbsp;|&nbsp;<CODE>E</CODE>&nbsp;|&nbsp;<CODE>F</CODE>&nbsp;|&nbsp;<CODE>a</CODE>&nbsp;|&nbsp;<CODE>b</CODE>&nbsp;|&nbsp;<CODE>c</CODE>&nbsp;|&nbsp;<CODE>d</CODE>&nbsp;|&nbsp;<CODE>e</CODE>&nbsp;|&nbsp;<CODE>f</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-OctalIntegerLiteral"></A><VAR class=nonterminal>OctalIntegerLiteral</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>0</CODE>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-OctalIntegerLiteral"><VAR class=nonterminal>OctalIntegerLiteral</VAR></A>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-OctalDigit"></A><VAR class=nonterminal>OctalDigit</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>0</CODE>&nbsp;|&nbsp;<CODE>1</CODE>&nbsp;|&nbsp;<CODE>2</CODE>&nbsp;|&nbsp;<CODE>3</CODE>&nbsp;|&nbsp;<CODE>4</CODE>&nbsp;|&nbsp;<CODE>5</CODE>&nbsp;|&nbsp;<CODE>6</CODE>&nbsp;|&nbsp;<CODE>7</CODE></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-HexIntegerLiteral"><VAR class=nonterminal>HexIntegerLiteral</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-HexIntegerLiteral"><VAR class=nonterminal>HexIntegerLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>0</CODE>&nbsp;<A href="#N-HexIndicator"><VAR class=nonterminal>HexIndicator</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>HexValue</SPAN>[<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-HexIntegerLiteral"><VAR class=nonterminal>HexIntegerLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-HexIntegerLiteral">HexIntegerLiteral</A><SUB>1</SUB></VAR>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;16*<SPAN class=action-name>IntegerValue</SPAN>[<VAR class=nonterminal><A href="#N-HexIntegerLiteral">HexIntegerLiteral</A><SUB>1</SUB></VAR>]&nbsp;+&nbsp;<SPAN class=action-name>HexValue</SPAN>[<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>]</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>HexValue</SPAN>[<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>digitValue</SPAN>(<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>)</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-OctalIntegerLiteral"><VAR class=nonterminal>OctalIntegerLiteral</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-OctalIntegerLiteral"><VAR class=nonterminal>OctalIntegerLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>0</CODE>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>IntegerValue</SPAN>[<A href="#N-OctalIntegerLiteral"><VAR class=nonterminal>OctalIntegerLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-OctalIntegerLiteral">OctalIntegerLiteral</A><SUB>1</SUB></VAR>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;8*<SPAN class=action-name>IntegerValue</SPAN>[<VAR class=nonterminal><A href="#N-OctalIntegerLiteral">OctalIntegerLiteral</A><SUB>1</SUB></VAR>]&nbsp;+&nbsp;<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>nil</SPAN>(<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>)</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>digitValue</SPAN>(<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>)</P>
+
+<H2>String literals</H2>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-argument><VAR class=nonterminal><SPAN class=nonterminal-argument>Quote</SPAN></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_isin)</SCRIPT>&nbsp;{<VAR class=nonterminal><SPAN class=nonterminal-attribute>single</SPAN></VAR>,&nbsp;<VAR class=nonterminal><SPAN class=nonterminal-attribute>double</SPAN></VAR>}</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-StringLiteral"></A><VAR class=nonterminal>StringLiteral</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>'</CODE>&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-attribute>single</SPAN></SUP></VAR>&nbsp;<CODE>'</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>"</CODE>&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-attribute>double</SPAN></SUP></VAR>&nbsp;<CODE>"</CODE></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>StringValue</SPAN>[<A href="#N-StringLiteral"><VAR class=nonterminal>StringLiteral</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>String</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>StringValue</SPAN>[<A href="#N-StringLiteral"><VAR class=nonterminal>StringLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>'</CODE>&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-attribute>single</SPAN></SUP></VAR>&nbsp;<CODE>'</CODE>]&nbsp;=&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-attribute>single</SPAN></SUP></VAR>]</P>
+
+<P class=semantics-next><SPAN class=action-name>StringValue</SPAN>[<A href="#N-StringLiteral"><VAR class=nonterminal>StringLiteral</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>"</CODE>&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-attribute>double</SPAN></SUP></VAR>&nbsp;<CODE>"</CODE>]&nbsp;=&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-attribute>double</SPAN></SUP></VAR>]</P>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-StringChars"></A><VAR class=nonterminal>StringChars<SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<CODE>\</CODE>&nbsp;<A href="#N-ShortOctalEscape"><VAR class=nonterminal>ShortOctalEscape</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-OrdinaryStringChars"></A><VAR class=nonterminal>OrdinaryStringChars<SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<A href="#N-PlainStringChar"><VAR class=nonterminal>PlainStringChar</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<VAR class=nonterminal><A href="#N-PlainStringQuote">PlainStringQuote</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<CODE>\</CODE>&nbsp;<A href="#N-OrdinaryEscape"><VAR class=nonterminal>OrdinaryEscape</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-PlainStringChar"></A><VAR class=nonterminal>PlainStringChar</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-UnicodeCharacter"><VAR class=nonterminal>UnicodeCharacter</VAR></A>&nbsp;<B>except</B>&nbsp;<CODE>'</CODE>&nbsp;|&nbsp;<CODE>"</CODE>&nbsp;|&nbsp;<CODE>\</CODE>&nbsp;|&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>&nbsp;|&nbsp;<A href="#N-LineTerminator"><VAR class=nonterminal>LineTerminator</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-PlainStringQuote"></A><VAR class=nonterminal>PlainStringQuote<SUP><SPAN class=nonterminal-attribute>single</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>"</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>PlainStringQuote<SUP><SPAN class=nonterminal-attribute>double</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>'</CODE></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]&nbsp;:&nbsp;<SPAN class=type-name>String</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]</P>
+
+<P class=semantics-next><SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP><SUB>1</SUB></VAR>&nbsp;<CODE>\</CODE>&nbsp;<A href="#N-ShortOctalEscape"><VAR class=nonterminal>ShortOctalEscape</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP><SUB>1</SUB></VAR>]&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<B>[</B><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-ShortOctalEscape"><VAR class=nonterminal>ShortOctalEscape</VAR></A>]<B>]</B></P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]&nbsp;:&nbsp;<SPAN class=type-name>String</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;&#171;empty&#187;]&nbsp;=&nbsp;&#8220;&#8221;</P>
+
+<P class=semantics-next><SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<A href="#N-PlainStringChar"><VAR class=nonterminal>PlainStringChar</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<B>[</B><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-PlainStringChar"><VAR class=nonterminal>PlainStringChar</VAR></A>]<B>]</B></P>
+
+<P class=semantics-next><SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<VAR class=nonterminal><A href="#N-PlainStringQuote">PlainStringQuote</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<B>[</B><SPAN class=action-name>CharacterValue</SPAN>[<VAR class=nonterminal><A href="#N-PlainStringQuote">PlainStringQuote</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]<B>]</B></P>
+
+<P class=semantics-next><SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP><SUB>1</SUB></VAR>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP><SUB>1</SUB></VAR>]&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<B>[</B><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]<B>]</B></P>
+
+<P class=semantics-next><SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-OrdinaryStringChars">OrdinaryStringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>&nbsp;<CODE>\</CODE>&nbsp;<A href="#N-OrdinaryEscape"><VAR class=nonterminal>OrdinaryEscape</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=action-name>StringValue</SPAN>[<VAR class=nonterminal><A href="#N-StringChars">StringChars</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]&nbsp;<SCRIPT type="text/javascript">document.write(U_oplus)</SCRIPT>&nbsp;<B>[</B><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-OrdinaryEscape"><VAR class=nonterminal>OrdinaryEscape</VAR></A>]<B>]</B></P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-PlainStringChar"><VAR class=nonterminal>PlainStringChar</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>nil</SPAN>(<A href="#N-PlainStringChar"><VAR class=nonterminal>PlainStringChar</VAR></A>)</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<VAR class=nonterminal><A href="#N-PlainStringQuote">PlainStringQuote</A><SUP><SPAN class=nonterminal-argument>Quote</SPAN></SUP></VAR>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<VAR class=nonterminal><A href="#N-PlainStringQuote">PlainStringQuote</A><SUP><SPAN class=nonterminal-attribute>single</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>"</CODE>]&nbsp;=&nbsp;&#8216;<CODE>"</CODE>&#8217;</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<VAR class=nonterminal><A href="#N-PlainStringQuote">PlainStringQuote</A><SUP><SPAN class=nonterminal-attribute>double</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>'</CODE>]&nbsp;=&nbsp;&#8216;<CODE>'</CODE>&#8217;</P>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-OrdinaryEscape"></A><VAR class=nonterminal>OrdinaryEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-FullOctalEscape"><VAR class=nonterminal>FullOctalEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-HexEscape"><VAR class=nonterminal>HexEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-UnicodeEscape"><VAR class=nonterminal>UnicodeEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-StringNonEscape"><VAR class=nonterminal>StringNonEscape</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-StringNonEscape"></A><VAR class=nonterminal>StringNonEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-NonTerminator"><VAR class=nonterminal>NonTerminator</VAR></A>&nbsp;<B>except</B>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>&nbsp;|&nbsp;<CODE>x</CODE>&nbsp;|&nbsp;<CODE>u</CODE>&nbsp;|&nbsp;<CODE>'</CODE>&nbsp;|&nbsp;<CODE>"</CODE>&nbsp;|&nbsp;<CODE>\</CODE>&nbsp;|&nbsp;<CODE>b</CODE>&nbsp;|&nbsp;<CODE>f</CODE>&nbsp;|&nbsp;<CODE>n</CODE>&nbsp;|&nbsp;<CODE>r</CODE>&nbsp;|&nbsp;<CODE>t</CODE>&nbsp;|&nbsp;<CODE>v</CODE></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-OrdinaryEscape"><VAR class=nonterminal>OrdinaryEscape</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-OrdinaryEscape"><VAR class=nonterminal>OrdinaryEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-OrdinaryEscape"><VAR class=nonterminal>OrdinaryEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-FullOctalEscape"><VAR class=nonterminal>FullOctalEscape</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-FullOctalEscape"><VAR class=nonterminal>FullOctalEscape</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-OrdinaryEscape"><VAR class=nonterminal>OrdinaryEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-HexEscape"><VAR class=nonterminal>HexEscape</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-HexEscape"><VAR class=nonterminal>HexEscape</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-OrdinaryEscape"><VAR class=nonterminal>OrdinaryEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-UnicodeEscape"><VAR class=nonterminal>UnicodeEscape</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-UnicodeEscape"><VAR class=nonterminal>UnicodeEscape</VAR></A>]</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-OrdinaryEscape"><VAR class=nonterminal>OrdinaryEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-StringNonEscape"><VAR class=nonterminal>StringNonEscape</VAR></A>]&nbsp;=&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringNonEscape"><VAR class=nonterminal>StringNonEscape</VAR></A>]</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringNonEscape"><VAR class=nonterminal>StringNonEscape</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>nil</SPAN>(<A href="#N-StringNonEscape"><VAR class=nonterminal>StringNonEscape</VAR></A>)</P>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-StringCharEscape"></A><VAR class=nonterminal>StringCharEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>'</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>"</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>\</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>b</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>f</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>n</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>r</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>t</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>v</CODE></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>'</CODE>]&nbsp;=&nbsp;&#8216;<CODE>'</CODE>&#8217;</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>"</CODE>]&nbsp;=&nbsp;&#8216;<CODE>"</CODE>&#8217;</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>\</CODE>]&nbsp;=&nbsp;&#8216;<CODE>\</CODE>&#8217;</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>b</CODE>]&nbsp;=&nbsp;&#8216;<CODE><SPAN class=control>&#171;BS&#187;</SPAN></CODE>&#8217;</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>f</CODE>]&nbsp;=&nbsp;&#8216;<CODE><SPAN class=control>&#171;FF&#187;</SPAN></CODE>&#8217;</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>n</CODE>]&nbsp;=&nbsp;&#8216;<CODE><SPAN class=control>&#171;LF&#187;</SPAN></CODE>&#8217;</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>r</CODE>]&nbsp;=&nbsp;&#8216;<CODE><SPAN class=control>&#171;CR&#187;</SPAN></CODE>&#8217;</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>t</CODE>]&nbsp;=&nbsp;&#8216;<CODE><SPAN class=control>&#171;TAB&#187;</SPAN></CODE>&#8217;</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-StringCharEscape"><VAR class=nonterminal>StringCharEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>v</CODE>]&nbsp;=&nbsp;&#8216;<CODE><SPAN class=control>&#171;VT&#187;</SPAN></CODE>&#8217;</P>
+
+<H4>Syntax</H4>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-ShortOctalEscape"></A><VAR class=nonterminal>ShortOctalEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-ZeroToThree"><VAR class=nonterminal>ZeroToThree</VAR></A>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-FullOctalEscape"></A><VAR class=nonterminal>FullOctalEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-FourToSeven"><VAR class=nonterminal>FourToSeven</VAR></A>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-ZeroToThree"><VAR class=nonterminal>ZeroToThree</VAR></A>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-ZeroToThree"></A><VAR class=nonterminal>ZeroToThree</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>0</CODE>&nbsp;|&nbsp;<CODE>1</CODE>&nbsp;|&nbsp;<CODE>2</CODE>&nbsp;|&nbsp;<CODE>3</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-FourToSeven"></A><VAR class=nonterminal>FourToSeven</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>4</CODE>&nbsp;|&nbsp;<CODE>5</CODE>&nbsp;|&nbsp;<CODE>6</CODE>&nbsp;|&nbsp;<CODE>7</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-HexEscape"></A><VAR class=nonterminal>HexEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>x</CODE>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-UnicodeEscape"></A><VAR class=nonterminal>UnicodeEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>u</CODE>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A></DIV>
+</DIV>
+<H4>Semantics</H4>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-ShortOctalEscape"><VAR class=nonterminal>ShortOctalEscape</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-ShortOctalEscape"><VAR class=nonterminal>ShortOctalEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]&nbsp;=&nbsp;<SPAN class=global-variable>codeToCharacter</SPAN>(<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>])</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-ShortOctalEscape"><VAR class=nonterminal>ShortOctalEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-ZeroToThree"><VAR class=nonterminal>ZeroToThree</VAR></A>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=global-variable>codeToCharacter</SPAN>(8*<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-ZeroToThree"><VAR class=nonterminal>ZeroToThree</VAR></A>]&nbsp;+&nbsp;<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>])</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-FullOctalEscape"><VAR class=nonterminal>FullOctalEscape</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-FullOctalEscape"><VAR class=nonterminal>FullOctalEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-FourToSeven"><VAR class=nonterminal>FourToSeven</VAR></A>&nbsp;<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=global-variable>codeToCharacter</SPAN>(8*<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-FourToSeven"><VAR class=nonterminal>FourToSeven</VAR></A>]&nbsp;+&nbsp;<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-OctalDigit"><VAR class=nonterminal>OctalDigit</VAR></A>])</P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-FullOctalEscape"><VAR class=nonterminal>FullOctalEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-ZeroToThree"><VAR class=nonterminal>ZeroToThree</VAR></A>&nbsp;<VAR class=nonterminal><A href="#N-OctalDigit">OctalDigit</A><SUB>1</SUB></VAR>&nbsp;<VAR class=nonterminal><A href="#N-OctalDigit">OctalDigit</A><SUB>2</SUB></VAR>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=global-variable>codeToCharacter</SPAN>(<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;64*<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-ZeroToThree"><VAR class=nonterminal>ZeroToThree</VAR></A>]&nbsp;+&nbsp;8*<SPAN class=action-name>OctalValue</SPAN>[<VAR class=nonterminal><A href="#N-OctalDigit">OctalDigit</A><SUB>1</SUB></VAR>]&nbsp;+&nbsp;<SPAN class=action-name>OctalValue</SPAN>[<VAR class=nonterminal><A href="#N-OctalDigit">OctalDigit</A><SUB>2</SUB></VAR>])</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-ZeroToThree"><VAR class=nonterminal>ZeroToThree</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>digitValue</SPAN>(<A href="#N-ZeroToThree"><VAR class=nonterminal>ZeroToThree</VAR></A>)</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>OctalValue</SPAN>[<A href="#N-FourToSeven"><VAR class=nonterminal>FourToSeven</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Integer</SPAN>&nbsp;=&nbsp;<SPAN class=global-variable>digitValue</SPAN>(<A href="#N-FourToSeven"><VAR class=nonterminal>FourToSeven</VAR></A>)</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-HexEscape"><VAR class=nonterminal>HexEscape</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-HexEscape"><VAR class=nonterminal>HexEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>x</CODE>&nbsp;<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>1</SUB></VAR>&nbsp;<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>2</SUB></VAR>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=global-variable>codeToCharacter</SPAN>(16*<SPAN class=action-name>HexValue</SPAN>[<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>1</SUB></VAR>]&nbsp;+&nbsp;<SPAN class=action-name>HexValue</SPAN>[<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>2</SUB></VAR>])</P>
+
+<P class=semantics><SPAN class=semantic-keyword>action</SPAN>&nbsp;<SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-UnicodeEscape"><VAR class=nonterminal>UnicodeEscape</VAR></A>]&nbsp;:&nbsp;<SPAN class=type-name>Character</SPAN></P>
+
+<P class=semantics-next><SPAN class=action-name>CharacterValue</SPAN>[<A href="#N-UnicodeEscape"><VAR class=nonterminal>UnicodeEscape</VAR></A>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>u</CODE>&nbsp;<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>1</SUB></VAR>&nbsp;<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>2</SUB></VAR>&nbsp;<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>3</SUB></VAR>&nbsp;<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>4</SUB></VAR>]<BR>
+&nbsp;&nbsp;=&nbsp;<SPAN class=global-variable>codeToCharacter</SPAN>(<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4096*<SPAN class=action-name>HexValue</SPAN>[<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>1</SUB></VAR>]&nbsp;+&nbsp;256*<SPAN class=action-name>HexValue</SPAN>[<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>2</SUB></VAR>]&nbsp;+&nbsp;16*<SPAN class=action-name>HexValue</SPAN>[<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>3</SUB></VAR>]&nbsp;+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class=action-name>HexValue</SPAN>[<VAR class=nonterminal><A href="#N-HexDigit">HexDigit</A><SUB>4</SUB></VAR>])</P>
+
+<!--/SEMANTICS-->
+
+<HR>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TD valign=BOTTOM nowrap>
+      <ADDRESS><A href="mailto:waldemar@netscape.com">Waldemar Horwat</A><BR>
+      Last modified Thursday, July 22, 1999</ADDRESS>
+    </TD>
+    <TD valign=TOP nowrap align=RIGHT><A href="index.html"><IMG src="../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="index.html"><IMG src="../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="grammar.html"><IMG src="../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+  </TR>
+</TABLE>
+</BODY>
+</HTML>

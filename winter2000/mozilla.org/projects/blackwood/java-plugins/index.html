@@ -1,0 +1,323 @@
+<HTML>
+<HEAD>
+<TITLE>Java Pluglet API</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+  
+  
+
+  
+      <h1>Java Pluglet API</h1> 
+      by Igor Kushnirskiy 
+      &lt;  <a href="mailto:idk@eng.sun.com">idk@eng.sun.com</a>&gt; <br>
+      Akhil Arora 
+      &lt; <a href="mailto:akhil.arora@sun.com">akhil.arora@sun.com</a>&gt; <p>
+
+
+    <p>A <em>Pluglet</em> is a 
+    <a href="http://developer.netscape.com/docs/manuals/communicator/plugin/index.htm">
+       Plug-in 
+    </a>
+    that is written in the Java<sup><font size = -2>TM </font></sup> programming language. A Pluglet is similar in concept to a 
+    <a  href="http://java.sun.com/products/servlet/">Servlet</a>, 
+       with the difference that a Servlet <em>produces</em> content, whereas a
+       Pluglet <em>consumes</em> it. The Java Pluglet 
+    <a  href="api/">API</a>
+    is a close 1:1 implementation of the new C++ 
+    <a  href="http://lxr.mozilla.org/seamonkey/source/modules/plugin/public/">
+       Plug-in  API
+    </a> in Mozilla.</p>
+      
+
+    <UL>
+
+      <LI> <A HREF="#Overview">Overview</A>
+
+      <LI> <A HREF="#Requirements">Requirements</A>
+
+      <LI> <A HREF="#Code">Getting and Building the Code</A><BR>
+      
+      <LI> <A HREF="#CodeBinary">Pluglets Service Binaries</A></BR>
+
+      <LI> <A HREF="#Demos">Demos and Screenshots</A>
+      
+      <LI> <A HREF="#References"> References</A>
+
+    </UL>
+
+    <p>
+    
+    <ul>
+    
+    <a name="Overview">  </a>
+    <p><b><li>Why Pluglets?</li></b><br>
+
+    Pluglets are part of the <a
+    href="http://www.mozilla.org/projects/blackwood/">Blackwood</a>
+    project. For a Plug-in developer, choosing to extend Mozilla via a
+    Java Pluglet brings the advantages of the Java platform to
+    Pluglets.
+    </p>
+
+    <ul>
+    <p><b><li>Platform neutral</li></b><br>
+
+      Writing a Plug-in in Java instantly makes it available on all
+      platforms on which a Java Virtual Machine is
+      available.
+    </p>
+
+    <p><b><li>Compact</li></b><br>
+      
+      For a given functionality, Java bytecode is typically smaller
+      than compiled native code, so the time needed to download a
+      Plug-in is reduced.
+    </p>
+    </ul>  
+
+    <p><b><li>Pluglets vs Applets</li></b><br>
+
+      A frequently asked question is how are Pluglets different from
+      Applets. There has been a discussion of this on 
+      <a href="http://www.mozillazine.org/talkback.html?article=712">MozillaZine</a>.
+      Basically there are two differences. A Pluglet is launched when
+      a certain Content Type is encountered, whereas an Applet is
+      launched when an &lt;applet&gt; tag is encountered. The other
+      difference is that Pluglets are installed onto disk and unlike
+      Applets, are not downloaded at each invocation.
+    </p>
+
+    <p><b><li>How?</li></b><br>
+
+      Key to enabling Pluglets is the Pluglet Engine. The Pluglet
+      Engine appears to Mozilla like an XPCOM service.
+      When Mozilla can not get a handler for some MIME type, the Pluglet Engine would 
+      be asked for it. It simply delegates to the appropriate Pluglet.
+      Some JNI is involved to go from C++ to Java and back again.
+    </p>
+
+    <p><b><li>Design Goals</li></b><br>
+
+      It was a conscious design decision to have the Pluglet API
+      resemble its C++ counterpart as much as possible, while being
+      able to reflect all of its functionality to Java, so that
+      Plug-in writers will not have to learn yet another API. This
+      concern, in our opinion, outweighed other alternatives which
+      offered a cleaner, more Java-like look. Support for other
+      Plug-in APIs can be easily added by contributing adaptors.
+    </p>
+    
+    </UL>
+
+    <H2><A NAME="Requirements">Requirements</A></H2>
+
+    This section describes the requirements you need before building the
+    pluglets project.
+
+    <UL>
+
+      <UL>
+
+      <LI> JDK1.2 or later
+
+      <LI> a current Mozilla build 
+
+      </UL>
+
+    </UL>
+
+    <H2><A NAME="Code">Getting and Building the Code</A></H2>
+
+
+    <H3>Getting the Code</H3>
+
+    <OL>
+
+      <LI> You must first grab the latest Mozilla and Pluglets code.
+	This can be found at <A
+	  HREF="../../../cvs.html">http://www.mozilla.org/cvs.html</A>, but instead of 
+	  <nobr><code>cvs checkout SeaMonkeyAll</code> </nobr>
+	  use <code><nobr>cvs checkout SeaMonkeyBlackwood</code> </nobr><P>
+
+    </OL> <P>
+
+    <h3>Building the Code</H3>
+
+    <OL>
+    
+      <LI> Build the Mozilla tree using the instructions found at 
+      <A  HREF="../../../build/">http://www.mozilla.org/build/</A>. <P>
+
+      <LI> Follow the steps in the 
+      <a href="http://lxr.mozilla.org/mozilla/source/java/plugins/README"> 
+      mozilla/java/plugins/README</a>. <P>
+
+    </OL>
+
+    <B>NOTE:</B> The build is only currently designed for NT4.0,
+    Linux and Solaris.  If you make changes to the 
+    build to get it to work on other platforms, mail them to 
+    <a href="mailto:idk@eng.sun.com">me</a>.
+    <P>
+
+    <H3><A NAME="CodeBinary"></A>Pluglet Service Binaries</H3>
+
+    Binaries are available for the following platforms.
+    They are provided as a convenience and are not guaranteed to work. <P></P>
+    
+    <table border = "2" >
+    <tr><td> <pre> </pre>  </td> <td> Not using OJI </td>  <td> Using OJI </td>
+    </tr>
+    <tr><td> Windows </td> 
+    <td> <a href="binaries/windows_without_oji.zip"> Download </a> </td>
+    <td> <a href="binaries/windows_with_oji.zip"> Download </a> </td>
+    </tr>
+    <tr><td> Solaris2.6 (sparc) </td>
+    <td> <a href="binaries/solaris_without_oji.tar.gz"> Download </a> </td>
+    <td> N/A </td>
+    </tr>
+    <tr><td> Linux RH6.0 (i386) </td> 
+    <td> <a href="binaries/linux_without_oji.tar.gz"> Download </a> </td>
+    <td> N/A </td>
+    </tr>
+    </table>    
+    <p>
+    You need to download <a href="binaries/pluglets.jar"> Pluglet module class files</a>.<p>
+    
+    <h4> Steps to install. </h4>
+    <ol>
+    <li> Unzip the archive. </li> <p>
+    <li> Place libpluglet.so or pluglet.dll into the $MOZILLA_FIVE_HOME/components directory.
+         Place libplugletjni.so or plugletjni.dll into the $MOZILLA_FIVE_HOME directory.
+	 <P>
+    <li> Follow the steps in the 
+         <a href="http://lxr.mozilla.org/mozilla/source/java/plugins/README"> 
+	    mozilla/java/plugins/README.
+	 </a>
+	 <p>
+    </ol>
+
+    <h2><A NAME="Demos">Demos and Screenshots</A></H2>
+    We have four demos available. Here is a 
+    <a href="binaries/pluglets.jpg" target="_new"> screenshot</a>. <p>
+    <table border="1">
+    <tr>
+    <td> 
+    <a href="http://lxr.mozilla.org/mozilla/source/java/plugins/examples/pdf/"> Pdf viewer </a> <br>
+    <a href="binaries/PDFView.jar"> Download </a>
+    </td>
+    <td> <a href="http://lxr.mozilla.org/mozilla/source/java/plugins/examples/rtf/"> Rtf viewer </a> <br>
+    <a href="binaries/JView.jar"> Download </a>
+    </td>
+    </tr>
+    <tr>
+    <td> <a href="http://lxr.mozilla.org/mozilla/source/java/plugins/examples/zip/"> Zip viewer </a> <br>
+    <a href="binaries/ZipView.jar"> Download </a>
+    </td>
+    <td> <a href="http://lxr.mozilla.org/mozilla/source/java/plugins/examples/MediaPlayer/">Media player  </a> <br>
+    <a href="binaries/JMPlayer.jar"> Download </a>
+    </td>
+    </tr>
+    </table>
+    
+    <H2><A NAME="References">References</A></H2>
+
+    <ul>
+      
+      <LI> <A HREF="api/">Pluglet API</A> 
+      </LI>
+      <LI> <A HREF="guide/"> Pluglet Developer Guide </A>
+      </LI>
+      <LI> <A HREF="http://people.netscape.com/ornduff/plugin.htm"> Mozilla Plug-in API Guide  </A>
+      </LI>
+      <LI> <A HREF="http://java.sun.com/products/servlet/"> Servlets </A>
+      </LI>
+    </ul>
+    <hr>
+<!-- hhmts start -->
+Last modified: Nov 23  1999
+<!-- hhmts end -->
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/blackwood/java-plugins/index.html&amp;rev=&amp;root=/cvsroot/">Last modified January 12,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,2234 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla Plug-in API Guide</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+<center>
+<h1>
+Mozilla Plug-in API Guide</h1></center>
+
+<p>This guide documents the Plug-in Application Programming Interface (API)
+for the Mozilla codebase. The information here applies to all browsers
+derived from the Mozilla codebase, including the Mozilla browser, Netscape
+Navigator 5, and Neoplanet.
+<p>Mozilla-based browsers provide an impressive set of capabilities for
+accessing and displaying information from the World Wide Web or company
+intranets. Plug-ins extend the browser to include a wide range of interactive
+and multimedia capabilities, while blending seamlessly into the interface.
+<p>The <i>Mozilla Plug-in API Guide</i> includes the information you need
+to write a plug-in for Mozilla-based browsers. It describes the new APIs
+and the steps for creating and building a plug-in for Mozilla-based browsers
+and for upgrading an existing plug-in for optimal performance on Mozilla-based
+browsers. It also describes how to design your new plug-ins so they will
+work in older versions of the browser. By following the guidelines in this
+document, plug-in developers can create a single plug-in binary that performs
+optimally in the newest version of the browser while maintaining full backward
+compatibility for use in older browsers.
+<br>
+<h2>
+Contents</h2>
+
+<ul>
+<li>
+<a href="#who">About This Guide</a></li>
+
+<li>
+<a href="#benefit">Benefits of Using the New Plug-in API</a></li>
+
+<li>
+<a href="#upgrading">Upgrading Plug-ins Based on LiveConnect</a></li>
+
+<li>
+<a href="#backward">Backward Compatibility of Upgraded Plug-ins</a></li>
+
+<li>
+<a href="#archit">Overview of the New Plug-in Architecture</a></li>
+
+<li>
+<a href="#instruct">Instructions for Upgrading an Old Plug-in</a></li>
+
+<li>
+<a href="#api">Plug-in API Reference</a></li>
+
+<li>
+<a href="#map">Plug-in API Map</a></li>
+
+<li>
+<a href="#linux">Creating Plug-ins on Linux</a></li>
+
+<li>
+<a href="#example">Example</a></li>
+</ul>
+
+<hr>
+<h2>
+<a NAME="who"></a>About This Guide</h2>
+The <i>Mozilla Plug-in API Guide</i> is designed for C++ developers who
+want to extend the capabilities of their Mozilla-based browser. This includes
+all developers who are writing new plug-ins for Mozilla-based browsers
+and all developers who have already released plug-ins for previous versions
+of the browser.
+<p>This is the guide to read if you want to write C++ code for plug-ins
+for Navigator 5.x or other Mozilla-based browsers. This guide provides
+reference information and instructions for creating a plug-in for all Mozilla-based
+browsers.
+<p>If you are new to plug-in development, please read the <i>Plug-in Guide</i>
+(<a href="http://developer.netscape.com/docs/manuals/communicator/plugin/contents.htm">http://developer.netscape.com/docs/manuals/communicator/plugin/contents.htm</a>)
+before reading this document. Although the <i>Plug-in Guide</i> focuses
+on the development of plug-ins for 4.x versions of Navigator, much of the
+information in it is still valid.
+<h3>
+Where to Find More Information</h3>
+
+<ul>
+<li>
+For general Netscape developer information, see Netscape DevEdge site (<a href="http://devedge/">http://developer.netscape.com/</a>).</li>
+
+<li>
+For more information on the new plug-in architecture, see the Extending
+Mozilla document (<a href="http://www.mozilla.org/docs/tplist/catFlow/extendmoz.html">http://www.mozilla.org/docs/tplist/catFlow/extendmoz.html</a>).</li>
+
+<li>
+If you have how-to questions while writing a new plug-in or while enhancing
+an existing plug-in, please post your questions to the <a href="news://news.mozilla.org/netscape.public.dev.plugin-upgrade">netscape.public.dev.plugin-upgrade</a>
+newsgroup.</li>
+
+<li>
+If you have specific enhancement requests or would like to report a problem,
+please read the bug reporting guidelines on Mozilla (<a href="http://www.mozilla.org/bugs/">http://www.mozilla.org/bugs/</a>)
+and the file your reports through <a href="http://bugzilla.mozilla.org/">Bugzilla</a>
+(<a href="http://www.mozilla.org/bugs/">http://bugzilla.mozilla.org/</a>).</li>
+
+<li>
+If you would like to provide general feedback or comments to the development
+team about the architecture of the Mozilla plug-in API, post them to the
+<a href="news://news.mozilla.org/netscape.public.mozilla.plugins">netscape.public.mozilla.plugins</a>
+newsgroup.</li>
+</ul>
+
+<h3>
+Conventions Used in This Guide</h3>
+This guide uses the following conventions to indicate some types of information.
+<p><i>Fonts</i>. All program code listings, URLs, and other program names
+appear in Courier, a monospace font. Placeholders, which you replace with
+your own value, are in italicized Courier font.
+<p><i>Note Formats</i>. This guide emphasizes information with several
+types of note formats:
+<blockquote><b>NOTE: </b>Information of interest to the developer but not
+essential to understanding the surrounding topic.</blockquote>
+
+<blockquote><b>WARNING: </b>Information that can affect the development
+decisions you make or the development environment you choose. Don't miss
+these notes.</blockquote>
+<i>Platform-specific information</i>. This information is preceded by the
+platform name:
+<p><b><i>MS Windows</i></b>
+<p><b><i>Mac OS</i></b>
+<p><b><i>Unix</i></b>
+<br>
+<hr><a NAME="benefit"></a>
+<h2>
+Benefits of Using the New Plug-in API</h2>
+Mozilla is a complete rewrite of previous versions of Netscape's browser.
+Using the Mozilla source code as its foundation, the new browser is designed
+to be small, fast, and standards-compliant. The new plug-in architecture
+offers many of advantages over the old architecture, including greater
+extensibility and modularity. Designing the new browser from the ground
+up has provided the opportunity to enhance the Mozilla plug-in API in a
+number of ways:
+<ul>
+<li>
+Plug-ins that offer LiveConnect APIs no longer depend on the Navigator
+4 Java Virtual Machine (JVM). This means that end-users do not need to
+wait for the JVM to start before a plug-in runs, and consequently, performance
+is improved.</li>
+
+<li>
+New <tt>START</tt> and <tt>STOP</tt> methods are provided that enable plug-ins
+to stop execution easily when the user leaves the page. This improves performance
+when the user returns to the page. The plug-in remains in memory so it
+resumes execution immediately when the user returns to it.</li>
+
+<li>
+A plug-in can now ask the browser to change its size dynamically at run
+time, allowing a multitude of special effects.</li>
+</ul>
+Because of these and other improvements, all plug-in vendors are encouraged
+to upgrade their plug-ins to take advantage of these enhancements.
+<h3>
+<a NAME="upgrading"></a>Upgrading Plug-ins Based on LiveConnect</h3>
+If your plug-in provides a JavaScript-accessible LiveConnect API, then
+you must upgrade your plug-in to the new Mozilla plug-in API. LiveConnect,
+as used in Navigator versions 3 and 4, depended on the presence of the
+Netscape JVM. Mozilla supports Java through the Open Java Interface (OJI),
+giving users the freedom to use any OJI-compliant JVM as soon as it is
+released, and the Mozilla plug-in API has been redesigned to eliminate
+the dependency on the JVM. Existing plug-in binaries on Windows and Macintosh
+that feature a LiveConnect API will still function within the new browser,
+but calls to the LiveConnect API itself will fail silently until the plug-in
+has been upgraded to the Mozilla plug-in API. Upgrading a plug-in is a
+straightforward process that involves mapping the old API to the new one,
+providing a backward adapter file, and recompiling the plug-in to reflect
+the changes. Step-by-step instructions for upgrading plug-ins can be found
+later in this guide.
+<h3>
+<a NAME="backward"></a>Backward Compatibility of Upgraded Plug-ins</h3>
+Plug-ins upgraded to take advantage of these enhancements for Mozilla will
+remain backwardly compatible (on Windows and Macintosh) with previous browsers,
+so vendors will be able to release a single binary that runs in all browsers
+and provides the best possible user experience for the new browser. The
+performance gains will in turn make content and application developers
+even more likely to adopt plug-ins, benefiting users and plug-in vendors
+alike.
+<hr><a NAME="archit"></a>
+<h2>
+Overview of the New Plug-in Architecture</h2>
+The new architecture includes several abstract base classes. All <tt>NPP</tt>
+functions, those implemented by the plug-in developer, become methods on
+the <tt>NPIPlugin</tt>, <tt>NPIPluginInstance</tt>, and <tt>NPIPluginStream</tt>
+classes. All <tt>NPN </tt>functions, those implemented by Mozilla, become
+methods of the <tt>NPIPluginManager</tt>,
+<tt>NPIPluginManagerStream</tt>,
+<tt>NPIPluginInstancePeer</tt>,
+and <tt>NPIPluginStreamPeer</tt> classes.
+<p>When a plug-in is loaded by the browser, an instance of the service
+manager is passed to the plug-in's initial entry point, <tt>NSGetFactory</tt>.
+The service manager can be used to access other browser services such as
+the memory allocator. The caller uses this plug-in object to get
+general information about the plug-in, such as the MIME type the plug-in
+handles or the name and description displayed in the About Plug-in page.
+<p>When an <tt>EMBED</tt> or <tt>OBJECT</tt> tag appears on the page, the
+<tt>NewInstance</tt>
+method is called on the plug-in object. It is the responsibility of this
+method to instantiate a subclass of <tt>NPIPluginInstance</tt>. The <tt>NewInstance</tt>
+method is passed an instance of <tt>NPIPluginInstancePeer</tt> and the
+newly created plug-in instance may use it to query the plug-in about its
+relationship to the page. The plug-in instance stores the plug-in instance
+peer in an instance variable for use by other methods.
+<p>After the plug-in instance is created, the plug-in is notified that
+an initial data stream is going to be fed to it through a call to <tt>nsIpluginInstance->NewStream</tt>.
+This only occurs if the <tt>OBJECT</tt> tag has a <tt>DATA</tt> attribute
+or the <tt>EMBED</tt> tag has an <tt>SRC</tt> attribute. The call to <tt>NewStream</tt>
+expects <tt>nsIPluginStreamListener</tt> to be returned to the browser
+so it can feed the stream to the plug-in. Subsequent calls to <tt>GetURL</tt>
+or <tt>PostURL </tt>already take parameters for the <tt>nsIPluginStreamListener</tt>,
+so <tt>NewStream </tt>is not called in those cases.
+<p>The <tt>nsIPluginStreamListener</tt> methods are called as the stream
+data comes in. <tt>OnStartBinding</tt> indicates that the stream is ready.
+Calls to <tt>OnDataAvailable</tt> give data to the plug-in and <tt>OnStopBinding</tt>
+indicates that the stream is finished. <tt>OnFileAvailable</tt> is only
+used when the call to <tt>GetStreamType</tt> returns either <tt>nSPluginStreamType_AsFile</tt>
+or <tt>nsPluginStreamType_AsFileOnly</tt>.
+<hr><a NAME="instruct"></a>
+<h2>
+Instructions for Upgrading an Old Plug-in</h2>
+Once you decide what you want your new plug-in to do, upgrading it to the
+new plug-in API involves these steps:
+<ol>
+<li>
+Decide on a MIME type and file extension for the plug-in.</li>
+
+<li>
+Implement the three new C++ interfaces:</li>
+
+<ul>
+<li>
+nsIPlugin</li>
+
+<li>
+nsIPluginInstance</li>
+
+<li>
+nsIPluginStreamListener</li>
+</ul>
+
+<li>
+Map all <tt>NPN*</tt> calls to the new C++ interfaces. <tt>NPN</tt> functions
+are the Netscape functions used with Communicator 4.x. See the <a href="#map">Plug-in
+API Map</a> later in this document for information on how to map methods
+from the Navigator 4 API to the new ones.</li>
+
+<li>
+Change all streaming methods to <tt>NSIPluginStreamListener</tt>. This
+allows you to implement different streaming methods for different MIME
+types so it is easier to modularize your programming code. On Linux only,
+upgrade the user interface from Motif to GTK. For more information, see
+<a href="#linux">Creating
+Plug-ins on Linux</a> later in this document.</li>
+
+<li>
+Create ID or header files for the interfaces that you want to appear in
+JavaScript.</li>
+
+<li>
+Generate the <tt>.h</tt> and <tt>.xpt</tt> files for the plug-in.</li>
+
+<li>
+Ship the <tt>.xpt</tt> file with the plug-in.</li>
+
+<li>
+On Windows and Macintosh:</li>
+<OL TYPE="a">
+<LI>Implement <tt>NPP_GetJavaClass</tt> in the <a href="http://lxr.mozilla.org/mozilla/source/modules/plugin/bad/badapter.cpp">backward
+adapter file (http://lxr.mozilla.org/mozilla/source/modules/plugin/bad/badapter.cpp).</a>
+<LI>Ship the original <tt>.class</tt> file if you want your plug-in
+to work in Navigator 4.x with LiveConnect.
+</OL>
+<li>
+Recompile.</li>
+</ol>
+
+<hr><a NAME="api"></a>
+<h2>
+Plug-in API Reference</h2>
+This section is a reference to the new plug-in API. To implement a new
+plug-in for Mozilla-based browsers, you must implement the following new
+interfaces:
+<ul>
+<li>
+<a href="plugin.htm#nsiplugin">nsIPlugin</a></li>
+
+<li>
+<a href="plugin.htm#nsiplugininst">nsIPluginInstance</a></li>
+
+<li>
+<a href="plugin.htm#nsiplugstream">nsIPluginStreamListener</a></li>
+</ul>
+You can add additional services to the plug-in through the following interfaces:
+<ul>
+<li>
+<a href="plugin.htm#nsipluginmanager">nsIPluginManager</a></li>
+
+<li>
+<a href="plugin.htm#nsiplugininstancepeer">nsIPluginInstancePeer</a></li>
+
+<li>
+<a href="plugin.htm#nsIPluginInstancePeer2">nsIPluginInstancePeer2</a></li>
+
+<li>
+<a href="plugin.htm#nsIPluginStreamInfo">nsIPluginStreamInfo</a></li>
+
+<li>
+<a href="plugin.htm#nsiplugintaginfo">nsIPluginTagInfo</a></li>
+
+<li>
+<a href="plugin.htm#nsiplugintaginfo2">nsIPluginTagInfo2</a></li>
+</ul>
+
+<hr>
+<h2>
+<a NAME="nsiplugin"></a>nsIPlugin</h2>
+
+<h3>
+Methods</h3>
+
+<ul>
+<li>
+<tt>NS_IMETHOD CreatePluginInstance</tt></li>
+
+<li>
+<tt>NS_IMETHOD Initialize</tt></li>
+
+<li>
+<tt>NS_IMETHOD Shutdown</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetMIMEDescription</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetValue</tt></li>
+</ul>
+
+<h4>
+NS_METHOD CreatePluginInstance</h4>
+Creates a new instance of a plug-in.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>REFNSIID aIID</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Used to do the <tt>QueryInterface</tt> on
+the newly created instance.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const shar* aPluginMIMEType</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The MIME type the instance is expected to
+handle.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>void**aResult</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The resulting <tt>nsIPluginInstance</tt>.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD Initialize</h4>
+Provides global initialization for a plug-in. Navigator calls this function
+only once: when a plug-in is loaded, before the first instance is created.
+This is the first function Navigator calls. <tt>Initialize</tt> tells the
+plug-in that Navigator has loaded it and provides global initialization.
+Allocate any memory or resources shared by all instances of your plug-in
+at this time.
+<p>After the last instance of the plug-in has been deleted, Navigator calls
+<tt>Shutdown</tt>.
+This releases allocated memory or resources.
+<h5>
+Parameters</h5>
+None
+<h4>
+NS_IMETHOD Shutdown</h4>
+Provides global deinitialization for a plug-in. Navigator calls this function
+once after the last instance of your plug-in is destroyed, before unloading
+the plug-in library itself. Use <tt>Shutdown</tt> to delete any data allocated
+in <tt>Initialize</tt> to be shared by all the instances of a plug-in.
+<h5>
+Parameters</h5>
+None
+<h4>
+NS_IMETHOD GetMIMEDescription</h4>
+
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char** resultingDesc</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>A string containing the type, extension
+list, and type description separated by semicolons.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetValue</h4>
+Allows Navigator to query the plug-in for information.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginVariable variable</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Returns the desired variable as defined
+by the <tt>enum</tt>.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>void* value</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>A pointer to the resulting value of the
+variable.</td>
+</tr>
+</table>
+
+<hr>
+<h2>
+<a NAME="nsiplugininst"></a>nsIPluginInstance</h2>
+
+<h3>
+Methods</h3>
+
+<ul>
+<li>
+<tt>NS_IMETHOD Initialize</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetPeer</tt></li>
+
+<li>
+<tt>NS_IMETHOD Start</tt></li>
+
+<li>
+<tt>NS_IMETHOD Stop</tt></li>
+
+<li>
+<tt>NS_IMETHOD Destroy</tt></li>
+
+<li>
+<tt>NS_IMETHOD SetWindow</tt></li>
+
+<li>
+<tt>NS_IMETHOD NewStream</tt></li>
+
+<li>
+<tt>NS_IMETHOD Print</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetValue</tt></li>
+
+<li>
+<tt>NS_IMETHOD HandleEvent</tt></li>
+</ul>
+
+<h4>
+NS_IMETHOD Initialize</h4>
+Creates a new instance of the plug-in, passing it the plug-in instance
+peer it should use for all communication back to the browser.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginInstancePeer* peer</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Indicates the corresponding peer which the
+plug-in must store to access various browser services.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetPeer</h4>
+Returns the plug-in instance peer that was passed during <tt>Initialize</tt>.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginInstancePeer**resulting peer</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Indicates the corresponding peer that was
+passed during <tt>Initialize</tt>.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD Start</h4>
+Creates a specific instance of a plug-in. This is called after the plug-in
+is first created and initialized and may be called after the plug-in is
+stopped by the <tt>Stop </tt>method.
+<h5>
+Parameters</h5>
+None
+<h4>
+NS_IMETHOD Stop</h4>
+Deletes a specific instance of a plug-in. The plug-in stops operation completely
+and does not call any browser interfaces. This method is called when the
+user goes to another web page. The <tt>Start</tt> method is called if the
+user returns to the original page in the history.
+<h5>
+Parameters</h5>
+None
+<h4>
+NS_IMETHOD Destroy</h4>
+Deletes a specific instance of a plug-in and instructs the plug-in to destroy
+itself. This method is called when it is no longer possible to return to
+the plug-in instance, most likely because the list of allowed plug-ins
+is exhausted.
+<h5>
+Parameters</h5>
+None
+<h4>
+NS_IMETHOD SetWindow</h4>
+Tells the plug-in when a window is created for it to draw into, or when
+its window is moved, sized, or destroyed. Navigator calls <tt>SetWindow</tt>
+after creating the instance to allow drawing to begin. Subsequent calls
+to <tt>SetWindow</tt> indicate changes in size and position; these calls
+pass the same <tt>nsPluginWindow</tt> object each time, but with different
+values. If the window handle is set to null, the window is destroyed. In
+this case, the plug-in must not perform any additional graphics operations
+on the window and should free any associated resources.
+<p>The data structure passed in <tt>SetWindow</tt> is an <tt>nsPluginWindow</tt>
+object, which contains the coordinates of the instance's area and various
+platform-specific data. This window is valid for the life of the instance,
+or until <tt>SetWindow</tt> is called again with a different value.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginWindow *window</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Contains the platform-specific drawing information
+and structures.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD NewStream</h4>
+Tells the plug-in that the initial data stream is ready. Expects the plug-in
+to return an <tt>nsPluginStreamListener</tt> interface.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginStreamListener**listener
+
+
+
+</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>A pointer to a valid stream listener when
+an exit method is called.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD Print</h4>
+Requests a platform-specific print operation for an embedded or full-screen
+plug-in. <tt>Print</tt> is called when the user requests printing for a
+web page that contains a visible plug-in (either embedded or full-page).
+It uses the print mode set in the <tt>nsPluginPrint</tt> structure in its
+mode parameter to determine whether the plug-in should print as an embedded
+plug-in or as a full-page plug-in.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginPrint*platformPrint
+
+
+
+</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>A pointer to platform-specific printing
+information.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetValue</h4>
+Returns the value of the requested information as specified by <tt>nsPluginInstanceVariable</tt>.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginInstanceVariable variable</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Plug-in information the call gets. Values
+allowed for <tt>variable</tt> are <tt>WindowlessBool</tt> and <tt>TransparentBool</tt>.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>void* value</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The plug-in name returned by the function.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD HandleEvent</h4>
+Navigator calls <tt>HandleEvent</tt> to tell the plug-in that events take
+place in the plug-in's window or drawable area. The plug-in either handles
+or ignores the event, depending on the values given in the event parameter
+of this function. For a list of event types the application is responsible
+for delivering to the plug-in, see the <tt>nsPluginEventNPEvent</tt> structure.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginEvent* event</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Platform-specific value representing the
+event handled by the function.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRBool* handled</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>A return value that expects <tt>PRTrue</tt>
+if the event was handled or <tt>PRFalse</tt> if it was not.</td>
+</tr>
+</table>
+
+<hr>
+<h2>
+<a NAME="nsiplugstream"></a>nsIPluginStreamListener</h2>
+
+<h3>
+Methods</h3>
+
+<ul>
+<li>
+<tt>NS_IMETHOD OnStartBinding</tt></li>
+
+<li>
+<tt>NS_IMETHOD OnDataAvailable</tt></li>
+
+<li>
+<tt>NS_IMETHOD OnFileAvailable</tt></li>
+
+<li>
+<tt>NS_IMETHOD OnStopBinding</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetStreamType</tt></li>
+</ul>
+
+<h4>
+NS_IMETHOD OnStartBinding</h4>
+Notifies a plug-in instance of a new data stream. This method is called
+before all other methods. <tt>nsIPluginStreamInfo</tt> can be queried at
+this point to get information about the stream.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsIPluginStreamInfo* pluginInfo</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The interface through which the listener
+can obtain stream-specific information. You can get the MIME type, the
+data length, the date modified, the URL, and find out of the stream is
+seekable.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD OnDataAvailable</h4>
+Delivers data to a plug-in instance.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsIPluginStreamInfo* pluginInfo</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The interface through which the listener
+can obtain stream-specific information. You can get the MIME type, the
+data length, the date modified, the URL, and find out of the stream is
+seekable.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsIInputStream*Input</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the input stream through which
+data is read.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD OnFileAvailable</h4>
+Provides a plug-in instance with a local file name for the data from a
+stream.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsIPluginStreamInfo* pluginInfo</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The interface through which the listener
+can obtain stream specific information. You can get the MIME type, the
+data length, the date modified, the URL, and find out of the stream is
+seekable.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char*fileName</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the full path to the plug-in file.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD OnStopBinding</h4>
+Tells the plug-in that a stream is about to be closed or destroyed.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsIPluginStreamInfo* pluginInfo</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The interface through which the listener
+can obtain stream-specific information. You can get the MIME type, the
+data length, the date modified, the URL, and find out of the stream is
+seekable.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsresult status</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Indicates success or failure code of the
+URL load.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetStreamType</h4>
+Returns the type of stream.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsIPluginStreamType *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Indicates the type of stream to return.
+Values can be _<tt>Normal</tt>, _<tt>Seek</tt>, _<tt>AsFile</tt>, _<tt>AsFileOnly.</tt></td>
+</tr>
+</table>
+
+<hr>
+<h2>
+<a NAME="nsipluginmanager"></a>nsIPluginManager</h2>
+
+<h3>
+Methods</h3>
+
+<ul>
+<li>
+<tt>NS_IMETHOD GetValue</tt></li>
+
+<li>
+<tt>NS_IMETHOD ReloadPlugins</tt></li>
+
+<li>
+<tt>NS_IMETHOD UserAgent</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetURL</tt></li>
+
+<li>
+<tt>NS_IMETHOD PostURL</tt></li>
+</ul>
+
+<h4>
+NS_IMETHOD GetValue</h4>
+Allows the browser to query the plug-in for information.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginManagerVariable variable</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the plug-in information the call
+gets. Values allowed for <tt>variable</tt> are <tt>XDisplay</tt> and <tt>XtAppContext</tt>.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>void* value</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Plug-in name, returned by the function.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD ReloadPlugins</h4>
+Reloads all plug-ins in the Plug-ins directory. The browser knows about
+all installed plug-ins at start-up. If you add or remove any plug-ins,
+the browser does not see them until you restart it. This method lets you
+install a new plug-in and load it, or to remove a plug-in, without having
+to restart the browser.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRBool reloadPages</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Set to <tt>PRTrue</tt> to reload pages and
+<tt>PRFalse</tt>
+to not reload pages.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD UserAgent</h4>
+Returns the browser's <tt>user agent</tt> field. The user agent is the
+part of the HTTP header that identifies the browser during transfers. You
+can use this information to verify that the expected browser is in use.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char**resultingAgentSring</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Contains the user agent field of the browser.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetURL</h4>
+Requests the browser to create a stream for the specified URL. <tt>GetURL</tt>
+is used to load a URL into the current window or another target or stream.
+Plug-ins can use this capability to provide hyperlinks to other documents
+or to retrieve data from anywhere on the network. This is especially useful
+for enabling an existing application to operate on the web. For HTTP URLs,
+the browser resolves this method as the HTTP server method <tt>GET</tt>,
+which requests URL objects.
+<p>Make sure that the target matches the URL type sent to it. For example,
+a null target does not make sense for some URL types (such as mailto).
+The following recommendations about target choice apply to other methods
+that handle URLs as well.
+<p>If the target parameter refers to the window or frame containing the
+current plug-in instance, the instance is destroyed and the plug-in may
+be unloaded. If target is null, the application creates a new stream and
+delivers the data to the plug-in instance, through calls to <tt>nsIPluginStreamListener</tt>.
+This means that, if you want the plug-in to handle a new stream, no matter
+what the MIME type is, use null. If the application cannot locate the URL
+and retrieve the data, it does not create a stream for the instance.
+<p>When the plug-in instance is part of a regular browser window, and it
+uses a _blank target with a mailto or news URL, another blank browser window
+is opened along with the mail or news window.
+<p>When the plug-in uses a _self target, no other instance is created;
+the plug-in usually continues to operate successfully in its own window.
+The safest target is _blank, even though this creates an extra blank browser
+instance.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginManagerVariable variable</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the plug-in information the call
+gets.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>void* value</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the plug-in name, returned by
+the function.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD PostURL</h4>
+<tt>PostURL</tt> works similarly to <tt>GetURL</tt>, but in reverse.
+<tt>GetURL</tt>
+reads data from the URL and either displays it in the target window or
+delivers it to the plug-in. <tt>PostURL</tt> writes data from a file or
+buffer to the URL and either displays the server's response in the target
+window or delivers it to the plug-in. If the target parameter is null,
+the new stream is passed to the plug-in regardless of MIME type. When you
+use <tt>PostURL</tt> to send data to the server, you can handle the response
+in several different ways by specifying different target parameters. If
+the target is null, the server response is sent back to the plug-in. You
+can get the data and save it in a file or use it in a program.
+<p>If you specify <tt>_current</tt>, <tt>_self</tt>, or <tt>_top</tt>,
+the response data is written to the same plug-in window and the plug-in
+is unloaded. If you specify <tt>_new</tt> or <tt>_blank</tt>, the response
+data is written to a new browser window. You can also write the response
+data to a frame by specifying the frame name as the target parameter. For
+HTTP URLs only, the browser resolves this method as the HTTP server method
+POST, which transmits data to the server. The data to post can be contained
+either in a local temporary file or a new memory buffer. To post to a temporary
+file, set the flag file to <tt>true</tt>, the buffer to the path name string
+for a file, and <tt>len</tt> to the length of the path string. The file-type
+URL prefix <tt>file://</tt> is optional. If a file is posted with any protocol
+other than FTP, the file must be text with Unix-style line breaks ('<tt>\n'
+</tt>separators
+only). To post data from a memory buffer, set the flag file to <tt>false</tt>,
+the <tt>buffer</tt> to the data to post, and <tt>len</tt> to the length
+of buffer.
+<p>Possible URL types include HTTP (similar to an HTML form submission),
+mail (sending mail), news (posting a news article), and FTP (upload a file).
+Plug-ins can use this function to post form data to CGI scripts using HTTP
+or upload files to a remote server using FTP.
+<p>For protocols in which the headers must be distinguished from the body,
+such as HTTP, the buffer or file should contain the headers, followed by
+a blank line, then the body. If no custom headers are required, simply
+add a blank line ('<tt>\n</tt>') to the beginning of the file or buffer.
+<tt>PostURL</tt>
+is typically asynchronous: it returns immediately and only later handles
+the request.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsISupports*pluginInst</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The current plug-in instance.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const shar*url</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>URL of the request specified by the plug-in.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32 psotDataLen</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Length of the buffer.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* psotData</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Path to the local temporary file or data
+buffer that contains the data to post.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* target</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The destination where the URL will be displayed,
+a
+<br>window or frame.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsIPluginStreamListener* streamListener</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The current stream.</td>
+</tr>
+</table>
+
+<hr>
+<h2>
+<a NAME="nsiplugininstancepeer"></a>nsIPluginInstancePeer</h2>
+
+<h3>
+Methods</h3>
+
+<ul>
+<li>
+<tt>NS_IMETHOD GetValue</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetMIMEType</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetMode</tt></li>
+
+<li>
+<tt>NS_IMETHOD NewStream</tt></li>
+
+<li>
+<tt>NS_IMETHOD ShowStatus</tt></li>
+
+<li>
+<tt>NS_IMETHOD SetWindowSize</tt></li>
+</ul>
+
+<h4>
+NS_IMETHOD GetValue</h4>
+Allows the browser to query the plug-in for information.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>NSPluginInstancePeerVariable variable</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>The <tt>variable</tt> value can be <tt>_Netscape</tt>
+window.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>void* value</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Plug-in name, returned by the function.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetMIMETYPE</h4>
+Returns the MIME type that corresponds to the plug-in instance.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsMIMEType *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the MIME type for this plug-in
+instance.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetMode</h4>
+Determines whether the plug-in is embedded or in full-page mode.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsPluginMode *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Returns <tt>nsPluginMode_Embedded</tt> or
+<tt>nsPluginMode_Full</tt>.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD New Stream</h4>
+Creates a new stream of data produced by the plug-in and consumed by the
+browser.
+<p>The MIME parameter is the MIME type of the plug-in to create. A plug-in
+can create another instance of itself by specifying its own MIME type and
+a new target name in a call to <tt>NewStream</tt>.
+<p>The stream is returned in the stream parameter. The plug-in can use
+this object in subsequent calls to <tt>nsIOutputStream Write </tt>to write
+data into the stream. When the plug-in has written all of its data into
+the stream,
+<tt>nsIOuputStream Close</tt> and <tt>nsIOutputStream Release</tt>
+terminates the stream and deallocates the Stream object.
+<p>The target parameter is the name of the target window or frame, or one
+of several special target names. For parameter values and information about
+how to use them, see <tt>GetURL</tt>.
+<h4>
+NS_IMETHOD ShowStatus</h4>
+You can use this function to make your plug-in user interface simulate
+the browser's behavior. When the user moves the cursor over a link in a
+browser window, the browser displays information about it in the status
+message area (on the lower edge of the browser window). If your plug-in
+has a button or other object that acts as a link when clicked, you can
+call <tt>Status</tt> to display a description or URL when the user moves
+the cursor over it. The browser always displays the last status line message
+it receives, regardless of the message source. Your message is always displayed,
+but you have no control over how long it stays in the status line before
+another message replaces it.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* message</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the string specified in the status
+bar of the plug-in's window.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD SetWindowSize</h4>
+The plug-in can call this method to alter its size dynamically in the browser
+window. An error result will be returned if the dimensions cannot be accommodated.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32 width</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the desired width of the plug-in
+window.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32 height</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the desired height of the plug-in
+window.</td>
+</tr>
+</table>
+
+<h2>
+<a NAME="nsIPluginInstancePeer2"></a><font color="#000000">nsIPluginInstancePeer2</font></h2>
+
+<h3>
+<font color="#000000">Methods</font></h3>
+
+<ul>
+<li>
+<tt><font color="#000000">NS_IMETHOD GetJSThread</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetJSContext</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetJSWindow</font></tt></li>
+</ul>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetJSThread</font></h4>
+<font color="#000000">Gets the JavaScript execution thread ID corresponding
+to this plug-in instance.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre><font color="#000000">PRUint32 *outThreadID</font></pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE><font color="#000000">Specifies the resulting
+JavaScript thread. Returns NS_OK if successful.</font></td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetJSContext</font></h4>
+<font color="#000000">Gets the JavaScript context to this plug-in instance.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre><font color="#000000">JSContext* *outContext</font></pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE><font color="#000000">Specifies the resulting
+JavaScript context. Returns NS_OK if successful.</font></td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetJSWindow</font></h4>
+<font color="#000000">Gets the JavaScript window object corresponding to
+this plug-in instance.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre><font color="#000000">JSObject* *outJSWindow</font></pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE><font color="#000000">A placeholder for
+a pointer to the resulting JavaSCript window object.</font>
+<br><font color="#000000">Returns NS_OK if successful.</font></td>
+</tr>
+</table>
+
+<h2>
+<a NAME="nsIPluginStreamInfo"></a>nsIPluginStreamInfo</h2>
+
+<h3>
+Methods</h3>
+
+<ul>
+<li>
+<tt>NS_IMETHOD GetContentType</tt></li>
+
+<li>
+<tt>NS_IMETHOD IsSeekable</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetLength</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetLastModified</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetURL</tt></li>
+
+<li>
+<tt>NS_IMETHOD RequestRead</tt></li>
+</ul>
+
+<h4>
+NS_IMETHOD GetContentType</h4>
+Returns the MIME type for a particular stream.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsMIMEType*result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the MIME type for this stream.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetLength</h4>
+Returns the length of a stream in bytes.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32*result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the length of the stream in bytes.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetLastModified</h4>
+Returns the time the data in the URL was last modified, measured in seconds
+since 12:00 midnight, GMT, January 1, 1970.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32*result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the time the data in the URL was
+last modified.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetURL</h4>
+Specifies the URL that was used to originally request the stream.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the original URL requested for
+this stream.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD RequestRead</h4>
+Requests a range of bytes from a seekable stream.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsByteRange*rangeList</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Range of bytes in the form of a linked list
+of <tt>nsByteRange</tt> objects, each of which specifies a request for
+a range of bytes.</td>
+</tr>
+</table>
+
+<hr>
+<h2>
+<a NAME="nsiplugintaginfo"></a>nsIPluginTagInfo</h2>
+
+<h3>
+Methods</h3>
+
+<ul>
+<li>
+<tt>NS_IMETHOD GetAttributes</tt></li>
+
+<li>
+<tt>NS_IMETHOD GetAttribute</tt></li>
+</ul>
+
+<h4>
+NS_IMETHOD GetAttributes</h4>
+Returns all the name/value pairs found in the tag attributes.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32*result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the number of name/value pairs.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char*const*&amp; name</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Array of attribute names.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char*const*&amp; values</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Array of attribute values.</td>
+</tr>
+</table>
+
+<h4>
+NS_IMETHOD GetAttribute</h4>
+Requests a value for a particular attribute. Returns NULL if the attribute
+does not exist.
+<h5>
+Parameters</h5>
+The function has the following parameters:
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* name</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Name of the attribute being requested.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Corresponding values for that attribute.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char*const*&amp; values</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Array of attribute values.</td>
+</tr>
+</table>
+
+<hr>
+<h2>
+<a NAME="nsiplugintaginfo2"></a><font color="#000000">nsIPluginTagInfo2</font></h2>
+
+<h3>
+<font color="#000000">Methods</font></h3>
+
+<ul>
+<li>
+<tt><font color="#000000">NS_IMETHOD GetTagType</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetTagText</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetParameters</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetParameter</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetDocumentBase</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetDocumentEncoding</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetAlignment</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetWidth</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetHeight</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetBorderVertSpace</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetBorderHorizSpace</font></tt></li>
+
+<li>
+<tt><font color="#000000">NS_IMETHOD GetUniqueID</font></tt></li>
+</ul>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetTagType</font></h4>
+<font color="#000000">Returns the type of HTML tag used to instantiate
+this plug-in. Supported tags are <tt>EMBED</tt>, <tt>OBJECT</tt>, and <tt>APPLET</tt>.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>nsIPluginTagType *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the HTML tag. Possible values
+are <tt>Unknown</tt>, <tt>Embed</tt>, <tt>Object</tt>, <tt>Applet</tt>.
+Returns NS_OK if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetTagText</font></h4>
+<font color="#000000">Returns the complete text of the HTML tag used to
+instantiate this plug-in.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char**result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Pointer to the resulting text. Returns NS_OK
+if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetParameters</font></h4>
+<font color="#000000">Returns a pointer to the paired list of parameter
+names and values and the length of the array. Each name is a non-terminated
+string.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint16&amp; n</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Array length. Returns NS_OK if successful.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char*const*&amp; names</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Array of attribute names. Returns NS_OK
+if successful.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char*const*&amp; values</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Array of attribute values. Returns NS_OK
+if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetParameter</font></h4>
+<font color="#000000">Returns the value for the named parameter. Returns
+null if the parameter was not set.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* name</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Array of attribute names. Returns NS_OK
+if successful and NS_ERROR_FAILURE if this operation failed.</td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Array of attribute values. Returns NS_OK
+if successful. Result is set to NULL if the attribute is not found.</td>
+</tr>
+</table>
+
+<br>
+<h4>
+<font color="#000000">NS_IMETHOD GetDocumentBase</font></h4>
+<font color="#000000">Returns the URL of the document containing a plug-in
+or applet instance. This is used to compute the default CODEBASE for applets,
+etc.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>A pointer to the string containing the URL
+information. Returns NS_OK if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetDocumentEncoding</font></h4>
+<font color="#000000">Returns an encoding specified in <a href="http://java.sun.com/products/jdk/1.1/docs/guide/intl/intl.doc.html#25303">http://java.sun.com/products/jdk/1.1/docs/guide/intl/intl.doc.html#25303</a>.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>const char* *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>A pointer to the string containing the encoding
+information. Returns NS_OK if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetAlignment</font></h4>
+<font color="#000000">Returns the value of the ALIGNMENT attribute in the
+tag.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<br>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32 *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the aligment value. Returns NS_OK
+if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetWidth</font></h4>
+<font color="#000000">Returns the value of the WIDTH attribute in the tag.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<br>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32 *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the width value. Returns NS_OK
+if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetHeight</font></h4>
+<font color="#000000">Returns the value of the HEIGHT attribute in the
+tag.</font>
+<br>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<br>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32 *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the height value. Returns NS_OK
+if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetBorderVertSpace</font></h4>
+<font color="#000000">Returns the value of the VSPACE attribute in the
+tag.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<br>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32 *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the border's vertical space. Returns
+NS_OK if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetBorderHorizspace</font></h4>
+<font color="#000000">Returns the value of the HSPACE attribute in the
+tag.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<br>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32 *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the border's horizontal space.
+Returns NS_OK if successful.</td>
+</tr>
+</table>
+
+<h4>
+<font color="#000000">NS_IMETHOD GetUniqueID</font></h4>
+<font color="#000000">Returns the unique identifier for the current document
+where the plug-in is displayed.</font>
+<h5>
+<font color="#000000">Parameters</font></h5>
+<font color="#000000">The function has the following parameters:</font>
+<br>
+<table>
+<tr>
+<td ALIGN=LEFT VALIGN=BASELINE>
+<pre>PRUint32 *result</pre>
+</td>
+
+<td ALIGN=LEFT VALIGN=BASELINE>Specifies the unique identifier. Returns
+NS_OK if successful.</td>
+</tr>
+</table>
+
+<p>
+<hr>
+<br><a NAME="map"></a>
+<h2>
+Plug-in API Map</h2>
+The following table maps the APIs used in Communicator 4.x to the new ones
+used in Mozilla.
+<center>
+<hr WIDTH="100%"></center>
+
+<center><table BORDER COLS=2 WIDTH="100%" >
+<tr>
+<td>
+<center><b><u>Old Plug-in API Call</u></b></center>
+</td>
+
+<td>
+<center><b><u>New Plug-in API Method</u></b></center>
+</td>
+</tr>
+
+<tr>
+<td><tt>NPP_Destroy</tt></td>
+
+<td><tt>nsIPluginInstance->Stop, nsIPluginInstance->Destroy</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_DestroyStream</tt></td>
+
+<td><tt>nsIPluginStreamListener->OnStopBinding</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_GetJavaClass</tt></td>
+
+<td>Not used</td>
+</tr>
+
+<tr>
+<td><tt>NPP_GetValue</tt></td>
+
+<td><tt>nsIPlugin->GetValue, nsIPluginInstance->GetValue</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_HandleEvent</tt></td>
+
+<td><tt>nsIPluginInstance->HandleEvent</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_Initialize</tt></td>
+
+<td><tt>nsIPlugin->Initialize</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_New</tt></td>
+
+<td><tt>nsIPluginInstance->Initialize, nsIPluginInstance->Start</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_NewStream</tt></td>
+
+<td><tt>nsIPluginStreamListener->OnStartBinding</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_Print</tt></td>
+
+<td><tt>nsIPluginInstance->Print</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_SetValue</tt></td>
+
+<td>Not used</td>
+</tr>
+
+<tr>
+<td><tt>NPP_SetWindow</tt></td>
+
+<td><tt>nsIPluginInstance->SetWindow</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_Shutdown</tt></td>
+
+<td><tt>nsIPlugin->Shutdown</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_StreamAsFile</tt></td>
+
+<td><tt>nsIPluginStreamListener->OnFileAvailable</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_URLNotify</tt></td>
+
+<td><tt>Not used</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_Write</tt></td>
+
+<td><tt>nsIPluginStreamListener->OnDataAvailable</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPP_WriteReady</tt></td>
+
+<td>Not used</td>
+</tr>
+
+<tr>
+<td><tt>NPN_DestroyStream</tt></td>
+
+<td>Not used</td>
+</tr>
+
+<tr>
+<td><tt>NPN_ForceRedraw</tt></td>
+
+<td><tt>nsIWindowlessPluginInstancePeer->ForceRedraw</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_GetJavaEnv</tt></td>
+
+<td>Not used</td>
+</tr>
+
+<tr>
+<td><tt>NPN_GetJavaPeer</tt></td>
+
+<td>Not used</td>
+</tr>
+
+<tr>
+<td><tt>NPN_GetURL</tt></td>
+
+<td><tt>nsIPluginManager->GetURL</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_GetURLNotify</tt></td>
+
+<td><tt>nsIPluginManager->GetURL</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_GetValue</tt></td>
+
+<td><tt>nsIPluginManager->GetValue, nsIPluginInstancePeer->GetValue</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_InvalidateRect</tt></td>
+
+<td><tt>nsIWindowlessPluginInstancePeer->InvalidateRect</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_InvalidateRegion</tt></td>
+
+<td><tt>nsIWindowlessPluginInstancePeer->InvalidateRegion</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_MemAlloc</tt></td>
+
+<td><tt>nsIAllocator->Alloc</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_MemFlush</tt></td>
+
+<td><tt>nsIAllocator->HeapMinimize</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_MemFree</tt></td>
+
+<td><tt>nsIAllocator->Free</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_NewStream</tt></td>
+
+<td><tt>nsIPluginInstancePeer->NewStream</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_PostURL</tt></td>
+
+<td><tt>nsIPluginManager->PostURL</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_PostURLNotify</tt></td>
+
+<td><tt>nsIPluginManager->PostURL</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_ReloadPlugins</tt></td>
+
+<td><tt>nsIPluginManager->ReloadPlugins</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_RequestRead</tt></td>
+
+<td><tt>nsIPluginStreamInfo->RequestRead</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_SetValue</tt></td>
+
+<td>Not used</td>
+</tr>
+
+<tr>
+<td><tt>NPN_Status</tt></td>
+
+<td><tt>nsIPluginInstancePeer->ShowStatus</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_UserAgent</tt></td>
+
+<td><tt>nsIPluginManager->UserAgent</tt></td>
+</tr>
+
+<tr>
+<td><tt>NPN_Version</tt></td>
+
+<td>Not used</td>
+</tr>
+
+<tr>
+<td><tt>NPN_Write</tt></td>
+
+<td><tt>nsIOutputStream->Write</tt></td>
+</tr>
+</table></center>
+
+<center>
+<p>
+<hr WIDTH="100%"></center>
+
+<h1>
+<a NAME="linux"></a></h1>
+
+<h1>
+Creating Plug-ins on Linux</h1>
+Navigator 4.x for Linux was a Motif application that statically linked
+in and included in its distribution the Motif GUI binaries. As a result,
+plug-in vendors supporting Navigator 4.x on Linux used a Motif GUI for
+their plug-in binary.
+<p>On Linux, as on Windows and Macintosh platforms, the Mozilla Plug-in
+API in Mozilla and Navigator 5.x is still compatible with the plug-in API
+calls made by existing plug-in binaries. However, on Linux platforms, there
+is an additional change between Navigator 4.x and Moziila and Navigator
+5.x.
+<br>In order to create a fully open source browser that can be compiled,
+used, and distributed by anyone without charge and without a dependency
+on software with a licensing fee, Mozilla and Navigator 5.x have switched
+from using the Motif GUI to the free and open source GTK GUI.
+<p>Differences exist between the Motif and GTK GUIs, and they cannot be
+used together. In particular, the API methods and the event handling systems
+are different. As a result, the Motif-based plug-in binaries cannot be
+used with a GTK-based browser application and existing plug-in binaries
+for Navigator 4.x for Linux will not run within Gecko and Mozilla-based
+browsers. This is unlike plug-ins on Windows and Macintosh platforms where
+existing plug-in binaries for Navigator 4.x run in Navigator 5.x.
+<p>External developers have verified that if an existing plug-in, using
+the Motif GUI and Navigator 4.x plug-in API, for Navigator 4.x for Linux
+is updated with a GTK GUI, the plug-in works in Navigator 5.x (with an
+updated GTK GUI with the same Navigator 4.x plug-in API calls). The same
+developers, however, also concluded that because of performance and other
+advantages of the Mozilla plug-in API, it is more efficient to update the
+plug-in from the Navigator 4.x plug-in API to the Mozilla API at the same
+time that the user interface is updated from Motif to GTK. Since all the
+existing Linux plug-ins must be updated from Motif to GTK and recompiled,
+using the Navigator 4.x plug-in API on Linux, even with an updated GTK
+GUI, will <b>not</b> be supported.
+<p>The compatibility and support for plug-in API versions and GUIs on Navigator
+for Linux is summarized in this table:
+<br>
+<br>
+<table BORDER >
+<tr>
+<td></td>
+
+<td><b>Motif GUI</b></td>
+
+<td><b>GTK GUI</b></td>
+</tr>
+
+<tr>
+<td><b>Nav 4.x plug-in API</b></td>
+
+<td>Plug-ins using the Nav 4.x plug-in API and a Motif GUI are supported
+on Navigator 4.x for Linux.</td>
+
+<td>Plug-ins using the Nav 4.x plug-in API and a GTK GUI would be compatible
+(except for LiveConnect) with Navigator 4.x, but the use of the Navigator
+4.x plug-in API (even with an updated GTK GUI) is unsupported on Navigator
+5.x. Plug-in vendors should update their existing Linux plug-ins to the
+Mozilla Plug-in API and the GTK GUI in one step.</td>
+</tr>
+
+<tr>
+<td><b>Mozilla plug-in API</b></td>
+
+<td>(This combination does not occur as Mozilla-based browsers on Linux
+will use a GTK GUI.)</td>
+
+<td>Plug-ins using the Mozilla Plug-in API and a GTK GUI are supported
+on Mozilla-based browsers such as Mozilla and Navigator 5.x for Linux.</td>
+</tr>
+</table>
+
+<p>Netscape recommends the following:
+<ul>
+<li>
+Vendors who have already released a plug-in for Navigator 4.x on Linux
+should immediately upgrade the plug-in to use both the GTK GUI and the
+Mozilla plug-in API.</li>
+
+<li>
+All new development of plug-ins for Navigator on Linux should be done for
+the GTK GUI, Mozilla plug-in API, and Mozilla-based browsers, such as Navigator
+5.x.</li>
+
+<li>
+Vendors who need to support both Navigator 4.x and Navigator 5.x on Linux,
+should release two separate binaries:</li>
+
+<ol>
+<li>
+a plug-in for Navigator 4.x for Linux using Motif and Navigator 4.x plug-in
+API</li>
+
+<li>
+a plug-in for Navigator 5.x for Linux using GTK and the Mozilla plug-in
+API.</li>
+</ol>
+</ul>
+
+<br>
+<p><b>Note</b>: On the Windows and Macintosh platforms, a single plug-in
+binary that has been upgraded to the Mozilla plug-in API can be run in
+Navigator 3.x, Navigator 4.x, and Navigator 5.x.
+
+<p><a NAME="example"></a>
+<h1>
+Example</h1>
+For a complete example of the new API implementation, see:
+<ul>
+<li>
+<a href="http://lxr.mozilla.org/mozilla/source/plugin/oji/MRJ/plugin/Source/MRJPlugin.cpp">MRJ
+Plug-in code example</a> (<a href="http://lxr.mozilla.org/mozilla/source/plugin/oji/MRJ/plugin/Source/MRJPlugin.cpp">http://lxr.mozilla.org/mozilla/source/plugin/oji/MRJ/plugin/Source/MRJPlugin.cpp</a></li>
+
+<li>
+<a href="http://lxr.mozilla.org/mozilla/source/plugin/oji/MRJ/plugin/Source/MRJPlugin.cpp">http://lxr.mozilla.org/mozilla/source/plugin/oji/MRJ/plugin/Source/MRJPlugin.h)</a>.</li>
+
+<li>
+<a href="http://lxr.mozilla.org/mozilla/source/modules/plugin/test/SimpleTest.html">http://lxr.mozilla.org/mozilla/source/modules/plugin/test/SimpleTest.html</a></li>
+</ul>
+
+<p>
+Comments or suggestions about this document? Please post them to
+the <a href="news://news.mozilla.org/netscape.public.dev.plugin-upgrade">netscape.public.dev.plugin-upgrade</a>
+newsgroup.
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/plugin.html&amp;rev=&amp;root=/cvsroot/">Last modified November 30,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

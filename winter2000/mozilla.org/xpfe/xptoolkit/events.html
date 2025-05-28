@@ -1,0 +1,279 @@
+<HTML>
+<HEAD>
+<TITLE>Focus and Command Dispatching</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Focus and Command Dispatching</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="broadcasters.html">Previous: Broadcasters and Observers</a>]
+[<a href="keys.html">Next: Key Binding</a>]
+<p>
+<b>Feature Owners:</b> <a href="mailto:hyatt@netscape.com">David Hyatt</a>
+<p>
+In addition to the DOM APIs for tracking focus (namely <font color=blue>addEventListener</font>
+and <font color=blue>removeEventListener</font> on <font color=purple>focus</font> and 
+<font color=purple>blur</font> events), XUL documents contain an object called
+the <i>focus tracker</i> that monitors the current focused object within the XUL
+document.  The focus tracker is capable of monitoring focus changes even within subframes
+of the document.
+<p>
+The focus tracker is retrieved using the <font color=purple>focus</font> property on the
+XUL document.  This property is read only.  All XUL documents have a single focus tracker,
+and this tracker cannot be modified or deleted.
+<p>
+At any given time, the current focused object can be obtained 
+by asking the focus tracker for its <font color=purple>current</font> property. 
+This always refers to the innermost object in a focus chain (so if, for example, there
+are many nested framesets, the innermost frame with the focus would be the one
+stored in this property).
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+dump("The current focused object is: " + document.focus.current);
+</td></tr>
+</table>
+<p>
+Elements in a XUL document can log their interest in listening to focus changes by 
+registering themselves with the document's focus tracker.  The focus tracker supports
+two methods, <font color=blue>addFocusListener</font> and <font color=blue>removeFocusListener</font>.
+These methods each take a single DOM element as an argument.
+<p>
+Typically a broadcaster node that represents a single action (e.g., <font color=purple>Cut</font>)
+will register itself with the focus tracker, and then it can handle passing off any state
+changes to UI elements as necessary. (See <a href="broadcasters.html">Broadcasters and
+Observers</a> for details.)
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="cut"/&gt;
+...
+document.focus.addFocusListener(document.getElementById('cut'));
+</table>
+<p>
+The objects that listen to focus are typically <i>actions</i>, and as such, they are concerned
+with enabling or disabling themselves when the focus changes or when the state within
+a focused object changes.  They are also interested in supplying a common API for
+the execution of their action, regardless of which node has the focus.
+<p>
+<font color=red>[Not yet implemented]</font> An object called a <font color=purple>controller</font> determines whether or not an action 
+should be enabled/disabled for its associated object; it also supplies the interface through which the action can
+be invoked.
+<p>
+Any XUL element can have a controller attached to it.  The controller can be retrieved through
+the <font color=purple>controller</font> property on the XUL element, and it supports
+a certain set of interfaces, called <font color=green>Command Sets</font>.  Command sets
+can be obtained by calling <font color=orange>QueryInterface</font> on controller objects.
+<p>
+There is a generic command set object that can be used for any parameterless commands.  More
+complicated commands that require parameter-passing, or that need to expose custom methods
+for determining enabled/disabled state, can be placed inside custom command sets that implement
+their own scriptable interfaces.
+<p>
+The <font color=purple>nsIGenericCommandSet</font> interface has two simple methods: 
+<font color=blue>DoCommand</font>, which takes a string that represents the command's name,
+and <font color=blue>IsCommandEnabled</font>, which also takes a string that represents
+the command's name and returns a boolean value indicating whether or not the command is
+enabled.
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="cut" action="performCut();"/&gt;
+...
+function performCut()
+{
+  var c = document.focus.current.controller;
+  var g = c.QueryInterface(Components.interfaces.nsIGenericCommandSet);
+  g.DoCommand('cut');
+}
+</table>
+<p>
+The focus tracker supplies a convenience method called <font color=blue>getController</font>
+that can be used as a shorthand for retrieving the focused node's controller and using 
+QueryInterface to obtain the appropriate command set.
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="cut" action="performCut();"/&gt;
+...
+function performCut()
+{
+  var c = document.focus.getController(Components.interfaces.nsIGenericCommandSet);
+  c.DoCommand('cut');
+}
+</table>
+<p>
+All controllers must implement the <font color=purple>nsIController</font> interface, which 
+the focus tracker uses to inform the controller of its focus tracker.  The controller can
+then, at its discretion, communicate to the focus tracker that its state has changed and
+that any observers of the focus tracker may potentially need to update their own states
+(e.g., enable or disable themselves).
+<p>
+For example, a tree widget's controller would communicate with the focus tracker whenever
+its selection changed.  The focus tracker would then notify all of its observers.
+It would do so by executing a <font color=purple>change</font> handler that was attached to
+the observers of the focus tracker.
+<p>
+In addition to invoking the change handlers when the controllers communicate a state change
+to the focus tracker, the focus tracker also invokes the handlers automatically whenever
+the focus changes.
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="cut" action="performCut(); 
+    onchange="updateUI('cut', this);"/&gt;
+...
+function updateUI(commandName, element)
+{
+  var c = document.focus.getController(Components.interfaces.nsIGenericCommandSet);
+  if (c.IsCommandEnabled(commandName))
+    element.unsetAttribute('disabled');
+  else element.setAttribute('disabled');
+}
+</table>
+<p>
+Although the <font color=purple>nsIGenericCommandSet</font> works well for any parameterless
+commands, other commands might be more complex, and might require custom enabling/disabling
+checkers, as well as custom APIs for the invocation of their commands.
+<p>
+An example of such a system might be commands in the Composer package for color management.
+The application of color to the selection within a focused object requires that the new
+color be passed in to the command as a parameter.
+<p>
+An interface, nsIColorCommandSet, could contain an applyColor method that takes a string,
+the RGB value of the color being applied, as a single argument.  The code then looks very
+similar to previous examples, except that the command set being used is a different 
+interface.
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>
+&lt;broadcaster id="colorApplier" action="applyColor();"/&gt;
+...
+function applyColor()
+{
+  // Code that pops up a color picker and stashes a color result in 
+  // the variable color result
+  var colorResult = ...;
+
+  // Execute the command for applying the color.
+  var c = document.focus.getController(Components.interfaces.nsIColorCommandSet);
+  c.ApplyColor(colorResult);
+}
+</table>
+<p>
+<font color=red>Open Issues
+<ul>
+<li>Does the focus tracker only need to track elements, or does it also need to worry about
+windows?
+<li>If it isn't sufficient to only track elements, how do we attach controllers to other
+DOM objects that might not be XUL?
+<li>How does the controller registration happen for HTML text fields that Ender uses?  (It
+needs to happen automatically when the node is created.)  An answer might be that Ender
+doesn't use controllers, but the getController method of the focus tracker special cases
+the HTML text nodes.
+</ul>
+</font>
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="broadcasters.html">Previous: Broadcasters and Observers</a>]
+[<a href="keys.html">Next: Key Binding</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/xptoolkit/events.html&amp;rev=&amp;root=/cvsroot/">Last modified December  5,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

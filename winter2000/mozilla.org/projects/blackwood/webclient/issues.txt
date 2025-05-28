@@ -1,0 +1,38 @@
+This file is a simple solution to the problem of tracking webclient
+implementation issues.  It may not be the final solution to this
+problem.
+
+Owner    Issue
+=====    =====
+
+edburns  Come up with list of things that need to be implemented
+
+?        Prioritize this list and parcel out implementation tasks
+
+?        What to do when the custom app calls a part of the spec that isn't 
+         implemented: a) fail silently, b) throw a NotImplemented
+         exception, c) have a programmatic way of determining what is
+         implemented and then throw a NotImplemented exception if
+         necessary.
+
+?        Do we fit the bill for fetch and context progress callbacks as
+         defined in the vertigo spec: 
+
+> > Fetch progress callbacks
+> >
+> > A fetch progress callback gives information on the status of a single
+> > fetch. The kind of information provided in a fetch progress callback is:
+> > "How many bytes have been downloaded so far?", "How many bytes remain to
+> > be downloaded?", "has the fetch stalled?", etc.
+> >
+> > Context progress callbacks
+> >
+> > A context progress callback gives information on the status of a group
+> > of fetches. The kind of information provided in a context progress
+> > callback is: "how many items in this context have been fetched or remain
+> > to be fetched?", etc.
+> >
+> > Information common to both kinds of callbacks includes: "What's the %
+> > complete of this fetch?", "what is the network status of this fetch
+> > (connecting, downloading, etc)?".
+

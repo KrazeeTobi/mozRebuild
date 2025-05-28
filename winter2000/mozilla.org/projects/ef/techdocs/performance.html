@@ -1,0 +1,143 @@
+<HTML>
+<!--THIS FILE CREATED 2:34 PM  2/10/97 BY CLARIS HOME PAGE VERSION 2.0-->
+<HEAD>
+  <TITLE>Electrical Fire Performance</TITLE>
+  <X-SAS-WINDOW TOP=35 BOTTOM=845 LEFT=305 RIGHT=835>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE BORDER="0" CELLPADDING="0" WIDTH="100%" CELLSPACING="2">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#ff0000">Electrical Fire</FONT></H2>
+
+
+<H2>Requirements</H2>
+
+
+<H2><FONT SIZE=+4>Performance</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"electricalfire.gif" ALIGN="BOTTOM"></A>  <A HREF="performance.html"><IMG SRC="arrows/left.gif" ALIGN="BOTTOM"></A><A
+HREF="requirements.html"><IMG SRC="arrows/up.gif" WIDTH="37" HEIGHT="37"
+ALIGN="BOTTOM" NATURALSIZEFLAG="3"></A><A HREF="machine_model.html"><IMG SRC=
+"arrows/right.gif" ALIGN="BOTTOM"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+Updated 2/10/97<P></P>
+
+<H2><A NAME="Goals"></A>Goals</H2>
+
+
+<P>The goals of the first version of Electrical Fire are to generate a good
+Java bytecode just-in-time compiler for all of the platforms supported by
+Netscape. We expect the performance of the first implementation to be substantially
+better than the Symantec PowerPC JIT.</P>
+
+<P>Win32 will be a special case. It will be necessary for the Win32 implementation
+to be competitive with any other Java implementation in the marketplace.</P>
+
+<H2>Assumptions</H2>
+
+
+<P>To keep the first version of the JIT relatively simple and fast we're
+assuming that all of the optimizations that could have been done on the
+bytecode level already have been done by the Java source-to-bytecode compiler.
+These optimizations include most common subexpression elimination, partial
+dependency elimination, code motion out of loops, dead code stripping, constant
+propagation, etc. This greatly limits the set of interesting optimizations
+and transformations for the JIT and allows us to create a faster JIT. The
+interesting optimizations for the JIT are the ones that cannot be expressed
+by the Java bytecodes either because they would break the Java security
+model, they are target-specific, or Javasoft hasn't thought of them. These
+include eliminating redundant null pointer or array range checks, scheduling
+instructions to suit the native instruction set, register allocation, and
+some strength reduction.</P>
+
+<P>We believe that the Java source-to-bytecode compiler is the right place to 
+  do all the optimizations that can be done there because it has much more time 
+  to analyze the Java program; the optimizations are done once by the developer 
+  (or us) rather than every time the Java code is loaded. We at Netscape can tweak 
+  the compiler or use alternative vendors of such a compiler in order to generate 
+  good bytecodes for projects like <A HREF="performance.html">Javagator</A>; third-party 
+  vendors can do likewise.</P>
+
+<P>In the future we plan to do aggressive interprocedural inlining; this
+is the way (other than making some changes to the definition of the Java
+language) to get past a coming Java performance plateau. Once we do that,
+the assumption that all of the optimizations that could have been done at
+the bytecode level have been done will no longer apply because the Java
+source-to-bytecode had never seen the inlined combination of methods together.
+At that point we'll implement some of the more general and traditional optimizations
+in the JIT.</P>
+
+<H2><A NAME="Translation Speed"></A>Translation Speed Goals</H2>
+
+
+<P>Here are a few simple calculations based on the startup time of a Java-based
+Navigator (front end only) or another similary sized component. We are calculating
+the necessary translation speed per byte code measured in JIT instructions
+executed to translate one bytecode. We examine all four scenarios of having
+to translate either two hundred thousand or a million bytecodes on startup
+and allowing either two or ten seconds to do it. Ten seconds might seem
+unreasonable, but we could maintain a disk cache of the translated bytecodes
+between successive runs of the Navigator.</P>
+
+<P><TABLE BORDER="1" CELLPADDING="0" WIDTH="405" HEIGHT="124" CELLSPACING=
+"2">
+ <TR>
+  <TH WIDTH="18%" HEIGHT="29">&nbsp;Number of Bytecodes</TH>
+  <TH WIDTH="23%" HEIGHT="29">&nbsp;Desired Time to Translate</TH>
+  <TH WIDTH="26%" HEIGHT="29">&nbsp;Time / Bytecode</TH>
+  <TH WIDTH="33%" HEIGHT="29">&nbsp;JIT Instructions / Bytecode*</TH>
+ </TR>
+ <TR>
+  <TD WIDTH="18%" HEIGHT="17">&nbsp;1 M</TD>
+  <TD WIDTH="23%" HEIGHT="17">&nbsp;2 s</TD>
+  <TD WIDTH="26%" HEIGHT="17">&nbsp;2 &micro;s</TD>
+  <TD WIDTH="33%" HEIGHT="17">&nbsp;400</TD>
+ </TR>
+ <TR>
+  <TD WIDTH="18%" HEIGHT="17">&nbsp;1 M</TD>
+  <TD WIDTH="23%" HEIGHT="17">&nbsp;10 s</TD>
+  <TD WIDTH="26%" HEIGHT="17">&nbsp;10 &micro;s</TD>
+  <TD WIDTH="33%" HEIGHT="17">&nbsp;2000</TD>
+ </TR>
+ <TR>
+  <TD WIDTH="18%" HEIGHT="16">&nbsp;200 K</TD>
+  <TD WIDTH="23%" HEIGHT="16">&nbsp;2 s</TD>
+  <TD WIDTH="26%" HEIGHT="16">&nbsp;10 &micro;s</TD>
+  <TD WIDTH="33%" HEIGHT="16">&nbsp;2000</TD>
+ </TR>
+ <TR>
+  <TD WIDTH="18%" HEIGHT="17">&nbsp;200 K</TD>
+  <TD WIDTH="23%" HEIGHT="17">&nbsp;10 s</TD>
+  <TD WIDTH="26%" HEIGHT="17">&nbsp;50 &micro;s</TD>
+  <TD WIDTH="33%" HEIGHT="17">&nbsp;10000</TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>* Assumes a 200 MHz machine executing an average of one instruction per
+cycle.</P>
+
+<P>By these back-of-the-envelope calculations we can execute between 400
+and 10000 instructions in the JIT for each Java bytecode translated. Our
+initial goal is for a number somewhere in the middle of the range, such
+as 2000. To reach this goal we have to avoid using algorithms that are substantially
+slower than linear on typical code (it may be OK if they are, say, quadratic
+on atypical Java code or, if the constant factors are extremely small, even
+quadratic on typical code).</P>
+
+<P>These figures do not include the time to run these byte codes. The total
+time to translate and execute might be a more interesting number -- as we
+spend more time translating, our execution time could go down at a greater
+than linear rate.<HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

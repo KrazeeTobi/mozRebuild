@@ -1,0 +1,982 @@
+<HTML>
+<HEAD>
+<TITLE>Feature Testspec: Mail &amp; News: Navigate Flag</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+<script LANGUAGE="JavaScript"> 
+  document.write("<CENTER><FONT COLOR=Red SIZE=-1>"); 
+  document.write("Last modified on ", document.lastModified); 
+  document.write("</CENTER></FONT>"); 
+</script>
+
+
+
+<h2>
+Feature Testspec</h2>
+<b>Project: 5.0 (Seamonkey)</b>
+<br><b>Mail and News component</b>
+<br><b>Navigate: Mark</b>
+<p>Original document was written by: <b>Laurel Carlson for 4.5</b>
+<br>Modified by: <b><a href="mailto:fenella@netscape.com">Fenella Gor</a>
+for 5.0 (Seamonkey)</b>
+<p><b>References:</b>
+<br>5.0 Seamonkey UI Specification:
+<br>Test case management: N/A
+<br>Total number of test cases: approximate 425
+<p>
+<hr WIDTH="100%">
+<ol TYPE=I>
+<li>
+Description: This feature testspec is intended to outline test coverage
+for using the various Message|Mark commands on mail and news messages.</li>
+
+<ol TYPE=A>
+<li>
+Mark Message should be initiated from:</li>
+
+<ol>
+<li>
+Thread pane</li>
+
+<ol TYPE=a>
+<li>
+3 pane UI window (thread pane, folder pane and message pane shown)</li>
+
+<li>
+2 pane UI window (thread pane and folder pane shown, message pane
+collapsed)</li>
+
+<li>
+1 pane UI window (thread pane shown, folder pane and message pane
+collapsed)</li>
+</ol>
+
+<li>
+Message pane</li>
+
+<li>
+Message window (double click on message opens a message window)</li>
+</ol>
+
+<li>
+Mark Message should be tested by:</li>
+
+<ol>
+<li>
+Menu item (Message|Mark)</li>
+
+<li>
+<font color="#000000">Mnemonic/hot keys (Underlined letters; windows eg
+alt/k or alt/m)</font></li>
+
+<li>
+<font color="#000000">Toolbar button dropdown(Apply to newsgroup only)</font></li>
+
+<li>
+Keyboard shortcuts(Press F and M simultaneously or just M)</li>
+</ol>
+
+<li>
+Mark|Message options</li>
+
+<ol>
+<li>
+as Read (M)</li>
+
+<li>
+Thread as Read</li>
+
+<li>
+by Date (C)</li>
+
+<li>
+All Read (shift+C)</li>
+</ol>
+
+<li>
+Initial condition: Open a 3 pane UI window, message pane shown. Select
+the Inbox folder</li>
+
+<br></ol>
+
+<li>
+General testing: After marking message, check for appropriate read/unread
+state:</li>
+
+<ol TYPE=A>
+<li>
+Thread pane: Unread column/diamond</li>
+
+<li>
+Thread pane: thread icon state</li>
+
+<li>
+Thread pane: item line bold attribute</li>
+
+<li>
+Thread Window unread count</li>
+
+<li>
+Message Center unread count</li>
+
+<li>
+Read/Unread state lasts through exit.</li>
+
+<br></ol>
+
+<li>
+Verifying Mark on mail messages</li>
+
+<br>
+<ol TYPE=A>
+<li>
+3 pane UI window (thread pane, folder pane and message pane shown)</li>
+
+<ol>
+<li>
+Mark (selection) As Read Note: during Nova
+project Mark Read/Unread was changed to toggle/checkmark single menu item.</li>
+
+<ol TYPE=a>
+<li>
+Initial condition: close message pane, select a unread message</li>
+
+<li>
+Mark as Read - Enable/disable conditions:</li>
+
+<ul>
+<li>
+A checkmark before "as Read" is toggled back and forth for Read/Unread
+message.</li>
+
+<li>
+Should be disabled (grayed out) in empty view</li>
+
+<li>
+Should have a checkmark before "as Read" (because opening the window
+changes status to read.</li>
+</ul>
+
+<li>
+Mark as Read - single selection</li>
+
+<ul>
+<li>
+When collapsed</li>
+
+<ul>
+<li>
+only change the top thread</li>
+</ul>
+
+<li>
+When expanded-only change the selected thread:</li>
+
+<ul>
+<ul>
+<li>
+may be the top level thread,</li>
+
+<li>
+various level replies</li>
+</ul>
+</ul>
+</ul>
+
+<li>
+Mark as Read - multiple selections</li>
+
+<ul>
+<li>
+On multiple selection where selected message are not read (green icon),
+should have no checkmark before "as Read".</li>
+
+<li>
+On multiple selection where selected message are read (no green icon),
+should have a checkmark before "as Read".</li>
+
+<li>
+contiguous seletion</li>
+
+<li>
+on-contiguous selection</li>
+
+<li>
+mix of unread/read items</li>
+</ul>
+
+<li>
+From Edit|Select All (or ctl/A); Mark as Read</li>
+
+<li>
+Mark as Read - Selection includes collapsed thread --verify that operation
+only done on displayed/top level message, it doesn't mark collapsed components</li>
+
+<li>
+Mark as Read when selecting thread usin<font color="#000000">g thread icon/spool
+</font><font color="#FF0000">-</font>-it
+should mark all thread components as Read</li>
+
+<li>
+Select large number of items; Mark as Read (Nova bug#82313: "Mark as Read
+does not work for large number of messages", eg 5000 in newsgroup)</li>
+
+<li>
+Mark as Read various message types:</li>
+
+<ul>
+<li>
+animated message</li>
+
+<li>
+very long messages</li>
+
+<li>
+signed message</li>
+
+<li>
+html with images inserted</li>
+
+<li>
+message with attachments</li>
+
+<ul>
+<li>
+web pages with lots of animation</li>
+
+<li>
+web pages with forms</li>
+
+<li>
+more...</li>
+</ul>
+</ul>
+
+<li>
+Mark an item as Read by using the read/unread "diamond" column (green =
+unread, grey = read)</li>
+
+<li>
+Undo/Redo various Mark as Read operations</li>
+</ol>
+
+<li>
+Mark Thread As Read - Note: Mark Thread Read will mark the thread
+read but will not move on to next thread/next unread thread as does the
+navigational item Go|Next Unread Thread.</li>
+
+<ol TYPE=a>
+<li>
+Initial condition</li>
+
+<ul>
+<li>
+Close message pane and then select a unread thread</li>
+</ul>
+
+<li>
+Enable/disable conditions:</li>
+
+<ul>
+<li>
+enabled in populated view for any single selection</li>
+
+<li>
+disabled in empty view</li>
+
+<li>
+enabled in message window</li>
+
+<li>
+disabled for multiple selection</li>
+</ul>
+
+<li>
+When collapsed: Mark Thread As Read changes both</li>
+
+<ul>
+<li>
+Focus on top level message</li>
+
+<li>
+Focus on nested reply</li>
+</ul>
+
+<li>
+When expanded: Mark Thread As Read changes both</li>
+
+<ul>
+<li>
+Focus on top level message</li>
+
+<li>
+Focus on nested reply</li>
+</ul>
+
+<li>
+Really large thread (apply to newsgroup only)</li>
+
+<li>
+Mark Thread as Read In a flat sort (eg: sort by subject)</li>
+
+<li>
+Mark Thread as Read In a threaded sort (eg: sort by thread)</li>
+
+<ul>
+<li>
+when expanded</li>
+
+<li>
+when collapsed</li>
+</ul>
+
+<li>
+Undo/Redo mark thread read</li>
+
+<ul>
+<li>
+flat sort</li>
+
+<li>
+threaded sort</li>
+
+<ul>
+<li>
+when expanded</li>
+
+<li>
+when collapsed</li>
+</ul>
+</ul>
+
+<li>
+Mark Thread as Read In different views (View|Message):</li>
+
+<ul>
+<li>
+All</li>
+
+<li>
+Unread</li>
+
+<li>
+Threads with Unread</li>
+
+<li>
+Watched Threads with Unread</li>
+</ul>
+
+<li>
+Mark from message window when thread window closed.</li>
+
+<ul>
+<li>
+close message pane, double click a unread(green icon) message to
+open a message window, close the thread window, select Mark Thread as Read,
+open the thread window and verify that the message's green icon is gone.</li>
+</ul>
+</ol>
+
+<li>
+Mark Read by Date dialog tests</li>
+
+<ol TYPE=a>
+<li>
+Test the general dialog controls:</li>
+
+<ul>
+<li>
+Cancel works via button or ESC, or X</li>
+
+<li>
+Each portion of the date box, DD MM YY, displays clearly</li>
+
+<li>
+Each portion of the date, DD MM YY, can be changed by typing</li>
+
+<li>
+Each portion of the date, DD MM YY, can be changed via the up/down arrow
+control</li>
+
+<li>
+Date arrow control operates smoothly through full double digit range:</li>
+
+<ul>
+<li>
+Day range should be 01-31</li>
+
+<li>
+Month range should be 01-12</li>
+
+<li>
+Year range should be 00-99</li>
+
+<li>
+If century set (special format), range should be 19-(upper limit of ??)</li>
+</ul>
+</ul>
+
+<li>
+ON startup dialog defaults with current date</li>
+
+<li>
+Verify each portion of the date, DD MM YY can take single or double digit</li>
+</ol>
+
+<li>
+Mark Read by Date basic tests</li>
+
+<ol TYPE=a>
+<li>
+Initial condition: message pane is closed.</li>
+
+<li>
+Enable/disable conditions:</li>
+
+<ul>
+<li>
+disabled in empty view</li>
+
+<li>
+generally enabled otherwise</li>
+
+<li>
+enabled in message window</li>
+</ul>
+
+<li>
+Mark read to current date</li>
+
+<li>
+Mark read to future date</li>
+
+<ul>
+<li>
+future date within date range of messages in group (marks some)</li>
+
+<li>
+future date after date range of messages in group (marks all)</li>
+
+<li>
+use dates which will exercise changing each portion of date field:</li>
+
+<ol TYPE=a>
+<li>
+future date using day field</li>
+
+<li>
+future date using month field</li>
+
+<li>
+future date using year</li>
+</ol>
+</ul>
+
+<li>
+Mark read to past date</li>
+
+<ul>
+<li>
+past date before date range of messages in group; verify it marks none</li>
+
+<li>
+past date within date range of messages in group; verify it marks some</li>
+
+<li>
+past date after date range of messages in group; verify it marks all</li>
+
+<li>
+use dates which will exercise changing each portion of date field:</li>
+
+<ol TYPE=a>
+<li>
+past date using day field</li>
+
+<li>
+past date using month field</li>
+
+<li>
+past date using year</li>
+</ol>
+</ul>
+
+<li>
+Verify Mark Read by Date where parent message is within range, but reply
+is not.</li>
+
+<ul>
+<li>
+parent is top level message</li>
+
+<li>
+parent is a reply to top level message</li>
+
+<li>
+parent is a nested reply</li>
+</ul>
+
+<li>
+Verify collapsed thread components are marked appropriately</li>
+
+<li>
+Verify new messages received display unread which fall into a prior Mark
+Read by Date operation's range.</li>
+
+<li>
+Mark Read by Date in different views (from View|Message), switch views.</li>
+
+<ul>
+<li>
+All</li>
+
+<li>
+Unread</li>
+
+<li>
+Threads with Unread</li>
+
+<li>
+Watched Thread with Unread</li>
+</ul>
+
+<li>
+Mark Read by Date in different sort</li>
+
+<ul>
+<li>
+flat sort</li>
+
+<li>
+threaded sort</li>
+
+<ul>
+<li>
+When collapsed</li>
+
+<li>
+When expanded</li>
+</ul>
+</ul>
+
+<li>
+Undo/Redo of Mark Read by Date</li>
+
+<li>
+Mark from message window when thread window: closed. Close
+message pane, double click a unread(green icon) message to open a
+message window, close the thread window, select Mark Read by Date, open
+the thread window and verify that the message's green icon is gone.</li>
+</ol>
+
+<li>
+Mark All Read</li>
+
+<ol TYPE=a>
+<li>
+Initial condition: Set messages to unread stage</li>
+
+<li>
+Enable/disable conditions:</li>
+
+<ul>
+<li>
+disabled in empty view</li>
+
+<li>
+generally enabled otherwise</li>
+
+<li>
+enabled in message window</li>
+</ul>
+
+<li>
+<font color="#000000">Large number of messages to mark</font></li>
+
+<ul>
+<li>
+<font color="#000000">Check progress dialog (Mac)</font></li>
+
+<li>
+<font color="#000000">Check status bar text "</font><font color="#FF0000">Marked
+N messages" (All platforms?)</font></li>
+
+<li>
+<font color="#000000">.Interrupt marking process, verify you're left in
+a good state</font></li>
+
+<ol TYPE=a>
+<li>
+<font color="#000000">Cancel dialog (Mac)</font></li>
+
+<li>
+<font color="#000000">Single selection</font></li>
+</ol>
+</ul>
+
+<li>
+.Mark All Read from different views</li>
+
+<ul>
+<li>
+View Message All</li>
+
+<ul>
+<li>
+Ignored toggle OFF</li>
+
+<li>
+Ignored toggle ON</li>
+</ul>
+
+<li>
+View Message Unread</li>
+
+<li>
+View Threads with Unread</li>
+
+<li>
+View Watched Threads with Unread</li>
+</ul>
+
+<li>
+Undo/Redo mark All Read</li>
+
+<li>
+Mark All Read from message window when thread window closed.
+Close message pane, double click a unread(green icon) message to
+open a message window, close the thread window, select Mark All Read, open
+the thread window and verify that the message's green icon is gone.</li>
+</ol>
+</ol>
+
+<li>
+2 pane UI window (thread pane and folder pane shown, message pane
+collapsed)</li>
+
+<ol>
+<li>
+Repeat all of the above 3 pane UI window test cases.</li>
+
+<br></ol>
+
+<li>
+1 pane UI window (thread pane shown, folder pane and message pane
+collapsed)</li>
+
+<ol>
+<li>
+Repeat all of the above 3 pane UI window test cases</li>
+
+<br></ol>
+
+<li>
+Message pane</li>
+
+<ol>
+<li>
+Repeat all of the above 3 pane UI window test cases</li>
+
+<br></ol>
+
+<li>
+Message window (double click on message opens a message window)</li>
+
+<ol>
+<li>
+Repeat all of the above 3 pane UI window test cases</li>
+
+<br></ol>
+</ol>
+
+<li>
+Verifying Mark on newsgroup messages</li>
+
+<ol TYPE=A>
+<li>
+3 pane UI window (thread pane, folder pane and message pane shown) for
+newsgroup</li>
+
+<ol>
+<li>
+Repeat all of the above 3 pane UI window test cases for Mail.</li>
+
+<li>
+Mark Newsgroup Read - Message Center context menu item (not available for
+mail folders in general)</li>
+
+<ol TYPE=a>
+<li>
+Initial condition: Select a newsgroup</li>
+
+<li>
+Enable/disable conditions: always enabled when selection is newsgroup,
+whether the group has unread items or not, or any level.</li>
+
+<li>
+Mark various groups over different servers</li>
+
+<li>
+Mark when group is open</li>
+
+<ol TYPE=a>
+<li>
+when newsgroup collapsed - verify it marks the group all Read</li>
+
+<li>
+when newsgroup expanded - verify it the entire all Read</li>
+</ol>
+
+<li>
+category group is open:</li>
+
+<ol TYPE=a>
+<li>
+the same category as you're marking is open; verify it marks all newsgroup
+Read</li>
+
+<li>
+a different category in the same overall group is open; it should
+mark all Read.</li>
+</ol>
+
+<li>
+Mark with large number of unread items</li>
+
+<li>
+Folder dropdown should lose bold attribute for newsgroup marked read</li>
+
+<li>
+No Undo/Redo</li>
+
+<li>
+Mark Newsgroup Read before you've downloaded header</li>
+
+<li>
+When selection is top level category As of Nova RTM, mark group read
+from top level category marks all the subcategories, too</li>
+
+<li>
+When selection is subcategory As of Nova RTM, mark group read from a subcategory
+only marks that category</li>
+</ol>
+
+<li>
+<u><font color="#999999">Marking in Category Groups (This gray
+section is in out-list at this point, reserve it just in case it comes
+back)</font></u></li>
+
+<ol TYPE=a>
+<li>
+<u><font color="#999999">no longer should have specific Mark Category command
+(??), but verify marking operations in category newsgroup</font></u></li>
+
+<li>
+<u><font color="#999999">Mark All: currently (4.04) marks all in
+the extended category newsgroup (root and all subcategories)</font></u></li>
+
+<ul>
+<li>
+<u><font color="#999999">Mark All: currently (4.04) marks all in
+the extended category newsgroup (root and all subcategories)</font></u></li>
+
+<li>
+<u><font color="#999999">from subcategory As of Nova RTM, mark all from
+a subcategory only marks that category</font></u></li>
+</ul>
+
+<li>
+<u><font color="#999999">Mark Read by Date</font></u></li>
+
+<ul>
+<li>
+<u><font color="#999999">from top level category</font></u></li>
+
+<li>
+<u><font color="#999999">from subcategory</font></u></li>
+</ul>
+</ol>
+
+<li>
+Cross-posted messages: Verify marking a cross-posted message marks message
+read/unread in all recipient groups</li>
+
+<ol TYPE=a>
+<li>
+posted to different newsgroups</li>
+
+<ul>
+<li>
+same server (eg zia)</li>
+
+<li>
+different server (eg poisonivy)</li>
+</ul>
+
+<li>
+mark single cross-posted message</li>
+
+<li>
+mark thread with cross-post</li>
+
+<li>
+mark all with cross-post</li>
+
+<li>
+mark by date with cross-post</li>
+
+<li>
+mark for later</li>
+</ol>
+
+<li>
+Mark All Read for different download header options: (not applicable for
+mail)</li>
+
+<ol TYPE=a>
+<li>
+<font color="#000000">download all with no warning dialog/pref not set</font></li>
+
+<li>
+<font color="#000000">download all with warning dialog/pref set</font></li>
+
+<li>
+<font color="#000000">download chunk of header with warning dialog/pref
+set:</font></li>
+
+<ul>
+<li>
+<font color="#000000">check mark remaining headers read</font></li>
+
+<li>
+<font color="#000000">do not check mark remaining headers read</font></li>
+
+<br></ul>
+</ol>
+</ol>
+
+<li>
+2 pane UI window (thread pane and folder pane shown, message
+pane collapsed)</li>
+
+<ol>
+<li>
+Repeat the 3 pane UI window test cases for newsgroup (IV.A)</li>
+
+<br></ol>
+
+<li>
+1 pane UI window (thread pane shown, folder pane and message pane
+collapsed)</li>
+
+<ol>
+<li>
+Repeat the 3 pane UI window test cases for newsgroup (IV.A)</li>
+
+<br></ol>
+
+<li>
+Message pane</li>
+
+<ol>
+<li>
+Repeat the 3 pane UI window test cases for newsgroup (IV.A)</li>
+
+<br></ol>
+
+<li>
+Message window (double click on message opens a message window)</li>
+
+<ol>
+<li>
+Repeat the 3 pane UI window test cases for newsgroup (IV.A)</li>
+</ol>
+</ol>
+</ol>
+
+<hr ALIGN=LEFT WIDTH="100%">
+<br>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-navigate-mark.html&amp;rev=&amp;root=/cvsroot/">Last modified May 14,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

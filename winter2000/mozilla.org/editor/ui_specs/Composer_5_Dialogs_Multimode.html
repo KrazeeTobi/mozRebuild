@@ -1,0 +1,230 @@
+<HTML>
+<HEAD>
+<TITLE>Multimode Dialogs in Composer 5.0</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<h2>
+Composer Property Dialogs: Multiple use modes</h2>
+
+<div align=right><font size=-1>Last updated 5/13/99 by Charles Manske</font>
+<br><font size=-1>(<a href="mailto:cmanske@netscape.com">cmanske@netscape.com</a>)</font></div>
+
+<p><br>In an effort to simplify the Composer UI, we will start by considering
+what attributes are necessary for "basic' use, as in the Mail Composer,
+and what attributes are "advanced", for HTML website authors. The details
+on how to implement this will be decided at a later time. The primary choices
+seem to be:
+<ol>
+<li>
+<b>Progressive display of dialog: </b>Include a button, probably near the
+lower right corner, that would expand a dialog to include the advanced
+controls. Thus each dialog can be used in the smaller, basic mode or in
+and advanced mode.</li>
+
+<li>
+<b>Two sets of dialogs: </b>A preference, changeable via a menu item and/or
+toolbar button, could be used to switch modes. A separate set of basic
+and advanced dialogs would be available.</li>
+</ol>
+This is a first draft anaylyzing the attributes that we include in the
+more complex 4.5 Composer dialogs. Dialogs not included in this list are
+deemed OK for both modes. Use the links to the dialogs to examine the current
+dialog images and behavior descriptions.
+<br>&nbsp;
+<table BORDER COLS=3 WIDTH="100%" >
+<tr>
+<th>Dialog</th>
+
+<th>Basic</th>
+
+<th>Advanced</th>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="ImageDialogs.html#ImageProperties">Image Properties</a></td>
+
+<td VALIGN=TOP>Location (SRC. Includes Choose file button), Alt text (ALT),
+Leave at original location checkbox, Use as background checkbox, and Alignment
+(<font size=-1>I'm not sure about this one</font>.)&nbsp;</td>
+
+<td VALIGN=TOP>
+<br>All Dimension, and Space around images controls.
+<br>Remove Image map and Extra HTML buttons.</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="CharacterPropertiesDialogs.html#LinkProperties">Link
+Properties</a></td>
+
+<td VALIGN=TOP>Link Source text (needed only when there's no selected text
+or image) and link location (HREF. Includes Choose File button).</td>
+
+<td VALIGN=TOP>Remove Link button, Target (named anchor) listbox and related
+radio buttons, and Extra HTML button.</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="TablePropertiesDialogs.html#TableProperties">Table
+Properties</a></td>
+
+<td VALIGN=TOP>Number of rows, number of columns, border checkbox and width,
+alignment, and background controls (color and image)</td>
+
+<td VALIGN=TOP>Height and width checkboxes and edit fields, spacing and
+padding, caption, and Extra HTML button.</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="TablePropertiesDialogs.html#CellProperties">Cell
+Properties</a></td>
+
+<td VALIGN=TOP>Selection combobox with Previous and Next buttons, Content
+alignment (<font size=-1>not sure about this)</font> and background controls</td>
+
+<td VALIGN=TOP>All controls in the Size and Text Style groups, and Extra
+HTML button.</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>Page Properties (<a href="PagePropertiesDialogs.html#GeneralPageProperties">Genera</a>l,
+<a href="PagePropertiesDialogs.html#ColorsAndBackgroundProperties">Colors
+and Background</a>, and <a href="PagePropertiesDialogs.html#MetaTagsProperties">Meta
+Tags</a>)
+<br>Note: We plan to reorganize into 1 or two new dialogs</td>
+
+<td VALIGN=TOP>Page title and Author edit fields, Normal text and background
+color [automatically calculate appropriate link, active link, and followed
+link colors]. Background color and image controls</td>
+
+<td VALIGN=TOP>Description, Keywords, and Classification (from General
+tab).
+<br>Color schemes (<font size=-1>not sure about this)</font>
+<br>Everything in the Meta Tags properites tab. <font size=-1>[I agree
+this can be simplified]</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="MiscDialogs.html#HorizontalLinePropertiesDialog">Horizontal
+Line</a></td>
+
+<td VALIGN=TOP>All dimension attributes, Alignment, and 3-D shading
+<br>Note: Always act as if "Save settings as default" is checked.</td>
+
+<td VALIGN=TOP>Save settings as default, Extra HTML</td>
+</tr>
+</table>
+
+<h3>
+Comments about other dialogs:</h3>
+
+<h4>
+<a href="CharacterPropertiesDialogs.html#CharacterProperties">Character
+Properties</a></h4>
+We are contemplating eliminating this dialog entirely. Most of the attributes
+are the basic text attributes that are easily changed via the toolbar,
+main menus, and context popup ("right mouse") menus. The only attributes
+not on the toolbar are Strikethrough, superscript, subscript, nonbreaking,
+and blink (which most agree we should not support any more!), but these
+are available in the Format | Style menu.
+<h4>
+<a href="CharacterPropertiesDialogs.html#ParagraphProperties">Paragraph
+Properties</a></h4>
+The paragraph and list styles are also easily available from the toolbar
+and menus. The only attributes not available are the list bullet styles
+(what graphic is used for the bullet) and the numbering styles. I propose
+replacing the existing dialog with a simpler "List Style" dialog that is
+available only when the selection is within a list. It would allow you
+to change the list style (bulleted, numbered, definition [note: we don't
+support menu and directory lists any more]), Bullet Style (type of graphic
+or numbering pattern), and Starting number.
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/editor/ui_specs/Composer_5_Dialogs_Multimode.html&amp;rev=&amp;root=/cvsroot/">Last modified May 14,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,135 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; U) [Netscape]">
+   <meta name="Author" content="Ian Oeschger">
+   <title>The &lt;popup> Widget</title>
+</head>
+<body>
+<table>
+<tr><td><p align="right"><i>XUL Programmer's Reference Manual</i></p></td></tr>
+<tr>
+<td>
+<h1>
+<font color="#000099"><font size=+2>&lt;popup></font></font></h1>
+
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font face="Arial,Helvetica"><font color="#FFFFFF">Attributes</font></font></b></td>
+
+<td><b><font face="Arial,Helvetica"><font color="#FFFFFF">Common Children</font></font></b></td>
+</tr>
+
+<tr>
+<td><i><font face="Arial,Helvetica"><a href="common.html#id">id</a></font></i></td>
+
+<td><a href="buttonref.html">titledbutton</a></td>
+</tr>
+
+<tr>
+<td><font face="Arial,Helvetica"><a href="#oncreate">oncreate</a></font></td>
+
+<td><a href="windowref.html">window</a></td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td><a href="menuel.html">menu</a></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<br>The XUL language provides a way for developers to declare that a XUL
+subtree is&nbsp;<a NAME="popup content IDX"></a>popup content, meaning
+that the content is displayed in its own window when a certain event occurs
+(e.g., a right mouse click to bring up a context menu, or a left click
+to bring up a popup color picker on a toolbar). There are two kinds of
+popup content: menus and windows. Popup menus use the native menus on each
+platform and are described using menu and menuitem elements. Popup windows
+can contain arbitrary XUL, and are full-fledged XUL windows, declared using
+the window tag (See Windows and Dialogs for details).&nbsp;
+<p>Popup content is placed inside a popup tag, which prevents it from being
+displayed in the main document. The popup tag always has an identifier
+attached to it (using the id attribute) that is used when attaching the
+popup content to a UI element.&nbsp;
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="60%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre><a NAME="popup exampleIDX"></a>&lt;popup id="replyMenu">
+&nbsp;&lt;menu>
+&nbsp;&nbsp; &lt;menuitem name="Reply to Sender">
+&nbsp;&nbsp; &lt;menuitem name="Reply to All">
+&nbsp;&lt;/menu>
+&lt;/popup>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+</blockquote>
+Popups are positioned on the anchoring element with that element's&nbsp;<a NAME="popupanchor attributeIDX"></a><a href="common.html#popupanchor">popupanchor</a>
+and <a href="common.html#popupalign">popupalign</a> attributes. There are
+three different ways of automatically attaching a popup to content. All
+three methods involve setting attributes on the content node that should
+have the popup content attached to it. The attributes are popup, context,
+and tooltip. The value of one of these attributes is the id of the popup
+element that should be used to build the popup content.&nbsp;
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="60%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;titledbutton value="Reply" popup="replyMenu"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+</blockquote>
+The popup attribute is used to attach popup content that will be invoked
+on a left mouse down. The context attribute is used to attach popup content
+that will be invok<a NAME="popupalign attribute IDX"></a>ed on a context
+menu event (with the cross-platform abstraction being taken care of for
+you). The tooltip attribute is used to attach popup content that will be
+invoked after a time-delay hover over the node that has the popup content
+attached.(Note that tooltips may only be used with popup window content
+and never with popup menu content.)
+<br>&nbsp;
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="oncreate"></a><b><font color="#FFFFFF"><font size=+1>oncreate</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>oncreate</b> is an&nbsp;<a NAME="oncreate attribute, popups IDX"></a>optional
+event listener attribute.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><font face="Courier, New Courier">&lt;popup id="<i>string</i>"
+<b>oncreate</b>="<i>event
+handler code</i>" /></font></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><font face="Courier, New Courier">&lt;popup id="main-context"
+type="menu" <b>oncreate</b>="checkForExtraVerbs()" /></font></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>The <i>create</i> event is fired when a popup is displayed
+in the UI -- for example when the user right clicks in a content window
+and a context menu pops up.</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;<br>
+<p align="right"><i>Last updated: 13:10 1/26/00 <a href="mailto:oeschger@netscape.com">Ian Oeschger</a></i></p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

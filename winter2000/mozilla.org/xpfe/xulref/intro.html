@@ -1,0 +1,180 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; U) [Netscape]">
+   <title>XUL Reference Introduction</title>
+</head>
+<body>
+<table BORDER=0 COLS=1 WIDTH="100%" >
+<tr><td BGCOLOR="#CCCCCC"><p align="right"><i><b>XUL Programmer's Reference Manual</b><br>
+<b><font size=+1 color="red">First Draft&nbsp;&nbsp;&nbsp;</font></b><br>
+<a href="javascript:parent.location='http://bugzilla.mozilla.org/show_bug.cgi?id=24689'">Submit</a> comments and feedback</i></br>
+<a href="http://www.mozilla.org/xpfe/Xulref.zip">Zipped HTML</a> version of this doc </td></tr>
+<tr>
+<td>
+<h1>
+<font color="#000099"><font size=+2>Introduction</font></font></h1>
+
+<blockquote><font color="#000099"><a href="#about">About This Document</a></font>
+<br><font color="#000099"><a href="#widget">Widget Overview</a></font>
+<br><font color="#000099"><a href="#attr">Reference Information</a></font>
+<br><font color="#000099"><a href="#syntax">XUL Syntax</a></font>
+<br><font color="#000099"><a href="#window">Organization of XUL Interfaces</a></font></blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="about"></a><font color="#FFFFFF"><font size=+1>About
+This Document</font></font></td>
+</tr>
+
+<tr>
+<td>This document is a reference for the XML-based User Interface Language (XUL). Like the
+interface widgets that XUL describes, this reference is organized hierarchically. For example,
+many of the widgets inherit from the <a href="boxref.html">box</a> widget,
+which means that they share the attributes described in that area of the
+reference. Where&nbsp;<a NAME="attributesIDX"></a>attributes are&nbsp;<a NAME="inheritedIDX"></a>inherited,
+those attributes are italicized in the spelling for that widget. The <a href="menubar.html">menubar</a>
+object and the attributes it inherits from box are a good example of this.
+<p>A very small collection of attributes are general to all widgets but
+not inherited from generalized widgets or tools like &lt;box>. These include
+attributes like <a href="common.html#id">id</a>, with which every XUL widget
+can be specified. These attributes are defined in a <a href="common.html">common</a>
+file. Where common attributes are implemented or used differently by different
+widgets, the attributes are described with their respective widgets. Values
+for <b>class</b> vary quite a bit from widget to widget, for example, so
+class is defined separately for each widget that includes it.
+<p>The following sections contain a <i>very</i> brief introduction to XUL.
+This introduction is intended merely to preface the XUL reference information
+that this document contains. For more detailed information, see the <i>XUL
+Programmer's Guide</i>.
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="widget"></a><font color="#FFFFFF"><font size=+1>Widget
+Overview</font></font></td>
+</tr>
+
+<tr>
+<td>The root element in a XUL file and the top level of the interface it
+defines is the &lt;<a href="windowref.html">window</a>> element. All XUL
+files must contain one and only one window element. The entire XUL interface
+is defined within this root element.
+<p>Typically, a XUL interface is composed of some combination of menubars
+and toolbars and a content area. A typical XUL file might define a very
+simple window with the following basic (but too simple to be technically
+valid) structure:
+<blockquote>
+<table BORDER=0 WIDTH="75%" BGCOLOR="#CCCCCC"> 
+<tr><td><pre>&lt;window>
+&nbsp; &lt;menubar>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;menu value="File" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;menu value="Edit" />
+&nbsp; &lt;/menubar>
+&nbsp; &lt;box>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;browser />
+&nbsp; &lt;/box>
+&lt;/window></pre>
+</td></tr></table>
+</blockquote>
+Each of the children of &lt;window> (i.e., menubar and box) may themselves
+contain&nbsp;<a NAME="childIDX"></a>child elements. XUL provides for the
+absolute positioning and nesting of elements. In this way the interface
+is built up from the basic window.
+<p>The list of XUL widget groups are as follows:
+<ul><a href="windowref.html">window</a>
+<br><a href="boxref.html">box</a>
+<br><a href="menuref.html">menus and menubars</a>
+<br><a href="toolref.html">toolboxes and toolbars</a>
+<br><a href="tabref.html">tab widget</a>
+<br>checkbox
+<br><a href="buttonref.html">titled buttons</a>
+<br>scrollbar
+<br>splitter
+<br>progress meter
+<br>&nbsp;
+<br>&nbsp;</ul>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="attr"></a><font color="#FFFFFF"><font size=+1>Reference
+Information</font></font></td>
+</tr>
+
+<tr>
+<td>What makes the example XUL snippet in the previous section nearly useless
+is the lack of detail. The box widget, for example, should be positioned
+and identified, the window itself should be given a title and various event
+listeners, and so on. For the most part, this sort of functionality is
+specified with attributes of the widgets in the XPToolkit. Some of the
+attributes, such as the box's <a href="boxref.html#flex">flex </a>attribute
+are optional, and are used for laying out the widgets in the interface;
+other attributes, such as the value of menuitems or the namespace declarations
+for the window element itself are required, and break the interface if
+they do not appear. This document describes all of the values and attributes
+that the XPToolkit widgets support, as well as the genealogy and structure
+of valid XUL documents. These two main categories of information appear
+as the <i>Attributes</i> and <i>Common Children</i> for each XUL widget,
+respectively.
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="syntax"></a><font color="#FFFFFF"><font size=+1>XUL
+Syntax</font></font></td>
+</tr>
+
+<tr>
+<td>XUL is an XML-based interface definition language. There are a couple
+of very slight departures from the core XML syntax, but for the most part,
+the syntax rules are the same. The four cardinal XUL syntax rules are as
+follows:
+<ul>
+<li>
+All events and attributes must be written in lowercase</li>
+
+<li>
+All strings must be double quoted</li>
+
+<li>
+Every XUL widget must use close tags (either &lt;tag>&lt;/tag> or &lt;tag/>)
+to be well-formed</li>
+
+<li>
+All attributes must have a value&nbsp;</li>
+</ul>
+Note that XUL is not very forgiving about syntax problems and typos. Most
+of the time, a XUL file will not display at all if one or another element
+has been improperly marked up. Ignore these cardinal rules at your peril
+and vexation!
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="window"></a><font color="#FFFFFF"><font size=+1>Organization
+of XUL Interfaces</font></font></td>
+</tr>
+
+<tr>
+<td>There are a number of additional files that work with the XUL file
+to create a single window. Collectively, these files are referred to as
+a package, and include such things as the style sheet for the XUL, a DTD
+specifying localization strings in the interface, and additional XUL that
+may overlay the basic XUL file. Menu items and other commands issued in
+one XUL file can display other XUL files. For example, the <b>Edit Bookmarks</b>
+command invoked from the navigator.xul file brings up the Bookmarks window,
+as does the key combination Ctrl + B. In this way, the interface is laid
+out file by file.&nbsp;
+<br>&nbsp;
+<br>&nbsp;<p align="right"><i>Last updated: 13:10 1/26/00 <a href="mailto:oeschger@netscape.com">Ian Oeschger</a></i></p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

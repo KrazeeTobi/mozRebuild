@@ -1,0 +1,328 @@
+<HTML>
+<HEAD>
+<TITLE>JavaScript Call Stack Dumper</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<h2><center>JavaScript Call Stack Dumper</center></h2>
+<h3><center>Draft 1</center></h3>
+
+<h3>Introduction</h3>
+<blockquote>
+
+The purpose of this document is to explain how to use the code I've added to  <a
+href="index.html">XPConnect</a> which allows the native and JavaScript
+programmer to  manually or programatically dump the current JavaScript call
+stack to the native console.
+
+<p>
+
+Although there is currently no support in mozilla for stepping through
+JavaScript code or setting breakpoints from a debugger, the system I describe
+below will at least allow programmers to see the current state of the JavaScript
+call stack (with arguments and locals) and do arbitrary JavaScript evaluations
+while stopped in the native debugger. I've also added support for dumping the
+JavaScript call stack via the 'debugger' keyword in JavaScript source code.
+
+<p>
+
+This support will work regardless of whether or not the JavaScript code uses
+XPConnect.
+
+</blockquote>
+
+<h3>From within the native debugger...</h3>
+<blockquote>
+
+I've exported two global symbols from the xpconnect and jsdom DLLs:
+
+<pre>
+  extern "C" void DumpJSStack(void);
+  extern "C" void DumpJSEval(PRUint32 frameno, const char* text);
+</pre>
+
+These functions can be called manaully from within the native debugger [I've
+tested only NT. This <b>should</b> work in Linux debuggers. On Mac???].
+
+<p>
+
+In msdev (Microsoft's Win32 debugger) these functions can be called from the "Quick
+Watch" dialog or by adding the call to the 'Watch" window. <b>Note</B> that this
+debugger can only resolve and call the functions if the current frame as
+selected in the "Call Stack" or "Variables" window is a frame from one of the DLLs
+where these symbols are exported; i.e. the xpconnect or jsdom DLLs. A successful
+call to one of these functions should send output to the native console and
+evaluate to <tt>&lt;void&gt;</tt> in the Watch or Quick Watch window. An attempt
+to call from a frame where the debugger can not find the symbol will result in something like
+<tt>CXX0017: Error: symbol "DumpJSStack" not found</tt>.
+
+<p>
+
+<tt>DumpJSStack()</tt> will attempt to dump the JS call stack for the JSContext
+on the current thread. It uses the JSContext which is pushed onto the
+<tt>ThreadJSContextStack</tt> by the DOM and other code in mozilla before calling into
+JavaScript. The 'top' JSContext will be used regardless of which native frame is
+selected in the debugger.
+
+<p>
+
+The format for the dump is explained <a href="#dumpformat">below</a>.
+
+<p>
+
+<tt>DumpJSEval()</tt> takes two params: 1) the zero based frame number in which to do the
+eval, 2) the source text to eval. The text evaled and the result are echo'd to the
+native console:
+
+<p>
+
+Calling <tt>DumpJSEval(0, "1+1")</tt> might print:
+<pre>
+js[0]>1+1
+2
+</pre>
+
+<p>
+
+Keep in mind that although calling <tt>DumpJSStack()</tt> should have no effect on
+the running JS code,  calls to <tt>DumpJSEval()</tt> may have side effects. This
+can be powerful if used creatively.
+
+</blockquote>
+
+<h3>Dumping the JavaScript stack from native code...</h3>
+
+<blockquote>
+You can easily write C++ code that will dump the JavaScript call stack using
+XPConnect service. Look <a href="http://lxr.mozilla.org/seamonkey/ident?i=DebugDumpJSStack">here</a>
+for the declarations and examples. Here is a simple sample call...
+
+<pre>
+    nsresult rv;
+    NS_WITH_SERVICE(nsIXPConnect, xpc, nsIXPConnect::GetCID(), &rv);
+    if(NS_SUCCEEDED(rv))
+        xpc->DebugDumpJSStack(PR_TRUE, PR_TRUE, PR_FALSE);
+</pre>
+
+We might want to add such a call to the JavaScript error reporter.
+
+</blockquote>
+
+<h3>The JavaScript <tt>debugger</tt> statement</h3>
+<blockquote>
+
+JavaScript has a <tt>debugger</tt> keyword which can appear in JavaScript
+source. Older JavaScript engines will flag its use as a syntax error (use of a
+reserved word). But newer engines will allow the keyword. Engine embedders can
+install a callback hook to be called if and when the keyword is reached during
+script execution. At some future point there may be a JavaScript Debugger which
+will install such a hook and pop up a fully featured debugging window when this
+event fires. For now I have created such a hook in xpconnect which is <b>set in
+DEBUG builds only</b>. If the <tt>debugger</tt> keyword is reached then the
+JavaScript stack will be dumped to the native console (same as if
+<tt>DumpJSStack()</tt> had been called.
+
+<p>
+
+After hitting the <tt>debugger</tt> keword and dumping the JS call stack, JS
+execution will continue as if nothing unusual had happened. If you would like 
+this to stop in your native debugger then set a breakpoint in
+<tt>xpc_DebuggerKeywordHandler</tt> in your native debugger. 
+
+<p>
+
+The <tt>debugger</tt> statement can be very useful as a kind of super
+<tt>dump</tt> as you develop your JavaScript code. You can also use it as a kind
+of assert: <pre> if(some_unusual_condition) debugger;  </pre>
+
+<b>Note</b> 1) in the example above the test will always happen even though
+<tt>debugger</tt> might have no effect in non-DEBUG builds 2) at some future
+point someone is <b>bound</b> to ship a JavaScript Debugger that will catch
+these cases (even in non-DEBUG builds). When that happens, users trying to debug
+their own JS code might trip over your <tt>debugger</tt> statements. So, while
+these <tt>debugger</tt> statements might be very useful as you write code, you
+may not want to leave them in permanently.
+
+
+</blockquote>
+
+<a name="dumpformat"></a>
+<h3>The Dump Format</h3>
+<blockquote>
+
+The format of the dump output is like:
+
+<pre>
+frame_number function_name(argname = argvalue) ["filename":line_number]
+    local_variable1 = value
+    local_variable2 = value
+    this = value
+</pre>
+So an example frame might look like:
+<pre>
+0 f(arg1 = [function], arg2 = "bar") ["debug.js":6]
+    local1 = 1
+    local2 = "second local"
+    this = [object global]
+</pre>
+
+Some things to note...
+<ul>
+<li>In the browser the 'filename' will often be a URL.
+<li>Some places in mozilla that evaluate JavaScript will not supply a filename, so the dump may report something like <tt>[&lt;unknown&gt;:0]</tt>.
+<li>If a function is called with more arguments than its declaration names, then the additional trailing argument values will be displayed without the "argname = " part.
+<li>Functions passed as arguments or stored as variables are displayed as simply "[function]".
+<li>If the type of an argument or variable is 'string' then it will be displayed quoted.
+<li>Functions declared without a name are displayed with the name "anonymous".
+<li>Frames that are not functions are displayed as "&lt;TOP LEVEL&gt;".
+<li>Native (non-JavaScript) frames in the call stack are displayed as "[native frame]".
+</ul>
+
+So, the following (contrived) code stored in a file called "debug.js" 
+
+<pre>
+/* an example... */
+function f(arg1, arg2) {
+    var local1 = 1;
+    var local2 = "second local";
+    debugger;       // &lt;-- stack is dumped here
+}
+
+var o = {foo : "fu", bar : function(a,b){f(a,b)}};
+
+function g(a1, a2, a3, a4) {
+    var alocal = "something";
+    var l4 = a4;
+    var localFromArg = a1;
+    o.bar(a1,a2);
+}
+
+g(f, "bar", {foo : "f", bar : "b"}, [1,2,3], "extra", 123);
+</pre>
+...might cause output like...
+<pre>
+------------------------------------------------------------------------
+Hit JavaScript "debugger" keyword. JS call stack...
+0 f(arg1 = [function], arg2 = "bar") ["debug.js":5]
+    local1 = 1
+    local2 = "second local"
+    this = [object global]
+1 anonymous(a = [function], b = "bar") ["debug.js":8]
+    this = [object Object]
+2 g(a1 = [function], a2 = "bar", a3 = [object Object], a4 = 1,2,3, "extra", 123) ["debug.js":14]
+    alocal = "something"
+    l4 = 1,2,3
+    localFromArg = [function]
+    this = [object global]
+3 &lt;TOP LEVEL&gt; ["debug.js":17]
+    this = [object global]
+------------------------------------------------------------------------</pre>
+</blockquote>
+
+<h3>Conclusions</h3>
+<blockquote>
+
+Please people, use this to help yourselves understand exactly what your JavaScript code is doing.
+
+<p>
+
+And <a href="mailto:jband@netscape.com">send</a> feedback.
+
+</blockquote>
+
+
+
+<hr>
+<b>document history...</b>
+<font size="-1">
+<ul>
+<li><code>31 Jan 2000 - <a href="mailto:jband@netscape.com">John Bandhauer &lt;jband@netscape.com&gt;</a> - </code>initial creation of document
+<li><code>03 Feb 2000 - <a href="mailto:jband@netscape.com">John Bandhauer &lt;jband@netscape.com&gt;</a> - </code>added example of calling from native code
+</ul>
+</font>
+
+ 
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/scriptable/javascript-stack-dumper.html&amp;rev=&amp;root=/cvsroot/">Last modified February  4,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,380 @@
+<HTML>
+<HEAD>
+<TITLE>XUL Overlays</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+&nbsp;
+<table CELLSPACING=0 WIDTH="100%" >
+<tr>
+<td BGCOLOR="#6699FF"><font face="Century Gothic"><font color="#FFFFFF"><font size=+1>XUL
+Overlays</font></font></font></td>
+</tr>
+
+<tr>
+<td>[<a href="index.html">Table of Contents</a>] [<a href="popups.html">Previous:
+Popup Content</a>] [<a href="persistence.html">Next: Persistence and Sharing</a>]
+<p><font size=-1><b>Feature Owner:</b> <a href="mailto:hyatt@netscape.com">Dave
+Hyatt</a></font>
+<br><font size=-1><b>Authors:</b> <a href="mailto:ioeschger@mindspring.com">Ian
+Oeschger</a> and <a href="mailto:hyatt@netscape.com">Dave Hyatt</a></font>
+<ul><font size=-1><a href="#intro">What is a XUL Overlay?</a></font>
+<br><font size=-1><a href="#IDs">Overlays and IDs</a></font>
+<br><font size=-1><a href="#load">Loading Overlay Files</a></font>
+<br><font size=-1><a href="#skins">Overlays and Skins</a></font>
+<br><font size=-1><a href="#attr">Overlaying Attributes</a></font>
+<br><font size=-1><a href="#posit">Overlay Positioning</a></font>
+<br><font size=-1><a href="#reuse">UI Reuse with Overlays</a></font>
+<p><font size=-1><a href="#frag">Supplement: Why Overlays Instead of Fragments?</a></font></ul>
+
+<p><br><a NAME="intro"></a>
+<h2>
+XUL Files and XUL Overlays</h2>
+Overlays are XUL files used to describe extra content in the UI. Though
+overlays often define UI elements that have been added as a result of an
+update or enhancement of some kind, they can be used in many different
+ways. Overlays provide a general mechanism for:
+<ul>
+<li>
+adding UI for additional components, as described in the example above&nbsp;</li>
+
+<li>
+overriding small pieces of a XUL file without having to resupply the whole
+UI&nbsp;</li>
+
+<li>
+reusing particular pieces of the UI&nbsp;</li>
+</ul>
+XUL overlays were designed as a replacement for XUL fragments, which are
+now <a href="#frag">deprecated</a>. XUL files and overlays work together
+to describe a single master document. Though there is no formal restriction
+on what kind of XUL content is located in "base" XUL files and what kind
+should be put in overlays, XUL overlays generally define items that are
+not present in the basic versions of the UI, such as additional components.
+When plug-ins, browser extensions, or other applications provide new UI
+elements to the browser, these elements should be defined in overlay files.
+The installation of a media plug-in, for example, may add new icons and
+menu items to the interface:
+<p><img SRC="overlay.gif" ALT="image of SSP UI in browser. Don't worry if you can't see it." style="margin-left: .5in" >
+<p>In the <i>navigatorOverlay.xul</i> file or in a separate <i>navigatorSSPOverlay.xul</i>
+file (where <i>navigator.xul</i> defines the basic UI for the navigator
+package), these new plug-in elements would be defined as a collection of
+elements or subtrees:
+<pre>&nbsp; &lt;menuitem name="Super Stream Player"/>
+
+&nbsp; &lt;menupopup name="SS Favorites">
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;menuitem name="Wave" src="mavericks.ssp"/>
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;menuitem name="Soccer" src="brazil_soccer.ssp"/>&nbsp;
+&nbsp; &lt;/menupopup>&nbsp;&nbsp;
+
+&nbsp; &lt;titledbutton id="SSP" crop="right" flex="1"&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value="&amp;SSButton.label;" onclick="FireSSP()"/></pre>
+<a NAME="IDs"></a>
+<h2>
+Overlays and ID Attributes</h2>
+The layout engine uses the ID attribute to determine where the elements
+in the overlay file will be merged. Use the same IDs in the base XUL file
+<i>and</i>
+the XUL overlay; otherwise, the new elements will not appear at all. In
+the base file, the parent nodes for the overlay elements must be ID'd if
+they have not been already. For example, the &lt;menu> element in the following
+XUL subtree should be the parent of the Super Stream Player menu item,
+so it has been given the ID "file_menu":
+<pre>&nbsp;
+&nbsp; &lt;menu <b>id="file_menu"</b>>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;menuitem name="New"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;menuitem name="Open"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;menuitem name="Save"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;menuitem name="Close"/>
+&nbsp; &lt;/menu></pre>
+In the overlay file, you can "sync up" the new item by making it the child
+of a tag <i>with the same ID in the overlay file</i>. The layout engine
+takes the elements directly under the &lt;overlay> tag with IDs and merges
+them with the corresponding nodes in the base file. The complete XUL overlay
+file for adding the single Super Stream Player menu item from the example
+above is as follows:
+<pre>&nbsp;
+&nbsp; &lt;xml version="1.0"?>
+&nbsp; &lt;overlay id="singleItemEx"
+&nbsp;&nbsp;&nbsp; xmlns:html="http://www.w3.org/TR/REC-html40"
+&nbsp;&nbsp;&nbsp; xmlns="http:www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;menu <b>id="file_menu"</b>>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;menuitem name="Super Stream Player"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/menu>
+&nbsp; &lt;/overlay></pre>
+Note that below &lt;menu> in the base file and &lt;overlay> in the overlay
+file, the subtrees are equivalent. Merged items can be arbitrarily nested
+subtrees: new popup menus may contain other popup submenus, extra toolbars
+can overlay existing toolbars or appear beneath them, as the Personal Toolbar
+does below the Location Bar in Netscape's Communicator, etc. As long as
+the IDs of the elements appearing below the &lt;overlay> tag in the overlay
+file and tag with the same ID in the base file, overlays support the merging
+of any valid subtree.
+<br><a NAME="load"></a>
+<h2>
+Loading Overlays</h2>
+Overlays can be loaded <i>explicitly</i> or <i>dynamically</i>. When you
+load an overlay explicitly, it means that you intend to make it available
+every time the base file is loaded. Since one of the main purposes of overlays
+is to provide UI for additions or components to the basic package, explicit
+loading can be somewhat problematic when the overlay defines optional UI
+elements.&nbsp;
+<h3>
+Loading Overlays Explicitly</h3>
+A processing instruction is used to load overlay files explicitly into
+the master document. Inserting the following processing instruction before
+the DOCTYPE declaration in a base file tells the layout engine to load
+the named overlay file:
+<pre>&nbsp; &lt;?xml-overlay href="chrome://component/content/componentOverlay.xul"?></pre>
+where <i>component</i> is the name of the package being overlayed (e.g.
+"chrome://navigator/content/navigatorOverlay.xul").&nbsp;
+<p>The layout engine loads any overlay files and then flows the resulting
+XUL document, so problems associated with incremental insertion in menus,
+boxes, tables, and forms are avoided. Any number of overlays can be loaded
+into a master document, and an overlay can also load other overlays. Because
+an overlay is superimposed on the master document, there are no ambiguities
+relating to scoping of style sheets of scripts. Style sheets and scripts
+loaded by the overlay simply apply to the entire master document.&nbsp;
+<h3>
+Loading Overlays Dynamically</h3>
+The chrome registry makes it possible to load XUL overlays dynamically
+-- or only when necessary. The chrome registry, which is a special <a href="http://www.mozilla.org/rdf/doc/">RDF
+datasource</a> into which user-specific information is <i>persisted</i>,
+or stored, contains information about the components or additional packages
+that have been installed with the browser. When a component such as the
+"Super Stream Player" from the examples above is registered there, overlays
+associated with that component are loaded automatically. When the component
+is not present, only the base files are loaded.&nbsp;
+<h2>
+<a NAME="skins"></a>Overlays and Skins</h2>
+
+<blockquote><b><font face="Arial,Helvetica"><font color="#000099"><font size=-1>Always
+load master skins from base files. Never load master skins from overlays.</font></font></font></b></blockquote>
+Unlike base files, overlays should never load the master skin file for
+a package. The <i>navigatorOverlay.xul</i> file, for example, does not
+and should never load the <i>navigator.css</i> file that defines the master
+skin for the navigator package. Since the purpose of an overlay is to define
+new UI elements for a package within the context of that package's skin,
+the overlay should add structure but not new style. Any skins that
+<i>are</i>
+loaded by an overlay destructively replace the master skin for the base
+file, and can change the basic appearance of the package's skin in unfortunate
+ways.
+<blockquote><font size=-1>Note: the master skin is not the same as the
+global skin. For any package, the master skin file is that CSS file named
+after the package itself. The master skin file for the bookmarks package,
+for example, is called <i>bookmarks.css,</i> and is located in the skin/default
+subdirectory.&nbsp;</font></blockquote>
+
+<p><br><a NAME="attr"></a>
+<h2>
+Overlaying Attributes</h2>
+In addition to new elements and subtrees, you can also overlay <i>attributes</i>
+into existing elements. In XUL, attributes control important features of
+the skin like image sources, as in the following example, where an overlay
+destructively overwrites the image source in the base file with a replacement.
+In the base file, the HTML image element points to a Netscape GIF icon:
+<pre>&nbsp; &lt;html:img id="foo" src="netscapeImage.gif" /></pre>
+In the overlay, an element with the same ID attribute specifies a different
+image, and that image is superimposed on top of the original Netscape image
+as part of the merge process:
+<pre>&nbsp; &lt;html:img id="foo" src="mozillaImage.gif" /></pre>
+When the base file references an overlay file which contains the html image
+element above, the Mozilla icon is superimposed over the Netscape icon.&nbsp;
+<br><a NAME="posit"></a>
+<h2>
+Overlay Positioning</h2>
+XUL overlays also support positioning of nodes. You can specify a position
+attribute on a node in the overlay to provide a hint for insertion into
+the master document. In the following example, the last menu item, Example
+Four, will be placed just after the "New" menu item instead of being appended
+to the end of the menu like the other kids.&nbsp;
+<pre>&nbsp; &lt;overlay id="main-overlay" xmlns:html="http://www.w3.org/TR/REC-html40"&nbsp;
+&nbsp;&nbsp; xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&nbsp;
+
+&nbsp;&nbsp; xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">&nbsp;
+
+&nbsp;&nbsp;&nbsp; &lt;menu id="FileMenu">&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;menuitem name="Example One"/>&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;menuitem name="Example Two"/>&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;menuitem name="Example Three"/>&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;menuitem name="Example Four" <b>position="1"</b>/>&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;/menu>&nbsp;
+
+&nbsp; &lt;/overlay></pre>
+The node with the position attribute orders itself to the top of the menu.
+The position can also be given for nodes in overlay files that will be
+ordered in a group of similar items in the base file. For example, if only
+the last menuitem above had been in an overlay and the other items were
+defined in the base file, the overlayed menuitem would still appear at
+the top of the parent menu.
+<br><a NAME="reuse"></a>
+<h2>
+UI Reuse with Overlays</h2>
+One of the biggest benefits of using overlays is that it allows you to
+reuse groups of elements that appear frequently in the UI. The overlay
+mechanism allows you to merge elements into existing subtrees, but it also
+allows you to store common UI elements in overlay files and merge them
+into any base files that use them. Using the ID attribute on an otherwise
+empty node in the base file, you can essentially reference a subtree defined
+in an overlay file and merge it in wherever it's needed.&nbsp;
+<p>For example, the buttons that appear at the bottom of common dialogs,
+the OK and Cancel buttons, may be used in dozens of places in the UI. Rather
+than redefining this set of buttons each time they are necessary in a particular
+dialog, base XUL files can overlay the XUL file in which these buttons
+are defined,
+<i>dialogOverlay.xul</i>. (Actually, the implementation is
+one step more complicated than this: base files overlay <i>dialogOverlay.xul</i>
+from the global component directory, which in turn overlays a platform-specific
+XUL file such as <i>platformDialogOverlay.xul</i>. The mechanism is the
+same, however.)&nbsp;
+<p>Any dialog that wants to overlay these buttons just declares the overlay
+at the top:
+<pre>&nbsp; &lt;?xul-overlay href="chrome://global/content/dialogOverlay.xul"?></pre>
+and includes an empty box with an ID of "okCancelButtons" in the UI. The
+following snippet shows a dialog with custom UI elements at the top and
+a reference to the overlay's OK and Cancel buttons at the bottom:
+<pre>&nbsp; &lt;box align="horizontal"&nbsp; id="bx1" flex="100%" style="margin-bottom: 1em; width: 100%;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;html:input type="checkbox" id="dialog.newWindow"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;html:label for="dialog.newWindow">&amp;openWin.label;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;spring flex="100%"/>&nbsp;
+&nbsp; &lt;/box>
+&nbsp;&nbsp;
+&nbsp; <b>&lt;box id="okCancelButtons"/></b></pre>
+For more detail, see the OK and Cancel button definitions being referenced
+here in the global component file <i>platformDialogOverlay.xul</i>. Toolbars,
+submenus, boxes, and any other subtrees that appear in multiple places
+can be defined in overlays files in this way and referenced for reuse wherever
+necessary.&nbsp;<a NAME="frag"></a>
+<h2>
+Supplement: Why Overlays Instead of Fragments?</h2>
+
+<ul>
+<li>
+<i>XML is developing a much more complete fragment inclusion standard that
+XUL fragments were competing with. Rather than develop a non-standard fragment
+system, I decided it was better to wait until the standard develops and
+to implement that in a general way (so that it doesn't just apply to XUL)
+when it's ready to go. It is not ready to go now.&nbsp;</i></li>
+
+<li>
+<i>There are ambiguities related to style sheets and scripts in fragments.
+A style sheet loaded by a fragment should presumably only apply to the
+fragment. It's undefined right now. There is no such scoping mechanism.&nbsp;</i></li>
+
+<li>
+<i>Including the same fragment more than once in the same file can cause
+problems. This leads to the idea of needing a fragment cache in order to
+prevent multiple parses of the fragment.&nbsp;</i></li>
+
+<li>
+<i>XUL fragments were being used in a way they weren't designed for. There
+was a tension emerging regarding trying to make the fragments function
+as everything from templates for building UI to a mechanism for UI reuse
+to a system for defining implementations.&nbsp;</i></li>
+
+<li>
+<i>People wanted aysnchronous XUL fragments that could stream in at a later
+date. This still isn't possible because of bugs in the form elements, bugs
+in the table code, bugs in the box code, and bugs in the menu code. So
+it seemed unrealistic to continue trying to make a system that works this
+way.&nbsp;</i></li>
+</ul>
+
+<p><br>
+<hr size=1 solid>[<a href="index.html">Table of Contents</a>] [<a href="popups.html">Previous:
+Popup Content</a>] [<a href="persistence.html">Next: Persistence and Sharing</a>]
+<hr size=1 solid>Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:ioeschger@mindspring.com">Ian
+Oeschger</a>.</td>
+</tr>
+</table>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/xptoolkit/overlays.html&amp;rev=&amp;root=/cvsroot/">Last modified January  3,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,1263 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Primitives</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+<TR>
+<TD VALIGN=TOP NOWRAP><H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Primitive Graph Format</H2>
+
+
+<H2>Data Layer</H2>
+
+
+<H2><FONT SIZE=+4>Primitives</FONT></H2>
+
+</TD>
+<TD VALIGN=TOP NOWRAP ALIGN="RIGHT">
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="data_layer.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM" 
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"><IMG SRC="../arrows/up.gif" 
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="bytecode_mappings.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+</TD></TR>
+</TABLE>
+<P></P>
+
+<P></P>
+
+<P>This page contains precise descriptions of all primitives available in
+the primitive graph format.</P>
+
+<H2>Syntax</H2>
+
+
+<P>In the <A HREF="#primitives">table of primitives</A> below the primitives
+are written in a form such as <I>A</I>, <I>B</I> = <I>op</I>.&curren;
+<I>C</I>, <I>D</I>, <I>E</I>. This notation represents a <A
+HREF="data_layer.html">data graph node</A> <I>op</I> with <A HREF="#variants">variant</A>
+&curren;, outputs <I>A</I> and <I>B</I>, and inputs <I>C</I>,
+<I>D</I>, and <I>E</I>. Order of the inputs is significant.</P>
+
+<P>Inputs can be either constants or incoming data edges.  Outputs can
+be either outgoing data edges or the special symbol <STRONG>E</STRONG> that
+indicates that the primitive may throw an exception. A primitive can have
+at most one outgoing data edge output and at most one <STRONG>E</STRONG> output.
+To specify which inputs and outputs are legal for a
+particular primitive we use one of the syntactic domains below in the
+pattern which describes the primitive.</P>
+
+<P>To illustrate, suppose that we have a fictional primitive with the pattern
+<I>Vi</I>, <I>E</I> = <CODE>sing</CODE> <I>M</I>, <I>Vi</I>,
+<I>Vl</I>, <I>Ad</I>. Then either of these nodes would be a valid
+use of this primitive; note that the two <I>Vi's</I> are independent
+and do not necessarily refer to the same variable.</P>
+
+<P ALIGN=CENTER><IMG SRC="graphics/primitive_sing.gif" ALIGN="BOTTOM" WIDTH=
+"240" HEIGHT="82" NATURALSIZEFLAG="3"></P>
+
+<P>Many primitives have several different variants for different kinds
+of inputs and outputs. We indicate which variant of the primitive we want by using
+the <A HREF="#variants">variant</A> suffix of the primitive.</P>
+
+<H3>Syntactic Domains</H3>
+
+
+<P>The following domains describe the categories of inputs and outputs in the primitive
+descriptions:</P>
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+<TR>
+<TH WIDTH="7%" NOWRAP><P ALIGN=LEFT>Name</TH>
+<TH WIDTH="93%"><P ALIGN=LEFT>Contents</TH></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><I>X</I> <STRONG>|</STRONG> <I>Y</I></TD>
+<TD>an element of domain <I>X</I> or an element of domain <I>Y</I></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Ci</STRONG></TD>
+<TD>32-bit <CODE>int</CODE> constant</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Cl</STRONG></TD>
+<TD>64-bit <CODE>long</CODE> constant</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Cf</STRONG></TD>
+<TD>single-precision floating-point constant</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Cd</STRONG></TD>
+<TD>double-precision floating-point constant</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Ca</STRONG></TD>
+<TD>nil, pointer constant, or object reference constant</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Cc</STRONG></TD>
+<TD>condition constant <CODE>less</CODE>, <CODE>equal</CODE>, <CODE>greater</CODE>, or <CODE>unordered</CODE></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>&copy;</STRONG></TD>
+<TD>constant memory region; this input indicates that no incoming <A HREF="data_layer.html#df_edge_store">memory edge</A> is
+necessary because the value being read from memory is immutable</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>C</STRONG>&curren;</TD>
+<TD>one of Ci, Cl, Cf, Cd, Ca, or Cc depending on variant &curren;</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>C</STRONG>@</TD>
+<TD>one of Ci, Cl, Cf, Cd, or Ca; two different C@ inputs may have different kinds</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Vi</STRONG></TD>
+<TD><A HREF="data_layer.html#df_edge_int">int edge</A> (32-bit integer local
+variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Vl</STRONG></TD>
+<TD><A HREF="data_layer.html#df_edge_long">long edge</A> (64-bit integer local
+variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Vf</STRONG></TD>
+<TD><A HREF="data_layer.html#df_edge_single">single float edge</A> (32-bit floating-point
+local variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Vd</STRONG></TD>
+<TD><A HREF="data_layer.html#df_edge_double">double float edge</A> (64-bit floating-point
+local variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Va</STRONG></TD>
+<TD><A HREF="data_layer.html#df_edge_addr">address edge</A> (object reference
+or pointer local variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Vc</STRONG></TD>
+<TD><A HREF="data_layer.html#df_edge_condition">condition edge</A> (four-state
+local variable, often held in a processor's condition codes)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>M</STRONG></TD>
+<TD><A HREF="data_layer.html#df_edge_store">memory edge</A></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>V</STRONG>&curren;</TD>
+<TD>one of Vi, Vl, Vf, Vd, Va, Vc, or M depending on variant &curren;</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>V</STRONG>@</TD>
+<TD>one of Vi, Vl, Vf, Vd, or Va; two different V@ inputs or outputs may have different kinds</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Ai</STRONG></TD>
+<TD>Ci | Vi (32-bit integer constant or local variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Al</STRONG></TD>
+<TD>Cl | Vl (64-bit integer constant or local variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Af</STRONG></TD>
+<TD>Cf | Vf (32-bit floating-point constant or local variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Ad</STRONG></TD>
+<TD>Cd | Vd (64-bit floating-point constant or local variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Aa</STRONG></TD>
+<TD>Ca | Va (object reference constant or local variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>Ac</STRONG></TD>
+<TD>Cc | Vc (condition constant or local variable)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>M&copy;</STRONG></TD>
+<TD>M | &copy; (memory edge or constant memory region)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>A</STRONG>&curren;</TD>
+<TD>one of Ai, Al, Af, Ad, Aa, or Ac depending on variant &curren;</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>A</STRONG>@</TD>
+<TD>one of Ai, Al, Af, Ad, or Aa; two different A@ inputs may have different kinds</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>T&lt;</STRONG><I>X</I><STRONG>,</STRONG>
+<I>Y</I><STRONG>,</STRONG> <I>Z</I><STRONG>&gt;</STRONG></TD>
+<TD><A HREF="data_layer.html#df_edge_tuple">tuple edge</A> carrying an element of domain
+<I>X</I> as component 0, an element of domain <I>Y</I> as component 1, and an
+element of domain <I>Z</I> as component 2. The number of components can vary, and
+some can be missing.
+For example, <CODE>T&lt;, Vi, Vl&gt;</CODE> has no component 0, carries an int edge
+as component 1, and carries a long edge as component 2.</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG>E</STRONG></TD>
+<TD>If an E is present as an output of a primitive, it indicates that the primitive may produce an exception,
+so it has to be connected to an <A HREF="control_layer.html#cf_exc">exception node</A> or
+<A HREF="control_layer.html#cf_throw">throw node</A>.</TD></TR>
+</TABLE>
+<P></P>
+
+<P>As an additional restriction, no primitive is allowed to have inputs
+consisting entirely of constants, even if the above domains would otherwise
+allow it.  In other words, at least one input of every primitive must be a
+variable or memory edge.  For example,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<CODE>Vi = Add.i 3, 5</CODE><BR>
+is not legal, while<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<CODE>Vi = Ld.i M, 0x20000</CODE><BR>
+is legal.  A phi node is not a primitive, so this restriction does not
+apply to phi nodes.</P>
+
+<H3><A NAME="variants"></A>Variants</H3>
+
+
+<P>Many primitives have different variants for different kinds of inputs and outputs.
+We identify a particular variant by annotating the primitive with a variant letter.
+The following letters designate the variants in the table of primitives below:</P>
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+<TR>
+<TH WIDTH="6%" NOWRAP><P ALIGN=RIGHT>Variant&nbsp;&nbsp;</TH>
+<TH WIDTH="94%"><P ALIGN=LEFT>Description</TH></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG>-</STRONG></TD>
+<TD>none</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>b</CODE></STRONG></TD>
+<TD>8-bit byte</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>h</CODE></STRONG></TD>
+<TD>16-bit halfword</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>i</CODE></STRONG></TD>
+<TD>32-bit integer word (<CODE>int</CODE>)</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>l</CODE></STRONG></TD>
+<TD>64-bit integer word (<CODE>long</CODE>)</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>f</CODE></STRONG></TD>
+<TD>32-bit floating-point number (<CODE>float</CODE>)</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>d</CODE></STRONG></TD>
+<TD>64-bit floating-point number (<CODE>double</CODE>)</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>a</CODE></STRONG></TD>
+<TD>address; usually 32 bits, but may be 64 bits on some machines</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>c</CODE></STRONG></TD>
+<TD>condition</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>m</CODE></STRONG></TD>
+<TD>memory state</TD></TR>
+<TR>
+<TD NOWRAP><P ALIGN=RIGHT><STRONG><CODE>t</CODE></STRONG></TD>
+<TD>tuple</TD></TR>
+</TABLE>
+<P></P>
+
+<P>Note that the variant is not the same as the primitive's kind listed in
+the primitive's data structure. A primitive's kind is defined to be the kind of the primitive's
+output edge (or <CODE>void</CODE> if none), which is not necessarily the same as the
+primitive's variant.  Variants are simply a shorthand to reduce the size of
+the table describing the primitives on this page.</P>
+
+<H3><A NAME="cond"></A>Conditionals</H3>
+
+
+<P>The fourteen nontrivial conditionals <I>cond</I> are named
+and listed in the table below. For each conditional <I>cond</I> the table
+lists the result of <I>cond</I>(<I>c</I>) for each of the four possible
+conditions <I>c</I> (<CODE>less</CODE>, <CODE>equal</CODE>, <CODE>greater</CODE>,
+or <CODE>unordered</CODE>).</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+<TR>
+<TH><P ALIGN=LEFT><I>cond</I></TH>
+<TH>&nbsp;<CODE>less</CODE>&nbsp;</TH>
+<TH>&nbsp;<CODE>equal</CODE>&nbsp;</TH>
+<TH>&nbsp;<CODE>greater</CODE>&nbsp;</TH>
+<TH>&nbsp;<CODE>unordered</CODE>&nbsp;</TH></TR>
+<TR>
+<TD><B>Lt</B></TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>0</TD></TR>
+<TR>
+<TD><B>Eq</B></TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>0</TD></TR>
+<TR>
+<TD><B>Le</B></TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>0</TD></TR>
+<TR>
+<TD><B>Gt</B></TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD></TR>
+<TR>
+<TD><B>Lgt</B></TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD></TR>
+<TR>
+<TD><B>Ge</B></TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD></TR>
+<TR>
+<TD><B>Ord</B></TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD></TR>
+<TR>
+<TD><B>Unord</B></TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD></TR>
+<TR>
+<TD><B>ULt</B></TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD></TR>
+<TR>
+<TD><B>UEq</B></TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD></TR>
+<TR>
+<TD><B>ULe</B></TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD></TR>
+<TR>
+<TD><B>UGt</B></TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD></TR>
+<TR>
+<TD><B>Ne</B></TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD></TR>
+<TR>
+<TD><B>UGe</B></TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD></TR>
+</TABLE>
+<P></P>
+
+<P><A NAME="cond3"></A>There are also several three-way conditionals <I>cond3</I> that produce one of
+three integer results -1, 0, or 1. For each three-way conditional <I>cond3</I> the table
+below lists the result of <I>cond3</I>(<I>c</I>) for each of the four possible
+conditions <I>c</I> (<CODE>less</CODE>, <CODE>equal</CODE>, <CODE>greater</CODE>,
+or <CODE>unordered</CODE>).</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+<TR>
+<TH><P ALIGN=LEFT><I>cond3</I></TH>
+<TH>&nbsp;<CODE>less</CODE>&nbsp;</TH>
+<TH>&nbsp;<CODE>equal</CODE>&nbsp;</TH>
+<TH>&nbsp;<CODE>greater</CODE>&nbsp;</TH>
+<TH>&nbsp;<CODE>unordered</CODE>&nbsp;</TH></TR>
+<TR>
+<TD><B>CatL</B></TD>
+<TD><P ALIGN=CENTER>-1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>-1</TD></TR>
+<TR>
+<TD><B>CatG</B></TD>
+<TD><P ALIGN=CENTER>-1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>1</TD></TR>
+<TR>
+<TD><B>CatCL</B></TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>-1</TD>
+<TD><P ALIGN=CENTER>-1</TD></TR>
+<TR>
+<TD><B>CatCG</B></TD>
+<TD><P ALIGN=CENTER>1</TD>
+<TD><P ALIGN=CENTER>0</TD>
+<TD><P ALIGN=CENTER>-1</TD>
+<TD><P ALIGN=CENTER>1</TD></TR>
+</TABLE>
+<P></P>
+
+<H3>Other Notation</H3>
+
+
+<P>The table of primitives uses the following notation:</P>
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+<TR>
+<TD WIDTH="44" NOWRAP VALIGN=TOP><P ALIGN=RIGHT><I>A</I>:<I>B</I></TD>
+<TD WIDTH="94%" VALIGN=TOP>A 64-bit number whose high 32 bits are <I>A</I> and low 32 bits are
+<I>B</I>.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT>extu(<I>A</I>)</TD>
+<TD VALIGN=TOP><I>A</I> zero-extended to whatever precision the context of extu(<I>A</I>)
+needs.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT>exts(<I>A</I>)</TD>
+<TD VALIGN=TOP><I>A</I> sign-extended to whatever precision the context of exts(<I>A</I>)
+needs.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><I>A</I> /<FONT SIZE=-2>U</FONT> <I>B</I></TD>
+<TD VALIGN=TOP>Unsigned division of <I>A</I> by <I>B</I>; both <I>A</I> and <I>B</I> are
+interpreted as unsigned integers. The exact mathematical quotient is rounded down to the nearest integer.
+The result is undefined if <I>B</I> is zero.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><I>A</I> /<FONT SIZE=-2>S</FONT> <I>B</I></TD>
+<TD VALIGN=TOP>Signed division of <I>A</I> by <I>B</I>; both <I>A</I> and <I>B> are
+interpreted as signed integers. The exact mathematical quotient is rounded towards zero to the nearest integer.
+As a special case, if <I>A</I> is the largest negative number representable in <I>A</I>'s precision and
+<I>B</I> is -1, then the result is equal to <I>A</I> (see <A HREF="../bibliography.html#GJS96">[GJS96]</A>, page 352).
+The result is undefined if <I>B</I> is zero.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><I>A</I> %<FONT SIZE=-2>U</FONT> <I>B</I></TD>
+<TD VALIGN=TOP>Unsigned remainder of <I>A</I> divided by <I>B</I>; both <I>A</I> and <I>B</I> are
+interpreted as unsigned integers. The remainder satisfies the identity
+(<I>A</I>&nbsp;/<FONT SIZE=-2>U</FONT>&nbsp;<I>B</I>)&nbsp;*&nbsp;<I>B</I>&nbsp;+&nbsp;(<I>A</I>&nbsp;%<FONT SIZE=-2>U</FONT>&nbsp;<I>B</I>)&nbsp;=&nbsp;<I>A</I>.
+The result is undefined if <I>B</I> is zero.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><I>A</I> %<FONT SIZE=-2>S</FONT> <I>B</I></TD>
+<TD VALIGN=TOP>Signed remainder of <I>A</I> divided by <I>B</I>; both <I>A</I> and <I>B</I> are
+interpreted as signed integers. The remainder satisfies the identity
+(<I>A</I>&nbsp;/<FONT SIZE=-2>S</FONT>&nbsp;<I>B</I>)&nbsp;*&nbsp;<I>B</I>&nbsp;+&nbsp;(<I>A</I>&nbsp;%<FONT SIZE=-2>S</FONT>&nbsp;<I>B</I>)&nbsp;=&nbsp;<I>A</I>.
+The result is undefined if <I>B</I> is zero.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><I>A</I> ? <I>B</I></TD>
+<TD VALIGN=TOP>Return one of four possible conditions depending on the relative magnitudes
+of numbers <I>A</I> and <I>B</I>. Return <CODE>less</CODE> if <I>A</I>
+&lt; <I>B</I>, <CODE>equal</CODE> if <I>A</I> = <I>B</I>, <CODE>greater</CODE>
+if <I>A</I> &gt; <I>B</I>, or <CODE>unordered</CODE> if either <I>A</I>
+or <I>B</I> is a floating-point NaN.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><I>A</I> ?<FONT SIZE=-2>U</FONT> <I>B</I></TD>
+<TD VALIGN=TOP>Same as <I>A</I> ? <I>B</I>, but treating integers as unsigned.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><I>A</I> ?<FONT SIZE=-2>S</FONT> <I>B</I></TD>
+<TD VALIGN=TOP>Same as <I>A</I> ? <I>B</I>, but treating integers as signed.</TD></TR>
+</TABLE>
+<P></P>
+
+<H2><A NAME="primitives"></A>Primitives</H2>
+
+
+<P>Below are the patterns for all primitives.
+<FONT COLOR="#C00000">Primitives in red are not available on all machines and are marked with
+one of the following symbols:</FONT></P>
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+<TR>
+<TD WIDTH="15" NOWRAP VALIGN=TOP><P ALIGN=RIGHT><FONT COLOR="#C00000">&#134;</FONT></TD>
+<TD>This primitive is supported only if the target architecture has an appropriate trap
+instruction.  If not, this primitive will be converted to a conditional branch after
+optimization but before instruction generation.</TD></TR>
+<TR>
+<TD NOWRAP VALIGN=TOP><P ALIGN=RIGHT><FONT COLOR="#C00000">&reg;</FONT></TD>
+<TD>This primitive is supported only if the target architecture protects memory
+around address 0 from read or write accesses.</TD></TR>
+</TABLE>
+<P></P>
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+<TH WIDTH="5%" VALIGN=TOP NOWRAP><P ALIGN=LEFT>Primitive&nbsp;</TH>
+<TH WIDTH="5%" VALIGN=TOP NOWRAP><P ALIGN=LEFT>Patterns</TH>
+<TH WIDTH="5%" VALIGN=TOP NOWRAP><P ALIGN=LEFT>Variants &curren;</TH>
+<TH WIDTH="5%" VALIGN=TOP NOWRAP><P ALIGN=LEFT>Action</TH>
+<TH WIDTH="80%" VALIGN=TOP><P ALIGN=LEFT>Description</TH></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>General</FONT></B></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Const">Const</A></CODE></STRONG></TD>
+<TD VALIGN=TOP HEIGHT=22 NOWRAP><FONT COLOR="#330099">V&curren; =&nbsp; <STRONG><CODE>Const</CODE></STRONG>.&curren;
+C&curren; <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE>, <CODE>c</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren; := C&curren;</TD>
+<TD VALIGN=TOP>Constant variable (rarely used except as an input to a phi node because most
+primitives allow constants directly as their inputs)</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Proj">Proj</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren; =&nbsp; <STRONG><CODE>Proj</CODE></STRONG>.&curren;
+T, <I>n</I> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE>, <CODE>c</CODE>, <CODE>m</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren; := T[<I>n</I>]</TD>
+<TD VALIGN=TOP>Extraction (projection) of the <I>n</I>th component of tuple T.
+That component must exist and must have kind V&curren;. Memory components may be stored at index <I>n</I>=0 only.
+This primitive must be located inside the same control node as the node that creates the tuple T.<BR></TD></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>Debugging</FONT></B></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Debug">Debug</A></CODE></STRONG></TD>
+<TD VALIGN=TOP HEIGHT=22 NOWRAP><FONT COLOR="#330099">M<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Debug</CODE></STRONG> <BR>
+&nbsp;&nbsp;M<FONT SIZE=-2>2</FONT>, A@<FONT SIZE=-2>1</FONT>, ..., A@<FONT SIZE=-2><I>n</I></FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP>-</TD>
+<TD VALIGN=TOP NOWRAP>Debugger checkpoint</TD>
+<TD VALIGN=TOP>Potential place to stop the function and examine its variables when debugging.
+The state of local variables is provided in the inputs.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Break">Break</A></CODE></STRONG></TD>
+<TD VALIGN=TOP HEIGHT=22 NOWRAP><FONT COLOR="#330099">M<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Break</CODE></STRONG> <BR>
+&nbsp;&nbsp;M<FONT SIZE=-2>2</FONT>, A@<FONT SIZE=-2>1</FONT>, ..., A@<FONT SIZE=-2><I>n</I></FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP>-</TD>
+<TD VALIGN=TOP NOWRAP>Breakpoint</TD>
+<TD VALIGN=TOP>A point where execution should stop when debugging.
+The state of local variables is provided in the inputs.<BR></TD></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>Arguments and Results</FONT></B></TD></TR>
+
+<TR>
+<TD ROWSPAN=2 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Arg">Arg</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren; =&nbsp; <STRONG><CODE>Arg</CODE></STRONG>.&curren;
+<I>n</I> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren; := <I>n</I>th argument</TD>
+<TD ROWSPAN=2 VALIGN=TOP>Incoming function argument or memory state reference.
+The arguments are numbered starting from 0. If this is a dynamic method, the first argument is the <CODE>this</CODE> pointer.
+This primitive can only be located inside a <A HREF="control_layer.html#cf_begin">begin node</A>.<BR></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">M =&nbsp; <STRONG><CODE>Arg</CODE></STRONG>.<CODE>m</CODE>&nbsp; <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>m</CODE></TD>
+<TD VALIGN=TOP NOWRAP>M := entry memory state</TD></TR>
+
+<TR>
+<TD ROWSPAN=2 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Result">Result</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099"><STRONG><CODE>Result</CODE></STRONG>.&curren;
+<I>n</I>, V&curren; <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP><I>n</I>th result := V&curren;</TD>
+<TD VALIGN=TOP>Outgoing result reference.
+The results are numbered starting from 0. A <CODE>void</CODE> function has no results; all other Java functions have one result.
+This primitive can only be located inside a <A HREF="control_layer.html#cf_return">return node</A>.<BR></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099"><STRONG><CODE>Result</CODE></STRONG>.<CODE>m</CODE>
+M <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>m</CODE></TD>
+<TD VALIGN=TOP NOWRAP>exit memory state := M</TD>
+<TD VALIGN=TOP>Outgoing memory state reference. This primitive can only be located inside an
+<A HREF="control_layer.html#cf_end">end node</A>.<BR></TD></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>Flow Control</FONT></B></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_If">If</A><I>cond</I></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099"><STRONG><CODE>If<I>cond</I></CODE></STRONG>
+Vc, B<FONT SIZE=-2>false</FONT>, B<FONT SIZE=-2>true</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>-</CODE></TD>
+<TD VALIGN=TOP NOWRAP>If <I>cond</I>(Vc) goto B<FONT SIZE=-2>true</FONT><BR>
+else goto B<FONT SIZE=-2>false</FONT><BR></TD>
+<TD VALIGN=TOP>Branch to control node B<FONT SIZE=-2>true</FONT> if the condition Vc satisfies the conditional <I>cond</I>;
+branch to B<FONT SIZE=-2>false</FONT> if not. See the
+<A HREF="#cond">table of conditionals</A> for the interpretation of <I>cond</I>.
+This primitive is actually part of an <A HREF="control_layer.html#cf_if">if node</A>.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Switch">Switch</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099"><STRONG><CODE>Switch</CODE></STRONG>&nbsp; Vi,<BR>
+&nbsp;&nbsp;B<FONT SIZE=-2>0</FONT>, B<FONT SIZE=-2>1</FONT>, ..., B<FONT SIZE=-2><I>n</I>-1</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>-</CODE></TD>
+<TD VALIGN=TOP NOWRAP>If <I>Vi</I>=0 goto B<FONT SIZE=-2>0</FONT><BR>
+else if <I>Vi</I>=1 goto B<FONT SIZE=-2>1</FONT><BR>
+else ...<BR>
+else if <I>Vi</I>=<I>n</I>-1 goto B<FONT SIZE=-2><I>n</I>-1</FONT><BR></TD>
+<TD VALIGN=TOP>Branch to one of <I>n</I> control nodes B<FONT SIZE=-2><I>k</I></FONT> depending on the value of
+the index Vi.  Vi is guaranteed to be between 0 and <I>n</I>-1, inclusive.
+This primitive is actually part of a <A HREF="control_layer.html#cf_switch">switch node</A>.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Catch">Catch</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Va =&nbsp; <STRONG><CODE>Catch</CODE></STRONG>.<CODE>a</CODE> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Va := thrown exception</TD>
+<TD VALIGN=TOP>Get value of exception just caught by this handler.
+This primitive can only be located inside a <A HREF="control_layer.html#cf_catch">catch node</A>.<BR></TD></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>Scalar Arithmetic and Logical</FONT></B></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_And">And</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>And</CODE></STRONG>.&curren;
+V&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := V&curren;<FONT SIZE=-2>2</FONT> &amp; A&curren;<FONT SIZE=-2>3</FONT></TD>
+<TD VALIGN=TOP>Bitwise AND</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Or">Or</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Or</CODE></STRONG>.&curren;
+V&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := V&curren;<FONT SIZE=-2>2</FONT> | A&curren;<FONT SIZE=-2>3</FONT></TD>
+<TD VALIGN=TOP>Bitwise OR</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Xor">Xor</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Xor</CODE></STRONG>.&curren;
+V&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := V&curren;<FONT SIZE=-2>2</FONT> ^ A&curren;<FONT SIZE=-2>3</FONT></TD>
+<TD VALIGN=TOP>Bitwise exclusive OR</TD></TR>
+
+<TR>
+<TD ROWSPAN=4 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Add">Add</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Add</CODE></STRONG>.<CODE>i</CODE>
+Vi<FONT SIZE=-2>2</FONT>, Ai<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi<FONT SIZE=-2>1</FONT> := (Vi<FONT SIZE=-2>2</FONT> + Ai<FONT SIZE=-2>3</FONT>) mod 2<FONT SIZE=-2><SUP>32</SUP></FONT> </TD>
+<TD VALIGN=TOP>Int addition</TD></TR>
+
+<TR>
+<TD VALIGN=TOP HEIGHT=22 NOWRAP><FONT COLOR="#330099">Vl<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Add</CODE></STRONG>.<CODE>l</CODE>
+Vl<FONT SIZE=-2>2</FONT>, Al<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vl<FONT SIZE=-2>1</FONT> := (Vl<FONT SIZE=-2>2</FONT> + Al<FONT SIZE=-2>3</FONT>) mod 2<FONT SIZE=-2><SUP>64</SUP></FONT> </TD>
+<TD VALIGN=TOP>Long addition</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Va<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Add</CODE></STRONG>.<CODE>a</CODE>
+Aa<FONT SIZE=-2>2</FONT>, Ai<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Va<FONT SIZE=-2>1</FONT> := Aa<FONT SIZE=-2>2</FONT> + exts(Ai<FONT SIZE=-2>3</FONT>)</TD>
+<TD ROWSPAN=2 VALIGN=TOP>Address addition. Like in ANSI C, the source address and the result
+address must point to the same object. The signed or unsigned extend is explicit because addresses might
+be longer than 32 bits.<BR></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Va<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>AddU</CODE></STRONG>.<CODE>a</CODE>
+Aa<FONT SIZE=-2>2</FONT>, Ai<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Va<FONT SIZE=-2>1</FONT> := Aa<FONT SIZE=-2>2</FONT> + extu(Ai<FONT SIZE=-2>3</FONT>) <BR></TD></TR>
+
+<TR>
+<TD ROWSPAN=5 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Sub">Sub</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Sub</CODE></STRONG>.<CODE>i</CODE>
+Ai<FONT SIZE=-2>2</FONT>, Vi<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi<FONT SIZE=-2>1</FONT> := (Ai<FONT SIZE=-2>2</FONT> - Vi<FONT SIZE=-2>3</FONT>) mod 2<FONT SIZE=-2><SUP>32</SUP></FONT> </TD>
+<TD VALIGN=TOP>Int subtraction</TD></TR>
+
+<TR>
+<TD VALIGN=TOP HEIGHT=22 NOWRAP><FONT COLOR="#330099">Vl<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Sub</CODE></STRONG>.<CODE>l</CODE>
+Al<FONT SIZE=-2>2</FONT>, Vl<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vl<FONT SIZE=-2>1</FONT> := (Al<FONT SIZE=-2>2</FONT> - Vl<FONT SIZE=-2>3</FONT>) mod 2<FONT SIZE=-2><SUP>64</SUP></FONT> </TD>
+<TD VALIGN=TOP>Long subtraction</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Va<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Sub</CODE></STRONG>.<CODE>a</CODE>
+Aa<FONT SIZE=-2>2</FONT>, Vi </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Va<FONT SIZE=-2>1</FONT> := Aa<FONT SIZE=-2>2</FONT> - exts(Vi)</TD>
+<TD ROWSPAN=2 VALIGN=TOP>Address subtraction. The source address and the result
+address must point to the same object. The extend is explicit because addresses might
+be longer than 32 bits.</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Va<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>SubU</CODE></STRONG>.<CODE>a</CODE>
+Aa<FONT SIZE=-2>2</FONT>, Vi </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Va<FONT SIZE=-2>1</FONT> := Aa<FONT SIZE=-2>2</FONT> - extu(Vi)</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi =&nbsp; <STRONG><CODE>SubA</CODE></STRONG>.<CODE>i</CODE>
+Aa<FONT SIZE=-2>2</FONT>, Aa<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi := (Aa<FONT SIZE=-2>2</FONT> - Aa<FONT SIZE=-2>3</FONT>) mod 2<FONT SIZE=-2><SUP>32</SUP></FONT> <BR></TD>
+<TD VALIGN=TOP>Address difference. Both source addresses must point to the same object.<BR></TD></TR>
+
+<TR>
+<TD ROWSPAN=2 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Mul">Mul</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Mul</CODE></STRONG>.<CODE>i</CODE>
+Vi<FONT SIZE=-2>2</FONT>, Ai<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi<FONT SIZE=-2>1</FONT> := (Vi<FONT SIZE=-2>2</FONT> &times; Ai<FONT SIZE=-2>3</FONT>) mod 2<FONT SIZE=-2><SUP>32</SUP></FONT> </TD>
+<TD VALIGN=TOP>Int multiplication</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vl<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Mul</CODE></STRONG>.<CODE>l</CODE>
+Vl<FONT SIZE=-2>2</FONT>, Al<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vl<FONT SIZE=-2>1</FONT> := (Vl<FONT SIZE=-2>2</FONT> &times; Al<FONT SIZE=-2>3</FONT>) mod 2<FONT SIZE=-2><SUP>64</SUP></FONT> <BR></TD>
+<TD VALIGN=TOP>Long multiplication<BR></TD></TR>
+
+<TR>
+<TD ROWSPAN=4 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Div">Div</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Div</CODE></STRONG>.&curren;
+A&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> /<FONT SIZE=-2>S</FONT> A&curren;<FONT SIZE=-2>3</FONT> </TD>
+<TD ROWSPAN=4 VALIGN=TOP>Signed or unsigned integer division, rounding towards zero.
+Dividing by zero writes an undefined value into V&curren;<FONT SIZE=-2>1</FONT> and throws <CODE>ArithmeticException</CODE>.
+The divisor is guaranteed not to be zero in Div and DivU.<BR></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT>, E =&nbsp; <STRONG><CODE>DivE</CODE></STRONG>.&curren; <BR>
+&nbsp;&nbsp;A&curren;<FONT SIZE=-2>2</FONT>, V&curren;<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> /<FONT SIZE=-2>S</FONT> V&curren;<FONT SIZE=-2>3</FONT>; <BR>
+throw if V&curren;<FONT SIZE=-2>3</FONT> = 0 </TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>DivU</CODE></STRONG>.&curren;
+A&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> /<FONT SIZE=-2>U</FONT> A&curren;<FONT SIZE=-2>3</FONT> </TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT>, E =&nbsp; <STRONG><CODE>DivUE</CODE></STRONG>.&curren; <BR>
+&nbsp;&nbsp;A&curren;<FONT SIZE=-2>2</FONT>, V&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> /<FONT SIZE=-2>U</FONT> V&curren;<FONT SIZE=-2>3</FONT>; <BR>
+throw if V&curren;<FONT SIZE=-2>3</FONT> = 0 <BR></TD></TR>
+
+<TR>
+<TD ROWSPAN=4 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Mod">Mod</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Mod</CODE></STRONG>.&curren;
+A&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> %<FONT SIZE=-2>S</FONT> A&curren;<FONT SIZE=-2>3</FONT> </TD>
+<TD ROWSPAN=4 VALIGN=TOP>Signed or unsigned integer modulo, rounding towards zero.
+Dividing by zero writes an undefined value into V&curren;<FONT SIZE=-2>1</FONT> and throws <CODE>ArithmeticException</CODE>.
+The divisor is guaranteed not to be zero in Mod and ModU.<BR></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT>, E =&nbsp; <STRONG><CODE>ModE</CODE></STRONG>.&curren; <BR>
+&nbsp;&nbsp;A&curren;<FONT SIZE=-2>2</FONT>, V&curren;<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> %<FONT SIZE=-2>S</FONT> V&curren;<FONT SIZE=-2>3</FONT>; <BR>
+throw if V&curren;<FONT SIZE=-2>3</FONT> = 0 </TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>ModU</CODE></STRONG>.&curren;
+A&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> %<FONT SIZE=-2>U</FONT> A&curren;<FONT SIZE=-2>3</FONT> </TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT>, E =&nbsp; <STRONG><CODE>ModUE</CODE></STRONG>.&curren; <BR>
+&nbsp;&nbsp;A&curren;<FONT SIZE=-2>2</FONT>, V&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> %<FONT SIZE=-2>U</FONT> V&curren;<FONT SIZE=-2>3</FONT>; <BR>
+throw if V&curren;<FONT SIZE=-2>3</FONT> = 0 <BR></TD></TR>
+
+<TR>
+<TD ROWSPAN=2 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Shl">Shl</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Shl</CODE></STRONG>.<CODE>i</CODE>
+Ai<FONT SIZE=-2>2</FONT>, Ai<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi<FONT SIZE=-2>1</FONT> := (Ai<FONT SIZE=-2>2</FONT> &lt;&lt; (Ai<FONT SIZE=-2>3</FONT> mod 32)) <BR>
+&nbsp;&nbsp;mod 2<FONT SIZE=-2><SUP>32</SUP></FONT> </TD>
+<TD VALIGN=TOP>Int logical shift left</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vl<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Shl</CODE></STRONG>.<CODE>l</CODE>
+Al<FONT SIZE=-2>2</FONT>, Ai <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vl<FONT SIZE=-2>1</FONT> := (Al<FONT SIZE=-2>2</FONT> &lt;&lt; (Ai mod 64)) <BR>
+&nbsp;&nbsp;mod 2<FONT SIZE=-2><SUP>64</SUP></FONT> <BR></TD>
+<TD VALIGN=TOP>Long logical shift left<BR></TD></TR>
+
+<TR>
+<TD ROWSPAN=4 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Shr">Shr</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Shr</CODE></STRONG>.<CODE>i</CODE>
+Ai<FONT SIZE=-2>2</FONT>, Ai<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi<FONT SIZE=-2>1</FONT> := Ai<FONT SIZE=-2>2</FONT> &gt;&gt;<FONT SIZE=-2>S</FONT> (Ai<FONT SIZE=-2>3</FONT> mod 32) </TD>
+<TD VALIGN=TOP>Int arithmetical shift right</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vl<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Shr</CODE></STRONG>.<CODE>l</CODE>
+Al<FONT SIZE=-2>2</FONT>, Ai </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vl<FONT SIZE=-2>1</FONT> := Al<FONT SIZE=-2>2</FONT> &gt;&gt;<FONT SIZE=-2>S</FONT> (Ai mod 64) </TD>
+<TD VALIGN=TOP>Long arithmetical shift right</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>ShrU</CODE></STRONG>.<CODE>i</CODE>
+Ai<FONT SIZE=-2>2</FONT>, Ai<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi<FONT SIZE=-2>1</FONT> := Ai<FONT SIZE=-2>2</FONT> &gt;&gt;<FONT SIZE=-2>U</FONT> (Ai<FONT SIZE=-2>3</FONT> mod 32) </TD>
+<TD VALIGN=TOP>Int logical shift right</TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vl<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>ShrU</CODE></STRONG>.<CODE>l</CODE>
+Al<FONT SIZE=-2>2</FONT>, Ai <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vl<FONT SIZE=-2>1</FONT> := Al<FONT SIZE=-2>2</FONT> &gt;&gt;<FONT SIZE=-2>U</FONT> (Ai mod 64) <BR></TD>
+<TD VALIGN=TOP>Long logical shift right<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Ext">Ext</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Ext</CODE></STRONG>.&curren;
+V&curren;<FONT SIZE=-2>2</FONT>, Ci <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := exts(V&curren;<FONT SIZE=-2>2</FONT> mod 2<FONT SIZE=-2><SUP>Ci</SUP></FONT>) </TD>
+<TD VALIGN=TOP>Signed right-aligned field extraction (1 &lt;= Ci &lt;= 31 or 63)<BR></TD></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>Floating Point Arithmetic</FONT></B></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_FAdd">FAdd</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>FAdd</CODE></STRONG>.&curren;
+V&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>f</CODE>, <CODE>d</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := V&curren;<FONT SIZE=-2>2</FONT> + A&curren;<FONT SIZE=-2>3</FONT></TD>
+<TD VALIGN=TOP>Floating point addition (no exceptions)<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_FSub">FSub</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>FSub</CODE></STRONG>.&curren;
+A&curren;<FONT SIZE=-2>2</FONT>, V&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>f</CODE>, <CODE>d</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> - V&curren;<FONT SIZE=-2>3</FONT></TD>
+<TD VALIGN=TOP>Floating point subtraction (no exceptions)<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_FMul">FMul</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>FMul</CODE></STRONG>.&curren;
+V&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>f</CODE>, <CODE>d</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := V&curren;<FONT SIZE=-2>2</FONT> &times; A&curren;<FONT SIZE=-2>3</FONT></TD>
+<TD VALIGN=TOP>Floating point multiplication (no exceptions)<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_FDiv">FDiv</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>FDiv</CODE></STRONG>.&curren;
+A&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>f</CODE>, <CODE>d</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> &divide; A&curren;<FONT SIZE=-2>3</FONT></TD>
+<TD VALIGN=TOP>Floating point division (no exceptions)<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_FRem">FRem</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren;<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>FRem</CODE></STRONG>.&curren;
+A&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>f</CODE>, <CODE>d</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren;<FONT SIZE=-2>1</FONT> := A&curren;<FONT SIZE=-2>2</FONT> rem A&curren;<FONT SIZE=-2>3</FONT></TD>
+<TD VALIGN=TOP>Java-style floating point remainder (no exceptions); see <A HREF="../bibliography.html#GJS96">[GJS96]</A>, page 354<BR></TD></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>Conversion</FONT></B></TD></TR>
+
+<TR>
+<TD ROWSPAN=2 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Conv">Conv</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi =&nbsp; <STRONG><CODE>ConvI</CODE></STRONG>.<CODE>l</CODE>
+Vl </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi := Vl mod 2<FONT SIZE=-2><SUP>32</SUP></FONT> </TD>
+<TD VALIGN=TOP>Long-to-int conversion</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vl =&nbsp; <STRONG><CODE>ConvL</CODE></STRONG>.<CODE>i</CODE>
+Vi <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vl := exts(Vi) </TD>
+<TD VALIGN=TOP>Int-to-long signed extension</TD></TR>
+
+<TR>
+<TD ROWSPAN=4 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_FConv">FConv</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi =&nbsp; <STRONG><CODE>FConvI</CODE></STRONG>.&curren;
+V&curren; </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>f</CODE>, <CODE>d</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi := (int)V&curren; </TD>
+<TD ROWSPAN=4 VALIGN=TOP>Floating-point conversions, rounding and pinning at minimum or maximum representable values as necessary.
+<CODE>NaN</CODE>s converted into integers become zeros.</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vl =&nbsp; <STRONG><CODE>FConvL</CODE></STRONG>.&curren;
+V&curren; </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>f</CODE>, <CODE>d</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vl := (long)V&curren; </TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vf =&nbsp; <STRONG><CODE>FConvF</CODE></STRONG>.&curren;
+V&curren; </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE>, <CODE>d</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vf := (float)V&curren; </TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vd =&nbsp; <STRONG><CODE>FConvD</CODE></STRONG>.&curren;
+V&curren; </FONT><BR></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vd := (double)V&curren; <BR></TD></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>Comparison</FONT></B></TD></TR>
+
+<TR>
+<TD ROWSPAN=2 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Cmp">Cmp</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vc =&nbsp; <STRONG><CODE>Cmp</CODE></STRONG>.&curren;
+V&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vc := V&curren;<FONT SIZE=-2>2</FONT> ?<FONT SIZE=-2>S</FONT> A&curren;<FONT SIZE=-2>3</FONT></TD>
+<TD ROWSPAN=2 VALIGN=TOP>Signed or unsigned integer comparison, yielding one of three possible conditions
+<CODE>less</CODE>, <CODE>equal</CODE>, or <CODE>greater</CODE><BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vc =&nbsp; <STRONG><CODE>CmpU</CODE></STRONG>.&curren;
+V&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE>, <CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vc := V&curren;<FONT SIZE=-2>2</FONT> ?<FONT SIZE=-2>U</FONT> A&curren;<FONT SIZE=-2>3</FONT> <BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_FCmp">FCmp</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vc =&nbsp; <STRONG><CODE>FCmp</CODE></STRONG>.&curren;
+V&curren;<FONT SIZE=-2>2</FONT>, A&curren;<FONT SIZE=-2>3</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>f</CODE>, <CODE>d</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vc := V&curren;<FONT SIZE=-2>2</FONT> ? A&curren;<FONT SIZE=-2>3</FONT> <BR></TD>
+<TD VALIGN=TOP>Floating point comparison (no exceptions), yielding one of four possible conditions
+<CODE>less</CODE>, <CODE>equal</CODE>, <CODE>greater</CODE>, or <CODE>unordered</CODE><BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><I><A NAME="prim_cond">cond</A></I></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi =&nbsp; <STRONG><CODE><I>cond</I></CODE></STRONG>.<CODE>i</CODE>
+Vc </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi := <I>cond</I>(Vc)</TD>
+<TD VALIGN=TOP>Return 1 if the condition Vc satisfies the conditional <I>cond</I> or 0 if not. See the
+<A HREF="#cond">table of conditionals</A> for the interpretation of <I>cond</I>.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><I><A NAME="prim_cond3">cond3</A></I></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi =&nbsp; <STRONG><CODE><I>cond3</I></CODE></STRONG>.<CODE>i</CODE>
+Vc </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi := <I>cond3</I>(Vc)</TD>
+<TD VALIGN=TOP>Return -1, 0, or 1 depending on how the three-way conditional <I>cond3</I> deals with condition Vc. See the
+<A HREF="#cond3">table of three-way conditionals</A>.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000"><STRONG><CODE><A NAME="prim_ChkNull">ChkNull</A></CODE></STRONG></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">E =&nbsp; <STRONG><CODE>ChkNull</CODE></STRONG>.<CODE>a</CODE>&nbsp; Va </FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&#134; <CODE>a</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Va = 0</FONT><BR></TD>
+<TD VALIGN=TOP><FONT COLOR="#C00000">Null pointer check: throw <CODE>NullPointerException</CODE> if Va is null.</FONT><BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000"><STRONG><CODE><A NAME="prim_ChkCast">ChkCast</A></CODE></STRONG></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">E =&nbsp; <STRONG><CODE>ChkCast</CODE></STRONG>.&curren;<BR>
+&nbsp;&nbsp;V&curren;<FONT SIZE=-2>1</FONT>, A&curren;<FONT SIZE=-2>2</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&#134; <CODE>i</CODE>, <CODE>a</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if V&curren;<FONT SIZE=-2>1</FONT> != A&curren;<FONT SIZE=-2>2</FONT></FONT></TD>
+<TD VALIGN=TOP><FONT COLOR="#C00000">Type check: throw <CODE>ClassCastException</CODE> if
+the two integers or pointers are different.</FONT><BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000"><STRONG><CODE><A NAME="prim_Limit">Limit</A></CODE></STRONG></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">E =&nbsp; <STRONG><CODE>Limit</CODE></STRONG>.<CODE>i</CODE>
+Ai<FONT SIZE=-2>1</FONT>, Ai<FONT SIZE=-2>2</FONT> </FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&#134; <CODE>i</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Ai<FONT SIZE=-2>1</FONT> &gt;=<FONT SIZE=-2>U</FONT> Ai<FONT SIZE=-2>2</FONT></FONT></TD>
+<TD VALIGN=TOP><FONT COLOR="#C00000">Array range check: throw <CODE>ArrayIndexOutOfBounds</CODE> if the index is out of range
+(using an unsigned comparison).</FONT><BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000"><STRONG><CODE><A NAME="prim_LimCast">LimCast</A></CODE></STRONG></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">E =&nbsp; <STRONG><CODE>LimCastI</CODE></STRONG>.<CODE>i</CODE><BR>
+&nbsp;&nbsp;Vi<FONT SIZE=-2>1</FONT>, Ci<FONT SIZE=-2>2</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&#134; <CODE>i</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Vi<FONT SIZE=-2>1</FONT> &lt; Ci<FONT SIZE=-2>2</FONT></FONT><BR></TD>
+<TD VALIGN=TOP><FONT COLOR="#C00000">Type check: throw <CODE>ClassCastException</CODE> if Vi<FONT SIZE=-2>1</FONT>
+is less than Ci<FONT SIZE=-2>2</FONT>;
+the comparison can be either signed or unsigned at the implementation's discretion.</FONT><BR></TD></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>Memory</FONT></B></TD></TR>
+
+<TR>
+<TD ROWSPAN=12 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Ld">Ld</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">V&curren; =&nbsp; <STRONG><CODE>Ld</CODE></STRONG>.&curren;
+M&copy;, Aa </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren; := *Aa</TD>
+<TD ROWSPAN=6 VALIGN=TOP>Load value (<CODE>Ld</CODE>), signed byte or halfword (<CODE>LdS</CODE>), or
+unsigned byte or halfword (<CODE>LdU</CODE>) from memory.
+The address is guaranteed to be aligned on a natural boundary for the value being loaded.
+<FONT COLOR="#C00000"><CODE>LdE</CODE>, <CODE>LdSE</CODE>, and <CODE>LdUE</CODE> throw <CODE>NullPointerException</CODE> if Va points to
+MMU-protected memory.</FONT><BR></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">V&curren;, E =&nbsp; <STRONG><CODE>LdE</CODE></STRONG>.&curren;
+M&copy;, Va </FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&reg; <CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Va protected;<BR>
+V&curren; := *Va</FONT></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi =&nbsp; <STRONG><CODE>LdS</CODE></STRONG>.&curren;
+M&copy;, Aa </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>b</CODE>, <CODE>h</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi := exts(*Aa)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">Vi, E =&nbsp; <STRONG><CODE>LdSE</CODE></STRONG>.&curren;
+M&copy;, Va </FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&reg; <CODE>b</CODE>, <CODE>h</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Va protected;<BR>
+Vi := exts(*Va)</FONT></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">Vi =&nbsp; <STRONG><CODE>LdU</CODE></STRONG>.&curren;
+M&copy;, Aa </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>b</CODE>, <CODE>h</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi := extu(*Aa)</TD></TR>
+<TR>
+<TD VALIGN=TOP HEIGHT=35 NOWRAP><FONT COLOR="#C00000">Vi, E =&nbsp; <STRONG><CODE>LdUE</CODE></STRONG>.&curren;
+M&copy;, Va </FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&reg; <CODE>b</CODE>, <CODE>h</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Va protected;<BR>
+Vi := extu(*Va)</FONT></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, V&curren;&gt; = <BR>
+&nbsp;&nbsp;<STRONG><CODE>LdV</CODE></STRONG>.&curren;&nbsp; M<FONT SIZE=-2>2</FONT>, Aa </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>V&curren; := *Aa</TD>
+<TD ROWSPAN=6 VALIGN=TOP>Load value (<CODE>LdV</CODE>), signed byte or halfword (<CODE>LdVS</CODE>), or
+unsigned byte or halfword (<CODE>LdVU</CODE>) from volatile memory.
+The address is guaranteed to be aligned on a natural boundary for the value being loaded.
+<FONT COLOR="#C00000"><CODE>LdVE</CODE>, <CODE>LdVSE</CODE>, and <CODE>LdVUE</CODE> throw <CODE>NullPointerException</CODE> if Va points to
+MMU-protected memory.</FONT><BR></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">T&lt;M<FONT SIZE=-2>1</FONT>, V&curren;&gt;, E = <BR>
+&nbsp;&nbsp;<STRONG><CODE>LdVE</CODE></STRONG>.&curren;&nbsp; M<FONT SIZE=-2>2</FONT>, Va </FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&reg; <CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Va protected;<BR>
+V&curren; := *Va</FONT></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Vi&gt; = <BR>
+&nbsp;&nbsp;<STRONG><CODE>LdVS</CODE></STRONG>.&curren;&nbsp; M<FONT SIZE=-2>2</FONT>, Aa </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>b</CODE>, <CODE>h</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi := exts(*Aa)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">T&lt;M<FONT SIZE=-2>1</FONT>, Vi&gt;, E = <BR>
+&nbsp;&nbsp;<STRONG><CODE>LdVSE</CODE></STRONG>.&curren;&nbsp; M<FONT SIZE=-2>2</FONT>, Va </FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&reg; <CODE>b</CODE>, <CODE>h</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Va protected;<BR>
+Vi := exts(*Va)</FONT></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Vi&gt; = <BR>
+&nbsp;&nbsp;<STRONG><CODE>LdVU</CODE></STRONG>.&curren;&nbsp; M<FONT SIZE=-2>2</FONT>, Aa </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>b</CODE>, <CODE>h</CODE></TD>
+<TD VALIGN=TOP NOWRAP>Vi := extu(*Aa)</TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">T&lt;M<FONT SIZE=-2>1</FONT>, Vi&gt;, E = <BR>
+&nbsp;&nbsp;<STRONG><CODE>LdVUE</CODE></STRONG>.&curren;&nbsp; M<FONT SIZE=-2>2</FONT>, Va <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&reg; <CODE>b</CODE>, <CODE>h</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Va protected;<BR>
+Vi := extu(*Va)<BR>&nbsp;</FONT></TD></TR>
+
+<TR>
+<TD ROWSPAN=4 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_St">St</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">M<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>St</CODE></STRONG>.&curren;
+M<FONT SIZE=-2>2</FONT>, Aa, A&curren; </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>b</CODE>, <CODE>h</CODE>, <CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>*Aa := A&curren;</TD>
+<TD ROWSPAN=2 VALIGN=TOP>Store value into memory.
+The address is guaranteed to be aligned on a natural boundary for the value being stored.
+<FONT COLOR="#C00000"><CODE>StE</CODE> throws <CODE>NullPointerException</CODE> if Va points to
+MMU-protected memory.</FONT><BR></TD></TR>
+<TR>
+<TD VALIGN=TOP HEIGHT=22 NOWRAP><FONT COLOR="#C00000">M<FONT SIZE=-2>1</FONT>, E =&nbsp; <STRONG><CODE>StE</CODE></STRONG>.&curren;<BR>
+&nbsp;&nbsp;M<FONT SIZE=-2>2</FONT>, Va, A&curren; </FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&reg; <CODE>b</CODE>,<CODE>h</CODE>,<CODE>i</CODE>,<CODE>l</CODE>,<CODE>f</CODE>,<CODE>d</CODE>,<CODE>a</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Va protected;<BR>
+*Va := A&curren;</FONT></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">M<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>StV</CODE></STRONG>.&curren;
+M<FONT SIZE=-2>2</FONT>, Aa, A&curren; </FONT></TD>
+<TD VALIGN=TOP NOWRAP><CODE>b</CODE>, <CODE>h</CODE>, <CODE>i</CODE>, <CODE>l</CODE>, <CODE>f</CODE>, <CODE>d</CODE>, <CODE>a</CODE></TD>
+<TD VALIGN=TOP NOWRAP>*Aa := A&curren;</TD>
+<TD ROWSPAN=2 VALIGN=TOP>Store value into volatile memory.
+The address is guaranteed to be aligned on a natural boundary for the value being stored.
+<FONT COLOR="#C00000"><CODE>StVE</CODE> throws <CODE>NullPointerException</CODE> if Va points to
+MMU-protected memory.</FONT><BR></TD></TR>
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">M<FONT SIZE=-2>1</FONT>, E =&nbsp; <STRONG><CODE>StVE</CODE></STRONG>.&curren;<BR>
+&nbsp;&nbsp;M<FONT SIZE=-2>2</FONT>, Va, A&curren; <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">&reg; <CODE>b</CODE>,<CODE>h</CODE>,<CODE>i</CODE>,<CODE>l</CODE>,<CODE>f</CODE>,<CODE>d</CODE>,<CODE>a</CODE></FONT></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#C00000">throw if Va protected;<BR>
+*Va := A&curren;<BR>&nbsp;</FONT></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_MEnter">MEnter</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">M<FONT SIZE=-2>1</FONT>, E =&nbsp; <STRONG><CODE>MEnter</CODE></STRONG><BR>
+&nbsp;&nbsp;M<FONT SIZE=-2>2</FONT>, Aa, Ci <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP>-</TD>
+<TD VALIGN=TOP NOWRAP>Acquire monitor</TD>
+<TD VALIGN=TOP>Acquire the monitor of object Aa. If there is contention for the object, periodically
+check for asynchronous exceptions and throw any such exceptions that may arise. If <CODE>MEnter</CODE> throws
+an exception, the object's monitor is not acquired. Aa is guaranteed to be non-null.
+Ci is the index of a stack slot that this <CODE>MEnter</CODE> can use to communicate with the matching <CODE>MExit</CODE>
+primitive or primitives.
+One of the matching <CODE>MExit</CODE>s is guaranteed to execute exactly once even if synchronous or asynchronous exceptions occur (including
+this thread being stopped) unless the current thread is destroyed with <CODE>Thread.destroy</CODE>.
+No other <CODE>MEnter</CODE> or <CODE>MExit</CODE> with the same slot number can execute in the interim in this function.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_MExit">MExit</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">M<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>MExit</CODE></STRONG><BR>
+&nbsp;&nbsp;M<FONT SIZE=-2>2</FONT>, Aa, Ci <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP>-</TD>
+<TD VALIGN=TOP NOWRAP>Release monitor</TD>
+<TD VALIGN=TOP>Release the monitor of object Aa. Aa is guaranteed to be non-null.
+Ci is the index of a stack slot set up by a matching <CODE>MEnter</CODE> that previously acquired the monitor of the same object Aa.
+Each <CODE>MExit</CODE> is guaranteed to match one <CODE>MEnter</CODE>, so the current thread is guaranteed to own the monitor.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Sync">Sync</A></CODE></STRONG></TD>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">M<FONT SIZE=-2>1</FONT> =&nbsp; <STRONG><CODE>Sync</CODE></STRONG>
+M<FONT SIZE=-2>2</FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP NOWRAP>-</TD>
+<TD VALIGN=TOP NOWRAP>Memory synchronization</TD>
+<TD VALIGN=TOP>Ensure that all previous memory reads and writes have completed before any subsequent memory reads or writes
+can begin. This has the same semantic effect as but is faster than calling a <CODE>MEnter</CODE>/<CODE>MExit</CODE> pair on a monitor that
+this thread already owns.<BR></TD></TR>
+
+<TR>
+<TD COLSPAN=5 HEIGHT=24><B><FONT SIZE=+1>Calls</FONT></B></TD></TR>
+
+<TR>
+<TD ROWSPAN=6 VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_SysCall">SysCall</A></CODE></STRONG></TD>
+<TD COLSPAN=2 VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;, V@<FONT SIZE=-2>1</FONT>, ..., V@<FONT SIZE=-2><I>m</I></FONT>&gt;
+ =&nbsp; <STRONG><CODE>SysCall</CODE></STRONG> <BR>
+&nbsp;&nbsp; <CODE><I>routine</I></CODE>,
+ M, A@<FONT SIZE=-2>1</FONT>, ..., A@<FONT SIZE=-2><I>n</I></FONT> </FONT></TD>
+<TD VALIGN=TOP>System call</TD>
+<TD ROWSPAN=3 VALIGN=TOP>Perform a system call, passing arguments and retrieving results.
+Three varieties of SysCall are provided depending on whether the system call is pure (<CODE>SysCallC</CODE>),
+reads non-constant memory (<CODE>SysCall</CODE>), or modifies memory (<CODE>SysCallV</CODE>).</TD></TR>
+<TR>
+<TD COLSPAN=2 VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>,
+ V@<FONT SIZE=-2>1</FONT>, ..., V@<FONT SIZE=-2><I>m</I></FONT>&gt;
+ =&nbsp; <STRONG><CODE>SysCallV</CODE></STRONG> <BR>
+&nbsp;&nbsp; <CODE><I>routine</I></CODE>,
+ M<FONT SIZE=-2>2</FONT>, A@<FONT SIZE=-2>1</FONT>, ..., A@<FONT SIZE=-2><I>n</I></FONT> </FONT></TD>
+<TD VALIGN=TOP>Volatile system call</TD></TR>
+<TR>
+<TD COLSPAN=2 VALIGN=TOP HEIGHT=35 NOWRAP><FONT COLOR="#330099">T&lt;, V@<FONT SIZE=-2>1</FONT>, ..., V@<FONT SIZE=-2><I>m</I></FONT>&gt;
+ =&nbsp; <STRONG><CODE>SysCallC</CODE></STRONG> <BR>
+&nbsp;&nbsp; <CODE><I>routine</I></CODE>,
+ A@<FONT SIZE=-2>1</FONT>, ..., A@<FONT SIZE=-2><I>n</I></FONT> </FONT></TD>
+<TD VALIGN=TOP>Constant system call</TD></TR>
+
+<TR>
+<TD COLSPAN=2 VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;, V@<FONT SIZE=-2>1</FONT>, ..., V@<FONT SIZE=-2><I>m</I></FONT>&gt;, E
+ =&nbsp; <STRONG><CODE>SysCallE</CODE></STRONG> <BR>
+&nbsp;&nbsp; <CODE><I>routine</I></CODE>,
+ M, A@<FONT SIZE=-2>1</FONT>, ..., A@<FONT SIZE=-2><I>n</I></FONT> </FONT></TD>
+<TD VALIGN=TOP>System call<BR>with exceptions</TD>
+<TD ROWSPAN=3 VALIGN=TOP>Same as above, but able to raise exceptions.<BR></TD></TR>
+<TR>
+<TD COLSPAN=2 VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>,
+ V@<FONT SIZE=-2>1</FONT>, ..., V@<FONT SIZE=-2><I>m</I></FONT>&gt;, E
+ =&nbsp; <STRONG><CODE>SysCallEV</CODE></STRONG> <BR>
+&nbsp;&nbsp; <CODE><I>routine</I></CODE>,
+ M<FONT SIZE=-2>2</FONT>, A@<FONT SIZE=-2>1</FONT>, ..., A@<FONT SIZE=-2><I>n</I></FONT> </FONT></TD>
+<TD VALIGN=TOP>Volatile system call<BR>with exceptions</TD></TR>
+<TR>
+<TD COLSPAN=2 VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;, V@<FONT SIZE=-2>1</FONT>, ..., V@<FONT SIZE=-2><I>m</I></FONT>&gt;, E
+ =&nbsp; <STRONG><CODE>SysCallEC</CODE></STRONG> <BR>
+&nbsp;&nbsp; <CODE><I>routine</I></CODE>,
+ A@<FONT SIZE=-2>1</FONT>, ..., A@<FONT SIZE=-2><I>n</I></FONT> <BR>&nbsp;</FONT></TD>
+<TD VALIGN=TOP>Constant system call<BR>with exceptions<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><STRONG><CODE><A NAME="prim_Call">Call</A></CODE></STRONG></TD>
+<TD COLSPAN=2 VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>,
+ V@<FONT SIZE=-2>1</FONT>, ..., V@<FONT SIZE=-2><I>m</I></FONT>&gt;, E =&nbsp; <STRONG><CODE>Call</CODE></STRONG> <BR>
+&nbsp;&nbsp;M<FONT SIZE=-2>2</FONT>, Aa, A@<FONT SIZE=-2>1</FONT>, ..., A@<FONT SIZE=-2><I>n</I></FONT> </FONT></TD>
+<TD VALIGN=TOP>Function call</TD>
+<TD VALIGN=TOP>Call function Aa, passing arguments and retrieving results.</TD></TR>
+
+</TABLE>
+
+<H2><A NAME="system_calls"></A>System Calls</H2>
+
+
+<P>The following calls can be made using the <CODE>SysCall</CODE> primitives:</P>
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;&gt;, E = <CODE>SysCallEC <STRONG><A NAME="syscall_Throw">Throw</A></STRONG></CODE>,
+ Aa </FONT><BR></TD>
+<TD VALIGN=TOP>Throw exception Aa. Aa is guaranteed to be non-null.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;&gt;, E = <CODE>SysCallEC <STRONG><A NAME="syscall_CheckArrayStore">CheckArrayStore</A></STRONG></CODE>,
+ Aa<FONT SIZE=-2>1</FONT>, Aa<FONT SIZE=-2>2</FONT> </FONT></TD>
+<TD VALIGN=TOP>Check that object Aa<FONT SIZE=-2>2</FONT> can be written into object array Aa<FONT SIZE=-2>1</FONT>;
+throw <CODE>ArrayStoreException</CODE> if not. Aa<FONT SIZE=-2>1</FONT> is guaranteed to be non-null.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_New">New</A></STRONG></CODE>,
+ M<FONT SIZE=-2>2</FONT>, Ca </FONT></TD>
+<TD VALIGN=TOP>Create and return a new object of class Ca. Throw <CODE>OutOfMemoryError</CODE> if out of memory.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewBooleanArray">NewBooleanArray</A></STRONG></CODE>,
+ M<FONT SIZE=-2>2</FONT>, Ai </FONT><BR>
+<FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewByteArray">NewByteArray</A></STRONG></CODE>, M<FONT SIZE=-2>2</FONT>, Ai </FONT><BR>
+<FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewShortArray">NewShortArray</A></STRONG></CODE>, M<FONT SIZE=-2>2</FONT>, Ai </FONT><BR>
+<FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewCharArray">NewCharArray</A></STRONG></CODE>, M<FONT SIZE=-2>2</FONT>, Ai </FONT><BR>
+<FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewIntArray">NewIntArray</A></STRONG></CODE>, M<FONT SIZE=-2>2</FONT>, Ai </FONT><BR>
+<FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewLongArray">NewLongArray</A></STRONG></CODE>, M<FONT SIZE=-2>2</FONT>, Ai </FONT><BR>
+<FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewFloatArray">NewFloatArray</A></STRONG></CODE>, M<FONT SIZE=-2>2</FONT>, Ai </FONT><BR>
+<FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewDoubleArray">NewDoubleArray</A></STRONG></CODE>, M<FONT SIZE=-2>2</FONT>, Ai </FONT><BR></TD>
+<TD VALIGN=TOP>Create and return a new array of Ai non-objects. Throw <CODE>NegativeArraySizeException</CODE> if Ai is less than zero.
+Throw <CODE>OutOfMemoryError</CODE> if out of memory.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewObjectArray">NewObjectArray</A></STRONG></CODE>,
+ M<FONT SIZE=-2>2</FONT>, Ca,&nbsp;<BR>
+&nbsp;&nbsp;Ai </FONT><BR></TD>
+<TD VALIGN=TOP>Create and return a new array of Ai objects of type Ca. Throw <CODE>NegativeArraySizeException</CODE> if Ai is less than zero.
+Throw <CODE>OutOfMemoryError</CODE> if out of memory.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_New2DArray">New2DArray</A></STRONG></CODE>,
+ M<FONT SIZE=-2>2</FONT>, Ca,&nbsp;<BR>
+&nbsp;&nbsp;Ai<FONT SIZE=-2>1</FONT>, Ai<FONT SIZE=-2>2</FONT> </FONT><BR></TD>
+<TD VALIGN=TOP>Create and return a new 2-dimensional array of Ai<FONT SIZE=-2>1</FONT>&times;Ai<FONT SIZE=-2>2</FONT> objects.
+The array itself has type Ca (which must be a class with at least two dimensions) [In the future we may change this to be the
+type of the array's elements instead of the type of the array].
+Throw <CODE>NegativeArraySizeException</CODE> if either Ai<FONT SIZE=-2>1</FONT> or Ai<FONT SIZE=-2>2</FONT> is less than zero.
+Throw <CODE>OutOfMemoryError</CODE> if out of memory.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_New3DArray">New3DArray</A></STRONG></CODE>,
+ M<FONT SIZE=-2>2</FONT>, Ca,&nbsp;<BR>
+&nbsp;&nbsp;Ai<FONT SIZE=-2>1</FONT>, Ai<FONT SIZE=-2>2</FONT>, Ai<FONT SIZE=-2>3</FONT> </FONT><BR></TD>
+<TD VALIGN=TOP>Create and return a new 3-dimensional array of
+Ai<FONT SIZE=-2>1</FONT>&times;Ai<FONT SIZE=-2>2</FONT>&times;Ai<FONT SIZE=-2>3</FONT> objects.
+The array itself has type Ca (which must be a class with at least three dimensions) [In the future we may change this to be the
+type of the array's elements instead of the type of the array].
+Throw <CODE>NegativeArraySizeException</CODE> if either Ai<FONT SIZE=-2>1</FONT>, Ai<FONT SIZE=-2>2</FONT>,
+or Ai<FONT SIZE=-2>3</FONT> is less than zero.
+Throw <CODE>OutOfMemoryError</CODE> if out of memory.<BR></TD></TR>
+
+<TR>
+<TD VALIGN=TOP NOWRAP><FONT COLOR="#330099">T&lt;M<FONT SIZE=-2>1</FONT>, Va&gt;, E = <CODE>SysCallEV <STRONG><A NAME="syscall_NewNDArray">NewNDArray</A></STRONG></CODE>,
+ M<FONT SIZE=-2>2</FONT>, Ca, Aa </FONT><BR></TD>
+<TD VALIGN=TOP>Create and return a new N-dimensional array of objects, whose dimensions are given by the elements of the
+int array Aa. The array itself has type Ca (which must be a class with at least length(Aa) dimensions) [In the future we
+may change this to be the type of the array's elements instead of the type of the array]. The number of dimensions is
+guaranteed to be between 1 and 255, and Aa is guaranteed to be non-null.
+Throw <CODE>NegativeArraySizeException</CODE> if any of the dimensions is less than zero.
+Throw <CODE>OutOfMemoryError</CODE> if out of memory.<BR></TD></TR>
+
+</TABLE>
+<HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>
+

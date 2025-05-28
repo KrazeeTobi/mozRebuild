@@ -1,0 +1,463 @@
+<HTML>
+<HEAD>
+<TITLE>Delete Messages Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.0 Project (Seamonkey)</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mail and News Component</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Delete Messages</b>
+<p>Written by:<a href="mailto:esther@netscape.com"> Esther Goes</a>
+<br>Original test specs by <a href="mailto:pmock@netscape.com">Peter Mock</a>
+&amp; Laurel Carlson
+<p><b>History:</b>
+<br>122198 Started updating spec using original Nova test specs
+<br>033199 Updating Scenarios
+<br>072399 Updated with changes
+<p><b>Reviewed By:&nbsp; </b><a href="mailto:laurel@netscape.com">Laurel
+Carlson</a>
+<p><b>References:</b>
+<br>UI Specification:&nbsp; Used Nova Specs (not available at this time)
+<br>Other: None
+<p>
+<hr WIDTH="100%">
+<br>Description: Deleting/Canceling&nbsp; messages from (<b>Mail&amp;News)</b>
+<p><b><font size=+1>Basic Scenarios - Delete/Cancel</font></b>
+<ol TYPE=A>
+<li>
+Message can be deleted/canceled from various Mail/News windows</li>
+
+<ol>
+<li>
+3 Pane UI</li>
+
+<li>
+Message Window&nbsp; (stand alone)</li>
+</ol>
+
+<li>
+Ways to delete/cancel a Message</li>
+
+<ol>
+<li>
+Menu</li>
+
+<li>
+Toolbar (not for a selected News article)</li>
+
+<li>
+Mnemonics</li>
+
+<li>
+Mouse (drag and drop to Trash only for a Mail message, not News articles)</li>
+
+<li>
+Context Menu</li>
+</ol>
+
+<li>
+Number of messages that can be deleted/canceled</li>
+
+<ol>
+<li>
+Single message</li>
+
+<li>
+Multiple messages</li>
+
+<li>
+Selective messages (Example on Windows, use the Ctrl+Mouse click,&nbsp;
+On Mac, use Cmd+Mouse click.&nbsp; On Unix, use Ctrl+Mouse click.)</li>
+
+<li>
+All messages</li>
+</ol>
+
+<li>
+Cancel messages from Newsgroups</li>
+
+<ol>
+<li>
+You are the one who posted the message, verify it allows the cancel</li>
+
+<li>
+You are not the who posted the message, verity you receive a message stating
+you cannot cancel the message because you are not the one who posted it.</li>
+
+<li>
+Verify you cannot Undo a cancelled message</li>
+
+<li>
+Verify you cannot cancel multiple selected news messages, the Cancel menu
+items are disabled in this scenario.</li>
+</ol>
+
+<li>
+Delete Mail messagges from various folders including the following, that
+reside within various Accounts (Identities).&nbsp; Verify the message is
+moved to the Trash (Preference for IMAP servers should have "Move it to
+the Trash Folder"&nbsp; selected)</li>
+
+<ol>
+<li>
+Account&nbsp; Inbox</li>
+
+<li>
+Account Sent</li>
+
+<li>
+Account Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Template</li>
+
+<li>
+A User defined folder for each account</li>
+</ol>
+
+<li>
+Delete Mail messages from various Trash&nbsp; folders, verify the message
+is no longer in Trash or any other&nbsp; folder</li>
+
+<ol>
+<li>
+Account Trash</li>
+
+<li>
+Local Trash</li>
+</ol>
+
+<li>
+Deleting messages from different Mail Identies (Accounts)</li>
+
+<ol>
+<li>
+POP account (server)</li>
+
+<li>
+IMAP&nbsp; account (server)</li>
+</ol>
+
+<li>
+Canceling messages from different News Identities</li>
+</ol>
+<b><font size=+1>Expanded Scenarios - Delete/Cancel</font></b>
+<ol TYPE=A>
+<li>
+3 Pane UI collapsed to 2 pane UI</li>
+
+<ol>
+<li>
+Collapse the Thread pane only and delete/cancel a message from the Message
+pane</li>
+
+<li>
+Collapse the Message pane only and delete/cancel a message om the Thread
+pane</li>
+
+<li>
+Collapse the Sidebar (aka Folder pane) only and delete/cancel a message
+from either Message or Thread pane</li>
+</ol>
+
+<li>
+3 Pane UI collapsed to 1 pane UI</li>
+
+<ol>
+<li>
+Collapse the Thread pane and Folder pane then delete/cancel a message from
+the Message pane</li>
+
+<li>
+Collapse the Sidebar (aka Folder pane) and Message pane then delete/cancel
+a message from the Thread pane</li>
+</ol>
+
+<li>
+Delete a Mail message when the number of messages in the mail folder is:</li>
+
+<ol>
+<li>
+No message&nbsp; -verify Delete is disabled</li>
+
+<li>
+1 message in the folder -verify the message is deleted and Delete becomes
+disabled after the deletion</li>
+
+<li>
+2-10 messages in the folder -verify the selected message/s&nbsp; is deleted</li>
+
+<li>
+11-50 messages in the folder -verify the selected message/s&nbsp; is deleted</li>
+
+<li>
+51-XXXX messages in the folder -verify the selected message/s is deleted</li>
+</ol>
+
+<li>
+Interrupting deleting a Mail message when the number of messages in the
+mail folder is:</li>
+
+<ol>
+<li>
+1 message -verify the message is not deleted (this can only be tested if
+it is a very large message and you have a slow system)&nbsp; otherwise
+just test to see that there are no crashes or strange behaviour.</li>
+
+<li>
+2-10 messages in the folder -verify some of the selected message/s are
+not deleted (above statement "this can only be tested..." applies)</li>
+
+<li>
+11-50 messages in the folder --verify some of the selected message/s are
+not deleted (above statement "this can only be tested..." applies)</li>
+
+<li>
+51-1000 messages in the folder -verify some of the selected message/s are
+not deleted (above statement "this can only be tested..." applies)</li>
+</ol>
+
+<li>
+Delete/Cancel messages in a thread list</li>
+
+<ol>
+<li>
+Sort by thread and select one from the thread list, delete/cancel and verify
+the selected message is the only one deleted/canceled</li>
+
+<li>
+Mail only- Sort by thread and select multiple messages in the middle of
+the thread list and delete, verify only the selected messages are deleted</li>
+
+<li>
+New only- Verify you cannot cancel multiple message, when multiple news
+messages are selected the Menu items and Context menu items for cancelling
+are disabled.</li>
+</ol>
+
+<li>
+Delete Original messages, Replied messages and Forward messages</li>
+
+<ol>
+<li>
+Verify the message is move to the Trash Folder that belongs to the account
+you are deleting from.</li>
+
+<li>
+Verify Edit/Undo copies the message in the Trash back to the folder it
+came from, (Currenty it's a copy, no mention in dogbert or nova spec that
+the behaviour should be a move instead of a copy.&nbsp; Because it's a
+move the message is in two places, need to check that)</li>
+</ol>
+
+<li>
+Delete messages from different sort orders for the columns in the Thread
+pane</li>
+
+<li>
+Delete messages using Shift+Delete:</li>
+
+<ol>
+<li>
+Verifying the message by-passes the Trash folder and is no longer in any
+folder.</li>
+
+<li>
+Verify selecting Edit/Undo (before you change folders) will place the message
+back in the folder</li>
+</ol>
+
+<li>
+Deleting messages from Search Messages dialog&nbsp; (News messages cannot
+be cancelled from this dialog)</li>
+
+<ol>
+<li>
+Verify the Delete Message button is enabled after selecting a mail message.</li>
+
+<li>
+Verify the message is deleted (moved to Trash), when clicking on the Delete
+Message button</li>
+
+<li>
+Verify both the Delete Message button and context menu item are disabled
+if the Search was on a Newsgroup and a news message is selected.</li>
+</ol>
+
+<li>
+Deleting messages while Offline (News messages cannot be cancelled while
+offline)</li>
+
+<ol>
+<li>
+Verify all Delete options are enabled when a mail message is selected.</li>
+
+<li>
+Verify the mail message is deleted (moved to Trash), when clicking on any
+of the Delete options</li>
+
+<li>
+Verify the Cancel menu items are disabled if a news message is selected
+while offline.</li>
+</ol>
+
+<li>
+Visual</li>
+
+<ol>
+<li>
+Verify there is feedback through the status/progress bar</li>
+</ol>
+</ol>
+<b><font size=+1>Stress Scenarios - Delete/Cancel</font></b>
+<ol TYPE=A>
+<li>
+Verify you are able to Delete mail messages with the following and verify
+the deleted message w/attachment is moved to the Trash folder</li>
+
+<ol>
+<li>
+&nbsp;large article</li>
+
+<li>
+article with attachments</li>
+
+<li>
+.html</li>
+
+<li>
+.text</li>
+</ol>
+
+<li>
+Verify for one of the above scenarios, delete works using the Delete context
+menu item</li>
+
+<li>
+Verify for one of the above scenarios, delete works using the drag n drop
+to the trash</li>
+
+<li>
+Verify you can Cancel news articles using the following, the canceled message
+is removed from the newsgroup (Note, you can only cancel News messages
+that you posted).</li>
+
+<ol>
+<li>
+large article</li>
+
+<li>
+article with attachments</li>
+
+<li>
+.html</li>
+
+<li>
+.text</li>
+</ol>
+
+<li>
+Verify for one of the above scenarios using the Cancel context menu item</li>
+
+<li>
+Verify for one of the above scenarios, cancel works using the drag n drop
+to the trash</li>
+</ol>
+
+<hr WIDTH="100%">
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-delete.html&amp;rev=&amp;root=/cvsroot/">Last modified July 23,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

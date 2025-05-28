@@ -1,0 +1,165 @@
+<HTML>
+<HEAD>
+<TITLE>Java-to-XPCOM Bridge</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+  
+  
+
+  
+
+    <h1>Java-to-XPCOM Bridge</h1>
+
+    <p>
+      The Java-to-XPCOM Bridge allows interoperability between Java and 
+      XPCOM components.  Java code may obtain proxies to 
+      XPCOM objects written in other languages such as C++, invoke 
+      methods on those objects as if they were written in Java, and 
+      register Java objects for callbacks from XPCOM components.
+      When this bridge it is in place, it will be possible to write 
+      applets that access the DOM, or (when the infrastructure is 
+      in place) XPCOM components written in Java instead of C++.
+    </p>
+
+    <h3>Current Design</h3>
+
+    <p>
+      The Blackwood team is working on an implementation 
+      based on the XPCOM reflection and typelib infrastructure behind 
+      <a href="http://www.mozilla.org/scriptable">XPConnect</a>.
+      The current plan is to implement dynamically-generated 
+      Java proxies to C++ objects, and vice-versa.  That is, the system 
+      will generate the byte-codes for each Java-side proxy on demand;
+      each method implementation will marshall arguments to a generic 
+      invocation method based on <code>XPTC_Invoke()</code>, and back again.
+      Java objects which implement an XPCOM interface may be passed to 
+      C++ based XPCOM components, using a proxy derived from nsXPTCStubBase.
+    </p>
+
+    <p>Other notable features of the current design:</p>
+
+    <ol>
+      <li>
+	The binding will mirror nsIComponentManager and nsIServiceManager 
+	into the Java environment.
+      </li>
+      <li>
+	Java code interacts with XPCOM objects through a 
+	<a href="xpidl-java-binding.html">binding from XPIDL to Java</a> 
+	based loosely on CORBA and MS-COM bindings.  
+	One of Java's key features is its type safety, and 
+	the binding uses it as much as possible.
+      </li>
+      <li>
+	Because Java has automatic memory management, Java proxies will 
+	take care of all reference counting; Java programmers need never 
+	call <code>AddRef()</code> or <code>Release()</code>, 
+	and the binding will not expose those methods.
+      </li>
+    </ol>
+
+    <h3>Status</h3>
+
+    <p>
+      Right now, the project is just getting started.
+      What implementation we have is useful only for standalone test programs 
+      demonstrating argument marshalling.
+      We have yet to explore a number of issues relating to 
+      security and concurrency.
+      We also have yet to explore mapping Java interfaces back to IIDs, 
+      and <code>nsXPTCStubBase.CallMethod()</code> invocations to Java calls.
+      Anyone interested in helping out should contact
+      <a href="mailto:frankm@eng.sun.com">Frank Mitchell</a> or
+      <a href="mailto:drapeau@eng.sun.com">George Drapeau</a>.
+    </p>
+
+    <hr>
+    <address><a href="mailto:frankm@eng.sun.com">Frank Mitchell</a></address>
+<!-- Created: Mon Jul 19 16:17:03 PDT 1999 -->
+<!-- hhmts start -->
+Last modified: Tue Jul 20 14:26:04 PDT 1999
+<!-- hhmts end -->
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/blackwood/connect/index.html&amp;rev=&amp;root=/cvsroot/">Last modified July 28,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

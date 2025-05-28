@@ -1,0 +1,560 @@
+<HTML>
+<HEAD>
+<TITLE>mozilla.org</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+  
+    <title>
+      XPIDL Binding to Java
+    </title>
+  
+  
+
+    <h1>XPIDL Binding to Java</h1>
+
+    <h3>DRAFT: 23 July 1999</h3>
+
+    <p>
+      <em>
+	Note: This document is not a formal specification, but notes on a 
+	work in progress.
+	Feedback is encouraged.
+      </em>
+    </p>
+
+    <h3>Overview</h3>
+    
+    <p>
+      To use XPCOM interfaces from Java, we must have a consistent mapping
+      that meets the following design goals:
+    </p>
+
+    <ol>
+      <li>
+	Interfaces, and their (hidden) implementations, must look and behave 
+	like regular Java classes as much as possible.
+      </li>
+      <li>
+	Since Java is a strongly typed language, and strong typing contributes 
+	to both efficiency and correctness, the binding should use 
+	Java's type system as much as possible.
+      </li>
+      <li>
+	Only standard Java syntax and semantics are allowed; no implementor 
+	of a JVM must adopt extensions to the JVM and Java language specs.
+      </li>
+    </ol>
+
+    <p>
+      The following mapping is not the only one possible, and because of 
+      the mismatches between Java and XPCOM no mapping can be perfect.  
+      The author believes, however, that this mapping makes the 
+      best compromises for the sake of usability and simplicity.
+    </p>
+
+    <!--
+    <p>
+      As a motivating example, consider the following interface:
+    </p>
+
+    <pre>
+
+    </pre>
+    -->
+
+    <h3>Interfaces</h3>
+
+    <p>
+      Each XPCOM interface corresponds to a public Java interface of the same
+      name.
+    </p>
+
+    <p>
+      In addition to the constants defined in the interface, each Java 
+      interface also has two additional public static final fields:
+      <i>INTERFACENAME</i>_IID, of type org.mozilla.xpcom.nsID, containing 
+      the interface's IID, and <i>INTERFACENAME</i>_IID_STRING, a 
+      java.lang.String containing the IID's string value.
+    </p>
+
+    <p>
+      For backwards-compatibility, names beginning with "ns" will become
+      NS_<i>INTERFACENAME</i>_IID{_STRING}, e.g. nsISupports has an IID field 
+      called NS_ISUPPORTS_IID.
+    </p>
+
+    <h5>Namespaces</h5>
+
+    <p>
+      By default, all XPCOM interfaces reside in the Java package 
+      <code>org.mozilla.xpcom</code>.
+    </p>
+
+    <p>
+      A "namespace" attribute on the interface places the interface in the 
+      package named by the attribute's value.
+    </p>
+
+    <h3>Types</h3>
+
+    <p>
+      Each XPIDL/XPCOM type maps to a Java type.  Basic types -- integers, 
+      floating-point numbers, booleans and characters -- map to the 
+      corresponding Java "primitive" type.
+      If a parameter's or attribute's type declaration has a "ref" or 
+      "ptr" attribute, the mapping uses the listed "reference" type.
+    </p>
+
+    <p>
+      Strings, interfaces, and nsIDs always use a reference type.
+      and other complex types always use a reference 
+      type.
+    </p>
+
+    <p>
+      In some cases, no Java type corresponds exactly to the XPIDL type;
+      conversions between the XPIDL and Java values are noted. 
+    </p>
+
+    <table border="1" summary="Mapping from XPIDL types to C++ and Java">
+      <tr valign="top">
+        <th rowspan="2">XPIDL</th>
+        <th colspan="2">Java</th>
+        <th rowspan="2">C++ (NSPR)</th>
+        <th rowspan="2">Notes</th>
+      </tr>
+      <tr>
+        <!-- XPIDL -->
+        <th> primitive </th>
+	<th> reference </th>
+	<!-- C++ (NSPR) -->
+      </tr>
+      <tr>
+        <td> void </td>
+        <td> void </td>
+        <td> --- </td>
+        <td> void </td>
+      </tr>
+      <tr>
+	<td> --- </td>
+        <td> byte </td>
+        <td> java.lang.Byte </td>
+        <td> PRInt8 </td>
+      </tr>
+      <tr>
+        <td> short </td>
+        <td> short </td>
+        <td> java.lang.Short </td>
+        <td> PRInt16 </td>
+      </tr>
+      <tr>
+        <td> long </td>
+        <td> int </td>
+        <td> java.lang.Integer </td>
+        <td> PRInt32 </td>
+      </tr>
+      <tr>
+        <td> long long </td>
+        <td> long </td>
+        <td> java.lang.Long </td>
+        <td> PRInt64 </td>
+      </tr>
+      <tr>
+        <td> octet </td>
+        <td> byte </td>
+        <td> java.lang.Byte </td>
+        <td> PRUInt8 </td>
+        <td rowspan="4">
+	  Sign bit converted to unsigned's high bit.
+	</td>
+      </tr>
+      <tr>
+        <td> unsigned short </td>
+        <td> short </td>
+        <td> java.lang.Short </td>
+        <td> PRUInt16 </td>
+      </tr>
+      <tr>
+        <td> unsigned long </td>
+        <td> int </td>
+        <td> java.lang.Integer </td>
+        <td> PRUInt32 </td>
+      </tr>
+      <tr>
+        <td> unsigned long long </td>
+        <td> long </td>
+        <td> java.lang.Long </td>
+        <td> PRUInt64 </td>
+      </tr>
+      <tr>
+        <td> float </td>
+        <td> float </td>
+        <td> java.lang.Float </td>
+        <td> float </td>
+      </tr>
+      <tr>
+        <td> double </td>
+        <td> double </td>
+        <td> java.lang.Double </td>
+        <td> double </td>
+      </tr>
+      <tr>
+        <td> boolean </td>
+        <td> boolean </td>
+        <td> java.lang.Boolean </td>
+        <td> PRBool </td>
+      </tr>
+      <tr>
+        <td> char </td>
+        <td> char (16-bit)</td>
+        <td> java.lang.Character </td>
+        <td> char (8-bit)</td>
+        <td> Java values truncated to 8 bits </td>
+      </tr>
+      <tr>
+	<td> wchar </td>
+        <td> char </td>
+        <td> java.lang.Character </td>
+        <td> PRUnichar </td>
+      </tr>
+      <tr>
+        <td> string </td>
+        <td> --- </td>
+        <td> java.lang.String </td>
+        <td> char&nbsp;* </td>
+        <td> Java values converted to UTF-8 </td>
+      </tr>
+      <tr>
+        <td> wstring </td>
+        <td> --- </td>
+        <td> java.lang.String </td>
+        <td> PRUnichar&nbsp;* </td>
+      </tr>
+      <tr>
+        <td>
+          <i>interface</i>
+        </td>
+        <td> --- </td>
+        <td>
+	  <i>namespace</i><b>.</b>&nbsp;<i>interface</i>
+        </td>
+        <td>
+          <i>interface</i>&nbsp;*
+        </td>
+      </tr>
+      <tr>
+        <td> [ptr, nsid] native(nsID) </td>
+        <td> --- </td>
+        <td> org.mozilla.xpcom.nsID </td>
+        <td> nsID&nbsp;* </td>
+      </tr>
+      <tr>
+        <td> [ptr, ns_iid(<i>id-param</i>)] native(void) </td>
+        <td> --- </td>
+        <td> org.mozilla.xpcom.nsISupports </td>
+        <td> void&nbsp;* </td>
+      </tr>
+      <tr>
+        <td> <i>all other</i> [ptr]&nbsp;native(<i>type</i>) </td>
+        <td> --- </td>
+	<td> 
+	  <i><b>Type-dependent</b>:
+	  The implementation may use a pre-defined class, 
+	  or simply ignore declarations containing the type.</i>
+	</td>
+        <td> <i>type</i> * </td>
+      </tr>
+    </table>
+
+    <h3> Typedefs </h3>
+
+    <p>
+      Because Java has no corresponding "typedef" declaration, the Java type 
+      for a defined type is the "expanded" type from unravelling that and 
+      all intermediate typedefs.
+    </p>
+
+    <h3> Forward References </h3>
+
+    <p>
+      Java does not require forward references per se.
+      If the interface resides in a different namespace from the 
+      interface being generated, the generated Java interface will include
+      an appropriate import statement; otherwise, the import will be omitted.
+    </p>
+
+    <p>
+      A "namespace" attribute on a forward reference tells the XPIDL compiler 
+      which package the named interface belongs in, should the compiler 
+      not be able to discover that information itself.
+    </p>
+
+    <p>
+      For more information, see Namespaces, above.
+    </p>
+
+    <h3> Constants </h3>
+
+    <p>
+      Each constant defined within the interface corresponds to a public static 
+      final field of the same name, of the Java type corresponding to the 
+      XPIDL type, according to the mapping above.
+    </p>
+
+    <h3> Methods </h3>
+
+    <p>
+      Each method defined within the interface corresponds to a public method 
+      the same name.  The signature and Java types of the methods conform 
+      to patterns summarized in the table below.
+    </p>
+
+    <table>
+      <tr><th>XPIDL</th><th>Java</th><th>C++</th></tr>
+      <tr>
+	<td>void <i>Method</i>(in&nbsp;<i>type</i>&nbsp;<i>var</i>)</td>
+	<td>void <i>Method</i>(<i>type</i>&nbsp;<i>var</i>)<br></td>
+	<td>NS_IMETHOD <i>Method</i>(<i>type</i>&nbsp;<i>var</i>)</td>
+      </tr>
+      <tr>
+	<td>void <i>Method</i>(out&nbsp;<i>type</i>&nbsp;<i>var</i>)<br>   
+	  <b>or</b> void <i>Method</i>(inout&nbsp;<i>type</i>&nbsp;<i>var</i>)</td>
+	<td>void <i>Method</i>(<i>type</i>[] <i>var</i>)<br></td>
+	<td>NS_IMETHOD <i>Method</i>(<i>type</i>*&nbsp;<i>var</i>)</td>
+      </tr>
+      <tr>
+	<td><i>type</i> <i>Method</i>()<br> 
+	  <b>or</b> void <i>Method</i>([retval]&nbsp;out&nbsp;<i>type</i>&nbsp;<i>var</i>)</td>
+	<td><i>type</i> <i>Method</i>()<br></td>
+	</td><td>NS_IMETHOD <i>Method</i>(<i>type</i>&nbsp;*_retval)</td>
+      </tr>
+      <tr>
+	<td>[notxpcom] <i>type</i> <i>Method</i>()</td>
+	<td><i>type</i> <i>Method</i>()</td>
+	<td><i>type</i> <i>Method</i>()</td>
+      </tr>
+      <tr>
+	<td>[noscript] void <i>Method</i>()</td>
+	<td>/* not supported */</td>
+	</td><td>NS_IMETHOD <i>Method</i>()</td>
+      </tr>
+    </table>
+
+    <h5> Error Codes </h5>
+
+    <p>
+      Instead of explicitly returning an "nsresult" as the C++ binding does, 
+      Java XPCOM methods throw an org.mozilla.xpcom.XPCOMException when 
+      the nsresult is negative (or greater than 0x80000000).
+      XPCOMException is a RuntimeException, so it is not declared in the 
+      method's throws clause.
+    </p>
+
+    <blockquote>
+      <h5>Justification:</h5>
+      <p>
+	An explicit "nsresult" return value would place the burden of testing 
+	for successful return on the programmers; failing to do so would lead  
+	to mysterious bugs later. 
+	Unlike C++, Java has a well-established and fully portable exception
+	mechanism for just this purpose.
+      </p>
+      <p>
+	Declaring the exception, instead of using a RuntimeException, would 
+	forces the programmer to consider method failure ... but catching an 
+	exception for every single XPCOM method would prove too tedious, and 
+	lead to the dangerous practice of "catching" the exception to keep the 
+	compiler happy without doing anything useful with it.
+      </p>
+    </blockquote>
+
+    <h5> Success Codes </h5>
+
+    <p>
+      Any nsresults greater than 0 (but less than 0x80000000) are available 
+      by calling <i>{method in class TBD}</i>.  
+      This value is stored per thread, so 
+      it must be used before calling another XPCOM method.
+    </p>
+
+    <h5> Out Parameters and Return Values </h5>
+
+    <p>
+      The method's return value, or its out parameter marked with the 
+      "retval" attribute, becomes the return value of the corresponding 
+      Java method.
+    </p>
+
+    <p>
+      Other out or inout parameters become arguments of the array type 
+      corresponding to the XPIDL's parameter type.  For example, an 
+      "out double" becomes an argument of Java type "double[]".  Callers 
+      pass in an array of at least one element, which the method would 
+      fill with its value.
+    </p>
+
+    <blockquote>
+      <h5>Justification:</h5>
+      <p>
+	The CORBA-to-Java binding uses type-safe "holder" objects for 
+	out values, but that would require generating an extra class for 
+	every interface.  A Holder for type Object, on the other hand, would 
+	not be type-safe.
+      </p>
+      <p>
+	Length-one arrays provide type safety without extra classes, 
+	even though arrays have extra overhead and the small possibility 
+	of being allocated as zero-length.  MS-COM takes this approach in 
+	its binding.
+      </p>
+      <p>
+	Because of the overhead for arrays or holders, the binding maps 
+	the XPIDL return value to the Java method's return value.
+	(This is another motivation for using exceptions instead of 
+	success/error return codes; see above.)
+      </p>
+    </blockquote>
+
+    <h3> Attributes </h3>
+
+    <p>
+      Each attribute corresponds to a pair of methods of the form 
+      <code>public <i>AttributeType</i> get<i>AttributeName</i>()</code>
+      and
+      <code>public void set<i>AttributeName</i>(<i>AttributeType</i> value)</code>
+      .
+      The first letter of <i>AttributeName</i> is capitalized, if necessary.
+      Readonly attributes have only the "get" method.
+      Each method behaves exactly as described in the "Methods" section.
+    </p>
+
+    <blockquote>
+      <h5>Justification:</h5>
+      <p>
+	The "get" and "set" methods begin with lowercase, unlike most 
+	XPCOM methods, to fit the JavaBeans naming pattern.
+      </p>
+    </blockquote>
+
+    <h3>Support Classes and Interfaces</h3>
+
+    <p>
+    </p>
+
+    <h5> class org.mozilla.xpcom.XPCOMException </h5>
+
+    <p>TBD</p>
+
+    <h5> class org.mozilla.xpcom.nsID </h5>
+
+    <p>TBD</p>
+
+    <h5> interface org.mozilla.xpcom.nsISupports </h5>
+
+    <p>TBD</p>
+
+    <h5> interface org.mozilla.xpcom.nsIComponentManager </h5>
+
+    <p>TBD</p>
+
+    <h5> interface org.mozilla.xpcom.nsIServiceManager </h5>
+
+    <p>TBD</p>
+
+    <h5> class <i>namespace</i>.<i>InterfaceName</i>__Proxy </h5>
+
+    <p>TBD</p>
+
+    <hr>
+    <address>
+      <a href="mailto:frankm@eng">Frank Mitchell</a>
+    </address>
+<!-- Created: Tue Jul 20 13:30:58 PDT 1999 -->
+<!-- hhmts start -->
+Last modified: Thu Dec 23 11:47:19 PST 1999
+<!-- hhmts end -->
+  
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/blackwood/connect/xpidl-java-binding.html&amp;rev=&amp;root=/cvsroot/">Last modified December 23,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

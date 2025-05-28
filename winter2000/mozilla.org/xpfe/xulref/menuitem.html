@@ -1,0 +1,353 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Ian Oeschger">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (Win98; U) [Netscape]">
+   <title>The &lt;menuitem> Element</title>
+</head>
+<body>
+&nbsp;
+<table BORDER=0 COLS=1 WIDTH="100%" >
+<tr>
+<td>
+<div align=right><i>XUL Programmer's Reference Manual</i></div>
+</td>
+</tr>
+
+<tr>
+<td>
+<h1>
+<a NAME="menuitemsIDX"></a><b><font color="#000099"><font size=+2>&lt;menuitem
+/>&nbsp;</font></font></b></h1>
+
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Attributes</font></b></td>
+
+<td><b><font color="#FFFFFF">Common Children</font></b></td>
+</tr>
+
+<tr>
+<td><a href="#value">value</a></td>
+
+<td>* * *</td>
+</tr>
+
+<tr>
+<td><i><a href="menuel.html#key">key</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="menuel.html#acceltext">acceltext</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="menuel.html#access">accesskey</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="menuel.html#disabled">disabled</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#CCCCCC"><a href="#oncommand">oncommand</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>observes</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#class">class</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#checked">checked</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#type">type</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#name">name</a></td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+
+<p>&lt;menuitem> is the widget that represents the actual item in the menu.
+menuitems typically appear as children of a <a href="menupop.html">menupopup</a>
+whose own parent is a &lt;menu>. The&nbsp;<a NAME="basic structure of a XUL menuIDX"></a>basic
+structure of a XUL menu is as follows:
+<blockquote>&nbsp;
+<table BGCOLOR="#CCCCCC" >
+<tr>
+<td><a NAME="menu exampleIDX"></a><font face="Courier New,Courier">&lt;menu
+value="File"></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp; &lt;menupopup></font>
+<br><a NAME="examples, menu IDX"></a><font face="Courier New,Courier">&lt;menuitem
+value="Open" /></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;menuitem value="Close" oncommand="window.close()"/></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;menuseparator/></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;menuitem value="Save" /></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;menuitem value="Exit"/></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp; &lt;/menupopup></font>
+<br><font face="Courier New,Courier">&lt;/menu></font></td>
+</tr>
+</table>
+</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="value"></a><b><font color="#FFFFFF"><font size=+1>value</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote>The <b>v<a NAME="value attribute, menuitemsIDX"></a>alue</b>
+attribute specifies the name displayed for the menuitem.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;menuitem <b>value</b>="<i>string</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><font face="Courier New,Courier">&lt;menuitem
+<b>value</b>="New"
+/></font>
+<br><font face="Courier New,Courier">&lt;menuitem <b>value</b>="Open" /></font></blockquote>
+<b>Notes</b>
+<blockquote>&nbsp;</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="checked"></a><b><font color="#FFFFFF"><font size=+1>checked</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote>When&nbsp;<a NAME="checked attribute, menuitemsIDX"></a><b>checked</b>
+is set to "true", the menu itself appears with a check mark next to it
+in the menubar.
+<br>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;menu value="File">
+&nbsp; &lt;menupopup>
+&nbsp;&nbsp;&nbsp; &lt;menuitem value="New..."/>
+&nbsp;&nbsp;&nbsp; &lt;menu value="Open"/>
+&nbsp;&nbsp;&nbsp; &lt;menuitem value="Close"/>
+&nbsp;&nbsp;&nbsp; &lt;menuseparator/>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;menuitem value="Save" disabled="true"/>
+&nbsp;&nbsp;&nbsp; &lt;menuitem value="Save As..." <b>checked="true"</b>/>
+&nbsp;&nbsp;&nbsp; &lt;menuseparator/>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;menuitem value="Exit"/>
+&nbsp; &lt;/menupopup>
+&lt;/menu></pre>
+</td>
+
+<td><img SRC="menu_checked.gif" HSPACE=25 VSPACE=25 BORDER=1 height=164 width=184></td>
+</tr>
+</table>
+</blockquote>
+<b>Syntax</b>
+<blockquote><tt><b>checked</b>="[true | false]"</tt></blockquote>
+<b>Example</b>
+<blockquote><font face="Courier New,Courier">&lt;menuitem value="AutoSave"
+<b>checked</b>="true"
+/></font></blockquote>
+<b>Notes</b>
+<blockquote>Menuitems can be checked in this way, or they can be created
+as part of a radio or checkbox menu type (see the <b><a href="#type">type</a></b>
+attribute below), in which case the checkmarks appear without having to
+set this attribute. You can check for the state of this attribute by using
+something like the following in javascript, where "autosave" is the <b>id</b>
+of the menuitem:
+<p><tt>autosave_item = document.getElementById("autosave");</tt>
+<br><tt>current_state = autosave_item.getAttribute("checked");</tt>
+<br><tt>if (current_state = true) {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; doAutoSave()</tt>
+<br><tt>}</tt>
+<br>&nbsp;</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="oncommand"></a><b><font color="#FFFFFF"><font size=+1>oncommand</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>oncommand</b> is a<a NAME="oncommand attribute, menuitemsIDX"></a>n
+optional attribute for creating event handlers for key bindings and menu
+commands.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;menuitem id="<i>string</i>" value="<i>string</i>"
+<b>oncommand</b>="<i>event
+handler code</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menuitem id="saveKey" value="Save All" <b>oncommand</b>="SaveAll()"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>one..&nbsp;</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td></td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="type"></a><b><font color="#FFFFFF"><font size=+1>type</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote>The <b>type<a NAME="type attribute, menuitemsIDX"></a></b>attribute
+specifies the kind of menu that contains the given menuitem(s).</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;menuitem <b>type</b>="[ radio | checkbox ]" /></tt></blockquote>
+<b>Example</b>
+<blockquote><font face="Courier New,Courier">&lt;menuitem value="Auto Save"
+<b>type</b>="radio"
+name="save_type" /></font>
+<br><font face="Courier New,Courier">&lt;menuitem value="Manual Save" <b>type</b>="radio"
+name="save_type" /></font></blockquote>
+<b>Notes</b>
+<blockquote>In addition to the default menu type, which has no check marks
+or other indicators, you can also use the
+<b>type</b> attribute to specify
+menuitems of type <i>radio</i> and <i>checkbox</i>. Type, in this case,
+is a function of the menuitems and not the menu itself.
+<p>A&nbsp;<a NAME="radio menusIDX"></a><i>radio</i> menu allows the user
+to check only a single menuitem at any time. When an item is selected from
+the radio menu, that item is checked, and any other item&nbsp;<a NAME="menuitem types: radioIDX"></a>that
+was checked before is cleared. This functionality requires that all menuitems
+participating in this group be given the same
+<b>name</b>.
+<br>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;menu value="Wash">
+&nbsp; &lt;menupopup>
+&nbsp;&nbsp;&nbsp; &lt;menuitem disabled="true" value="Special Wax" />
+&nbsp;&nbsp;&nbsp; &lt;menuseparator />
+&nbsp;&nbsp;&nbsp; &lt;menuitem type="radio" name="w1" value="Disinfect" />
+&nbsp;&nbsp;&nbsp; &lt;menuitem type="radio" name="w1" value="Scrub" />
+&nbsp;&nbsp;&nbsp; &lt;menuitem type="radio" name="w1" value="Hose Down" />
+&nbsp; &lt;/menupopup>
+&lt;/menu></pre>
+</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td ALIGN=CENTER><img SRC="menu_radio1.gif" HSPACE=15 height=116 width=142><img SRC="menu_radio2.gif" HSPACE=15 height=116 width=138></td>
+</tr>
+</table>
+
+<p>Note that the first menuitem is not part of the radio set. When the
+user chooses "Scrub" from the Wash menu, the Disinfect item that was previously
+selected is deselected. In this scenario, the user can choose only one
+type of wash at a time.
+<p>A <i>checkbox</i> menu type also uses checks to indicate selected items,
+but it does not&nbsp;<a NAME="menuitem types: checkboxIDX"></a>prohibit
+the selection of multiple items. When the example menu above is specified
+as a checkbox menu, the user can choose to activate a group of items.
+<br>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre><a NAME="checkbox menuitemsIDX"></a>&lt;menu value="Wash">
+&nbsp; &lt;menupopup>
+&nbsp;&nbsp;&nbsp; &lt;menuitem disabled="true" value="Special Wax" />
+&nbsp;&nbsp;&nbsp; &lt;menuseparator />
+&nbsp;&nbsp;&nbsp; &lt;menuitem type="checkbox" value="Disinfect" />
+&nbsp;&nbsp;&nbsp; &lt;menuitem type="checkbox" value="Scrub" />
+&nbsp;&nbsp;&nbsp; &lt;menuitem type="checkbox" value="Hose Down" />
+&nbsp; &lt;/menupopup>
+&lt;/menu></pre>
+</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td ALIGN=CENTER><img SRC="menu_radio1.gif" HSPACE=15 height=116 width=142><img SRC="menu_radio3.gif" HSPACE=15 height=114 width=142></td>
+</tr>
+</table>
+
+<p>Note that <a href="#name">names</a> are not necessary for checkbox menuitems,
+because the toggling of each item functions independently of the others.</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="name"></a><b><font color="#FFFFFF"><font size=+1>name</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>name</b> is used to&nbsp;<a NAME="name attribute, menuitemsIDX"></a>associated
+radio menuitems with one another.</blockquote>
+<b>Syntax</b>
+<blockquote><a NAME="radio menus: name attributeIDX"></a><tt><b>name</b>="<i>string</i>"</tt></blockquote>
+<b>Example</b>
+<blockquote><font face="Courier New,Courier">&lt;menuitem value="Auto Save"
+type="radio" <b>name</b>="save_type" /></font>
+<br><font face="Courier New,Courier">&lt;menuitem value="Manual Save" type="radio"
+<b>name</b>="save_type"
+/></font></blockquote>
+<b>Notes</b>
+<blockquote>It is not necessary to use names with checkbox type menus,
+because the menuitems function independently of one another. Note also
+that you can name only a portion of the menuitems in a particular menu
+to make a set; not all menuittems within a particular menu need to be part
+of the same set.</blockquote>
+</td>
+</tr>
+
+<tr>
+<td></td>
+</tr>
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<div align=right><i>Last updated: 2/17/00 <a href="mailto:oeschger@netscape.com">Ian
+Oeschger</a></i></div>
+
+</body>
+</html>

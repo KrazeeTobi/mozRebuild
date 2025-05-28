@@ -1,0 +1,378 @@
+<HTML>
+<HEAD>
+<TITLE>Building Mozilla on Microsoft Windows 32-bit platforms</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+  
+  
+  
+    <HR>
+    <H1>
+      Building Mozilla on Microsoft Windows 32-bit platforms</H1>
+    
+    <H2>
+      Daniel Nunes, 
+      <TT><A HREF="mailto:leaf@netscape.com">leaf@mozilla.org</A></TT>
+    </H2>
+    $Id: win32.html,v 1.18 2000/02/10 07:44:26 endico%mozilla.org Exp $
+    
+    <P>
+    <HR><I>How to build Mozilla on a Microsoft Windows 32-bit System.</I>
+    <HR>
+    <H2>1. <A HREF="#s1">Introduction</A></H2>
+
+    <H2>2. <A HREF="#s2">Building Mozilla</A></H2>
+
+    <UL>
+      <LI>
+	<A HREF="#ss2.1">2.1 Requirements</A></LI>
+      <LI>
+	<A HREF="#ss2.2">2.2 Set Up The Build Environment</A></LI>
+      <LI>
+	<A HREF="#ss2.3">2.3 Get The Code </A></LI>
+      <LI>
+	<A HREF="#ss2.4">2.4 Compile The Code</A></LI>
+    </UL>
+
+    <H2>3. <A HREF="#s3"> Common Problems </A></H2>
+    <HR>
+    <H2><A NAME="s1">1. Introduction</A></H2>
+    <P>
+      What this document is: A guide to building the Mozilla application.
+      <BR>
+      This includes:
+    <OL>
+      <LI> A listing of the development tools you will need to build 
+	Mozilla. </LI>
+      <LI> A list of environment variables you will need to set before 
+	building. </LI>
+    </OL>
+    <P>
+      If you're looking for documentation on developing features or fixing 
+      bugs, the Mozilla
+      <A HREF="http://www.mozilla.org/hacking/">Hacking	Documents </A> 
+      are probably what you're looking for.
+    <P>
+    <HR>
+    <H2><A NAME="s2">2. Building Mozilla </A></H2>
+    <P>
+    <UL>Each of the following subsections describes, or gives references to
+	descriptions of, the steps necessary to build Mozilla.
+    <H2><A NAME="ss2.1">2.1 Requirements</A></H2>
+    <UL>
+	The following need to be installed:
+	<UL>
+	  <LI>Microsoft Visual C++ version 5.0 or later<BR>
+	      (make sure you have set up the compiler using the
+	       vcvars32.bat script that came with it)
+	  <LI>Service Pack 3
+	  <LI>GNU Tools for Microsoft Windows (the Cygnus toolkit):
+	    <UL>
+		Go to 
+		<A HREF="http://sourceware.cygnus.com/cygwin/download.html">
+		  http://sourceware.cygnus.com/cygwin/download.html</A>
+		and select a download site. Go to the 'latest' directory 
+		and download and run the file <TT>full.exe</TT>.
+	    </UL>
+	    Specifically, you'll need:
+	    <UL><TT>
+		  cp.exe<BR>
+		  rm.exe<BR>
+		  date.exe<BR>
+		</TT>
+	    </UL>
+	    Set <TT>MOZ_TOOLS</TT> such that <TT>%MOZ_TOOLS%\bin</TT> 
+	    contains the executables listed above..
+	    Netscape has internally modified versions of <TT>gmake</TT>, 
+	    <TT>shmsdos</TT>, and <TT>uname</TT>
+	    that we use to get around some problems 
+	    we were having keeping in sync with the Unix version of gmake. 
+	    These versions can be found in the Windows Build Tools 
+	    package, which can be ftp'd from
+	    <A HREF="ftp://ftp.mozilla.org/pub/mozilla/source/wintools.zip"> 
+	      ftp://ftp.mozilla.org/pub/mozilla/source/wintools.zip</A>. Then,
+	    unpack the zip file, and run the handy install script:
+	    <UL><CODE>
+		  cd buildtools\windows<BR>
+		  install.bat
+		</CODE>
+	    </UL>
+	    This will overwrite the cygnus toolkit versions of three 
+	    files with the modified versions you get from mozilla.org. This
+	    also installs required support libraries and dlls (such as libIDL
+	    and glib). 
+            <BR>
+	  <LI>Perl5 for win32:
+	    <UL>
+		Download ActivePerl from Activestate. Some of the build 
+		needs a perl interpreter and this is the standard one 
+		for windows now. Go to 
+		<A HREF="http://www.activestate.com/ActivePerl/download.htm">
+		  http://www.activestate.com/ActivePerl/download.htm</A>
+		and get the full installation via ftp or http.
+	    </UL>
+	  </LI>
+	</UL>
+	<P>
+	  Hardware/OS
+	<UL>
+	  <LI>Pentium 133 MHz or better</LI>
+	  <LI>64 MB RAM, 128 MB recommended</LI>
+	  <LI>250 MB NTFS or 500 MB FAT disk space</LI>
+	  <LI>NT 4.0 is preferred</LI>
+	  <LI>NT 3.51, Win95, and Win98 will also work.
+	  </LI>
+	</UL>
+    </UL>
+    <P>
+    <H2><A NAME="ss2.2">2.2 Set Up The Build Environment</A></H2>
+    <P>
+    <UL>
+	The following environment variables need to be set:
+	<UL>
+	    <CODE>
+	      <BR>
+	      set BUILD_XPIDL=1
+	      <BR>(don't set this if you haven't installed the wintools.zip
+	          package in a while)
+	      <BR>
+	      set MOZ_BITS=32
+	      <BR>
+	      set MOZ_DEBUG=1 
+	      <BR>(set this only if you want to build a debug build). to build
+              optimized, undefine the variable by doing "set MOZ_DEBUG="
+	      <BR>
+	      set MOZ_NT=351 
+	      <BR>(if running NT3.51)
+	      <BR>
+	      set MOZ_SRC=
+	      <BR>(top of your tree, for example: set 
+	      MOZ_SRC=d:\mozilla_source 
+	      if this is the directory where you checked out or 
+	      unzipped the source into... don't end this line with a <BR>
+	      '\'... you'll be sorry if you do)
+	      <BR>
+	      set MOZ_TOOLS=
+	      <BR>(the parent directory of the GNU tools 'bin' 
+	      directory. The build
+	      looks for MOZ_TOOLS\bin\gmake.exe, so make sure that the 
+	      gmake.exe from the Windows Build Tools package resides there.)
+	      <BR>
+	      OS_TARGET=WINNT 
+	      <BR>(or WIN95, or WIN98? Someone with one of these
+	      systems needs to verify this)
+	      <BR>
+	      set PATH=%PATH%;%MOZ_TOOLS%\bin
+	      <BR>
+	      set _MSC_VER=1100 
+	      <BR>(if you are running VC++ 5.0) or 1200 
+	      (if you are running VC++ 6.0) - or -
+	      set MOZ_VCVER=42 (for version 4.2, though no 
+	      reports of successful compilation have been reported with 4.2)
+	      <BR>
+	    </CODE>
+	</UL>
+	<BR>
+	<P>
+    </UL>
+    
+    <H2><A NAME="ss2.3">2.3 Get The Code</A></H2>
+    <P>
+    <UL>
+	There are two principal ways of getting the code, 
+	<A HREF="http://www.mozilla.org/download.html"> ftp</A> and 
+	<A HREF="http://www.mozilla.org/cvs.html"> CVS</A>.
+	CVS will provide the most current code for building, but is
+	slower than ftp. Ftp drops are generally produced daily,
+	and are known to compile.
+        <P>
+        If you prefer to initially get the source via FTP then
+        copy the tarball to your MOZ_SRC directory and uncompress it.
+    </UL>
+
+    <P>
+    <H2><A NAME="ss2.4">2.4 Compile The Code </A></H2>
+    <UL>
+	Change to the directory that you set the variable MOZ_SRC to. 
+         (for example,
+	<CODE>cd d:\mozilla_source</CODE>). 
+        <P>
+        If you already copied the source there from a tarball,
+	there should be one directory here named 
+	<CODE>mozilla</CODE>. Change to that directory and run 
+        <CODE>nmake</CODE> with the <CODE>build_all</CODE> option
+        so that <CODE>nmake</CODE> doesn't use CVS to update your tree.
+        <P>
+	<CODE>
+	<PRE>
+cd mozilla
+nmake /f client.mak build_all
+	</PRE>
+      </CODE>
+      <P>
+       If you're checking out the source via CVS, then check out the
+       makefile, change to the new <CODE>mozilla</CODE> directory it creates,
+       and run <CODE>nmake</CODE>. The makefile checks out the source 
+       and builds the tree in one step.
+	<PRE><CODE>
+cvs co  mozilla/client.mak
+cd mozilla
+nmake /f client.mak
+	</CODE></PRE>
+    </UL>
+  </UL>
+    
+    <HR>
+    <H2><A NAME="s3">3. Common Sticking Points</A></H2>
+    <UL>
+      <LI><B>nmake has a 'fatal error', listing one of the GNU commands and a 
+	  hexadecimal return code.</B>
+	<UL>
+	    This will happen as a result of not having the GNU tools and Windows Build
+	    tools in your path. Add the directories with the appropriate binaries to your 
+	    path.
+	</UL>
+      </LI>
+      <LI>
+	<B>It fails with the message "'.\WIN32' unexpected": </B>
+	<UL>
+	    You didn't properly
+	    set the environment variables -- you must not include a 
+	    space at the end
+	    of the set statements (be careful if you are cut'n'pasting).
+	</UL>
+      </LI>
+      <LI>
+	<B>It fails to build, with directory-related errors: </B>
+	<UL>
+	    The full path
+	    to the source must not include any spaces. Additionally, 
+	    the source must
+	    be extracted with an intact directory structure by a utility 
+	    that understands
+	    long filenames. If in doubt, grab Info-Zip at 
+	    <A HREF="ftp://ftp.cdrom.com/pub/infozip">
+	      ftp://ftp.cdrom.com/pub/infozip</A>
+	</UL>
+      </LI>
+      <LI>
+	<B>It fails immediately with the message "Cannot find 
+	  specified directory": 
+	</B>
+	<UL>
+	    You probably didn't properly set the environment 
+	    variable MOZ_TOOLS; 
+	    this needs to be set to the path up to, but not including, 
+	    the final \bin directory in the path to the gnu tools. So, 
+	    the path to the tool executables is '%MOZ_TOOLS%\bin\<executable>'.
+	</UL>
+      </LI>
+      <LI>
+	<B>I'm not running a 32-bit windows system, how do i build?</B>
+	<UL>
+	    Currently, the build process depends on a 32-bit operating system. 
+	    Windows NT 4.0 is the recommended windows operating system. 
+	</UL>
+      </LI>
+      <LI>
+	<B>I'm not using the standard cmd.exe, and my build fails...</B>
+	<UL>
+	  Problems have been encounted using the 4nt command shell. 4nt 
+	    interprets charactes like ';' in the makefile.win files as 
+	    targets, and since there are no rules for the target ';', the 
+	    build fails.
+	</UL>
+      </LI>
+      <LI>
+	<B>I checked in something that builds on Windows, but it breaks other platforms ...</B>
+	<UL>
+	    Check out
+	    <A HREF="making-additions.html">So you want to add something
+	    (and not break the build) ..."</a>, a guide to adding files and
+	    directories without breaking any of the three platforms.
+	</UL>
+    </UL>
+    <HR>
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/build/win32.html&amp;rev=&amp;root=/cvsroot/">Last modified February 10,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

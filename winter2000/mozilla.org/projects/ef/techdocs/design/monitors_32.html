@@ -1,0 +1,959 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire 32-Bit Monitors and Hash Codes</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Runtime</H2>
+
+
+<H2>Monitors and Hash Codes</H2>
+
+
+<H2><FONT SIZE=+4>32-Bit Implementation</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC="../electricalfire.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A>  <A HREF=
+"monitors.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM" WIDTH="37"
+HEIGHT="37" NATURALSIZEFLAG="3"><IMG SRC="../arrows/up.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="monitors_64.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P></P>
+
+<P>On a 32-bit address machine we pack both an object's monitor and its
+hash code into a single word -- the object's subheader at offset 4 in the
+object. <A HREF="#figure1">Figure 1</A> shows the placement of the subheader
+in an object and lists the possible states of the subheader.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" HEIGHT="223">
+ <TR>
+  <TD VALIGN="TOP">
+<A NAME="figure1"></A><IMG SRC="graphics/object_32_subheader.gif" WIDTH=
+"181" HEIGHT="114" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<IMG SRC="graphics/subheader_states_32.gif" WIDTH="275" HEIGHT="185" ALIGN=
+"BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD>(a) Subheader location in an object</TD>
+  <TD>(b) Subheader states</TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="2">Figure 1</TH>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>The states of a subheader <CODE>s</CODE> have the following meaning:</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP"><A NAME="st_hash_small"></A><B>Small Hash</B></TD>
+  <TD VALIGN="TOP">
+The object is unlocked and its hash value is the given unsigned 30-bit integer:
+<CODE>s&gt;&gt;2</CODE>.
+  </TD>
+ </TR>
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP"><A NAME="st_hash_large"></A><B>Large Hash</B></TD>
+  <TD VALIGN="TOP">
+The object is unlocked and its hash value is obtained by treating <CODE>s</CODE>-3
+as a pointer to an integer and dereferencing it: <CODE>*(int&nbsp;*)(s-3)</CODE>.
+The 32-bit hash code is located in an <A HREF="#hash_code_pool">extended
+hash code pool</A>.
+  </TD>
+ </TR>
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP"><A NAME="st_hash_uncomputed"></A><B>Uncomputed Hash</B></TD>
+  <TD VALIGN="TOP">The object is unlocked and its hash value has not been computed yet.</TD>
+ </TR>
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP"><A NAME="st_locked_uncontested"></A><B>Uncontended Locked</B></TD>
+  <TD VALIGN="TOP">
+The object is locked. <CODE>s</CODE>, when treated as a pointer, points
+to the saved subheader in a stack slot of the thread that locked the object.
+No other thread is waiting for the object's lock.
+  </TD>
+ </TR>
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP"><A NAME="st_locked_contested"></A><B>Contended Locked</B></TD>
+  <TD VALIGN="TOP">
+The object is locked. <CODE>s</CODE>-2, when treated as a pointer, points
+to the saved subheader in a stack slot of the thread that locked the object.
+Other threads <I>may</I> be waiting for the object's lock.
+  </TD>
+ </TR>
+ <TR>
+  <TD NOWRAP ALIGN="RIGHT" VALIGN="TOP"><A NAME="st_busy"></A><B>Busy</B></TD>
+  <TD VALIGN="TOP">
+A transient state used when reading or writing the hash code of a locked
+object.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H2><A NAME="monitors"></A>Monitors</H2>
+
+
+<P>Let us now take a look at the implementations of the monitor entering
+and exiting operations. We will start with a few examples of entering and
+exiting and then describe the entering and exiting procedures more precisely.</P>
+
+<H3>Simple and Recursive Entry Example</H3>
+
+
+<P>Uncontested monitor entries and exits are quite efficient, requiring
+at most one atomic operation each. When a thread wants to enter the monitor
+of an object <CODE>o</CODE>, it does the following:</P>
+
+<P><TABLE BORDER="0" WIDTH="100%" CELLSPACING="10" CELLPADDING="0">
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_rec_1.gif" WIDTH="406" HEIGHT="249" 
+ALIGN="RIGHT" NATURALSIZEFLAG="0"><B>1.</B> Initially the object is unlocked
+in a <B><A HREF="#st_hash_small">small hash</A></B>, <B><A HREF="#st_hash_large">large
+hash</A></B>, or <B><A HREF="#st_hash_uncomputed">uncomputed hash</A></B>
+state. A thread that we'll call thread <CODE>A</CODE> has an area of memory
+dedicated to its execution stack. The thread's stack pointer <CODE>sp</CODE>
+points to the top of the stack, and an end of stack pointer <CODE>eos</CODE>
+points to the stack's other end.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_rec_2.gif" WIDTH="406" HEIGHT="249"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>2.</B> Thread <CODE>A</CODE> is executing
+some function we'll call <CODE>F1</CODE>. That function allocates a frame
+on thread <CODE>A</CODE>'s stack. The compiler statically determined that
+function <CODE>F1</CODE> contains a monitor enter/exit pair, so it reserved
+one word (the saved subheader slot) in <CODE>F1</CODE>'s frame for monitor
+handling.</P>
+
+<P>Were <CODE>F1</CODE> to have nested monitor enter/exit pairs, each level
+of such nesting would get its own word in <CODE>F1</CODE>'s frame for monitor
+handling. The <A HREF="primitives.html#prim_MEnter">MEnter</A> (MonitorEnter)
+and <A HREF="primitives.html#prim_MExit">MExit</A> (MonitorExit)
+primitives contain the index of the word to use for a particular monitor
+entry or exit.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_rec_3.gif" WIDTH="406" HEIGHT="249"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>3.</B> Thread <CODE>A</CODE> begins
+to execute the <A HREF="primitives.html#prim_MEnter">MEnter</A>
+primitive (which, despite its name, is most likely
+an inline sequence of native instructions with a system call being made
+only if the thread needs to be suspended).</P>
+
+<P>Thread <CODE>A</CODE> reads object <CODE>o</CODE>'s subheader into a
+variable <CODE>s</CODE> and checks its least significant bit. Upon noticing
+that it is set, which means that the object is unlocked, thread <CODE>A</CODE>
+copies <CODE>s</CODE> into the saved subheader slot in <CODE>F1</CODE>'s
+stack frame.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_rec_4.gif" WIDTH="406" HEIGHT="249"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>4.</B> Now thread <CODE>A</CODE> does
+a compare-and-swap to store the pointer to the saved subheader slot into
+object <CODE>o</CODE>'s subheader. The compare-and-swap atomically checks
+that object <CODE>o</CODE>'s subheader still has the same value <CODE>s</CODE>
+as it did in step 3. If so, the compare-and-swap does the write. If not,
+the compare-and-swap aborts and thread <CODE>A</CODE> goes back to step
+3 to try again.</P>
+
+<P>If the compare-and-swap succeeded, thread A successfully acquired object
+<CODE>o</CODE>'s lock and can continue executing.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_rec_5.gif" WIDTH="406" HEIGHT="249" 
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>5.</B> For the sake of this example
+let us suppose that function <CODE>F1</CODE> called another function <CODE>F2</CODE>
+while holding the lock on object <CODE>o</CODE>. <CODE>F2</CODE>'s frame
+appears on thread <CODE>A</CODE>'s stack. <CODE>F2</CODE> is also going
+to attempt to acquire a lock, so it includes its own saved subheader slot.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_rec_6.gif" WIDTH="406" HEIGHT="249"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>6.</B> Suppose that thread <CODE>A</CODE>
+begins to execute another <A HREF="primitives.html#prim_MEnter">MEnter</A> (MonitorEnter)
+on the same object <CODE>o</CODE>.</P>
+
+<P>Thread <CODE>A</CODE> reads object <CODE>o</CODE>'s subheader into a
+variable <CODE>s</CODE> and checks its least significant bit. It is clear,
+so the object is already locked. At this point thread <CODE>A</CODE> tests
+whether <CODE>s</CODE> points between its <CODE>sp</CODE> and <CODE>eos</CODE>.
+It is, which means that thread <CODE>A</CODE> already owns object <CODE>o</CODE>'s
+lock. In this case thread A writes a zero into frame <CODE>F2</CODE>'s saved
+subheader slot as a reminder that the MonitorEnter entered object <CODE>o</CODE>'s
+lock recursively.</P>
+
+<P>At this point thread A holds object <CODE>o</CODE>'s lock and can continue
+executing.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_rec_5.gif" WIDTH="406" HEIGHT="249"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>7.</B> Sometime later function <CODE>F2</CODE>
+executes an <A HREF="primitives.html#prim_MExit">MExit</A> (MonitorExit)
+primitive to release object <CODE>o</CODE>'s lock.</P>
+
+<P>That primitive first reads the saved subheader slot and checks whether
+it is zero. If so, the lock was acquired recursively, so the MonitorExit
+is done.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_rec_4.gif" WIDTH="406" HEIGHT="249" 
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>8.</B> Function <CODE>F2</CODE> deallocates
+its frame and returns back to function <CODE>F1</CODE>.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_rec_2.gif" WIDTH="406" HEIGHT="249"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>9.</B> At some point function <CODE>F1</CODE>
+executes an <A HREF="primitives.html#prim_MExit">MExit</A> (MonitorExit)
+to release object <CODE>o</CODE>'s lock.</P>
+
+<P>That primitive first reads the saved subheader slot <CODE>sv</CODE>.
+<CODE>sv</CODE> wasn't zero, so the lock was not acquired recursively.</P>
+
+<P>Thread <CODE>A</CODE> then reads object <CODE>o</CODE>'s subheader into
+a variable <CODE>s</CODE>. If <CODE>s</CODE> is zero (the <B><A HREF="#st_busy">busy</A></B>
+state), thread <CODE>A</CODE> yields and then reads it again until it is
+not zero. Once it obtains a nonzero value of <CODE>s</CODE>, thread <CODE>A</CODE>
+does a compare-and-swap to atomically check that <CODE>s</CODE> hasn't changed
+since it was last read, and, if so, write <CODE>sv</CODE> into <CODE>o</CODE>'s
+subheader. If the compare-and-swap fails, thread <CODE>A</CODE> re-reads
+object <CODE>o</CODE>'s subheader into <CODE>s</CODE> and tries again as
+above.</P>
+
+<P>Now thread A checks the second least significant bit of <CODE>s</CODE>
+(the value of <CODE>o</CODE>'s subheader just before the successful compare-and-swap).
+If it was clear, the lock was uncontested and the MonitorExit is done. If
+that bit was set, the lock was contested; we'll look at that scenario in
+the next example.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_rec_1.gif" WIDTH="406" HEIGHT="249" 
+ALIGN="RIGHT" NATURALSIZEFLAG="0"><B>10.</B> Finally function <CODE>F1</CODE>
+returns and we're back to the state at the beginning of the example.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Contested Monitor Example</H3>
+
+
+<P>The contested case is slightly more complicated but still efficient:</P>
+
+<P><TABLE BORDER="0" WIDTH="100%" CELLSPACING="10" CELLPADDING="0">
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_contested_1.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>1.</B> We begin our example by
+having thread <CODE>A</CODE> currently hold object <CODE>o</CODE>'s lock.
+Thread <CODE>B</CODE>, which is currently executing (red in the figure),
+is about to attempt to acquire that lock. Thread <CODE>A</CODE> may or may
+not be executing at this time -- our scheme works on multiprocessors as
+well as uniprocessors.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_contested_2.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>2.</B> Thread <CODE>B</CODE>
+begins to execute the <A HREF="primitives.html#prim_MEnter">MEnter</A> (MonitorEnter).
+It reads object <CODE>o</CODE>'s subheader into a variable <CODE>s</CODE>
+and checks its least significant bit. It is clear, which means that object
+<CODE>o</CODE> is either <B><A HREF="#st_locked_uncontested">uncontested
+locked</A></B>, <B><A HREF="#st_locked_contested">contested locked</A></B>,
+or <B><A HREF="#st_busy">busy</A></B>. If <CODE>s</CODE> is zero (the <B>busy</B>
+state), thread <CODE>B</CODE> yields and then retries from the beginning
+of this step.</P>
+
+<P>If <CODE>s</CODE> indicated that <CODE>o</CODE> is locked by some other
+thread, thread <CODE>B</CODE> allocates and initializes a heavy monitor
+<CODE>h</CODE> on its stack and atomically creates an entry in a global
+hash table that associates <CODE>h</CODE> with object <CODE>o</CODE>. That
+hash table is protected by its own monitor to make sure that only one thread
+can manipulate it at a time.</P>
+
+<P>The heavy monitor contains a sticky semaphore that is initialized to
+the stopped (<CODE>0</CODE>) state.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_contested_3.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>3.</B> At this point thread <CODE>B</CODE>
+does a compare-and-swap to set the next-to-least significant bit of <CODE>o</CODE>'s
+subheader. If <CODE>o</CODE>'s subheader changed, thread <CODE>B</CODE>
+releases its heavy monitor and hash table entry and tries again from the
+beginning of step 2 (as an optimization, if the object is still locked,
+thread <CODE>B</CODE> could just use the new value of <CODE>o</CODE>'s subheader
+and try the compare-and-swap again without releasing the heavy monitor and
+hash table entry).
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_contested_4.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>4.</B> Now thread <CODE>B</CODE>
+suspends on the semaphore located inside its heavy monitor. It will restart
+when some other thread sets that semaphore to <CODE>1</CODE>.</P>
+
+<P>The semaphore must be sticky -- if some other thread already set that
+semaphore to <CODE>1</CODE> by the time thread <CODE>B</CODE> gets to this
+step, then thread <CODE>B</CODE> will not suspend. However, we will not
+illustrate this case here.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_contested_5.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>5.</B> At some later time thread
+<CODE>A</CODE> executes an <A HREF="primitives.html#prim_MExit">MExit</A> (MonitorExit)
+and releases object <CODE>o</CODE>'s lock. As part of the release process
+it notices that the next-to-least significant bit of <CODE>o</CODE>'s subheader
+was set and...
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_contested_6.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>6.</B> ...it looks for any entry
+referring to object o in the global hash table. If there is at least one
+such entry whose semaphore is <CODE>0</CODE>, thread <CODE>A</CODE> sets
+that semaphore to <CODE>1</CODE>, restarting that thread. In our example
+thread <CODE>B</CODE> will be scheduled to be restarted at this point.</P>
+
+<P>Thread <CODE>A</CODE> continues to run and may eventually exit its function
+<CODE>F1</CODE>.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_contested_7.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>7.</B> Once its semaphore is
+triggered, the scheduler restarts thread <CODE>B</CODE>.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_contested_8.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>8.</B> Thread <CODE>B</CODE>
+releases its heavy monitor and global hash table entry.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_contested_9.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>9.</B> Now thread <CODE>B</CODE>
+starts from the beginning its MonitorEnter process. This time it succeeds
+and acquires object <CODE>o</CODE>'s lock.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Breaking a Monitor Wait</H3>
+
+
+<P>Sometimes we may want to ask a thread to break out of an
+<A HREF="primitives.html#prim_MEnter">MEnter</A> (MonitorEnter)
+wait to, say, handle an asynchronous exception. The MonitorEnter will terminate
+abnormally without having acquired a lock. We do this as illustrated in
+this example:</P>
+
+<P><TABLE BORDER="0" WIDTH="100%" CELLSPACING="10" CELLPADDING="0">
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_contested_4.gif" WIDTH="406" HEIGHT=
+"348" ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>1.</B> Let us begin as in step
+4 of the contested example above. Thread <CODE>B</CODE> is suspended, waiting
+on object <CODE>o</CODE>'s lock held by thread <CODE>A</CODE>. Some other
+thread <CODE>C</CODE> (not shown) now wants to stop thread <CODE>B</CODE>.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P><IMG SRC="graphics/monitor_example_stop_2.gif" WIDTH="406" HEIGHT="348"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>2.</B> Thread <CODE>C</CODE> acquires
+the global lock of the global hash table, stores a <CODE>STOP</CODE> token
+in thread B's heavy monitor and sets its semaphore to 1, requesting thread
+B to restart.</P>
+
+<P>The <CODE>STOP</CODE> token can be a flag or it can be a pointer to more
+information such as the exception that caused the stop.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_stop_3.gif" WIDTH="406" HEIGHT="348"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>3.</B> Thread <CODE>B</CODE> resumes
+running and notices the <CODE>STOP</CODE> token.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_stop_4.gif" WIDTH="406" HEIGHT="348"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>4.</B> Instead of trying to acquire
+object <CODE>o</CODE>'s lock, thread <CODE>B</CODE> throws an exception
+out of its MonitorEnter primitive.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_stop_5.gif" WIDTH="406" HEIGHT="348"
+ALIGN="RIGHT" NATURALSIZEFLAG="3"><B>5.</B> The exception may propagate
+out of function <CODE>F2</CODE> and eventually kill thread <CODE>B</CODE>.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Procedures</H3>
+
+
+<P>The algorithms for MonitorEnter, MonitorExit, and stopping a thread are
+described below. We use the following notation:</P>
+
+<DL>
+  <DT><B><CODE>sp</CODE></B>
+  <DD>The value of the current stack pointer.
+  <DT><B><CODE>eos</CODE></B>
+  <DD>The other end of the current thread's stack. (The algorithms assume
+  contiguous stacks but could be extended to handle noncontiguous stacks.)
+  <DT><VAR>bool</VAR> := <B><CODE>compare-and-swap</CODE></B>(<VAR>loc</VAR>,
+  <VAR>old</VAR>, <VAR>new</VAR>)
+  <DD>Atomically test whether the contents of memory location <VAR>loc</VAR>
+  is equal to <VAR>old</VAR>. If so, set <VAR>loc</VAR> to <VAR>new</VAR>
+  and return true; otherwise it leave <VAR>loc</VAR> unchanged, set <VAR>old</VAR>
+  to the actual contents of memory location <VAR>loc</VAR> and return false.
+  <DT><B><CODE>sticky-wait</CODE></B>(<VAR>semaphore</VAR>)
+  <DD>Yield the current thread until <VAR>semaphore </VAR>is <CODE>1</CODE>.
+  <VAR>semaphore</VAR> is sticky, so that if it is <CODE>1</CODE> on entry,
+  <CODE>sticky-wait</CODE> returns immediately. On exit <VAR>semaphore </VAR>is
+  always <CODE>1</CODE>.
+</DL>
+
+<P>The following functions operate on the global heavy monitor hash table.
+These functions all synchronize on a single global lock, so they are all
+atomic <I>with respect to each other</I>.</P>
+
+<DL>
+  <DT><VAR>heavy-lock</VAR> := <B><CODE>create-heavy</CODE></B>(<VAR>object</VAR>)
+  <DD>Allocate and initialize a heavy lock <VAR>heavy-lock</VAR> on the current
+  thread's stack and allocate a hash entry associating <VAR>heavy-lock</VAR>
+  with <VAR>object</VAR>. The hash table can contain multiple entries associated
+  with the same object.
+  <DD>Set the <CODE>semaphore</CODE> field in <VAR>heavy-lock </VAR>to <CODE>0</CODE>.
+  Clear the <CODE>stop</CODE> flag in <VAR>heavy-lock</VAR>. Return <VAR>heavy-lock</VAR>.
+  <DT><VAR>bool</VAR> := <B><CODE>destroy-heavy</CODE></B>(<VAR>heavy-lock</VAR>)
+  <DD>Deallocate <VAR>heavy-lock</VAR>, which must be on the current thread's
+  stack, and deallocate the hash entry associating <VAR>heavy-lock</VAR>
+  with an object. Return the contents of the <VAR>heavy-lock</VAR>'s <CODE>semaphore</CODE>
+  field (note that it cannot change because <CODE>create-heavy</CODE> and
+  <CODE>notify</CODE> are excluded by the global hash table's lock).
+  <DT><B><CODE>notify-heavy</CODE></B>(<VAR>object</VAR>)
+  <DD>Find any hash entry associated with <VAR>object</VAR> whose heavy-lock's
+  semaphore is <CODE>0</CODE>. If such an entry exists, set that semaphore
+  to <CODE>1</CODE> for exactly one such entry.
+  <DT><VAR>bool</VAR> := <B><CODE>notify-heavy</CODE></B>(<VAR>object</VAR>,
+  <VAR>thread</VAR>, <VAR>stop</VAR>)
+  <DD>Find the hash entry, if any, associated with <VAR>object</VAR> whose
+  heavy-lock corresponds to <VAR>thread</VAR>. If no such an entry exists,
+  return false. If that entry exists and its semaphore is already <CODE>1</CODE>,
+  also return false. Otherwise, set that semaphore to <CODE>1</CODE> and
+  return true.
+</DL>
+
+<P></P>
+
+<H4><A NAME="alg_MonitorEnter"></A>MonitorEnter</H4>
+
+
+<P>The algorithm that <A HREF="primitives.html#prim_MEnter">MEnter</A>
+uses to acquire the lock of an object <CODE>o</CODE> is as follows. <CODE>sv</CODE>
+is the proper saved subheader slot in the current stack frame. <CODE>s</CODE>
+and <CODE>stop</CODE> are local variables.</P>
+
+<OL>
+  <LI><CODE>s := o-&gt;subheader</CODE>
+  <LI>If <CODE>s&amp;1</CODE> <FONT COLOR="#996633">(<CODE>s</CODE>'s least
+  significant bit is set)</FONT>:
+  <OL>
+    <LI><CODE>sv := s</CODE>
+    <LI>If <CODE>compare-and-swap(&amp;o-&gt;subheader, s, &amp;sv)</CODE>
+    then done; otherwise go back to step 2 <FONT COLOR="#996633">(some other
+    thread just changed the lock)</FONT>.
+  </OL>
+  <LI>Else if <CODE>s</CODE> is between <CODE>sp</CODE> and <CODE>eos</CODE>:
+  <OL>
+    <LI><CODE>sv := 0</CODE>
+    <LI>Done <FONT COLOR="#996633">(we're in the recursive MonitorEnter case)</FONT>.
+  </OL>
+  <LI>Else if <CODE>s</CODE> is zero then:
+  <OL>
+    <LI>Yield for a while <FONT COLOR="#996633">(the monitor is temporarily
+    busy)</FONT>.
+    <LI>Go back to step 1.
+  </OL>
+  <LI>Else <FONT COLOR="#996633">(some other thread already has the lock)</FONT>:
+  <OL>
+    <LI><CODE>h := create-heavy(o)</CODE>
+    <LI>If <CODE>compare-and-swap(&amp;o-&gt;subheader, s, s|2)</CODE> then:
+    <OL>
+      <LI><CODE>sticky-wait(&amp;h-&gt;semaphore)</CODE>
+      <LI><CODE>stop := h-&gt;stop</CODE> <FONT COLOR="#996633">(wait for the
+      lock to be released and this thread notified of that fact)</FONT>
+      <LI><CODE>destroy-heavy(h)</CODE>
+      <LI>If <CODE>stop</CODE> is non-null then throw(<CODE>stop</CODE>); otherwise
+      go back to step 1.
+    </OL>
+    <LI>Else <FONT COLOR="#996633">(<CODE>o</CODE>'s lock changed while we
+    were creating the heavy lock)</FONT>:
+    <OL>
+      <LI>If (<CODE>s&amp;1</CODE>) or (<CODE>s</CODE> is between <CODE>sp</CODE>
+      and <CODE>eos</CODE>) or (<CODE>s</CODE> is zero) then:
+      <OL>
+        <LI>If <CODE>destroy-heavy(h)</CODE> then <CODE>notify-heavy(o)</CODE>
+        <FONT COLOR="#996633">(if we were notified in the meantime, notify some
+        other thread waiting for <CODE>o</CODE>)</FONT>.
+        <LI>Go back to step 1.
+      </OL>
+      <LI>Else <FONT COLOR="#996633">(some other thread still has the lock)</FONT>:
+      <OL>
+        <LI>Go back to step 5.2.
+      </OL>
+    </OL>
+  </OL>
+</OL>
+
+<P>Steps 1, 2, and 3 can be inlined. The others occur only in cases of contention
+and should be performed in system routines.</P>
+
+<H4><A NAME="alg_MonitorExit"></A>MonitorExit</H4>
+
+
+<P>The algorithm that <A HREF="primitives.html#prim_MExit">MExit</A>
+uses to release the lock of an object <CODE>o</CODE> is as follows. <CODE>sv</CODE>
+is the proper saved subheader slot in the current stack frame. <CODE>s</CODE>
+is a local variable.</P>
+
+<OL>
+  <LI>If <CODE>sv</CODE> is zero, done <FONT COLOR="#996633">(we're in the
+  recursive MonitorExit case)</FONT>.
+  <LI><CODE>s := &amp;sv</CODE>
+  <LI>If <CODE>compare-and-swap(&amp;o-&gt;subheader, s, sv)</CODE> then
+  done <FONT COLOR="#996633">(we successfully restored <CODE>o</CODE>'s subheader)</FONT>.
+  <LI>If <CODE>s</CODE> is zero then:
+  <OL>
+    <LI>Yield for a while <FONT COLOR="#996633">(the monitor is temporarily
+    busy)</FONT>.
+    <LI>Go back to step 2.
+  </OL>
+  <LI>If <CODE>not compare-and-swap(&amp;o-&gt;subheader, s, sv)</CODE> then
+  go back to step 4 <FONT COLOR="#996633">(some other thread just changed
+  the lock)</FONT>.
+  <LI>If <CODE>s&amp;2</CODE> is zero <FONT COLOR="#996633">(<CODE>s</CODE>'s
+  second-least significant bit is clear)</FONT> then done.
+  <LI><CODE>notify-heavy(o)</CODE> <FONT COLOR="#996633">(some other thread
+  is waiting for <CODE>o</CODE>)</FONT>
+  <LI>Done.
+</OL>
+
+<P>Steps 1, 2, and 3 can be inlined. The others occur only in cases of contention
+and should be performed in system routines.</P>
+
+<H4>Stop</H4>
+
+
+<P>If, while trying to stop a thread <CODE>T</CODE>, we determine that it
+is waiting for a lock inside MonitorEnter, we can break it out of that MonitorEnter
+by calling <CODE>notify-heavy(o, T, stop)</CODE>, where <CODE>stop</CODE>
+is the exception that we'd like that MonitorEnter to throw. If <CODE>notify-heavy</CODE>
+returns false, then it indicates that it got to the thread too late -- it
+was already restarted by some other call to <CODE>notify-heavy</CODE>.</P>
+
+<H3>Code Sequences</H3>
+
+
+<P>We can use the following 80486 code sequences for the inline cases of
+MonitorEnter and MonitorExit.</P>
+
+<H4>MonitorEnter</H4>
+
+
+<P>The address of the object <CODE>o</CODE> is assumed to be in <CODE>ebx</CODE>;
+we can rename registers as appropriate if the address is somewhere else.
+The subheader is at offset 4 in the object. <CODE>sv_offset</CODE> is the
+offset to the saved subheader slot in the current stack frame.</P>
+
+<PRE>            mov     eax,[ebx+4]                ;Read o-&gt;subheader.
+Retry:      test    eax,1                      ;Is it locked?
+            je      Unlocked
+            sub     eax,esp                    ;Yes.  Is the stack pointer close to the subheader?
+            cmp     eax,stack_guard_size
+            mov     [ebp+sv_offset],0          ;Optimistically set sv to zero.
+            jb      Done                       ;We're in the recursive case if the stack pointer is close
+            call    SlowEnter                  ; to the subheader.  If not, enter the slower case.
+            jmp     Done
+
+Unlocked:   mov     [ebp+sv_offset],eax        ;Write sv and change o-&gt;subheader to &amp;sv.
+            lea     ecx,ebp+sv_offset
+     {lock} cmpxchg [ebx+4],ecx
+            jne     Retry                      ;Try again if the compare-and-swap failed.
+Done:       ...</PRE>
+
+<P>The <CODE>cmpxchg</CODE> instruction should have a <CODE>lock</CODE>
+prefix on a multiprocessor. It's best not to use the <CODE>lock</CODE> prefix
+on a multiprocessor because it substantially slows down the instruction.</P>
+
+<P>Since access to a thread-local variable is slow under Windows NT (involving
+at least the code below), we check instead whether the current stack pointer
+<CODE>esp</CODE> is within <CODE>stack_guard_size</CODE> bytes below the
+object's subheader. Assuming that any two stacks are separated by guard
+pages at least <CODE>stack_guard_size</CODE> bytes long, we know that the
+object was locked in the same stack.</P>
+
+<P>If the test fails, we call <CODE>SlowEnter</CODE> which then does the
+full check of whether the object's subheader is between <CODE>esp</CODE>
+and <CODE>eos</CODE>, which it gets from a thread-local variable using the
+code below. <CODE>SlowEnter</CODE> also handles the other, less frequent
+cases of entering a monitor.</P>
+
+<PRE>            mov     edx,__tls_index
+            mov     ecx,fs:[0x2C]
+            mov     ecx,[ecx+edx*4]
+            mov     edx,[ecx+eos_offset]       ;edx now contains eos.</PRE>
+
+<P>Note that if the code is placed in a DLL that can be dynamically loaded
+(instead of statically loaded when the program begins executing), we must
+use a system call instead of the above code, and the procedure becomes several
+<I>times</I> slower.</P>
+
+<H4>MonitorExit</H4>
+
+
+<P>The address of the object <CODE>o</CODE> is assumed to be in <CODE>ebx</CODE>;
+we can rename registers as appropriate if the address is somewhere else.</P>
+
+<PRE>            mov     ecx,[ebp+sv_offset]        ;Get sv.
+            test    ecx,ecx
+            je      Done                       ;If sv==0, this is a recursive unlock and we're done.
+            lea     eax,ebp+sv_offset
+     {lock} cmpxchg [ebx+4],ecx
+            je      Done
+            call    SlowExit                   ;Handle the slower cases if the compare-and-swap failed.
+Done:       ...</PRE>
+
+<P>Again, the <CODE>cmpxchg</CODE> instruction should have a <CODE>lock</CODE>
+prefix on a multiprocessor.</P>
+
+<H2>Hash Codes</H2>
+
+
+<P>Now let us turn our attention to the hash code reading and writing operations.</P>
+
+<H3><A NAME="hash_code_pool"></A>Extended Hash Code Pool</H3>
+
+
+<P>When an object's hash code is negative or greater than 0x3FFFFFFF, it
+needs to be stored outside the object. Such hash codes can occur for strings
+longer than six characters. We put them into a separate area of memory called
+the <B>extended hash code pool</B>. Each hash code in that pool is a word
+that belongs to one and only one object in memory. We can link free pool
+words into a linked list if desired. We deallocate a pool word when we deallocate
+its object.</P>
+
+<P><IMG SRC="graphics/large_hash.gif" WIDTH="388" HEIGHT="204" ALIGN="BOTTOM"
+NATURALSIZEFLAG="3"></P>
+
+<H3>Reading a Hash Code</H3>
+
+
+<P>To read the hash code of an object <CODE>o</CODE> or &quot;unknown&quot;
+if not known, we follow the procedure below. <CODE>s</CODE> and <CODE>h</CODE>
+are local variables, and <CODE>exchange</CODE> is defined as:</P>
+
+<DL>
+  <DT><VAR>old</VAR> := <B><CODE>exchange</CODE></B>(<VAR>loc</VAR>, <VAR>new</VAR>)
+  <DD>Atomically read the contents of memory location <VAR>loc</VAR> and
+  return it as <VAR>old</VAR> while writing <VAR>new</VAR> into <VAR>loc</VAR>.
+</DL>
+
+<OL>
+  <LI><CODE>s := o-&gt;subheader</CODE>
+  <LI>If <CODE>s&amp;1</CODE> <FONT COLOR="#996633">(<CODE>s</CODE>'s least
+  significant bit is set)</FONT>:
+  <OL>
+    <LI><CODE>h := s</CODE> <FONT COLOR="#996633">(the object is unlocked)</FONT>
+  </OL>
+  <LI>Else if <CODE>s</CODE> is between <CODE>sp</CODE> and <CODE>eos</CODE>:
+  <OL>
+    <LI><CODE>h := *(int *)(s &amp; -2)</CODE> <FONT COLOR="#996633">(the object
+    is locked by our thread, so we can read the saved subheader word directly)</FONT>
+  </OL>
+  <LI>Else <FONT COLOR="#996633">(the object is busy or locked by some other
+  thread)</FONT>:
+  <OL>
+    <LI><CODE>s := exchange(&amp;o-&gt;subheader, 0)</CODE> <FONT COLOR="#996633">(try
+    to make the monitor busy)</FONT>
+    <LI>If <CODE>s</CODE> is zero then:
+    <OL>
+      <LI>Yield for a while <FONT COLOR="#996633">(the monitor already was busy)</FONT>.
+      <LI>Go back to step 1.
+    </OL>
+    <LI>If <CODE>s&amp;1</CODE> <FONT COLOR="#996633">(<CODE>s</CODE>'s least
+    significant bit is set)</FONT>:
+    <OL>
+      <LI><CODE>h := s</CODE> <FONT COLOR="#996633">(the object is unlocked)</FONT>
+    </OL>
+    <LI>Else:
+    <OL>
+      <LI><CODE>h := *(int *)(s &amp; -2)</CODE>
+    </OL>
+    <LI><CODE>o-&gt;subheader := s</CODE> <FONT COLOR="#996633">(restore the
+    monitor to its non-busy state)</FONT>
+  </OL>
+  <LI>If <CODE>(h&amp;3) == 3</CODE> <FONT COLOR="#996633">(<CODE>h</CODE>'s
+  two significant bits are set)</FONT>:
+  <OL>
+    <LI>If <CODE>h == 3</CODE>:
+    <OL>
+      <LI>Return &quot;unknown&quot;.
+    </OL>
+    <LI>Else:
+    <OL>
+      <LI>Return <CODE>*(int *)(h-3) </CODE><FONT COLOR="#996633">(large hash
+      code)</FONT>
+    </OL>
+  </OL>
+  <LI>Else:
+  <OL>
+    <LI>Return <CODE>(unsigned int)h &gt;&gt; 2 </CODE><FONT COLOR="#996633">(small
+    hash code)</FONT>
+  </OL>
+</OL>
+
+<P>If the object is unlocked, we can read the hash code directly from it.
+If it is locked by our thread, we dereference the pointer in the object's
+subheader to get the saved subheader and read the hash code from that. If
+the object is locked by some other thread, we must temporarily put the object's
+subheader into the <B><A HREF="#st_busy">busy</A></B> state so we can read
+that thread's saved subheader word without worrying about that thread exiting
+from a MonitorExit and destroying its saved subheader word in the meantime.
+After reading the saved subheader word we restore the object's subheader
+into its previous state. Here's an example of this process:</P>
+
+<P><TABLE BORDER="0" WIDTH="100%" CELLSPACING="10" CELLPADDING="0">
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_hash_1.gif" WIDTH="406" HEIGHT="249"
+ALIGN="RIGHT" NATURALSIZEFLAG="0"><B>1.</B> Initially thread <CODE>A</CODE>
+holds object <CODE>o</CODE>'s lock, while thread <CODE>B</CODE> wants to
+read its hash code. Thread <CODE>B</CODE> reads <CODE>o</CODE>'s subheader
+and notices that object <CODE>o</CODE> is locked by a thread other than
+<CODE>B</CODE>.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_hash_2.gif" WIDTH="406" HEIGHT="249"
+ALIGN="RIGHT" NATURALSIZEFLAG="0"><B>2.</B> Thread <CODE>B</CODE> atomically
+exchanges <CODE>o</CODE>'s subheader with zero to obtain a pointer to thread
+<CODE>A</CODE>'s saved subheader slot. Now thread <CODE>B</CODE> can read
+the hash value from that slot. Thread <CODE>A</CODE> cannot erase its saved
+subheader slot because <CODE>o</CODE>'s subheader is in the <B><A HREF=
+"#st_busy">busy</A></B> state.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<IMG SRC="graphics/monitor_example_hash_1.gif" WIDTH="406" HEIGHT="249"
+ALIGN="RIGHT" NATURALSIZEFLAG="0"><B>3.</B> Thread <CODE>B</CODE> writes
+the old value back into <CODE>o</CODE>'s subheader.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Writing a Hash Code</H3>
+
+
+<P>Most objects will have their hash code computed as soon as they are created,
+generally using a global running counter or perhaps a processor cycle counter
+if available. On an 80486 processor or higher we can quickly obtain a new
+hash code for an object using:</P>
+
+<PRE>            mov     eax,4
+     {lock} xadd    [running_counter],eax</PRE>
+
+<P>The <CODE>xadd</CODE> instruction should have a <CODE>lock</CODE> prefix
+on a multiprocessor, although omitting it would not be disastrous -- some
+objects might have duplicate hash codes.</P>
+
+<P>For some special system classes such as <CODE>java.lang.String</CODE>
+we may choose to compute an object's hash code lazily, in which case we
+store 3 (the <B><A HREF="#st_hash_uncomputed">uncomputed hash</A></B> state)
+into the object's subheader when we create the object and only store the
+hash code on demand. For such objects we need to be able to write the hash
+code of an object.</P>
+
+<P><B><FONT COLOR="#FF0000">Important:</FONT></B><FONT COLOR="#FF0000">
+We can only use lazy hash codes in cases where the function <CODE>f</CODE>
+that computes an object's hash code is idempotent. There is a race condition
+between MonitorExit and writing the hash code of a locked object that could
+cause an object's hash code to be forgotten soon after it is written, so
+<CODE>f</CODE> could get called several times on the same object. This means,
+for instance, that <CODE>f</CODE> must not increment and return a running
+counter.</FONT></P>
+
+<P>To write a small hash code <CODE>hash</CODE> (between 0 and 0x3FFFFFFF
+inclusive) into an object <CODE>o</CODE>, we do the following. <CODE>s</CODE>,
+<CODE>sv</CODE>, and <CODE>h</CODE> are local variables.</P>
+
+<OL>
+  <LI><CODE>h := hash&lt;&lt;2 | 1</CODE>
+  <LI><CODE>s := o-&gt;subheader</CODE>
+  <LI>If <CODE>s == 3</CODE>:
+  <OL>
+    <LI>If <CODE>compare-and-swap(&amp;o-&gt;subheader, s, h)</CODE> then done
+    else go back to step 3.
+  </OL>
+  <LI>Else if <CODE>s&amp;1</CODE>, done <FONT COLOR="#996633">(someone already
+  wrote the hash code into the object; it better be the same as <CODE>hash</CODE>!)</FONT>.
+  <LI>Else if <CODE>s</CODE> is between <CODE>sp</CODE> and <CODE>eos</CODE>:
+  <OL>
+    <LI><CODE>sv := (int *)(s &amp; -2)</CODE> <FONT COLOR="#996633">(the object
+    is locked by our thread, so we can write the saved subheader word directly)</FONT>
+    <LI>If <CODE>*sv == 3</CODE> then <CODE>*sv := h</CODE>
+    <LI>Done.
+  </OL>
+  <LI>Else <FONT COLOR="#996633">(the object is busy or locked by some other
+  thread)</FONT>:
+  <OL>
+    <LI><CODE>s := exchange(&amp;o-&gt;subheader, 0)</CODE> <FONT COLOR="#996633">(try
+    to make the monitor busy)</FONT>
+    <LI>If <CODE>s</CODE> is zero then:
+    <OL>
+      <LI>Yield for a while <FONT COLOR="#996633">(the monitor already was busy)</FONT>.
+      <LI>Go back to step 2.
+    </OL>
+    <LI>If <CODE>s == 3</CODE>:
+    <OL>
+      <LI><CODE>o-&gt;subheader := h</CODE> <FONT COLOR="#996633">(write the
+      hash and restore the monitor to its non-busy state)</FONT>
+    </OL>
+    <LI>Else:
+    <OL>
+      <LI>If <CODE>(s&amp;1) == 0</CODE> <FONT COLOR="#996633">(<CODE>s</CODE>'s
+      least significant bit is clear)</FONT>:
+      <OL>
+        <LI><CODE>sv := (int *)(s &amp; -2)</CODE>
+        <LI>If <CODE>*sv == 3</CODE> then <CODE>*sv := h</CODE>
+      </OL>
+      <LI><CODE>o-&gt;subheader := s</CODE> <FONT COLOR="#996633">(restore the
+      monitor to its non-busy state)</FONT>
+    </OL>
+  </OL>
+</OL>
+
+<P>The race condition mentioned above exists between the write in statement
+6.4.1.2 and the read of <CODE>sv</CODE> in MonitorExit. <A HREF="#alg_MonitorExit">MonitorExit's
+algorithm</A> must read the saved subheader slot before it does the compare-and-swap
+that writes the object's subheader; we could be unlucky enough to set the
+object's hash code in the saved subheader slot between the read and the
+compare-and-swap in MonitorExit's algorithm. This race condition can be
+fixed, but doing so would substantially slow down MonitorExit.</P>
+
+<P>To write a large hash code <CODE>hash</CODE> (negative or greater than
+0x3FFFFFFF) into an object <CODE>o</CODE>, we do the following. <CODE>w</CODE>,
+<CODE>s</CODE>, <CODE>sv</CODE>, and <CODE>h</CODE> are local variables.</P>
+
+<OL>
+  <LI>Allocate a new extended hash code pool word <CODE>w</CODE> that contains
+  <CODE>hash</CODE>.<CODE></CODE>
+  <LI><CODE>h := w | 3</CODE>
+  <LI><CODE>s := o-&gt;subheader</CODE>
+  <LI>If <CODE>s == 3</CODE>:
+  <OL>
+    <LI>If <CODE>compare-and-swap(&amp;o-&gt;subheader, s, h)</CODE> then done
+    else go back to step 4.
+  </OL>
+  <LI>Else if <CODE>s&amp;1</CODE>:
+  <OL>
+    <LI>Deallocate <CODE>w</CODE>
+    <LI>Done <FONT COLOR="#996633">(someone already wrote the hash code into
+    the object; it better be the same as <CODE>hash</CODE>!)</FONT>.
+  </OL>
+  <LI>Else if <CODE>s</CODE> is between <CODE>sp</CODE> and <CODE>eos</CODE>:
+  <OL>
+    <LI><CODE>sv := (int *)(s &amp; -2)</CODE> <FONT COLOR="#996633">(the object
+    is locked by our thread, so we can write the saved subheader word directly)</FONT>
+    <LI>If <CODE>*sv == 3</CODE> then <CODE>*sv := h</CODE> else deallocate
+    <CODE>w</CODE>
+    <LI>Done.
+  </OL>
+  <LI>Else if <CODE>s</CODE> is zero then:
+  <OL>
+    <LI>Yield for a while <FONT COLOR="#996633">(the monitor is busy)</FONT>.
+    <LI>Go back to step 3.
+  </OL>
+  <LI>Else <FONT COLOR="#996633">(the object is locked by some other thread;
+  we can't write the hash code due to the race condition)</FONT>:
+  <OL>
+    <LI>Deallocate <CODE>w</CODE>
+  </OL>
+</OL>
+
+<P>In this algorithm we do not write the hash code if the object is locked
+by some other thread. If we did, we might slowly leak extended hash code
+pool words due to the above race condition.</P>
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

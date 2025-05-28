@@ -1,0 +1,202 @@
+<HTML>
+<HEAD>
+<TITLE>Pluglet Oveview</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<hr>
+<h1>Pluglet Overview</h1>
+<hr>
+<p>This section defines what Pluglets are, provides a broad overview of how they 
+  work from a Pluglet developer perspective, and briefly describes the three interfaces 
+  that a developer must implement.</p>
+<ul>
+  <li><a href="basics.html#definition">Pluglet Definition</a></li>
+  <li><a href="basics.html#how">How Pluglets Work</a></li>
+  <li><a href="basics.html#interfaces">Required Interface Implementations</a></li>
+</ul>
+<p>&nbsp;</p>
+<h2><a name="definition"></a>Pluglet Definition</h2>
+<p><font size="4"><font size="3">A <i>Pluglet</i> is</font></font> a Mozilla Plugin 
+  written in Java using the Pluglet API. Using the Java Native Interface (JNI), 
+  the Pluglet API mimics the C++ Plugin API of Mozilla.</p>
+<h2><a name="how"></a>How Pluglets Work</h2>
+<p>When a MIME type is first encountered by the Mozilla browser, it checks if 
+  there is a native Plugin for it. If there is not, it creates an instance of 
+  <code>PlugletFactory</code> and attempts to created an instance of <code>Pluglet</code> 
+  for the MIME type. </p>
+<p>A manifest file, which the Pluglet developer must write, informs the <code>PlugletFactory</code> 
+  instance if there is an implementation of Pluglet that handles the MIME type. 
+  This occurs through the <code>createPluglet()</code> method of <code>PlugletFactory</code>, 
+  which takes the MIME type as an argument. (For more on MIME types and manifest 
+  files, see <a href="mime_manifest.html">MIME Types and Manifest Files</a>.)</p>
+<p>Once an instance of <code>Pluglet</code> has been created, the browser may 
+  call the <code>newStream()</code> method of <code>Pluglet</code>, creating an 
+  instance of <code>PlugletStreamListener</code>, which is used for notification 
+  and passing of information about the stream.</p>
+<p>Note that there is normally a single instance of <code>PlugletFactory</code>, 
+  but there can be multiple instances of <code>Pluglet</code> and <code>PlugletStreamListener</code>. 
+  Note, also, that an instance of <code>Pluglet</code> can handle more than one 
+  MIME type.</p>
+<p>Pluglets, like Plugins, can be invoked in various ways. They may be embedded 
+  in an HTML page via an <code>EMBED</code> or <code>OBJECT</code> tag. They may 
+  also be full-page Pluglets existing in a window of their own. (For more information 
+  on how Pluglets can be invoked, see <a href="display.html">Pluglet Display Modes</a>.) 
+</p>
+<p>When a Pluglet is embedded in a page with an <code>EMBED</code> or <code>OBJECT</code> 
+  tag, the <code>TYPE</code> attribute should normally be included. The <code>TYPE</code> 
+  attribute specifies the MIME type of the media.</p>
+<p>The Pluglet developer must implement the following three interfaces:</p>
+<ul>
+  <li><code>PlugletFactory</code></li>
+  <li><code>Pluglet</code></li>
+  <li><code>PlugletStreamListener</code></li>
+</ul>
+<p>They are described in general in the sections below, and in detail in the <a href="../api/index.html">API</a>. 
+</p>
+<p>Other interfaces that the developer should know about, and that have been implemented 
+  to make Pluglets work, are the following: </p>
+<ul>
+  <li><code>ByteRanges</code></li>
+  <li><code>PlugletManager</code></li>
+  <li><code>PlugletManager2</code></li>
+  <li><code>PlugletPeer</code></li>
+  <li><code>PlugletStreamInfo</code></li>
+  <li><code>PlugletTagInfo</code></li>
+  <li><code>PlugletTagInfo2. </code></li>
+</ul>
+<p>For a general description of each, read the overview for each in the API.</p>
+<h2><a name="interfaces"></a>Required Interface Implementations</h2>
+<p>To create a Pluglet, the developer must implement the following three interfaces.</p>
+<h3>PlugletFactory Interface</h3>
+<p>The browser typically passes the MIME type to the <code>createPluglet()</code> 
+  method of <code>PlugletFactory</code>, and this method returns an instance of 
+  <code>Pluglet</code> for that MIME type. But first <code>PlugletFactory</code> 
+  needs to be initialized via its <code>initialize()</code> method, to which an 
+  instance of <code>PlugletManager</code> is passed. </p>
+<p>When the browser is done with the <code>PlugletFactory</code> instance, it 
+  should call <code>shutdown()</code>.</p>
+<h3>Pluglet Interface</h3>
+<p>Once an instance of <code>Pluglet</code> has been created, its <code>initialize()</code> 
+  method should be called, passing to it an instance of <code>PlugletPeer</code>. 
+  The <code>Pluglet</code> instance should use the <code>PlugletPeer</code> instance 
+  for all communication with the browser.</p>
+<p>The <code>start()</code> method may then be called to start the <code>Pluglet</code> 
+  instance.</p>
+<p>If the Pluglet involves a data stream, when the data stream is ready the browser 
+  calls <code>newStream()</code> to inform the <code>Pluglet</code> instance. 
+  <code>newStream()</code> returns an instance of <code>PlugletStreamListener</code>, 
+  to which the browser sends notifications and information about the stream. (The 
+  <code>PlugletStreamListener</code> interface is described below.)</p>
+<p>The browser uses the <code>setWindow()</code> method to tell the <code>Pluglet</code> 
+  instance what frame it is in, and the implementation of this method may add 
+  additional components and functionality to the frame.</p>
+<p>The <code>Pluglet</code> interface also includes <code>stop()</code>, <code>print()</code>, 
+  and <code>destroy()</code> methods.</p>
+<h3>PlugletStreamListener Interface</h3>
+<p><code>PlugletStreamListener</code> is used for notification. Its methods are 
+  called by the browser to make a variety of conditions known and to pass information.</p>
+<p><code>getStreamType()</code> returns the type of the stream, which can be:</p>
+<ul>
+  <li> <code>STREAM_TYPE_NORMAL</code></li>
+  <li><code>STREAM_TYPE_SEEK</code></li>
+  <li><code>STREAM_TYPE_AS_FILE</code> or</li>
+  <li><code>STREAM_TYPE_AS_FILE_ONLY</code></li>
+</ul>
+<p>(See the API for a detailed description of each of these stream types.)</p>
+<p><code>onStartBinding()</code> is used for notification that a URL has started 
+  to load.</p>
+<p><code>onDataAvailable()</code> is used for notification that data is available 
+  on the input stream.</p>
+<p><code>onFileAvailable()</code> is used for notification that a local file name 
+  is available and for passing the file name.</p>
+<p><code>onStopBinding()</code> is used for notification that a URL has stopped 
+  binding, and it passes status information about the success for failure of the 
+  load.</p>
+<p>&nbsp;</p>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/blackwood/java-plugins/guide/basics.html&amp;rev=&amp;root=/cvsroot/">Last modified January 12,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

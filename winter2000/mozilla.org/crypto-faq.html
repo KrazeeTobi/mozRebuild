@@ -1,0 +1,779 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla Crypto FAQ</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="./"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<link rel="author" rev="made" href="mailto:hecker@mozilla.org" title="crypto-faq.html">
+
+
+
+<center>
+<h1>Mozilla Crypto FAQ</h1></center>
+
+<center><b>Version 2.01</b><br>
+Frank Hecker<br>
+<a href="mailto:hecker@mozilla.org">hecker@mozilla.org</a><br>
+February 23, 2000</center>
+
+<p>In this document I try to answer some frequently asked questions
+about the Mozilla web browser and mail/news client and its support for
+SSL, S/MIME, and related features based on cryptographic
+technology. Note that this document is for your information only and
+is not intended as legal advice. If you wish to develop and
+distribute cryptographic software, particularly for commercial sale or
+distribution, then you should consult an attorney with expertise in
+the particular laws and regulations that apply in your jurisdiction.
+
+<p>I've updated this version of the Mozilla Crypto FAQ to include
+information on the new U.S. encryption export regulations published on
+January 14, 2000, and the release on February 11, 2000, of source code
+for SSL, S/MIME, and general PKI functionality for use in the Mozilla
+project.
+
+<p>The questions in this FAQ address Mozilla's support for encryption
+and related security functionality, information important to Mozilla
+contributors relating to encryption functionality in Mozilla, and
+general questions on U.S. regulation of encryption technology.
+
+<hr>
+
+<h3>Cryptographic functionality in Mozilla</h3>
+
+<ol>
+<li><a href="#1-1">Have all the issues with Mozilla and crypto now
+been resolved?</a></li>
+
+<li><a href="#1-2">What's missing from the Mozilla crypto code
+released so far? How will Mozilla get full support for SSL and S/MIME,
+including RSA support?</a></li>
+
+<li><a href="#1-3">What is the open source license used for the
+released SSL, S/MIME, and PKI source code?</a></li>
+
+<li><a href="#1-4">Will mozilla.org accept contributions of code to
+replace the encryption code not being released?</a></li>
+
+<li><a href="#1-5">What about Mozilla support for PGP and other
+protocols besides SSL and S/MIME? Will we be able to use GNU Privacy
+Guard or other PGP versions with Mozilla?</a></li>
+
+<li><a href="#1-6">Will mozilla.org release information on the format
+of the PSM key and certificate database, so that other software can
+reuse existing user keys and certificates managed by PSM?</a></li>
+</ol>
+
+<h3>Information for Mozilla contributors</h3>
+
+<ol>
+
+<li><a href="#2-1">I want to mirror the Mozilla FTP site. Do I need to
+do anything with regard to U.S. encryption export controls?</a></li>
+
+</ol>
+
+<h3>Further information on U.S. export controls on encryption
+software</h3>
+
+<ol>
+<li>
+<a href="#3-1">What are the relevant U.S. government laws and
+regulations governing export from the U.S. of encryption
+software?</a></li>
+
+<li><a href="#3-2">I thought export of encryption software from
+the U.S.  was governed by the International Traffic in Arms
+Regulations. What happened to the ITAR?</a></li>
+
+<li><a href="#3-3">Haven't U.S. export controls on encryption
+software already been ruled unconstitutional?</a></li>
+
+<li><a href="#3-4">Where can I learn more about U.S. export controls
+on encryption software?</a></li>
+</ol>
+
+<hr>
+
+<h2>Cryptographic functionality in Mozilla</h2>
+
+<ol>
+<li>
+<a name="1-1"></a><b>Have all the issues with Mozilla and crypto now
+been resolved?</b>
+
+<p>No, but the situation is significantly better than it was when
+Mozilla source code was first released.
+
+<p>At the time Mozilla source code was originally released in 1998
+U.S. export control regulations essentially made it impossible for
+Netscape to release encryption-related source code or for mozilla.org
+to host such code on its site. On January 14, 2000, the
+U.S. government published new export regulations that significantly
+loosen controls on export of encryption products from the U.S., and in
+particular allow export of source code for open source software
+implementing encryption, including offering such source code for
+anonymous downloading over the Internet.
+
+<p>On February 14, 2000, iPlanet E-Commerce Solutions (a Sun-Netscape
+Alliance) released source code through mozilla.org for the Personal
+Security Manager and Network Security Services software; this code was
+originally developed to provide SSL, S/MIME, and general Public Key
+Infrastructure (PKI) functionality for Netscape Communicator and the
+Netscape server products, and is currently being developed by iPlanet
+E-Commerce Solutions for use with iPlanet e-commerce products and
+future versions of the Netscape client.
+
+<p>However there are still some remaining issues with Mozilla and
+crypto.  First, the changes to the U.S. export regulations do not
+completely eliminate controls on export of encryption software and
+technology; there are some remaining restrictions, particularly with
+regard to export of binaries, and some ambiguities in the regulations
+that may affect Mozilla development activities.
+
+<p>Even more important, the release of source code from iPlanet
+E-Commerce Solutions does <em>not</em> include all the code needed to
+produce a complete SSL- or S/MIME-capable Mozilla product starting
+with only source code. See the next question for more information.
+
+<p>Finally, the S/MIME source code that has been released is not yet
+integrated into Mozilla; this will require further development.
+
+<p>On a more positive note, Mozilla's current architecture allows
+security and crypto support to be more easily added than in the past
+(i.e., in the "Mozilla Classic" code base). Mozilla implements
+high-level generic APIs by which support for SSL, S/MIME, and other
+security functions can be added by independent "add-on" software;
+these APIs are not specific to cryptography or security, and can be
+used to add other protocol-specific functionality, e.g.,
+special-purpose web proxy functionality or custom handling of email
+message attachments.
+
+<p>For information on new US encryption export regulations, see the
+U.S. Department of Commerce
+<a href="http://204.193.246.62/public.nsf/docs/60D6B47456BB389F852568640078B6C0">press
+release</a>
+announcing the new regulations, the
+<a href="http://www.bxa.doc.gov/Encryption/pdfs/Crypto.pdf">actual
+revisions</a>
+to the regulations, and the
+<a href="http://w3.access.gpo.gov/bxa/ear/ear_data.html">updated regulations</a>
+themselves.
+Export of source code for open source software is addressed in
+<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=bxa&docid=f:740.pdf">Part 740</a>,
+section 740.13(e), "Unrestricted encryption source code"; export of
+binaries is addressed in 740.17.
+<!--
+(You may also be interested in a more
+<a href="http://www.hecker.org/writings/encryption-export-changes.html">in-depth
+analysis</a> of the new regulations, with an emphasis on how
+they affect open source software.)
+-->
+
+<p>For more information on the SSL, S/MIME, and general PKI source code
+released by iPlanet E-Commerce Solutions see the
+<a href="http://www.mozilla.org/projects/security/pki/">PKI project page</a>
+and of course the
+<a href="http://www.mozilla.org/projects/security/pki/src/download.html">source
+code</a>
+itself.
+Also see the
+<a href="http://www.iplanet.com/alliance/press_room/press_releases/011800.html">Sun-Netscape
+Alliance press release</a>
+on the release of PKI source code and the corresponding
+<a href="http://home.netscape.com/newsref/pr/newsrelease793.html">mozilla.org
+press release</a>.
+<p></li>
+
+<li>
+<a name="1-2"></a><b>What's missing from the Mozilla crypto code
+released so far? How will Mozilla get full support for SSL and S/MIME,
+including RSA support?</b>
+
+<p>The SSL and S/MIME code released through mozilla.org thus far is
+missing the actual encryption code itself, as well as some other code
+not yet released or releasable. However in the meantime iPlanet
+E-Commerce Solutions will be releasing branded binary versions of
+Personal Security Manager that can be installed and used with binary
+Mozilla versions.
+
+<p>As noted previously, the PKI source code released thus far by
+iPlanet E-Commerce does not include all the source code necessary to
+build complete binary versions of Personal Security Manager and
+Network Security Services from source. The source code not released
+falls into the following general categories:
+
+<ul>
+<li>Proprietary source code licensed from third-parties, most notably
+RSA Security, Inc. This code implements the underlying encryption
+algorithms (RSA, RC4, DES, etc.) as well as related operations such as
+"bignum" arithmetic; almost all of this code is in the internal
+cryptographic module invoked from NSS using the PKCS#11 API. This
+category of code will not be released in the future, unless for some
+reason RSA Security someday decides to make it available under an open
+source license.
+
+<li>Source code which contains some elements which might be considered
+proprietary information of RSA Security, Inc., or other third
+parties. This code was created by Netscape developers or contractors,
+but contains information which may be considered proprietary by RSA
+Security or other third parties, such as names and argument types of
+proprietary functions in third-party libraries. This category of code
+will be released in the future, after revising the code to eliminate
+references to the third-party proprietary information.
+
+<li>Other source code for which iPlanet E-Commerce Solutions has not
+yet secured permissions to release. This code is known to have been
+created by third parties, but the licensing is uncertain or the
+parties in question have not yet given permission to release the
+code. Most if not all code in this category should be released in the
+future, after clarifying licencing or securing the necessary
+permissions.
+</ul>
+
+Even though iPlanet E-Commerce Solutions cannot release all the source
+code for PSM and NSS, it will be releasing Netscape-branded binary
+versions of PSM which include the unreleased code in binary
+form. These Netscape PSM binaries will be available for download from
+the iPlanet web site, and can be installed and used with Mozilla
+binaries built from the Mozilla source tree; the Netscape PSM binaries
+will provide Mozilla builds with the ability to do SSL connections to
+SSL-capable servers, generate private/public key pairs, get digital
+certificates, and perform other PKI-related functions.
+
+<p>Providing Mozilla with the ability to send and receive S/MIME
+signed and/or encrypted messages will require additional integration
+between Mozilla and the contributed S/MIME code; note that mozilla.org
+cannot commit to a date or release for when this integration will
+be completed.
+
+<p>More information about the Netscape Personal Security Manager
+binaries will be available in the future on the iPlanet
+<a href="http://www.iplanet.com/products/infrastructure/dir_security/index.html">security
+product information</a> page; when they become available Netscape PSM
+binaries will be downloadable from the iPlanet
+<a href="http://www.iplanet.com/downloads/index.html">download site</a>.<p>
+
+<li><a name="1-3"></a><b>What is the open source license used for the
+released SSL, S/MIME, and PKI source code?</b>
+
+<p>The released source code is dual-licensed under the MPL and
+the GPL.
+
+<p>The SSL, S/MIME, and PKI source code released by iPlanet E-Commerce
+Solutions is licensed under the Mozilla Public License (version 1.1),
+with the GNU General Public License (version 2.0 or later) available
+as an alternate license. You may choose to use the code either under
+the terms of the MPL or under the terms of the GPL.
+
+<p>This form of licensing was chosen to allow the released Personal
+Security Manager and Network Security Services source code to be used
+in as many contexts as possible; for example, the PSM and NSS code can
+be used in Mozilla under MPL terms, and can also be used in GNU and
+other projects under GPL terms. If you create and distribute
+modifications to the original PSM and NSS code, we ask that you in
+turn make such modifications available under both the MPL and
+GPL. (Note that mozilla.org will not accept contributed modifications
+into future PSM/NSS source releases unless they are so licensed.)
+
+<p>Discussions about licensing of the PSM and NSS source
+code should be directed to the
+<a href="news://news.mozilla.org/netscape.public.mozilla.license">netscape.public.mozilla.license</a>
+newsgroup or the associated mozilla-license mailing list.<p></li>
+
+<li><a name="1-4"></a><b>Will mozilla.org accept contributions of code
+to replace the encryption code not being released?</b>
+
+<p>Not at present, since RSA patent issues currently prevent such code
+from being used by Mozilla developers in the U.S.
+
+<p>As noted previously, iPlanet E-Commerce Solutions will not be
+releasing the core encryption code called by the SSL, S/MIME, and
+general PKI code, since such code contains proprietary code licensed
+from a third party (RSA Security, Inc.) and implementing an encryption
+algorithm (the RSA public key algorithm) which is subject to patent
+restrictions in the U.S.  It is possible to write new source code
+reimplementing the RSA public key algorithm and related functionality
+found in the code not released; however Mozilla developers in the
+U.S. cannot generally make use of such code without infringing on the
+RSA patent. (For example, they cannot use such code in a commercial
+context.)
+
+<p>Therefore mozilla.org has decided that at this time we will not
+accept any source code into the official Mozilla tree that implements
+the RSA algorithm or related algorithms subject to patent restrictions
+that prevent their general use by Mozilla developers. We will revisit
+this decision at a later time. (Note that the RSA algorithm patent
+will expire on September 20, 2000.)
+
+<p>Also note that security protocols exist which do not depend on
+algorithms encumbered by patent, trade secret, or other restrictions
+related to intellectual property claims. For example, the Transport
+Layer Security protocol (based on the SSL protocol) includes TLS
+ciphersuites based solely on algorithms in the public domain;
+similarly the S/MIME version 3 protocol mandates support for key
+exchange, digital signature, and other mechanisms based on algorithms
+in the public domain. If you wish to assist with development of
+unencumbered TLS or S/MIMEv3 functionality for Mozilla then we
+encourage you to contact the module owners for SSL and S/MIME.
+
+<p>For more information on the RSA patent see
+<a href="http://www.rsasecurity.com/rsalabs/faq/6-3-1.html">question 6.3.1</a>
+in RSA Laboratories'
+<a href="http://www.rsasecurity.com/rsalabs/faq/">"Frequently
+Asked Questions about Today's Cryptography"</a>
+and the
+<a href="http://www.patents.ibm.com/details?&pn=US04405829__">RSA patent</a>
+itself.
+For more information on TLS see RFC2246, <a
+href="ftp://ftp.isi.edu/in-notes/rfc2246.txt">"The TLS Protocol,
+Version 1.0"</a>, particularly the material on TLS ciphersuites
+(Appendix A) and TLS-related patents (Appendix G), and related
+documents from the IETF
+<a href="http://www.ietf.org/html.charters/tls-charter.html">TLS Working
+Group</a>.  For more information on S/MIMEv3 see RFC2263,
+<a href="ftp://ftp.isi.edu/in-notes/rfc2633.txt">"S/MIME
+Version 3 Message Specification"</a>
+and related documents produced by the IETF
+<a href="http://www.ietf.org/html.charters/smime-charter.html">S/MIME
+Working Group</a>.
+See the Mozilla
+<a href="http://www.mozilla.org/projects/security/">security project</a>
+pages for the names and email addresses of the Mozilla module owners
+for SSL and S/MIME.<p></li>
+
+<li><a name="1-5"></a><b>What about Mozilla support for PGP and other protocols
+besides SSL and S/MIME? Will we be able to use GNU Privacy
+Guard or other PGP versions with Mozilla?</b>
+
+<p>Support for PGP and other security-related protocols and formats
+can potentially be added to Mozilla in the same manner as SSL and
+S/MIME; if anyone is interested in working on such support within the
+Mozilla project then they are welcome to do so. We know of at least
+two efforts which may produce PGP support for Mozilla.
+
+<p>As noted above, the PSM code implements SSL and (in the future)
+S/MIME support for Mozilla by taking advantage of generic high-level
+Mozilla public APIs used to add new protocols and message
+formats. These same APIs can be used to add support to Mozilla for
+other security schemes, including potentially PGP. If anyone is
+interested on working such support within the Mozilla project then
+they are welcome to do so. However note that, as with SSL and S/MIME,
+mozilla.org will not host code implementing patented algorithms that
+are not generally usable by all Mozilla developers.
+
+<p>Also note that Mozilla support for PGP and other security schemes
+may also be made available by commercial security vendors or by
+independent developers, using the various public APIs already present
+in Mozilla. Based on statements made in various Internet forums it
+appears that the developers of GNU Privacy Guard may create a plugin
+module to support invocation of GnuPG functionality from Mozilla;
+Network Associates may also create a commercial PGP plugin for
+Mozilla. You should contact those vendors or developers directly for
+more information concerning their plans.
+
+<p>See the Open Directory references for
+<a href="http://dmoz.org/Computers/Security/Products_and_Tools/Cryptography/PGP/">general
+PGP information</a>, including contact information for companies and
+independent developers producing PGP implementations.<p></li>
+
+<li><a NAME="1-6"></a><b>Will mozilla.org release information on the format
+of the PSM key and certificate database, so that other software can reuse
+existing user keys and certificates managed by PSM?</b>
+
+<p>Yes, documentation of the database format is available; however
+we cannot guarantee that the format of the database will remain
+unchanged in the future.
+
+<p>The initial release of SSL, S/MIME, and general PKI source code
+from iPlanet E-Commerce Solutions includes some documentation on the
+format of the key and certificate database. As with Mozilla
+documentation in general, mozilla.org will be glad to host any other
+documentation contributed to describe database formats, APIs, and
+other technical aspects of the released SSL, S/MIME, and PKI source
+code.
+
+<p>However, as with APIs internal to Mozilla modules, mozilla.org
+cannot guarantee that the format of the key and certificate database
+will remain unchanged over time; in particular, changes may be
+introduced at some point that break compatibility with existing
+applications. Also, changing the database directly from an
+application risks causing database corruption and subsequent problems
+in PSM and applications like Mozilla using PSM. For these reasons we
+strongly recommend that Mozilla developers and others access the key
+and certificate database only through public APIs provided by the NSS
+library.
+
+<p>For more information see the documentation for the
+<a href="http://www.mozilla.org/projects/security/pki/nss/db_formats.html">cert7.db certificate database</a>.
+Also see the documents
+<a href="http://www.sei.cmu.edu/publications/documents/99.reports/99tn010/99tn010dtic.html">"Into
+the Black Box: A Case Study in Obtaining Visibility into Commercial
+Software"</a>,
+<a href="http://www.drh-consultancy.demon.co.uk/cert7.html">"Netscape Certificate Database Information"</a>,
+and
+<a href="">"Netscape Communicator Key Database Format"</a>,
+the results of independent attempts to describe the
+format of the Netscape Communicator 4.x key and certificate database
+(with which the PSM key and certificate database format is
+compatible).</li>
+</ol>
+
+<h2>Information for Mozilla contributors</h2>
+
+<ol>
+
+<li><a name="2-1"></a><b>I want to mirror the Mozilla FTP site. Do
+I need to do anything with regard to U.S. encryption export
+controls?</b>
+
+<p>Yes, you may need to provide notification to the Bureau of Export
+Administration and NSA. If you are outside the U.S. you do not need to
+provide such notification, but may need to take other actions to
+comply with laws and regulations in your own country concerning
+encryption technologies.
+
+<p>As a mirror of the Mozilla FTP site you will automatically be
+distributing open source encryption code as well. If you are a
+U.S. resident and/or your mirror site is in the U.S. then you are
+required to comply with applicable U.S. regulations governing the
+export of encryption software. Your particular obligations depend on
+your exact circumstances, and we cannot provide legal advice to you.
+However we <em>can</em> tell you of the particular steps we have taken
+to comply with the new export regulations, and we recommend that you
+consider taking similar action yourselves.
+
+<p>In particular, we have provided notification to the Bureau of
+Export Administration and the National Security Agency of our posting
+of open source encryption source code in accordance with section
+740.13(e) of the Export Administration Regulations, and as part of
+that notification have supplied BXA and NSA with the URL(s) at which
+mozilla.org will be hosting such source code.
+
+<p>You can provide such notification yourself by sending an email
+message to BXA at the address
+<a href="mailto:crypt@bxa.doc.gov">crypt@bxa.doc.gov</a>
+and by sending a letter to NSA at the postal address
+<address>
+Attn: ENC Encryption Request Coordinator<br>
+9800 Savage Road<br>
+Suite 6131<br>
+Ft. Meade, MD 20755-6000
+</address>
+
+<p>The notice should
+<ol>
+<li>state that you will be posting unrestricted
+encryption source code that is mirrored from the mozilla.org site at
+&lt;URL:<a href="http://ftp.mozilla.org/pub/mozilla/nightly/">http://ftp.mozilla.org/pub/mozilla/nightly/</a>&gt;,
+&lt;URL:<a href="http://ftp.mozilla.org/pub/mozilla/releases/">http://ftp.mozilla.org/pub/mozilla/releases/</a>&gt;,
+and
+&lt;URL:<a href="http://ftp.mozilla.org/pub/security/">http://ftp.mozilla.org/pub/security/</a>&gt;
+<li>provide the URL(s) at which you will be mirroring the code.
+</ol>
+
+<p>We are also placing notices on our site where appropriate regarding
+applicable export restrictions.  This is the notice we plan to place
+with our source code and on the mirror page, and which you may use on
+your own site:
+<blockquote>
+This source code is subject to the U.S. Export Administration
+Regulations and other U.S. law, and may not be exported or re-exported
+to certain countries (currently Afghanistan (Taliban-controlled
+areas), Cuba, Iran, Iraq, Libya, North Korea, Serbia (except Kosovo),
+Sudan and Syria) or to persons or entities prohibited from receiving
+U.S. exports (including Denied Parties, entities on the Bureau of
+Export Administration Entity List, and Specially Designated
+Nationals).
+</blockquote>
+
+<p>Note that the notification procedures described above apply only to
+U.S. residents and sites located in the U.S. If you are not a
+U.S. citizen or resident and your mirror site is located outside the
+U.S. then you are not subject to U.S. encryption export regulations;
+however you may be subject to other regulations related to encryption,
+and are responsible for complying with any such regulations applying
+in your jurisdiction.
+
+<p>For information on notification requirements related to the export
+of open source encryption source code, see the
+<a href="http://w3.access.gpo.gov/bxa/ear/ear_data.html">Export Administration Regulations</a>, in particular
+<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=bxa&docid=f:740.pdf">Part 740</a>,
+sections 740.13(e), "Unrestricted encryption source code", and
+740.17(g), "Reporting requirements".
+<p></li>
+</ol>
+
+<h2>Further information on U.S. export controls on encryption software</h2>
+
+<ol>
+<li><a name="3-1"></a><b>What are the relevant U.S. government laws
+and regulations governing export from the U.S. of encryption
+software?</b>
+
+<p>The Export Administration Regulations, the Export Administration
+Act of 1979, and related U.S. presidential executive orders address
+export of encryption software from the U.S.
+
+<p>The main U.S. government regulations governing the export from the
+U.S.  of cryptographic software are the Export Administration
+Regulations (EAR), also known as 15 CFR chapter VII subchapter C, or
+15 CFR Parts 730-774. ("CFR" stands for "Code of Federal
+Regulations.")  The Export Administration Regulations were created by
+the Bureau of Export Administration (BXA) and were designed primarily
+to implement the requirements of the Export Administration Act of 1979
+(as amended), also known as 50 USC appendices 2401-2420. ("USC" stands
+for "United States Code.") The EAA was passed as temporary
+legislation; however the President of the United States has
+periodically issued orders to continue the EAA and EAR, exercising
+authority under the International Emergency Economic Powers Act, also
+known as 50 USC 1701-1706.
+
+<p>For more information see
+<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=bxa&docid=f:730.pdf">15 CFR Part 730</a>,
+section 730.2 (concerning statutory authority for the EAR),
+and the document
+<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=bxa&docid=f:lagauth.pdf">"Principal
+Statutory Authority for the Export Administration Regulations"</a>,
+which contains copies of the Export Administration Act of 1979 (as
+amended), the International Emergency Economic Powers Act (as
+amended), and related legislation and executive orders.<p></li>
+
+<li><a name="3-2"></a><b>I thought export of encryption software from
+the U.S. was governed by the International Traffic in Arms
+Regulations. What happened to the ITAR?</b>
+
+<p>The ITAR still exist, but are no longer used in the context of
+export control of encryption software; for this purpose they have been
+replaced by the EAR.
+
+<p>Authority for non-military encryption export was transferred from
+the U.S. State Department to the U.S. Department of Commerce by
+Presidential Executive Order 13026 on November 15, 1996, for
+regulation under the Export Administration Regulations (EAR), along
+with all other export-controlled commercial products.  At that time
+encryption hardware, software, and technology was transferred from
+the U.S. Munitions List to the Commerce Control List (CCL) of the
+EAR.
+
+<p>For more information see the document
+<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=bxa&docid=f:lagauth.pdf">"Principal
+Statutory Authority for the Export Administration Regulations"</a>,
+which contains a copy of Executive Order 13026.<p></li>
+
+<li><a name="3-3"></a><b>Haven't U.S. export controls on encryption
+software already been ruled unconstitutional?</b>
+
+<p>Yes in a specific case, but the decision may yet be overruled.
+
+<p>For several years Professor Daniel Bernstein (currently at the
+University of Illinois at Chicago) has pursued a lawsuit against the
+U.S. government essentially claiming that U.S. export control
+regulations on encryption software and related conduct with regard to
+cryptography (e.g., "technical assistance") were
+unconstitutional. (Bernstein's suit was originally directed at the
+ITAR and related regulations, since at the time the suit was filed the
+current Export Administration Regulations were not yet in effect with
+respect to encryption software.) Bernstein claimed that the
+U.S. export regulations were in essence a licensing scheme designed to
+impede or prohibit certain types of speech (e.g., publishing
+cryptographic source code in electronic form), and were therefore
+unconstitutional under the First Amendment to the
+U.S. constitution. The U.S. government claimed in return that
+cryptographic software was regulated based solely on its ability to be
+used to secure communications and data, and that the national security
+interest in so regulating it overrode any First Amendment protections;
+as the export regulations put it, "encryption software is controlled
+because of its functional capacity, and not because of any
+informational value of such software". The government also claimed
+that publication of cryptographic software in electronic form made
+such functional use easier than publication in printed form, and that
+that was sufficient to justify treating the two forms differently in
+the regulations.
+
+<p>On August 25, 1997, the U.S. District Court for the Northern
+District of California issued a final ruling (written by Judge Marilyn
+Hall Patel) that "the [U.S. government] encryption regulations are an
+unconstitutional prior restraint in violation of the First Amendment."
+The U.S. government appealed this decision to the U.S. 9th Circuit
+Court of Appeals, and on May&nbsp;6, 1999, the court upheld the
+District Court's ruling in a 2-1 decision, with Judge Betty Fletcher
+writing for the majority that the ITAR and EAR export restrictions
+against encryption are an unconstitutional prior restraint of free
+expression, impermissible under the First Amendment to the
+U.S. Constitution.
+
+<p>However this ruling did not settle the issue of the
+constitutionality of U.S. export control regulations. The
+U.S. Department of Justice has sought to appeal the decision, first to
+all eleven members of the 9th Circuit Court of Appeals (referred to as
+the court <i>en banc</i>, or full court) and then possibly to the
+U.S. Supreme Court. Until the appeals process is completed the
+U.S. government will continue to enforce current U.S.  export
+regulations.
+
+<p>For more information see the
+<a href="http://www.eff.org/pub/Legal/Cases/Bernstein_v_DoS/">archives
+on the Bernstein case</a> maintained by the
+<a href="http://www.eff.org/">Electronic Frontier Foundation</a>,
+particularly the 9th Circuit Court of Appeals
+<a href="http://www.eff.org/bernstein/Legal/19990506_circuit_decision.html">ruling</a>,
+the
+<a href="http://www.eff.org/bernstein/19990507_bxa_pressrel.html">press
+release</a> issued by the U.S. Bureau of Export Administration
+immediately afterward, and the U.S.
+<a href="http://w3.access.gpo.gov/bxa/ear/ear_data.html">Export
+Administration Regulations</a>
+themselves, particularly
+<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=bxa&docid=f:ccl5-pt2.pdf">15
+CFR Part 774, Supplement No. 1, Category 5, Part 2</a>,
+entry 5D002 (note on "functional capacity") and
+<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=bxa&docid=f:734.pdf">15
+CFR Part 734</a>, paragraphs 734.3(b)(2) and (b)(3)
+and accompanying note (printed form vs. electronic form).<p></li>
+
+<li><a name="3-4"></a><b>Where can I learn more about U.S. export
+controls on encryption software?</b>
+
+<p>For more information on U.S. export control of encryption software
+and related topics, see the following online references:
+
+<ul>
+<li>The
+<a href="http://www.eff.org/pub/Privacy/ITAR_export/index.html">ITAR,
+EAR and encryption export archive</a> maintained by the
+<a href="http://www.eff.org/">Electronic
+Freedom Foundation</a> (EFF).</li>
+
+<li>The
+<a href="http://www.epic.org/crypto/">cryptography policy page</a>
+maintained by the
+<a href="http://www.epic.org/">Electronic Privacy Information
+Center</a> (EPIC).</li>
+
+<li>The <a href="http://www.cdt.org/crypto/">Encryption Resources
+and Security Policy Page</a> maintained by the
+<a href="http://www.cdt.org/">Center for Democracy and
+Technology</a> (CDT).</li>
+</ul>
+
+The following books may also be of interest if you want to know more
+about the history and politics of U.S. export control of encryption
+software:
+
+<ul>
+<li><cite><a href="http://www.amazon.com/exec/obidos/ISBN=0262041677">The
+Limits of Trust: Cryptography, Governments, and Electronic
+Commerce</a></cite>, by Stewart Baker and Paul Hurst. An in-depth
+discussion of the legal framework for regulation of cryptography in
+various countries around the world, including the U.S.</li>
+
+<li><cite><a href="http://www.amazon.com/exec/obidos/ISBN=0262041677">Privacy
+on the Line: The Politics of Wiretapping and Encryption</a></cite>, by
+Whitfield Diffie and Susan Landau.</li>
+
+<li><cite><a href="http://www.amazon.com/exec/obidos/ISBN=026201162X">Technology
+and Privacy: The New Landscape</a></cite>, by Philip Agre and Marc
+Rotenberg (ed.). A set of ten essays on various aspects of privacy and
+technological developments affecting it.</li>
+
+<li><cite><a href="http://www.amazon.com/exec/obidos/ISBN=0471122971">The
+Electronic Privacy Papers: Documents on the Battle for Privacy in the
+Age of Surveillance</a></cite>, by Bruce Schneier and David Banisar
+(ed.). A collection of public documents relating to U.S. encryption
+policy and related topics.</li>
+
+<li><cite><a href="http://www.amazon.com/exec/obidos/ISBN=0387944419">Building
+in Big Brother: The Cryptographic Policy Debate</a></cite>, by Lance
+Hoffman (ed.). An earlier (circa 1995) collection of essays and public
+documents, with a concentration on the Clipper chip controversy and
+the Digital Telephony Act.</li>
+</ul>
+</li>
+</ol>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/crypto-faq.html&amp;rev=&amp;root=/cvsroot/">Last modified February 23,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

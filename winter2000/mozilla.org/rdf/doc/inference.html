@@ -1,0 +1,232 @@
+<HTML>
+<HEAD>
+<TITLE>RDF: Enabling Inference</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<center>
+<h1><A HREF="../../rdf/doc/">Mozilla RDF</A> / Enabling Inference</h1>
+</center>
+
+<P>
+This is an umbrella project for experimental work investigating the 
+integration of logic/inference capabilities into the Mozilla application
+environment.
+</P>
+
+<H2>Overview</H2>
+<P>
+
+<A HREF="http://www.w3.org/RDF/">RDF</A> was designed to be (amongst
+many other things!) an appropriate data representation formalism for
+logic/inference applications on the Web. A number
+of papers and tools already exist that explore the relationship between
+the W3C's RDF and the world of logic programming. Our aim here is to put
+some of this into practice and explore the possibilities it raises for a
+the creation of more intelligent and intuitive information management
+tools.
+</P>
+
+<P>What might this mean in practice? Imagine an RDF datasource that
+responded to the normal RDF graph API but which could be loaded with
+declarative rules allowing it to infer the presence of RDF statements that
+it hasn't explicitly been given. Or better, a rule-aware datasource that
+could use rules in combination with facts stored in other simpler
+datasources. Potential applications include inter-schema mappings, complex
+reasoning about user preferences and profiles (eg. PICS rules, P3P etc),
+fancy email filtering capabilities etc etc... [<EM>your better examples go
+here</EM>]
+</P>
+
+<H2>Background Reading</H2>
+<P>
+The following papers and tools focus on RDF and logic/inference/agent
+applications. Also you'll want to read most of the documents linked from
+the <A HREF="../../rdf/doc/">Mozilla RDF</A> home page, and of course the
+offical specs from the <A HREF="http://www.w3.org/RDF/">W3C RDF</A> pages. Finally the
+<A HREF="z3950.html">Z39.50 / RDF Integration</A> project has a few links
+aimed at people just getting started with the Mozilla architecture.
+ </P>
+
+<UL>
+<LI><A HREF="http://www.w3.org/TandS/QL/QL98/pp/enabling.html">Enabling Inferencing</A> (Guha et al.)</LI>
+<LI><A HREF="http://www.w3.org/TandS/QL/QL98/pp/metalog.html">Query + Metadata + Logic = Metalog</A> (Massimo Marchiori, Janne Saarela)</LI>
+<LI><A HREF="http://www.w3.org/TandS/QL/QL98/pp/queryservice.html">A Query and Inference Service for RDF</A> (Decker et al.)</LI>
+<LI><A HREF="http://www.w3.org/DesignIssues/Semantic.html">Semantic Web roadmap</A> (Berners-Lee)</LI>
+<LI><A HREF="http://www.w3.org/DesignIssues/RDFnot.html">What the Semanic Web can represent</A> (Berners-Lee)</LI>
+<LI><A HREF="http://www.w3.org/DesignIssues/Toolbox.html">The Semantic Toolbox: Building Semantics on top of XML-RDF</A>, or 'what could logic and trust look like in RDF' (Berners-Lee - "personal ramblings")</LI>
+<LI><A HREF="http://www.aifb.uni-karlsruhe.de/~sde/rdf/">SiLRI  (Simple  Logic-based RDF Interpreter)</A> - an RDF inference engine in Java</A></LI>
+</UL>
+
+<H2>Raw Materials</H2>
+
+<P>Ideally we'll find a cross-platform software component that can be
+linked into Mozilla to provide a logic-oriented interface to RDF
+datasources. For there to be any chance of including this in the main
+Mozilla build, it would need to be available under some suitable license
+(eg. GNU general license isn't appropriate; GNU library license (I think)
+is.).
+</P>
+
+<P>
+Here are some possibly useful ingredients that might be mangled into
+Mozilla components. Please feel free to <A
+HREF="mailto:daniel.brickley@bristol.ac.uk">recommend</A> others that
+should be listed.
+</P>
+<UL>
+<LI><A HREF="http://www.cs.sunysb.edu/~sbprolog/xsb-page.html">XSB: The XSB Programming System (Version 2.0)</A></LI>
+<LI><A
+HREF="http://swi.swi.psy.uva.nl/projects/SWI-Prolog/index.html">SWI-Prolog</A>
+(<A
+HREF="http://swi.swi.psy.uva.nl/projects/SWI-Prolog/index.html#license">License</A>;
+non-free)</A></LI>
+<LI>[...?]</LI>
+</UL>
+
+<H2>Running Code!</H2>
+<P>
+<A HREF="mailto:geoff@sover.net">Geoff Chappell</A> managed to get a
+Prolog-based RDF logic composite datasource up and running within a week
+of this <A
+HREF="http://x35.deja.com/getdoc.xp?AN=512640228&CONTEXT=935347821.129433664&hitnum=1">vague
+request</A> on <A HREF="news:comp.lang.prolog">comp.lang.prolog</A>. There
+is a separate page available providing details (and downloads) of the
+prolog-aware datasource. Although currently based around SWI-Prolog, the
+glue code that sits between RDF and the prolog engine is pretty generic so
+might for example be useful for hooking up to XSB or other systems.
+</P>
+<P>More details available offsite; the plan is to make the glue src code
+available under the MPL license sometime soon. Note also that this hasn't
+yet been tested with M9 release but works with the Win32 M8 binary
+release of Mozilla.</P>
+ <UL>
+<LI>a working Prolog RDF DataSource: <A
+HREF="http://209.198.94.130/mzpl/">Mozilla/Prolog Project</A> (early
+release)</LI>
+</UL>
+
+<H2>Other Projects</H2>
+
+<P>Some things to try:</P>
+<UL>
+<LI>Representation of RDF schema type system (subClassOf etc) as logic
+rules (see <A
+HREF="http://www.w3.org/RDF/Implementations/SiRPAC/Validation.html">F-Logic
+version from SiLRI</A>)</A></LI>
+<LI>Representation of RDF containers (this has been discussed a little on
+<A HREF="http://www.ilrt.bris.ac.uk/discovery/rdf-dev/">RDF-DEV</A>)</LI>
+<LI>Search the web for logic stuff in Javascript (everything is out there
+somewhere ;-)</LI>
+<LI>Build XUL/Javascript UI on top of rule-aware datasources</LI>
+<LI>Expression of <A HREF="http://www.w3.org/P3P/">P3P privacy preferences</A>
+or <A HREF="http://www.w3.org/PICS/">PICS rules</A> as logical rules over
+RDF content
+<LI>Your idea here...</LI>
+<LI>and your student project here...</LI>
+</UL> 
+
+
+
+<H2>Discussion</H2>
+
+See the <A HREF="../../rdf/doc/">Mozilla RDF</A> home page for links to
+appropriate discussion forums. Anything to do with Mozilla probably
+belongs on the mozilla-rdf newsgroup/list; more general RDF and logic
+issues might usefully be discussed on <A
+HREF="http://www.ilrt.bris.ac.uk/discovery/rdf-dev/">RDF-DEV</A>.
+
+<hr>
+<SMALL>
+Author: Dan Brickley <A HREF="mailto:daniel.brickley@bristol.ac.uk">daniel.brickley@bristol.ac.uk</A><BR>
+Last Updated: $Id: inference.html,v 1.1 1999/08/22 19:49:11 daniel.brickley%bristol.ac.uk Exp $
+<br>
+</SMALL>
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/rdf/doc/inference.html&amp;rev=&amp;root=/cvsroot/">Last modified August 22,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

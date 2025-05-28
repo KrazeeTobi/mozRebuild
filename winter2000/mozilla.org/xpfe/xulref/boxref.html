@@ -1,0 +1,417 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; I) [Netscape]">
+   <title>The &lt;box> Widget</title>
+</head>
+<body>
+&nbsp;
+<table BORDER=0 COLS=1 WIDTH="100%" >
+<tr>
+<td>
+<div align=right><i>XUL Programmer's Reference Manual</i></div>
+</td>
+</tr>
+
+<tr>
+<td>
+<h1>
+<font color="#000099"><font size=+2>&lt;box></font></font></h1>
+
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font face="Arial,Helvetica"><font color="#FFFFFF">Attributes</font></font></b></td>
+
+<td><b><font face="Arial,Helvetica"><font color="#FFFFFF">Common Children</font></font></b></td>
+</tr>
+
+<tr>
+<td><a href="#align">align</a></td>
+
+<td>&lt;<a href="menuel.html">menu</a>></td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#class">class</a></i></td>
+
+<td>&lt;<a href="buttonref.html">titledbutton</a>></td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td>&lt;text></td>
+</tr>
+
+<tr>
+<td><a href="#flex">flex</a></td>
+
+<td>&lt;image>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#width">width</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#height">height</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#autostretch">autostretch</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#orient">orient</a></td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+
+<p>The &lt;box> widget provides a general purpose and flexible layout mechanism.
+Using boxes, you can specify the position and relationship of almost any
+combination of widgets in the UI. Many XUL widgets inherit from boxes,
+including:
+<ul>
+<li>
+<a href="menuel.html">menus</a></li>
+
+<li>
+<a href="menubar.html">menubars</a></li>
+
+<li>
+<a href="menupop.html">menupopups</a></li>
+
+<li>
+<a href="menuitem.html">menuitems</a></li>
+
+<li>
+<a href="toolbox.html">toolboxes</a></li>
+
+<li>
+<a href="toolbar.html">toolbars</a></li>
+</ul>
+Boxes use <a href="#flex">flex</a> to stretch their positions in a UI.
+<a href="springref.html">Springs</a>
+with flex push back against boxes, constraining them within the parent
+container. The following example shows a simple box and spring layout using
+all of box's basic attributes:
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;box id="parent_box"&nbsp;
+&nbsp; orient="vertical"&nbsp;
+&nbsp; style="background-color:lightblue;">
+&nbsp;&nbsp;&nbsp; &lt;box flex="1">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton class="borderless" value="Start" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton class="borderless" value="Stop" />
+&nbsp;&nbsp;&nbsp; &lt;/box>
+&nbsp;&nbsp;&nbsp; &lt;spring flex="3" />
+&lt;/box></pre>
+</td>
+
+<td><img SRC="flex.gif" HSPACE=25 VSPACE=25 BORDER=1 height=151 width=53></td>
+</tr>
+</table>
+</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="align"></a><b><font color="#FFFFFF"><font size=+1>align</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>align</b> is an optional attribute that specifies the alignment
+of the current element's children.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element align="left | right | center | <font color="#999999">vertical</font>
+| <font color="#999999">horizontal</font>"></tt></blockquote>
+<b>Example</b>
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&nbsp;
+&lt;box width="150" orient="vertical" autostretch="never"&nbsp;
+style="border: solid 2px; background-color: lightblue"&nbsp;
+<b>align</b>="left">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton value="button1" style="font-size: 12pt"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton value="button2" style="font-size: 12pt"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton value="button3" style="font-size: 12pt"/>
+&lt;/box>
+</pre>
+</td>
+
+<td><img SRC="align_l.gif" HSPACE=10 BORDER=1 height=65 width=153></td>
+</tr>
+
+<tr>
+<td><tt>&lt;box width="150" orient="vertical" autostretch="never" style="border:
+solid 2px; background-color: lightblue" <b>align</b>="right"></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton value="button1"
+style="font-size: 12pt"/></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton value="button2"
+style="font-size: 12pt"/></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton value="button3"
+style="font-size: 12pt"/></tt>
+<br><tt>&lt;/box></tt>
+<br><tt></tt>&nbsp;</td>
+
+<td><img SRC="align_r.gif" HSPACE=10 VSPACE=5 BORDER=1 height=64 width=154></td>
+</tr>
+</table>
+</blockquote>
+<b>Notes</b>
+<blockquote>The default value for <b>align</b> is left. In addition to
+the left, center, and right values, <b>align</b> also supports "horizontal"
+and "vertical", though these latter two are both deprecated. Remember that
+the attribute referes to the alignment of the children and not the parent
+element.
+<br>&nbsp;</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="flex"></a><b><font color="#FFFFFF"><font size=+1>flex</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>flex</b> is used to position widgets and establish their
+flexibility relative to one another.</blockquote>
+
+<p><br><b>Syntax</b>
+<blockquote><tt>&lt;element flex="<i>integer</i> | <i>percentage</i>"></tt></blockquote>
+<b>Examples</b>
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;box orient="vertical" style="background-color:lightblue;">
+&nbsp;&nbsp;&nbsp; &lt;box <b>flex</b>="1">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton class="borderless" value="Start" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton class="borderless" value="Stop" />
+&nbsp;&nbsp;&nbsp; &lt;/box>
+&nbsp;&nbsp;&nbsp; &lt;spring <b>flex</b>="3" />
+&lt;/box></pre>
+</td>
+
+<td><img SRC="flex.gif" HSPACE=25 VSPACE=25 BORDER=1 height=151 width=53></td>
+</tr>
+</table>
+</blockquote>
+
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;box orient="vertical" style="background-color:lightblue;">
+&nbsp;&nbsp;&nbsp; &lt;box <b>flex</b>="100%">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton class="borderless" value="Start" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton class="borderless" value="Stop" />
+&nbsp;&nbsp;&nbsp; &lt;/box>
+&nbsp;&nbsp;&nbsp; &lt;spring <b>flex</b>="50%" />
+&lt;/box></pre>
+</td>
+
+<td><img SRC="flex_percentage.gif" HSPACE=25 VSPACE=25 BORDER=1 height=134 width=54></td>
+</tr>
+</table>
+</blockquote>
+<b>Notes</b>
+<blockquote>Flex is one of the principal ways to size and arrange widgets
+in the UI. Using <a href="boxref.html">boxes</a>, springs, flex, and the
+functional XUL widgets you need, you can layout the interface in any way
+you choose.
+<p>In the first example above, the inner box widget is vying for space
+with the spring widget. Both of them have been given flex, but the greater
+flex of the spring widget has resulted in a spring elememt (below the two
+buttons) that is three times as tall as the buttons themselves.&nbsp;
+<p>In the second example, the percentage of flex that the button box has
+is twice that of the spring widget, and so the button box is twice as tall.
+In these examples, flexibility controls the height because the alignment
+of the containing box has been set to vertical rather than horizontal.
+Flex always reflects the orientation of the container: widgets flex into
+the space provided for them by the containing widget.
+<p>When flexible widgets (widgets for which some flex value has been specified)
+are arranged with other, unflexible widgets, the flex of the flexible widgets
+is always understood to be complete. The inflexible widgets in this case
+take up only as much space as they need to fulfill their other requirements:
+that their values be displayed, that the style considerations like padding
+and borders are met, and so on.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="width"></a><b><font color="#FFFFFF"><font size=+1>width</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>width</b> is an optional attribute that specifies the width
+of the box in pixels or percentage of available space.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element width="width in pixels | width as percentage"></tt></blockquote>
+<b>Example</b>
+<blockquote>
+<pre>&lt;menubar <b>width</b>="100px"&nbsp;
+&nbsp; style="background-color:lightblue;"></pre>
+</blockquote>
+<b>Notes</b>
+<blockquote>See <b><a href="#height">height</a></b> for an example of using
+a percentage value. When you do not specify a width of height, boxes and
+other elements will rely upon <a href="#flex">flex</a> to figure out how
+much space to occupy. With no flex and no size attributes, a box will take
+only as much space as is needed to display whatever value or name attributes
+that have been specified.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="height"></a><b><font color="#FFFFFF"><font size=+1>height</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>height</b> is an optional attribute that specifies the width
+of the box in pixels or percentage of available space.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element height="height in pixels | height as percentage"></tt></blockquote>
+<b>Example</b>
+<blockquote>
+<pre>&lt;menubar <b>height</b>="10%"&nbsp;
+&nbsp; style="background-color:lightblue;"></pre>
+</blockquote>
+<b>Notes</b>
+<blockquote>See <b><a href="#width">width</a></b> for an example of using
+an absolute value (i.e., a specific number of pixels). When you do not
+specify a width of height, boxes and other elements will rely upon <a href="#flex">flex</a>
+to figure out how much space to occupy. With no flex and no size attributes,
+a box will take only as much space as is needed to display whatever value
+or name attributes that have been specified.</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="autostretch"></a><b><font color="#FFFFFF"><font size=+1>autostretch</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>autostretch</b> is an optional attribute that turns a box's
+autostrething on and off.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element autostretch="never | always"></tt></blockquote>
+<b>Example</b>
+<blockquote>
+<pre>&lt;box <b>autostretch</b>="never"&nbsp;
+&nbsp; style="background-color:lightblue;"></pre>
+</blockquote>
+<b>Notes</b>
+<blockquote>The autostretch attribute gives you control over a box's tendency
+to stretch its child elements to fit <i>in the opposite direction</i> of
+the box. When a box is aligned vertically, for example, it will stretch
+its children out horizontally automatically unless you specify otherwise.
+The figure below demonstrates how autostretch prevents the stretching of
+the box's button children.</blockquote>
+
+<table BORDER=0 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr>
+<td><tt>&lt;box style="background-color: lightblue; border: solid 2px"
+orient="vertical"></tt>
+<br><tt>&nbsp; &lt;titledbutton value="button1" style="font-size: 10pt"/></tt>
+<br><tt>&nbsp; &lt;titledbutton value="button2" style="font-size: 14pt"/></tt>
+<br><tt>&nbsp; &lt;titledbutton value="button3" style="font-size: 24pt"/></tt>
+<br><tt>&nbsp; &lt;titledbutton value=" default stretching " style="font-size:
+10pt"/></tt>
+<br><tt>&lt;/box></tt>
+<p><tt>&lt;box style="background-color: lightblue; border: solid 2px" autostretch="never"
+orient="vertical"></tt>
+<br><tt>&nbsp; &lt;titledbutton value="button1" style="font-size: 10pt"/></tt>
+<br><tt>&nbsp; &lt;titledbutton value="button2" style="font-size: 14pt"/></tt>
+<br><tt>&nbsp; &lt;titledbutton value="button3" style="font-size: 24pt"/></tt>
+<br><tt>&nbsp; &lt;titledbutton value=" autostretch=never " style="font-size:
+10pt"/></tt>
+<br><tt>&lt;/box></tt>
+<br>&nbsp;</td>
+
+<td>
+<center><img SRC="box_autostretch.gif" HSPACE=10 height=132 width=214></center>
+</td>
+</tr>
+</table>
+
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="orient"></a><b><font color="#FFFFFF"><font size=+1>orient</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>orient</b> is an optional attribute that specifies the alignment
+of the children of the current element.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element orient="vertical | horizontal"></tt></blockquote>
+<b>Example</b>
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&nbsp;
+&lt;menubar <b>orient</b>="horizontal"&nbsp;
+&nbsp; style="background-color:lightblue;"></pre>
+</td>
+
+<td><img SRC="orient_h.gif" HSPACE=10 BORDER=1 height=46 width=122></td>
+</tr>
+
+<tr>
+<td><tt>&lt;menubar <b>orient</b>="vertical"&nbsp;</tt>
+<br><tt>&nbsp; style="background-color:lightblue;"></tt></td>
+
+<td><img SRC="orient_v.gif" HSPACE=10 VSPACE=5 BORDER=1 height=124 width=50></td>
+</tr>
+</table>
+</blockquote>
+<b>Notes</b>
+<blockquote>The <b>orient</b> attribute takes the place of <b><a href="#align">align</a></b>
+as the way to orient an element's child elements either end-to-end or top-to-bottom.
+Though <b><a href="#align">align</a></b> still accepts "vertical" and "horizontal"
+as values, these are now deprecated.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td></td>
+</tr>
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<div align=right><i>Last updated: 1/26/00 <a href="mailto:oeschger@netscape.com">Ian
+Oeschger</a></i></div>
+
+</body>
+</html>

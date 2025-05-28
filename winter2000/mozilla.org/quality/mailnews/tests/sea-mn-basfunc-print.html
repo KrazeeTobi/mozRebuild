@@ -1,0 +1,667 @@
+<HTML>
+<HEAD>
+<TITLE>Print Feature Test Plan</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+<script LANGUAGE="JavaScript"> 
+  document.write("<CENTER><FONT COLOR=Red SIZE=-1>"); 
+  document.write("Last modified on ", document.lastModified); 
+  document.write("</CENTER></FONT>"); 
+</script>
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>5.0 Project (Seamonkey)</b>
+<br><b> Mail and News Component</b>
+<br><b> Basic Mail and New Functionality:
+Print</b>
+<p>Original document was written by: <b>Peter Mock for Nova</b>
+<br>Modified and maintained by: <b><a href="mailto:fenella@netscape.com">Fenella
+Gor</a> for 5.0 (Seamonkey)</b>
+<p><b>References:</b>
+<p>5.0 Seamonkey UI Specification:
+<br>Test case management system: n/a
+<br>Approx. number of test cases: 260
+<p>
+<hr WIDTH="100%">
+<p><b>Description:</b> Printing involves out-putting the displayed information
+on-to the printed media or electronic file. This test plan focuses on printing
+the content of the mail message to a device/file.Verify the expected results
+visually after each test and that all elements of the email messages has
+printed out correctly.
+<ol TYPE=A>
+<li>
+Mail can be printed from various Mail/News windows</li>
+
+<ol>
+<li>
+3 Pane UI</li>
+
+<li>
+2 Pane UI (3 Pane UI collapsed to 2 pane UI)</li>
+
+<ol TYPE=a>
+<li>
+Collapse the Thread pane only and print a message</li>
+
+<li>
+Collapse the Folder pane only and print a message</li>
+</ol>
+
+<li>
+1 Pane UI (3 Pane UI collapsed to 1 pane UI)</li>
+
+<ol TYPE=a>
+<li>
+Collapse the Thread pane and Folder pane then print a message</li>
+</ol>
+
+<li>
+Message Window</li>
+
+<li>
+Compose Window (if possible)</li>
+
+<br></ol>
+
+<li>
+Ways to Print a Message</li>
+
+<ol>
+<li>
+Menu (File|Print)</li>
+
+<li>
+Toolbar (Print icon)</li>
+
+<li>
+Mnemonics (CTRL P)</li>
+
+<li>
+Context Menu</li>
+
+<br></ol>
+
+<li>
+Print Preview</li>
+
+<ol>
+<li>
+View Next page</li>
+
+<li>
+View Previous Page</li>
+
+<li>
+View Two Pages</li>
+
+<li>
+Zoom In</li>
+
+<li>
+Zoom Out</li>
+
+<li>
+Print</li>
+
+<li>
+Close/Cancel print preview</li>
+
+<br></ol>
+
+<li>
+Print Setup ( Selected from Print Properties)</li>
+
+<ol>
+<li>
+Page Options</li>
+
+<li>
+Margins</li>
+
+<ol TYPE=a>
+<li>
+Top</li>
+
+<li>
+Bottom</li>
+
+<li>
+Left</li>
+
+<li>
+Right</li>
+</ol>
+
+<li>
+Headers</li>
+
+<ol TYPE=a>
+<li>
+Document Title</li>
+
+<li>
+Document Location (URL)</li>
+</ol>
+
+<li>
+Footers</li>
+
+<ol TYPE=a>
+<li>
+Page Number</li>
+
+<li>
+Page Total</li>
+
+<li>
+Date Printing</li>
+</ol>
+
+<li>
+Printer specific options</li>
+
+<ol TYPE=a>
+<li>
+Duplex</li>
+
+<li>
+Postscript</li>
+
+<li>
+Scaling</li>
+
+<li>
+1 UP/ 2UP/ 4 UP</li>
+
+<br></ol>
+</ol>
+
+<li>
+Number of messages that can be Printed</li>
+
+<ol>
+<li>
+Single message</li>
+
+<li>
+Multiple messages (Request for Enhancement)</li>
+
+<li>
+Selective messages (Request for Enhancement)</li>
+
+<li>
+All messages (Request for Enhancement)</li>
+
+<br></ol>
+
+<li>
+Mail message and news articles with the following contents:</li>
+
+<ol>
+<li>
+Text</li>
+
+<li>
+Graphics</li>
+
+<li>
+Java applets</li>
+
+<li>
+Vcards</li>
+
+<li>
+Signature</li>
+
+<li>
+Attachments</li>
+
+<li>
+Background Image/texture</li>
+
+<li>
+Other</li>
+
+<br></ol>
+
+<li>
+Print to different media</li>
+
+<ol>
+<li>
+black and white printer</li>
+
+<li>
+color printer</li>
+
+<li>
+to file</li>
+
+<li>
+postscript printer</li>
+
+<br></ol>
+
+<li>
+Printing from a 3 pane window</li>
+
+<ol>
+<li>
+Printing from the File|Print menu:</li>
+
+<ol TYPE=a>
+<li>
+To the black and white printer</li>
+
+<ol TYPE=i>
+<li>
+Print a single copy from each of the following folders</li>
+
+<ul>
+<li>
+Inbox</li>
+
+<li>
+Sent</li>
+
+<li>
+Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Trash</li>
+
+<li>
+Template</li>
+
+<li>
+User defined folders</li>
+</ul>
+
+<li>
+Print multiple copies</li>
+
+<ul>
+<li>
+Inbox</li>
+
+<li>
+Sent</li>
+
+<li>
+Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Trash</li>
+
+<li>
+Template</li>
+
+<li>
+User defined folders</li>
+</ul>
+
+<li>
+Print All</li>
+
+<ul>
+<li>
+Inbox</li>
+
+<li>
+Sent</li>
+
+<li>
+Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Trash</li>
+
+<li>
+Template</li>
+
+<li>
+User defined folders</li>
+</ul>
+
+<li>
+Print selected pages</li>
+
+<ul>
+<li>
+Inbox</li>
+
+<li>
+Sent</li>
+
+<li>
+Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Trash</li>
+
+<li>
+Template</li>
+
+<li>
+User defined folders</li>
+</ul>
+
+<li>
+Print to a output File</li>
+
+<ul>
+<li>
+Inbox</li>
+
+<li>
+Sent</li>
+
+<li>
+Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Trash</li>
+
+<li>
+Template</li>
+
+<li>
+User defined folders</li>
+</ul>
+
+<li>
+Print landscape</li>
+
+<ul>
+<li>
+Inbox</li>
+
+<li>
+Sent</li>
+
+<li>
+Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Trash</li>
+
+<li>
+Template</li>
+
+<li>
+User defined folders</li>
+</ul>
+
+<li>
+Print portrait</li>
+
+<ul>
+<li>
+Inbox</li>
+
+<li>
+Sent</li>
+
+<li>
+Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Trash</li>
+
+<li>
+Template</li>
+
+<li>
+User defined folders</li>
+</ul>
+
+<li>
+Print on Both Sides</li>
+
+<ul>
+<li>
+Short Side</li>
+
+<ol>
+<li>
+Inbox</li>
+
+<li>
+Sent</li>
+
+<li>
+Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Trash</li>
+
+<li>
+Template</li>
+
+<li>
+User defined folders</li>
+</ol>
+
+<li>
+Long Side</li>
+
+<ol>
+<li>
+Inbox</li>
+
+<li>
+Sent</li>
+
+<li>
+Draft</li>
+
+<li>
+Unsent Messages</li>
+
+<li>
+Trash</li>
+
+<li>
+Template</li>
+
+<li>
+User defined folders</li>
+</ol>
+</ul>
+</ol>
+
+<li>
+Printing from the File|Print menu to a color printer</li>
+
+<ol TYPE=i>
+<li>
+Repeat the above test</li>
+</ol>
+
+<li>
+Printing from the File|Print menu to a to file</li>
+
+<ol TYPE=i>
+<li>
+Repeat the above test</li>
+</ol>
+
+<li>
+Printing from the File|Print menu to a postscript printer</li>
+</ol>
+
+<li>
+Printing from the Print Icon (Toolbar)</li>
+
+<ol TYPE=a>
+<li>
+Repeat the Printing from the File|Print menu test case.</li>
+</ol>
+
+<li>
+Printing from the Mnemonics (CTRL P)</li>
+
+<ol TYPE=a>
+<li>
+Repeat the Printing from the File|Print menu test cases</li>
+</ol>
+
+<li>
+Printing from the Context Menu</li>
+
+<ol TYPE=a>
+<li>
+Repeat the Printing from the File|Print menu test cases</li>
+
+<br></ol>
+</ol>
+
+<li>
+Printing from a 2 pane window</li>
+
+<ol>
+<li>
+Repeat the section Printing from the 3 pane window</li>
+
+<br></ol>
+
+<li>
+Printing from a 1 pane window</li>
+
+<ol>
+<li>
+Repeat the section Printing from the 3 pane window</li>
+
+<br></ol>
+
+<li>
+Printing from a Message pane window</li>
+
+<ol>
+<li>
+Repeat the section Printing from the 3 pane window</li>
+
+<br></ol>
+
+<li>
+Printing from a compose window</li>
+
+<ol>
+<li>
+Repeat the section Printing from the 3 pane window</li>
+</ol>
+</ol>
+
+<hr WIDTH="100%">
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-basfunc-print.html&amp;rev=&amp;root=/cvsroot/">Last modified May 14,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

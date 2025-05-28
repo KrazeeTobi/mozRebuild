@@ -1,0 +1,387 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: BitMap</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prlong.html">[Previous]</A> <A HREF="prprf.html">[Next]</A><A HREF="last.html">[Last]</A>
+<HR>
+<CENTER>
+<H2>
+<A NAME="BitMaps"></A>Chapter 16<BR>
+BitMaps</H2></CENTER>
+This chapter describes the bitmap type and the functions for manipulating
+a bitmap type.
+
+<H2>
+<A NAME="BitMapType"></A>BitMap Type</H2>
+
+<H4>
+<A NAME="prbitmap_t"></A>prbitmap_t</H4>
+Define a BitMap type.
+<H5>
+syntax</H5>
+<PRE>
+#include "prbit.h"
+
+typedef unsigned long prbitmap_t;
+</PRE>
+
+<H5>
+description</H5>
+
+Use <CODE>prbitmap_t</CODE> as an array to define a bitmap of more than the 32 bits
+implied by a single <CODE>prbitmap_t</CODE> instance.
+<H2>
+<A NAME="BitMapFunctions"></A>BitMap Functions</H2>
+The API defined for the BitMap functions is consistent across all platforms..
+<H4>
+<A NAME="prtestbit"></A>PR_TEST_BIT</H4>
+Test a bit within an array of prbitmap_t.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prbit.h></PRE>
+
+<PRE>PRIntn PR_TEST_BIT(prbitmap_t *_map, PRInt32 _bit);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<PRE>_map</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Address of the bitmap containing _bit</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>_bit</PRE>
+</TD>
+
+<TD>The number of the bit within _map to be referenced.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+non-zero if <B>_bit</B> within <B>_map</B> is on, else zero.
+<H5>
+Description</H5>
+PR_TEST_BIT tests the bit at relative position <B>_bit</B> within bitmap
+<B>_map</B>. The macro evaluates to true if the bit is set, else it evaluates
+to zero.
+<H4>
+<A NAME="prsetbit"></A>PR_SET_BIT</H4>
+Set a bit within an array of prbitmap_t.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prbit.h></PRE>
+
+<PRE>void PR_SET_BIT(prbitmap_t *_map, PRInt32 _bit);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<PRE>_map</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Address of the bitmap containing _bit</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>_bit</PRE>
+</TD>
+
+<TD>The number of the bit within _map to be referenced.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+PR_SET_BIT sets bit <B>_bit</B> in bitmap <B>_map</B> to one.
+<H4>
+<A NAME="prclearbit"></A>PR_CLEAR_BIT</H4>
+Set a bit within an array of prbitmap_t.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prbit.h></PRE>
+
+<PRE>void PR_CLEAR_BIT(prbitmap_t *_map, PRInt32 _bit);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<PRE>_map</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Address of the bitmap containing _bit</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>_bit</PRE>
+</TD>
+
+<TD>The number of the bit within _map to be referenced.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+PR_CLEAR_BIT sets bit <B>_bit</B> in bitmap <B>_map</B> to zero.
+<H4>
+<A NAME="prceilinglog2-function"></A>PR_CeilingLog2</H4>
+Ceiling of Log2 of a number.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prbit.h></PRE>
+
+<PRE>PRIntn PR_CeilingLog2(PRUint32 i);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<PRE>i</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Argument to be evaluated</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+Ceiling of Log2 of i.
+<H5>
+Description</H5>
+PR_CeilingLog2() takes the log2 of i, converting result to the smallest
+integer that is greater than or equal to log2(i).
+
+<P>Think of it as: Ceil(Log2(i));
+<H5>
+Example</H5>
+
+<PRE>PRIntn j = PR_CeilingLog2( 32 ); /* After execution, j == 5 */</PRE>
+
+<H4>
+<A NAME="prfloorlog2-function"></A>PR_FloorLog2</H4>
+Floor of Log2 of a number.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prbit.h></PRE>
+
+<PRE>PRIntn PR_FloorLog2(PRUint32 i);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<PRE>i</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Argument to be evaluated</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+Floor of Log2 of i.
+<H5>
+Description</H5>
+PR_FloorLog2() takes the log2 of i, converting the result to the largest
+integer that is less than or equal to log2(i).
+
+<P>Think of it as: Floor(Log2(i));
+<H4>
+<A NAME="prceilinglog2-macro"></A>PR_CEILING_LOG2</H4>
+Ceiling of Log2 of a number.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prbit.h></PRE>
+
+<PRE>void PR_CEILING_LOG2(PRUint32 _log, PRUint32 i);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<PRE>_log</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Result of operation</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>i</PRE>
+</TD>
+
+<TD>Argument to be evaluated.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Same as PR_CeilingLog2(). Implemented as a macro.
+<H4>
+<A NAME="prfloorlog2-macro"></A>PR_FLOOR_LOG2</H4>
+Floor of Log2 of a number.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prbit.h></PRE>
+
+<PRE>void PR_FLOOR_LOG2(PRUint32 _log, PRUint32 i);</PRE>
+
+<H5>
+Parameter</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%">
+<PRE>_log</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>Result of operation</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>i</PRE>
+</TD>
+
+<TD>Argument to be evaluated.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Same as PR_FloorLog2(). Implemented as a macro.
+<BR>
+<HR WIDTH="100%">
+<A HREF="contents.html">[Contents]</A> <A HREF="prlong.html">[Previous]</A> <A HREF="prprf.html">[Next]</A><A HREF="last.html">[Last]</A>
+<DIV ALIGN=right><I><FONT SIZE=-2>Last Updated: Tue Jul 14 10:26:12 PDT 1998</FONT></I>
+<HR SIZE=4></DIV>
+
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html" TARGET="_top">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/refList/refNSPR/prbit.html&amp;rev=&amp;root=/cvsroot/">Last modified July 17,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

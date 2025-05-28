@@ -1,0 +1,597 @@
+<HTML>
+<HEAD>
+<TITLE>Compser 5 Dialogs</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<h1>
+Composer 5 Dialogs</h1>
+
+<div align=right><font size=-1>Last updated 5/13/99 by Charles Manske</font>
+<br><font size=-1>(<a href="mailto:cmanske@netscape.com">cmanske@netscape.com</a>)</font></div>
+
+<p><br>The purpose of this document is to detail the dialogs used by Mozilla
+Composer, including improvements done during the "Gromit" project (now
+in the "MozillaClassic" tree in the CVS code repository.) This should be
+the basis for the new dialogs to be completed using the new XML-based dialogs
+in the Seamonkey project.
+<br>After thinking about these dialogs, we are investigating breaking up
+the more complex dialogs up into "basic" and "advanced" sets. See the <a href="Composer_5_Dialogs_Multimode.html">Multiple
+use modes</a> document for details.
+<p>We will start with a description of some characteristics common to all
+the dialogs of a given type.
+<h3>
+Normal Dialogs</h3>
+
+<ol>
+<li>
+OK and Cancel buttons are usually present in a dialog and located along
+the bottom of the dialog. On the Mac, the placement should be Cancel, OK.</li>
+
+<li>
+The OK button is usually grayed (disabled) if there is user input required
+to complete the action of the dialog (such as entering text in an edit
+field.) It is enabled after the user makes enters some valid text (something
+other than just whitespace) into the required editbox(es).</li>
+</ol>
+
+<h3>
+<a NAME="MultipaneDialogs"></a>Multipane or Tabbed Dialogs</h3>
+
+<ol>
+<li>
+At the bottom of the outer panel, there are four buttons:OK, Cancel, Apply,
+and Help.</li>
+
+<br>On the Mac the order of buttons is: Help, Cancel, Apply, and OK
+<br>Of course the Help button should only be present if help is available.
+<li>
+The Help button should bring up the help topic for the particular pane
+that is showing. The F1 key should bring up this same help content (standard
+in Windows, what about other platforms?)</li>
+
+<li>
+The Apply button is initially grayed (disabled) until the user makes a
+change in one of the settings in any panel, then it is enabled. Switching
+from one panel to another should not automatically do the "Apply" actions.</li>
+
+<li>
+The OK, Cancel, and Help button should always be enabled.</li>
+
+<li>
+The OK button should do the same action as the Apply button, then close
+the dialog.</li>
+
+<li>
+After the Apply button is used, all panels should execute actions needed
+to apply the changed settings. This action (currently) cannot be reversed
+while in the dialog, so the text on the OK button is changed to "Close"
+and the button remains enabled. Note that the action can be reversed by
+using Undo after the dialog is dismissed.</li>
+
+<li>
+After using Apply, this button should be disabled until another setting
+is changed in the dialog.</li>
+
+<li>
+Suggested new behavior:</li>
+
+<br>After the state described in 4 above, the Cancel button text could
+be changed to "Undo" so the user can undo the last Apply action without
+leaving the dialog. Since the new Undo system supports multiple levels,
+this button should be left in the "Undo" state, available to undo any previous
+Apply action taken while in the dialog. After using this undo feature,
+the button text should change back to Cancel only after there all actions
+applied within the dialog are undone. If this state is reached the document
+should be in the same exact state as when the dialog was created, thus
+we probably should also change the "Close" button text back to "OK."</ol>
+
+<h2>
+Composer Dialogs</h2>
+Click on the links to individual dialogs for screen shots and detailed
+descriptions of each dialog's behavior.
+<table BORDER CELLSPACING=2 WIDTH="80%" >
+<tr>
+<th VALIGN=TOP>Dialog</th>
+
+<th VALIGN=TOP>Invoke</th>
+
+<th VALIGN=TOP>Comments</th>
+
+<td VALIGN=TOP WIDTH="83"><b>Days to Implement</b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="ColorPickerWidget.html">Color Picker</a></td>
+
+<td VALIGN=TOP>Color button (or "swatch") on toolbar or in Page or Table
+dialogs</td>
+
+<td VALIGN=TOP>This is really an XPFE "widget", not a dialog</td>
+
+<td VALIGN=TOP>3-4</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="FindReplaceDlg.html">Find/Replace</a></td>
+
+<td VALIGN=TOP>Edit | Find</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="SpellCheckerDlg.html#SpellCheckerDialog">Check
+Spelling</a></td>
+
+<td VALIGN=TOP>Tools | Check Spelling...</td>
+
+<td VALIGN=TOP>Newest version only implemented on Windows (new layout)</td>
+
+<td VALIGN=TOP>2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="SpellCheckerDlg.html#PersonalDictionaryDialog">Personal
+Dictionary</a></td>
+
+<td VALIGN=TOP>Tools | Check Spelling... | Edit</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="MiscDialogs.html#HorizontalLinePropertiesDialog">Horizontal
+Line Properties</a></td>
+
+<td VALIGN=TOP>Insert | Horizontal Line, Format | Horizontal Line Properties&nbsp;</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="MiscDialogs.html#TargetPropertiesDialog">Target
+Properties</a></td>
+
+<td VALIGN=TOP>Insert | Target</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1/2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="MiscDialogs.html#HTMLTagDialog">HTML Tag</a></td>
+
+<td VALIGN=TOP>Insert | HTML Tag</td>
+
+<td VALIGN=TOP>Similar to "Extra HTML"&nbsp;
+<br>Scrolling text field</td>
+
+<td VALIGN=TOP>1/2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="MiscDialogs.html#ExtraHTMLDialog">Extra HTML</a></td>
+
+<td VALIGN=TOP>Insert | Link... | Extra HTML</td>
+
+<td VALIGN=TOP>Scrolling text field</td>
+
+<td VALIGN=TOP>1/2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="MiscDialogs.html#RemoveAllCharacterStylesDialog">Remove
+All Character Styles</a></td>
+
+<td VALIGN=TOP>Format | Remove All Styles and the selection contains 1
+or more links</td>
+
+<td VALIGN=TOP>Only dialog now used of the general type "Editor Hint" dialogs
+that could display different messages.</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><a href="MiscDialogs.html#NumericRangeError">Numeric Range Error</a></td>
+
+<td>From many property dialogs that must validate user input for an editbox
+or combobox</td>
+
+<td>Maybe just use a generic FE_Alert type of message box?</td>
+
+<td>1/2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="PagePropertiesDialogs.html#GeneralPageProperties">General
+Page Properties</a></td>
+
+<td VALIGN=TOP>Format | Page Colors &amp; Properties | General</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="PagePropertiesDialogs.html#ColorsAndBackgroundProperties">Page
+Colors and Background</a></td>
+
+<td VALIGN=TOP>Format | Page Colors &amp; Properties | Colors and Background</td>
+
+<td VALIGN=TOP>Tab control
+<br>Complex!
+<br>Page colors sample
+<br>Color swatches
+<br>Choose file button</td>
+
+<td VALIGN=TOP>2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="PagePropertiesDialogs.html#MetaTagsProperties">Meta
+Tags Properties</a></td>
+
+<td VALIGN=TOP>Format | Page Colors &amp; Properties | META Tags</td>
+
+<td VALIGN=TOP>2 scrolling lists</td>
+
+<td VALIGN=TOP>2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="CharacterPropertiesDialogs.html#CharacterProperties">Character
+Properties</a></td>
+
+<td VALIGN=TOP>Format | Character Properties | Character tab</td>
+
+<td VALIGN=TOP>Colors swatch
+<br>Font &amp; font size popups</td>
+
+<td VALIGN=TOP>3</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="CharacterPropertiesDialogs.html#LinkProperties">Link
+Properties</a></td>
+
+<td VALIGN=TOP>Format | Character Properties | Link tab</td>
+
+<td VALIGN=TOP>Choose file button
+<br>Scrolling list</td>
+
+<td VALIGN=TOP>3</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="CharacterPropertiesDialogs.html#ParagraphProperties">Paragraph
+Properties</a></td>
+
+<td VALIGN=TOP>Format | Character Properties | Paragraph</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>3</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="ImageDialogs.html#ImageProperties">Image Properties</a></td>
+
+<td VALIGN=TOP>Insert | Image</td>
+
+<td VALIGN=TOP>&nbsp;Complex!
+<br>Tab control
+<br>Choose file button
+<br>Buttons with icons, or dropdown menu with icons</td>
+
+<td VALIGN=TOP>3</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="ImageDialogs.html#ImageConversionDialog">Image
+Conversion</a></td>
+
+<td VALIGN=TOP>Insert | Image | Choose File (Select *.BMP) or paste a BMP
+image from the Windows clipboard.</td>
+
+<td VALIGN=TOP>Can bring up system file save dialog.</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="ImageDialogs.html#JPEGQualityDialog">JPEG Quality</a></td>
+
+<td VALIGN=TOP>Insert | Image... | Choose File... (select .BMP file)</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1/2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="ImageDialogs.html#LoadingImageDialog">Loading Image</a></td>
+
+<td VALIGN=TOP>During image loading</td>
+
+<td VALIGN=TOP>Wait Dialog.
+<br>Should pop up only if image loading time is > about 1/2 sec.</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="TablePropertiesDialogs.html#TableProperties">Table
+Properties</a></td>
+
+<td VALIGN=TOP>Table | Properties</td>
+
+<td VALIGN=TOP>Calls Choose File</td>
+
+<td VALIGN=TOP>3</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="TablePropertiesDialogs.html#CellProperties">Cell
+Properties</a></td>
+
+<td VALIGN=TOP>Table | Properties | Cell</td>
+
+<td VALIGN=TOP>Used for selected Cells, Rows, or Columns with changes to
+strings accomodate each type</td>
+
+<td VALIGN=TOP>3</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="PreferencesDialogs.html#ComposerPreferences">Composer
+Preferences</a></td>
+
+<td VALIGN=TOP>Edit | Preferences | Composer</td>
+
+<td VALIGN=TOP>&nbsp;Tree widget (Prefs-wide)</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="PreferencesDialogs.html#PublishingPreferences">Publishing
+Preferences</a></td>
+
+<td VALIGN=TOP>Edit | Preferences | Composer | Publish</td>
+
+<td VALIGN=TOP>&nbsp;Choose file button</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="PreferencesDialogs.html#NewPageColorsPreferences">New
+Page Color Preferences</a></td>
+
+<td VALIGN=TOP>Edit | Preferences |Composer | New Page Colors</td>
+
+<td VALIGN=TOP>Implemented only in UNIX versions.
+<br>Color swatches
+<br>Page colors sample</td>
+
+<td VALIGN=TOP>3</td>
+</tr>
+</table>
+
+<p>The following will be needed only if a separate Composer Application
+with file I/O and publishing are implemented (i.e., they are not needed
+for just the Ender widget):
+<table BORDER CELLSPACING=2 WIDTH="80%" >
+<tr>
+<th VALIGN=TOP>Dialog</th>
+
+<th VALIGN=TOP>Invoke</th>
+
+<th VALIGN=TOP>Comments</th>
+
+<td VALIGN=TOP WIDTH="83"><b>Days to Implement</b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="OpenPageDialogs.html#OpenPage">Open Page</a></td>
+
+<td VALIGN=TOP>File | Open Page...</td>
+
+<td VALIGN=TOP>Previously shared with Navigator. Do the same&nbsp;</td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="OpenPageDialogs.html#NewPageFromTemplate">New Page
+From Template</a></td>
+
+<td VALIGN=TOP>File | New | Page from Template...</td>
+
+<td VALIGN=TOP></td>
+
+<td VALIGN=TOP>1</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="PublishDialog.html">Publish</a></td>
+
+<td VALIGN=TOP>File | Publish</td>
+
+<td VALIGN=TOP>Scrolling list
+<br>Combo box of document history</td>
+
+<td VALIGN=TOP>3</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><a href="FileSaveDialogs.html#SaveChanges">SaveChanges</a></td>
+
+<td>File | Browse Page or
+<br>Edit | HTML Source&nbsp;
+<br>and page already exists and has changes</td>
+
+<td>This is a simple "Yes, No, Cancel" message box in Windows</td>
+
+<td>1/2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="FileSaveDialogs.html#SaveNewPage">Save New Page</a></td>
+
+<td VALIGN=TOP>File | Browse Page or
+<br>Edit | HTML Source&nbsp;
+<br>and page has not been saved yet</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1/2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="FileSaveDialogs.html#ConfirmSaveFile">Confirm Save
+File</a></td>
+
+<td VALIGN=TOP>File | Save or File | Save As</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1/2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="FileSaveDialogs.html#SavingPublishingPage">Saving/Publishing
+Page</a></td>
+
+<td VALIGN=TOP>During saving or publishing of HTML with associated files</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1/2</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="FileSaveDialogs.html#PageTitle">Page Title</a></td>
+
+<td VALIGN=TOP>File | Save (new page)</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1/4</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><a href="EditChangesDlg.html">SelectEditChanges</a></td>
+
+<td VALIGN=TOP>Upon returning focus to the page after editing in an external
+editor AND changes were also made in Composer's version after it was loaded
+into the other editor but before those changes were saved to disk.
+<br>(Now you have two versions with new changes, each different from the
+file on disk so the dialog lets user decide which changes to accept)</td>
+
+<td VALIGN=TOP>&nbsp;</td>
+
+<td VALIGN=TOP>1/2</td>
+</tr>
+</table>
+
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/editor/ui_specs/Composer_5_Dialogs.html&amp;rev=&amp;root=/cvsroot/">Last modified May 14,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,1872 @@
+<HTML>
+<HEAD>
+<TITLE>Address Book/Pinpoint Addressing Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>5.0 Project - (Seamonkey)</b>
+<br><b>Mail and News Component</b>
+<br><b>Address Book/Pinpoint Addressing</b>
+<p>Written by: <a href="mailto:esther@netscape.com">Esther Goes</a>
+<br>Date Created:121198
+<br>Last Modified and Change Description:
+<br>121498 added links and more on Completion picker
+<br>011398 made changes per Scott's review
+<br>031599 made changes per Fenella's review
+<p><b>Reviewed by: </b><a href="mailto:mscott@netscape.com">Scott MacGregor</a>
+(1st draft), <a href="mailto:fenella@netscape.com">Fenella</a> (2nd draft)
+<p><b>References:</b>
+<br>UI Specification: Address Book UI-Seamonkey, for additional information
+you may need to refer to: Address Book UI-4.5
+<br>Other: <a href="howtocreate.html">How To Create Address
+Books, Cards, Lists, Directories etc.</a>
+<br>Link to:<a href="sampleabook.ldif"> Sample Address Book</a> (Right
+mouse click to save an .ldif file for importing to a new Address Book)
+<p><b>Test Case Management Usage: n/a</b>
+<p><b>Contents:</b>
+<br><a href="#Introduction">Introduction</a>
+<br><a href="#Basic">Basic Functionality</a>
+<br><a href="#Expanded">Expanded Functionality</a>
+<br><a href="#Other">Other Functionality</a>
+<p>
+<hr WIDTH="100%">
+<br><a NAME="Introduction"></a><b>Introduction</b>
+<p><b>Pinpoint Addressing (<i>NOTE: The "@netscape.com" in all the results
+listed below will change when testing from a different domain. The results
+will show the domain the tester is currenty using. )</i></b>
+<p><b>(</b><i>This is performed while in the Addressing pane of a Compose
+window and should also be performed in the List section of an existing
+or New Mail List window from within an Address Book </i><b>).
+</b>Pinpoint
+Addressing is name completion of names entered on an Address line, based
+on a search in an Address Book or Directory which matches any of these
+<b>(5)
+fields in a Card</b> or a person's HTML<b> </b>page produced from a Directory
+sever: <b>First Name, Last Name, Display Name, Email Address or Nickname;
+</b> or </b>for these <b>(3) fields for a List</b>:<b> List Name, Description
+and Nickname.
+</b>There are (3) possible results from the search for matches:
+Unique Match, Multiple Matches &amp; No Match. Below are tables with test
+scenarios using the (4) UI Preference combinations and (1) hidden Preference
+that will determine the results.
+<p><a NAME="Basic"></a><b>Basic Functionality</b>
+<ol TYPE=A>
+<li>
+Pinpoint Addressing - Basic functionality</li>
+
+<ol>
+<li>
+Verify the search does not begin until the user has stopped typing and
+about 300ms have passed</li>
+
+<li>
+Verify the user can accelerate the search (bring up address picker) by:</li>
+
+<ol TYPE=a>
+<li>
+selecting "Show Matching Addresses" from the Edit menu</li>
+
+<li>
+Ctrl+J</li>
+
+<li>
+Pressing "Tab"</li>
+
+<li>
+Pressing "Enter"</li>
+</ol>
+
+<li>
+Verify the user can interrupt the search by typing more characters causing
+the search to restart</li>
+
+<li>
+Verify the user can interrupt the search by pressing the "Stop" button,
+the search will not restart</li>
+
+<li>
+Verify the status text states "Searching for email address..."</li>
+
+<li>
+Verify the final status or a search results in one of the following:</li>
+
+<ol TYPE=a>
+<li>
+&lt;Multiple Matches Found> ( if there is more than 1 match)</li>
+
+<li>
+&lt;No match found> after the name with domain appended (if there are no
+matches)</li>
+
+<li>
+Name Completion (if there is a unique match found)</li>
+</ol>
+
+<li>
+Verify multiple names on same line separated by comma's will report the
+same for each case mentioned above. (example using sample address book
+listed beow type in: cards, card, ##1)</li>
+
+<ol TYPE=a>
+<li>
+unique names will be completed (example using sample address book listed
+below: "cards" will be unique)</li>
+
+<li>
+a completion picker for each multiple match will come up (example using
+sample address book listed below: "card" will cause mutiple matches)</li>
+
+<li>
+a name completion (using domain) when no matches found (example using sample
+address book listed below: "##1" will have no matches)</li>
+</ol>
+
+<li>
+Verify the order which these names were entered is kept and each name will
+be entered on a separate line</li>
+
+<li>
+Functionality of other Keys:</li>
+
+<ol TYPE=a>
+<li>
+Verify pressing &lt;Tab> will move the insertion point to the "Subject"
+line after the required completion process.</li>
+
+<li>
+Verify pressing &lt;Enter> will move the insertion point to the next address
+line after the required completion process.</li>
+
+<li>
+Verify pressing &lt;Delete> will erase the completion string and temporarily
+defeat completion</li>
+
+<li>
+Verify pressing &lt;End or Right Arrow> will accept the completion string
+and move the insertion point to the end of the current line.</li>
+</ol>
+
+<li>
+Verify pinpoint addressing from the New Message window only applys when
+the addressing type is: To: , Cc:, Bcc:, or Reply To:</li>
+
+<li>
+Verify pinpoint addressing from the New Message window does <b>not</b>
+apply to addressing fields: Groups: and Followup To:. There should be no
+matching, no auto complete and no completion picker popup.</li>
+</ol>
+</ol>
+<a href="sampleabook.ldif">Sample Address Book</a> (right mouse click on
+this link and save the file to import into a new address book)
+<ol TYPE=A>
+<ol>
+<table BORDER COLS=5 WIDTH="59%" >
+<tr>
+<td>First Name
+<br>(FN)</td>
+
+<td>Last Name (LN)</td>
+
+<td WIDTH="25%">Display Name
+<br>(DN)</td>
+
+<td>Email address</td>
+
+<td>Nickname</td>
+</tr>
+
+<tr>
+<td>Card</td>
+
+<td>One</td>
+
+<td>Card One</td>
+
+<td>card1@testdomain.com</td>
+
+<td>
+<br>#eno</td>
+</tr>
+
+<tr>
+<td>Card</td>
+
+<td>Two</td>
+
+<td>Card Two</td>
+
+<td>card2@testdomain.com</td>
+
+<td>#owt</td>
+</tr>
+
+<tr>
+<td>Card</td>
+
+<td>Three</td>
+
+<td>Card Three</td>
+
+<td>card3@testdomain.com</td>
+
+<td>#eerht</td>
+</tr>
+
+<tr>
+<td>Card</td>
+
+<td>Four</td>
+
+<td>Card Four</td>
+
+<td>card4@testdomain.com</td>
+
+<td>#ruof</td>
+</tr>
+
+<tr>
+<td>Card</td>
+
+<td>Five</td>
+
+<td>Card Five</td>
+
+<td>card5@testdomain.com</td>
+
+<td>#evif</td>
+</tr>
+
+<tr>
+<td>Card</td>
+
+<td>Fivt</td>
+
+<td>Card Fivt</td>
+
+<td>card5t@testdomain.com</td>
+
+<td>#tvif</td>
+</tr>
+
+<tr>
+<td>Cards</td>
+
+<td>Seven</td>
+
+<td>Card Seven</td>
+
+<td>card7@testdomain.com</td>
+
+<td>car</td>
+</tr>
+</table>
+
+<table BORDER COLS=3 WIDTH="59%" >
+<tr>
+<td>List Name</td>
+
+<td>Description</td>
+
+<td WIDTH="25%">Nickname</td>
+</tr>
+
+<tr>
+<td>List One</td>
+
+<td>Description for list one</td>
+
+<td>List1</td>
+</tr>
+
+<tr>
+<td>List Two</td>
+
+<td>Description for list two</td>
+
+<td>List2</td>
+</tr>
+</table>
+</ol>
+</ol>
+<a NAME="Expanded"></a><b>Expanded Functionality - (4) combinations of the preference settings</b>
+<ol TYPE=A>
+<li>
+Pinpoint Addressing Preferences - Combination 1: "Address Books" and "Directory server"
+are <b>checked,</b> " Show me a list of choices" is <b>selected</b>. Use
+the Sample Address Book above and test Scenarios in the table below for
+testing this Pinpoint Addressing. <b>Note:</b> For this Preferences combination,
+a search is started comparing all of the entries in the addressing line
+with the Address Book and Directory selected to give results pinpointing
+the closest match of any of the 5 fields mentioned above for Cards or any
+of the 3 fields for Lists.</li>
+
+<ol>
+<li>
+Scenarios for Unique Match</li>
+
+<table BORDER=2 WIDTH="92%" >
+<tr>
+<td WIDTH="10%">Unique Match:</td>
+
+<td WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: cards</td>
+
+<td WIDTH="100%">blur string in green Seven &lt;card7@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Cards Seven &lt;card7@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: two</td>
+
+<td>blur string in green Card Two &lt;card2@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Card Two &lt;card2@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card three</td>
+
+<td>blur string in green &lt;card3@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Card Three&lt;card3@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card4</td>
+
+<td>blur string in green Card Four &lt;card4@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Card Four &lt;card4@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To:#evif</td>
+
+<td>blur string in green Card Five &lt;card5@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Card Five &lt;card5@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To: list1</td>
+
+<td>blur string in green List One &lt;Description for list 1></td>
+
+<td>&lt;Enter></td>
+
+<td>List One &lt;Description for list 1></td>
+</tr>
+</table>
+
+<li>
+Scenarios for Multiple Matchess</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">Multiple Matches:</td>
+
+<td ALIGN=LEFT WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: card</td>
+
+<td>blur string in blue &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with a list of matches from all Address
+Books &amp; Directories which includes: all the cards from the Sample Address
+Book. In addition a raw address (what you typed + domain). Clicking OK
+will complete the line with the address you had selected in the Completion
+picker and moves cursor to next line.</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: fiv</td>
+
+<td>blur string in blue &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with a list of matches from all Address
+Books &amp; Directories which includes: these cards from the Sample Address
+Book: Card Five &amp; Card Fivt. In addition a raw address that adds your
+domain to what you typed (fiv@netscape.com). Clicking OK will complete
+the line with the address you had selected in the Completion picker and
+moves cursor to next line.</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card fiv</td>
+
+<td>blur string in blue &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with a list of matches from all Address
+Books &amp; Directories which includes: these cards from the Sample Address
+Book: Card Five &amp; Card Fivt. In addition (2) raw addresses for each
+name divided by a &lt;space>, it adds your domain to what you typed (card@netscape.com
+and fiv@netscape.com). Clicking OK will complete the line with the address
+you had selected in the Completion picker and moves cursor to next line.</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card5</td>
+
+<td>blur string in blue &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with a list of matches from all Address
+Books &amp; Directories which includes these cards from the Sample Address
+Book: Card Five &amp; Card Fivt. In addition a raw address that adds your
+domain to what you typed (card5@netscape.com). Clicking OK will complete
+the line with the address you had selected in the Completion picker and
+moves cursor to next line.</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To: #e</td>
+
+<td>blur string in blue &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with a list of matches from all Address
+Books &amp; Directories which includes: these cards from the Sample Address
+Book: Card One, Card Five, &amp; Card Three. In addition a raw address
+that adds your domain to what you typed (#e@netscape.com). Clicking OK
+will complete the line with the address you had selected in the Completion
+picker and moves cursor to next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To: list</td>
+
+<td>blur string in blue &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with a list of matches from all Address
+Books &amp; Directories which includes these lists from the Sample Address
+Book:List One and List Two. In addition to a raw address that adds your
+domain to what you typed (list@netscape.com). Clicking OK will complete
+the line with the list you selected in the Completion picker and moves
+cursor to next line</td>
+</tr>
+</table>
+
+<li>
+Scenarios for No Match Found</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">No Match:</td>
+
+<td WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: cardone</td>
+
+<td>blur string in red @netscape.com &lt;no match found></td>
+
+<td>&lt;Enter></td>
+
+<td>cardone@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: twotwo</td>
+
+<td>blur string in red @netscape.com&lt;no match found></td>
+
+<td>&lt;Enter></td>
+
+<td>twotwo@nescape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card fiver</td>
+
+<td>blur string in red card@netscape.com fiver@netscape.com &lt;no match
+found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with: Name=card fiver Emails= card@netscape.com
+and fiver@netscape.com. Clicking OK completes each email on separate line
+and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card55</td>
+
+<td>blur string in red @netscape.com&lt;no match found></td>
+
+<td>&lt;Enter></td>
+
+<td>card55@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To: ##e</td>
+
+<td>blur string in red @netscape.com&lt;no match found></td>
+
+<td>&lt;Enter></td>
+
+<td>##e@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To:list123</td>
+
+<td>blur string in red @netscape.com &lt;no match found></td>
+
+<td>&lt;Enter></td>
+
+<td>list123@netscape.com and cursor moves to next line</td>
+</tr>
+</table>
+</ol>
+
+<li>
+Pinpoint Addressing Preferences - Combination 2: "Address Books" and "Directory server"
+are <b>unchecked</b> and " Show me a list of choices" is <b>selected</b>.
+Use the Sample Address Book above and test Scenarios in the table below
+for testing this Pinpoint Addressing. <b>Note:</b> For this Preferences
+combination, a search is started comparing all of the entries in the addressing
+line with the Address Book and Directory selected to give results pinpointing
+the closest match of any of the 5 fields mentioned above for Cards or any
+of the 3 fields for Lists.</li>
+
+<ol>
+<li>
+Scenarios for Unique Match</li>
+
+<table BORDER=2 WIDTH="92%" >
+<tr>
+<td WIDTH="10%">Unique Match:</td>
+
+<td WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: cards</td>
+
+<td WIDTH="100%">blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>cards@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: two</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>two@testdomain.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card three</td>
+
+<td>blur string in red card@netscape.com, three@netscape.com &lt;No match
+found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with Name=card three, Email=card@netscape.com,
+three@netscape.com. Clicking OK, will complete each name on a separate
+line and move cursor to the next line.</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card4</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>card4@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To:#evif</td>
+
+<td>blur string in green Card Five &lt;card5@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Card Five &lt;card5@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To list2</td>
+
+<td>blur string in green List Two &lt;Description of list 2></td>
+
+<td>&lt;Enter></td>
+
+<td>List Two &lt;Description of list 2></td>
+</tr>
+</table>
+
+<li>
+Scenarios for Multiple Matches:</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">Multiple Matches:</td>
+
+<td ALIGN=LEFT WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: card</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>cards@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: fiv</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>fiv@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card fiv</td>
+
+<td>blur string in red card@netscape.com, fiv@netscape.com &lt;No match
+found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with Name=card fiv, Email=card@netscape.com,
+fiv@netscape.com. Clicking OK, will complete each name on a separate line
+and move cursor to the next line.</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card5</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>card5@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>TestingNickname
+<br>To: #e</td>
+
+<td>blur string in blue &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with a list of matches from all Address
+Books &amp; Directories which includes: these cards from the Sample Address
+Book: Card One, Card Five, &amp; Card Three. In addition a raw address
+that adds your domain to what you typed (#e@netscape.com). Clicking OK
+will complete the line with the address you had selected in the Completion
+picker and moves cursor to next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To:list</td>
+
+<td>blur string in blue &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with a list of matches from all Address
+Books &amp; Directories which includes these lists from the Sample Address
+Book:List One and List Two. In addition to a raw address that adds your
+domain to what you typed (list@netscape.com). Clicking OK will complete
+the line with the list you selected in the Completion picker and moves
+cursor to next line</td>
+</tr>
+</table>
+
+<li>
+Scenarios for No Match:</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">No Match:</td>
+
+<td WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: cardone</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>cardone@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: twotwo</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>twotwo@nescape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card fiver</td>
+
+<td>blur string in red card@netscape.com fiver@netscape.com &lt;No match
+found></td>
+
+<td>&lt;Enter></td>
+
+<td>Brings up Completion picker with: Name=card fiver Emails= card@netscape.com
+and fiver@netscape.com. Clicking OK completes each email on separate line
+and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card55</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>card55@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To: ##e</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>##e@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To: list12</td>
+
+<td>blur string in red @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>list12@netscape.com and cursor moves to next line</td>
+</tr>
+</table>
+</ol>
+
+<li>
+Pinpoint Addressing Preferences - Combination 3: "Accept what I have typed" is <b>selected</b>
+and matching against Address Books <b>checked</b>. Use the Sample Address
+Book above and test Scenarios in the table below for testing this Pinpoint
+Addressing. <b>Note:</b> For this Preferences combination, a search is
+started comparing all of the entries in the addressing line with the Address
+Book and Directory selected to give results pinpointing the closest match
+of any of the 5 fields mentioned above for Cards or any of the 3 fields
+for Lists, but the blur string is grey which means the default action of
+the &lt;Enter> button is not to bring up the Completion Picker when Multiple
+names are found.</li>
+
+<ol>
+<li>
+Scenarios for Unique Match:</li>
+
+<table BORDER=2 WIDTH="92%" >
+<tr>
+<td WIDTH="10%">Unique Match:</td>
+
+<td WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: cards</td>
+
+<td WIDTH="100%">blur string in gray Seven &lt;card7@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Cards Seven &lt;card7@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: two</td>
+
+<td>blur string in gray Card Two &lt;card2@testdomain.com</td>
+
+<td>&lt;Enter></td>
+
+<td>Card Two &lt;card2@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card three</td>
+
+<td>blur string in gray &lt;card3@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Card Three&lt;card3@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card4</td>
+
+<td>blur string in gray Card Four &lt;card4@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Card Four &lt;card4@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To:#evif</td>
+
+<td>blur string in gray Card Five &lt;card5@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Card Five &lt;card5@testdomain.com> and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To:list1</td>
+
+<td>blur string in gray List One &lt;Description of list 1></td>
+
+<td>&lt;Enter></td>
+
+<td>List One &lt;Description of list 1></td>
+</tr>
+</table>
+
+<li>
+Scenarios for Multiple Matches:</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">Multiple Matches:</td>
+
+<td ALIGN=LEFT WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: card</td>
+
+<td>blur string in gray &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>card@netscape.com and cursor moves to next line (note: to bring up
+the picker at this time you would have to use the menu item or accelerator
+key Ctrl+J)</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: fiv</td>
+
+<td>blur string in gray &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>fiv@netscape.com and cursor moves to next line(note: to bring up the
+picker at this time you would have to use the menu item or accelerator
+key Ctrl+J)</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card fiv</td>
+
+<td>blur string in gray &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>card@netscape.com and fiv@netscape.com on separate lines, cursor moves
+to next line (note: to bring up the picker at this time you would have
+to use the menu item or accelerator key Ctrl+J)</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card5</td>
+
+<td>blur string in gray &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>card5@netscape.com and cursor moves to next line (note: to bring up
+the picker at this time you would have to use the menu item or accelerator
+key Ctrl+J)</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To: #e</td>
+
+<td>blur string in gray &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>#e@netscape.com and cursor moves to next line (note: to bring up the
+picker at this time you would have to use the menu item or accelerator
+key Ctrl+J)</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To:list</td>
+
+<td>blur string in gray &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>list@netscape.com and cursor moves to next line (note: to bring up
+the picker at this time you would have to use the menu item or accelerator
+key Ctrl+J)</td>
+</tr>
+</table>
+
+<li>
+Scenarios for No Match:</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">No Match:</td>
+
+<td WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: cardone</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>cardone@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: twotwo</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>twotwo@nescape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card fiver</td>
+
+<td>blur string in gray card@netscape.com, fiver@netscape.com &lt;No match
+found></td>
+
+<td>&lt;Enter></td>
+
+<td>card@netscape.com and fiver@netscape.com on separate lines, cursor
+moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card55</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>card55@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To: ##e</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>##e@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To:list23</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>list23@netscape.com and cursor moves to next line</td>
+</tr>
+</table>
+</ol>
+
+<li>
+Pinpoint Addressing Preferences - Combination 4: "Accept what I have typed" is <b>selected</b>
+and matching against Address Books &amp; Directories <b>unchecked</b>.
+Use the Sample Address Book above and test Scenarios in the table below
+for testing this Pinpoint Addressing. <b>Note:</b> For this Preferences
+combination a search is started comparing all of the entries in the addressing
+line with the Address Book and Directory selected, to give results pinpointing
+the closest match of any of the 5 fields mentioned above for Cards or any
+of the 3 fields for Lists. However, the blur string is grey which means
+the default action of the &lt;Enter> button is not to bring up the Completion
+Picker when Multiple names are found.</li>
+
+<ol>
+<li>
+Scenarios for Unique Match:</li>
+
+<table BORDER=2 WIDTH="92%" >
+<tr>
+<td WIDTH="10%">Unique Match:</td>
+
+<td WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: cards</td>
+
+<td WIDTH="100%">blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>cards@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: two</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>two@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card three</td>
+
+<td>blur string in gray card@netscape.com, three@netscape.com &lt;No match
+found></td>
+
+<td>&lt;Enter></td>
+
+<td>card@netscape.com and three@netscape.com on separate lines and cursor
+moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card4</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>card4@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To:#evif</td>
+
+<td>blur string in gray Card Five &lt;card5@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Card Five &lt;card5@testdomain.com> Note: on Nicknames we always do
+a search in the Address Book - in this case there is a Unique match which
+displays the string in gray- pressing &lt;Enter> completes the matching
+name and moves the cursor to the next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To:list2</td>
+
+<td>blur string in gray List Two &lt;Description of list 2></td>
+
+<td>&lt;Enter></td>
+
+<td>List Two &lt;Description of list 2> Note: on Nicknames we always do
+a search in the Address Book - in this case there is a Unique match which
+displays the string in gray- pressing &lt;Enter> completes the matching
+name and moves the cursor to the next line</td>
+</tr>
+</table>
+
+<li>
+Scenarios for Multiple Matches:</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">Multiple Matches:</td>
+
+<td ALIGN=LEFT WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: card</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>cards@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: fiv</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>fiv@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card fiv</td>
+
+<td>blur string in gray card@netscape.com, fiv@netscape.com &lt;No match
+found></td>
+
+<td>&lt;Enter></td>
+
+<td>card@netscape.com and fiv@netscape.com on separate lines, cursor moves
+to next line</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card5</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>card5@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To: #e</td>
+
+<td>blur string in gray &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>#e@netscape.com and cursor moves to next line. <b>Note: on nicknames
+we always do a search of the Address Books. In this case there are multiple
+matches found which displays &lt;Mulitiple Matches Found> in gray.</b>
+To bring up the picker at this time you would have to use the menu item
+or accelerator key Ctrl+J</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To: list</td>
+
+<td>blur string in gray &lt;Multiple Matches Found></td>
+
+<td>&lt;Enter></td>
+
+<td>list@netscape.com and cursor moves to next line. Note: on nicknames
+we always do a search of the Address Books. In this case there are multiple
+matches found which displays &lt;Mulitiple Matches Found> in gray. To bring
+up the picker at this time you would have to use the menu item or accelerator
+key Ctrl+J</td>
+</tr>
+</table>
+
+<li>
+Scenarios for No Match:</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">No Match:</td>
+
+<td WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+</tr>
+
+<tr>
+<td>Testing FN
+<br>To: cardone</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>cardone@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing LN
+<br>To: twotwo</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>twotwo@nescape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing DN
+<br>To: card fiver</td>
+
+<td>blur string in gray card@netscape.com, fiver@netscape.com &lt;No match
+found></td>
+
+<td>&lt;Enter></td>
+
+<td>card@netscape.com and fiver@netscape.com on separate lines, cursor
+moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Email
+<br>To: card55</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>card55@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing Nickname
+<br>To: ##e</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>##e@netscape.com and cursor moves to next line</td>
+</tr>
+
+<tr>
+<td>Testing List Nickname
+<br>To:list22</td>
+
+<td>blur string in gray @netscape.com &lt;No match found></td>
+
+<td>&lt;Enter></td>
+
+<td>list22@netscape.com and cursor moves to next line</td>
+</tr>
+</table>
+</ol>
+</ol>
+<a NAME="Other"></a><b>Other Functionality</b>
+<ol TYPE=A>
+<li>
+<b>Non-UI Preference-Nickname has precedence over name when an exact match
+is found. As stated in the 4.51 <a href="http://home.netscape.com/eng/mozilla/4.5/relnotes/windows-4.51.html">Release
+notes</a>: </b><i>Change the prefs.js file by adding this line: user_pref
+("ldap_2.autoComplete.nicknameHasPrecedence", true);</i></li>
+
+<br><b>Note:</b> For this Preferences selection, a search is started comparing
+all of the entries in the addressing line with the Address Book and Directory
+selected to give results pinpointing the closest match of any of the 5
+fields mentioned above for Cards or any of the 3 fields for Lists. <b>However
+when it reaches an <i>exact match</i> for a <i>nickname</i> the search
+stops and enters the match.</b>
+<ol>
+<li>
+UI-Preference = Address Book &amp; Directories <b>checked</b>-Show me a
+list <b>selected</b></li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">Address</td>
+
+<td ALIGN=LEFT WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion Results</td>
+
+<td>Notes:</td>
+</tr>
+
+<tr>
+<td>To: car</td>
+
+<td>blur string in green is Seven &lt;card7@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Cards Seven &lt;card7@testdomain.com></td>
+
+<td>If this preference hadn't been changed to give Nicknames precedence
+then you would have seen &lt;Multiple Matches Found> for the partial match
+of all the cards in the Sample Address book as well as any other partial
+match found in the other address books and directories</td>
+</tr>
+</table>
+
+<li>
+UI-Prefernece=Address Book &amp; Directories <b>unchecked</b>-Show me a
+list selected</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">Address</td>
+
+<td ALIGN=LEFT WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+
+<td>Notes:</td>
+</tr>
+
+<tr>
+<td>To: car</td>
+
+<td>blur string in green is Seven &lt;card7@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Cards Seven &lt;card7@testdomain.com></td>
+
+<td>This would be the response with or without the preference change, since
+matching against address book is off Nickname is the only field we try
+to match.</td>
+</tr>
+</table>
+
+<li>
+UI-Preference=Address Book &amp; Directories <b>checked</b>-Accept what
+I have typed is selected</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">Address</td>
+
+<td ALIGN=LEFT WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>To: car</td>
+
+<td>blur string in grey ds Seven &lt;card7@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Cards Seven &lt;card7@testdomain.com></td>
+
+<td>This would be the response with or without the preference change, since
+Accept what I have typed does exact matching against nicknames</td>
+</tr>
+</table>
+
+<li>
+UI-Preference=Address Book &amp; Directories <b>unchecked</b>-Accept what
+I have typed is selected</li>
+
+<table BORDER=2 WIDTH="89%" >
+<tr>
+<td WIDTH="10%">Address</td>
+
+<td ALIGN=LEFT WIDTH="30%">Results:</td>
+
+<td WIDTH="5%">Action:</td>
+
+<td WIDTH="50%">Name Completion results:</td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>To: car</td>
+
+<td>blur string in grey ds Seven &lt;card7@testdomain.com></td>
+
+<td>&lt;Enter></td>
+
+<td>Cards Seven &lt;card7@testdomain.com></td>
+
+<td>This would be the response with or without the preference change, since
+matching against address book is off and Accept what I have typed is selected
+resulting in Nickname being the only field we try to match.</td>
+</tr>
+</table>
+</ol>
+
+<li>
+REMEMBER to remove the non-UI Preference that was added in section E. <b>"Non-UI
+Preference-Nickname"</b>.</li>
+
+<li>
+Name Completeion turned OFF - (3) ways:</li>
+
+<ol>
+<li>
+Delete - Pressing the <b>Delete</b> key will delete the completion string
+and
+<b>temporarily defeat</b> the auto completion. (Currently a bug in
+windows)</li>
+
+<ol TYPE=a>
+<li>
+Pressing tab/return at this point will accept what was typed as a raw email
+address</li>
+
+<li>
+Continuing to edit on the line re-enables completion and causes the search
+to begin again.</li>
+</ol>
+
+<li>
+Edit|Do Not Complete Address - Selecting this Menu item disables auto-completion
+for the current line.</li>
+
+<li>
+Cancel - Pressing the <b>Cancel </b>button in the <i>Completion Picker</i>
+dialog, dismisses the dialog and <b>temporarily defeats</b> name completion
+for the address that is being matched.</li>
+
+<ol TYPE=a>
+<li>
+Verify that pressing tab/return at this point will accept what was typed
+as a raw email address</li>
+
+<li>
+Verify that continuing to edit on the line, re-enables completion and causes
+the search to begin again.</li>
+</ol>
+</ol>
+
+<li>
+The Comma -Comma can be used to separates multiple addresses on a single
+line. Multiple addresses separated by comma, will display summary of the
+matching information (Note: reset the Addressing preferences back to only
+searching on Address Books and Show me a list. This is only done to make
+it easier to see the results by limiting the number of matches.)</li>
+
+<ol>
+<li>
+Resolving names when all have a match (using Sample Address Book)</li>
+
+<ol TYPE=a>
+<li>
+Type in the addressing line: card one, card two, card three - will display
+a green blur string &lt;All addresses match>.</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify that pressing &lt;Enter> will name complete with the matching address,
+put each name on a separate line and move cursor to next blank line</li>
+</ul>
+</ol>
+
+<li>
+Resolving names when some names match - some don't (using Sample Address
+Book)</li>
+
+<ol TYPE=a>
+<li>
+Type in the addressing line: card, cardz, fiv, #e - will display a red
+blur string &lt;cardz doesn't match, 3 matches found>.</li>
+
+<ul TYPE=SQUARE>
+<li>
+OK the Completion picker - verify that pressing &lt;Enter> will:</li>
+
+<ul TYPE=CIRCLE>
+<li>
+Bring up the picker for "card", select Card Four and <b>OK, </b>the pickerwill
+do a completion with the selected name.</li>
+
+<li>
+"cardz" is completed on the 2nd line with the domain added.</li>
+
+<li>
+A picker will come up for "fiv", select Card Fivt and <b>OK,</b> the picker
+will do a completion with the selected name.</li>
+
+<li>
+A picker will come up for "#e", select Card 3 and <b>OK </b>will do a completion
+with the selected name and the cursor is moved to the next blank line.</li>
+</ul>
+
+<li>
+Cancel the Completion picker - verify that pressing &lt;Enter> will:</li>
+
+<ul TYPE=SQUARE>
+<li>
+Bring up the picker for "card" select Card Four and <b>OK, </b>the picker
+will do a completion with the selected name.</li>
+
+<li>
+"cardz" is completed with the domain.</li>
+
+<li>
+A picker will come up for "fiv". <b>Cancel</b> the picker will bring you
+back to the addressing pane, the non-completed names still on the line,
+<strike>a
+blur string &lt;multiple matches found></strike> and cursor at the end
+of the last name. (currently a bug in windows that the cursor is at the
+beginning of the line in front of the remaining names)</li>
+</ul>
+</ul>
+</ol>
+
+<li>
+Resolving names when all have multiple matches (using Sample Address Book)</li>
+
+<ol TYPE=a>
+<li>
+Type in the addressing line: card, fiv, #e - will display a blur string
+in blue &lt;All addresses have multiple matches></li>
+
+<ul TYPE=SQUARE>
+<li>
+verify that pressing &lt;Enter> will bring up the picker for each name.
+OK the picker will do a completion with the selected name for each, and
+place the cursor on the next blank line</li>
+
+<li>
+verify that when you Cancel the Completion picker for any name, it should
+finish the name completion for the names that were OK'd, leaving the remaining
+names on the last line with <strike>a blur string &lt;multiple matches
+found></strike> and cursor at the end of the last name</li>
+</ul>
+</ol>
+</ol>
+
+<li>
+Completion Picker - is presented when a match is found for a name typed
+in the addressing field of a New Message window and user has selected "Show
+me a list" in the Addressing panel of the preferences.</li>
+
+<ol>
+<li>
+Visual (note, this part will most likely change based on decisions from
+UI group)</li>
+
+<ol TYPE=a>
+<li>
+Verifiy the Completion picker is a resizable, modal dialog. The title banner
+states: "Addresses Matching "xyz" (where "xyz" represents the name the
+user typed). This dialog contains two buttons OK and Cancel.</li>
+
+<li>
+Verify the name the user typed should be listed first and in <b>Bold </b>print,
+however it is not the selected name by default. Verify the second name
+is highlighted by default.</li>
+
+<li>
+Verfiy during a search, a progress indicator will display at the bottom
+of the window, left side. Pressing Cancel will interrupt the search. (Note:
+reset the Addressing preferences back to searching on a Directory as well
+as the Address Books and Show me a list. Edit the Directory Properties
+to list 1000 entries. Type "car" minus the quotes, in the addressing field.
+This is so the progress indicator stay up long enough to Cancel)</li>
+
+<li>
+Verify the first two column headers displayed will be the Location Icon
+&amp; Name, with the remaining headers reflecting the arrangement of the
+LDAP directory that is selected. The LDAP arrangement is the one you set
+up in the Adddress Book for each LDAP directory. Note: LDAP columns to
+be displayed can be changed using Mission Control, this test relates to
+default columns for an LDAP directory.</li>
+
+<li>
+Verify there is a show/hide widget for the columns</li>
+
+<li>
+Verify a title-tip will display the full contents of a column item when
+mousing over a partially concealed item. For the Location Icon, the title
+tip will display the name of the personal address book or directory itself.</li>
+
+<li>
+Verify each item in the list (except raw address at the top of the list)
+has a context menu associated with it.</li>
+
+<ul TYPE=SQUARE>
+<li>
+Verify that if the item is from the address book the menu will list: Properties
+&amp; Delete from Address Book. Properties will bring up the card's properties
+dialog. Delete from Address Book will do just that.</li>
+
+<li>
+Verify that if the item is from a Directory the menu will list: Properties
+&amp; Add to Address Book. Properties will bring up the HTML page. Add
+to the Address Book will bring up a new card window.</li>
+</ul>
+</ol>
+
+<li>
+Functionality</li>
+
+<ol TYPE=a>
+<li>
+Verify clicking OK, will dismiss the dialog, causing the selected address
+to appear in place of the text the user typed on the line and the cursor
+moves to the next line. (In the case of multiple names on the line separated
+by comma's see the Comma section above)</li>
+
+<li>
+Verify clicking Cancel, will bring the user back to the addressing pane
+with the insertion point exactly where it was at the end of the last name.
+(currently a bug in Windows, that the cursor lands at the beginning of
+the line)</li>
+
+<li>
+Verify all items, by default, are sorted by location icon (icon indicating
+the item is located in an Address Book or Directory) with Address Books
+items listed ahead of Directory items. User sorting is not allowed in the
+Completion Picker window.</li>
+
+<li>
+Verify you can reorder and resize columns and the changes hold across sessions.</li>
+
+<li>
+Verify double clicking on an item will select it as the correct address
+by placing it on the addressing line, close the completion picker dialog
+and move cursor to next blank line.</li>
+</ol>
+</ol>
+</ol>
+
+<hr WIDTH="100%">
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-addrb-pinpt.html&amp;rev=&amp;root=/cvsroot/">Last modified April 22,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

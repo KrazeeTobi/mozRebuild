@@ -1,0 +1,281 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Ian Oeschger">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; U) [Netscape]">
+   <title>tree</title>
+</head>
+<body>
+<table BORDER=0 COLS=1 WIDTH="100%" >
+<tr><td><p align="right"><i>XUL Programmer's Reference Manual</i></p></td></tr>
+<tr>
+<td><b><font color="#000099"><font size=+2>&lt;tree></font></font></b></td>
+</tr>
+
+<tr>
+<td>
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Attributes</font></b></td>
+
+<td><b><font color="#FFFFFF">Common Children</font></b></td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td><a href="treehead.html">treehead</a></td>
+</tr>
+
+<tr>
+<td><a href="#multiple">multiple</a></td>
+
+<td><a href="treechildren.html">treechildren</a></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&lt;tree> is the root element in a XUL tree. It provides the ability
+to display multiple items in a tabular format. Each item is represented
+as a row in the table. Each row may consist of multiple cells.The XUL tree
+structure is similar to an HTML table structure. The following tags are
+roughly analogous to their HTML table counterparts.
+<blockquote>&nbsp;
+<table WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td BGCOLOR="#6699FF"><font color="#FFFFFF">Table</font></td>
+
+<td BGCOLOR="#6699FF"><font color="#FFFFFF">Tree</font></td>
+</tr>
+
+<tr>
+<td><tt>table</tt></td>
+
+<td><tt>tree</tt></td>
+</tr>
+
+<tr>
+<td><tt>caption</tt></td>
+
+<td><tt>treecaption</tt></td>
+</tr>
+
+<tr>
+<td><tt>colgroup</tt></td>
+
+<td><tt>treecolgroup</tt></td>
+</tr>
+
+<tr>
+<td><tt>col</tt></td>
+
+<td><tt>treecol</tt></td>
+</tr>
+
+<tr>
+<td><tt>thead</tt></td>
+
+<td><tt>treehead</tt></td>
+</tr>
+
+<tr>
+<td><tt>tbody</tt></td>
+
+<td><tt>treechildren, treeitem</tt></td>
+</tr>
+
+<tr>
+<td><tt>tfoot</tt></td>
+
+<td><tt>treefoot</tt></td>
+</tr>
+
+<tr>
+<td><tt>tr</tt></td>
+
+<td><tt>treerow</tt></td>
+</tr>
+
+<tr>
+<td><tt>td</tt></td>
+
+<td><tt>treecell</tt></td>
+</tr>
+</table>
+</blockquote>
+To insert a tree widget into a document, use the <font color="#000000">tree</font>
+tag. This tag is analogous to the <font color="#000000">table</font> tag
+in HTML.
+<br>The tree widget can contain a caption, which can be specified using
+the <font color="#000000">treecaption</font> tag.
+<p>The tree's column information can be specified using the <font color="#000000">treecolgroup</font>
+and <font color="#000000">treecol</font> tags; these tags respond to all
+the same properties that the HTML <font color="#000000">col</font> tags
+do. These column tags can be used to specify column widths and to apply
+styles to individual columns in the tree view. Tree column tags can respond
+to an additional CSS property, <font color="#000000">column-layout,</font>
+which indicates whether or not this column's size is alterable using the
+tree's column resizing capabilities. It has values of fixed and flexible,
+with the default being flexible.
+<p>A tree can contain headers, bodies, and footers, just as a table does.
+A tree widget's body, unlike a table's body will constrain itself when
+the height of the table is constrained.
+<p>The <font color="#000000"><a href="treeitem.html">treeitem</a></font>
+tag is used to declare a single item (along with that item's row and children)
+in the tree. The tree item contains one or more rows, which are specified
+using the <font color="#000000"><a href="treerow.html">treerow</a></font>
+tag. Each row consists of one or more cells, which are specified using
+the <font color="#008000"><a href="treecell.html">treecell</a></font> tag.
+<blockquote>
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;tree>
+&nbsp; &lt;treehead>
+&nbsp;&nbsp;&nbsp; &lt;treerow>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell>Name&lt;/treecell>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell>URL&lt;/treecell>
+&nbsp;&nbsp;&nbsp; &lt;/treerow>
+&nbsp; &lt;/treehead>
+&nbsp; &lt;treechildren>
+&nbsp;&nbsp;&nbsp; &lt;treeitem>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treerow>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell>Netscape Home Page&lt;/treecell>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell>http://www.netscape.com&lt;/treecell>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/treerow>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/treeitem>
+&nbsp; &lt;/treechildren>
+&lt;/tree>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+</blockquote>
+<p>Tree items are either open or closed, and their state is specified using
+the <b><font color="#000000">open</font></b> attribute. This attribute,
+when set to true, indicates that the tree item's children should be displayed
+in the tree. If it is set to false, or if it isn't set at all, then the
+tree item's children are not displayed.
+<p>A tree item's children are specified using the <font color="#000000">treechildren</font>
+tag, which is placed within the parent <font color="#000000">treeitem</font>
+tag. The <font color="#000000">treechildren</font> tag contains tree items
+that represent the children of the parent node.
+<blockquote>
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;tree>
+&nbsp; &lt;treehead>
+&nbsp;&nbsp;&nbsp; &lt;treerow>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell>Name&lt;/treecell>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell>URL&lt;/treecell>
+&nbsp;&nbsp;&nbsp; &lt;/treeitem>
+&nbsp; &lt;/treerow>
+&nbsp; &lt;treechildren>
+&nbsp;&nbsp;&nbsp; &lt;treeitem>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treerow>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell>Netscape Bookmarks Folder&lt;/treecell>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/treerow>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treechildren>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treeitem>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treerow>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell>Netscape Home Page&lt;/treecell>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;treecell>http://www.netscape.com&lt;/treecell>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/treerow>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/treeitem>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/treechildren>
+&nbsp;&nbsp;&nbsp; &lt;/treeitem>
+&nbsp; &lt;/treechildren>
+&lt;/tree>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+</blockquote>
+<p><font color="#000000">The tree automatically handles selection, and
+it is capable of supporting single and multiple selection (through the
+use of CTRL/command and SHIFT modifier keys). The tree's selection is reflected
+into the content model. Tree items that are selected have an attribute
+called selected set to true. Tree rows that are selected have an attribute
+called selectedrow set. Tree cells that are selected have an attribute
+called selectedcell that is set to true. CSS can be applied using attribute
+selector rules, thus enabling the tree designer to control the look of
+the tree's selection.</font><font color="#000000"></font>
+<p><font color="#000000">A select handler can be attached to the tree,
+and this handler will be invoked whenever the tree's selection changes.
+You can either add it as an attribute (e.g., onselect) on the tree tag
+or add it using the DOM addEventListener method.</font><font color="#000000"></font>
+<p><font color="#000000">The tree widget also supports hover feedback on
+items and cells. This hover feedback is also reflected into the content
+model. Tree items that are currently moused over have an attribute called
+hover set to true. Tree cells that are being moused over have an attribute
+called hover set to true. Tree rows also use hover. CSS can be applied
+using attribute selector rules, which enable control of the hover feedback
+effects for the tree. [This will probably change to use the :hover mechanism
+at some point, assuming some sort of bubbling mechanism for hover is determined.]</font><font color="#000000"></font>
+<p><font color="#000000">Because the tree handles selection, events that
+would normally go to the content inside the cell are intercepted by the
+cell. This behavior can be turned off on a cell by cell basis by setting
+the treeallowevents attribute on the cell. This attribute, when set to
+true, indicates that the cell is unselectable, and that the content inside
+should receive events (like mouse clicks and keystrokes).</font><font color="#000000"></font>
+<p><font color="#000000">To selectively allow events to go to cell content
+(e.g., a button inside a cell), the treeallowevents attribute can be placed
+on a node that is a descendant of the cell.</font>
+<br><font color="#000000">&nbsp;</font></td>
+</tr>
+
+<td BGCOLOR="#000099"><a NAME="multiple"></a><b><font color="#FFFFFF"><font size=+1>multiple</font></font></b></td>
+</tr>
+
+<tr>
+<td>
+<h3>
+<font size=+0>Description</font></h3>
+
+<blockquote>The <b>multiple</b> attribute specifies whether the tree
+allows multiple selection or not.</blockquote>
+
+<h3>
+<font size=+0>Syntax</font></h3>
+
+<blockquote><tt>&lt;tree <b>multiple</b>="true | false" /></tt></blockquote>
+
+<h3>
+<font size=+0>Example</font></h3>
+
+<blockquote><font face="Courier New,Courier">&lt;tree <b>multiple</b>="true"></font>
+<br><font face="Courier New,Courier">&nbsp; &lt;treeheader>&lt;/treeheader></font>
+<br><font face="Courier New,Courier">&nbsp; &lt;treechildren id="Main" /></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp; &lt;treeitem
+...</font>
+<br><font face="Courier New,Courier">&nbsp; &lt;/treechildren></font>
+<br><font face="Courier New,Courier">&lt;/tree></font></blockquote>
+
+<h3>
+<font size=+0>Notes</font></h3>
+
+<blockquote>The default for multiple selection is false, which means that only a single child of the tree can be selected at any one time. When multiple select is enabled, you can select multiple elements using <shift>+click and <ctrl>+click key combinations. <p>In the example above, the treechildren can all be selected. When multiple is set to true, the selection of any particular item is toggled on and off, and is independent of the selection state of other items.</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+
+</table>
+
+<br>&nbsp;
+<br>&nbsp;<p align="right"><i>Last updated: 13:10 1/26/00 <a href="mailto:oeschger@netscape.com">Ian Oeschger</a></i></p>
+</body>
+</html>

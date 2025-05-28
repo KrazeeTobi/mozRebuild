@@ -1,0 +1,269 @@
+<HTML>
+<HEAD>
+<TITLE>Zulu Windows Build Instructions</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<H2>Zulu Windows Build Instructions</H2>
+
+This document explains how to build Zulu for the Windows platform.
+<HR><B><FONT SIZE=+1>Required Tools:</FONT></B>
+<UL>
+<LI>
+<B>Microsoft Visual C++ version 4.2 or later</B>
+
+<LI>
+<B>The same set of tools for building <A HREF="http://www.mozilla.org/build/win32.html">Mozilla</A></B>
+</UL>
+<B><FONT SIZE=+1>Setting up:</FONT></B>
+<UL>
+<LI>
+You need a Pentium with at least a 133 MHz processor and at least 250 megs
+(NTFS partition) or 500 megs (FAT partition) of hard drive space. You need
+to have a minimum of 64 megs of memory in order to build this tree. These
+numbers are approximations.
+
+<LI>
+The preferred platform is NT 4.0. NT 3.51 will also work, and Win95/98
+might work if you're lucky. Maybe.
+
+<LI>
+Install MSVC. If you don't choose to have the MSVC install modify your
+environment variables for PATH, INCLUDE, and LIB information, be sure to
+run VCVARS32.BAT out of the MSVC bin directory prior to attempting to build.
+
+<LI>
+Download and install GNU tools. Put them in your path. <B>Change the name
+of date.exe (GNU tool) to unix_date.exe</B>
+
+<LI>
+Install Zulu source.
+
+<UL>
+<LI>
+cd &lt;your-source-area>
+
+<LI>
+gunzip <A HREF="ftp://ftp.mozilla.org/pub/calendar/source/calendar-mozilla-newlayout-19981016-win.tar.gz">calendar-mozilla-newlayout-19981016-win.tar.gz</A>
+
+<LI>
+tar xf <A HREF="ftp://ftp.mozilla.org/pub/calendar/source/calendar-mozilla-newlayout-19981016-win.tar.gz">calendar-mozilla-newlayout-19981016-win.tar</A>
+</UL>
+
+<LI>
+There are several environment variables you will need to set, either manually
+or via a script within a command session, or by setting them in your system
+environment located through the Control Panel | System icon.
+
+<P>
+<B>Note: There are additional variables for building Zulu! Use this
+list carefully!</B>
+
+<P>The variables are:
+<UL>
+<LI>
+set MOZ_BITS=32
+
+<LI>
+set MOZ_DEBUG=1 (don't set this if you want to build an optimized release
+build)
+
+<LI>
+set MOZ_GOLD=1
+
+<LI>
+set MOZ_MEDIUM=1
+
+<LI>
+set MOZ_NT=351 (if running NT 3.51, don't set otherwise)
+
+<LI>
+set MOZ_OUT=(location of resulting executable and totally optional, see
+Notes for more details)
+
+<LI>
+set MOZ_SRC=(top of your tree, drive letter and path, i.e. set MOZ_SRC=d:\calendar_src.
+The topmost directory under this should be ns)
+
+<LI>
+set MOZ_TOOLS=(location of the bin directory containing your GNU tools.
+The build looks for MOZ_TOOLS\bin\gmake.exe, so make sure your MOZ_TOOLS
+is figured appropriately)
+
+<LI>
+set NO_SECURITY=1
+
+<LI>
+set NSPR20=1
+
+<LI>
+if you are running VC++ 5.0 or higher: set _MSC_VER=1100; if you are running
+VC++ 4.2 then set MOZ_VCVER=42
+
+<LI>
+set MODULAR_NETLIB=1
+
+<LI>
+set MOZ_TREX=1
+
+<LI>
+set MOZ_ZULU_FREE=1
+
+<LI>
+set NGLAYOUT_PLUGINS=1
+
+<LI>
+set NO_SECURITY=1
+
+<LI>
+set STANDALONE_IMAGE_LIB=1
+</UL>
+</UL>
+<B><FONT SIZE=+1>Building:</FONT></B>
+<UL>
+<LI>
+You need to be running a vanilla command prompt. Other shells may work,
+but you might have to tweak makefiles.
+
+<LI>
+<B>Build Zulu:</B> This will do a complete build of the source tree. You
+will end up with a zulu.exe at the end. The zulu.exe will be in your dist\win32_[OD].obj\bin
+directory (O will be used when you don't set MOZ_DEBUG; D will be used
+when you set MOZ_DEBUG).
+
+<UL>
+<LI>
+cd mozilla
+
+<LI>
+<I><B>Optional</B>: clobber all your old binaries - </I><TT>nmake -f trex.mak
+clobber_all</TT>
+
+<LI>
+<TT>nmake -f trex.mak build_all</TT>
+</UL>
+</UL>
+<B><FONT SIZE=+1>Running:</FONT></B>
+<UL>
+<LI>
+To run Zulu:
+
+<UL>
+<LI>
+cd mozilla\dist\win32_[OD].obj\bin
+
+<LI>
+.\zulu.exe
+</UL>
+</UL>
+<B><FONT SIZE=+1>Notes:</FONT></B>
+<UL>
+<LI>
+This build process does not use Visual C++ generated project files for
+several reasons having to do with (among other things) size, maintainability,
+and the long term desire to start using more of tools like gmake, or plug
+and play developer tools. This does not preclude you from using the Visual
+C++ IDE, or it's debugger. Once you have built a zulu.exe do this to run
+it under the debugger:
+</UL>
+
+<UL>
+<UL>
+<LI>
+cd mozilla\dist\win32_[OD].obj\bin
+
+<LI>
+msdev zulu.exe
+</UL>
+</UL>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/calendar/winbuild.html&amp;rev=&amp;root=/cvsroot/">Last modified January 15,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

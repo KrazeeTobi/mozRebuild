@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>JavaScript 2.0 Definitions</TITLE>
+<LINK rel=stylesheet href="../../styles.css">
+<LINK rel=Start href="../index.html">
+<LINK rel=Contents href="../index.html">
+<LINK rel=Prev href="statements.html">
+<LINK rel=Next href="variables.html">
+<SCRIPT type="text/javascript" language="JavaScript1.2" src="../../unicodeCompatibility.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+<TR>
+  <TD valign=TOP nowrap>
+    <DIV class=title2><SPAN class=top-title>JavaScript 2.0</SPAN></DIV>
+    <DIV class=title2>Core Language</DIV>
+    <DIV class=title1>Definitions</DIV>
+  </TD>
+  <TD valign=TOP nowrap align=RIGHT><A href="statements.html"><IMG src="../../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="../index.html"><IMG src="../../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="variables.html"><IMG src="../../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+</TR>
+</TABLE>
+
+<P class=mod-date>Tuesday, February 15, 2000</P>
+
+<H2>Introduction</H2>
+
+<P>Definitions introduce new constants, variables, <A href="functions.html">functions</A>, and <A href="classes.html">classes</A>.
+All definitions can be preceded by zero or more attributes using the following syntax:</P>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-AnnotatedDefinition"></A><VAR class=nonterminal>AnnotatedDefinition<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>w</SPAN></SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-Attributes"><VAR class=nonterminal>Attributes</VAR></A>&nbsp;<VAR class=nonterminal><A href="#N-Definition">Definition</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>w</SPAN></SPAN></SUP></VAR></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Attributes"></A><VAR class=nonterminal>Attributes</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-FixedAttribute"><VAR class=nonterminal>FixedAttribute</VAR></A>&nbsp;[no&nbsp;line&nbsp;break]&nbsp;<A href="#N-Attributes"><VAR class=nonterminal>Attributes</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="expressions.html#N-Identifier"><VAR class=nonterminal>Identifier</VAR></A>&nbsp;[no&nbsp;line&nbsp;break]&nbsp;<A href="#N-Attributes"><VAR class=nonterminal>Attributes</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-FixedAttribute"></A><VAR class=nonterminal>FixedAttribute</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE class=terminal-keyword>private</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE class=terminal-keyword>public</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE class=terminal-keyword>final</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Definition"></A><VAR class=nonterminal>Definition<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>w</SPAN></SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="variables.html#N-VariableDefinition"><VAR class=nonterminal>VariableDefinition</VAR></A>&nbsp;<VAR class=nonterminal><A href="statements.html#N-Semicolon">Semicolon</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>w</SPAN></SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="functions.html#N-FunctionDefinition">FunctionDefinition</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>w</SPAN></SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="classes.html#N-ClassDefinition"><VAR class=nonterminal>ClassDefinition</VAR></A></DIV>
+</DIV>
+
+
+
+<H2>Attributes</H2>
+
+<P>A definition attribute is an identifier that modifies the definition. Attributes can specify a definition's visibility,
+semantics, and other hints. A JavaScript program may also define and subsequently use <A href="#user-attributes">its own attributes</A>.</P>
+
+<P>The table below summarizes the predefined attributes.</P>
+
+<DIV class=indent>
+  <TABLE border=1 cellspacing=2 cellpadding=0>
+  <TR>
+    <TH valign=TOP nowrap align=LEFT>Category</TH>
+    <TH valign=TOP nowrap align=LEFT>Attribute</TH>
+    <TH valign=TOP align=LEFT>Behavior</TH>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap rowspan=6><A href="#visibility-attributes">Visibility</A></TD>
+    <TD valign=TOP nowrap><CODE>local</CODE></TD>
+    <TD valign=TOP>The definition is local in the enclosing block.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>scope</CODE></TD>
+    <TD valign=TOP>The definition applies to the enclosing scope.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>global</CODE></TD>
+    <TD valign=TOP>The definition applies to the enclosing package and is visible only inside this package.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>private</CODE></TD>
+    <TD valign=TOP>The definition creates a member of the enclosing class. The defined member is visible only inside that
+      class. If there is no enclosing class, <CODE>private</CODE> is the same as <CODE>global</CODE>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>package</CODE></TD>
+    <TD valign=TOP>The definition creates a member of the enclosing class. The defined member is visible only inside the enclosing
+      package. If there is no enclosing class, <CODE>package</CODE> is the same as <CODE>global</CODE>.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>public&nbsp;&nbsp;</CODE></TD>
+    <TD valign=TOP>The definition creates a member of the enclosing class. The defined member is visible anywhere. If there
+      is no enclosing class, the definition applies to the enclosing package and is visible in any package that imports this
+      package.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap rowspan=3><A href="#semantic-attributes">Semantic</A>&nbsp;&nbsp;</TD>
+    <TD valign=TOP nowrap><CODE>static</CODE></TD>
+    <TD valign=TOP>The definition creates a global member (rather than an instance member) of the enclosing class.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>instance</CODE></TD>
+    <TD valign=TOP>The definition creates an instance member (rather than a global member) of the enclosing class.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>final&nbsp;&nbsp;</CODE></TD>
+    <TD valign=TOP>The definition cannot be overridden in subclasses.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap rowspan=4><A href="#hint-attributes">Hint</A></TD>
+    <TD valign=TOP nowrap><CODE>override</CODE></TD>
+    <TD valign=TOP>The definition overrides a member of a superclass.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>mayOverride</CODE>&nbsp;&nbsp;</TD>
+    <TD valign=TOP>The definition may override a member of a superclass.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>compile</CODE></TD>
+    <TD valign=TOP>Compiler hint that the definition may be processed at compile time.</TD>
+  </TR>
+  <TR>
+    <TD valign=TOP nowrap><CODE>unused</CODE></TD>
+    <TD valign=TOP>Compiler hint that the definition is not used.</TD>
+  </TR>
+  </TABLE>
+
+</DIV>
+
+
+<H3><A name="visibility-attributes"></A>Visibility Attributes</H3>
+
+<P>A visibility attribute describes the <A href="concepts.html#scope">scope</A> to which a definition applies as well as the
+definition's visibility outside that scope. A visibility attribute may be <A href="#user-attributes">user-defined</A>, in
+which case it can also indicate that the definition is visible in other packages only when those packages import a specific
+version of this package.</P>
+
+<P>The <CODE>local</CODE> attribute applies the definition to the enclosing <A href="statements.html#N-Block"><VAR class=nonterminal>Block</VAR></A>.
+If the enclosing block is a class, the definition does not appear as a member of that class.</P>
+
+<P>The <CODE>scope</CODE> attribute applies the definition to the enclosing <A href="concepts.html#scope">scope</A>. If the
+enclosing scope is a class, the definition will appear as a member of that class; that member will be visible only inside
+the enclosing package (as though it had <CODE>package</CODE> visibility).</P>
+
+<P>The <CODE>global</CODE> attribute applies the definition to the enclosing package.</P>
+
+<P>The <CODE>private</CODE>, <CODE>package</CODE>, <CODE>public</CODE>, and user-defined version attributes apply the definition
+to the enclosing class or to the current package if there is no enclosing class.</P>
+
+<P>The default visibility is <CODE>scope</CODE>.</P>
+
+<P class=issue>There is a slight syntactic ambiguity between using <CODE>package</CODE> as a block attribute and defining
+a new package.</P>
+
+
+
+<H3><A name="semantic-attributes"></A>Semantic Attributes</H3>
+
+<P>The <CODE>static</CODE> attribute makes the definition create a global member rather than an instance member of the enclosing
+class. The <CODE>instance</CODE> attribute reverses this -- it makes the definition create an instance member of the enclosing
+class. The <CODE>final</CODE> attribute prevents subclasses from overriding this definition.</P>
+
+<P>These three attributes may only be used on definitions that apply to a class. They cannot be used on definitions that,
+for instance, create local variables inside a function.</P>
+
+
+
+<H3><A name="hint-attributes"></A>Hint Attributes</H3>
+
+<P>The <CODE>override</CODE> and <CODE>mayOverride</CODE> attributes control warnings. Normally defining a class member with
+the same name as a visible member of a superclass generates a warning. The <CODE>override</CODE> attribute reverses the sense
+of the warning so that the warning will be generated if there is no visible member of a superclass with the same name. The
+<CODE>mayOverride</CODE> attribute turns off this warning altogether.</P>
+
+<P>The <CODE>compile</CODE> attribute is a hint that the definition may be evaluated early. See <A href="statements.html#compiler-block">compiler
+blocks</A>.</P>
+
+<P>The <CODE>unused</CODE> attribute is a hint that the definition is not referenced anywhere. Referencing it will generate
+a warning.</P>
+
+<H3><A name="user-attributes"></A>User-Defined Attributes</H3>
+
+<P>Any constant defined in an enclosing scope is also a potential attribute. That constant's value must be an attribute object,
+which can be obtained either from another attribute or by calling one of the attribute-creating functions such as <CODE>Version</CODE>.
+For example, the following code creates aliases <CODE>priv</CODE> and <CODE>loc</CODE> of the attributes <CODE>private</CODE>
+and <CODE>local</CODE>:</P>
+
+<PRE>compile {
+  const priv = private;
+  const loc = local;
+  const V1 = Version("1.0","");
+  const V2 = Version("2.0","1.0");
+}
+
+class C {
+  priv var x;
+  V1 var simple;
+  V2 var complicated;
+  priv static const a:Array = new Array(10);
+
+  loc var i;
+  for (i = 0; i != 10; i++) a[i] = i;
+}</PRE>
+
+<P>An implementation may require that user-defined attributes be defined early (in <A href="statements.html#compiler-block">compiler
+blocks</A> or using the <CODE>compile</CODE> attribute).</P>
+
+<H2>Extent</H2>
+
+<P>Each definition has a particular static and dynamic extent. The static extent of a definition is the region of source code
+where the definition is visible. The dynamic extent is the time interval during which the defined constant, variable, function,
+or class may be accessed.</P>
+
+<P>The rules for determining the extent of a definition differ depending on whether the defined entity is a class member or
+not.</P>
+
+<H3>Non-Class Members</H3>
+
+<P>The static extent of a definition <VAR>D</VAR> is specified by its <A href="#visibility-attributes">visibility attribute</A>,
+which designates a scope (or set of scopes) <VAR>A</VAR> where the definition is visible. If there is a subscope <VAR>B</VAR>
+in <VAR>A</VAR> that defines an entity <VAR>E</VAR> with the same name as <VAR>D</VAR> and the definition <VAR>E</VAR> is
+actually executed, then the inner definition <VAR>E</VAR> shadows the outer one and definition <VAR>D</VAR> is not visible
+inside <VAR>B</VAR>.</P>
+
+<P>In general, the dynamic extent of a definition <VAR>D</VAR> begins when the definition is executed and ends when its static
+extent scope is exited. There are a couple of exceptions to this rule for compatibility with JavaScript 1.5:</P>
+
+<UL>
+  <LI>All <CODE>function</CODE> definitions at the top level of a scope have a dynamic extent which includes the entire scope.</LI>
+  <LI>All <CODE>var</CODE> definitions without a type or attributes have a dynamic extent which includes the entire scope.</LI>
+</UL>
+<P>Situations may arise where an inner definition will shadow an outer definition but the inner definition's static extent
+has not yet begun. In the example below, function <CODE>f</CODE> shadows the global <CODE>b</CODE> but tries to access the
+inner <CODE>b</CODE> before its dynamic extent begins (at the time the <CODE>const &nbsp;b:Integer&nbsp;=&nbsp;8</CODE> statement
+is executed). This is illegal, but an implementation is not required to diagnose such an error (which may be difficult, especially
+if the inner <CODE>b</CODE> is defined conditionally). The effects of executing such a program are undefined.</P>
+
+<PRE>const b:Integer = 7;
+
+function f():Integer {
+  function g():Integer {return b}
+
+  var a = g();
+  const b:Integer = 8;
+  return g() - a;
+}</PRE>
+
+<P>In general, it is not legal to define the same entity twice within a scope <VAR>A</VAR> without exiting <VAR>A</VAR> in
+the interim. There are a couple of exceptions:</P>
+
+<UL>
+  <LI>The same <CODE>var</CODE> or <CODE>const</CODE> definition may be executed repeatedly. Here "the same" means
+    that the definition is in the same location in the source code, which can happen if the definition is located inside a
+    loop. Moreover, the definition's type, if any, must not change each time the definition is executed, and, if the definition
+    is of a <CODE>const</CODE>, then its value may not change either.</LI>
+  <LI><CODE>var</CODE> definitions without a type or attributes may be executed repeatedly on the same variable.</LI>
+</UL>
+<H3>Class Members</H3>
+
+<H2>Examples</H2>
+
+
+<P>In the example below the comments indicate the scope and visibility of each definition:</P>
+
+<P class=indent><CODE>var&nbsp;a0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;variable<BR>
+<CODE>local&nbsp;var&nbsp;a1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;variable<BR>
+<CODE>private&nbsp;var&nbsp;a2&nbsp;=&nbsp;true;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;variable<BR>
+<CODE>package&nbsp;var&nbsp;a3;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;variable<BR>
+<CODE>public&nbsp;var&nbsp;a4;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Public&nbsp;global&nbsp;variable<BR>
+<BR>
+<CODE>if&nbsp;(a1)&nbsp;{</CODE><BR>
+<CODE>&nbsp;&nbsp;var&nbsp;b0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;local&nbsp;var&nbsp;b1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Local&nbsp;to&nbsp;this&nbsp;block<BR>
+<CODE>&nbsp;&nbsp;private&nbsp;var&nbsp;b2;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;package&nbsp;var&nbsp;b3;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;public&nbsp;var&nbsp;b4;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Public&nbsp;global&nbsp;variable<BR>
+<CODE>}</CODE><BR>
+<BR>
+<CODE>public&nbsp;function&nbsp;F()&nbsp;{&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Public&nbsp;global&nbsp;function<BR>
+<CODE>&nbsp;&nbsp;var&nbsp;c0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Local&nbsp;to&nbsp;this&nbsp;function<BR>
+<CODE>&nbsp;&nbsp;local&nbsp;var&nbsp;c1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Local&nbsp;to&nbsp;this&nbsp;function<BR>
+<CODE>&nbsp;&nbsp;private&nbsp;var&nbsp;c2;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;package&nbsp;var&nbsp;c3;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;public&nbsp;var&nbsp;c4;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Public&nbsp;global&nbsp;variable<BR>
+<CODE>}</CODE><BR>
+<BR>
+<CODE>function&nbsp;G()&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;function<BR>
+<CODE>&nbsp;&nbsp;var&nbsp;d0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Never&nbsp;defined&nbsp;because&nbsp;<CODE>G</CODE>&nbsp;isn't&nbsp;called<BR>
+<CODE>&nbsp;&nbsp;private&nbsp;var&nbsp;d1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Never&nbsp;defined&nbsp;because&nbsp;<CODE>G</CODE>&nbsp;isn't&nbsp;called<BR>
+<CODE>&nbsp;&nbsp;package&nbsp;var&nbsp;d2;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Never&nbsp;defined&nbsp;because&nbsp;<CODE>G</CODE>&nbsp;isn't&nbsp;called<BR>
+<CODE>&nbsp;&nbsp;public&nbsp;var&nbsp;d3;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Never&nbsp;defined&nbsp;because&nbsp;<CODE>G</CODE>&nbsp;isn't&nbsp;called<BR>
+<CODE>}</CODE><BR>
+<BR>
+<CODE>class&nbsp;C&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;global&nbsp;class<BR>
+<CODE>&nbsp;&nbsp;var&nbsp;e0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;class&nbsp;instance&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;private&nbsp;var&nbsp;e1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Class-visible&nbsp;class&nbsp;instance&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;package&nbsp;var&nbsp;e2;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;class&nbsp;instance&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;public&nbsp;var&nbsp;e3;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Public&nbsp;class&nbsp;instance&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;static&nbsp;var&nbsp;e4;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;class-global&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;private&nbsp;static&nbsp;var&nbsp;e5;//</CODE>&nbsp;Class-visible&nbsp;class-global&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;package&nbsp;static&nbsp;var&nbsp;e6;//</CODE>&nbsp;Package-visible&nbsp;class-global&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;public&nbsp;static&nbsp;var&nbsp;e7;&nbsp;//</CODE>&nbsp;Public&nbsp;class-global&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;local&nbsp;var&nbsp;e8;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Local&nbsp;to&nbsp;class&nbsp;<CODE>C</CODE>'s&nbsp;block<BR>
+<BR>
+<CODE>&nbsp;&nbsp;function&nbsp;H()&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;class&nbsp;function<BR>
+<CODE>&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;f0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Local&nbsp;to&nbsp;this&nbsp;function<BR>
+<CODE>&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;var&nbsp;f1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Class-visible&nbsp;class&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;&nbsp;&nbsp;package&nbsp;var&nbsp;f2;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Package-visible&nbsp;class&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;var&nbsp;f3;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</CODE>&nbsp;Public&nbsp;class&nbsp;variable<BR>
+<CODE>&nbsp;&nbsp;}</CODE><BR>
+<CODE>&nbsp;&nbsp;public&nbsp;function&nbsp;I()&nbsp;{}//</CODE>&nbsp;Public&nbsp;class&nbsp;method<BR>
+<BR>
+<CODE>&nbsp;&nbsp;H();</CODE><BR>
+<CODE>}</CODE><BR>
+<BR>
+<CODE>F();</CODE></P>
+
+<P>A static subset of JavaScript 2.0 may disallow definitions inside a function <VAR>F</VAR> that define entities in a scope
+outside <VAR>F</VAR>. This would disallow functions <CODE>F</CODE>, <CODE>G</CODE>, and <CODE>H</CODE> above.</P>
+
+<DIV class=issue>
+
+  <H2>Discussion</H2>
+
+  <P>Should we have a <CODE class=terminal-keyword>protected</CODE> <VAR class=nonterminal>Visibility</VAR>? It has been omitted
+  for now to keep the language simple, but there does not appear to be any fundamental reason why it could not be supported.
+  If we do support it, should we choose the C++ <CODE>protected</CODE> concept (visible only in class and subclasses) or the
+  Java <CODE>protected</CODE> concept (visible in class, subclasses, and the original class's package)?</P>
+
+</DIV>
+
+<HR>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TD valign=BOTTOM nowrap>
+      <ADDRESS><A href="mailto:waldemar@netscape.com">Waldemar Horwat</A><BR>
+      Last modified Tuesday, February 15, 2000</ADDRESS>
+    </TD>
+    <TD valign=TOP nowrap align=RIGHT><A href="statements.html"><IMG src="../../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="../index.html"><IMG src="../../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="variables.html"><IMG src="../../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+  </TR>
+</TABLE>
+</BODY>
+</HTML>

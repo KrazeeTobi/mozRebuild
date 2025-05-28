@@ -1,0 +1,189 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; U) [Netscape]">
+   <meta name="Author" content="Ian Oeschger">
+   <title>The &lt;progressmeter> Element</title>
+</head>
+<body>
+<p align="right"><i>XUL Programmer's Reference Manual</i></p>
+
+<h1>
+<font color="#000099"><font size=+2></font></font></h1>
+
+<table BORDER=0 COLS=1 WIDTH="100%" >
+<tr>
+<td>
+<h1>
+<font color="#000099"><font size=+2>&lt;progressmeter></font></font></h1>
+
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font face="Arial,Helvetica"><font color="#FFFFFF">Attributes</font></font></b></td>
+
+<td><b><font face="Arial,Helvetica"><font color="#FFFFFF">Common Children</font></font></b></td>
+</tr>
+
+<tr>
+<td><i><font face="Arial,Helvetica"><a href="common.html#id">id</a></font></i></td>
+
+<td>&lt;observes /></td>
+</tr>
+
+<tr>
+<td><a href="#value">value</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#mode">mode</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#align">align</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#onclick">onclick</a></td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td>The progressmeter is a widget that displays the progress of an operation
+as it executes. In Mozilla the progress meter (with the statusbar to the
+right) looks like this:
+<blockquote>&nbsp;
+<table BORDER=0 COLS=1 WIDTH="80%" BGCOLOR="#CCCCCC" >
+<tr>
+<td><img SRC="progressmeter.gif" height=14 width=551>
+<br>&nbsp;</td>
+</tr>
+</table>
+</blockquote>
+When larger pages load in a browser, for instance, the progress meter shows
+the percentage of the page that has been loaded and how much remains to
+be done. The following example shows a progressmeter defined within a XUL
+box:
+<blockquote>&nbsp;
+<table BORDER=0 COLS=1 WIDTH="80%" BGCOLOR="#CCCCCC" >
+<tr>
+<td><tt>&lt;box id="state-box" align="horizontal" flex="100%" style="min-width:
+1px"></tt>
+<br><tt>&nbsp; &lt;box align="vertical" style="width:100px"></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;spring flex="100%"/></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;<b>progressmeter</b> id="statusbar-icon"
+mode="normal"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align="horizontal" value="0"
+onclick="dumpProgress()"></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;observes element="Browser:LoadingProgress"
+attribute="mode"/></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;observes element="Browser:Throbber"
+attribute="busy"&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; onbroadcast="onProgress()"/></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>progressmeter</b>></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; &lt;spring flex="100%"/></tt>
+<br><tt>&nbsp; &lt;/box></tt>
+<br><tt>&lt;/box></tt></td>
+</tr>
+</table>
+</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="value"></a><b><font color="#FFFFFF"><font size=+1>value</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>value</b> is a required attribute for specifying the value
+or name of the progressmeter.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><font face="Courier, New Courier">&lt;progressmeter <b>value</b>="<i>character
+or string</i>" /></font></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><font face="Courier, New Courier">&lt;progressmeter id="nav=prog
+<b>value</b>="0" /></font></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>The value is not visible for progressmeters, as it is for <a href="buttonref.html">titledbuttons</a>
+and other XUL widgets. The value in this case XXX.</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="mode"></a><b><font color="#FFFFFF"><font size=+1>mode</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>mode</b> is a required attribute for specifying whether
+the length of the operation is known or unknown.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><font face="Courier, New Courier">&lt;progressmeter <b>mode</b>="determined
+| undetermined | normal" /></font></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><font face="Courier, New Courier">&lt;progressmeter id="nav-prog
+<b>mode</b>="undetermined" /></font></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>When the length of the operation cannot be determined, as for
+example when page loading times are affected by network traffic and other
+unforeseeables, you should set this attribute to "undetermined."
+<br>&nbsp;</blockquote>
+
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="onclick"></a><b><font color="#FFFFFF"><font size=+1>onclick</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>onclick</b> is an optional event listener attribute for
+the progressmeter.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><font face="Courier, New Courier">&lt;progressmeter id="string"
+<b>onclick</b>="<i>event handler code</i>" /></font></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><font face="Courier, New Courier">&lt;progressmeter id="string"
+<b>onclick</b>="dumpLoad()" /></font></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>The click event is fired when the user clicks on the actual
+progress meter. If you want to have an action performed -- if you want
+to cancel the operation that the progressmeter is tracking, for instance
+-- then you can write an event handler for this attribute, as in the following
+example:
+<br>&nbsp;</blockquote>
+
+<br>&nbsp;</td>
+</tr>
+</table>
+
+<br><br>
+<p align="right"><i>Last updated: 13:10 1/26/00 <a href="mailto:oeschger@netscape.com">Ian Oeschger</a></i></p>
+
+</body>
+</html>

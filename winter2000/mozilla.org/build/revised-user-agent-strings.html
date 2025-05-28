@@ -1,0 +1,331 @@
+<HTML>
+<HEAD>
+<TITLE>user-agent strings</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+<center><b><font size=+2>user-agent strings</font></b></center>
+<p>
+Revision of the original user-agent string proposal.  See the
+<a href="http://www.mozilla.org/build/user-agent-strings.html">
+original, obsolete proposal</a> and discussions on
+<a href="news://news.mozilla.org/netscape.public.mozilla.seamonkey">
+netscape.public.mozilla.seamonkey</a> and
+<a href="news://news.mozilla.org/netscape.public.mozilla.netlib">
+netscape.public.mozilla.netlib</a> for background information.
+
+
+<p>
+<h3>Goals</h3>
+    The original goals:
+    <ul>
+    <li>    Obey the standard described in RFC 1945 and RFC 2068.
+    <li>    Don't break existing web servers.
+    <li>    Don't break existing log-file analysis software or user-agent parsing code.
+    <li>    Keep the User-Agent string reasonably short.
+    <li>    Use a consistent, obvious, and easy-to-parse format.
+    </ul>
+
+    Other concerns that came out of discussion:
+    <ul>
+    <li>    Provide date-based version information.
+    <li>    Address the issue of version modifiers.
+    <li>    Provide a way for applications that contain Mozilla
+            technology (i.e. Gecko) but are not Mozilla to identify themselves
+    </ul>
+
+<h3>Proposal</h3>
+    For browsers based on Mozilla, the user-agent string shall
+    follow the format:
+    <p>
+    <blockquote>
+    <tt><font size=-1>
+    MozillaProductToken (MozillaComment) GeckoProductToken (GeckoComment)
+    *(VendorProductToken|VendorComment)
+    </font></tt>
+    </blockquote>
+    <p>
+    Applications that embed the Gecko layout engine shall have user-agent strings
+    that follow the format:<p>
+    <blockquote>
+    <font size=-1><tt>ApplicationProductToken (ApplicationComment) GeckoProductToken *(VendorProductToken|VendorComment)</tt>
+    </font>
+    </blockquote>
+    <p>
+    Where:
+    <p>
+    <table border=0 width=100% cellpadding=5 cellspacing=3>
+    <tr valign=top bgcolor=#ffffcc>
+    <td align=right width=25%>    MozillaProductToken
+    </td>
+    <td>    <tt><b>Mozilla/</b></tt> <i>MozillaVersion</i>
+    </td>
+    </tr>
+
+    <tr valign=top bgcolor=#ffffcc>
+    <td align=right width=25%>    MozillaVersion
+    </td>
+    <td>    <i>Major</i> <tt><b>.</b></tt> <i>minor[VersionModifier]</i>
+    </td>
+    </tr>
+
+    <tr valign=top bgcolor=#ffffcc>
+    <td align=right width=25%>    Major
+    </td>
+    <td>    Integer indicating major release number.
+    </td>
+    </tr>
+
+    <tr valign=top bgcolor=#ffffcc>
+    <td align=right width=25%>Minor
+    </td>
+    <td>    If non-zero, it shall be a three-digit, zero-filled number, i.e.
+            <b><tt>001</tt></b>.
+
+            If zero, zero is fine.
+    </td>
+    </tr>
+
+    <tr valign=top bgcolor=#ffffcc>
+    <td align=right width=25%>    VersionModifier
+    </td>
+    <td>    String whose first character is <tt>[a-zA-Z]</tt>.  By
+            convention, used to indicate pre-release versions,
+            such as beta quality software, or milestones.
+    </td>
+    </tr>
+    <tr valign=top>
+    <td align=right width=25%>    MozillaComment
+    </td>
+    <td>    <tt>(</tt> <i>Platform</i> <b><tt>;</tt></b>
+              <i>Security</i> <b><tt>;</tt></b>
+              <i>OS-or-CPU</i> <b><tt>;</tt></b>
+              <i>Localization information</i><b><tt></tt></b>
+              <i>*[<b><tt>;</tt></b> Optional Other Comments] <tt>)</tt>
+    </td>
+    </tr>
+
+    <tr valign=top>
+    <td align=right width=25%> Platform
+    </td>
+    <td>    Allowed values:
+            <ul>
+            <li>    <tt><b>Windows</b></tt> for all Microsoft Windows environments
+            <li>    <tt><b>Macintosh</b></tt> for all MacOS environments
+            <li>    <tt><b>X11</b></tt> for X Window System environments
+    </td>
+    </tr>
+
+    <tr valign=top>
+    <td align=right width=25%>Security
+    </td>
+    <td>    Allowed values:
+            <ul>
+            <li>    <tt><b>N</b></tt> for no security
+            <li>    <tt><b>U</b></tt> for strong security
+            <li>    <tt><b>I</b></tt> for weak security
+            </ul>
+    </td>
+    </tr>
+
+    <tr valign=top>
+    <td align=right width=25%>OS-or-CPU
+    </td>
+    <td>
+            Values for <b>Windows</b> systems:
+            <ul>
+            <li>    <tt><b>Win3.11</b></tt> for Windows 3.11
+            <li>    <tt><b>NT3.51</b></tt> for Windows NT 3.11
+            <li>    <tt><b>NT4.0</b></tt> for Windows NT 4.0
+            <li>    <tt><b>Win95</b></tt>   for Windows 95;
+            <li>    <tt><b>Win98</b></tt>   for Windows 98;
+            <li>    etc.
+            </ul>
+            Values for <b>MacOS</b> systems shall be:
+            <ul>
+            <li>    <tt><b>68K</b></tt> for 68k hardware
+            <li>    <tt><b>PPC</b></tt> for PowerPC hardware
+            <li>    etc.
+            </ul>
+            Values for <b>Unix</b> systems shall be the output of the command
+                <b><tt>uname -srm</tt></b> (also accessible as the
+                <b>sysname</b>, <b>release</b>, and <b>machine</b> fields of
+                the utsname structure.)
+    </td>
+    </tr>
+
+    <tr valign=top>
+    <td align=right width=25%>Localization Information
+    </td>
+    <td>    Language Tag as described in the standards RFC 1945 and RFC 2068.
+            Examples:<br>
+            <tt>en, en-US, es, es-CO, ja, ja-JP</tt>, etc.
+    </td>
+    </tr>
+
+    <tr valign=top bgcolor=#ffffcc>
+    <td align=right width=25%>    GeckoProductToken
+    </td>
+    <td>    <tt><b>Gecko/</b></tt><i>GeckoVersion</i>
+        <p>
+            The Gecko product token allows products that embed the
+            Gecko engine, including Mozilla, to identify this significant
+            sub-product.
+    </td>
+    </td>    </tr>
+
+    <tr valign=top bgcolor=#ffffcc>
+    <td align=right width=25%>    GeckoVersion
+    </td>
+    <td>    Date in the format YYYYMMDD.  For official Mozilla
+            builds, this will correspond to the date portion of the
+            BuildID.
+
+            For branded versions of Mozilla, the GeckoVersion
+            should correspond to the date the code was pulled
+            from mozilla.org, and may not necessarily correspond
+            to the date portion of the generated BuildID.
+    </td>
+    </tr>
+
+    <tr valign=top>
+    <td align=right width=25%> ApplicationProductToken, Application Comment
+    </td>
+    <td>    For use by applications that embed Gecko layout engine.
+            The form of their product token and comment is not specified
+            here, but should adhere to the HTTP standards.
+    </td>
+    </tr>
+
+    <tr valign=top bgcolor=#ffffcc>
+    <td align=right width=25%></b> ( VendorProductToken | VendorComment )
+    </td>
+    <td>    Product tokens for applications based on Mozilla.
+
+            Format and content shall be vendor-specific, but should adhere
+            to the HTTP standards.
+    </td>
+    </tr>
+    <tr valign=top>
+    <td align=right width=25%><b><tt>*</tt>
+    </td>
+    <td></b> Zero or more of the following token are allowed.
+    </td>
+    </tr>
+
+    </table>
+
+<h3>Examples</h3>
+    <blockquote>
+
+    <table width=100%>
+    <tr valign=top>
+    <td width=25%>    A mozilla.org release
+    </td>
+    <td>    <font size=-1><tt>Mozilla/5.001 (windows; U; NT4.0; en-us) Gecko/25250101</tt></font>
+    </td>
+    </tr>
+    <tr valign=top>
+    <td width=25%>    A branded release based on the same codebase as the browser above
+    </td>
+    <td>    <font size=-1><tt>Mozilla/5.001 (Macintosh; N; PPC; ja) Gecko/25250101 MegaCorpBrowser/1.0 (MegaCorp, Inc.)</tt></font>
+    </td>
+    </tr>
+    <tr valign=top>
+    <td width=25%>    A re-branded release
+    </td>
+    <td>    <font size=-1><tt>Mozilla/9.876 (X11; U; Linux 2.2.12-20 i686, en) Gecko/25250101 Netscape/5.432b1 (C-MindSpring)</tt></font>
+    </td>
+    </tr>
+    <tr valign=top>
+    <td width=25%>    A Gecko-based browser
+    </td>
+    <td>    <font size=-1><tt>TinyBrowser/2.0 (TinyBrowser Comment) Gecko/20201231</tt></font>
+    </td>
+    </tr>
+    </table>
+    </blockquote>
+
+<p>
+<hr>
+Comments to <a href="mailto:cbegle@mozilla.org">cbegle@mozilla.org</a> or
+<a href="news://news.mozilla.org/netscape.public.mozilla.netlib">netscape.public.mozilla.netlib</a>
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/build/revised-user-agent-strings.html&amp;rev=&amp;root=/cvsroot/">Last modified February  9,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

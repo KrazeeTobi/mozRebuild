@@ -1,0 +1,382 @@
+<html>
+<head>
+<title>Bugzilla Helper</title>
+
+<script language="JavaScript1.2" src="./bugreport.js">
+</script>
+</head>
+
+
+<body onLoad=PrefillBugInfoForm(); bgcolor=#ffffff >
+<img src="./../../images/mozilla-banner.gif" alt="" Border=0 WIDTH="600" height="58" vspace="0"
+HSPACE="0">
+
+<center>
+<p><h2>Bugzilla Helper</h2>
+    a tool to help you write a good Mozilla bug report.
+    <br>
+    Comments to <a href="mailto:cbegle@mozilla.org">christine begle</a>
+
+<p>
+</center>
+<hr>
+<p>
+<b>Why should you use this?</b>
+<blockquote>
+    <script language="JavaScript1.2">
+    if ( navigator.userAgent.match( /Mozilla\/4.*/ ) ) {
+        document.write(
+            "<font color=#990000><b>This is not a tool for reporting bugs "+
+            "against commercial Netscape products.  If that is what you're " +
+            "looking for, the right place to go is <a href="+
+            "\"http://help.netscape.com/forms/bug-client.html\"</a>here"+
+            "</a>.</b></font><p>"
+        );
+    }
+    </script>
+    This form prompts you for information that is essential to Mozilla
+    developers.  They need this information to understand and reproduce the
+    bug.  Being able to understand and reproduce bugs is the first step
+    towards getting the bug fixed.
+    <p>
+    This form currently requires a browser that supports JavaScript1.2 or
+    greater, and that JavaScript is turned on.
+
+</blockquote>
+
+<a name="step1"></a>
+<p><b>Step 1. Create a Bugzilla account and log in.</b>
+    <blockquote>
+    <a href="http://bugzilla.mozilla.org/createaccount.cgi" target="other">Create a Bugzilla
+    account</a> if you don't already have one.  After you receive your Bugzilla password,
+    <a href="http://bugzilla.mozilla.org/query.cgi?GoAheadAndLogIn=1" target="other">
+    log in</a> if you haven't already logged in.
+    </blockquote>
+
+<a name="step2"></a>
+<p><b>Step 2. Search for your bug.</b>
+    <blockquote>
+    See if your bug has already been reported.  Check the list of <a href=
+    "http://www.mozilla.org/quality/most-frequent-bugs/" target="other">most frequently filed bugs</a>.
+    If you don't find your bug, then search Bugzilla here.
+    Enter two or three of the main words having to do with your bug.
+    For example: <tt><b>crash mail</b></tt> or <tt><b>copy paste</b></tt>
+
+    <form name=query>
+    <table bgcolor=#ffffcc border=0>
+    <tr >
+    <td colspan=2><b>Search Bugzilla</b>
+    <input type=text size=60 name=keywords>
+    </td>
+    </tr>
+    <tr>
+    <td align=left><input type=button value=Search
+        onClick="SearchForBugs(this.form.keywords.value,this.form.searchLong)">
+    </td>
+    <td>
+    <input type=radio name=searchLong value=min CHECKED>Only Look in Summary Fields</input>
+    <br><input type=radio name=searchLong value=max>Look in both Summary and Description Fields</input>
+    </td>
+
+    </tr>
+    </table>
+    </form>
+    <p>
+    Look through the search results. If you get the cryptic <tt><b>Zarro Boogs</b></tt>
+    message, Bugzilla found no bugs that match.  Check for typos, or add fewer or
+    different keywords.
+    <p>If you find a bug that looks the same
+    as yours, you can add comments to that bug, but please don't open a new one.
+    <p>
+    If you find bugs similar to yours, read them.
+    <font color=#cc0000><b>Note their Component</b></font>;    you'll need it later.
+    </font>
+
+    </blockquote>
+
+<a name="step3"></a>
+<p><b>Step 3. Gather information.</b>
+    <blockquote>
+    Please try to complete this form as accurately as you can.  The more
+    you can tell us, the better our chance of being able to understand and
+    reproduce your bug.
+    <form name=BugInfoForm>
+    <table valign=top cellpadding=5 cellspacing=5 border=0 >
+    <tr bgcolor=#ffffcc>
+    <td >
+        <p align=right>
+        <b>Product</b>
+    </td>
+    <td valign=top>
+        <select name="Product" onChange=UpdateComponentList(this.form) size=3>
+        <option name="Browser" SELECTED value="Browser">   Browser or Editor (aka Composer)
+        <option name="MailNews" VALUE="MailNews">            Mail or News
+        <option name="Documentation" value="Documentation">       Documentation
+        </select>
+    </td>
+    </tr>
+
+    <tr>
+    <td valign=top><p align=right><b>Component</b></p>
+    <p align=left>
+    </td>
+    <td valign=top>
+        <select name="Component" size=1 >
+        <option value="NOTSELECTED">Choose one...
+        <OPTION VALUE="ActiveX Wrapper">ActiveX Wrapper<OPTION VALUE="Autofill">Autofill<OPTION VALUE="Bookmarks">Bookmarks<OPTION VALUE="Browser-General">Browser-General<OPTION VALUE="Build Config">Build Config<OPTION VALUE="chatzilla">chatzilla<OPTION VALUE="Compositor">Compositor<OPTION VALUE="Cookies">Cookies<OPTION VALUE="DOM Level 0">DOM Level 0<OPTION VALUE="DOM Level 1">DOM Level 1<OPTION VALUE="DOM Level 2">DOM Level 2<OPTION VALUE="DOM to Text Conversion">DOM to Text Conversion<OPTION VALUE="DOM Viewer">DOM Viewer<OPTION VALUE="Editor">Editor<OPTION VALUE="Embedding APIs">Embedding APIs<OPTION VALUE="Embedding: Docshell">Embedding: Docshell<OPTION VALUE="Event Handling">Event Handling<OPTION VALUE="Form Submission">Form Submission<OPTION VALUE="GTK Embedding Widget">GTK Embedding Widget<OPTION VALUE="Help">Help<OPTION VALUE="History">History<OPTION VALUE="HTML Element">HTML Element<OPTION VALUE="HTML Form Controls">HTML Form Controls<OPTION VALUE="HTMLFrames">HTMLFrames<OPTION VALUE="HTMLTables">HTMLTables<OPTION VALUE="Image Conversion Library">Image Conversion Library<OPTION VALUE="ImageLib">ImageLib<OPTION VALUE="Installer">Installer<OPTION VALUE="Installer: XPI Packages">Installer: XPI Packages<OPTION VALUE="Installer: XPInstall Engine">Installer: XPInstall Engine<OPTION VALUE="Internationalization">Internationalization<OPTION VALUE="Java APIs for DOM">Java APIs for DOM<OPTION VALUE="Java APIs to WebShell">Java APIs to WebShell<OPTION VALUE="Java FrontEnd">Java FrontEnd<OPTION VALUE="Java to XPCOM Bridge">Java to XPCOM Bridge<OPTION VALUE="Java-Implemented Plugins">Java-Implemented Plugins<OPTION VALUE="JavaScript Debugger">JavaScript Debugger<OPTION VALUE="Javascript Engine">Javascript Engine<OPTION VALUE="Layout">Layout<OPTION VALUE="Live Connect">Live Connect<OPTION VALUE="Localization">Localization<OPTION VALUE="MathML">MathML<OPTION VALUE="MozillaTranslator">MozillaTranslator<OPTION VALUE="Networking">Networking<OPTION VALUE="Networking: Cache">Networking: Cache<OPTION VALUE="OJI">OJI<OPTION VALUE="other">other<OPTION VALUE="Parser">Parser<OPTION VALUE="PICS">PICS<OPTION VALUE="Plug-ins">Plug-ins<OPTION VALUE="Preferences">Preferences<OPTION VALUE="Preferences: Backend">Preferences: Backend<OPTION VALUE="Printing">Printing<OPTION VALUE="Profile Manager BackEnd">Profile Manager BackEnd<OPTION VALUE="Profile Manager FrontEnd">Profile Manager FrontEnd<OPTION VALUE="Profile Migration">Profile Migration<OPTION VALUE="Progress Window">Progress Window<OPTION VALUE="RDF">RDF<OPTION VALUE="Search">Search<OPTION VALUE="Security: CAPS">Security: CAPS<OPTION VALUE="Security: Crypto">Security: Crypto<OPTION VALUE="Security: General">Security: General<OPTION VALUE="Selection">Selection<OPTION VALUE="Sidebar">Sidebar<OPTION VALUE="Single Signon">Single Signon<OPTION VALUE="Style System">Style System<OPTION VALUE="SVG">SVG<OPTION VALUE="Threading">Threading<OPTION VALUE="User Interface: Design Feedback">User Interface: Design Feedback<OPTION VALUE="Viewer App">Viewer App<OPTION VALUE="Views">Views<OPTION VALUE="XML">XML<OPTION VALUE="XP Miscellany">XP Miscellany<OPTION VALUE="XP Toolkit/Widgets">XP Toolkit/Widgets<OPTION VALUE="XP Toolkit/Widgets: Menus">XP Toolkit/Widgets: Menus<OPTION VALUE="XP Toolkit/Widgets: Trees">XP Toolkit/Widgets: Trees<OPTION VALUE="XP Toolkit/Widgets: XBL">XP Toolkit/Widgets: XBL<OPTION VALUE="XP Toolkit/Widgets: XUL">XP Toolkit/Widgets: XUL<OPTION VALUE="XP Utilities">XP Utilities<OPTION VALUE="XPApps">XPApps<OPTION VALUE="XPCOM">XPCOM<OPTION VALUE="XPCOM Registry">XPCOM Registry<OPTION VALUE="XPConnect">XPConnect<OPTION VALUE="xpidl">xpidl<OPTION VALUE="Y2k">Y2k</SELECT>
+        </select>
+        <br>
+        <input type=button onClick="SeeBugsInComponent(this.form)" value="See bugs in this component">
+    <p><font size=-1>This is the hard part.  Here are some tips on picking the right component.
+    <ul>
+    <li>    Read the <a href=
+        "http://bugzilla.mozilla.org/describecomponents.cgi?product=MailNews"
+        target="other">MailNews</a> and
+        <a href="http://bugzilla.mozilla.org/describecomponents.cgi?product=Browser"
+        target="other">Browser  </a> component descriptions, and try to
+        pick the best component for your bug.
+    <li>    Go back to <a href="#step2">Step 2</a>.  Search for bugs that
+            are similar to yours, and put yours in the same Component.
+    <li> If you can't decide, select a component from the list above, and click the
+        button to see the bugs in that component.   Decide if your bug fits in that group.
+        </ul>
+        </font>
+
+    </td>
+    </tr>
+    </p>
+
+    <tr bgcolor=#ffffcc>
+    <td align=right valign=top><b>Platform</b>
+    </td>
+    <td valign=top><SELECT NAME=Platform><option value="NotSelected">Choose One...<OPTION VALUE="All">All<OPTION name="DEC" VALUE="DEC">DEC<OPTION name="HP" VALUE="HP">HP<OPTION NAME="Macintosh" VALUE="Macintosh">Macintosh<OPTION name="PC" VALUE="PC">PC<OPTION NAME="SGI" VALUE="SGI">SGI<OPTION NAME="Sun" VALUE="Sun">Sun<OPTION VALUE="Other">Other
+        </select>
+    </td>
+    </tr>
+
+    <tr>
+    <td align=right valign=top>    <B>Operating System</b>
+    </td>
+    <td valign=top><SELECT NAME=OpSys><option value="NotSelected">Choose One...<OPTION VALUE="All" name=All>All<OPTION name="Windows 3.1" VALUE="Windows 3.1">Windows 3.1<OPTION name="Windows 95" VALUE="Windows 95">Windows 95<OPTION name="Windows 98" VALUE="Windows 98">Windows 98<OPTION name="Windows 2000" VALUE="Windows 2000">Windows 2000<OPTION name="Windows NT" VALUE="Windows NT">Windows NT<OPTION VALUE="Mac System 7">Mac System 7<OPTION VALUE="Mac System 7.5">Mac System 7.5<OPTION VALUE="Mac System 7.6.1">Mac System 7.6.1<OPTION VALUE="Mac System 8.0">Mac System 8.0<OPTION name="Mac System 8.5" VALUE="Mac System 8.5">Mac System 8.5<OPTION VALUE="Mac System 8.6">Mac System 8.6<OPTION VALUE="Mac System 9.0">Mac System 9.0<OPTION NAME="AIX" VALUE="AIX">AIX<OPTION name="BSDI" VALUE="BSDI">BSDI<OPTION name="HP-UX" VALUE="HP-UX">HP-UX<OPTION NAME="IRIX" VALUE="IRIX">IRIX<OPTION NAME="Linux" VALUE="Linux">Linux<OPTION VALUE="FreeBSD">FreeBSD<OPTION VALUE="OSF/1">OSF/1<OPTION NAME="Solaris" VALUE="Solaris">Solaris<OPTION name="SunOS" VALUE="SunOS">SunOS<OPTION VALUE="Neutrino">Neutrino<OPTION VALUE="OS/2">OS/2<OPTION VALUE="BeOS">BeOS<OPTION VALUE="OpenVMS">OpenVMS<OPTION VALUE="other">other</SELECT>
+    </td>
+    </tr>
+
+    <tr bgcolor=#ffffcc>
+    <td align=right valign=top>    <B>Build ID</b>
+    </td>
+    <td valign=top><input type=text size=50 name=BuildID>
+        <br><font size=-1>
+        This is the number in the lower right hand corner of your Browser window.
+        </font>
+    </tr>
+
+    <tr>
+    <td align=right valign=top>   <b>URL
+    </td>
+    <td valign=top>    <input type=text size=50 name=URL>
+            <br><font size=-1>
+            URL that demonstrates the problem you are seeing.
+            </font>
+    </td>
+    </tr>
+
+
+    <tr bgcolor=#ffffcc>
+    <td align=right valign=top>   <b>Summary</b>
+        <p>
+            <font size=-1>
+            Please be descriptive and use lots of keywords.
+            </font>
+    </td>
+    <td valign=top>    <input type=text size=50 name=Summary>
+            <br>
+            <font size=-1>
+            Examples:
+            <br>
+            <tt>
+            <tt>
+            <font color=#990000>Bad</font>: mail crashed
+            </tt>
+            <p>
+            <font color=#009900>Good</font>:
+            crash if i close the mail window while checking for new POP mail
+            </tt>
+            </font>
+    </td>
+
+    <tr>
+    <td align=right valign=top>    <b>Description</b>
+    <p align=right>
+    <font size=-1>
+    Expand on the Summary.  Please be as specific as possible about what is
+    wrong.
+    </font>
+    </td>
+    <td valign=top>  <textarea rows=3 cols=70 name=Description wrap=virtual>
+    </textarea>
+            <br>
+            Examples:
+            <br>
+            <tt>
+            <font color=#990000>Bad</font>:
+            This page looks wrong in Mozilla.  Other browsers display it correctly.
+            </tt>
+            </font>
+            <p>
+            <tt>
+            <font color=#009900>Good</font>:
+            In the page at http://www.foo.com/, text in the first column should be
+            fully justified -- text should be aligned with both the left and right
+            margins.  In Mozilla, the text is only left-justified.
+
+            </tt>
+    </td>
+    </tr>
+
+    <tr bgcolor=#ffffcc>
+    <td align=right valign=top> <b>Reproducibility</b>
+        <br>
+        <font size=-1>How often can you reproduce the problem?</font>
+    </td>
+    <td valign=top>    <select name="Reproducible">
+        <option name="NotSelected" SELECTED >Choose one...
+        <option name="AlwaysReproducible" value="Always">Every time.
+        <option name="Sometimes" value="Sometimes">Sometimes, but not always.
+        <option name="DidntTry" value="Didn't try">Haven't tried to reproduce it.
+        <option name="NotReproducible" value="Couldn't Reproduce">Tried, but couldn't reproduce it.
+        </select>
+    </tr>
+
+    <tr>
+    <td align=right valign=top>    <b>Steps to Reproduce</b>
+    <p><font size=-1>
+    Describe how to reproduce the problem, step by step.
+    Include any special setup steps.
+    <p>
+    </td>
+    <td valign=top>  <textarea rows=5 cols=70 name=ReproduceSteps wrap=virtual>
+    </textarea>
+    </font>
+    </td>
+    </tr>
+
+    <tr bgcolor="#ffffcc">
+    <td valign=top align=right ><b>Actual Results</b>
+    <p>
+    <font size=-1>What happened after you performed the steps above?</font>
+    </td>
+    <td valign=top>
+        <textarea rows=5 cols=70 name=ActualResults wrap=virtual></textarea>
+    </td>
+    </tr>
+
+    <tr>
+    <td valign=top align=right><b>Expected Results</b>
+    <p>
+    <font size=-1>What should Mozilla have done instead?</font>
+    </td>
+    <td valign=top><textarea rows=5 cols=70 name=ExpectedResults wrap=virtual></textarea>
+    </td>
+    </tr>
+
+    <tr bgcolor=#ffffcc>
+    <td valign=top align=right> <b>Additional Information</b>
+    <p><font size=-1>
+    Add any additional information you feel may be relevant to this bug, such
+    as a few lines of HTML that demonstrate the problem, a Talkback crash ID,
+    or special information about your computer's configuration.
+    <p>
+    If you are reporting a crash, note the module in which
+    Mozilla crashed (e.g, <tt>application violation in gkhtml.dll</tt>).
+    If you can provide a stack trace, paste that information here.
+    On Macintosh, if you have MacsBug, paste the results of the <b><tt>how</tt></b>
+    and <b><tt>sc</tt></b> commands.
+    </font>
+    </td>
+    <td valign=top>  <textarea rows=8 cols=70 name=AdditionalInfo wrap=virtual></textarea>
+    </tr>
+
+    <tr >
+    <td valign=top> <b>Severity</b>
+    </td>
+    <td valign=top>
+        <select name="Severity" >
+        <option name="blocker" value="blocker" > Blocker:  This bug prevents you from being getting Mozilla testing or development work done.
+        <option name="critical" value="critical"> Critical: Mozilla crashes, hangs, leaks memory, or causes you to lose data.
+        <option name="major" value="major">   Major:  A major feature is broken.
+        <option name="normal" value="normal" SELECTED> Normal: It's a bug that should be fixed.
+        <option name="minor" value="minor">      Minor: Minor loss of function, and there's an easy workaround.
+        <option name="trivial" value="trivial">     Trivial: A cosmetic problem, such as a misspelled word or misaligned text.
+        <option name="enhancement" value="enhancement"> Enhancement: Request for new feature or enhancement.
+        </select>
+    </td>
+    </tr>
+
+    <!--tr bgcolor=#ffffcc>
+    <td align=right valign=top>   <b>Verify the form values.</b>
+    </td>
+    <td valign=top>    <input type=button value="Check Values" onClick=CheckValues(this.form) >
+    </td>
+    </tr-->
+    </table>
+    </form>
+
+    </blockquote>
+
+<a name="step4">
+<p><b>Step 4. Submit your bug to Bugzilla.</b>
+    <blockquote>
+    Now that you've gathered all the right information, you're ready to report
+    your bug to Bugzilla.
+    <p>
+    Click the button below. If you've filled in all the right fields, Bugzilla's <b>Enter Bug</b>
+    page will open in a new window.  The form should be filled with all the
+    information you've entered here.
+
+    <p>
+    <blockquote>
+    <form name=EnterBugForm>
+    <input type=button value="Open Bugzilla Entry Form" onClick=OpenEnterBugPage();>
+    </blockquote>
+
+    Submit your bug by clicking the <b>Commit</b> button on Bugzilla's Enter Bug page..
+    <p>
+    <font color=#dd0000><b>Your bug will not be submitted until you click the <b>Commit</b>
+    button near the bottom of the Bugzilla's <b>Enter Bug</b> form.</b></font>
+
+    <p>
+    </blockquote>
+
+<p><b>Congratulations!</b>
+    <blockquote>
+    You've submitted your bug.  You should soon receive an e-mail message
+    that says your bug was successfully filed.
+    <p>
+    If you have other information, such as test cases that demonstrate the bug,
+    you can attach them to the bug report.  In the e-mail message you receive, click on
+    the link to view the bug report, then click the link to <b>Create a new attachment</b>.
+    <p>
+    </blockquote>
+
+<b>What's next?</b>
+    <blockquote>
+    Check out the <a href="http://www.mozilla.org/bugs/">
+    Bugzilla Fact Sheet</a>'s Life Cycle of a Bug section to see what will happen
+    to your bug.
+    <p>
+    Thanks for making the effort to file a good bug!
+
+    </blockquote>
+
+<p>
+
+<hr>
+
+This is based on Mozilla's
+<a href="http://www.mozilla.org/quality/bug-writing-guidelines.html">Bug Writing
+Guidelines</a>.
+If you have comments or problems with this form, please send mail to
+<a href="mailto:cbegle@mozilla.org">christine begle</a>.
+
+</body>
+</html>

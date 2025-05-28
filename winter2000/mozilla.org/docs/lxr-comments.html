@@ -1,0 +1,185 @@
+<HTML>
+<HEAD>
+<TITLE>Commenting Mozilla for LXR</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<H1>Commenting Mozilla for LXR</H1>
+When printing directory listings, such as the one for 
+<A HREF="http://lxr.mozilla.org/mozilla/source/lib/libmime/">libmime</A>,
+LXR tries to add to each listing a description of the current directory,
+each file, and each subdirectory.
+
+<H2>Source Code Description</H2>
+
+Many Mozilla files have a comment near the beginning of the file describing
+the file's purpose and function. There are three common formats for such
+comments.
+
+<OL>
+<LI>
+ The comment contains a line beginning with the word "Description:".
+ <BR>
+ <A HREF="http://lxr.mozilla.org/mozilla/source/cmd/xfe/XfeWidgets/Xfe/Button.h#23">
+ EXAMPLE</A>: 
+ <PRE>
+   /*----------------------------------------------------*/
+   /*                                                    */
+   /* Name:        &lt;Xfe/Button.h&gt;                        */
+   /* Description: XfeButton widget public header file.  */
+   /* Author:      Ramiro Estrugo &lt;ramiro@netscape.com&gt;  */
+   /*                                                    */
+   /*----------------------------------------------------*/
+ </PRE>
+
+<LI>
+ The comment begins with the name of the file followed by a delimiter.
+ <BR>
+ <A HREF="http://lxr.mozilla.org/mozilla/source/lib/libmime/mimecont.c#23">
+ EXAMPLE</A>:
+ <PRE>
+   /* mimecont.c --- definition of the MimeContainer class
+    */
+ </PRE>
+
+<LI>
+ If neither of these type comments are found then LXR looks for a comment 
+ directly after the file's licence header and before any code, including any 
+ <CODE>#define</CODE> or <CODE>#include</CODE> directives.
+</OL>
+
+<H2>Descriptions Of Directories</H2>
+Directory descriptions are found in a README file in that directory, either 
+in a plain text file called README, or in a formatted README.html file.
+The README file contains both a short and  long description.
+The long description is printed at the top of the directory's file listing
+as in this listing for 
+<A HREF="http://lxr.mozilla.org/mozilla/source/js/rhino/">rhino</A>.
+The short description is printed in the parent directory's file listing
+as in this listing for
+<A HREF="http://lxr.mozilla.org/mozilla/source/js/">javascript</A>.  
+
+<H3>Format Of A Text README File</H3>
+LXR looks for the short description in a line containing the directory
+name followed by dashes as a delimiter and a short description. The long
+description is taken from the rest of the file. If the file is short, the
+entire file is printed, otherwise, chooses the first few paragraphs until
+it has used between 10 and 20 lines.
+<P>
+EXAMPLE of a short description:
+<PRE>
+  xpfe --- Cross-Platform Front End
+</PRE>
+
+
+<H3>Format Of README.html</H3>
+With html files surround the descriptions with SPAN tags with the proper
+LXRLONGDESC or LXRSHORTDESC class. This is the long
+description shown in the 
+<A HREF="http://lxr.mozilla.org/mozilla/source/js/rhino/">rhino</A>
+directory.
+ <PRE>
+   &lt;span CLASS=LXRLONGDESC&gt;
+   Rhino is an implementation of JavaScript in Java. Documentation can be found 
+   &lt;a href="http://www.mozilla.org/js/rhino/rhino.html"&gt;here&lt;/a&gt;.
+   </span>
+ </PRE>
+
+Here is the short description of rhino shown in the 
+<A HREF="http://lxr.mozilla.org/mozilla/source/js/">javascript</A>
+directory, rhino's parent.
+
+<PRE>
+   &lt;span CLASS=LXRSHORTDESC&gt;
+   Rhino: JavaScript in Java&lt;p&gt;
+   &lt;/span&gt;
+</PRE>
+
+
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/lxr-comments.html&amp;rev=&amp;root=/cvsroot/">Last modified November 15,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

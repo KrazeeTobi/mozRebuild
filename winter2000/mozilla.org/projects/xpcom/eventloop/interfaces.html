@@ -1,0 +1,159 @@
+<HTML>
+<HEAD>
+<TITLE>XP Event Loop Interfaces</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<center>
+<h1>
+XP Event Loop Interfaces</h1></center>
+
+<div align=right>By <a href="mailto:travis@netscape.com">Travis Bogard</a>
+<br>Last Modified: 9-2-99</div>
+
+<p><br>&nbsp;Below are the interfaces that are used to interact with the
+XP Event Loop.&nbsp; To create or find an event loop one should use the
+<a href="http://lxr.mozilla.org/seamonkey/source/xpcom/appshell/nativeApp/nsINativeApp.idl">nsINativeApp</a>
+interface provided by the <a href="http://lxr.mozilla.org/seamonkey/source/xpcom/appshell/nativeApp/nsCNativeApp.idl">nsCNativeApp</a>
+component.
+<br>&nbsp;
+<ul>
+<li>
+<b><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/appshell/eventloop/xp/nsIEventLoop.idl">nsIEventLoop</a></b>
+- Represents a single Event Loop and provides methods for interacting with
+it.&nbsp; This interface exposes methods for high level interaction with
+the event loop through a simple Run() function.&nbsp; It also provides
+access to low level interaction if you wish to manually build your own
+loop in an XP Manner.&nbsp; The low level functions should be avoided for
+building an event loop as they are not nearly as efficient as using the
+Run() method.</li>
+
+<li>
+<b><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/appshell/eventloop/xp/nsPIEventLoop.idl">nsPIEventLoop</a></b>
+- This interface is used internally to allow the creator of the event loop
+to interact with the event loop through an interface.&nbsp; This interface
+is not for public consumption and should not be used by anyone that isn't
+directly responsible for the creation or management of the event loop.</li>
+
+<li>
+<b><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/appshell/eventloop/xp/nsIEvent.idl">nsIEvent</a></b>
+- nsIEvent serves as an XP wrapper around native events.&nbsp; This interface
+is what all the XP code deals with when it is talking about an event.&nbsp;
+From this interface clients wishing to view platform specific data can
+call the provided GetNativeData() function (There is also a SetNativeData()
+for setting).&nbsp; It should be noted that this returned data is platform
+specific.&nbsp; It is also a direct pointer to the data being held internally
+and should therefore not be used past the life of the reference to nsIEvent.</li>
+
+<li>
+<b><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/appshell/eventloop/xp/nsIEventFilter.idl">nsIEventFilter</a></b>
+- This, much like nsIEvent does for events, serves as an XP wrapper around
+native event filters.&nbsp; From this interface clients wishing to get
+or set a platform specific filter can call the provided GetNativeData()
+or SetNativeData() function.&nbsp; It should be noted that this returned
+data is platform specific.&nbsp; The Get version also returns a direct
+pointer to the data being held internally and should therefore not be used
+past the life of the reference to nsIEventFilter.</li>
+
+<br><b><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/appshell/eventloop/xp/nsIDispatchListener.idl">nsIDispatchListener</a></b>
+and <b><a href="http://lxr.mozilla.org/seamonkey/source/xpcom/appshell/eventloop/xp/nsITranslateListener.idl">nsITranslateListener</a></b>
+- These interfaces allow you to call the default provided Run() function
+from the nsIEventLoop interface, but still retain the ability to interject
+variations of the events being processed.&nbsp; In nearly all cases this
+should provide all the needed control that an app may need to avoid writing
+it's own event loop using the low level functions of nsIEventLoop.&nbsp;
+It is very important to try and use these interfaces instead of rolling
+your own event loop as the efficiency and performance is far greater with
+Run().&nbsp; These interfaces are completely optional and should not be
+passed in if you do not need to watch or change the flow of the event loop.</ul>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/xpcom/eventloop/interfaces.html&amp;rev=&amp;root=/cvsroot/">Last modified September  3,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

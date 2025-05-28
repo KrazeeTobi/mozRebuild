@@ -1,0 +1,289 @@
+<HTML>
+<HEAD>
+<TITLE>Building A Mozilla Distribution</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<H1>Building A Mozilla Distribution</H1>
+These are directions for creating your own milestone build or any other
+distribution. You might want to create your own distribution in order 
+to create a build for some platform that's not normally on our ftp site
+or to enable some feature that's not supported in the standard builds. 
+<OL>
+<LI>
+Download the special milestone tarball and build from it, not from
+your normal tree.
+
+<LI>
+Set the build options to disable debugging symbols, create optimized 
+code, set the build date (which is used in bugzilla) plus whichever
+other options you choose.
+
+<LI>Test your build to make sure it runs and make a note of the BuildID 
+number in the lower right hand corner of the app. It should look 
+something like <I>2000020208</I> and reflect the date and time you 
+built the package.
+<LI>
+Make the tarball available somewhere and 
+<A HREF="mailto:endico@mozilla.org,leaf@mozilla.org">
+let us know</A> so we can move it to the ftp site. We need to know the
+build id number and anything non-standard enabled (or disabled) in
+the build.
+</OL>
+
+<H2>Unix</H2>
+It helps to be familiar with the 
+<A HREF="unix.html">unix build instructions</A>
+and with using the 
+<A HREF="http://webtools.mozilla.org/build/config.cgi">
+unix build configurator</A> to create a mozconfig file.
+
+
+<OL>
+<LI><B>Download the source</B>.<BR>
+<A HREF="http://ftp.mozilla.org/pub/mozilla/releases/">
+Download</A> a source tarball of the latest milestone. 
+(If you're making a distribution from code in your own private
+tree you'll probably need to <TT>make clobber</TT> first).
+<P>
+
+<LI><B>Configure the build environment</B>.<BR>
+Create a file in the tree created from your tarball called 
+<A HREF="http://webtools.mozilla.org/build/config.cgi">
+mozilla/.mozconfig</A>. 
+You'll want to add these options to make your distribution smaller.
+The <TT>--disable-debug</TT> option is pretty important otherwise your 
+package will be 20mb or more.  Normal packages are around 5MB. 
+The <TT>--enable-optimize</TT> option enables the compiler option to
+build optimized binaries.  Feel free to turn on other options such as
+<A HREF="../projects/mathml">MathML</A> which aren't enabled in the
+official builds.
+
+<PRE><TT>ac_add_options --disable-tests
+ac_add_options --disable-debug
+ac_add_options --enable-optimize
+#ac_add_options --enable-mathml #uncomment to enable mathml
+</TT> </PRE>
+
+<P>
+Set these environment variables so the build date will be set correctly.
+
+<PRE><TT>MOZILLA_OFFICIAL=1
+export MOZILLA_OFFICIAL
+BUILD_OFFICIAL=1
+export BUILD_OFFICIAL
+</TT></PRE>
+
+<LI><B>Build the tree</B>.<BR>
+Make sure not to use the regular command to compile the code since you 
+don't want to do a cvs update. If you sync the tree, you'll be building
+from the tip and no longer have a milestone build.
+<PRE><TT>gmake -f client.mk build
+</TT></PRE>
+
+<LI><B>Create the package</B>.<BR>
+There is a make file in the packager directory that will create a tarball 
+for you in a package directory. It should place your package in mozilla/dist.
+At this point the only supported package type is tar but instrumentation
+exists for enterprising contributors to add support for other package 
+formats such as RPM or deb.
+
+<PRE><TT>cd mozilla/xpinstall/packager
+gmake
+</TT></PRE>
+
+<LI><B>Test</B>.<BR>
+Test your package to make sure it works. Our 
+<A HREF="http://www.mozilla.org/quality/smoketests/">smoke tests</A>
+are designed for this purpose.
+<P>
+
+<LI><B>Distribute</B>.<BR>
+Make the tarball available somewhere and 
+<A HREF="mailto:endico@mozilla.org">
+let us know</A> so we can move it to the ftp site. Let us know the BuildID
+as well as anything useful about your build environment such as the version
+of the OS, the name of the Linux distribution, or if you're using a
+non-standard compiler. If your package is very non-standard, it would
+be a good idea to include a README file.
+</UL>
+
+<H2>Win32</H2>
+
+It helps to be familiar with the 
+<A HREF="win32.html">build instructions</A>.
+
+<OL>
+<LI><B>Download the source</B>.<BR>
+<A HREF="http://ftp.mozilla.org/pub/mozilla/releases/">
+Download</A> a source tarball of the latest milestone. 
+<P>
+
+<LI><B>Configure the build environment</B>.<BR>
+You'll want to disable debugging to reduce the size of your distribution.
+Set MOZILLA_OFFICIAL to set the correct build date. 
+(There is a problem with this. See 
+<A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=27316">bug 27316</A>
+for a workaround.)
+Feel free to turn on other options such as
+<A HREF="../projects/mathml">MathML</A> which aren't enabled in the
+official builds. If you're building from a different directory than normal
+remember to set <CODE>MOZ_SRC</CODE> to the parent directory of your
+mozilla tree.
+
+<PRE><TT>set MOZ_DEBUG=
+set MOZILLA_OFFICIAL=1
+set MOZ_MATHML=1
+set MOZ_SRC=d:\mozilla\m13 
+</TT> </PRE>
+
+<LI><B>Build the tree</B>.<BR>
+When you compile, make sure not to use a command  uses cvs to update
+the tree. If you sync the tree, you'll be building
+from the tip and no longer have a milestone build.
+<PRE><TT>nmake /f client.mak build_all
+</TT></PRE>
+
+<LI><B>Create the package</B>.<BR>
+You have the choice of packaging the binaries either
+as a zip file or as an executable installer. 
+The installer is only buildable on NT and requires 
+the command line zip utility from 
+<A HREF="http://www.cdrom.com/pub/infozip/Zip.html#Win32">
+Info-ZIP</A>. Download <CODE>unz540xN.exe</CODE> to get
+unzip.exe. Then download and unzip 
+<CODE>zip23xN.zip</CODE>. Copy zip.exe
+to a directory in your system's search path.
+<P>
+
+<UL>
+<LI>
+<B>To create an installer</B>, change to the xpinstall builder
+directory and run the perl script.
+<PRE><TT>cd mozilla\xpinstall\wizard\windows\builder
+perl build.pl
+</TT> </PRE>
+
+This creates the file 
+<CODE>mozilla-win32-installer.exe</CODE>
+in <CODE>mozilla\dist\win32_o.obj\install</CODE>. (Or
+in <CODE>mozilla\dist\win32_d.obj\install</CODE> if you
+created a debug build.)
+<P>
+<LI>
+<B>To create a zip file</B>, change to the 
+<CODE>mozilla/dist/WIN32_O.OBJ</CODE> directory and 
+and create a zip file of the bin directory and its contents.
+
+<PRE><TT>cd mozilla\dist\WIN32_O.OBJ
+zip.exe -r mozilla-win32-M13.zip bin
+</TT> </PRE>
+</UL>
+
+<P>
+<LI><B>Test</B>.<BR>
+Test your package to make sure it works. Our 
+<A HREF="http://www.mozilla.org/quality/smoketests/">smoke tests</A>
+are designed for this purpose.
+<P>
+
+<LI><B>Distribute</B>.<BR>
+Make the tarball available somewhere and 
+<A HREF="mailto:endico@mozilla.org">
+let us know</A> so we can move it to the ftp site. Let us know the BuildID
+as well as anything useful about your build environment such as the version
+of the OS, the name of the Linux distribution, or if you're using a
+non-standard compiler. If your package is very non-standard, it would
+be a good idea to include a README file.
+</UL>
+<H2>Macintosh</H2>
+HELP WANTED! We need distribution directions for the Macintosh.
+
+<P>
+Contact: <A HREF="mailto:endico@mozilla.org">Dawn Endico</A>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/build/distribution.html&amp;rev=&amp;root=/cvsroot/">Last modified February 23,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

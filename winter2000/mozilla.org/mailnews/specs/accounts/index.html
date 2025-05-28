@@ -1,0 +1,1297 @@
+<HTML>
+<!--This file created 11:08 AM  10/22/1999 by Claris Home Page version 3.0-->
+<HEAD>
+   <TITLE>Sea-Monkey: Messenger:Account Setup</TITLE>
+   <META NAME=GENERATOR CONTENT="Microsoft FrontPage 4.0">
+   <X-CLARIS-WINDOW TOP=25 BOTTOM=595 LEFT=4 RIGHT=703>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+<!-- <LINK rel="stylesheet" HREF="http://gooey.mcom.com/client/gooey.css" TYPE="text/css"><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"><!--This file created 7/20/98 10:33 PM by Claris Home Page version 3.0-->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<P><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=2 WIDTH="100%">
+   <TR>
+      <TD VALIGN=bottom>
+         <P><FONT SIZE="+1">Sea-Monkey: Messenger: Account
+         Setup</FONT></P>
+      </TD>
+      <TD VALIGN=bottom>
+         <P ALIGN=right><FONT SIZE="+1">UI Specification</FONT></P>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#66CCCC">
+      <TD>
+         <P><FONT SIZE="+3"><B>Account Setup<BR>
+         </B></FONT><FONT SIZE="-1"><B>Account Setup Wizard, Account
+         Settings Dialogs and Mail Import Tool</B></FONT></P>
+      </TD>
+      <TD>
+         <P ALIGN=right><FONT SIZE="-1"><B>Last Modification:
+         <SCRIPT LANGUAGE=JavaScript>document.write(document.lastModified);</SCRIPT></B></FONT></P>
+      </TD>
+   </TR>
+</TABLE>
+
+<TABLE BORDER=1 BGCOLOR="#FFFFFF" CELLSPACING=0 CELLPADDING=0 WIDTH="100%">
+   <TR>
+      <TD VALIGN=top WIDTH="49%">
+         <P><B>Author:</B> Jennifer Glick<BR>
+         <B>Creation Date:</B> 5 March 1999&nbsp;</P>
+      </TD>
+      <TD VALIGN=top>
+         <P><B>Status:</B> UE4 - The spec is implementable. Narrowed
+         down to one design solution, major issues are resolved.</P>
+         
+         <P>Mail Import Tools portion is still a draft.</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD VALIGN=top WIDTH="49%">
+         <P><B>Quicklinks:</B></P>
+         
+         <BLOCKQUOTE><A HREF="http://gooey/client/5.0/specs/mail/messenger/messenger.shtml"><FONT SIZE="-1">Master
+            Mail UE Spec</FONT></A><FONT SIZE="-1"><BR>
+            </FONT><A HREF="http://gooey/client/5.0/specs"><FONT SIZE="-1">UE
+            Spec Page</FONT></A>
+            
+            <P><a HREF="#Cheatsheet"><FONT SIZE="-1">Design
+            Cheatsheet</FONT></a><FONT SIZE="-1"><BR>
+            </FONT><a HREF="#Details"><FONT SIZE="-1">Design
+            Details</FONT></a></P>
+            
+            <P><a HREF="#Wizard"><FONT SIZE="-1">Account Setup Wizard<br>
+            </FONT></a><font size="-1">&nbsp;- <a href="#Mail">Mail</a><br>
+            &nbsp;- <a href="#News">News</a><BR>
+            </font><a HREF="#AccountSettings"><FONT SIZE="-1">Mail/News
+            Account Settings dialogs</FONT></a><FONT SIZE="-1"><BR>
+            </FONT><A HREF="#Tools"><FONT SIZE="-1">Mail Import
+            Tools</FONT></A></P>
+            
+            <P><A HREF="#Menus and Preferences"><FONT SIZE="-1">Menus
+            &amp; Preferences</FONT></A><FONT SIZE="-1"><BR>
+            </FONT><A HREF="#Error Messages and Dialogs"><FONT SIZE="-1">Error
+            Messages &amp; Dialogs</FONT></A></P></BLOCKQUOTE>
+      </TD>
+      <TD VALIGN=top>
+         <P><B>Feature Team</B></P>
+         
+         <BLOCKQUOTE><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+               <TR>
+                  <TD VALIGN=top>
+                     <P><FONT SIZE="-1">Engineering Lead</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><A HREF="mailto:phil"><FONT SIZE="-1">Phil
+                     Peterson</FONT></A></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">Marketing Lead</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><A HREF="mailto:sol"><FONT SIZE="-1">Sol
+                     Goldfarb</FONT></A></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">FE Lead</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><A HREF="mailto:chuang"><FONT SIZE="-1">Candice
+                     Huang</FONT></A></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">XP Lead</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><A HREF="mailto:bienvenu"><FONT SIZE="-1">David
+                     Bienvenu</FONT></A></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">Docs</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><A HREF="mailto:simone"><FONT SIZE="-1">Simone
+                     Cox</FONT></A></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">Usability</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><A HREF="mailto:lake"><FONT SIZE="-1">Lake
+                     Roca</FONT></A></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD>
+                     <P><FONT SIZE="-1">QA - Mult Accounts</FONT></P>
+                  </TD>
+                  <TD>
+                     <P><A HREF="mailto:nbaca"><FONT SIZE="-1">Ninoschka
+                     Baca</FONT></A></P>
+                  </TD>
+               </TR>
+               <TR>
+                  <TD COLSPAN=2>
+                     <CENTER><A HREF="mailto:phil,sol,lake,simone,nbaca,scotty,chuang,bienvenu"><FONT SIZE="-1">eMail
+                     Team</FONT></A></CENTER>
+                     <p>&nbsp;</p>
+                  </TD>
+               </TR>
+            </TABLE>
+             <FONT SIZE="-1"> </FONT><FONT FACE="Arial"> </FONT></BLOCKQUOTE>
+      </TD>
+   </TR>
+</TABLE>
+
+<p>&nbsp;</p>
+
+<h1>Updates</h1>
+
+<UL>
+   <LI>7/28/99 - Update wording for SMTP dialogs with input from
+   Simone (Tech Pubs).</LI>
+   
+   <LI>7/29/99 - Minor updates from Ninoschka's (QA) feedback.</LI>
+   
+   <LI>8/23/99 - Start updating spec to include Mail Startup and Mail
+   Import Tool stuffs.</LI>
+   
+   <LI>10/22/99 - Minor updates from Mail Issues Meeting.</LI>
+   
+   <LI>12/13/99 - Account Settings is part of Mail Preferences instead of its
+    own set of dialogs.&nbsp; Update spec text and graphics to reflect this.</LI>
+</UL>
+
+<H2>
+
+</h2>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h1>
+
+Open Issues</h1>
+
+<OL>
+   <LI>Tony Robinson: When user's machine is being searched for
+   existing 4.x profiles, is it possible to also note if 3rd party
+   mail applications are found? That way, we only ask users if they
+   want to perform this task if they have existing info to
+   import.</LI>
+   
+   <LI>Should "Import" be an option on the first dialog of the New
+   Account Wizard dialogs? Or are creating a new account and
+   importing existing accounts two separate tasks and hence two
+   separate wizards?</LI>
+   
+   <LI>Import Tools: Do we show the user a list of types of imports
+   we can do, ask them which one, and then find out if they have any
+   that match? Or do we first search the machine and find out what
+   the user has and then ask them which one(s) they want to
+   import?</LI>
+   
+   <LI>&nbsp;</LI>
+</OL>
+
+<H2>
+
+</h2>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h1>
+
+Summary</h1>
+
+<P>This spec covers the <B>Account Setup Wizard</B>, <B>Account
+Settings Dialogs</B> and the <B>Mail Import Tools</B>.</P>
+
+<P>The <B>Account Setup Wizard</B> is used to set up new mail
+accounts (accounts that Netscape Mail did not find either through the
+4.x upgrade or inside of 3rd party email applications). It can be run
+at anytime the user would like to set up a new mail or news account.
+It is run automatically at startup of Netscape Mail <B>IF</B> no 4.x
+profile or 3rd party mail applications were found.</P>
+
+<P>The <B>Account Settings Dialogs</B> allow users to manage the
+detailed settings of their various Mail, and News accounts.
+The Account Settings Dialogs are a separate set of dialogs from the
+Preferences dialogs (change from 4.x).</P>
+
+<P>The <B>Mail Import Tools </B>can be used to import settings, email
+messages and/or address book entries from 3rd party Mail
+Applications. They can be run by using the "File", "Import..." menu
+from within Netscape Mail or the Address Book. The user is given the
+option to run the Mail Import Tools Wizard at startup of Netscape
+Mail <B>IF</B> 3rd party mail applications were found.</P>
+
+<H3>
+
+</h3>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h1>
+
+* Background Information - Process Flow*</h1>
+
+<P><B>Downloading 5.x Overview</B></P>
+
+<UL>
+   <LI>User downloads the "stub" installer (a piece of code that
+   downloads the rest of 5.x)</LI>
+   
+   <LI>Stub installer downloads 5.x pieces as necessary</LI>
+   
+   <LI>The pieces of 5.x are expanded on the end user's machine</LI>
+   
+   <LI>Navigator is started</LI>
+   
+   <LI>If the user has exactly 1 profile (which most upgrading users
+   will), then their 4.x data is upgraded to 5.x (if more than one
+   profile, user will most likely be asked to choose which profile).
+   &nbsp;The migrated 4.x account should be set to the default
+   account for 5.0.
+   
+   <UL>
+      <LI>4.x data includes preferences (such as email server
+      settings), address book data, and email messages</LI>
+   </UL>
+   </LI>
+   
+   <LI><B>User can then go to Mail (by selecting Tasks | Mail, or by
+   selecting Mail from the Task Switcher bar. One of 4 things
+   happens:</B>
+   
+   <UL>
+      <LI><B>Netscape 4.x profile found, no 3rd party mail
+      applications found - Netscape Mail starts. Netscape Mail
+      account is default account.</B></LI>
+      
+      <LI><B>Netscape 4.x profile found, 3rd party mail applications
+      found - user asked if they would like to import from 3rd party
+      mail applications.</B>
+      
+      <UL>
+         <LI><B>Yes - Import Tool Wizard run. Netscape Mail starts up
+         at completion of wizard.</B></LI>
+         
+         <LI><B>No - Netscape Mail starts.</B></LI>
+      </UL>
+      </LI>
+      
+      <LI><B>No Netscape 4.x profile found, 3rd party mail
+      applications found - user asked if they would like to import
+      from 3rd party mail applications.</B>
+      
+      <UL>
+         <LI><B>Yes - Import Tool Wizard run. Netscape Mail starts up
+         at completion of wizard.</B></LI>
+         
+         <LI><B>No - New Accounts Wizard starts up.</B></LI>
+      </UL>
+      </LI>
+      
+      <LI><B>No Netscape 4.x profile found, no 3rd party mail
+      applications found - New Account Wizard starts up.</B></LI>
+   </UL>
+   
+   <P>&nbsp;</P>
+   
+   <P>*The items in<B> Bold </B>above are illustrated in the
+   following flowchart: <A HREF="http://gooey/client/5.0/specs/mail/accountSetup/images/Process.gif"><B>Flowchart
+   of Process</B></A><B>*</B></P></LI>
+</UL>
+
+<H3>
+
+</h3>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h1>
+
+Goals</h1>
+
+<BLOCKQUOTE>The Account Settings Dialogs (within Preferences) and New Account Wizard
+   should allow a user to easily setup and/or modify account
+   information for one or more Mail, or News accounts.
+   
+   <P><TABLE BORDER=1>
+      <TR BGCOLOR="#66CCCC">
+         <TD VALIGN=top>
+            <P><B>Basic</B></P>
+         </TD>
+         <TD>
+            <P><B>Intermediate</B></P>
+         </TD>
+         <TD>
+            <P><B>Advanced</B></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <UL>
+               <LI>Use the Account Setup Wizard to import settings,
+               email addresses and messages from a 3rd party email
+               application.</LI>
+               
+               <LI>Use the Account Setup Wizard to create a new
+               default Mail Account.</LI>
+               
+               <LI>User the Account Setup Wizard to create additional
+               Mail Accounts.</LI>
+               
+               <LI>Use the Account Setup Wizard to create News
+               accounts.</LI>
+               
+            </UL>
+         </TD>
+         <TD VALIGN=top>
+            <UL>
+               <LI>Use the Account Settings Dialogs (within Preferences) to modify the
+               settings and/or preferences for an existing Mail or
+               News account.</LI>
+               
+               <LI>Use the Account Settings Dialogs (within Preferences) to modify their
+               SMTP server.</LI>
+            </UL>
+         </TD>
+         <TD VALIGN=top>
+            <UL>
+               <LI>Use the Account Settings Dialogs (within Preferences) to add additional
+               SMTP servers.</LI>
+               
+               <LI>Use the Account Settings Dialogs (within Preferences) to associate SMTP
+               servers with specified Identities.</LI>
+               
+               <LI>Define Advanced IMAP server settings.</LI>
+            </UL>
+         </TD>
+      </TR>
+   </TABLE>
+   
+   <P>&nbsp;</P>
+   
+   <P>The Mail Import Tools.</P>
+   
+   <P><TABLE BORDER=1>
+      <TR BGCOLOR="#66CCCC">
+         <TD VALIGN=top>
+            <P><B>Basic</B></P>
+         </TD>
+         <TD>
+            <P><B>Intermediate</B></P>
+         </TD>
+         <TD>
+            <P><B>Advanced</B></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD VALIGN=top>
+            <UL>
+               <LI>Use the Mail Import Tool. Wizard to import their
+               settings /mail /addresses from 3rd party Mail
+               Applications.</LI>
+            </UL>
+         </TD>
+         <TD VALIGN=top>
+            <UL>
+               <LI></LI>
+            </UL>
+         </TD>
+         <TD VALIGN=top>
+            <UL>
+               <LI></LI>
+            </UL>
+         </TD>
+      </TR>
+   </TABLE>
+</BLOCKQUOTE>
+
+<H3>
+
+</h3>
+
+<HR SIZE=4 WIDTH="40%" ALIGN=left>
+
+<h2>
+
+Target User</h2>
+
+<BLOCKQUOTE>The <B>Account Setup Wizard</B> should be straight
+   forward and easy to use for novice users. It should easily and
+   quickly walk them through the necessary steps to setting up a
+   Mail, Netscape or News account. Only Required information
+   is collected here and basic defaults for account behavior are
+   chosen for the user.
+   
+   <P>The <B>Account Settings Dialogs</B>  (within Preferences) are aimed at more
+   intermediate and advanced users who want to customize their
+   accounts, change the default settings, add additional SMTP servers
+   or associate certain Identities and SMTP servers.</P>
+   
+   <P>The <B>Mail Import Tools</B> are aimed at more intermediate and
+   advanced users who want to import settings, mail messages and/or
+   address book entries from 3rd party Mail applications into their
+   Netscape Mail.</P>
+   
+   <P>&nbsp;</P></BLOCKQUOTE>
+
+<H3>
+
+</h3>
+
+<HR SIZE=4 WIDTH="40%" ALIGN=left>
+
+<h2>
+
+Notes and Assumptions</h2>
+
+<UL>
+   <LI>SMTP and Identity are not bound.</LI>
+   
+   <LI>Mail from multiple servers/multiple accounts can be retrieved
+   (incoming servers) with a single Internet connection (user/system
+   does not have to connect to each server separately to retrieve
+   mail for each account). A single connection is needed to get the
+   user onto the Internet and from there, Messenger is able to
+   connect to each individual server.</LI>
+   
+   <LI>Mail from multiple accounts can be sent out at one time using
+   one SMTP server (user/system does not have to connect to each
+   server separately to send mail).</LI>
+   
+   <LI>In order to use ONE specified SMTP server for ALL outgoing
+   mail (from different identities), the user must be connected to
+   the Internet via the account paired with the specified SMTP
+   server.</LI>
+   
+   <LI>When a user launches Netscape Mail, and has multiple accounts
+   set up, the user will see a login (name, password) dialog for each
+   account (as necessary).</LI>
+</UL>
+
+<H2>
+
+</h2>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h1><a name="Cheatsheet"></a>Design Cheatsheet</h1>
+
+<h2>Access</h2>
+
+<P>The Account Setup Wizard, Account Settings Dialogs and Mail Import
+Tools are accessible to users as follows:</P>
+
+<P><TABLE BORDER=1>
+   <TR BGCOLOR="#66CCCC">
+      <TD>
+         <P><B>Account Setup Wizard</B></P>
+      </TD>
+      <TD>
+         <P><B>Account Settings Dialogs</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD VALIGN=top>
+         <UL>
+            <LI>Users are asked if they would like to import an existing
+            account or setup a new account.</LI>
+            
+            <LI>From the Mail<B> File, New</B> menu. "Account".</LI>
+            
+            <LI>From the Mail "File" menu, users can select
+            "Import...".</LI>
+            
+            <LI>From the Profile Manager, users are given the option
+            to set up a new Mail or News account.</LI>
+            
+            <LI>From the Taskbar (only if no accounts have been set
+            up yet and user selects a Mail related item)</LI>
+            
+            <LI>User selects any Mail related item (button, menu,
+            etc.) and does not have Mail configured.</LI>
+            
+            <LI>From the Account Settings Dialogs. Selecting the "New
+            Account" button.</LI>
+         </UL>
+         
+         <P></P>
+      </TD>
+      <TD VALIGN=top>
+         <P>The Account Settings Dialogs are contained within the Preferences
+         dialogs for Mail &amp; News. &quot;Mail/News Account Settings&quot; is
+         still a separate menu item in several places but selecting it opens the
+         Preferences dialog with the &quot;Account Settings&quot; level
+         selected.</P>
+         
+         <UL>
+            <LI>From the <b>Edit</b> menu, &quot;Preferences&quot;.</LI>
+            
+            <LI>From the <B>Edit</B> menu, Mail component, "Mail/News
+            Account Settings..."</LI>
+            
+            <LI>Context menu in mail folder pane. When an account has
+            focus, "Mail/News Account Settings..." is in the context
+            menu.</LI>
+            
+            <LI>From the Thread Pane when a top level Account Name is
+            selected, context menu, "Account Properties...".</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR BGCOLOR="#66CCCC">
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P><B>Mail Import Tools</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD VALIGN=top>
+         <P></P>
+      </TD>
+      <TD VALIGN=top>
+         <UL>
+            <LI>From Main Mail Window, "File", "Import...".</LI>
+            
+            <LI>From Main Address Book Window, "File",
+            "Import...".</LI>
+         </UL>
+      </TD>
+   </TR>
+</TABLE>
+
+<H1>
+
+</h1>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h1><a name="Details"></a>Design Details</h1>
+
+<H2><A NAME=Wizard></A>Account Setup Wizard</H2>
+
+<P>The Account Setup Wizard can be launched following the Mail
+Startup Wizard if the user requests to set up additional accounts. It
+can also be launched on its own at anytime when the user requests to
+set up a new account.</P>
+
+<P>The Account Setup Wizard should be straight forward and easy to
+use for novice users. It should easily and quickly walk users through
+the necessary steps for setting up a Mail or News account.
+Only Required information is collected here and basic defaults for
+account behavior are chosen for the user. Fields are pre-populated
+where ever possible.</P>
+
+<P>After each account setup is completed, the user is asked if they
+would like to create another account. If so, they are looped back to
+the beginning of the Account Wizard.</P>
+
+<H3>&nbsp;</H3>
+
+<H3><A NAME=Mail></A>Mail&nbsp;</H3>
+
+<P><B>1 - Account Wizard Start (Shared Dialog)</B></P>
+
+<P>&nbsp;<IMG SRC="images/Wizard1M.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>2 - Identity (Shared Dialog)</B></P>
+
+<P><IMG SRC="images/Wizard2.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>3 - Server Information (Mail)</B></P>
+
+<P><IMG SRC="images/Wizard3.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>The "Outgoing (SMTP) Server" information will only appear on this
+dialog if the user has NOT already specified this information for
+another account.</P>
+
+<P>&nbsp;</P>
+
+<P><B>4 - Name and Password (Mail)</B></P>
+
+<P><IMG SRC="images/Wizard4.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>5 - Account Name (Shared Dialog)</B></P>
+
+<P><IMG SRC="images/Wizard5.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;This field is pre-populated with a server name derivative
+(user name on server name). &nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P><A NAME=Congrats></A><B>6 - Congratulations (Shared
+Dialog)</B></P>
+
+<P><IMG SRC="images/Wizard6.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<UL>
+   <LI><B>Setup Another...</B> - Loops the user back to the first
+   dialog in the Account Wizard.</LI>
+</UL>
+
+<H3>&nbsp;
+
+</h3>
+
+<HR SIZE=4 WIDTH="40%" ALIGN=left>
+
+<h3>
+
+<A NAME=News></A>News</h3>
+
+<P><B>1 - New Account Wizard Start (Shared Dialog)</B></P>
+
+<P>&nbsp;<IMG SRC="images/Wizard1M.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>2 - Identity (Shared Dialog)</B></P>
+
+<P>&nbsp;<IMG SRC="images/Wizard2.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>3 - Server Information (News) </B></P>
+
+<P>&nbsp;<IMG SRC="images/WizardNews3.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>4 - Account Name (Shared Dialog)</B></P>
+
+<P><IMG SRC="images/Wizard5.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;This field is pre-populated with a server name derivative
+(user name on server name).</P>
+
+<P>&nbsp;</P>
+
+<P><B>5 - Congratulations (Shared Dialog)</B></P>
+
+<P><IMG SRC="images/WizardNews6.gif" width=431 height=355 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P><B>Note:</B> User Name and Email Address are not displayed (like
+they are for Mail).</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h2>
+
+<A NAME=AccountSettings></A>Mail/News Account Settings Dialogs</h2>
+
+<P>The Mail/News Account Settings dialogs (within the Preferences) let the user manage the
+settings of their various Mail and News accounts.</P>
+
+<P>The Account Settings Dialogs are contained within the Preferences dialogs for
+Mail &amp; News. &quot;Mail/News Account Settings&quot; is still a separate menu
+item in several places but selecting it opens the Preferences dialog with the
+&quot;Account Settings&quot; level selected.</P>
+
+<P>&nbsp;</P>
+
+<P><FONT SIZE="-1"><B>&nbsp;</B></FONT><B>Shared buttons</B></P>
+
+<UL>
+   
+   <LI><B>OK</B> - Accepts the changes (cumulative) and closes the
+   dialog.</LI>
+   
+   <LI><B>Cancel</B> - Ignores the changes (cumulative) and closes
+   the dialog.</LI>
+</UL>
+
+<P><B>Note: </B>As a user changes from account to account or account
+property (by highlighting items on the left), any changes made to the
+current view are not saved until the user clicks "OK".</P>
+
+<P>&nbsp;</P>
+
+<P><b>Account Settings</b></P>
+
+<P><img border="0" src="images/AcctSettings1.gif" width="560" height="450"></P>
+
+<P>Provides a top level summary of existing Mail and News accounts.&nbsp;
+Provides a location to enter Outgoing (SMTP) server settings.</P>
+
+<UL>
+   <LI><B>New...</B> - Launches the Account Setup Wizard.</LI>
+   
+   <LI><B>Set Default</B> - Sets a selected account as the default
+   account. This button is only available if an account is
+   selected/has focus.</LI>
+   
+   <LI><B>Duplicate</B> - Creates a duplicate copy of a selected
+   account. The word "Copy" is appended to the end of the account
+   name. The new account should also appear in the tree to the left.&nbsp; This button is only available if an account is selected/has
+   focus.</LI>
+   
+   <LI><B>Delete </B>- Deletes a selected account. A confirmation box
+   is shown. This button is only available if an account is
+   selected/has focus.<br>
+   </LI>
+   
+   <LI><B>Server Name - </B>Text field for user to enter the name of the
+    outgoing (SMTP) server.</LI>
+   
+   <LI><B>User Name</B> - Text field for user to enter their user
+   name for an SMTP server. Only available if "Always use name and
+   password" is selected.</LI>
+   
+   <LI><B>Save my password</B> - remembers the user's SMTP server
+   password (after first prompt) so the user doesn't have to enter it
+   each time. Only available if "Always use name and password" is
+   selected.</LI>
+   
+   <LI><B>Use secure connection (SSL)</B> - "Always" and "When
+   available" only available if check box selected.</LI>
+   
+</UL>
+
+<P>&nbsp;</P>
+
+<blockquote>
+
+<P><B>Outgoing (SMTP) Server - Advanced</B></P>
+
+  <P>&nbsp;<img border="0" src="images/AcctSmtpAdv1.gif" width="371" height="263"></P>
+
+<UL>
+   
+   <LI><B>Add</B> - Opens the &quot;SMTP Server&quot; dialog (below). Used to add a new SMTP
+   server.&nbsp;&nbsp;</LI>
+   
+   <LI><b>Edit... </b>- Opens the &quot;SMTP Server&quot; dialog (below). Used to
+    edit an existing SMTP
+   server.&nbsp;&nbsp;</LI>
+   
+   <LI><B>Delete</B> - Removes the selected SMTP server. This button
+   is only available if an account is selected/has focus.</LI>
+   
+   <LI><B>Set Default</B> - Sets the selected SMTP server as the
+   default account. This button is only available if an account is
+   selected/has focus. Results are displayed on the parent dialog, &quot;Mail
+    &amp; News Account Settings&quot; (above).</LI>
+   
+</UL>
+
+<P>&nbsp;</P>
+
+<P><B>(SMTP) Server</B></P>
+
+  <P>Used to add a new, or edit an existing, SMTP server.</P>
+
+<P><img border="0" src="images/AcctSmtpAdvDiag1.gif" width="305" height="233"></P>
+
+</blockquote>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P><B>Account - Identity</B></P>
+
+<P><IMG SRC="images/AcctIdentity1.gif" width=555 height=458 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<UL>
+   <LI><B>Account Name</B> - Text field used to name an account. Each
+   account must have a distinct name.</LI>
+   
+   <LI><B>Your Name</B> - Text field. Required?</LI>
+   
+   <LI><B>Email Address </B>- Text field. Required.</LI>
+   
+   <LI><B>Edit Card...</B> - opens Address Book Card for the current
+   identity.</LI>
+   
+   <LI><B>Attach this Signature dropdown</B> - list of already
+   defined signature files.</LI>
+   
+   <LI><B>Edit</B> - opens the selected signature file for
+   editing.</LI>
+   
+   <LI><B>Advanced </B>- Opens the Advanced Identity Settings dialog
+   (below).</LI>
+</UL>
+
+<P>&nbsp;</P>
+
+<P><B>Account - Identity - Advanced</B></P>
+
+<P><IMG SRC="images/AcctIdentity1Adv.gif" width=316 height=149 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<UL>
+   <LI><B>&nbsp;Server</B> - allows users to associate the current
+   Identity with a predefined SMTP Server.</LI>
+</UL>
+
+<P>&nbsp;</P>
+
+<P><B>Account - Server - POP</B></P>
+
+<P><IMG SRC="images/AcctServerPop1.gif" width=555 height=458 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>Account - Server - IMAP</B></P>
+
+<P><IMG SRC="images/AcctServerImap1.gif" width=555 height=458 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<UL>
+   <LI><B>When I delete a message:</B> - Drop down list with the 3
+   different trash models available. When an item is selected from
+   the list, the appropriate description text should appear
+   below.</LI>
+   
+   <LI><B>Advanced</B> - Opens the "Advanced IMAP Server dialog
+   (below).</LI>
+</UL>
+
+<P>&nbsp;</P>
+
+<P><B>Account - Server - IMAP</B> <B>- Advanced</B></P>
+
+<P><IMG SRC="images/ImapAdv1.gif" width=386 height=292 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>Account - Copies and Folders</B></P>
+
+<P><B><IMG SRC="images/AcctCopies1.gif" width=555 height=458 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></B></P>
+
+<UL>
+   <LI><B>&nbsp;Folder Drop downs</B> - allow the user to choose the
+   desired folder.</LI>
+</UL>
+
+<blockquote>
+  <p>&nbsp;</p>
+  <p><b>Default settings for "Copies &amp; Folders" preferences</b></p>
+  <ul>
+    <li>For Mail, both IMAP and POP - Sent messages, Draft messages and
+      Stationery messages are saved in the "Sent", &quot;Drafts&quot; or "Stationery"
+      folder respectively, of their associated account (instead of in the
+      &quot;Local Folders&quot; structure).&nbsp;&nbsp;&nbsp;</li>
+    <li>For News - Sent messages, Draft messages and Stationery messages are
+      saved in the "Sent", &quot;Drafts&quot; or "Stationery" folder
+      respectively, of the default mail account.  If there is no existing default mail account (only a news account is set up),
+      then messages will default to the correct folder within "Local Folders".&nbsp;</li>
+    <li>If the user later adds a default mail account (when there was only a news account before) or changes the default mail
+      account from one account to another, the preference for Send, Drafts and
+      Stationery of existing accounts is NOT changed but remains as originally set.  For example, user creates a news account only.  "Sent" mail
+      would default to a "Sent" folder within the "Local Folders" structure. The
+      user then sets up a mail account.  Sent news still goes to the "Sent" folder within the "Local Folders"
+      structure (but user can change this in prefs).&nbsp;</li>
+  </ul>
+</blockquote>
+
+<P>&nbsp;</P>
+
+<P><B>Account - News - Identity</B></P>
+
+<P>&nbsp;<IMG SRC="images/AcctIdentityNews1.gif" width=555 height=458 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>Account - News - Server</B></P>
+
+<P>&nbsp;<IMG SRC="images/AcctServerNews1.gif" width=555 height=458 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<P><B>Account - News - Copies and Folders</B></P>
+
+<P>&nbsp;<IMG SRC="images/AcctCopiesNews1.gif" width=555 height=458 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P>&nbsp;</P>
+
+<blockquote>
+  <p><b>Default settings for "Copies &amp; Folders" preferences</b></p>
+  <ul>
+    <li>For Mail, both IMAP and POP - Sent messages, Draft messages and
+      Stationery messages are saved in the "Sent", &quot;Drafts&quot; or "Stationery"
+      folder respectively, of their associated account (instead of in the
+      &quot;Local Folders&quot; structure).&nbsp;&nbsp;&nbsp;</li>
+    <li>For News - Sent messages, Draft messages and Stationery messages are
+      saved in the "Sent", &quot;Drafts&quot; or "Stationery" folder
+      respectively, of the default mail account.  If there is no existing default mail account (only a news account is set up),
+      then messages will default to the correct folder within "Local Folders".&nbsp;</li>
+    <li>If the user later adds a default mail account (when there was only a news account before) or changes the default mail
+      account from one account to another, the preference for Send, Drafts and
+      Stationery of existing accounts is NOT changed but remains as originally set.  For example, user creates a news account only.  "Sent" mail would default to a "Sent" folder within the "Local
+      Folders" structure. The user then sets up a mail account.  Sent news still goes to the "Sent" folder within the "Local Folders"
+      structure (but user can change this in prefs).&nbsp;</li>
+  </ul>
+</blockquote>
+
+<P>&nbsp;</P>
+
+<P><B>&nbsp;</B></P>
+
+<P><B>Signature Files</B></P>
+
+<P><IMG SRC="images/SignFile1.gif" width=316 height=235 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></P>
+
+<P><B>New/Edit Signature File</B></P>
+
+<P><B><IMG SRC="images/SignFile2.gif" width=308 height=235 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></B></P>
+
+<P>&nbsp;</P>
+
+<H2>
+
+</h2>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h2>
+
+<A NAME=Tools></A>Mail Import Tools</h2>
+
+<P><b>This section is NOT complete.</b>&nbsp; These are rough ideas only. Comments appreciated.</P>
+
+<P><FONT COLOR="#CC0000">Do we show the user a list of types of
+imports we can do, ask them which one they want, and then find out if
+they have any items to import that match (4.x method)? Or do we first
+search the user's machine and find out what the user has and then ask
+them which one(s) they want to import?</FONT></P>
+
+<P>&nbsp;</P>
+
+<H3>Process</H3>
+
+<P>The Mail Import Tool will be as automated as possible. Once the
+user selects what 3rd party mail applications they want to import,
+all settings, email messages and address book entries will be
+imported. Unlike 4.x, users will not be asked to choose which
+components they want to import. Once data is being imported, the user
+will see a progress indicator which informs the user how far along
+the process is and what files are currently being imported.</P>
+
+<P>Local mail which is imported is moved to a folder within the
+Netscape Mail "Local Mail" folders area. The name of the folder
+defaults to the name of the application from which it was imported. If that name is already taken, then a
+number is appended.</P>
+
+<P>If the user imported two POP accounts, each
+account would show up in Netscape Mail with it's own hierarchy of
+folders, but the mail would be moved to the folders of the first
+account and the folders of the second account would be empty. (Since some Mail
+applications store all POP local mail together, we won't know
+from which account the mail originated).</P>
+
+<P>&nbsp;</P>
+
+<P><B>Import Mail Tool - 1A</B></P>
+
+<P><FONT COLOR="#CC0000"><IMG SRC="images/Import1aM.gif" width=431 height=400 X-CLARIS-USEIMAGEWIDTH X-CLARIS-USEIMAGEHEIGHT ALIGN=bottom></FONT></P>
+
+<P>&nbsp;</P>
+
+<P><B>Import Mail Tool - 1B</B></P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P><B>Address Book Import</B></P>
+
+<P>From the Address Book, "File", "Import...", opens a File Open
+Dialog from which the user can select the file(s) to be imported.</P>
+
+<P>&nbsp;</P>
+
+<H3>
+
+</h3>
+
+<HR WIDTH="40%" ALIGN=left size="4">
+
+<h3>
+
+Determining the Default Account - Draft</h3>
+
+<OL>
+   <LI>If the user upgrades from a Netscape 4.x profile and no other
+   accounts are created or imported, the Netscape Mail account is the
+   default.</LI>
+   
+   <LI>If the user upgrades from a Netscape 4.x profile and imports
+   one or more accounts from 3rd party mail applications, <B>the
+   Netscape Mail account is the default? Or do we want to ask the
+   user?</B></LI>
+   
+   <LI>If the user does not upgrade from a Netscape 4.x profile and
+   imports one 3rd party mail application, the 3rd party mail
+   application account becomes the default.</LI>
+   
+   <LI>If the user does not upgrade from a Netscape 4.x profile and
+   imports more than one 3rd party mail application, we ask the user
+   to choose a default (once an additional account has been
+   imported).</LI>
+   
+   <LI>If the user does not upgrade from a Netscape 4.x profile, or
+   does not import 3rd party mail applications, and creates one new
+   account, the new account becomes the default.</LI>
+   
+   <LI>If the user does not upgrade from a Netscape 4.x profile, or
+   does not import 3rd party mail applications, and creates two or
+   more new accounts, we ask the user to choose a default (the user
+   is asked to choose at the completion of creating the 2nd new
+   account).</LI>
+</OL>
+
+<P>So basically, if there is a situation where there is more than one
+account (additional accounts are created or imported) and it is
+unclear which account should be the default account, we will ask the
+user to choose.</P>
+
+<P>It does not make much sense to a user when they are creating a new
+account, or importing an account, if the account will be a default.
+Users mostly won't understand what default account means and may not
+be aware of previously created/imported accounts. For this reason,
+users should be asked at the end of account creation/import which
+account they would like to set as default. For each new account
+created/imported, SMTP server information will be collected. Once the
+process (new account setup or import) is complete, users will be
+shown a list of all their current accounts, given an explanation of
+what it means to have a default account and asked to verify a default
+account. The account that was first setup (upgraded, created or
+imported) should be preselected. The SMTP information for the default
+account is what will be used.</P>
+
+<P>&nbsp;</P>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h2>
+
+<A NAME="Menus and Preferences"></A>Menus and Preferences</h2>
+
+<P><TABLE BORDER=1>
+   <TR BGCOLOR="#66CCCC">
+      <TD>
+         <P>Where</P>
+      </TD>
+      <TD>
+         <P>Component</P>
+      </TD>
+      <TD>
+         <P>What</P>
+      </TD>
+   </TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><B>"Edit"</B> Menu</P>
+         
+         <P></P>
+      </TD>
+      <TD VALIGN=top>
+         <P>All Components (Browser, Mail, Address Book, AIM)</P>
+         <P>Mail only</P>
+      </TD>
+      <TD VALIGN=top>
+         <P><b>&quot;Preferences&quot;</b></P>
+         <P><B>&quot;Mail/News Account Settings"</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>"File" Menu</P>
+      </TD>
+      <TD>
+         <P>Mail</P>
+      </TD>
+      <TD>
+         <P><B>"New Account"</B></P>
+      </TD>
+   </TR>
+</TABLE>
+
+<H2>
+
+</h2>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h2>
+
+<A NAME="Error Messages and Dialogs"></A>Error Messages and
+Dialogs</h2>
+
+<P><TABLE BORDER=1>
+   <TR BGCOLOR="#66CCCC">
+      <TD>
+         <P><B>Condition</B></P>
+      </TD>
+      <TD>
+         <P><B>Message</B></P>
+      </TD>
+      <TD>
+         <P><B>User Choices</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+</TABLE>
+
+<BLOCKQUOTE>&nbsp;</BLOCKQUOTE>
+
+<H2>
+
+</h2>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h2>
+
+Closed Issues</h2>
+
+<UL>
+   <LI>Is it possible for Messenger to determine how the user is
+   connected to the Internet (from which account)? If so, users could
+   enter an SMTP server for each multiple account and when the user
+   wanted to send mail, Messenger could be smart enough to use the
+   SMTP server associated with the account that the user is currently
+   using to access the Internet. This would prevent the user from
+   ever seeing error messages when sending email (if they are
+   connected through an account which is not there 'default' SMTP
+   server account), make it more understandable for users who expect
+   to enter an SMTP server for each account, and allow advanced users
+   to enter multiple SMTP servers. <B>No, this is not possible at
+   this time.</B></LI>
+   
+   <LI>Should Account Setup be separated from the Preferences
+   dialogs? <B>"Account Settings" will be separate dialogs accessed
+   from the "Edit" menu. 6/24/99, Mail Issues meeting.</B></LI>
+   
+   <LI>Multiple SMTP servers: As a first step, we will allow users to
+   enter only one SMTP server (instead of multiple). May provide
+   functionality to add multiple SMTP servers (for advanced users) at
+   a later time. 5/14/99. <B>This reversed on 6/24/99, Mail Issues
+   Meeting. Multiple SMTP servers will be allowed.</B></LI>
+   
+   <LI>Multiple Identities: <B>One identity per account allowed.
+   5/14/99</B></LI>
+   
+   <LI>Should certain preferences (html vs. plain text, Trash
+   behavior, Draft and Templates folders, etc.) be associated with a
+   specific account and located within the Account Setup Dialogs (a
+   separate item from the preferences), or should they be co-located
+   with the other Preferences in the Preferences dialogs?<B>
+   Preferences specific to servers (such as Trash and Special
+   Folders) will be located in the Account Settings Dialogs. 6/24/99,
+   Mail Issues Meeting.</B></LI>
+   
+   <LI><B>"New Account" button, automatically launches the Account
+   Setup Wizard. This may upset advanced users. There there a way
+   that this button could be a fly out (like MS's "New" button does)
+   and users could pick, "Create using Wizard" or "Create Manually"?
+   </B>"New Account" will always launch the Account Wizard.
+   6/30/99.</LI>
+   
+   <LI><B>"Default Account". Is this necessary? What are the benefits
+   to being the default account? Does Mail and News each have their
+   own Default account? </B>
+   Both Mail and News will have a Default Account. When the client
+   doesn't have enough information to know what host to send/post a
+   message through, the default account is used. 6/30/99.</LI>
+   
+   <LI><B>Each account must have an "Account Name"? We give it one if
+   users doesn't or show dialog? Must each "Account Name" be
+   distinct?</B>  News and Mail accounts will have a distinct
+   Account Name. SMTP will not have an account name. If the user
+   doesn't specify an account name, we will provide one. It will be
+   created using the account server name. 6/30/99.</LI>
+   
+   <LI><B>Local Mail directory and Local News directory. Are these
+   per account or global? Where should they be located? Account
+   Settings or Preferences (Mail and Newsgroups).</B> These will be
+   per account. Located on the "Server" dialog. 6/30/99.</LI>
+   
+   <LI><B>"Ask me before downloading x messages". Is this per News
+   account?</B> Per Account. 6/30/99.</LI>
+   
+   <LI><B>Is SSL secure (Mail) or encrypted (News) connection? (We
+   describe it two diff ways currently).</B> "Secure". 6/30/99.</LI>
+   
+   <LI><B>News Server Settings: Which password method is correct (see
+   dialog)? Currently, the Edit version is different than the New
+   version.</B> Use single checkbox method. 6/30/99.</LI>
+   
+   <LI><B>Does News Identity need an "Advanced" dialog as well?
+   </B>No.<B> </B>6/30/99.</LI>
+   
+   <LI><B>SMTP Servers: These need "Account Name" as well? </B>No.
+   6/30/99.</LI>
+   
+   <LI><B>Congratulations dialogs. Shouldn't the web dialogs be the
+   same as the client dialogs? If so, can the additional info, "Login
+   Name", "Email Address" and "http://..." be added?</B> Dialogs will
+   be the same. Summary info will be provided where appropriate.
+   6/30/99.</LI>
+   
+   <LI><B>Do we need a "Log into this account at startup" option for
+   each account? </B>Yes.</LI>
+</UL>
+
+<H2>
+
+&nbsp;
+
+</h2>
+
+<HR SIZE=4 WIDTH="50%" ALIGN=left NOSHADE color="#000000">
+
+<h2><a NAME="Archived Documents"></a>Archived Documents</h2>
+
+<UL>
+   <LI><a href="http://gooey/client/5.0/specs/mail/accountSetup/archive/12_9_99/12_9_99.html">December
+    9, 1999</a></LI>
+   
+   <LI><A HREF="http://gooey/client/5.0/specs/mail/accountSetup/archive/August99/08_23_99.html">August
+   99</A></LI>
+   
+   <LI><A HREF="http://gooey/client/5.0/specs/mail/accountSetup/archive/March99/accountSetup0399.shtml">April
+   99</A></LI>
+   
+   <LI><A HREF="http://gooey/client/5.0/specs/mail/accountSetup/archive/June99/accountSetup0699.shtml">June
+   99</A></LI>
+</UL>
+</BODY>
+</HTML>

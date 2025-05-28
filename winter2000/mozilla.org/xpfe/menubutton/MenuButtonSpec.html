@@ -1,0 +1,277 @@
+<HTML>
+<HEAD>
+<TITLE>Toolbar Spec</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+<!--This file created 2/25/99 2:46 PM by Claris Home Page version 3.0 30 Day Trial-->
+
+   
+   <X-CLARIS-WINDOW TOP=64 BOTTOM=750 LEFT=346 RIGHT=998>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+
+
+<H1>Image Button/Menu Button Spec</H1>
+
+<P>by Mike Pinkerton<BR>
+Last Modified 2/24/98</P>
+
+<H2>Overview</H2>
+
+<P>This document is the engineering details behind the <A HREF="MenuButton.html">Image
+Button/Menu Button Requirements document</A>. It supplements that
+document with examples and a comprehensive listing of attributes and
+parent/child relationships.</P>
+
+<P>
+
+<HR>
+
+</P>
+
+<H2><A NAME=Syntax></A>Syntax</H2>
+
+<P>The XUL syntax for Image Buttons and Menu Buttons. The only
+difference between the two should be the presence or absence of child
+nodes in the content tree. There shouldn't be any need for separate
+tags.</P>
+
+<P><TABLE BORDER=1 WIDTH="90%">
+   <TR>
+      <TD WIDTH="14%">
+         <P><B>Tag</B></P>
+      </TD>
+      <TD WIDTH="29%">
+         <P><B>Attributes</B></P>
+      </TD>
+      <TD WIDTH="57%">
+         <P><B>Description</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD VALIGN=top ROWSPAN=3 WIDTH="14%">
+         <P>titledbutton</P>
+      </TD>
+      <TD WIDTH="29%">
+         <P>src</P>
+      </TD>
+      <TD WIDTH="57%">
+         <P>Image (gif, jpeg, etc) displayed within the button</P>
+      </TD>
+   </TR>
+   <TR><TD WIDTH="29%">
+         <P>align</P>
+      </TD>
+      <TD WIDTH="57%">
+         <P>Position of text in relation to the image. For example,
+         "bottom" means the text is below the image.</P>
+      </TD>
+   </TR>
+   <TR><TD WIDTH="29%">
+         <P>value</P>
+      </TD>
+      <TD WIDTH="57%">
+         <P>Descriptive text for the button</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<H2>Style</H2>
+
+<P><FONT COLOR="#0033FF">&#91; This area really needs work
+&#93;</FONT></P>
+
+<P><TABLE BORDER=1 WIDTH="90%">
+   <TR>
+      <TD WIDTH="14%">
+         <P><B>Tag</B></P>
+      </TD>
+      <TD WIDTH="29%">
+         <P><B>Style Attributes</B></P>
+      </TD>
+      <TD WIDTH="57%">
+         <P><B>Description</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD VALIGN=top ROWSPAN=4 WIDTH="14%">
+         <P>titledbutton</P>
+      </TD>
+      <TD WIDTH="29%">
+         <P>color</P>
+      </TD>
+      <TD WIDTH="57%">
+         <P>Color of descriptive text</P>
+      </TD>
+   </TR>
+   <TR><TD WIDTH="29%">
+         <P>border</P>
+      </TD>
+      <TD WIDTH="57%">
+         <P>as in HTML</P>
+      </TD>
+   </TR>
+   <TR><TD WIDTH="29%">
+         <P>background-color</P>
+      </TD>
+      <TD WIDTH="57%">
+         <P>as in HTML</P>
+      </TD>
+   </TR>
+   <TR><TD WIDTH="29%">
+         <P>border-style</P>
+      </TD>
+      <TD WIDTH="57%">
+         <P>as in HTML</P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<H2>Event Handlers</H2>
+
+<P><FONT COLOR="#0033FF">&#91; Info forthcoming &#93;</FONT></P>
+
+<H2>
+
+<HR>
+
+Examples</H2>
+
+<P>Here is an example of XUL for a toolbar which has a button on it
+that executes an exposed function on an appcore.</P>
+
+<PRE>&lt;?xml version="1.0"?&gt;
+&lt;window xmlns:html="http://www.w3.org/TR/REC-html40"&gt;
+&lt;window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt; 
+
+&lt;html:style type="text/css"&gt;
+  toolbar { background-color=lightGray; background-image=url(marble.gif) }
+  titledbutton { background-color=lightGray }
+&lt;/html:style&gt;
+
+&lt;html:script&gt;
+  function BrowserBack()
+  {
+    appCore = XPAppCoresManager.Find("BrowserAppCore");  
+    if (appCore != null) {
+      appCore.back();
+    } else {
+      dump("BrowserAppCore has not been created!\n");
+    }
+  }
+&lt;/html:script&gt;
+
+&lt;window&gt;
+  &lt;broadcaster id="canGoBack"/&gt;
+
+  &lt;toolbar&gt;
+    &lt;titledbutton src="Back.gif" align="bottom" value="Back" onclick="BrowserBack()"&gt;	
+      &lt;observes element="canGoBack" attribute="disabled"/&gt;			
+    &lt;/titledbutton&gt;
+  &lt;/toolbar&gt;
+&lt;/window&gt;</PRE>
+
+<P>Note that this example doesn't show more complicated features such
+as:</P>
+
+<UL>
+   <LI>how to get a menu or a tree to display on a button</LI>
+   
+   <LI>how to hook up a button to an RDF data source for showing a
+   local data hierarchy (like bookmarks) in a popdown tree</LI>
+   
+   <LI>how to customize the look of a button with CSS</LI>
+</UL>
+
+<P>These will appear here shortly.</P>
+
+<P>
+
+<HR>
+
+maintained by <A HREF="http://people.netscape.com/pinkerton">Mike
+Pinkerton</A> (<A HREF="mailto:pinkerton@netscape.com">pinkerton@netscape.com</A>)</P>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/menubutton/MenuButtonSpec.html&amp;rev=&amp;root=/cvsroot/">Last modified February 25,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

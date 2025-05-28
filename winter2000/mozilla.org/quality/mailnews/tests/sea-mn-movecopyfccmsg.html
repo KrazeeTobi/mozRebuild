@@ -1,0 +1,1018 @@
+<HTML>
+<HEAD>
+<TITLE>Move/Copy/Fcc Messsage Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.0 Project (Seamonkey)</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mail and News Component</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Move/Copy/Fcc</b>
+<p>Written by:<a href="mailto:esther@netscape.com"> Esther Goes</a>
+<br>Original 4.5 test specs by Peter Mock &amp; Laurel Carlson
+<p><b>History:</b>
+<br>031099 Started writing spec using original Nova test specs
+<br>033099 Updating adding test scenarios
+<br>101499 Updating for adding scenarios
+<p><b>Reviewed By:</b>
+<p><b>References:</b>
+<br>UI Specification:&nbsp; Used Nova Specs (not available at this time),
+
+&nbsp; <a href="http://www.mozilla.org/mailnews/specs/compose/">Message
+Compose spec&nbsp;</a> for Fcc,
+<br>Other: Not available yet
+<p>
+<hr WIDTH="100%">
+<br>Description:&nbsp; Copy received messages from one folder to another
+folder, move received messages from one folder to another folder (aka File
+using toolbar button).&nbsp; Also, copy newly created messages to Sent
+folder and File Carbon Copy ( Fcc)&nbsp; newly created messages to a specified
+folder (this is in addition to a copy going to the Sent folder).&nbsp;&nbsp;
+These tests are for both <b>Mail &amp; News messages.</b>
+<br>&nbsp;
+<p><b><font size=+1>Basic Scenario - Move/Copy/Automatic Copy of Sent Messages/Fcc</font></b>
+<ol TYPE=A>
+<li>
+Received Mail messages can be Moved/Copied from folder to folder within
+these Mail/News windows</li>
+
+<ol>
+<li>
+3 Pane UI</li>
+
+<ol TYPE=a>
+<li>
+Perform a Move at least once from this window</li>
+
+<li>
+Perform a Copy at least once from this window</li>
+</ol>
+
+<li>
+Stand-alone Message window, can be accessed by selecting a message, right
+mouse click, select Open In New Window.</li>
+
+<ol TYPE=a>
+<li>
+Perform a Move at least once from this window</li>
+
+<li>
+Perform a Copy at least once from this window</li>
+</ol>
+
+<li>
+Undo</li>
+
+<ol TYPE=a>
+<li>
+Perform a Move and Undo at least once from the 3-Pane Window, verify the
+Undo worked</li>
+
+<li>
+Perform a Copy and Undo at least once from the 3-Pane Window, verify the
+Undo worked</li>
+
+<li>
+Perform a File and Undo at least once from the 3-Pane Window, verify the
+Undo worked</li>
+</ol>
+</ol>
+
+<li>
+Received Messages can be Moved/Copied from folder to folder using these
+methods:</li>
+
+<ol>
+<li>
+Menu</li>
+
+<ol TYPE=a>
+<li>
+Move a message using the menu item, verify the message is removed from
+the originating folder and is now located in the target folder</li>
+
+<li>
+Copy a message using the menu item,&nbsp; verify the message still resides
+in the originating folder and is also found in the target folder</li>
+</ol>
+
+<li>
+Toolbar</li>
+
+<ol TYPE=a>
+<li>
+Using the File button (same action as Move menu item), verify the message
+is removed from the originating folder and is now located in the target
+folder</li>
+</ol>
+
+<li>
+Mnemonics</li>
+
+<ol TYPE=a>
+<li>
+Move a message using the mnemonic for Move found in the menu,&nbsp; verify
+the message is removed from the originating folder and is now located in
+the target folder</li>
+
+<li>
+Copy a message using the mnemonic for Copy&nbsp; found in the menu,&nbsp;
+verify the message still resides in the originating folder and is also
+found in the target folder</li>
+</ol>
+
+<li>
+Mouse (drag and drop to Trash)</li>
+
+<ol TYPE=a>
+<li>
+Move a message by selecting it and dragging it to another folder, verify
+the message is removed from the originating folder and is now located in
+the target folder</li>
+
+<li>
+Copy a message using the menu item,&nbsp; verify the message still resides
+in the originating folder and is also found in the target folder</li>
+</ol>
+
+<li>
+Context Menu</li>
+
+<ol TYPE=a>
+<li>
+Move a message by a right mouse click on a message then select Move To>
+to move it to another folder,&nbsp; verify the message is removed from
+the originating folder and is now located in the target folder</li>
+
+<li>
+Copy a message by a right mouse click on a message then select Copy To>&nbsp;
+to copy it to another folder,&nbsp; verify the message still resides in
+the originating folder and is also found in the target folder</li>
+</ol>
+</ol>
+
+<li>
+Number of received messages that can be Moved/Copied from folder to folder</li>
+
+<ol>
+<li>
+Single message</li>
+
+<ol TYPE=a>
+<li>
+Perform a single move at least once from one folder to another folder,
+verify move action as mentioned above</li>
+
+<li>
+Perform a single copy at least once from one folder to another folder,
+verify copy action as mentioned above</li>
+</ol>
+
+<li>
+Multiple messages</li>
+
+<ol TYPE=a>
+<li>
+Perform (at least once) a continuous selection of multiple messages and
+move from one folder to another folder,&nbsp; verify all messages were
+moved as mentioned above</li>
+
+<li>
+Perform (at least once) a continuous selection of multiple messages and
+copy from one folder to another folder, verify all messages were copied
+as mentioned above</li>
+</ol>
+
+<li>
+Selective messages (Example on Windows, use the Ctrl+Mouse click,&nbsp;
+On Mac, use Cmd+Mouse click.&nbsp; On Unix, use Ctrl+Mouse click.)</li>
+
+<ol TYPE=a>
+<li>
+Perform (at least once) a non continuous selection of multiple messages
+and move from one folder to another folder, verify all messages were moved
+as mentioned above</li>
+
+<li>
+Perform (at least once) a non continuous selection of multiple messages
+and copy from one folder to another folder, verify all messages were copied
+as mentioned above</li>
+</ol>
+
+<li>
+All messages</li>
+
+<ol TYPE=a>
+<li>
+Select all messages in a folder and move them to another folder, verify
+all messages were moved as mentioned above and empty folder is still listed
+in the 3-pane window</li>
+
+<li>
+Select all messages in a folder and copy them to another folder, verify
+all messages were copied as mentioned above and empty folder is still listed
+in 3-pane&nbsp; window</li>
+</ol>
+</ol>
+
+<li>
+Copy received messages from a Newsgroup to various mail folders</li>
+
+<ol>
+<li>
+IMAP Inbox</li>
+
+<ol TYPE=a>
+<li>
+copy a single message from a newsgroup folder to a IMAP Inbox, verify the
+message was copied to the target folder and still resides in the newsgroup</li>
+
+<li>
+copy a group of messages (multiple select)&nbsp; from a newsgroup to a
+IMAP Inbox,&nbsp; verify the messages were all copied to the target folder
+and all still reside in the newsgroup</li>
+</ol>
+
+<li>
+IMAP user defined folder</li>
+
+<ol TYPE=a>
+<li>
+copy a single message from a newsgroup folder to a IMAP user defined folder,
+verify the message was copied to the target folder and still resides in
+the newsgroup</li>
+
+<li>
+copy a group of messages (multiple select)&nbsp; from a newsgroup to a
+IMAP user defined folder,&nbsp; verify the messages were all copied to
+the target folder and all still reside in the newsgroup</li>
+</ol>
+
+<li>
+POP Inbox</li>
+
+<ol TYPE=a>
+<li>
+copy a single message from a newsgroup folder to a POP Inbox, verify the
+message was copied to the target folder and still resides in the newsgroup</li>
+
+<li>
+copy a group of messages (multiple select)&nbsp; from a newsgroup to a
+POP Inbox,&nbsp; verify the messages were all copied to the target folder
+and all still reside in the newsgroup</li>
+</ol>
+
+<li>
+POP user defined folder</li>
+
+<ol TYPE=a>
+<li>
+copy a single message from a newsgroup folder to a POP user defined folder,
+verify the message was copied to the target folder and still resides in
+the newsgroup</li>
+
+<li>
+copy a group of messages (multiple select)&nbsp; from a newsgroup to a
+POP user defined folder,&nbsp; verify the messages were all copied to the
+target folder and all still reside in the newsgroup</li>
+</ol>
+
+<li>
+(TBD)</li>
+
+<li>
+Verify both menu item Move and context menu item Move are disabled when
+a newsgroup message is selected while both the menu item Copy and context
+menu item Copy are enabled</li>
+
+<li>
+Verify the action of the File toolbar button is a copy when a newsgroup
+message is selected and button is used</li>
+</ol>
+
+<li>
+Move/Copy received messages from folder to folder using the standard folders
+within an account including:</li>
+
+<ol>
+<li>
+Inbox</li>
+
+<ol TYPE=a>
+<li>
+Move a message from another folder to the Inbox, verify the message is
+removed from the originating folder and is now located in the target folder</li>
+
+<li>
+Copy a message from another&nbsp; folder to the Inbox, verify the message
+still resides in the originating folder and is also found in the target
+folder</li>
+</ol>
+
+<li>
+Sent</li>
+
+<ol TYPE=a>
+<li>
+Move a message from another folder to the Sent folder, verify the message
+is removed from the originating folder and is now located in the target
+folder</li>
+
+<li>
+Copy a message from another&nbsp; folder to the Sent folder, verify the
+message still resides in the originating folder and is also found in the
+target folder</li>
+</ol>
+
+<li>
+Draft</li>
+
+<ol TYPE=a>
+<li>
+Move a message from another folder to the Draft folder, verify the message
+is removed from the originating folder and is now located in the target
+folder</li>
+
+<li>
+Copy a message from another&nbsp; folder to the Draft folder, verify the
+message still resides in the originating folder and is also found in the
+target folder</li>
+</ol>
+
+<li>
+Unsent Messages</li>
+
+<ol TYPE=a>
+<li>
+Move a message from another folder to the Unsent Messages folder, verify
+you get an error message stating "Cannot copy messages into the "Unsent
+Messages" folder: That folder is only for storing messages to be sent later",
+and the message is not moved.</li>
+
+<li>
+Copy a message from another folder to the Unsent Messages folder, verify
+you get an error message stating "Cannot copy messages into the "Unsent
+Messages" folder: That folder is only for storing messages to be sent later",
+and the message is not copied.</li>
+</ol>
+
+<li>
+Trash</li>
+
+<ol TYPE=a>
+<li>
+Move a message from another folder to the Trash folder, verify the message
+is removed from the originating folder and is now located in the target
+folder</li>
+
+<li>
+Copy a message from another&nbsp; folder to the Trash folder, verify the
+message still resides in the originating folder and is also found in the
+target folder</li>
+</ol>
+
+<li>
+User defined (a folder you created and named)</li>
+
+<ol TYPE=a>
+<li>
+Move a message from another folder one of your user defined folders, verify
+the message is removed from the originating folder and is now located in
+the target folder</li>
+
+<li>
+Copy a message from another&nbsp; folder to one of your user defined folders,
+verify the message still resides in the originating folder and is also
+found in the target folder</li>
+</ol>
+</ol>
+
+<li>
+Moving/Copying a received message between Accounts ( you must have multiple
+accounts set up to complete this test - at&nbsp; least 1 IMAP, 1 POP and
+one (TBD) account)</li>
+
+<ol>
+<li>
+POP folder to IMAP folder</li>
+
+<ol TYPE=a>
+<li>
+Move a message from a POP account folder to an IMAP account folder, verify
+the message is removed from the originating folder and is now located in
+the target folder</li>
+
+<li>
+Move a group of messages from a POP account folder to an IMAP account folder,
+verify the messages are removed from the originating folder and are now
+located in the target folder</li>
+
+<li>
+Copy a message from a POP account folder to an IMAP account folder, verify
+the message still resides in the originating folder and is also found in
+the target folder</li>
+
+<li>
+Copy a group of messages from a POP account folder to an IMAP account folder,
+verify the messages still reside in the originating folder and are also
+found in the target folder</li>
+</ol>
+
+<li>
+IMAP folder to POP folder</li>
+
+<ol TYPE=a>
+<li>
+Move a message from an IMAP account folder to an POP account folder, verify
+the message is removed from the originating folder and is now located in
+the target folder</li>
+
+<li>
+Move a group of messages from a IMAP account folder to an POP account folder,
+verify the messages are removed from the originating folder and are now
+located in the target folder</li>
+
+<li>
+Copy a message from a IMAP account folder to an POP account folder, verify
+the message still resides in the originating folder and is also found in
+the target folder</li>
+
+<li>
+Copy a group of messages from a IMAP account folder to a POP account folder,
+verify the messages still reside in the originating folder and are also
+found in the target folder</li>
+</ol>
+
+<li>
+&nbsp;[TBD]</li>
+</ol>
+
+<li>
+Copy to Sent folder a New Message (this test is performed from a New Msg
+(aka Compose) window)</li>
+
+<ol>
+<li>
+Account Setup - Copies and Folders panel,&nbsp; Copy to Sent folder = checked</li>
+
+<ol TYPE=a>
+<li>
+With the default POP Sent folder selected, verify a copy of a Sent message
+went into the POP Sent folder, close application/reopen and verify again</li>
+
+<li>
+With the default IMAP Sent folder selected, verify a copy of a Sent message
+went into the IMAP Sent folder, close application/reopen and verify again</li>
+
+<li>
+&nbsp;Other POP folder selected, verify a copy of a Sent message went into
+the selected POP folder, close application/reopen and verify again</li>
+
+<li>
+Other&nbsp; IMAP folder selected, verify a copy of a Sent message went
+into the selected IMAP folder, close application/reopen and verify again</li>
+</ol>
+
+<li>
+Account Setup - Copies and Folders panel, Copy to Sent folder =unchecked</li>
+
+<ol TYPE=a>
+<li>
+Send a New Message and verify without closing the application, a copy is
+not sent to the designated folder</li>
+
+<li>
+Send a New Message and verify, after closing and reopening the application,
+a copy is not sent to the designated folder.</li>
+
+<li>
+Send a New Message, select a folder from the File Carbon Copy menu list
+(located under menu item Message) and verify a copy only went to the Fcc
+designated folder.</li>
+</ol>
+</ol>
+
+<li>
+Fcc a copy of a newly composed Message (this test is performed from a New
+Msg (Compose) window)</li>
+
+<ol>
+<li>
+Using menu item File Carbon Copy (Fcc) plus copy to Sent folder = checked</li>
+
+<ol TYPE=a>
+<li>
+Select a POP folder from the list generated when selecting File Carbon
+Copy, send the message and verify a copy of the message went into the Fcc
+selected folder and the designated copy to Sent folder.</li>
+
+<li>
+Select an IMAP folder from the list generated when selecting File Carbon
+Copy, send the message and verify a copy of the message went into the Fcc
+selected folder and the designated copy to Sent folder.</li>
+
+<li>
+[TBD]</li>
+</ol>
+
+<li>
+Using menu item File Carbon Copy (Fcc) while copy to Sent folder = unchecked</li>
+
+<ol TYPE=a>
+<li>
+Select a POP folder from the list generated when selecting File Carbon
+Copy, send the message and verify a copy of the message went into the Fcc
+selected folder but did not go into the designated copy to Sent folder.</li>
+
+<li>
+Select an IMAP folder from the list generated when selecting File Carbon
+Copy, send the message and verify a copy of the message went into the Fcc
+selected folder but did not go into the designated copy to Sent folder.</li>
+
+<li>
+[TBD]</li>
+</ol>
+
+<li>
+Verify the Fcc information is only for filing purposes and is not displayed
+in the header as part of the addressing field.</li>
+</ol>
+</ol>
+<b><font size=+1>Expanded Scenarios - Move/Copy/Automatic Copy of Sent
+Messages/Fcc</font></b>
+<ol TYPE=A>
+<li>
+3 Pane UI collapsed to 2 pane UI</li>
+
+<ol>
+<li>
+Collapse the Message pane only, from the Thread pane, Move a message to
+another Folder within the same account,&nbsp; verify the move action as
+described above</li>
+
+<li>
+Collapse the Message pane only,&nbsp; from the Thread&nbsp; and Copy a
+message to another Folder within the same account, verify the copy action
+as described above</li>
+
+<li>
+Collapse the Sidebar (aka Folder pane) only, select a message and Move
+a message to another Folder within the same account, using the menu item,
+verify the Move action as described above</li>
+
+<li>
+Collapse the Sidebar (aka Folder pane) only and Copy a message to another
+Folder within the same account, verify the copy action as described above.</li>
+</ol>
+
+<li>
+3 Pane UI collapsed to 1 pane UI</li>
+
+<ol>
+<li>
+Collapse the Thread pane and Folder pane then Move a message from the Message
+pane, verify the move action as described above</li>
+
+<li>
+Collapse the Thread pane and Folder pane then Copy a message from the Message
+pane, verify the copy action as described above</li>
+
+<li>
+Collapse the Sidebar (aka Folder pane) and Message pane then Move a message
+from the Thread pane, verify the move action as described above</li>
+
+<li>
+Collapse the Sidebar (aka Folder pane) and Message pane then Copy a message
+from the Thread pane, verify the copy action as described above</li>
+</ol>
+
+<li>
+Move/Copy a message when the number of messages in the mail folder is:</li>
+
+<ol>
+<li>
+No messages in selected folder, verify the Move and Copy in Menu items
+and the File toolbar button are disabled</li>
+
+<li>
+1 message in the folder,&nbsp; verify for a move, the message is moved
+to target folder and the now empty folder is still listed in the Side bar.&nbsp;
+Verify for a copy the message still&nbsp; resides in the originating folder
+and appears in the target folder.</li>
+
+<li>
+2-10 messages in the folder, Move or Copy selected message/s and verify
+they are moved or copied per actions described above</li>
+
+<li>
+11-50 messages in the folder, Move or Copy selected message/s and verify
+they are moved or copied per actions described above</li>
+
+<li>
+51-1000 messages in the folder, Move or Copy selected message/s and verify
+they are moved or copied per actions described above</li>
+</ol>
+
+<li>
+Interrupting Moving/Copying message when the number of messages in the
+mail folder is:</li>
+
+<ol>
+<li>
+1 message (should have a large attachment so the move/copy takes at least
+30 seconds so you can interrupt), verify the move/copy did not take place
+and the message is in the original folder is still intact</li>
+
+<li>
+2-10 messages in the folder (should have a large attachments so the move/copy
+takes at least 30 seconds so you can&nbsp; interrupt), verify pressing
+the "Stop" button stops the process of the move/copy, all messages are
+complete (no matter which folder are now located), and they can be opened.</li>
+
+<li>
+11-50 messages in the folder, verify pressing the "Stop" button stops the
+process of the move/copy, all messages are complete (no matter which folder
+are now located), and they can be opened.</li>
+
+<li>
+51-1000 messages in the folder, verify pressing the "Stop" button stops
+the process of the move/copy, all messages are complete (no matter which
+folder are now located), and they can be opened.</li>
+</ol>
+
+<li>
+Move/Copy by dragging between POP and IMAP folders</li>
+
+<ol>
+<li>
+Drag a message from a POP folder to an IMAP folder, verify this simple
+drag process is a Move and the move is completed as described above</li>
+
+<li>
+Drag a message from an IMAP folder to a POP folder, verify this simple
+drag process is a Move and the move is completed as described above</li>
+
+<li>
+Ctrl+drag a message from a POP folder to an IMAP folder, verify this Ctrl+drag
+process is a Copy and the copy is completed as described above</li>
+
+<li>
+Ctrl+drag a message from an IMAP folder to a POP folder, verify this Ctrl+drag
+process is a Copy and the copy is completed as described above</li>
+
+<li>
+Drag a message from a newsgroup to an IMAP or POP folder, verify this simple
+drag process is a Copy and the copy is completed as described above</li>
+
+<li>
+Ctrl+drag a message from a newsgroup to an IMAP or POP folder, verify this
+Ctrl+drag process is a Copy (not a Move)&nbsp; and the copy is completed
+as described above</li>
+</ol>
+
+<li>
+Move/Copy message/s cannot be to the same folder where the message resides</li>
+
+<ol>
+<li>
+verify drag n drop to the same folder, you will get the icon which disallows
+the action</li>
+
+<li>
+verify the originating folder is disabled in the drop down list when using
+the menu item Move Message</li>
+
+<li>
+verify the originating folder is disabled in the drop down list when using
+the menu item Copy Message</li>
+
+<li>
+verify the originating folder is disabled in the drop down list when using
+the File toolbar button</li>
+</ol>
+
+<li>
+Move/Copy message/s when messages are sorted in different views</li>
+
+<ol>
+<li>
+Move a message from one folder to another after changing the sort order
+in the Thread view, verify the move action as described above, then sort
+back to the original order and verify the move was still successful</li>
+
+<li>
+Copy a message from one folder to another after changing the sort order
+in the Thread view, verify the copy action as described above, then sort
+back to the original order and verify the move was still successful</li>
+</ol>
+
+<li>
+Move/Copy a&nbsp; Replied message and Forward message</li>
+
+<ol>
+<li>
+Move a replied message from one folder to another, verify the move action
+as described above</li>
+
+<li>
+Copy a replied message from one folder to another, verify the copy&nbsp;
+action as described above</li>
+
+<li>
+Move a forwarded message from one folder to another, verify the move action
+as described above</li>
+
+<li>
+Copy a forwarded massage from one folder to another, verify the copy action
+as described above</li>
+</ol>
+
+<li>
+Visual</li>
+
+<ol>
+<li>
+Verify feedback through the status/progress bar for each Move/Copy/File
+action (since this feedback can be quick, multiple selection moves should
+be used for this test)</li>
+</ol>
+
+<li>
+Fcc</li>
+
+<ol>
+<li>
+Fcc to the same folder you selected for automatically sending copies to,
+verify you only get one copy in that folder</li>
+
+<li>
+Fcc a New Message with several recipients, verify you only get one copy
+in the designated Fcc folder</li>
+
+<li>
+Fcc a New Message with addressing that includes both a mail recipient and
+newsgroup recipient, verify you only get one copy in the designated Fcc
+folder</li>
+
+<br>&nbsp;</ol>
+</ol>
+<b><font size=+1>Stress Scenarios - Move/Copy/Automatic Copy of Sent Messages/Fcc</font></b>
+<ol TYPE=A>
+<li>
+Verify you are able to Move/Copy/File messages with the following attachments:,&nbsp;
+verify the appropriate action for each (Copy/Move/File), and the messages
+can be opened with contents intact.</li>
+
+<ol>
+<li>
+large attachment (100kb)</li>
+
+<li>
+html attachment</li>
+
+<li>
+text attachment</li>
+
+<li>
+mailto link</li>
+</ol>
+
+<li>
+Verify you can Copy/Move/File messages using one of the above mentioned
+methods with the following criteria:, verify the appropriate action for
+each (Copy/Move/File) and the messages can be opened with contents intact.</li>
+
+<ol>
+<li>
+to various levels within the local mail folders</li>
+
+<li>
+to various level within the IMAP folders,</li>
+
+<li>
+with multiple attachments</li>
+
+<li>
+html messages</li>
+
+<li>
+plain text messages</li>
+</ol>
+
+<li>
+Verify you can Move/Copy messages via drag &amp; drop:</li>
+
+<ol TYPE=a>
+<li>
+Drag to move (news messages will just copy)</li>
+</ol>
+
+<ol>
+<li>
+from stand alone message window to the Sidebar (aka Folder pane)</li>
+
+<li>
+from message pane to the Sidebar (aka Folder pane)</li>
+
+<li>
+to Personal Toolbar in Browser</li>
+
+<ol TYPE=a>
+<li>
+from thread window</li>
+
+<li>
+from message window</li>
+</ol>
+</ol>
+</ol>
+<b><font size=+1>Preferences/Account Setup: Settings for Automatic Copy
+of Sent Messages</font></b>
+<ol TYPE=A>
+<li>
+Location of this setting: Account Setup Dialog listed under Mail or News
+server as "Copies and Folders</li>
+
+<ol>
+<li>
+Verify each account,&nbsp; Mail and News, has a Copies and Folder section
+listed when expanded</li>
+
+<li>
+Verify, when Copies and Folders is selected for each account,&nbsp; the
+panel on the right side changes to display the setting for that account's
+Copies and Folders</li>
+
+<li>
+Check box for automatically placing a copy in a specified&nbsp; folder
+when sending:</li>
+
+<ol TYPE=a>
+<li>
+verify this box is check by default</li>
+
+<li>
+verify changing the status of this box saves this action when you OK the
+dialog and then reopen it again</li>
+
+<li>
+verify changing the status of this box saves this action when you OK the
+dialog, close the application, then reopen</li>
+
+<li>
+verify that changing this setting for a selected account, does not interfere
+with&nbsp; the setting for the other accounts</li>
+</ol>
+
+<li>
+"Place a copy in:"</li>
+
+<ol TYPE=a>
+<li>
+verify the default folder for each account is the local "Sent" folder and
+is displayed in the list box as "Sent" in "Local Mailbox"</li>
+
+<li>
+verify , after migrating a&nbsp; 4.x profile, the folder listed list as
+the designated Sent folder is the same as the one in the 4.x profile you
+just migrated</li>
+
+<li>
+verify, when down arrow is selected, a drop down list appears listing all
+the folders and nested folders for that account</li>
+
+<li>
+verify, when changing folder selection the pretty name displayed in the
+collapsed list box is "[folder name]" in "[server name Mailbox]"</li>
+</ol>
+</ol>
+</ol>
+<b><font size=+1>Overview for Drag N Drop options</font></b>
+<ol TYPE=A>
+<li>
+Windows:</li>
+
+<ol>
+<li>
+Ctrl+drag to copy</li>
+
+<li>
+Drag to move (news messages will just copy)</li>
+</ol>
+
+<li>
+Macintosh</li>
+
+<ol>
+<li>
+Option key+drag to copy</li>
+
+<li>
+Drag to move (news messages will just copy)</li>
+</ol>
+
+<li>
+Unix:</li>
+
+<ol>
+<li>
+(unknown at this time)</li>
+
+<li>
+Drag to move (news messages will just copy)</li>
+</ol>
+</ol>
+
+<hr WIDTH="100%">
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-movecopyfccmsg.html&amp;rev=&amp;root=/cvsroot/">Last modified October 20,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

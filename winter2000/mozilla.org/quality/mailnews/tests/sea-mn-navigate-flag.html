@@ -1,0 +1,612 @@
+<HTML>
+<HEAD>
+<TITLE>Feature Testspec: Mail &amp; News: Navigate Flag</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+<script LANGUAGE="JavaScript"> 
+  document.write("<CENTER><FONT COLOR=Red SIZE=-1>"); 
+  document.write("Last modified on ", document.lastModified); 
+  document.write("</CENTER></FONT>"); 
+</script>
+
+
+
+<h2>
+Feature Testspec</h2>
+ <b>Project: 5.0 (Seamonkey)</b>
+<br><b><i> </i>Mail and News
+component</b>
+<br><b> Navigate: Flag Message</b>
+<p>Original document was written by: Laurel Carlson for 4.5 (Nova)
+<br>Modified and maintained by: <b><a href="mailto:fenella@netscape.com">Fenella
+Gor</a> </b>for 5.0 (Seamonkey)
+<p><b>References:</b>
+<p>5.0 Seamonkey UI Specification:
+<br>Test case management system: n/a
+<br>Approx. number of test cases: 145
+<p>
+<hr WIDTH="100%">
+<ol TYPE=A>
+<li>
+<b>Message|Flag tests should be initiated from</b></li>
+
+<ol>
+<li>
+Thread window:</li>
+
+<ol TYPE=a>
+<li>
+3-pane ui, message pane shown</li>
+
+<li>
+3-pane ui, message pane hidden</li>
+
+<li>
+separate thread window, message pane shown</li>
+
+<li>
+separate thread window, message pane hidden</li>
+</ol>
+
+<li>
+Message window</li>
+
+<br></ol>
+
+<li>
+<b>Message|Flag can be navigated from:</b></li>
+
+<ol>
+<li>
+Menu item: Message|Mark</li>
+
+<li>
+Flag taggle in column header from the thread pane</li>
+
+<li>
+Short cut keys or accelerator keys</li>
+
+<br></ol>
+
+<li>
+<b>Basic Flag Tests </b>(from a 3-pane window, message pane shown)</li>
+
+<ol>
+<li>
+Message|Flag enable/disable conditions:</li>
+
+<br>
+<table BORDER COLS=3 WIDTH="80%" >
+<tr>
+<td>Using Message|Mark|Flag to do</td>
+
+<td><b>if message/messages is/are</b></td>
+
+<td><b>Verify that result will be:</b></td>
+</tr>
+
+<tr>
+<td>single message selection</td>
+
+<td>not flagged</td>
+
+<td>flag enabled</td>
+</tr>
+
+<tr>
+<td>multiple message selection which contains (all or some) messages</td>
+
+<td>not flagged</td>
+
+<td>flag enabled</td>
+</tr>
+
+<tr>
+<td>single message selection</td>
+
+<td>flag</td>
+
+<td>flag disabled</td>
+</tr>
+
+<tr>
+<td>multiple message selection which contains (all or some) messages</td>
+
+<td>flag</td>
+
+<td>flag disabled</td>
+</tr>
+
+<tr>
+<td>in empty view</td>
+
+<td>flag disabled</td>
+
+<td>flag disabled</td>
+</tr>
+</table>
+
+<li>
+Flag column toggle: verify that flag column toggle:</li>
+
+<ol TYPE=a>
+<li>
+is not available in empty view</li>
+
+<li>
+should be operable on any single message selection</li>
+</ol>
+
+<li>
+Flag articles with focus in thread pane. Verify that with focus in thread
+pane, you can</li>
+
+<ol TYPE=a>
+<li>
+Flag article via toggle</li>
+
+<li>
+Flag article via menu item (Message|Mark|Flag)</li>
+
+<li>
+Flag multiple articles</li>
+
+<ul>
+<li>
+verify you can flag multiple articles (visible threads) via menu</li>
+</ul>
+
+<li>
+Flag collapsed threads</li>
+
+<ul>
+<li>
+verify that only visible threads are flagged</li>
+</ul>
+
+<li>
+Flag nested replies</li>
+</ol>
+
+<li>
+Repeat to Unflag from thread pane.</li>
+
+<ol TYPE=a>
+<li>
+Toggle</li>
+
+<li>
+Menu item</li>
+
+<li>
+Multiple articles</li>
+
+<li>
+Collapsed</li>
+
+<ul>
+<li>
+verify that only visible threads are flagged</li>
+</ul>
+
+<li>
+Replies</li>
+</ol>
+
+<li>
+Flag column:</li>
+
+<ol TYPE=a>
+<li>
+Flag when column is hidden</li>
+
+<li>
+Flag when column is showing</li>
+
+<li>
+Flag with column showing, then hide. Show column again and verify item
+still flagged.</li>
+</ol>
+
+<li>
+Flag articles with focus in article pane.</li>
+
+<ol TYPE=a>
+<li>
+Topic thread</li>
+
+<li>
+Various level replies</li>
+</ol>
+
+<li>
+Unflag articles with focus in article pane.</li>
+
+<ol TYPE=a>
+<li>
+Topic thread</li>
+
+<li>
+Various level replies</li>
+</ol>
+
+<li>
+Flag articles in message window and verify the flag icon in the article
+pane</li>
+
+<ol TYPE=a>
+<li>
+Topic thread</li>
+
+<li>
+Various level repliesUnflag articles in message window and verify the flag
+icon in the article pane</li>
+
+<li>
+Topic thread</li>
+
+<li>
+Various level repliey</li>
+</ol>
+
+<li>
+Undo and Redo should work with flag operation<br>
+<BR></li>
+</ol>
+
+<li>
+<b>Selecting Flagged Articles</b></li>
+
+<ol>
+<li>
+Verify selection across different threads.</li>
+
+<li>
+Verify selection at different level replies.</li>
+
+<li>
+Verifiy selection in collapsed/expanded threads. In order to select
+or navigate to flagged articles, it has been decided the user must be in
+a flat sort or threads expanded. Dogbert/Gromit will not notice flagged
+replies in collapsed threads.</li>
+
+<li>
+Select flagged articles:</li>
+
+<ol TYPE=a>
+<li>
+With attachments</li>
+
+<li>
+With images</li>
+
+<li>
+Multi-page<br>
+<BR></li>
+</ol>
+</ol>
+
+<li>
+<b>Navigate Flagged Articles(news)</b></li>
+
+<br>In order to select or navigate to flagged articles, it has been decided
+the user must be in a flat sort or threads expanded. Dogbert/Gromit will
+not notice flagged replies in collapsed threads.
+<ol>
+<li>
+Enable/disable conditions:</li>
+
+<ol TYPE=a>
+<li>
+Go|First Flagged</li>
+
+<ul>
+<li>
+enabled where flagged messages are present/displayed in the current view</li>
+
+<li>
+disabled if there are no flagged messages in the current view</li>
+</ul>
+
+<li>
+Go|Next Flagged</li>
+
+<ul>
+<li>
+enabled when flagged messages are present/displayed below the current selection
+point in the current view</li>
+
+<li>
+disabled if there are no flagged messages below the current selection point
+in the current view</li>
+</ul>
+
+<li>
+Go|Previous Flagged</li>
+
+<ul>
+<li>
+enabled when flagged messages are present/displayed above the current selection
+point in the current view</li>
+
+<li>
+disabled if there are no flagged messages above the current selection in
+the current view</li>
+</ul>
+</ol>
+
+<li>
+From the thread(mail) pane, navigate to:</li>
+
+<ol TYPE=a>
+<li>
+First flagged</li>
+
+<ul>
+<li>
+from various places in the message list</li>
+</ul>
+
+<li>
+Next flagged</li>
+
+<ul>
+<li>
+from various places in the message list</li>
+</ul>
+
+<li>
+Previous flagged</li>
+
+<ul>
+<li>
+from various places in the message list</li>
+</ul>
+</ol>
+
+<li>
+From the article(news) pane, navigate to:</li>
+
+<ol TYPE=a>
+<li>
+First flagged</li>
+
+<ul>
+<li>
+from various places in the message list</li>
+</ul>
+
+<li>
+Next flagged</li>
+
+<ul>
+<li>
+from various places in the message list</li>
+</ul>
+
+<li>
+Previous flagged</li>
+
+<ul>
+<li>
+from various places in the message list</li>
+</ul>
+</ol>
+
+<li>
+From an open message window, navigate to:</li>
+
+<ol TYPE=a>
+<li>
+First flagged</li>
+
+<ul>
+<li>
+from various places in the message list</li>
+</ul>
+
+<li>
+Next flagged</li>
+
+<ul>
+<li>
+from various places in the message list</li>
+</ul>
+
+<li>
+Previous flagged</li>
+
+<ul>
+<li>
+from various places in the message list</li>
+</ul>
+</ol>
+
+<li>
+Verify navigation operates in different sorts</li>
+
+<li>
+Verify navigation carries on smoothly after switching sorts</li>
+
+<li>
+Verify navigation operates in different views</li>
+
+<li>
+Verify navigation carries on smoothly after switching views<br>
+<BR></li>
+</ol>
+
+<li>
+<b>Sort</b></li>
+
+<ol>
+<li>
+Verify Flag is operational</li>
+
+<ol TYPE=a>
+<li>
+in a flat sort thread pane</li>
+
+<li>
+in a threaded thread pane</li>
+</ol>
+
+<li>
+Verify UnFlag is operational</li>
+
+<ol TYPE=a>
+<li>
+in a flat sort thread pane</li>
+
+<li>
+in a threaded thread pane</li>
+</ol>
+
+<li>
+Verify Sort by Flag is operational</li>
+
+<ol TYPE=a>
+<li>
+Via clicking on Flag column</li>
+
+<li>
+Via menu item</li>
+
+<li>
+Ascending/Descending (flagged items at bottom/top)<br>
+<BR></li>
+</ol>
+</ol>
+
+<li>
+<b>Views</b></li>
+
+<ol TYPE=A>
+<li>
+Verify Flag/Unflag operational in different views:</li>
+
+<ol TYPE=a>
+<li>
+All</li>
+
+<li>
+Unread</li>
+
+<li>
+Threads with Unread</li>
+
+<li>
+Watched Threads with Unread</li>
+</ol>
+
+<li>
+Verify Flagged messages stay flagged switching views<br>
+<BR></li>
+</ol>
+
+<li>
+Repeat the above tests in a 3-pane ui window ( message pane hidden )<br>
+<BR></li>
+
+<li>
+Repeat the above tests in a separate thread window ( message pane
+shown )<br>
+<BR></li>
+
+<li>
+Repeat the above tests in a separate thread window ( message pane hidden
+)<br>
+<BR></li>
+
+<li>
+Repeat the Basic Flag Tests in a Message window.</li>
+</ol>
+
+<hr ALIGN=LEFT WIDTH="100%">
+<br>
+<br>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-navigate-flag.html&amp;rev=&amp;root=/cvsroot/">Last modified May 14,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

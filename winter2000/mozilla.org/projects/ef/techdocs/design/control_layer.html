@@ -1,0 +1,552 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Primitive Graph Control Layer</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Primitive Graph Format</H2>
+
+
+<H2><FONT SIZE=+4>Control Layer</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="primitive_graph.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"><IMG SRC="../arrows/up.gif" 
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="control_edges.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+
+<DL>
+  <DT><P ALIGN=RIGHT><A HREF="control_edges.html"><FONT SIZE=+2>Control Edge
+  Details</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="control_schedule.html"><FONT SIZE=+2>Control
+  Scheduling</FONT></A>
+</DL>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P></P>
+
+<P>In its simplest form, the primitive graph is composed of <EM>control
+nodes</EM> linked by control edges. Each control node can contain a number
+of <A HREF="data_layer.html#df_node">data nodes</A> (<A HREF="primitives.html">primitives</A>
+or <A HREF="data_layer.html#df_phi">phi-nodes</A>) to specify actual program
+operations. An example of the control layer of the primitive graph is listed
+on the <A HREF="example1.html">graph example page</A>.</P>
+
+<P>The control flow graph nodes and edges are comprised of the kinds below.</P>
+
+<H3>Control Flow Edges</H3>
+
+
+<P><TABLE WIDTH="100%" BORDER="1" CELLSPACING="2" CELLPADDING="4">
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_edge_fwd.gif" ALIGN="BOTTOM" WIDTH=
+"46" HEIGHT="19" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="cf_edge_fwd"></A>A <STRONG>forward edge</STRONG> denotes a possible
+path of normal (non-exceptional) execution from one control node to one
+of its immediate successors.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_edge_back.gif" ALIGN="BOTTOM" WIDTH=
+"46" HEIGHT="19" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="cf_edge_back"></A>A <STRONG>backward edge</STRONG> is used instead
+of a forward edge to denote a backward branch completing a cycle. See <A
+HREF="control_edges.html">control edge details</A> for a more precise definition
+and properties of backward control flow edges. The target of a backward
+edge must be an <A HREF="#cf_aexc">aexc</A> node.</P>
+
+<P>We further categorize backward edges into <STRONG>regular backward edges</STRONG>
+and <STRONG>irregular backward edges</STRONG>. <A HREF="control_edges.html#edge_back_regular">Regular
+backward edges</A> complete loops. <A HREF="control_edges.html#edge_back_irregular">Irregular
+backward edges</A> occur only in <A HREF="control_edges.html#irreducible">irreducible
+graphs</A> and are quite rare.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_edge_return.gif" ALIGN="BOTTOM" WIDTH=
+"46" HEIGHT="19" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="cf_edge_return"></A>A <STRONG>return edge</STRONG> connects the
+<A HREF="#cf_return">return node</A> to the <A HREF="#cf_end">end node</A>.
+There is at most one return edge in a control flow graph. The return edge
+never completes a cycle, so it always behaves like a forward edge.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_edge_exception.gif" ALIGN="BOTTOM"
+WIDTH="64" HEIGHT="28" NATURALSIZEFLAG="3">
+  </TD>
+  <TD>
+<P><A NAME="cf_edge_exc"></A>An<STRONG> exception edge</STRONG> denotes
+the execution path taken when a <A HREF="data_layer.html#df_node">primitive</A>
+throws an exception. The exception edge connects the control node that throws
+the exception to a <A HREF="#cf_catch">catch node</A> that catches it or
+to the <A HREF="#cf_end">end node</A> if the exception is propagated out
+of the function. Only <A HREF="#cf_exc">exception</A>, <A HREF="#cf_throw">throw</A>,
+and <A HREF="#cf_aexc">aexc</A> nodes can originate an exception edge, and
+only <A HREF="#cf_catch">catch</A> and <A HREF="#cf_end">end</A> nodes can
+be targets of an exception edge. An exception edge never completes a cycle,
+so it always behaves like a forward edge.</P>
+
+<P>Each exception edge is annotated with a class; that edge only propagates
+exceptions of that class or one of its subclasses.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Control Nodes</H3>
+
+
+<P><TABLE WIDTH="100%" BORDER="1" CELLSPACING="2" CELLPADDING="4" HEIGHT=
+"1639">
+ <TR>
+  <TD WIDTH="26%" VALIGN="TOP" HEIGHT="102">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_begin.gif" ALIGN="BOTTOM" WIDTH="159"
+HEIGHT="82" NATURALSIZEFLAG="3">
+  </TD>
+  <TD WIDTH="74%" VALIGN="TOP">
+<P><A NAME="cf_begin"></A>The <STRONG>begin node</STRONG>. Each control
+flow graph must have exactly one begin node. This node provides the starting
+point for the function's code. The begin node always has exactly one outgoing
+forward edge.</P>
+
+<P>The begin node also hosts <A HREF="primitives.html#prim_Arg">arg</A>
+primitives that provide the initial memory state and values of all arguments.
+The begin node never contains any other data nodes. If the function is not
+a static method, <VAR>a0</VAR> is <CODE>this</CODE> and <VAR>a1</VAR> through
+<VAR>an</VAR> are the remaining arguments; if the function is a static method,
+<VAR>a0</VAR> through <VAR>an</VAR> are its arguments.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" HEIGHT="156">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_end.gif" ALIGN="BOTTOM" WIDTH="118"
+HEIGHT="82" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="cf_end"></A>The <STRONG>end node</STRONG>. Each control flow
+graph must have exactly one end node. This node provides the stopping point
+for the function's code. The end node always has one or more incoming control
+flow edges: either zero or one <A HREF="#cf_edge_return">return edge</A>
+and zero or more <A HREF="#cf_edge_exc">exception edges</A>. The return
+edge is present if the function can return normally; the exception edges
+are present if the function can throw an exception to its caller.</P>
+
+<P>The end node also hosts one <A HREF="primitives.html#prim_Result">result</A>
+primitive that consumes the final memory state. The end node may optionally
+contain one <A HREF="data_layer.html#df_phi">phi-node</A> to select the
+final memory state from one of several incoming data flow edges. The end
+node never contains any other data nodes.</P>
+
+<P>The end node does not consume the function's return value; use the <A
+HREF="#cf_return">return node</A> for that. The return node is separate
+from the end node because throwing an exception can bypass the return.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" HEIGHT="120">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_basic_block.gif" ALIGN="BOTTOM" WIDTH=
+"105" HEIGHT="100" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="cf_basic_block"></A>A <STRONG>block node</STRONG> has a single
+exit. We use block nodes to denote code within a basic block that ends with
+a control flow merge (as opposed to one of the other things that can end
+a basic block such as a conditional branch, a potential exception throw,
+or a return).</P>
+
+<P>A block node typically contains one or more <A HREF="data_layer.html#df_node">data
+nodes</A> (<A HREF="primitives.html">primitives</A> or <A HREF="data_layer.html#df_phi">phi-nodes</A>),
+all of which are executed when control enters the block. It is possible
+for a block node to be empty, although optimizations typically remove such
+nodes. Every block node contains one or more incoming forward edges and
+exactly one outgoing forward or backward edge.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" HEIGHT="165">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_if.gif" ALIGN="BOTTOM" WIDTH="105"
+HEIGHT="145" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="cf_if"></A>An <STRONG>if node</STRONG> is a basic block ending
+with an <CODE>if</CODE> statement. This node always contains two outgoing
+forward or backward edges; the left one is taken when the condition evaluates
+to zero, while the right one is taken when the condition evaluates to a
+nonzero integer. The condition comes from a <A HREF="data_layer.html#df_edge_condition"><CODE>condition</CODE>-valued
+data flow edge</A>.</P>
+
+<P>Every if node contains one or more incoming forward edges and zero or
+more <A HREF="data_layer.html#df_node">data nodes</A>, all of which are
+executed when control enters the if node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" HEIGHT="165">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_switch.gif" ALIGN="BOTTOM" WIDTH="105"
+HEIGHT="145" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="cf_switch"></A>A <STRONG>switch node</STRONG> is a basic block
+ending with a dense <CODE>switch</CODE> statement. This node always contains
+one or more outgoing forward or backward edges. Let <VAR>n</VAR> be the
+number of outgoing control flow edges and number these edges 0 through <VAR>n</VAR>-1.
+Then execution of the switch node will take outgoing control flow edge <VAR>i</VAR>
+when the index value evaluates to <VAR>i</VAR>. The index comes from an
+<A HREF="data_layer.html#df_edge_int"><CODE>int</CODE>-valued data flow
+edge</A>. The primitive node generator must make sure that the index value
+is always between 0 and <VAR>n</VAR>-1 inclusive, typically by inserting
+an unsigned comparison and an if node to check the index's value before
+the switch node.</P>
+
+<P>Every switch node contains one or more incoming forward edges and zero
+or more <A HREF="data_layer.html#df_node">data nodes</A>, all of which are
+executed when control enters the switch node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" HEIGHT="232">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_exc.gif" ALIGN="BOTTOM" WIDTH="113"
+HEIGHT="159" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="cf_exc"></A>An <STRONG>exception node</STRONG> is a basic block
+that contains one <A HREF="data_layer.html#df_nullary">primitive</A> <I>p</I>
+that sometimes (but not always) throws an exception. In addition, the exception
+node can contain any number of other, ordinary <A HREF="data_layer.html#df_node">data
+nodes</A>. In diagrams we mark primitive <I>p</I> by connecting it to the
+exception node with a dotted line (which technically is not a <A HREF="data_layer.html#df_edge">data
+edge</A>).</P>
+
+<P>Every exception node contains one or more incoming forward edges and
+one or more data nodes, all of which are executed when control enters the
+node. Note that primitives other than <I>p</I> are always executed regardless
+of whether <I>p</I> throws an exception or not.</P>
+
+<P>If <I>p</I> does not throw an exception, execution proceeds along the
+leftmost control flow edge (labeled &quot;normal exit&quot;), which must
+be a forward or backward edge. If the compiler can determine that <I>p</I>
+always throws an exception, then it will use a <A HREF="#cf_throw">throw
+node</A> instead of an exception node.</P>
+
+<P>If <VAR>p</VAR> throws an exception, execution proceeds along the first
+(leftmost) exceptional exit control flow edge that accepts the exception.
+Each of these <A HREF="#cf_edge_exc">exception edges</A> is annotated with
+the class of exceptions it accepts.</P>
+
+<P>If primitive <VAR>p</VAR> is the one that can cause an exception in exception
+node <VAR>E</VAR>, it is not legal to place another primitive <VAR>q</VAR>
+that uses one of <VAR>p</VAR>'s outputs in node <VAR>E</VAR>. Instead, use
+a separate control node to hold <VAR>q</VAR>.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" HEIGHT="179">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_throw.gif" ALIGN="BOTTOM" WIDTH="113"
+HEIGHT="159" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<A NAME="cf_throw"></A>A <STRONG>throw node</STRONG> is a variant of an
+<A HREF="#cf_exc">exception node</A> that always throws an exception so
+that it has no normal exit control flow edge. The same rules apply as for
+exception nodes.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" HEIGHT="220">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_aexc.gif" ALIGN="BOTTOM" WIDTH="113"
+HEIGHT="131" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="cf_aexc"></A>An <STRONG>aexc node</STRONG> (asynchronous exception
+node) is like an <A HREF="#cf_exc">exception node</A> except that the source
+of exceptions is an explicit check for asynchronous exceptions instead of
+an exception-throwing primitive. During program execution, asynchronous
+exceptions are normally queued until the program reaches the end of either
+an exception node or an aexc node, at which point the asynchronous exception
+can be thrown.</P>
+
+<P>Every aexc node contains one or more incoming forward or backward edges
+and zero or more <A HREF="data_layer.html#df_node">data nodes</A>, all of
+which are executed when control enters the node. An aexc node usually includes
+both some forward and some backward incoming control flow edges, although
+it is possible for an aexc node to have only forward or only backward incoming
+control flow edges (the latter case cannot occur immediately after the control
+graph's nodes are numbered, but it could result if some control edges in
+the graph are deleted by optimizations).</P>
+
+<P>If the aexc node does not throw an exception, execution proceeds along
+the leftmost control flow edge (labeled &quot;normal exit&quot;), which
+must be a forward or backward edge. The exception edges behave just like
+in an exception node.</P>
+
+<P>Note that only aexc nodes allow an incoming control flow edge to be backward,
+so every <A HREF="#cf_edge_back">backward edge</A> must point to an aexc
+node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" HEIGHT="106">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_catch.gif" ALIGN="BOTTOM" WIDTH="104"
+HEIGHT="86" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="cf_catch"></A>A <STRONG>catch node</STRONG> provides the starting
+point for an exception handler. A catch node has one or more incoming control
+flow edges, all of which must be <A HREF="#cf_edge_exc">exception edges</A>.
+The catch node has exactly one outgoing forward or backward edge. The catch
+node has at most one <A HREF="primitives.html">primitive</A>, which must
+be a <A HREF="primitives.html#prim_Catch">catch primitive</A>. However,
+since it can have more than one incoming edge, a catch node may has any
+number of <A HREF="data_layer.html#df_phi">phi-nodes</A>.</P>
+
+<P>When a thrown exception is propagated down an exception edge to a catch
+node, the exception object becomes available as the output of the catch
+primitive and execution follows the control edge leaving the catch node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" HEIGHT="169">
+<P ALIGN=RIGHT><IMG SRC="graphics/cf_return.gif" ALIGN="BOTTOM" WIDTH="105"
+HEIGHT="127" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="TOP">
+<P><A NAME="cf_return"></A>A <STRONG>return node</STRONG> is like a <A 
+HREF="#cf_basic_block">block node</A> except that the return node also collects
+the values, if any, to be returned from the function. The values come from
+data flow edges whose types are appropriate to hold the function's return
+values. Java allows at most one return value, so the return nodes with more
+than one return value will not be generated, but they are provided for generality.</P>
+
+<P>There can be at most one return node in a function. A return node may
+contain <A HREF="data_layer.html#df_node">data nodes</A>, all of which are
+executed when control enters the node. Every return node contains one or
+more incoming forward edges and exactly one outgoing <A HREF="#cf_edge_return">return
+edge</A> that points directly to the <A HREF="#cf_end">end node</A>.</P>
+
+<P>Even if a function has no return values (has return type <CODE>void</CODE>),
+its normal execution path must still pass through a return node before reaching
+the end node. This is because the only control flow edges that can enter
+an end node are exception and return edges.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>Every node starts by having a node number (represented as <VAR>n</VAR>
+in the node diagrams above) that is the node's number in a depth-first order
+of the graph; see <A HREF="control_edges.html">control edge details</A>.
+These node numbers may not be preserved by optimizations that take place
+on the control graph, but the separation of control edges into forward and
+backward edges will remain.</P>
+
+<H3><A NAME="constraints"></A>Constraints</H3>
+
+
+<P>The primitive graph's control nodes and edges satisfy the following constraints:</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TH NOWRAP><P ALIGN=LEFT>Name</TH>
+  <TH><P ALIGN=LEFT>Constraint</TH>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="BEGIN1"></A>BEGIN1</TD>
+  <TD>
+There is a unique <STRONG>begin</STRONG> node and a unique <STRONG>end</STRONG>
+node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="BEGIN2"></A>BEGIN2</TD>
+  <TD>
+There is exactly one control flow edge originating at the <STRONG>begin</STRONG>
+node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="BEGIN3"></A>BEGIN3</TD>
+  <TD>
+There are no control flow edges pointing into the <STRONG>begin</STRONG>
+node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="END1"></A>END1</TD>
+  <TD>There is a unique <STRONG>end</STRONG> node.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="END2"></A>END2</TD>
+  <TD>
+Only exception and return edges can point into the <STRONG>end</STRONG>
+node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="END3"></A>END3</TD>
+  <TD>
+There are no control flow edges originating at the <STRONG>end</STRONG>
+node.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="RETURN1"></A>RETURN1</TD>
+  <TD>There is at most one <STRONG>return</STRONG> node in the graph.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="RETURN2"></A>RETURN2</TD>
+  <TD>
+If present, the <STRONG>return</STRONG> node must have exactly one outgoing
+edge, a return edge pointing to the <STRONG>end</STRONG> node. That is the
+only return edge that can be present in the graph.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="EDGE1"></A>EDGE1</TD>
+  <TD>Backward edges must target <STRONG>aexc</STRONG> nodes.</TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="EDGE2"></A>EDGE2</TD>
+  <TD>
+Exception edges can originate only at <STRONG>exception</STRONG>, <STRONG>throw</STRONG>,
+and <STRONG>aexc</STRONG> nodes.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="EDGE3"></A>EDGE3</TD>
+  <TD>
+Exception edges can terminate only at <STRONG>catch</STRONG> and <STRONG>end</STRONG>
+nodes.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="COALESCE1"></A>COALESCE1</TD>
+  <TD>
+Except for the <STRONG>begin</STRONG>, <STRONG>end</STRONG>, and <STRONG>catch</STRONG>
+nodes, there are no two control nodes <VAR>A</VAR> and <VAR>B</VAR> such
+that there is exactly one control flow edge from <VAR>A</VAR> to <VAR>B</VAR>
+and no other control flow edges out of <VAR>A</VAR> or into <VAR>B</VAR>.
+This requirement states that control nodes are coalesced as much as possible.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="CONNECTED1"></A>CONNECTED1</TD>
+  <TD>
+<FONT COLOR="#FF0000">Each control node is reachable from the <STRONG>begin</STRONG>
+node by following only forward, exception, and return edges.</FONT> This
+condition is important to the soundness of some of the graph analysis algorithms;
+see, for example, lemma 4 in the proof of the control flow scheduling algorithm.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="CONNECTED2"></A>CONNECTED2</TD>
+  <TD>
+The <STRONG>end</STRONG> node is reachable from every control node by following
+control flow edges.
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN="TOP" NOWRAP><A NAME="CYCLES1"></A>CYCLES1</TD>
+  <TD>
+The subgraph consisting only of forward, exception, and return control flow
+edges does not contain any cycles.
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<H3>Semantics</H3>
+
+
+<P>We can (conceptually) evaluate a function represented as a primitive
+graph by starting at the begin node, following its control flow edge, and
+evaluating the primitives and phi nodes inside each control node we encounter.
+When we get to a control node with multiple exits, the node specifies which
+one to take via a conditional or exception-throwing expression. We stop
+when we reach the end node.</P>
+
+<P>Each control node contains zero or more <A HREF="data_layer.html#df_node">data
+nodes</A> that are evaluated together (subject to internal dependencies
+such as one primitive using the results from another). When evaluation enters
+the control node, it is always safe to evaluate all data nodes within it.
+Evaluation may not enter a control node part way into it. Conditionals and
+exceptions are represented by multiple edges leaving a control node. Merges
+of control flow are represented by multiple edges entering a control node.</P>
+
+<P>At this point we don't support subroutines as part of the control graph.
+Instead, the primitive graph generator either expands <CODE>JSR</CODE> and
+<CODE>RET</CODE> bytecodes into inline code or converts subroutines into
+functions.</P>
+
+<H3>Asynchronous Exceptions</H3>
+
+
+<P>Asynchronous exceptions must be handled within a bounded amount of time
+of being raised. To achieve this, we allow asynchronous exceptions to interrupt
+execution either:</P>
+
+<UL>
+  <LI>On a function call or return
+  <LI>On finishing execution of an aexc node
+</UL>
+
+<P>To make sure that the amount of time to reach one of the above three
+points is bounded, the translator inserts an <STRONG>aexc</STRONG> node
+into every cycle in the control flow graph.</P>
+
+<P>The translator assumes that asynchronous exceptions may not occur at
+any other point, such as inside basic blocks. Without this assumption it
+would be impossible to do most code transformations because they would subtly
+alter the Java semantics of asynchronous exceptions.</P>
+
+<P>We prepend an <STRONG>aexc</STRONG> node A containing a check for asynchronous
+exceptions to each node H that has at least one incoming back edge. This
+bounds the amount of execution that can take place between checks for asynchronous
+exceptions. As a side benefit, this transformation also makes the <STRONG>end</STRONG>
+node reachable from every cycle, which helps satisfy constraint 6 above
+for infinite loops. For simplicity we retarget all forward edges pointing
+to node H to point to node A instead.</P>
+
+<H3>Exception Edges and Cycles</H3>
+
+
+<P>If an exception handler is allowed to handle exceptions arising in itself,
+we may encounter a situation in which a <STRONG>catch</STRONG> node is the
+head of a cycle in the control flow graph. Such a graph would violate our
+<A HREF="#CYCLES1">CYCLES1</A> constraint, so in such a situation we <A
+HREF="control_edges.html#exception_transformation">transform</A> the catch
+node into several catch nodes.<HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,469 @@
+<HTML>
+<HEAD>
+<TITLE>Printing Acceptance Test Part 3</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<h2>
+Printing&nbsp; : Really long jumble of weird stuff.</h2>
+
+<hr>Things to watch for:
+<ul>
+<li>
+Colored text not showing up with black and white printers.</li>
+
+<li>
+Colored text not showing up with colored printers.</li>
+
+<li>
+HTML tags not printing, underline and strike not showing up.</li>
+
+<li>
+Fonts not showing up.</li>
+
+<li>
+Page breaks cutting off lines.</li>
+
+<li>
+Page breaks cutting off in bad places.</li>
+</ul>
+
+<hr>&nbsp;<b>Strike, Underline, and Font colors</b>
+<li>
+<strike>Three Strikes</strike> <strike>and</strike> you're <strike>out</strike>!!
+<u>Let
+me underline that point.</u></li>
+
+<li>
+<u><font color="#F5F5DC">underlining the world in</font> <font color="#008000">colors</font><font color="#FF0000">of</font><font color="#800080">the</font>
+<font color="#FFA500">rainbow</font></u></li>
+
+<br>&nbsp;
+<p>&nbsp;
+<p>
+<hr>
+<hr><b>Font Sizes</b> <font size=+0>body body body with font size set to
+3</font>
+<p><font size=+0>&nbsp;</font><font size=+4>body body body with font size
+set to 7</font>
+<p><font size=+4>&nbsp;</font><font size=+0>body body body with font size
+set back to 3</font>
+<br>&nbsp;
+<br>&nbsp;
+<h1>
+<font size=+4>head1 head1 head1 with font size set to 7 outside of head
+command</font></h1>
+<font size=+4>page two should be somewhere around here....</font>
+<br><font size=+0>body body body with font size set back to 3</font>
+<br>&nbsp;
+<br>&nbsp;
+<h1>
+<font size=+4>head1 head1 head1 with font size set to 7 inside of head
+command</font></h1>
+<font size=+0>body body body with font size set back to 3 -- yikes, what
+happened?</font>
+<p>
+<hr>
+<hr>
+<h3>
+<font size=+0>Paul's Obsolete HTML section. First, XMP, Second LISTING,
+Third PRE.</font></h3>
+
+<pre><font size=+0>&nbsp;Jose, can you see, buy the Don's Curly Might.&nbsp; What so PROUDLY we mailed at the Chi-Lites' last weaning.</font></pre>
+
+<pre><font size=+0>&nbsp;Jose, can you see, buy the Don's Curly Might.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; What so PROUDLY we mailed
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at the Chi-Lites' last weaning.</font></pre>
+
+<pre><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Jose, can you see, buy the Don's Curly Might.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; What so PROUDLY we mailed
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at the Chi-Lites' last weaning.</font></pre>
+<HP1><font size=+0>This phrase uses the old Highlighted Phrase 1 command.</HP1><HP2>This
+phrase uses the old Highlighted Phrase 2 command.</HP2><HP3>This phrase
+uses the old Highlighted Phrase 3 command.</HP3><HP4>This phrase uses the
+old Highlighted Phrase 4 command.</HP4>
+<hr>
+<hr><b>Normal, Bold, Italic, Fixed combinations</b> Normal</font>
+<br><b><font size=+0>Bold</font></b>
+<br><i><font size=+0>Italic</font></i>
+<br><b><i><font size=+0>Bold-Italic</font></i></b>
+<br><b><i><font size=+0>Italic-Bold</font></i></b>
+<br><tt><font size=+0>Fixed</font></tt>
+<br><b><tt><font size=+0>Fixed-Bold</font></tt></b>
+<br><b><tt><font size=+0>Bold-Fixed</font></tt></b>
+<br><i><tt><font size=+0>Fixed-Italic</font></tt></i>
+<br><i><tt><font size=+0>Italic-Fixed</font></tt></i>
+<br><b><i><tt><font size=+0>Fixed-Bold-Italic</font></tt></i></b>
+<br><b><i><tt><font size=+0>Fixed-Italic-Bold</font></tt></i></b>
+<br><b><i><tt><font size=+0>Bold-Fixed-Italic</font></tt></i></b>
+<br><b><i><tt><font size=+0>Italic-Fixed-Bold</font></tt></i></b>
+<br><b><i><tt><font size=+0>Italic-Bold-Fixed</font></tt></i></b>
+<br><b><i><tt><font size=+0>Bold-Italic-Fixed</font></tt></i></b>
+<br><font size=+0>page three should be around here some where...where did
+I put it??</font>
+<hr>
+<hr>
+<hr SIZE=3>
+<h3>
+<font size=+0>Welcome to a list of lists</font></h3>
+<font size=+0>Lists are not only fun to make, they are fun to use. They
+help us:</font>
+<ol>
+<li>
+<font size=+0>remember what the heck we are doing each day</font></li>
+
+<li>
+<font size=+0>arrange long and arbitrary lines of text into ordered lists
+that are pleasing to the eye and suggest some sense of priority, even if
+it is artificial</font></li>
+
+<li>
+<font size=+0>look really cool when we carry them around on yellow Post-Its</font><font size=-2>
+tm.</font></li>
+
+<li>
+<font size=+0>and that other thing I keep forgetting.</font></li>
+</ol>
+<font size=+0>Your ordered lists can start at a strange number, like</font>
+<ol START=6 TYPE=I>
+<li>
+<font size=+0>And use roman numerals,</font></li>
+
+<li TYPE="a">
+<font size=+0>You might try using letters as well,</font></li>
+
+<li TYPE="A">
+<font size=+0>Maybe you prefer Big Letters,</font></li>
+
+<li TYPE="i">
+<font size=+0>or small roman numerals</font></li>
+
+<li TYPE="DISC">
+<font size=+0>But discs belong to unordered lists</font></li>
+
+<li TYPE="1" VALUE="50">
+<font size=+0>Though you can set the value in a list item!</font></li>
+</ol>
+<font size=+0>Unordered list :</font>
+<ul>&nbsp;
+<li>
+<font size=+0>listing item</font></li>
+
+<ul>&nbsp;
+<li>
+<font size=+0>first sublevel</font></li>
+
+<ul>&nbsp;
+<li>
+<font size=+0>look for the bullet on</font></li>
+
+<ul>&nbsp;
+<li>
+<font size=+0>each sublevel</font></li>
+
+<li>
+<font size=+0>they should all be different, except here.</font></li>
+</ul>
+
+<li>
+<font size=+0>second sublevel</font></li>
+</ul>
+
+<li TYPE="SQUARE">
+<font size=+0>or you can specify a square</font></li>
+
+<ul>
+<li TYPE="CIRCLE">
+<font size=+0>if your TYPE is circle</font></li>
+
+<li TYPE="DISC">
+<font size=+0>or even a disc</font></li>
+</ul>
+</ul>
+
+<li TYPE="SQUARE">
+<font size=+0>Franz Liszt</font></li>
+
+<ul>
+<li>
+<font size=+0>was a composer who was not square</font></li>
+
+<li TYPE="DISC">
+<font size=+0>would have liked the Who</font></li>
+</ul>
+</ul>
+
+<ul TYPE=CIRCLE>
+<li>
+<font size=+0>feeling listless. TYPE=CIRCLE</font></li>
+
+<li TYPE="square" COLOR="#FFFF00">
+<font size=+0>blah, blah, blah (square)</font></li>
+
+<li TYPE="disc">
+<font size=+0>whine, whine, whine(disc)</font></li>
+</ul>
+
+<hr>
+<hr><b><font size=+0>Printing&nbsp;
+<hr>of various and sundry sizes</font></b><font size=+0> The HR element
+specifies that a horizontal rule of some sort (The default being a shaded
+engraved line) be drawn across the page. To this element we have added
+4 new tags to allow the document author some ability to describe how the
+horizontal rule should look.</font>
+<p><font size=+0>The SIZE tag lets the author give an indication of how
+thick they wish the horizontal rule to be. Here are Size 1-12, 47 and 125.&nbsp;
+<hr SIZE=1>
+<hr SIZE=2>
+<hr SIZE=3>
+<hr SIZE=4>
+<hr SIZE=5>
+<hr SIZE=6>
+<hr SIZE=7>
+<hr SIZE=8>
+<hr SIZE=9>
+<hr SIZE=10>
+<hr SIZE=11>
+<hr SIZE=12>
+<hr SIZE=47>
+<hr SIZE=125>Now WIDTH:&nbsp;
+<hr WIDTH=5>
+<hr WIDTH=15>
+<hr WIDTH=25>
+<hr WIDTH=35>
+<hr WIDTH=45>
+<hr WIDTH=55>
+<hr WIDTH=65>The default horizontal rule is always as wide as the page.
+With the WIDTH tag, the author can specify an exact width in pixels, or
+a relative width measured in percent of document width.&nbsp;
+<hr WIDTH=25% ALIGN=left>
+<hr WIDTH=25% ALIGN=center>
+<hr WIDTH=25% ALIGN=right>Now that horizontal rules do not have to be the
+width of the page we need to allow the author to specify whether they should
+be pushed up against the left margin, the right margin, or centered in
+the page.&nbsp;
+<hr NOSHADE>Finally, for those times when you really want a solid bar,
+the NOSHADE tag lets you specify that you do not want any fancy shading
+of your horizontal rule.</font>
+<hr SIZE=125 NOSHADE>
+<p>
+<hr>
+<hr><b><font size=+0>Look for your platform fonts</font></b>
+<br><font face="algerian"><font size=+0>algerian font style text</font></font>
+<br><font face="Arial"><font size=+0>Arial font style text</font></font>
+<br><font face="Arial Black"><font size=+0>Arial Black font style text</font></font>
+<br><font face="Arial Bold"><font size=+0>Arial Bold font style text</font></font>
+<br><font face="Arial Bold italic"><font size=+0>Arial Bold Italic font
+style text</font></font>
+<br><font face="Arial Italic"><font size=+0>Arial Italic font style text</font></font>
+<br><font face="Arial MT Black"><font size=+0>Arial MT Black font style
+text</font></font>
+<br><font face="Arial Narrow"><font size=+0>Arial Narrow font style text</font></font>
+<br><font face="Arial Rounded MT Bold"><font size=+0>Arial Rounded MT Bold
+font style text</font></font>
+<br><font face="Benguiat Frisky ATT"><font size=+0>Benguiat Frisky ATT
+font style text</font></font>
+<br><font face="Book Antiqua"><font size=+0>Book Antiqua font style text</font></font>
+<br><font face="Book Antiqua Bold"><font size=+0>Book Antiqua Bold font
+style text</font></font>
+<br><font face="Book Antiqua Bold Italic"><font size=+0>Book Antiqua Bold
+Italic font style text</font></font>
+<br><font face="Book Antiqua Italic"><font size=+0>Book Antiqua Italic
+font style text</font></font>
+<br><font face="Bookman Old Style"><font size=+0>Bookman Old Style font
+style text</font></font>
+<br><font face="Bookman Old Style Bold"><font size=+0>Bookman Old Style
+Bold font style text</font></font>
+<br><font face="Bookman Old Style Bold Italic"><font size=+0>Bookman Old
+Style Bold Italic font style text</font></font>
+<br><font face="Bookman Old Style Italic"><font size=+0>Bookman Old Style
+Italic font style text</font></font>
+<br><font face="Braggadocio"><font size=+0>Braggadocio font style text</font></font>
+<br><font face="Britannic Bold"><font size=+0>Britannic Bold font style
+text</font></font>
+<br><font face="Brush Script MT Italic"><font size=+0>Brush Script MT Italic
+font style text</font></font>
+<br><font face="Century Gothic"><font size=+0>Century Gothic font style
+text</font></font>
+<br><font face="Century Schoolbook"><font size=+0>Century Schoolbook font
+style text</font></font>
+<br><font face="Century Schoolbook Bold"><font size=+0>Century Schoolbook
+Bold font style text</font></font>
+<br><font face="Century Schoolbook Bold Italic"><font size=+0>Century Schoolbook
+Bold Italic font style text</font></font>
+<br><font face="Century Schoolbook Italic"><font size=+0>Century Schoolbook
+Italic font style text</font></font>
+<br><font face="Colonna MT"><font size=+0>Colonna MT font style text</font></font>
+<br><font face="Comic Sans MS"><font size=+0>Comic Sans MS font style text</font></font>
+<br><font face="Comic Sans MS Bold"><font size=+0>Comic Sans MS Bold font
+style text</font></font>
+<br><font face="Courier 10,12,15"><font size=+0>Courier 10,12,15 font style
+text</font></font>
+<br><font face="Courier New"><font size=+0>Courier New font style text</font></font>
+<br><font face="Desdemona"><font size=+0>Desdemona font style text</font></font>
+<br><font face="Footlight MT Light"><font size=+0>footlight MT Light font
+style text</font></font>
+<br><font face="Garamond"><font size=+0>Garamond font style text</font></font>
+<br><font face="Garamond Bold"><font size=+0>Garamond Bold font style text</font></font>
+<br><font face="Garamond Italic"><font size=+0>Garamond Italic font style
+text</font></font>
+<br><font face="Lucida Casual"><font size=+0>Lucida Casual font style text</font></font>
+<br><font face="Lucida Casual Italic"><font size=+0>Lucida Casual Italic
+font style text</font></font>
+<br><font face="Modern"><font size=+0>Modern font style text</font></font>
+<br><font face="Times New Roman"><font size=+0>Times New Roman font style
+text</font></font>
+<br><font face="Times New Roman Bold"><font size=+0>Times New Roman Bold
+font style text</font></font>
+<br><font face="Times New Roman Bold Italic"><font size=+0>Times New Roman
+Bold Italic font style text</font></font>
+<br><font face="Times New Roman Italic"><font size=+0>Times New Roman Italic
+font style text</font></font>
+<br><font face="Wide Latin"><font size=+0>Wide Latin font style text</font></font>
+<br><font size=+0><font face="WingDings">WingDings font style text</font><i>
+(WingDings)</i></font>
+<ol>&nbsp;
+<table BORDER CELLPADDING=10 BGCOLOR="#FFD700" >
+<tr>
+<td><b><font color="#FF0000">In this section you should see some Macintosh
+font styles!</font></b></td>
+</tr>
+</table>
+
+<p><font face="Avant Garde"><font size=+0>Avant Garde font style text</font></font>
+<br><font face="Bookman"><font size=+0>Bookman font style text</font></font>
+<br><font face="Chicago"><font size=+0>Chicago font style text</font></font>
+<br><font face="Courier"><font size=+0>Courier font style text</font></font>
+<br><font face="Geneva"><font size=+0>Geneva font style text</font></font>
+<br><font face="Helvetica"><font size=+0>Helvetica font style text</font></font>
+<br><font face="N Helvetica Narrow"><font size=+0>N Helvetica Narrow font
+style text</font></font>
+<br><font face="Monaco"><font size=+0>Monaco font style text</font></font>
+<br><font face="New Century Schlbk"><font size=+0>New Century Schlbk font
+style text</font></font>
+<br><font face="New York"><font size=+0>New York font style text</font></font>
+<br><font face="Palatino"><font size=+0>Palatino font style text</font></font>
+<br><font size=+0><font face="Symbol">Symbol font style text</font><i>
+(Symbol)</i></font>
+<br><font face="Times"><font size=+0>Times font style text</font></font>
+<br><font size=+0><font face="WingDings">WingDings font style text</font><i>
+(WingDings)</i></font></ol>
+
+<ol>&nbsp;
+<table BORDER CELLPADDING=10 BGCOLOR="#FFD700" >
+<tr>
+<td><b><font color="#FF0000">In this section you should see some Unix font
+styles!</font></b></td>
+</tr>
+</table>
+
+<p><font face="Charter"><font size=+0>Charter font style text</font></font>
+<br><font face="Clean"><font size=+0>Clean font style text</font></font>
+<br><font face="Courier"><font size=+0>Courier font style text</font></font>
+<br><font face="Fixed"><font size=+0>Fixed font style text</font></font>
+<br><font face="Helvetica"><font size=+0>Helvetica font style text</font></font>
+<br><font face="International"><font size=+0>International font style text</font></font>
+<br><font face="ITC Avent Garde Gothic"><font size=+0>ITC Avent Garde Gothic
+font style text</font></font>
+<br><font face="ITC Bookman"><font size=+0>ITC Bookman font style text</font></font>
+<br><font face="Laura"><font size=+0>Laura font style text</font></font>
+<br><font face="New Century Schoolbook"><font size=+0>New Century Schoolbook
+font style text</font></font>
+<br><font face="Palatino"><font size=+0>Palatino font style text</font></font>
+<br><font face="Rock"><font size=+0>Rock font style text</font></font>
+<br><font face="Terminal"><font size=+0>Terminal font style text</font></font>
+<br><font face="Times"><font size=+0>Times font style text</font></font>
+<br><font face="Utopia"><font size=+0>Utopia font style text</font></font></ol>
+
+<hr>
+<hr>
+<p><font size=+0>Your machine should not blow up.</font>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/browser/front-end/testcases/printing/large1.html&amp;rev=&amp;root=/cvsroot/">Last modified January 14,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

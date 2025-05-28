@@ -1,0 +1,451 @@
+<HTML>
+<HEAD>
+<TITLE>mozilla.org</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>5.0 Project (seamonkey)</b>
+<br><b>Mail and News Component</b>
+<br><b>Mime Parts on Demand (MPOD)</b>
+<p>Written by: <b><a href="mailto:pmock@netscape.com">Peter Mock</a></b>
+<p><b>History:</b>
+<br>120998&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Revised for seamonkey
+<br>010799&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Updated footer and
+header
+<br>011199&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Minor update
+<br>011499&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Incorporated suggestions
+from Chrisf
+<p><b>Reviewed by: Chris Fuchs</b> on 01/12/99
+<p><b>References:</b>
+<br>UI Specification:&nbsp; IMAP Mime Parts on Demand
+<p>
+<hr WIDTH="100%">
+<br>Description: This is an IMAP only feature.&nbsp; The IMAP protocol
+lets us selectively download parts of a message.&nbsp; When displaying&nbsp;
+messages that have large attachments, it is more efficient to download
+and display just the message body.&nbsp; The user can download the file
+attachment at any time. This feature is refer to as "MIME parts on demand,"
+or MPOD.&nbsp; No functional changes expected according to developer.&nbsp;
+Note, Mission Control features are not covered in this QA test spec.
+<p>Perquisite: the file attachment you use should not be files that are
+normally displayed in line such as Text, Gif, JPEG, and BMP.&nbsp; I suggest
+using MS Office documents for file attachments.
+<ol TYPE=A>
+<li>
+Verify the default MPOD preferences</li>
+
+<ol>
+<li>
+Verify the default state for MPOD is to be enabled.&nbsp; Send yourself
+a message that has a large word document greater than 30k.&nbsp; The attachment
+should not be downloaded.</li>
+
+<li>
+Verify you can disable MPOD by adding the following user preference to
+the pref.js file.&nbsp; "mail.imap.mime_parts_on_demand"&nbsp;&nbsp;&nbsp;
+- TRUE if enabled (default);&nbsp; if FALSE, we never do it</li>
+
+<li>
+Verify the default attachment size before MPOD takes effect is 30K.</li>
+
+<ol TYPE=a>
+<li>
+Send a attachment less than 30k.&nbsp; The attachment should be downloaded</li>
+
+<li>
+Send a attachment greater than or equal to 30K.&nbsp; The attachment should
+not be downloaded.</li>
+</ol>
+
+<li>
+Verify you can change the default MPOD threshold.&nbsp; You want to add
+the following user preference. "mail.imap.mime_parts_on_demand_threshold"&nbsp;&nbsp;&nbsp;
+(message size, in bytes, above which we try using MIME parts on demand.&nbsp;
+Default is 30k.)</li>
+
+<ol TYPE=a>
+<li>
+Change the size to 100k then test the new setting</li>
+
+<li>
+Change the size to 1 MB then test the new setting</li>
+</ol>
+
+<li>
+Verify you can change the maximum depth of a message which we will try
+to parse and use MPOD.&nbsp;&nbsp; You want to add the following user preference
+"mail.imap.mime_parts_on_demand_max_depth" - (The maximum depth of a message
+which we will try to parse and use MPOD for.&nbsp; Depth is defined as
+how many layers of forwarding there are. Default is 15.&nbsp; If we are
+trying to parse the body structure of a message which goes deeper than
+this, we will stop parsing and revert back to a normal full message fetch.&nbsp;
+This is to prevent attacks with malicious, extremely complex messages.)</li>
+
+<ol TYPE=a>
+<li>
+Send a sample MS Outlook message to test the default.&nbsp; You may need
+to look at the IMAP protocol log (Need to create a MS test message)</li>
+
+<li>
+Send a sample MS Express message to test the default.&nbsp; You may need
+to look at the IMAP protocol log (Need to create a MS test message)</li>
+</ol>
+</ol>
+
+<li>
+Verify the feedback given in the message that contains an attachment.</li>
+
+<ol>
+<li>
+Verify that the attachment description text read, "Not downloaded with
+message" or a similar phase</li>
+
+<li>
+Verify that the View | Page Source reads, "This body part will be downloaded
+on demand." or a similar phase</li>
+
+<li>
+Add the easter egg user preference which will enable you to see if the
+attachment has been downloaded.&nbsp; Add the following preference, "mailnews.color_tag_attachments"&nbsp;&nbsp;
+(FALSE by default; if TRUE, we attach a colored tag to each attachment
+in the message to indicate whether or not it has been downloaded as part
+of the message.&nbsp; green = downloaded, orange = not downloaded.&nbsp;
+This pref. can be useful for testing.)</li>
+
+<ol TYPE=a>
+<li>
+Send a attachment less than 30k.&nbsp; The attachment should be downloaded
+and display a green bar.</li>
+
+<li>
+Send a attachment greater than or equal to 30K.&nbsp; The attachment should
+not be downloaded and display a orange bar.</li>
+</ol>
+
+<li>
+Expand the Size column in the Thread pane</li>
+
+<ol TYPE=a>
+<li>
+Verify that attachments that are automatically downloaded have a file size
+less than 30k</li>
+
+<li>
+Verify that attachments that are not automatically downloaded greater or
+equal to 30k</li>
+</ol>
+</ol>
+
+<li>
+Verify you can save the file attachment that has not been downloaded.&nbsp;
+Perform these tests in the Message pane.</li>
+
+<ol>
+<li>
+Verify you can click on attachment link to download and save the attachment</li>
+
+<li>
+Verify you can right click on the attachment link and use the context menu
+"save link as" to download and save the attachment</li>
+
+<li>
+Verify you can open the attachment pane (bottom of the message) and double
+click on the attachment link to download and save the attachment</li>
+
+<li>
+Verify you can open the attachment pane (bottom of the message) and right
+click on the attachment link and use the context menu "Save Attachment
+As" to download and save the attachment</li>
+
+<li>
+Verify you can open the attachment pane (bottom of the message) and right
+click on the attachment link and use the context menu "Open Attachment"
+to download and save the attachment</li>
+</ol>
+
+<li>
+Repeat the above section but perform the tests in the Message Window</li>
+
+<li>
+Verify the following Message actions which does not require the file attachment
+to be downloaded (it uses a shell).&nbsp; To verify, it may require looking
+at the IMAP Protocol log.&nbsp; Assume that the file attachment is greater
+than the default setting.&nbsp; Perform these tests in the Message pane.</li>
+
+<ol>
+<li>
+Set the View message option to view attachments in line.&nbsp; Verify that
+has a file attachment (not downloaded) does not automatically download</li>
+
+<li>
+Set the View message option to not view attachments in line.</li>
+
+<ol TYPE=a>
+<li>
+Receive a message that has a plain text attachment and verify the entire
+message including text attachment was not downloaded</li>
+
+<li>
+Receive a message that has a message body which is a multipart type (multipart/mixed,
+multipart/related, etc.) and verify that we download that multipart's first
+part.&nbsp; For example, attach a web page to produce a multipart/mixed
+message.</li>
+</ol>
+
+<li>
+Verify viewing a message page source (View | Page Source) that has a file
+attachment (not downloaded) does not automatically download</li>
+
+<li>
+Verify Quoting</li>
+
+<ol TYPE=a>
+<li>
+With automatically quoting enable, reply to a message that has a file attachment
+and verify that the attachment was not downloaded.</li>
+
+<li>
+Forward quote a message that has a file attachment and verify that the
+attachment was not downloaded</li>
+
+<li>
+Forward in line a message that has a file attachment and verify that the
+attachment
+was not downloaded</li>
+
+<li>
+With automatically quoting disable, reply to a message then press the quote
+button located on the toolbar.&nbsp; Verify that the attachment was not
+downloaded.</li>
+</ol>
+
+<li>
+Verify when you print a message that has a file attachment, the attachment
+was not downloaded</li>
+</ol>
+
+<li>
+Repeat the above section but perform the tests in the Message Window</li>
+
+<li>
+Verify the following Messenger actions which should always read the entire
+message including attachments.&nbsp; Assume message has a file attachment.</li>
+
+<ol>
+<li>
+Forward a message as attachment and verify that the attachment was downloaded</li>
+
+<li>
+Synchronize and Go Offline then verify messages that has file attachment
+was downloaded</li>
+
+<li>
+Move/Copy to Offline Folder then Synchronize and verify messages that has
+file attachment were all downloaded</li>
+
+<li>
+Save Message and verify the attachment was downloaded</li>
+
+<li>
+Edit Message and verify the attachment was downloaded</li>
+</ol>
+
+<li>
+Verifying if the message shell and attachment has been cached&nbsp; (Use 
+IMAP Protocol logging).&nbsp; Verify the IMAP log to verify that the attachment
+was not downloaded again.</li>
+
+<ol>
+<li>
+Receive a message with an attach Word document (less than 30K).&nbsp; Select
+another message then re-select this message and verify that the shell and
+file attachment was not downloaded again</li>
+
+<li>
+Receive a message with an attach Word document (greater than 30K and less
+than 1 MB)</li>
+
+<ol TYPE=a>
+<li>
+Select another message then re-select this message and verify that the
+shell was not downloaded again</li>
+
+<li>
+Forward this message as a file attachment and verify the shell and attachment
+was downloaded from the server</li>
+</ol>
+
+<li>
+Receive a message with an attach Word document greater than 1 MB</li>
+
+<ol TYPE=a>
+<li>
+Select another message then re-select this message and verify that the
+shell&nbsp; was not downloaded again</li>
+
+<li>
+Save the attachment.&nbsp; Select another message then re-select this message
+and verify that the attachment may have been downloaded again</li>
+</ol>
+</ol>
+
+<li>
+Verify Signed &amp; Encrypted messages</li>
+
+<ol>
+<li>
+Verify encrypted message are always downloaded in full.&nbsp; (It is assumed
+from the outset that encrypted messages cannot benefit from this feature
+because their MIME structure is hidden from us before they are decrypted.)</li>
+
+<li>
+Verify signed messages that if there are any parts of the message that
+are not downloaded, the signature will check out as invalid since it uses
+all the parts to compute the signature.&nbsp; (Note: instead of displaying
+this as invalid, we will display it as "Unverified Signature."&nbsp; If
+the user chooses to verify the signature by clicking on the signature icon,
+we will re-download the whole message and display the correct signature
+information.)</li>
+</ol>
+
+<li>
+Verify MPOD works with multiple attachments.&nbsp; Suggestion: use MS Office
+document greater than 30k but less than 1MB</li>
+
+<ol>
+<li>
+Send a message to yourself with 2 or more file attachments, verify neither
+attachments are downloaded</li>
+
+<li>
+Verify you save both attachments one at a time</li>
+
+<li>
+Forward the message as an attachment and verify all attachments are downloaded</li>
+
+<li>
+Deselect the mail message and re-select the message.&nbsp; Verify the attachment
+is cached</li>
+</ol>
+
+<li>
+Verify MPOD works with complex body structures.&nbsp; Verify MPOD functions
+as expected.</li>
+
+<ol>
+<li>
+Send a message that has a double forwarded message with one external attachment
+on each</li>
+
+<li>
+Send a message that has a double forwarded message with one in line attachment
+on each and one external attachment on each</li>
+
+<li>
+Send a message that has a triple-forwarded message with one external attachment
+on each</li>
+
+<li>
+Send a message that has a triple-forwarded message with one in line attachment
+on each and with one external attachment on each</li>
+
+<li>
+Send a message that has been forwarded 10 times message with one external
+attachment on each</li>
+
+<li>
+Send a message that has been forwarded 10 times message with one in line
+attachment on each and with one external attachment on each</li>
+</ol>
+</ol>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-mpod.html&amp;rev=&amp;root=/cvsroot/">Last modified December 10,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

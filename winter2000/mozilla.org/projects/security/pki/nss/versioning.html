@@ -1,0 +1,314 @@
+<HTML>
+<HEAD>
+<TITLE>Content Version Numbers in cert7.db</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<center>
+<h2>Content Version Numbers in the Certificate Database</h2>
+<i><FONT SIZE="-1">
+
+Newsgroup: 
+<A HREF="news://news.mozilla.org/netscape.public.mozilla.crypto">netscape.public.mozilla.crypto</A><BR>
+
+Technical contact: 
+<A HREF="mailto:roeber@netscape.com?subject=cert db version numbers feedback">Frederick Roeber</A><BR>
+
+Yell at the manager: 
+<A HREF="mailto:lord@netscape.com?subject=cert db version numbers feedback">Bob Lord</A></FONT></i>
+</center>
+
+
+<p>NSS has traditionally contained a set of pre-trusted root certificates
+provided by a few root certificate authorities. These authorities
+and the basic trust information can be seen in the Communicator Security
+Advisor (click on the lock), under "Certificates / Signers."
+<p>Some companies consider their certificates "proprietary software," so
+we had to sanitize out their roots and replace them with a couple sample
+certificates to illustrate how the code works. See the file lib/cert/certinit.c.
+
+<p>In the original codebase, all certificate and trust information is kept
+in the certificate database (e.g., "cert7.db"). The physical format
+of this database is described <a href="db_formats.html">here</a>. Upon NSS
+initialization, this database would be created or updated with the built-in
+information. (This information proved much more dynamic than originally
+expected; in the future, we wish to move this basic trust info to one or
+more specific "data-only" PKCS#11 modules: see the code in lib/ckfw/builtins/).
+
+<p>The code that creates or updates the database is in lib/cert/certinit.c. 
+Specifically, "CERT_InitCertDB" creates a new database, and "CERT_AddNewCerts" updates
+the database when a new version of the client is run with an old database.
+<p>The certificates are stored in base64 form in static char arrays.
+<p>The array "initialcerts" provides instructions on updating a database. 
+This is an array of structures with the following format:
+<br>
+<blockquote><tt>typedef struct {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; char *cert;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; char *nickname;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; CERTCertTrust trust;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; int updateVersion;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; certUpdateOp op;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; CERTCertTrust trustDelta;</tt>
+<br><tt>} certInitEntry;</tt></blockquote>
+The cert field points to the base64-encoded cert. The nickname contains
+the text name that appears in the security advisor. The trust field
+contains the basic trust bits for the three subjects of SSL, S/MIME, and
+object signing. Usually three flags have to be set: CERTDB_VALID_CA,
+CERTDB_TRUSTED_CA, and CERTDB_NS_TRUSTED_CA. (These flags are defined
+in lib/cert/certdb.h). The update version is the content version
+number at which this entry appeared. The code's version is CERT_DB_CONTENT_VERSION
+in certdb.h. The op is the update operation to perform, usually certUpdateAdd
+or certUpdateAddTrust. Finally, the trustDelta field is used for
+some update operations.
+<p>When the database is being updated, CERT_AddNewCerts loops through the
+initialcerts array. Any entry with an updateVersion greater than
+the ContentVersion field in the database is acted upon. The certUpdateOp
+operations are:
+<ul>
+<li>
+<tt>certUpdateNone<br>
+</tt>This is a no-op.</li>
+
+<li>
+<tt>certUpdateAdd<br>
+</tt>The cert is added to the database, with the trust information as specified
+in "trust."</li>
+
+<li>
+<tt>certUpdateDelete<br>
+</tt>The cert is deleted from the database. I don't think we've
+ever used this.</li>
+
+<li>
+<tt>certUpdateAddTrust<br>
+</tt>If the cert exists, the trust bits in "trustDelta" are OR'ed into
+the trust info stored in the database. In addition to allowing the
+root CA vendors to change their mind, this allowed us to add the "step-up" bit
+to roots when the vendors received export clearance to issue "step-up" certs. 
+("Step-up" certs are ones which let export-grade clients use strong crypto.)</li>
+
+<li>
+certUpdateRemoveTrust<br>
+If the cert exists, the trust bits in "trustDelta" are removed from
+the trust info stored in the database. This allows root CA vendors
+to change their mind.</li>
+
+<li>
+certUpdateSetTrust<br>
+If the cert exists, the trust info stored in the database is set to be
+the value in "trustDelta." This also allows root CA vendors to change
+their mind.</li>
+</ul>
+
+<h2>
+Example</h2>
+As an example, let us suppose that the first version of the NSS code contained
+two root CA certificates from Example.com: one for server certs, and
+one for individual certs. Originally, they wanted the first to be
+trusted for SSL server authentication, and the second for s/mime and object
+signing. The first version of the code would look like this:
+<p>In certdb.h:
+<blockquote><tt>#define CERT_DB_CONTENT_VERSION 1</tt></blockquote>
+In certinit.c:
+<blockquote><tt>static char example_com_server_ca[] = "....";</tt>
+<br><tt>static char example_com_individual_ca[] = "....";</tt><tt></tt>
+<p><tt>static certInitEntry initialcerts[] = {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example_com_server_ca,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Example.com Server
+CA",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&nbsp;DEFAULT_TRUST_FLAGS,
+0, 0 },</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; certUpdateAdd,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&nbsp;0, 0, 0 }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; },</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example_com_individual_ca,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Example.com Individual
+CA",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { 0, DEFAULT_TRUST_FLAGS,
+DEFAULT_TRUST_FLAGS },</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; certUpdateAdd,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&nbsp;0, 0, 0 }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>};</tt>
+<br><tt></tt></blockquote>
+Then let us suppose that Example.com received export approval to issue
+step-up server certs, and they also decided that they'd prefer to have
+a third root specifically for object signing. The next version of
+the code might look like this:
+<p>In certdb.h:
+<blockquote><tt>#define CERT_DB_CONTENT_VERSION 2</tt></blockquote>
+In certinit.c:
+<blockquote><tt>static char example_com_server_ca[] = "....";</tt>
+<br><tt>static char example_com_individual_ca[] = "....";</tt>
+<br><tt>static char example_com_objsign_ca[] = "....";</tt><tt></tt>
+<p><tt>static certInitEntry initialcerts[] = {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example_com_server_ca,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Example.com Server
+CA",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&nbsp;DEFAULT_TRUST_FLAGS
+|&nbsp;CERTDB_GOVT_APPROVED_CA, 0, 0 },</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; certUpdateAdd,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&nbsp;0, 0, 0 }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; },</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example_com_server_ca,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Example.com Server
+CA",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { DEFAULT_TRUST_FLAGS
+| CERTDB_GOVT_APPROVED_CA, 0, 0 },</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; certUpdateAddTrust,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&nbsp;CERTDB_GOVT_APPROVED_CA,
+0, 0 }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; },</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example_com_individual_ca,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Example.com Individual
+CA",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { 0, DEFAULT_TRUST_FLAGS,
+0 },</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; certUpdateAdd,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { 0, 0, 0 }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; },</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example_com_individual_ca,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Example.com Individual
+CA",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { 0, DEFAULT_TRUST_FLAGS,
+0 },</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; certUpdateRemoveTrust,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&nbsp;0, 0, DEFAULT_TRUST_FLAGS
+}</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; },</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example_com_objsign_ca,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Example.com Code Signing
+CA",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { 0, 0, DEFAULT_TRUST_FLAGS
+},</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; certUpdateAdd,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&nbsp;0, 0, 0 }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>};</tt>
+<br><tt></tt>&nbsp;</blockquote>
+
+<h2>
+One dimensional</h2>
+This scheme -- which admittedly grew over time -- worked when there was
+a one-dimensional sequence of the Netscape client products. Unfortunately,
+this scheme is not going to work if NSS is used in multiple divergent clients. 
+In particular, we're afraid someone will write a program based on NSS,
+add their own root cert to their code (incrementing the database content
+version number) and release that program. Anyone else who makes
+a program with a similarly-numbered change (including future versions of
+Netscape, iPlanet, or mozilla.org programs) would find that their root
+trust information would not update properly. The only way this
+would work is if we all coordinated database content version numbers, which
+I don't think will be workable, especially in the long run.
+<h2>
+Going forward</h2>
+Luckily, we had already been planning on moving to a better system. 
+We would like to move all sources of data -- the local database, ldap servers,
+these builtins, etc. -- to "data-only" PKCS#11 modules. This
+is in fact why we wrote the "Cryptoki Framework" in lib/ckfw. 
+Different products could release small modules with their own trusted roots,
+and users could install any number of these from various sources.
+<p>We have defined a PKCS#11 "trust object" definition. The
+current code does not yet make use of "trust objects," but adding
+that soon will allow the code to use these external data modules even before
+the databases are replaced.
+<br>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/security/pki/nss/versioning.html&amp;rev=&amp;root=/cvsroot/">Last modified February 11,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

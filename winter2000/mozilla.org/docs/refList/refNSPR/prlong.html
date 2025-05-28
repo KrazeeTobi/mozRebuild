@@ -1,0 +1,1660 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: 64 Bit Integers</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prerr.html">[Previous]</A> <A HREF="prbit.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<HR>
+<CENTER>
+<H2>
+<A NAME="64BitIntegers"></A>Chapter 15<BR>
+Long Long (64 Bit) Integers</H2></CENTER>
+This chapter describes the global functions you use to perform 64 Bit Integer
+operations. The functions define a portable API that may be reliably used
+in any environment. Most of the 64 bit integer operations are implemented
+as macros. The specific implementation of the macros are dependent on whether
+the compiler for the target platform supports 64 bit integers.
+
+<P>For a specific target platform, if 64 bit integers are supported for
+that platform, define HAVE_LONG_LONG at compile time.
+
+<P>Where 64 bit integers are desired, use of NSPR's implementation is recommended
+to ensure cross platform compatibility.
+<H2>
+<A NAME="64BitTypes"></A>64 Bit Integer Types</H2>
+NSPR provides two <A HREF="prtyp.html#1027642">64 Bit Integer Types.</A>
+These types are <A HREF="prtyp.html#1027644">PRInt64</A> and
+<A HREF="prtyp.html#1027652">PRUint64</A> .
+<H2>
+<A NAME="64BitFunctions"></A>64 Bit Integer Functions</H2>
+The API defined for the 64 bit integer functions is consistent across all
+supported platforms.
+<DL>
+<DD>
+<A HREF="#InitAndLimits">Initialization and Limits</A></DD>
+
+<DL>
+<DD>
+<A HREF="#ll_maxint">LL_MaxInt</A></DD>
+
+<DD>
+<A HREF="#ll_minint">LL_MinInt</A></DD>
+
+<DD>
+<A HREF="#ll_zero">LL_Zero</A></DD>
+
+<DD>
+<A HREF="#ll_init">LL_INIT</A></DD>
+</DL>
+
+<DD>
+<A HREF="#RelationalOperators">Relational Operators</A></DD>
+
+<DL>
+<DD>
+<A HREF="#ll_is_zero">LL_IS_ZERO</A></DD>
+
+<DD>
+<A HREF="#ll_eq">LL_EQ</A></DD>
+
+<DD>
+<A HREF="#ll_ne">LL_NE</A></DD>
+
+<DD>
+<A HREF="#ll_ge_zero">LL_GE_ZERO</A></DD>
+
+<DD>
+<A HREF="#ll_cmp">LL_CMP</A></DD>
+
+<DD>
+<A HREF="#ll_ucmp">LL_UCMP</A></DD>
+</DL>
+
+<DD>
+<A HREF="#LogicalOperators">Logical Operators</A></DD>
+
+<DL>
+<DD>
+<A HREF="#ll_and">LL_AND</A></DD>
+
+<DD>
+<A HREF="#ll_or">LL_OR</A></DD>
+
+<DD>
+<A HREF="#ll_xor">LL_XOR</A></DD>
+
+<DD>
+<A HREF="#ll_or2">LL_OR2</A></DD>
+
+<DD>
+<A HREF="#ll_not">LL_NOT</A></DD>
+</DL>
+
+<DD>
+<A HREF="#MathOperators">Arithmetic Operators</A></DD>
+
+<DL>
+<DD>
+<A HREF="#ll_neg">LL_NEG</A></DD>
+
+<DD>
+<A HREF="#ll_add">LL_ADD</A></DD>
+
+<DD>
+<A HREF="#ll_sub">LL_SUB</A></DD>
+
+<DD>
+<A HREF="#ll_mul">LL_MUL</A></DD>
+
+<DD>
+<A HREF="#ll_div">LL_DIV</A></DD>
+
+<DD>
+<A HREF="#ll_mod">LL_MOD</A></DD>
+</DL>
+
+<DD>
+<A HREF="#ShiftOperators">Shift Operators</A></DD>
+
+<DL>
+<DD>
+<A HREF="#ll_shl">LL_SHL</A></DD>
+
+<DD>
+<A HREF="#ll_shr">LL_SHR</A></DD>
+
+<DD>
+<A HREF="#ll_ushr">LL_USHR</A></DD>
+
+<DD>
+<A HREF="#ll_ishl">LL_ISHL</A></DD>
+</DL>
+
+<DD>
+<A HREF="#ConversionOperators">Conversion Operators</A></DD>
+
+<DL>
+<DD>
+<A HREF="#ll_l2i">LL_L2I</A></DD>
+
+<DD>
+<A HREF="#ll_l2ui">LL_L2UI</A></DD>
+
+<DD>
+<A HREF="#ll_l2f">LL_L2F</A></DD>
+
+<DD>
+<A HREF="#ll_l2d">LL_L2D</A></DD>
+
+<DD>
+<A HREF="#ll_i2l">LL_I2L</A></DD>
+
+<DD>
+<A HREF="#ll_ui2l">LL_UI2L</A></DD>
+
+<DD>
+<A HREF="#ll_f2l">LL_F2L</A></DD>
+
+<DD>
+<A HREF="#ll_d2l">LL_D2L</A></DD>
+
+<DD>
+<A HREF="#ll_udivmod">LL_UDIVMOD</A></DD>
+</DL>
+</DL>
+
+<H3>
+<A NAME="InitAndLimits"></A>Initialization and Limits</H3>
+Long Long initialization functions initialize a PRInt64 data item. The
+limit functions initialize a 64 bit integer to the highest or lowest possible
+value for a 64 bit integer.
+<H4>
+<A NAME="ll_maxint"></A>LL_MaxInt</H4>
+Returns the a 64 bit integer whose value is the largest possible value.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h>
+
+PRInt64 LL_MaxInt( void );</PRE>
+
+<H5>
+Parameter</H5>
+The function has no parameter.
+<H5>
+Returns</H5>
+The largest possible value for a 64 bit integer.
+<H5>
+Description</H5>
+Return the largest possible value for a 64 bit integer.
+<H4>
+<A NAME="ll_minint"></A>LL_MinInt</H4>
+Returns the a 64 bit integer whose value is the least possible value.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h>
+
+PRInt64 LL_MinInt( void );</PRE>
+
+<H5>
+Parameter</H5>
+The function has no parameter:
+<H5>
+Returns</H5>
+The smallest possible value for a 64 bit integer.
+<H5>
+Description</H5>
+Return the smallest possible value for a 64 bit integer.
+<H4>
+<A NAME="ll_zero"></A>LL_Zero</H4>
+Return a PRInt64 value of zero.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h>
+
+PRInt64 LL_Zero( void );</PRE>
+
+<H5>
+Parameter</H5>
+The function has no parameter:
+<H5>
+Returns</H5>
+zero.
+<H5>
+Description</H5>
+
+<H4>
+<A NAME="ll_init"></A>LL_INIT</H4>
+Initialize a 64 bit integer.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h>
+
+PRInt64 LL_INIT(PRInt32 hi, PRInt32 lo );</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameters:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>hi</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The most significant 32 bit part of the
+64 bit integer</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>lo</PRE>
+</TD>
+
+<TD>The least significant 32 bit part of the 64 bit integer</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+A 64 bit integer containing the initialized value.
+<H5>
+Description</H5>
+LL_INIT uses two 32 bit arguments: hi and lo to assemble a 64 bit integer.
+<H3>
+<A NAME="RelationalOperators"></A>Relational Operators</H3>
+Note that the relational operators are implemented as macros. The return
+value is platform dependent that should be treated as an int. Make no other
+assumptions about its value.
+<H4>
+<A NAME="ll_is_zero"></A>LL_IS_ZERO</H4>
+Evaluate a 64 bit integer for zero.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>int LL_IS_ZERO(
+    PRInt64 a );</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>a</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A 64 bit integer to be evaluated for zero.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+Non-zero when <B>a</B> is equal to zero; zero when <B>a</B> is not equal
+to zero.
+<H5>
+Description</H5>
+LL_IS_ZERO evaluates the argument for zero.
+<H4>
+<A NAME="ll_eq"></A>LL_EQ</H4>
+Compare two 64 bit integers for equality.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>int LL_EQ(
+    PRInt64 a,
+    PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>a</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>First comparand.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second comparand.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+Non-zero when <B>a</B> is equal to <B>b, </B>otherwise zero.
+<H5>
+Description</H5>
+The first parameter, <B>a</B> is compared to the second <B>b</B>.
+<H4>
+<A NAME="ll_ne"></A>LL_NE</H4>
+Compare two 64 bit integers for inequality.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>int LL_NE(
+    PRInt64 a,
+    PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>a</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>First comparand.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second comparand.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+Non-zero when <B>a</B> is not equal to <B>b</B>, otherwise zero.
+<H5>
+Description</H5>
+The first comparand, a, is compared to the second comparand, b. The result
+is non-zero if the two comparands are not equal.
+<H4>
+<A NAME="ll_ge_zero"></A>LL_GE_ZERO</H4>
+Evaluate a 64 bit integer for greater than or equal to zero.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>int LL_GE_ZERO(
+    PRInt64 a );</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>a</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A 64 bit integer to be evaluated .</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+Non-zero when <B>a</B> is greater than or equal to zero, otherwise zero.
+<H5>
+Description</H5>
+Evaluates the parameter for greater than or equal to zero.
+<H4>
+<A NAME="ll_cmp"></A>LL_CMP</H4>
+Algebraically compare two 64 bit integers
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>int LL_CMP(
+    PRInt64 a,
+    operator,
+    PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>a</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>First comparand</TD>
+</TR>
+
+<TR>
+<TD><PRE>operator</PRE></TD>
+
+<TD>A comparison operator.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second comparand</TD>
+</TR>
+</TABLE>
+
+<BR><B>Operator</B> is any valid C comparison operator.
+<H5>
+Returns</H5>
+Non-zero when <B>a</B> compared to <B>b</B> using operator is true, otherwise
+zero.
+<H5>
+Description</H5>
+LL_CMP algebraically compares <B>a </B>to <B>b</B> according to <B>operand.</B>
+<H5>
+Example</H5>
+
+<UL>
+<PRE>PRInt64 foo = LL_INIT( 0, 1 );
+PRInt64 bar = LL_INIT( 0, 2 );</PRE>
+
+<PRE>
+if ( LL_CMP( foo, &lt;, bar ))
+    DoIt(); /* This gets called */
+</PRE>
+</UL>
+
+<H4>
+<A NAME="ll_ucmp"></A>LL_UCMP</H4>
+Logically compare two 64 bit integers.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>LL_UCMP(
+    PRUint64 a,
+    operator,
+    PRUint64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>a</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>First comparand</TD>
+</TR>
+
+<TR>
+<TD><PRE>operator</PRE></TD>
+
+<TD>A comparison operator.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second comparand</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+Non-zero when <B>a</B> compared to <B>b</B> using <B>operator</B> is true,
+otherwise zero.
+<H5>
+Description</H5>
+LL_UCMP logically compares <B>a </B>to <B>b</B> according to <B>operand.</B>
+<BR>
+<H5>
+Example</H5>
+
+<PRE>
+    PRInt64 foo = LL_INIT( -1, 1 );
+    PRInt64 bar = LL_INIT( 0, 2 );
+
+    if ( LL_UCMP( foo, >=, bar ))
+        DoIt(); /* This gets called */
+</PRE>
+<H3>
+<A NAME="LogicalOperators"></A>Logical Operators</H3>
+The logical operators are implemented as macros. For each logical operator,
+a result argument will contain the result of the logical operation. The
+logical operators may evaluate to different results on different platforms,
+therefore the result of the logical operator macros should not be used.
+<H4>
+<A NAME="ll_and"></A>LL_AND</H4>
+Apply logical AND to 64 bit integer operands
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_AND(PRInt64 r, PRInt64 a, PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>Operand to and</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Operand to and</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void.
+<H5>
+Description</H5>
+LL_AND performs a logical and on operands <B>a</B> and <B>b</B> yielding
+result <B>r</B>.
+<H4>
+<A NAME="ll_or"></A>LL_OR</H4>
+Apply logical OR to 64 bit integer operands
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_OR(PRInt64 r, PRInt64 a, PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A pointer to the result value.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>Operand to and</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Operand to and</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void.
+<H5>
+Description</H5>
+Operand <B>a</B> is logically or'd with operand <B>b</B> yielding <B>r</B>.
+<H4>
+<A NAME="ll_xor"></A>LL_XOR</H4>
+Apply logical Exclusive OR (xor) to 64 bit integer operands
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_XOR(PRInt64 r, PRInt64 a, PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>Operand to and</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Operand to and</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand <B>a</B> is xor'd with operand <B>b</B> yielding <B>r</B>.
+<H4>
+<A NAME="ll_or2"></A>LL_OR2</H4>
+Apply logical OR to 64 bit integers
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_OR2(PRInt64 r, PRInt64 a);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value.</TD>
+</TR>
+
+<TR>
+<TD>a</TD>
+
+<TD>operand</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand <B>a</B> is logically OR'd with <B>r.</B> The result is placed
+in <B>r</B>.
+<H4>
+<A NAME="ll_not"></A>LL_NOT</H4>
+Invert bits in a 64 bit integer
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_NOT(PRInt64 r, PRInt64 a);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>a</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A pointer to the value to increment.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+All bits in operand <B>a</B> are inverted and the result is placed in <B>r</B>.
+<H3>
+<A NAME="MathOperators"></A>Arithmetic Operators</H3>
+The arithmetic operators are implemented as macros. For each arithmetic
+operator, a result argument contains the result of the arithmetic operation.
+The arithmetic operators may evaluate to different results on different
+platforms, therefore the result of the logical operator macros should not
+be used.
+<H4>
+<A NAME="ll_neg"></A>LL_NEG</H4>
+Negate a 64 bit integer.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_NEG( PRInt64 r, PRInt64 a);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>Operand to be negated</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+The operand <B>a</B> is negated. The result is placed in <B>r</B>.
+<H4>
+<A NAME="ll_add"></A>LL_ADD</H4>
+Add 64 bit integers.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_ADD(PRInt64 r, PRInt64 a, PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>First operand</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second operand</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operands a and b are arithmetically added. The result is placed in r.
+<H4>
+<A NAME="ll_sub"></A>LL_SUB</H4>
+
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_SUB(PRInt64 r, PRInt64 a, PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>First operand</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second operand</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand b is subtracted from operand a. The result is placed in r.
+<H4>
+<A NAME="ll_mul"></A>LL_MUL</H4>
+Multiply 64 bit integers.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_MUL(PRInt64 r, PRInt64 a, PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>First operand</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second operand</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand b is multiplied by operand a. The result is placed in r.
+<H4>
+<A NAME="ll_div"></A>LL_DIV</H4>
+Divide a 64 bit integer by another 64 bit integer.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_DIV(PRInt64 r, PRInt64 a, PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>First operand</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second operand</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+
+<H5>
+Description</H5>
+Operand a is divided by operand b. The result is placed in r.
+<H4>
+<A NAME="ll_mod"></A>LL_MOD</H4>
+Modulo divide a 64 bit integer by another 64 bit integer.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_MOD(PRInt64 r, PRInt64 a, PRInt64 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>64 bit integer result.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>64 bit integer dividend</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>64 bit integer divisor</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand a is divided by operand b. The remainder is placed in r.
+<H3>
+<A NAME="ShiftOperators"></A>Shift Operators</H3>
+The shift operators are implemented as macros. For each shift operator,
+a result argument contains the result of the shift operation. The shift
+operators may evaluate to different results on different platforms, therefore
+the result of the logical operator macros should not be used.
+<H4>
+<A NAME="ll_shl"></A>LL_SHL</H4>
+Shift a 64 bit integer to the left
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_SHL(PRInt64 r, PRInt64 a, PRInt32 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>First operand</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second operand</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand <B>a</B> is arithmetically shifted left <B>b</B> bits. The result
+is placed in <B>r</B>.
+<H4>
+<A NAME="ll_shr"></A>LL_SHR</H4>
+Shift a 64 bit integer to the right
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_SHL(PRInt64 r, PRInt64 a, PRInt32 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>First operand</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second operand</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand a is cast to a PRInt64 and arithmetically shifted right b bits.
+The result is placed in r.
+<H4>
+<A NAME="ll_ushr"></A>LL_USHR</H4>
+Logically right shift a 64 bit integer
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_USHR(PRInt64 r, PRInt64 a, PRInt32 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand <B>a</B> is logically shifted right <B>b</B> bits. The result is
+placed in <B>r</B>.
+<H4>
+<A NAME="ll_ishl"></A>LL_ISHL</H4>
+Shift a 64 bit integer to the left
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>LL_SHL(
+    PRInt64 r,
+    PRInt64 a,
+    PRInt32 b);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>r</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>The result value.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>First operand</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>Second operand</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand <B>a</B> is arithmetically shifted left <B>b</B> bits. The result
+is placed in <B>r</B>.
+<H3>
+<A NAME="ConversionOperators"></A>Conversion Operators</H3>
+
+<H4>
+<A NAME="ll_l2i"></A>LL_L2I</H4>
+Convert a 64 bit integer to a 32 bit integer
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_L2I(PRInt32 i, PRInt64 l);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>i</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>32 bit integer result</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>l</PRE>
+</TD>
+
+<TD>64 bit integer to be converted</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Convert 64 bit integer <B>l</B> to a 32 bit integer <B>i</B>.
+<BR>
+<H4>
+<A NAME="ll_l2ui"></A>LL_L2UI</H4>
+Convert 64 bit integer to unsigned 32 bit integer.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_L2UI(PRUint32 i, PRInt64 l);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>i</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>32 bit integer result</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>l</PRE>
+</TD>
+
+<TD>64 bit integer to be converted</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Operand <B>l</B> is converted to unsigned 32 bit integer <B>i</B>.
+<H4>
+<A NAME="ll_i2f"></A>LL_L2F</H4>
+Convert a 64 bit integer to a float
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_L2F(PRUint32 f, PRInt64 l);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>f</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>float result</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>l</PRE>
+</TD>
+
+<TD>64 bit integer to be converted</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+64 bit integer<B> l</B> is converted to a float <B>f</B>.
+<H4>
+<A NAME="ll_l2d"></A>LL_L2D</H4>
+Convert a 64 bit integer to a double
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_L2D(PRFloat64 d, PRInt64 l);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>d</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>PRFloat64 result</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>l</PRE>
+</TD>
+
+<TD>64 bit integer to be converted</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+64 bit integer <B>l</B> is converted to PRFloat64 <B>d</B>.
+<H4>
+<A NAME="ll_i2l"></A>LL_I2L</H4>
+Convert a 32 bit integer to a 64 bit integer.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_I2L(PRInt64 l, PRInt32 i);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>l</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>64 bit integer result</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>i</PRE>
+</TD>
+
+<TD>32 bit integer to be converted</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+32 bit integer <B>i</B> is converted to 64 bit integer <B>l</B>.
+<H4>
+<A NAME="ll_ui2l"></A>LL_UI2L</H4>
+Convert an unsigned 32 bit integer to a 64 bit integer.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_UI2L(PRInt64 l, PRUint32 i);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>l</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A 64 bit result.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>i</PRE>
+</TD>
+
+<TD>A 32 bit integer</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+The argument <B>i</B> is converted to a 64 bit integer result, <B>l</B>.
+<H4>
+<A NAME="ll_f2l"></A>LL_F2L</H4>
+Convert a float to a 64 bit integer
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_F2L(PRInt64 l, float f);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>l</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>64 bit integer result</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>f</PRE>
+</TD>
+
+<TD>floating point number to be converted</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+Floating point number <B>f </B>is converted to 64 bit integer, <B>l</B>.
+<BR>
+<H4>
+<A NAME="ll_d2l"></A>LL_D2L</H4>
+Convert a PRFloat64 to a 64 bit integer.
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>void LL_D2L(PRInt64 l, PRFloat64 d);</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>l</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>64 bit integer result.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>d</PRE>
+</TD>
+
+<TD>PRFloat64 number to be converted.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+PRFloat64 number <B>d</B> is converted to 64 bit integer <B>l</B>.
+<H4>
+<A NAME="ll_udivmod"></A>LL_UDIVMOD</H4>
+64 bit integer divide with both remainder and quotient
+<H5>
+Syntax</H5>
+
+<PRE>#include &lt;prlong.h></PRE>
+
+<PRE>
+void LLUDIVMOD(
+    PRUint64 *qp,
+    PRUint64 *rp,
+    PRUint64 a,
+    PRUint64 b);
+</PRE>
+
+<H5>
+Parameter</H5>
+The function has the following parameter:
+<BR>
+<TABLE BORDER=0 COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=BASELINE WIDTH="10%">
+<PRE>qp</PRE>
+</TD>
+
+<TD ALIGN=LEFT VALIGN=BASELINE>A pointer to an PRUint64 quotient.</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>rp</PRE>
+</TD>
+
+<TD>A pointer to a PRUint64 remainder</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>a</PRE>
+</TD>
+
+<TD>64 bit integer dividend</TD>
+</TR>
+
+<TR>
+<TD>
+<PRE>b</PRE>
+</TD>
+
+<TD>64 bit integer divisor</TD>
+</TR>
+</TABLE>
+
+<H5>
+Returns</H5>
+void
+<H5>
+Description</H5>
+The 64 bit integer <B>a</B> is divided by 64 bit integer <B>b</B> yielding
+unsigned 64 bit integer result quotient stored at <B>qp</B> and 64 bit
+unsigned remainder stored at <B>rp</B>.
+<BR>
+<HR WIDTH="100%">
+<BR>
+<A HREF="contents.html">[Contents]</A> <A HREF="prerr.html">[Previous]</A> <A HREF="prbit.html">[Next]</A> <A HREF="last.html">[Last]</A>
+<DIV ALIGN=right><I><FONT SIZE=-2>Last Updated: Tue Jul 14 10:24:44 PDT 1998</FONT></I>
+<HR SIZE=4></DIV>
+
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html" TARGET="_top">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/refList/refNSPR/prlong.html&amp;rev=&amp;root=/cvsroot/">Last modified July 17,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

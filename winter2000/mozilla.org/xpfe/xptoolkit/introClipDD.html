@@ -1,0 +1,416 @@
+<HTML>
+<HEAD>
+<TITLE>Introduction To The Clipboard and Drag &amp; Drop</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+<!--This file created 2/3/00 7:19 PM by Claris Home Page version 3.0 30 Day Trial-->
+
+   
+   <X-CLARIS-WINDOW TOP=77 BOTTOM=748 LEFT=134 RIGHT=901>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+
+
+<P><TABLE CELLSPACING=0 WIDTH="100%">
+   <TR>
+      <TD BGCOLOR="#6699FF">
+         <P><FONT SIZE="+1" FACE="Century Gothic" COLOR="#FFFFFF">Introduction
+         To The Clipboard and Drag &amp; Drop</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>&#91;<A HREF="index.html">Table of Contents</A>&#93;
+         &#91;<A HREF="windows.html">Previous: Windows and
+         Dialogs</A>&#93; &#91;<A HREF="clipboard.html">Next: The
+         Clipboard</A>&#93;</P>
+         
+         <P><B>Feature Owner:</B> <A HREF="mailto:pinkerton@netscape.com">Mike
+         Pinkerton</A></P>
+         
+         <H2>Overview</H2>
+         
+         <P>As far as Mozilla is concerned, transfering data between
+         applications via the clipboard and drag and drop are
+         virtually identical, even though the OS-specific mechanisms
+         under the hood are very different. The goal is to provide a
+         uniform API for inter- and intra-application communication
+         regardless of the transport mechanism used. This document
+         covers that API, and subsequent documents describe the
+         various services in detail.</P>
+         
+         <P>The meat of this API is <A HREF="http://lxr.mozilla.org/seamonkey/source/widget/public/nsITransferable.idl">nsITransferable</A>,
+         an interface to an object that contains various
+         representations, or "flavors," of a piece of data. Each
+         transferable holds only one item and its various
+         flavors.</P>
+         
+         <UL>
+            <LI>Data Flavors</LI>
+            
+            <LI>Data Objects</LI>
+            
+            <LI>Converters</LI>
+            
+            <LI>Using The Transferable</LI>
+         </UL>
+         
+         <H2>Data Flavors</H2>
+         
+         <P>Each piece of data, such as a hunk of text or a single
+         bookmark item in a tree, can (and should) have multiple
+         representations of the data of varying (usually decreasing)
+         fidelity. This allows other applications to still be able to
+         process the data even if they don't understand the richest
+         representation used by mozilla. For example, the hunk of
+         text might have html styled text, the stripped-down plain
+         text representation, and possibly a gif illustrating the
+         text. Mozilla knows what to do with the styled html, but
+         SimpleText, for example, does not, yet we still want to be
+         able to communicate with SimpleText.</P>
+         
+         <P>Each representation of the data is referred to as a
+         "<FONT COLOR="#009900">flavor</FONT>." When referring to
+         data in the transferable, you need to know the flavor. When
+         you can accept a variety of flavors, there are mechanisms
+         for asking for the best one.</P>
+         
+         <H3><FONT COLOR="#CC0000"><B>Important:</B></FONT></H3>
+         
+         <BLOCKQUOTE>Even though there is a flavor "text/plain" to
+            represent plain ASCII text, clients of the Clipboard and
+            the Drag and Drop Services should not use it -- use
+            "text/unicode" instead. Conversion to and from
+            "text/plain" is performed automatically within these
+            services. Assume all your data is double-byte and life
+            will be pure and good. Please fix any Clipboard/D&amp;D
+            code that uses "text/plain" directly ASAP, as it is not
+            guaranteed to work in the future.</BLOCKQUOTE>
+         
+         <H2>Data Objects</H2>
+         
+         <P>In order to work with XPConnect and allow writing
+         clipboard/drag&amp;drop code in JavaScript, the actual must
+         be wrapped in typed objects. The two most common of these
+         objects are <A HREF="http://lxr.mozilla.org/seamonkey/source/xpcom/ds/nsISupportsPrimitives.idl#40">nsISupportsString</A>
+         and <A HREF="http://lxr.mozilla.org/seamonkey/source/xpcom/ds/nsISupportsPrimitives.idl#47">nsISupportsWString</A>
+         for one byte and two byte strings, respectively.</P>
+         
+         <P>These "wrapper" objects must be created using the
+         component manager and the actual data to transfer must be
+         placed within them before passing the data to the
+         Transferable object. Here's a code snipped in JavaScript to
+         do this.</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+// create the wrapper and QI it to the right interface
+var wrapper = 
+  Components.classes&#91;"component://netscape/supports-string"&#93;.createInstance(Components.interfaces.nsISupportsString);
+if ( wrapper ) {
+  // ... get the data, place it in |id|
+  wrapper.data = id;
+}</PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <H2>Converters</H2>
+         
+         <P>&lt;&lt;talk about data converters&gt;&gt;</P>
+         
+         <H2>Using The Transferable</H2>
+         
+         <H3>Placing Data Into The Transferable</H3>
+         
+         <P>The basic usage pattern for adding data to the
+         transferable is as follows:</P>
+         
+         <OL>
+            <LI>Create the Transferable object</LI>
+            
+            <LI>Register the approprate data flavors</LI>
+            
+            <LI>Create the data objects for each flavor (as
+            above)</LI>
+            
+            <LI>Add the data objects to the transferable</LI>
+            
+            <LI>Pass the transferable to a service that will use the
+            data, such as the clipboard or drag&amp;drop
+            services</LI>
+         </OL>
+         
+         <P>Note that the flavor must be registered with the
+         transferable before data of that type can be added.
+         <FONT COLOR="#FF0000">&#91;Why? That seems quite stupid.
+         Shouldn't it just add it if it can't find it?&#93;</FONT>
+         Also note that the length parameter of setTransferData() is
+         in bytes, not characters, so for double-byte strings, you
+         need to make sure you do the math correctly.</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+// 1. create the transferable
+var trans = 
+  Components.classes&#91;"component://netscape/widget/transferable"&#93;.createInstance(Components.interfaces.nsITransferable);
+if ( trans ) {
+                  
+  // 2. register the data flavors
+  trans.addDataFlavor("text/html");
+  trans.addDataFlavor("text/unicode");
+                  
+  // 3. create the data objects
+  var textWrapper = 
+    Components.classes&#91;"component://netscape/supports-wstring"&#93;.createInstance(Components.interfaces.nsISupportsWString);
+  var htmlWrapper = 
+    Components.classes&#91;"component://netscape/supports-wstring"&#93;.createInstance(Components.interfaces.nsISupportsWString);
+                  
+  if ( textWrapper &amp;&amp; htmlWrapper ) {
+    // get the data
+    textWrapper.data = plainTextRepresentation;
+    htmlWrapper.data = htmlRepresentation;
+                  
+    // 4. add data objects to transferable
+    trans.setTransferData ( "text/html", htmlWrapper, id.length*2 );  // double byte data (len*2)
+    trans.setTransferData ( "text/unicode", textWrapper, id.length );  // double byte data (len*2)
+                  
+  }
+}                </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <H3>Retrieving Data From The Transferable</H3>
+         
+         <P>There are two basic cases from retrieving data from the
+         transferable: when you know exactly what you want and when
+         you have a list of several flavors you support and you want
+         the best one available (the more common case, probably). In
+         either case, the basic steps are similiar:</P>
+         
+         <OL>
+            <LI>Create the Transferable object</LI>
+            
+            <LI>Register the approprate data flavors (see below)</LI>
+            
+            <LI>Pass the transferable a service that will fill in the
+            data, such as the clipboard or drag and drop
+            service.</LI>
+            
+            <LI>Ask the transferable for the data (see below)</LI>
+         </OL>
+         
+         <P>The only tricky part (which only applies to JavaScript)
+         is that since the objects returned by
+         <FONT COLOR="#990066">get&#91;Any&#93;TransferData</FONT><FONT COLOR="#660066">()</FONT>
+         are out parameters, you must create new JS objects to hold
+         the result and the length. After these objects are filled
+         in, you can get at the actual out parameter values by
+         accessing the <FONT COLOR="#990066">value</FONT> member of
+         these objects.</P>
+         
+         <H4>When you know exactly what you're looking for</H4>
+         
+         <P>This is the simple case or the case where you only care
+         about one flavor. For this, use
+         <FONT COLOR="#990066">getTransferData()</FONT>.</P>
+         
+         <H4><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+// 1. create the transferable
+var trans = 
+  Components.classes&#91;"component://netscape/widget/transferable"&#93;.createInstance(Components.interfaces.nsITransferable);
+if ( trans ) {
+                  
+  // 2. register the data flavor you want
+  trans.addDataFlavor("text/unicode");
+                  
+  // 3. ...pass transferable to clipboard, etc...
+                  
+  // 4. ask transferable for the data. Need to create new JS
+  //    objects for the out params. 
+  var dataObj = new Object();
+  var len = new Object();
+  trans.getTransferData ( "text/unicode", dataObj, len );
+  if ( dataObj ) 
+    dataObj = dataObj.value.QueryInterface(Components.interfaces.nsISupportsWString);
+  if ( dataObj ) {
+   
+    // do something with the data
+    var id = dataObj.data;
+                  
+  }
+}            </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </H4>
+         
+         <H4>When you want the best available</H4>
+         
+         <P>The most common case is where a client supports a variety
+         of flavors (mozilla flavors plus some from other
+         applications), but certainly has a preference about which
+         flavors it wants have if they are present. For this, use
+         <FONT COLOR="#990066">getAnyTransferData()</FONT>.</P>
+         
+         <P>In order for
+         <FONT COLOR="#990066">getAnyTransferData()</FONT> to work
+         correctly, <B>the order in which you register them is very
+         important</B>. You must register the flavors you are
+         interested in from most interested to least interested
+         (usually highest fidelity to lowest, but not necessarily).
+         Haphazardly registering flavors in random order will cause
+         you to not get the flavor you are expecting.</P>
+         
+         <P><TABLE BORDER=1 BGCOLOR="#D0D0D0" WIDTH="80%" align=center>
+            <TR>
+               <TD>
+                  <PRE>
+                  
+// 1. create the transferable
+var trans = 
+  Components.classes&#91;"component://netscape/widget/transferable"&#93;.createInstance(Components.interfaces.nsITransferable);
+if ( trans ) {
+                  
+  // 2. register the data flavors you want, highest fidelity first!
+  trans.addDataFlavor("text/html");
+  trans.addDataFlavor("text/unicode");
+                  
+  // 3. ...pass transferable to clipboard, etc...
+                  
+  // 4. ask transferable for the best flavor. Need to create new JS
+  //    objects for the out params. 
+  var dataObj = new Object();
+  var bestFlavor = new Object();
+  var len = new Object();
+  trans.getAnyTransferData ( bestFlavor, dataObj, len );
+  if ( bestFlavor.value == "text/html" ||
+         bestFlavor.value == "text/unicode" ) {
+    if ( dataObj ) 
+      dataObj = dataObj.value.QueryInterface(Components.interfaces.nsISupportsWString);
+    if ( dataObj ) {  
+      // ...do something with the data. remember len is in bytes, not chars
+      var id = dataObj.data.substring(0, len.value / 2);
+    }
+  }
+}</PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>&nbsp;
+         
+         <HR SIZE=1 solid>
+         
+         &#91;<A HREF="index.html">Table of Contents</A>&#93;
+         &#91;<A HREF="windows.html">Previous: Windows and
+         Dialogs</A>&#93; &#91;<A HREF="clipboard.html">Next: The
+         Clipboard</A>&#93;
+         
+         <HR SIZE=1 solid>
+         
+         Contact us at <A HREF="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</A>.
+         Want to complain about the new documentation? Email
+         <A HREF="mailto:hyatt@netscape.com">Dave Hyatt</A>.</P>
+         
+         <P></P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/xptoolkit/introClipDD.html&amp;rev=&amp;root=/cvsroot/">Last modified February  4,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

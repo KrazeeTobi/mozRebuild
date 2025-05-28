@@ -1,0 +1,161 @@
+<HTML>
+<HEAD>
+<TITLE>Native Methods Needed by Grendel</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+<BASE TARGET=_top>
+
+<H1 ALIGN=CENTER>native methods needed by grendel
+<BR><FONT SIZE="3">by <A HREF="mailto:jwz@mozilla.org">Jamie Zawinski</A>
+<BR>20-Nov-1997
+</FONT></H1>
+
+<P>
+This document lists the system services that Grendel will require to
+function properly that are not provided by the core Java 1.1 API.
+Please add to this list as you find more examples.
+
+<P>
+<TABLE BORDER WIDTH="100%" CELLPADDING=4 CELLSPACING=2 BGCOLOR="#FEFFE6">
+ <TR>
+  <TH ALIGN=LEFT BGCOLOR=BLACK><FONT COLOR=WHITE>Service</FONT></TH>
+  <TH ALIGN=LEFT BGCOLOR=BLACK><FONT COLOR=WHITE>Platform</FONT></TH>
+  <TH ALIGN=LEFT BGCOLOR=BLACK><FONT COLOR=WHITE>Consequence</FONT></TH>
+ </TR>
+
+ <TR>
+  <TD VALIGN=TOP><TT>link()</TT> system call.</TD>
+  <TD VALIGN=TOP>Unix</TD>
+  <TD VALIGN=TOP> 
+      Mail file locking cannot work on Unix.
+      <P> 
+      We must have this.  It is critical.
+  </TD>
+ </TR>
+
+ <TR>
+  <TD VALIGN=TOP><TT>truncate()</TT> system call.</TD>
+  <TD VALIGN=TOP>All</TD>
+  <TD VALIGN=TOP>
+      If an error occurs while appending a message to a folder (such as
+      running out of disk space) it will be impossible to back out the
+      change.  The target folder will have had a partial message appended
+      to it (which is spelled ``mail file corruption.'')
+  </TD>
+
+ <TR>
+  <TD VALIGN=TOP>Read/write access to resource fork.</TD>
+  <TD VALIGN=TOP>Mac</TD>
+  <TD VALIGN=TOP>
+      Mac users will be unable to exchange files that have resources
+      (such as executables.)
+      <P>
+      Without the ability to read the resource fork of a dual-forked Mac
+      file, we will be unable to generate multipart/<WBR>appledouble messages.
+      Without the ability to write the resource fork of a Mac file, we 
+      will be unable to decode multipart/<WBR>appledouble messages.
+      <P>
+      Mac users will find this critical.
+  </TD>
+ </TR>
+
+ <TR>
+  <TD VALIGN=TOP><TT>chmod()</TT> and <TT>fchmod()</TT> system calls.</TD>
+  <TD VALIGN=TOP>Unix</TD>
+  <TD VALIGN=TOP> 
+      When we create new mail folders, or compact folders, or empty the
+      trash, the newly-created mail files will be world-readable by default.
+      The user will be able to correct this by hand later, but it opens a
+      window during which other users could read their mail.
+      <P>
+      When sending mail messages, we sometimes create temporary files in the
+      system's <TT>/tmp</TT> directory.  Without <TT>fchmod()</TT>, those
+      temporary files will be readable by others, exposing the user's 
+      <I>outgoing</I> mail to evesdropping as well.
+      <P> 
+      This is a pretty basic security/<WBR>privacy issue.
+  </TD>
+ </TR>
+
+</TABLE>
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/grendel/natives.html&amp;rev=&amp;root=/cvsroot/">Last modified September  9,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

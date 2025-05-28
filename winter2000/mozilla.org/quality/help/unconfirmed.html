@@ -1,0 +1,195 @@
+<HTML>
+<HEAD>
+<TITLE>Bug Triager's Guide: How to move a bug from UNCONFIRMED to NEW</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+<center><b><font size=+2>Bug Triager's Guide</font></b><br>
+<b>Moving a Bug from Unconfirmed to New</b></center>
+<p>
+<CENTER><font color="#990000"><B>DRAFT:  Comments to <a href="cbegle@mozilla.org">cbegle@mozilla.org</a></center></b></font>
+
+<p>
+Bugs from new bug reporters will initially have the status UNCONFIRMED.
+To move a bug from UNCONFIRMED to NEW, we need your help to verify that
+the bug is valid.
+<p>
+<b>Get Set Up</b>
+    <blockquote>
+    <ul>
+    <li>    Download a
+            <a href="ftp://ftp.mozilla.org/pub/mozilla/nightly/latest/">
+            current nightly build</a>.
+    <li>    Check out the
+            <a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=UNCONFIRMED&product=Browser&product=MailNews&cmdtype=doit">
+            current list of unconfirmed bugs</a>.
+    </ul>
+    </blockquote>
+
+<b>Get the Right Privileges</b>
+    <blockquote>
+    In order to confirm bugs, you need the "canconfirm" privilege.
+    <p>
+    If you've been active in Bugzilla, you may already have this privilege.
+    Check your <a href=
+    "http://bugzilla.mozilla.org/userprefs.cgi?bank=permissions">
+    Bugzilla preferences</a>.  If your Permissions include
+    "Can confirm a bug", then you are all set.
+    <p>
+    If you don't have this privilege, here's how to get it.
+    <ul>
+    <li>    If you've filed a few good bugs that have been fixed,
+            ask the developer or QA contact you're working
+            with if they will grant you that privilege.
+
+    <li>    If you haven't filed a lot of bugs, here's what to do:
+            <ul>
+            <li>    Go through all the steps under "Confirm the Unconfirmed"
+            <li>    cc: <a href="mailto:cbegle@mozilla.org">cbegle@mozilla.org</a>
+            <li>    If everything looks okay, you'll then get the "can confirm a bug"
+                    privilege.
+            </ul>
+
+    <li>    Come over to the #mozillazine IRC channel on irc.mozilla.org.
+            There are usually a few people there who look at your work
+            right away, and grant privileges.
+    </ul>
+    </blockquote>
+
+<b>Confirm the Unconfirmed</b>
+    <blockquote>
+    <ol>
+    <li> <b>Try to determine whether the bug is a duplicate</b>.
+    Use <a href="http://bugzilla.mozilla.org/query.cgi">this form </a> to
+    search the database.
+
+    <li>    <b>Try to reproduce the bug.</b>
+    If you are able to reproduce the bug,  note the fact that
+    you could reproduce the bug, and add these comments to the
+    <b>Additional Comments</b> field:
+        <p>
+        <ol>
+        <li>    Your Mozilla BuildID
+        <li>    Your platform
+        <li>    Your operating system
+        <!--li>    You might also ask the user if they noticed when the problem
+                first started occurring. -->
+        </ol>
+        <p>
+        If you are unable to reproduce the bug, note in the comments that you tried
+        to reproduce the bug and could not.  If others agree that the bug is
+        unreproducible, you can mark it INVALID or WORKSFORME, and tell the reporter
+        to reopen it if they can provide steps to reproduce the bug in a current build.
+
+    <li>    <b>Make the bug easy to understand</b>.
+            See
+            <a href="http://www.mozilla.org/quality/bug-writing-guidelines.html">
+            the bug writing guidelines</a> for the kind of information that is
+            useful in a bug, including steps to reproduce and a good description.
+
+    <li>    <b>Check the Product and Component</b>.  If the bug report is classified
+            incorrectly, move to the correct Product and Component.  Be sure to
+            click the radio button that says "reassign the bug to owner of the selected
+            component."
+
+    <li>    <b>Check the bug's Summary</b>.  Update the Summary so that it is
+            descriptive, and contains enough key words so that people searching
+            for this bug will find it.
+
+    <li>    <B>Change the status to <TT>NEW</TT></B>.
+
+    </ol>
+    </blockquote>
+
+<b>Optional, but Helpful</b>
+    <blockquote>
+    <ul>
+    <li>    <b>Add Keywords</b>. If you are familiar with <a href="http://bugzilla.mozilla.org/describekeywords.cgi">
+            keywords and their meanings</a>, please add the right keywords.
+    <li>    <b>Update <a href="http://bugzilla.mozilla.org/bug_status.html#severity">
+            severity</a></b> so that it corresponds to the Bugzilla guidelines.
+
+    <li>    <b>Add a stack trace</b> for crashing bugs.
+    <li>    Write a reduced test case.
+    <li>    Find a URL that demonstrates the problem.
+    </ul>
+    </blockquote>
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/help/unconfirmed.html&amp;rev=&amp;root=/cvsroot/">Last modified February 28,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

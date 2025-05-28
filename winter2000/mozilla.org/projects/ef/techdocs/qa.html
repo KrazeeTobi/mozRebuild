@@ -1,0 +1,179 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Quality Assurance Plan</TITLE>
+  <!-- CHANGED BY: PATRICK DIONISIO, 25-FEB-1997 -->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000" SIZE=+4>Electrical Fire</FONT></H2>
+
+
+<H2><FONT SIZE=+4>Quality Assurance Plan</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"electricalfire.gif" WIDTH="37" HEIGHT="37" ALIGN="BOTTOM" NATURALSIZEFLAG=
+"3"></A>  <A HREF="build/build.html"><IMG SRC="arrows/left.gif" WIDTH="37" HEIGHT=
+"37" ALIGN="BOTTOM" NATURALSIZEFLAG="3"></A><A HREF="index.html"><IMG SRC=
+"arrows/up_dark.gif" WIDTH="37" HEIGHT="37" ALIGN="BOTTOM" NATURALSIZEFLAG=
+"3"></A><A HREF="qa/initiallist.html"><IMG SRC="arrows/right.gif" WIDTH=
+"37" HEIGHT="37" ALIGN="BOTTOM" NATURALSIZEFLAG="3"></A></PRE>
+
+<DL>
+  <DT><P ALIGN=RIGHT><A HREF="qa/initiallist.html"><FONT SIZE=+2>Initial
+  Bytecode List</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="qa/example1.html"><FONT SIZE=+2>Sample Test
+  1</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="qa/example2.html"><FONT SIZE=+2>Sample Test
+  2</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="qa/example3.html"><FONT SIZE=+2>Sample Test
+  3</FONT></A>
+</DL>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P><B><FONT SIZE=+2>Objectives</FONT></B></P>
+
+<P>The objectives are: 1) to verify correctness of a new Java Runtime, 2)measure 
+  size and performance and 3) verify completness of design documentation. Objectives 
+  1 and 2 are <A HREF="performance.html">cross-platform</A> goals. To achive these 
+  objectives, QA will work closely with Development to ensure that all <A HREF="requirements.html">requirements</A> 
+  are met.</P>
+
+<P><B><FONT SIZE=+2>Test Outline</FONT></B></P>
+
+<P>The following outline follows the project <A HREF="schedule.html">schedule</A>
+and describes what QA will concurrently be doing.</P>
+
+<UL>
+  <LI>Phase I: <B>Proof of Concept</B>
+  <UL>
+    <LI>The functionality and data structure of the Runtime are defined and
+    reviewed at this time. The Runtime will be divided into modules. The modules'
+    functions and data structure should be designed and documenteed. Each module
+    should have functions made available to QA for future testing.
+    <LI>In preparation for future phases, a <A HREF="#Test Harness">Test Harness</A>,
+    a <A HREF="#Bytecode Verifier">Bytecode Verifier</A>, and a <A HREF="#Inspector">Data
+    Structure Inspector</A> are created.
+    <LI><A HREF="#PhaseI">Acceptance</A> Test Cases will be designed and used
+    on PowerPC.
+  </UL>
+  <LI>Phase II: <B>Alpha Qualification</B>
+  <UL>
+    <LI>As the JIT, for Power PC, is made available, every opcode is tested.
+    <LI>Working modules should also be tested by using the functions that were
+    made available in Phase I.
+    <LI>A Standalone Runtime for PowerPC and Win32 are built and tested at
+    this time.
+    <LI>Along with previous test cases, <A HREF="#PhaseII">Functional</A> Test
+    Cases will be designed and used on PowerPC and Win32.
+    <LI>In preparation for Phase III, a <A HREF="#Benchmark">Benchmark</A>
+    tool is created.
+  </UL>
+  <LI>Phase III: <B>Beta Qualification</B>
+  <UL>
+    <LI>Standalone Runtimes for Win16, SPARC, and MIPS are built and tested
+    at this time.
+    <LI>The benchmarking process begins. Performance of the Runtime must be
+    better or equal to preformances of other runtimes.
+    <LI>Again with previous tests cases, <A HREF="#PhaseIII">Load</A> Test
+    Cases will be designed and used on PowerPC, Win32, Win16, SPARC, and MIPS
+    platforms.
+  </UL>
+  <LI>Phase IV: <B>Release Qualification</B>
+  <UL>
+    <LI>The Runtime should be fully functional and integrated into the Client
+    and the Server. For integrations testing, existing tests along with other
+    tests to be designed, will be converted into applets and used on the Client
+    and Server.
+    <LI>A complete test regression is done to make sure that nothing has been
+    broken.
+    <LI>Verify runtime meets performance and platform requirements.
+  </UL>
+</UL>
+
+<P><B><FONT SIZE=+2>Test Cases</FONT></B></P>
+
+<P>The bulk of the compatibitlity tests are taken from the Java Compatibility
+Kit (JCK) which is provided by Javasoft. Other sources will also be used
+and noted below. All test cases should be able to run on the <A HREF="#Test Harness">Test
+Harness</A>.</P>
+
+<UL>
+  <LI><A NAME="PhaseI"></A><B>Accpetance</B>
+  <UL>
+    <LI>Acceptance tests will be made for Phase I. These tests will determine
+    whether the JIT or Runtime is stable and ready for further testing. Every
+    new build of the JIT or Runtime will first be tested using these tests.
+    <LI>These should test basic functionality of the JIT or Runtime.
+    <LI>These test cases contain a list of Java <A HREF="qa/initiallist.html">bytecodes</A>
+    taken from the JCK Language Test.
+    <LI>Sample <A HREF="qa/example1.html">test 1</A>.
+  </UL>
+  <LI><A NAME="PhaseII"></A><B>Functional</B>
+  <UL>
+    <LI>These should test the Runtime according to the design specification
+    as well as include all VM Specification tests from the JCK.
+    <LI>All Java bytecodes are tested.
+    <LI>Sample <A HREF="qa/example2.html">test 2</A>.
+  </UL>
+  <LI><A NAME="PhaseIII"></A><B>Load</B>
+  <UL>
+    <LI>These should include boundary tests as well as illegal bytecode instructions.
+    <LI>Error recovery should also be included in these tests.
+    <LI>Sample <A HREF="qa/example3.html">test 3</A>.
+  </UL>
+</UL>
+
+<P><B><FONT SIZE=+2>Tools</FONT></B></P>
+
+<P>The following are the list of QA tools to be used for the project. All tools 
+  should be platform independent so they can be used on all <A HREF=
+"performance.html">platforms</A> for testing.</P>
+
+<P><A NAME="Test Harness"></A><B>Test Harness</B></P>
+
+<P>The Test Harness will be the general tool to run the test cases. The
+user will specify which test cases to run. Then the Harness will load the
+test and pass it to the JIT or Runtime and display the returned results.
+How the Test Harness will communicate with the JIT or the Runtime still
+needs to be determined. There are two ways to communicate which are to either
+pass the Java class or the bytcode instructions.</P>
+
+<P><A NAME="Bytecode Verifier"></A><B>Bytecode Verifier</B></P>
+
+<P>The Bytecode Verifier should be able to compare and verify the bytecodes
+used by our runtime to the bytecodes generated by javap or even other runtimes.
+The verifier should, for example, pass a class to the runtime, then verify
+the bytecodes used are similar.</P>
+
+<P><A NAME="Inspector"></A><B>Data Structure Inspector</B></P>
+
+<P>This tool should be able to print out the all the structures used in
+the Translator, ie the control flow and data flow graphs.</P>
+
+<P><A NAME="Benchmark"></A><B>Benchmark</B></P>
+
+<P>These tools will be used to compare ours with existing Runtimes, ie Microsoft's
+or Symantec's. These tools will measure if the Runtime meets our performance
+requirements.</P>
+
+<UL>
+  <LI><A HREF="http://www.webfayre.com/pendragon/cm2/index.html">Caffeinemark</A>
+  is an example of the kind of Benchmark tool that will be used. This tool
+  will be used as a general measuring stick to compare our Runtime's performance
+  with others.
+  <LI>For more in depth comparisons, Synthetic Benchmarks will be used to
+  test the performance of individual functions of the Runtime, ie. Method
+  Invocation or Looping.
+</UL>
+</BODY>
+</HTML>

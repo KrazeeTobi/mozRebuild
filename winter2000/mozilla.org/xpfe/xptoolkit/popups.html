@@ -1,0 +1,361 @@
+<HTML>
+<HEAD>
+<TITLE>Popup Content (Context Menus and Tooltips)</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+<!--This file created 7/6/99 1:47 PM by Claris Home Page version 3.0 30 Day Trial-->
+<X-CLARIS-WINDOW TOP=42 BOTTOM=763 LEFT=4 RIGHT=694>
+<X-CLARIS-TAGVIEW MODE=minimal>
+
+
+&nbsp;
+<table CELLSPACING=0 WIDTH="100%" >
+<tr>
+<td BGCOLOR="#6699FF"><font face="Century Gothic"><font color="#FFFFFF"><font size=+1>Popup
+Content (Context Menus and Tooltips)</font></font></font></td>
+</tr>
+
+<tr>
+<td>[<a href="index.html">Table of Contents</a>] [<a href="keys.html">Previous:
+Key Binding</a>] [<a href="overlays.html">Next: XUL Overlays</a>]
+<p><b>Feature Owners:</b>
+<br><a href="mailto:hyatt@netscape.com">Dave Hyatt</a> (Content Model Work,
+Arbitrary XUL Popups)
+<br><a href="mailto:saari@netscape.com">Chris Saari</a> (Popup Menus and
+Context Menus)
+<br><a href="mailto:pinkerton@netscape.com">Mike Pinkerton</a> (Tooltips,
+Making Things Suck Less)
+<p>The XUL language provides a way for developers to declare that a XUL
+subtree is <i>popup content</i>, meaning that the content is displayed
+in its own window when a certain event occurs (e.g., a right mouse click
+to bring up a context menu, or a left click to bring up a popup color picker
+on a toolbar).
+<p>There are two kinds of popup content: menus and windows. Popup menus
+use the native menus on each platform and are described using <font color="#008000">menu</font>
+and <font color="#008000">menuitem</font> elements (See <a href="menus.html">Menus
+and Menu Bars</a> for details). Popup windows can contain arbitrary XUL,
+and are full-fledged XUL windows, declared using the <font color="#008000">window</font>
+tag (See <a href="windows.html">Windows and Dialogs</a> for details).
+<p>Popup content is placed inside a <font color="#008000">popup</font>
+tag, which prevents it from being displayed in the main document. The popup
+tag always has an identifier attached to it (using the <font color="#FF0000">id</font>
+attribute) that is used when attaching the popup content to a UI element.
+<table BORDER WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;popup id="replyMenu">
+&nbsp; &lt;menu>
+&nbsp;&nbsp;&nbsp; &lt;menuitem name="Reply to Sender">
+&nbsp;&nbsp;&nbsp; &lt;menuitem name="Reply to All">
+&nbsp; &lt;/menu>
+&lt;/popup>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+
+<p>There are three different ways of automatically attaching a popup to
+content. All three methods involve setting attributes on the content node
+that should have the popup content attached to it. The attributes are <font color="#FF0000">popup</font>,
+<font color="#FF0000">context</font>, and <font color="#FF0000">tooltip</font>.
+The value of one of these attributes is the <font color="#FF0000">id</font>
+of the popup element that should be used to build the popup content.
+<table BORDER WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;titledbutton value="Reply" popup="replyMenu"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+
+<p>The <font color="#FF0000">popup</font> attribute is used to attach popup
+content that will be invoked on a <font color="#800080">left mouse down</font>.
+The <font color="#FF0000">context</font> attribute is used to attach popup
+content that will be invoked on a context menu event (with the cross-platform
+abstraction being taken care of for you). The <font color="#FF0000">tooltip</font>
+attribute is used to attach popup content that will be invoked after a
+time-delay hover over the node that has the popup content attached. (Note
+that tooltips may only be used with popup window content and never with
+popup menu content.)
+<p>By default the popup content appears with its top left point located
+directly underneath the point at which the user's mouse goes down (on tooltips
+the content is displaced by the height of the mouse cursor). This placement
+can be controlled using the <font color="#FF0000">popupanchor</font> and
+<font color="#FF0000">popupalign</font> attributes.
+<p>The <font color="#FF0000">popupanchor</font> and <font color="#FF0000">popupalign</font>
+attributes have four possible values: topleft, topright, bottomleft and
+bottomright. The <font color="#FF0000">popupanchor</font> attribute can
+be used to specify that the popup content should come up anchored to one
+of the four corners of the content object (e.g., the button popping up
+the content). If omitted, no anchoring occurs. Instead the popup content
+comes up directly underneath the mouse event coordinates. This point (either
+directly under the mouse or attached to one of the four corners) is called
+the <i>originating point</i>.
+<p>The <font color="#FF0000">popupalign</font> attribute can be used to
+specify which corner of the popup content is tied to the originating point.
+If omitted, the default is topleft. The example below shows how to create
+the traditional buttons with attached left mouse menus that exist in the
+4.x Communicator product.
+<table BORDER WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;titledbutton value="Reply" popup="replyMenu" popupanchor="bottomleft"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+
+<p>On Windows 98, anchored menus will animate (unless the property is turned
+off) to the opposite corner of the value specified in the <font color="#FF0000">popupalign</font>
+attribute. In the above example, since the attribute is omitted, the default
+is topleft, and the menu will therefore animate to the bottomright corner.
+<p>The popup content can have attached event handlers just as regular content
+might. In these event handlers, the element that the popup was invoked
+upon can be retrieved by examining the <font color="#800080">popupElement</font>
+property of the document. This property is set only when the popup is currently
+open.
+<table BORDER WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;popup id="toolbarContextMenu">
+&nbsp; &lt;menu>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; &lt;menuitem name="Delete" onclick="mailNewsCore.deleteButton(document.popupElement)">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp; &lt;/menu>
+&lt;/popup>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+
+<p>A similar property, <font color="#800080">tooltipElement</font>, is
+set for the element that has a tooltip displayed over it.
+<p>Arbitrary XUL windows that are created as popups have their own document,
+and any namespaces must be declared again on the new window tag. Style
+sheets, however, are inherited from the parent document. A popup XUL window
+is linked to the parent window that spawned it using the <font color="#800080">opener</font>
+property, and thus can get back to the originating document to invoke functions
+or to examine data.
+<p>Arbitrary XUL popups can be closed or repositioned just as normal windows
+can using the methods of the <font color="#800080">window</font> object.
+The most relevant method is <font color="#800080">window.close()</font>,
+which can be used to discard the popup.
+<table BORDER WIDTH="90%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;popup id="justifierPopup">
+&nbsp; &lt;window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+&nbsp;&nbsp;&nbsp; width="40" height="100">
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton id="left"&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; onclick="opener.setJustification('left'); window.close();"/>
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton id="center"
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; onclick="opener.setJustification('center'); window.close();"/>
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton id="right"&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; onclick="opener.setJustification('right'); window.close();"/>
+&nbsp; &lt;/window>
+&lt;/popup>
+...
+&lt;titledbutton popup="justifierPopup" popupanchor="bottomleft"/>
+...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+
+<p>Popup content can also be created in response to any event (and not
+just the predefined <font color="#FF0000">popup</font>, <font color="#FF0000">context</font>
+and <font color="#FF0000">tooltip</font> events. There are two new methods
+on the <font color="#800080">window</font> object that allow popup content
+to be instantiated programmatically.
+<p><font color="#0000FF">createPopup</font> takes six arguments: the DOM
+element to attach the popup to, the DOM element that represents the popup
+content, the x screen coordinate of the popup, the y screen coordinate
+of the popup, the popup type (context, popup, or tooltip), and the popup
+alignment (topleft, bottomright, bottomleft, topright).
+<p>The <font color="#0000FF">createAnchoredPopup</font> method can be used
+to create popup content at a specific anchor point on a content object.
+It takes five arguments: the element to attach the popup to, the popup
+content element, the anchor position for the content (topleft, bottomright,
+bottomleft, topright), the popup type, and the popup alignment.
+<p>Using these methods, fine-grained control of popup instantiation is
+possible, e.g., a popup can be brought up after a time-delay or in response
+to keyboard events.
+<p>Popups can also be built dynamically or be modified just prior to being
+displayed. The <font color="#800080">create</font> and <font color="#800080">destroy</font>
+events are fired on a popup element just prior to it being displayed and
+just after it has lost the focus, respectively. Event listeners can be
+attached using the <font color="#FF0000">oncreate</font> and <font color="#FF0000">ondestroy</font>
+attributes or by using the DOM <font color="#0000FF">addEventListener</font>
+function.
+<h3>
+Tooltips</h3>
+Tooltips are basically timed xul popups. You have full control over the
+appearance of these popups, or you may use a combination of JS and a standard
+"template" tooltip to get up and running quickly.
+<p>The easy way:
+<table BORDER WIDTH="90%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;html:script language="javascript" src="tooltip.js" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;popup id="aTooltip" oncreate="return FillInTooltip(document.tooltipElement);">
+&nbsp;&lt;window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+&nbsp;&nbsp; width="200" height="20" style="border: thin solid black">&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;titledbutton id = "replaceMe" align="left" class="borderless paneltitle"/>
+&nbsp;&lt;/window>
+&lt;/popup>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+...
+&lt;toolbar tooltip="aTooltip">
+&nbsp; &lt;titledbutton tooltiptext="Tip for Button One"/>
+&nbsp; &lt;titledbutton tooltiptext="Tip for Button Two"/>
+&nbsp; &lt;titledbutton tooltiptext="Tip for Button Three"/>
+&lt;/toolbar>
+...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+
+<p>The <font color="#FF0000">tooltiptext</font> attribute specifies the
+text displayed in the tooltip for this item. If you need more control over
+the tooltip for a particular button, you can specify the <font color="#FF0000">tooltip</font>
+attribute directly on that item and set its id to a different popup where
+the new content lives.
+<p>You can use the JS convenience routine <font color="#FF0000">FillInTooltip()</font>
+anywhere you want as long as you have one node within the popup whose name
+is "replaceMe". This way you keep the convenience of only having to specify
+the tooltip text on the button but can use any popup you like.
+<p>To prevent tooltips from showing up based on content, return false from
+the <font color="#FF0000">oncreate</font> event handler. Actually, this
+is true for any xul popup, but most useful for tooltips.
+<p><font color="#FF0000">Known Issues</font>
+<ul>
+<li>
+HTML Elements - Popups can only be attached to XUL elements right now and
+not to HTML elements.</li>
+
+<li>
+Positioning - Right now, because the screenx and screeny properties of
+the event object are not yet implemented, all popups come up at (50,50).
+(Hey, it's a feature. You'll always know where to find your context menus.)</li>
+
+<li>
+Anchoring - Don't try to use the popupanchor attribute yet. It will cause
+the popups to not even show up at all. Also, the createAnchoredPopup method
+doesn't do anything yet.</li>
+
+<li>
+Arbitrary XUL Popup Issues&nbsp;</li>
+
+<ul>
+<li>
+The popups don't close automatically, since blur events aren't being sent
+to windows.</li>
+
+<li>
+The popups have borders and a title bar (need a way to make them borderless
+cross-platform).</li>
+
+<li>
+The destruct event doesn't fire when an arbitrary XUL popup is closed.</li>
+</ul>
+</ul>
+
+<hr SIZE=1 solid>[<a href="index.html">Table of Contents</a>] [<a href="keys.html">Previous:
+Key Binding</a>] [<a href="overlays.html">Next: XUL Overlays</a>]&nbsp;
+<hr SIZE=1 solid>Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave
+Hyatt</a>.</td>
+</tr>
+</table>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/xptoolkit/popups.html&amp;rev=&amp;root=/cvsroot/">Last modified January  3,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

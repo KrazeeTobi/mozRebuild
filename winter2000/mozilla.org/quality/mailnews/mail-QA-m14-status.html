@@ -1,0 +1,1485 @@
+<HTML>
+<HEAD>
+<TITLE>Mail Beta 1 QA Status</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+
+<center><b><font size=+2>Mail QA Status - Moving Towards M14</font></b>
+<br><i>Page maintained by <a href="mailto:lchiang@netscape.com">Lisa Chiang</a>
+- Last Updated 01/07/2000&nbsp; 17:00</i>
+<br><i>Builds used:</i>
+<br><i>Win32 2000-01-04-09-m13</i>
+<br><i>Mac 2000-01-06-11-m13</i>
+<br><i>Linux 2000-01-05-15-m13</i>
+<p><font color="#FF0000">As of 1/7/2000, approximately 271 Open M13/M14
+Mail Bugs - click this <a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=MailNews&target_milestone=M13&target_milestone=M14&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Assignee&form_name=query">link</a>
+for all bugs target fix M13/M14 w/Product MailNews</font></center>
+
+<table BORDER COLS=4 WIDTH="100%" >
+<tr BGCOLOR="#FFFFCC">
+<td WIDTH="40%">
+<center><b>SERVICE INTEGRATION</b>
+<br><b>Features</b></center>
+</td>
+
+<td WIDTH="20%">
+<center><b>Win32</b></center>
+</td>
+
+<td WIDTH="20%">
+<center><b>Mac</b></center>
+</td>
+
+<td WIDTH="20%">
+<center><b>Linux</b></center>
+</td>
+</tr>
+
+<tr>
+<td>Collection address book</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>Multiple accounts (POP, IMAP, NNTP)</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp; PASS</center>
+</td>
+
+<td>
+<center>&nbsp; PASS</center>
+</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<table BORDER COLS=4 WIDTH="100%" >
+<tr BGCOLOR="#99FF99">
+<td WIDTH="40%">
+<center><b>STABILITY Goals</b></center>
+</td>
+
+<td WIDTH="20%">
+<center><b>Win32</b></center>
+</td>
+
+<td WIDTH="20%">
+<center><b>Mac</b></center>
+</td>
+
+<td WIDTH="20%">
+<center><b>Linux</b></center>
+</td>
+</tr>
+
+<tr>
+<td>Enough stability for day-to-day use (2 hours)</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;TBD</center>
+</td>
+
+<td>
+<center>&nbsp;TBD</center>
+</td>
+</tr>
+
+<tr>
+<td>No integrity issues (mail bombs)</td>
+
+<td>
+<center>&nbsp;PASS
+<br>(no current bugs resulting in data loss)</center>
+</td>
+
+<td>
+<center>&nbsp;PASS
+<br>(no current bugs resulting in data loss)</center>
+</td>
+
+<td>
+<center>&nbsp; PASS
+<br>(no current bugs resulting in data loss)</center>
+</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<table BORDER COLS=4 WIDTH="100%" >
+<tr BGCOLOR="#CCFFFF">
+<td WIDTH="40%">
+<center><b>BASIC TASKS Features</b></center>
+</td>
+
+<td WIDTH="20%">
+<center><b>Win32</b></center>
+</td>
+
+<td WIDTH="20%">
+<center><b>Mac</b></center>
+</td>
+
+<td WIDTH="20%">
+<center><b>Linux</b></center>
+</td>
+</tr>
+
+<tr>
+<td><b>Address book</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display address books in left pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display card list in results pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display card contents in card view pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Add cards using dialog box</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Sorting using columns</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Compose message to selected card</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Create address book</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Delete address book</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Import address book from ldif&nbsp;</td>
+
+<td>
+<center>PASS - imports to a new address book</center>
+</td>
+
+<td>
+<center>&nbsp;PASS - imports to a new address book</center>
+</td>
+
+<td>
+<center>&nbsp;PASS - imports to a new address book</center>
+</td>
+</tr>
+
+<tr>
+<td><b>POP/local mail</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Import prefs and POP msgs and folders from 4.x</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Set up one or more POP servers using Acct Manager</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Download new msgs from POP server</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display folders in acct hierarchy in left pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display message list in thread pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display message contents in msg pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; New mail biff with mail icon change in other components</td>
+
+<td>
+<center><font color="#FF0000">FAIL - </font>need to find bug number</center>
+</td>
+
+<td>
+<center><font color="#FF0000">FAIL - </font>need to find bug number&nbsp;</center>
+</td>
+
+<td>
+<center><font color="#FF0000">FAIL - </font>need to find bug number&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Create and delete folders</td>
+
+<td>
+<center>PASS - create
+<br><font color="#FF0000">FAIL</font> - delete <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20533">20533</a>
+- target for M13</center>
+</td>
+
+<td>
+<center>&nbsp;PASS - create
+<br><font color="#FF0000">FAIL</font> - delete <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20533">20533</a>
+- target for M13</center>
+</td>
+
+<td>
+<center>&nbsp;PASS - create
+<br><font color="#FF0000">FAIL</font> - delete <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20533">20533</a>
+- target for M13</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Basic IMAP</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Import pref from 4.x</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Set up one or more IMAP servers using Acct Manager</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Download msgs from IMAP server</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display IMAP mailboxes in folder pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display IMAP msg list in thread pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display IMAP msg contents in msg pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; New mail biff with mail icon change in other components</td>
+
+<td>
+<center>&nbsp;<font color="#FF0000">FAIL - </font>need to find bug number</center>
+</td>
+
+<td>
+<center>&nbsp;<font color="#FF0000">FAIL - </font>need to find bug number</center>
+</td>
+
+<td>
+<center>&nbsp;<font color="#FF0000">FAIL - </font>need to find bug number</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Create and delete folders</td>
+
+<td>
+<center>PASS - create
+<br><font color="#FF0000">FAIL</font> - delete <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20533">20533</a>
+- target for M13</center>
+</td>
+
+<td>
+<center>&nbsp;PASS - create
+<br><font color="#FF0000">FAIL</font> - delete <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20533">20533</a>
+- target for M13</center>
+</td>
+
+<td>
+<center>&nbsp;PASS - create
+<br><font color="#FF0000">FAIL</font> - delete <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20533">20533</a>
+- target for M13</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Sending Mail</b></td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp; Import preferences from 4.x</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Send mail via SMTP</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Reply</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Forward</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Intelligent sending of HTML/plain text</td>
+
+<td>
+<center><font color="#FF0000">FAIL</font> - not implemented - <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=17072">17072</a>
+- target for M14&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;<font color="#FF0000">FAIL</font> - not implemented - <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=17072">17072</a>
+- target for M14&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;<font color="#FF0000">FAIL</font> - not implemented - <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=17072">17072</a>
+- target for M14&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Basic news</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Import prefs from 4.x</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Set up one or more News servers using Acct Wizard</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Download msgs from news server</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display news msg list in thread pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Display news msg contents in msg pane</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Subscribe to newsgroups one at a time (not the big, complicated
+dialog)</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Auto-complete</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Basic auto-complete working</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; New addressing widget</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Filtering back-end</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Can use 4.x filters migrated during profile migration, but can't
+edit them yet</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Send/view attachments</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Send web page using File | Attach menu in compose window</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Send local attachments using Attach toolbar button or File |
+Attach menu</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; View attached web pages</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; View file attachments</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Undo</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Undo "Delete Message" only</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td><b>File messages</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Copy msgs between folders using menu commands</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Delete msgs to the Trash folder using toolbar button</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Delete msgs to the Trash folder using Delete key</td>
+
+<td>
+<center><font color="#FF0000">FAIL</font> - feature not enabled - bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=8985">8985</a>
+- target M14</center>
+</td>
+
+<td>
+<center><font color="#FF0000">FAIL</font> - feature not enabled - bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=8985">8985</a>
+- target M14</center>
+</td>
+
+<td>
+<center><font color="#FF0000">FAIL</font> - feature not enabled - bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=8985">8985</a>
+- target M14</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Applies to POP, IMAP, and News (cancel msg)</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Progress &amp; status</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Give percentage-wise feedback when possible, using graphical
+and textual feedback</td>
+
+<td>
+<center>PASS
+<br>however, cursor doesn't change when busy.</center>
+</td>
+
+<td>
+<center>&nbsp;PASS
+<br>however, cursor doesn't change when busy.</center>
+</td>
+
+<td>
+<center>PASS
+<br>however, cursor doesn't change when busy.</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Give generic activity feedback (cylon mode) when necessary</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Turn feedback off when operations stop</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Menus &amp; accelerator keys</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Menus and accelerator keys must match UI spec</td>
+
+<td>
+<center>&nbsp;Is the UI spec finalized?</center>
+</td>
+
+<td>
+<center>&nbsp;Is the UI spec finalized?</center>
+</td>
+
+<td>
+<center>&nbsp;Is the UI spec finalized?</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Unimplemented menu items must be disabled with a "." in front
+of the menu item</td>
+
+<td>
+<center>test-in-progress</center>
+</td>
+
+<td>
+<center>&nbsp;test-in-progress</center>
+</td>
+
+<td>
+<center>test-in-progress</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Accelerator keys shown in enabled menu items must work</td>
+
+<td>
+<center>&nbsp;test-in-progress</center>
+</td>
+
+<td>
+<center>&nbsp;test-in-progress</center>
+</td>
+
+<td>
+<center>test-in-progress&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Sort</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; All columns in thread pane are sortable</td>
+
+<td>
+<center>PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Send web page</b></td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td><b>Print message</b></td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Body and headers</td>
+
+<td>
+<center>PASS (printing headers planned for M13/M14)</center>
+</td>
+
+<td>
+<center>&nbsp;PASS (printing headers planned for M13/M14)</center>
+</td>
+
+<td>
+<center>PASS (printing headers planned for M13/M14)</center>
+</td>
+</tr>
+
+<tr>
+<td><b>UI state persistence across sessions</b></td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp; Window size and position</td>
+
+<td>
+<center>Size - PASS
+<br>Position - <font color="#FF0000">FAIL</font> - bug to be filed</center>
+</td>
+
+<td>
+<center>&nbsp;Size - PASS
+<br>Position - <font color="#FF0000">FAIL</font> - bug to be filed</center>
+</td>
+
+<td>
+<center><font color="#FF0000">FAIL</font> - bugs to be filed</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Column size and sort order</td>
+
+<td>
+<center>Size - PASS
+<br>Sort order - <font color="#FF0000">FAIL</font> - bug to be filed</center>
+</td>
+
+<td>
+<center>&nbsp;Size - PASS
+<br>Sort order - <font color="#FF0000">FAIL</font> - bug to be filed</center>
+</td>
+
+<td>
+<center>&nbsp;<font color="#FF0000">FAIL</font> - bugs to be filed</center>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp; Sidebar state</td>
+
+<td>
+<center>&nbsp;PASS</center>
+</td>
+
+<td>
+<center>PASS&nbsp;</center>
+</td>
+
+<td>
+<center>&nbsp;<font color="#FF0000">FAIL</font> - bugs to be filed</center>
+</td>
+</tr>
+</table>
+
+<p><b>Notes:</b>
+<ul>
+<li>
+<b>Definition of PASS/FAIL:</b></li>
+
+<ul>
+<li>
+PASS rating if the feature set is testable by QA, regardless if it has
+a bug or two.&nbsp;&nbsp; There may be days when there is a bad build :-)</li>
+
+<li>
+FAIL rating will be given if a feature is supposed to be implemented for
+this milestone and it's not in there yet so we cannot perform basic testing
+on it; or the feature is implemented, but not functional at its very simplest
+task</li>
+</ul>
+
+<li>
+<b>Additional references for status of the mail product</b></li>
+
+<ul>
+<li>
+List of up-to-date bugs designated as Performance bugs:&nbsp; <a href="http://bugzilla.mozilla.org/showdependencytree.cgi?id=9161">http://bugzilla.mozilla.org/showdependencytree.cgi?id=9161</a></li>
+
+<li>
+List of all feature bugs that still need to be implemented: <a href="http://bugzilla.mozilla.org/showdependencytree.cgi?id=10791">http://bugzilla.mozilla.org/showdependencytree.cgi?id=10791</a></li>
+</ul>
+</ul>
+
+<hr WIDTH="100%">
+<br><font size=-1>9/13/99 Original page created by Jan Leger</font>
+<br><font size=-1>1/5/00&nbsp;&nbsp; Updated for current product status</font>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/mail-QA-m14-status.html&amp;rev=&amp;root=/cvsroot/">Last modified January 21,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

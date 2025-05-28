@@ -1,0 +1,2366 @@
+<HTML>
+<HEAD>
+<TITLE>Attachment Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>5.0 Project - (SeaMonkey)</b>
+<br><b>Mail and News Component</b>
+<br><b>Attachment</b>
+<p>Written by: <b><a href="mailto:pmock@netscape.com">Peter Mock</a></b>
+<br>Date Created:112598
+<br>Last Modified and Change Description:
+<br>120998&nbsp;&nbsp;&nbsp; Updated and expanded
+<br>030299&nbsp;&nbsp;&nbsp; Incorporate changes to Compose UI
+<br>032999&nbsp;&nbsp;&nbsp; Incorporate changes to Messenger UI
+<br>113199&nbsp;&nbsp;&nbsp; Revised to match recent changes to UI specs
+<p><b>References:</b>
+<br>UI Specification: Main Mail Spec,&nbsp; Message Compose, Message Compose
+Menu&nbsp; Mail Menu, Context Menu Overview
+<p>Test Case Management Usage: n/a
+<p>Open Issues:
+<ol>
+<li>
+Awaiting decision to move the "Attach" menu option from the File menu to
+Message menu,</li>
+
+<li>
+Unclear whether the attachment dialog will include a preview option.</li>
+
+<li>
+Unclear on the wording on some of the options for the context menu options.</li>
+
+<li>
+Unclear what drag and drop will be available when saving attachments.</li>
+
+<li>
+Unclear on what will the final behavior be when attaching a windows shortcut
+file, mac alias, or unix symbolic link?&nbsp; Will it attach the alias
+or attach the original file(s).</li>
+</ol>
+
+<hr WIDTH="100%">
+<br>Description: The focus of attachment is to ensure that a file/web page
+can be sent in a mail message and saved/open once the message has been
+received.&nbsp;&nbsp; These test cases is intended to be performed in HTML
+Compose and apply to both Mail and News including POP and IMAP.&nbsp; Note.
+Under the section of "Composing Mail Messages with Attachment", most of
+these test cases can be run against the plain text mail editor except for
+the test requiring you to drag and files to native file (gif/jpeg/html
+etc) into the message body.
+<br>&nbsp;
+<p><b>Visual</b>
+<br>Viewing the Message Compose Editor.
+<br>Instructions: Start a new mail message and add attachments as needed
+to verify the following behavior.
+<ol TYPE=A>
+<li>
+Verify under the File menu contains the a menu option called "attach"</li>
+
+<li>
+Verify the "attach" sub menu option include "file", "web page", "remove
+selected attachment", and "Personal card (vCard)"</li>
+
+<li>
+Verify under the Message menu contain the following menu options</li>
+
+<ol>
+<li>
+"attach" (See issues section)</li>
+
+<li>
+"UUencode instead of MIME"</li>
+
+<li>
+"signature"</li>
+
+<li>
+"vCard"</li>
+</ol>
+
+<li>
+Verify in the Compose window, the attach toolbar option has drop down options
+for:</li>
+
+<ol>
+<li>
+file</li>
+
+<li>
+web page</li>
+
+<li>
+personal card (vCard)</li>
+</ol>
+
+<li>
+Verify that the Address Panel no longer includes an attachment tab</li>
+
+<ol>
+<li>
+Verify that the option tab is no longer present</li>
+
+<li>
+Verify that the view menu no longer includes the feature to switch the
+to the option or attachment view.</li>
+</ol>
+
+<li>
+Verify in the addressing area, the attachment area is located to the right
+of the Address Panel.</li>
+
+<ol>
+<li>
+Attachments are listed in the attachment area.</li>
+
+<li>
+An attachment is listed with a file name.</li>
+
+<li>
+An attachment is associated with an icon.</li>
+
+<li>
+If there are more attachments than what can be possibly displayed in the
+attachment area, a vertical scroll bar appears.</li>
+
+<li>
+If there are more attachments than what can be possibly displayed in the
+attachment area, a horizontal scroll bar will not be displayed.</li>
+
+<li>
+If an attachment name is longer than what can be displayed in the attachment
+area, then the user can mouse over the name and see the tool tip which
+will display the entire attachment name.</li>
+
+<li>
+Verify when you mouse click in the attachment area, brings up the attachment
+dialog.</li>
+</ol>
+
+<li>
+Verify the properties of the file attachment dialog.</li>
+
+<ol>
+<li>
+Verify the name of the dialog is called "Enter file to attach"</li>
+
+<li>
+Verify that the dialog contains the following tools:</li>
+
+<ol TYPE=a>
+<li>
+Navigate to a specific folder/directory</li>
+
+<li>
+Access the network</li>
+
+<li>
+Preview image is possible (See issues section)</li>
+
+<li>
+Sort list (win32 only?) by name or type</li>
+
+<li>
+Vertical Scroll bar (if list extend past visible window)</li>
+
+<li>
+Cancel button</li>
+
+<li>
+Open button</li>
+
+<li>
+Close button</li>
+
+<li>
+Help button</li>
+</ol>
+</ol>
+
+<li>
+Verify the properties of the web page attachment dialog</li>
+
+<ol>
+<li>
+Verify the name of the dialog is called "Please Specify a Location to Attach".</li>
+
+<li>
+Verify the text label "Web Page (URL): " is above the field.</li>
+
+<li>
+Verify the dialog contains the a field to enter a URL.</li>
+
+<li>
+Verify that the text "http://" is pre entered as the default text in the
+URL field.</li>
+
+<li>
+Verify the dialog contains a bookmark button to allow for easy access to
+recall a specific URL.</li>
+
+<li>
+Verify the dialog contains a OK button.</li>
+
+<li>
+Verify the dialog contains a Cancel button.</li>
+</ol>
+
+<li>
+Verify in the account setup/user preferences dialog you have options to
+include the option to include the following information at the bottom of
+each mail message when sent.</li>
+
+<ol>
+<li>
+signature</li>
+
+<li>
+vCard</li>
+</ol>
+
+<li>
+Verify the open/save attachment dialog properties. Click on the paper clip
+icon and select a file attachment to save.</li>
+
+<ol>
+<li>
+Verify the dialog is entitled "Open/Save Attachment".</li>
+
+<li>
+Verify the warning text is present and accurate.</li>
+
+<li>
+Verify you have a radio option to open or save the attachment.</li>
+
+<li>
+Verify you have a cancel button.</li>
+
+<li>
+Verify you have a ok button.</li>
+</ol>
+
+<li>
+Verify the save as attachment dialog properties. From the message envelope,
+save a single attachment.</li>
+
+<ol>
+<li>
+Verify the dialog is entitled "Save As".</li>
+
+<li>
+Verify the file name is automatically entered.</li>
+
+<li>
+Verify the file name is highlight to allow you to change it easily.</li>
+
+<li>
+Verify the dialog allows you to choose the destination directory.</li>
+</ol>
+
+<li>
+Verify the save all attachment dialog properties. On a message with more
+than one attachment be sides the vCard, click on the paper clip icon and
+select the option to save all the attachments.</li>
+
+<ol>
+<li>
+Verify the dialog is entitled "Save Attachment".</li>
+
+<li>
+Verify the dialog displays a list of all attachments including the vCard.</li>
+
+<li>
+Verify all the file attachment are checked except the vCard as being the
+default action.</li>
+
+<li>
+Verify you can check and unchecked the selections.</li>
+
+<li>
+Verify the dialog allows you to choose the destination directory.</li>
+
+<li>
+Verify you have a cancel button.</li>
+
+<li>
+Verify you have a save button.</li>
+</ol>
+
+<li>
+Verify the dialog controls</li>
+
+<ol>
+<li>
+Accelerator keys</li>
+
+<li>
+Mnemonics</li>
+
+<li>
+Menus</li>
+
+<li>
+Buttons</li>
+
+<li>
+Context menus</li>
+
+<li>
+Tool tips (if any)</li>
+</ol>
+</ol>
+
+<p><br><b>Viewing Messages with Attachments</b>
+<br>Instructions: For each test case, sent yourself various mail message
+in your inbox that contain one/more file attachments be sides a personal
+card (vCard).
+<ol TYPE=A>
+<li>
+Open new mail message that contains a mail attachment</li>
+
+<ol>
+<li>
+Verify the thread icon changes to an icon that indicates that mean "read
+with attachment".</li>
+
+<li>
+Verify mousing over the attachment paper clip button displays the Tool
+Tip, "Message Attachments".</li>
+
+<li>
+Verify in the mail message, the number of attachments is displayed to the
+left of the attachment paper clip icon located on the message envelope
+area.</li>
+
+<li>
+Verify if you click on the attachment paper clip icon,</li>
+
+<ol TYPE=a>
+<li>
+it lists all the attachment names.</li>
+
+<li>
+it lists the file size next to the attachment names.</li>
+
+<li>
+if there are more than one attachments (be sides vCard), it displays the
+option to save all attachments.</li>
+
+<li>
+if there are more than one attachment, the vCard is listed at the end of
+the list.</li>
+</ol>
+
+<li>
+Verify that an attached native image such as a jpeg or gif file is displayed
+in the message body and listed as a attachment.</li>
+
+<li>
+Verify that an inserted image in the message body is NOT listed as a attachment.</li>
+
+<li>
+Verify that an attached vCard is displayed in the body of the message and
+the attachment area.</li>
+
+<li>
+Verify that an attached signature file is displayed in the message body
+and the attachment area. (The signature file was manually attached and
+the user preference to include a signature file was unchecked.)</li>
+
+<li>
+Verify the vCard that contain a link to a graphic image is displayed inline.</li>
+
+<li>
+Verify that a message that contains an attached shortcut file (Mac = alias,
+Windows shortcut file and Linux = symbolic link) list only the shortcut
+file and not the actual file(s) that the shortcut was pointing to.</li>
+
+<li>
+Verify that if you unchecked the "view" menu option to display attachments
+inline,</li>
+
+<ol TYPE=a>
+<li>
+the attachment is still listed as a attachment.</li>
+
+<li>
+there is no attachment link in the message body.</li>
+
+<li>
+there is no attachment icon in the message body.</li>
+
+<li>
+there is no attachment description in the message body. Example:</li>
+
+<ul>
+<li>
+Name, example "Schedule.doc"</li>
+
+<li>
+Type,&nbsp; example "Microsoft Word Document (application/msword)"</li>
+
+<li>
+Encoding,&nbsp; example "base64"</li>
+
+<li>
+Download Status,&nbsp; example "Not downloaded with message"</li>
+</ul>
+</ol>
+
+<li>
+Click on the attachment paper clip button off the message envelope and
+verify that there is no attachment area at the bottom the message body.
+(This area was removed in 5.0)</li>
+</ol>
+
+<li>
+Select a different mail message then re-select the previous mail message
+that contained a mail attachment, verified that the thread icon changes
+to indicate that it is "cached and read with attachment".</li>
+
+<li>
+View the message and select the File menu option "File Open Attachment",
+verify it list the attachments in the current message.</li>
+
+<li>
+In the thread pane, display the size column then verify that the message
+size displayed includes the attachment size as well as the message size.</li>
+
+<li>
+Verify the context menu option appears to open/save the attachment when
+you:</li>
+
+<ol>
+<li>
+bring up the content menu in the address area.</li>
+
+<li>
+bring up the context menu in the envelope area.</li>
+
+<li>
+bring up the content menu in the message area.</li>
+</ol>
+
+<li>
+Special case, if you have an attachment link in the message area, verify
+the save attachment dialog appears when you click on the link.</li>
+</ol>
+
+<p><br><b>Saving/Opening File Attachments</b>
+<br>Instructions: Send as many mail message containing one or more file
+attachments as needed to run the following test cases.
+<ol TYPE=A>
+<li>
+Open a mail message that contains a single file attachment be sides the
+vCard. Save a single file attachment to your hard disk using the</li>
+
+<ol>
+<li>
+File menu save/open attachment option.</li>
+
+<li>
+Paper clip icon off the message envelope.</li>
+
+<li>
+Using the context menu option. (Select the inline image and choose save
+image/link).</li>
+</ol>
+
+<li>
+With the attachments saved in the previous test case, verify the the following:</li>
+
+<ol>
+<li>
+The attachment was saved with the correct name.</li>
+
+<li>
+Using the original application that created the attachment, open the attachment.</li>
+
+<li>
+Using BBedit (Mac) or some other utility, do a file compare to verify the
+attachment integrity is the same with the original attachment.</li>
+</ol>
+
+<li>
+Open a mail message that contains a single file attachment be sides the
+vCard. Save a single file attachment to your hard disk using same methods
+as before except to change the default file name to a different file name.</li>
+
+<ol>
+<li>
+File menu save/open attachment option.</li>
+
+<li>
+Paper clip icon off the message envelope.</li>
+
+<li>
+Using the context menu option. (Select the inline image and choose save
+image/link.)</li>
+</ol>
+
+<li>
+With the attachments saved in the previous test case, verify the the following:</li>
+
+<ol>
+<li>
+The attachment was saved with the correct name.</li>
+
+<li>
+Using the original application that created the attachment, open the attachment.</li>
+</ol>
+
+<li>
+Open a mail message that contains a single file attachment be sides the
+vCard. Save a single file attachment to your hard disk using the same methods
+as before except to change the different folder/directory location.</li>
+
+<ol>
+<li>
+File menu save/open attachment option.</li>
+
+<li>
+Paper clip icon off the message envelope.</li>
+
+<li>
+Using the context menu option. (Select the inline image and choose save
+image/link.)</li>
+</ol>
+
+<li>
+With the attachments saved in the previous test case, verify the the following:</li>
+
+<ol>
+<li>
+The attachment was saved with the correct name.</li>
+
+<li>
+Using the original application that created the attachment, open the attachment.</li>
+</ol>
+
+<li>
+Open a mail message that contains a single file attachment be sides the
+vCard. Open a single file attachment instead of saving it to your hard
+disk</li>
+
+<ol>
+<li>
+Verify the open/save dialog appears.</li>
+
+<li>
+Verify you can select the radio button option to open the attachment.</li>
+
+<li>
+Verify the attachment does open through the helper application.</li>
+
+<li>
+If there is no helper application, verify you receive a warning dialog
+with the option to save the attachment instead.</li>
+</ol>
+
+<li>
+Open a mail message that contains attachment link pointing to a native
+file (gif/jpeg) in its message body.</li>
+
+<ol>
+<li>
+Click on the attachment link and verify the attachment opens in a browser
+and displays inline.</li>
+
+<li>
+Right Mouse on the attachment link in the message body and verify the attachment
+opens in a browser. The image is displays inline.</li>
+
+<li>
+Drag the link to your hard drive. Verify the attachment is saved.</li>
+</ol>
+
+<li>
+Open a mail message that contains attachment link pointing to a non-native
+file (word/excel) in its message body.</li>
+
+<ol>
+<li>
+Click on the attachment link and verify you can open attachment through
+3rd party application (helper application).</li>
+
+<li>
+Right Mouse on the attachment link in the message body and verify you can
+open attachment through 3rd party application helper application.</li>
+
+<li>
+Drag the link to your hard drive. Verify the attachment is saved.</li>
+</ol>
+
+<li>
+Open a mail message that contain at least 2 file attachments be side the
+vCard. Save all the file attachments using the</li>
+
+<ol>
+<li>
+File menu save/open attachment option.</li>
+
+<li>
+Paper clip icon off the message envelope.</li>
+
+<li>
+Using the context menu option.</li>
+</ol>
+
+<li>
+With the attachments saved in the previous test case, verify the the following:</li>
+
+<ol>
+<li>
+All the attachments were saved with the correct name.</li>
+
+<li>
+Using the original application that created the attachment, open each attachment.</li>
+
+<li>
+Using BBedit (Mac) or some other utility, do a file compare to verify the
+attachment integrity is the same with the original attachment.</li>
+</ol>
+
+<li>
+Verify the following Context Menu options when clicking on a image that
+is displayed inline (See issues)</li>
+
+<ol>
+<li>
+Save Image as/Save Link as</li>
+
+<li>
+Save Message as Plain Text</li>
+
+<li>
+Save Message as HTML</li>
+</ol>
+
+<li>
+Open a mail message with a attached gif/jpeg image.</li>
+
+<ol>
+<li>
+Start a new html mail message and drag the inline image into the editor.
+Verify the image has been successfully dragged over.</li>
+
+<li>
+Start a new web page in the Page Composer and drag the inline image into
+the editor. Verify the image has been successfully dragged over.</li>
+</ol>
+
+<li>
+Verify the following drag operation to save an attachment to the desktop
+(See issues).</li>
+
+<ol>
+<li>
+Drag an inline image to the hard drive.</li>
+
+<li>
+Drag the attachment name from the paper clip button to the hard drive.</li>
+</ol>
+
+<li>
+Verify the following drag options when saving attachments to the Windows
+Explorer folder.</li>
+
+<ol>
+<li>
+Drag an inline image to a folder.</li>
+
+<li>
+Drag the attachment name from the paper clip button to a folder.</li>
+</ol>
+
+<li>
+Verify you can save the vCard to your hard disk.</li>
+
+<ol>
+<li>
+In a mail message containing only a vCard attachment, verify you can save
+a vCard.</li>
+
+<li>
+In a mail message containing multiple file attachments including a vCard,
+verify you can save only the vCard.</li>
+
+<li>
+In a mail message containing multiple file attachments including a vCard,
+verify you can save all the attachments including the vCard.</li>
+
+<li>
+Verify you can save the graphic image in a vCard (assume the vCard has
+a URL to a graphic file)</li>
+</ol>
+
+<li>
+Send a mail message with an attached signature file containing</li>
+
+<ol>
+<li>
+Verify when you can click on the HTTP URL to open the location in a browser
+window.</li>
+
+<li>
+Verify when you can click on the Mailto URL to start a new message compose
+window.</li>
+
+<li>
+Verify when you can click on the Mailto URL the correct HTML or Plain Text
+editor appear according to the formatting preference.</li>
+</ol>
+
+<li>
+Forward a mail message as an attachment to yourself.</li>
+
+<ol>
+<li>
+Verify the forwarded message appears in the list of attachment.</li>
+
+<li>
+Verify the forwarded message appears inline.</li>
+</ol>
+
+<li>
+Send a mail message with an attached mailbox file</li>
+
+<ol>
+<li>
+Verify you can save the mailbox file.</li>
+
+<li>
+Verify you can copy the save mailbox file to you local mail folder then
+launch Communicator and view the messages in the mail folder.</li>
+
+<li>
+Verify you can view the mailbox file in a browser window.</li>
+</ol>
+
+<li>
+Verify you can open an attachment that does not have a file extension.</li>
+
+<ol>
+<li>
+Verify a file such as a jpeg or gif is displayed inline.</li>
+
+<li>
+Verify the Word document with no .doc extension is received and can be
+opened.</li>
+
+<li>
+Verify the Excel document with no extension is received and can be opened.</li>
+
+<li>
+Verify the Powerpoint document with no extension is received and can be
+opened.</li>
+
+<li>
+Verify a Web page with no .html or .htm extension is displayed inline.</li>
+
+<li>
+Verify a vCard to with no .vcf extension is displayed inline.</li>
+</ol>
+
+<li>
+Decoding file attachment.&nbsp; Verify that you can decode the following
+file attachment (requires a 3rd party email program to specify some of
+these encoding upon sending)</li>
+
+<ol>
+<li>
+MIME or Base 64</li>
+
+<li>
+UUEncoded</li>
+
+<li>
+Binhex</li>
+
+<li>
+Apple Double</li>
+
+<li>
+Apple Single</li>
+
+<li>
+Printed quotable</li>
+</ol>
+
+<li>
+Mime Part on Demand (MPOD)</li>
+
+<ol>
+<li>
+See MPOD Test Spec</li>
+</ol>
+</ol>
+
+<p><br><b>Composing Mail Messages with Attachments</b>
+<br>Instruction: Set the view option to display attachments inline.
+<p>The following table outlines the possible actions users could perform
+and their resulting actions:
+<table BORDER >
+<tr BGCOLOR="#66CCCC">
+<td><b><font size=-1>File Type</font></b></td>
+
+<td><b><font size=-1>Action</font></b></td>
+
+<td WIDTH="111"><b><font size=-1>Show in Attachment Pane</font></b></td>
+
+<td><b><font size=-1>Show Inline</font></b></td>
+
+<td WIDTH="101"><b><font size=-1>Show as Link</font></b></td>
+
+<td><b><font size=-1>Alternate Method or Behavior</font></b></td>
+
+<td ALIGN=CENTER><b><font size=-1>Comments</font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Native Graphic File (jpg, gif)</font></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto attachment area.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>Yes</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>"File -> Attach" menu, or "Attach" button.</font></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Native Graphic File (jpg, gif)</font></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto message body.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>Yes</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>"Insert -> Image" menu, or "Insert -> Image"
+from mail compose toolbar.</font>
+<p><font size=-1>Right mouse click within the compose area, "Insert new
+link".</font></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Native Graphic File (jpg, gif)</font></td>
+
+<td VALIGN=TOP><font size=-1>Special Key + drag and drop onto message body.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>Yes</font></td>
+
+<td VALIGN=TOP></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Native Graphic File (jpg, gif)</font></td>
+
+<td VALIGN=TOP><font size=-1>Right Mouse drag &amp; drop</font> <font size=-1>onto
+message body.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>Maybe</font></td>
+
+<td VALIGN=TOP><font size=-1>Maybe</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>Maybe</font></td>
+
+<td VALIGN=TOP><font size=-1>A popup menu with options is displayed. (Insert
+as attachment, Insert inline, Insert as link, Cancel)</font></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>HTML File</font> <font size=-1>(local or networked)</font></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto attachment area.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>Yes</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>"File -> Attach" menu, or "Attach" button.</font></td>
+
+<td><font size=-1>Relative graphic links included. Absolute graphic links
+not included.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>HTML File</font> <font size=-1>(local or networked)</font></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto message body.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>Yes</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>No</font></td>
+
+<td VALIGN=TOP></td>
+
+<td VALIGN=TOP><font size=-1>Relative graphic links included. Absolute
+graphic links not included.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>HTML File</font> <font size=-1>(local or networked)</font></td>
+
+<td VALIGN=TOP><font size=-1>Special Key + drag and drop onto message body.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>Yes</font></td>
+
+<td VALIGN=TOP><font size=-1>"Insert -> Link" menu, or Ender Toolbar</font>
+<br><font size=-1>"Insert Link"</font></td>
+
+<td VALIGN=TOP></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>HTML File</font> <font size=-1>(local or networked)</font></td>
+
+<td VALIGN=TOP><font size=-1>Right Mouse drag &amp; drop</font> <font size=-1>onto
+message body.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>Maybe</font></td>
+
+<td VALIGN=TOP><font size=-1>Maybe</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>Maybe</font></td>
+
+<td VALIGN=TOP><font size=-1>A popup menu with options is displayed. (Insert
+as attachment, Insert inline, Insert as link, Cancel)</font></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><font size=-1>Bookmark</font></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto attachment area.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>Yes</font></td>
+
+<td VALIGN=TOP></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto message body not allowed (cursor
+changes to circle with line).</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Page Proxy Icon</font></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto attachment area.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>Yes</font></td>
+
+<td></td>
+
+<td><font size=-1>Drop onto message body not allowed (cursor changes to
+circle with line).</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Non-Native File (Word, Excel, etc.)</font></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto attachment area.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>Yes</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>No</font></td>
+
+<td></td>
+
+<td><font size=-1>Drop onto message body not allowed (cursor changes to
+circle with line).</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Non-Native File (Word, Excel, etc.)</font></td>
+
+<td><font size=-1>Special Key + drag and drop onto message body.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>No</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>Yes</font></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Non-Native File (Word, Excel, etc.)</font></td>
+
+<td><font size=-1>Right Mouse drag &amp; drop</font> <font size=-1>onto
+message body.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>Maybe</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>Maybe</font></td>
+
+<td><font size=-1>A popup menu with options is displayed. (Insert as attachment,
+Insert as link, Cancel)</font></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Address Book Entry Icon</font></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto attachment area.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>Yes - Attach vCard</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>No</font></td>
+
+<td VALIGN=TOP></td>
+
+<td><font size=-1>Drop onto message body not allowed (cursor changes to
+circle with line).</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Address Book</font></td>
+
+<td><font size=-1>Drop onto attachment area.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>Yes</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>No</font></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><font size=-1>Message or Thread Icon</font></td>
+
+<td VALIGN=TOP><font size=-1>Drop onto attachment area.</font></td>
+
+<td VALIGN=TOP WIDTH="111"><font size=-1>Yes - attach message</font></td>
+
+<td VALIGN=TOP><font size=-1>No</font></td>
+
+<td VALIGN=TOP WIDTH="101"><font size=-1>No</font></td>
+
+<td></td>
+
+<td><font size=-1>Drop onto message body not allowed (cursor changes to
+circle with line).</font></td>
+</tr>
+</table>
+
+<ol TYPE=A>
+<li>
+For each test case, start a html mail message and use a native file (gif/jpeg)
+to perform these operations:</li>
+
+<ol>
+<li>
+Drag a native file into the attachment area. Verify the native file is
+NOT displayed inline or as a link, but the attachment name is listed in
+the attachment area.</li>
+
+<li>
+Use the File menu option "attach" to attach the file. Verify the native
+file is NOT displayed inline or as a link, but the attachment name is listed
+in the attachment area.</li>
+
+<li>
+Use the "Attach" button from the toolbar. Verify the native file is NOT
+displayed inline or as a link, but the attachment name is listed in the
+attachment area.</li>
+
+<li>
+Click in the attachment area to bring up the attachment dialog then attach
+the file. Verify the native file is NOT displayed inline or as a link,
+but the attachment name is listed in the attachment area.</li>
+
+<li>
+Drag the native file into the message body. Verify the native file is displayed
+inline, but the attachment name is NOT listed in the attachment area.</li>
+
+<li>
+Use the Insert menu option "Insert Image" to attach the file. Verify the
+native file is displayed inline, but the attachment name is NOT listed
+in the attachment area.</li>
+
+<li>
+Bring up the context menu and use the "Insert Image" to attach the file.
+Verify the native file is displayed inline, but the attachment name is
+NOT listed in the attachment area.</li>
+
+<li>
+Use a special key combination (TBD) while drag the native file into the
+message body. Verify the native file is NOT displayed inline and the attachment
+name is NOT listed in the attachment area, but is displayed as a link.</li>
+
+<li>
+Right mouse drag and drag the native file into the message body. (Feature
+TBD) Verify a dialog appears asking you to:</li>
+
+<ol TYPE=a>
+<li>
+Insert as attachment</li>
+
+<li>
+Insert as Link</li>
+
+<li>
+Insert inline</li>
+
+<li>
+Cancel</li>
+</ol>
+</ol>
+
+<li>
+For each test case, start a html mail message and use a HTML (located locally
+or on the network) file to perform these operations:</li>
+
+<ol>
+<li>
+Drag a HTML file into the attachment area. Verify the native file is not
+displayed inline or as a link, but the attachment name is listed in the
+attachment area.</li>
+
+<li>
+Use the File menu option "attach" to attach the HTML file. Verify the native
+file is NOT displayed inline or as a link, but the attachment name is listed
+in the attachment area.</li>
+
+<li>
+Use the "Attach" button from the toolbar to attach the HTML. Verify the
+HTML file is NOT displayed inline or as a link, but the attachment name
+is listed in the attachment area.</li>
+
+<li>
+Click in the attachment area to bring up the attachment dialog then attach
+the file. Verify the native file is NOT displayed inline or as a link,
+but the attachment name is listed in the attachment area.</li>
+
+<li>
+Drag the HTML file into the message body. Verify the HTML file is displayed
+inline, but the attachment name is NOT listed in the attachment area.</li>
+
+<li>
+Use a special key combination (TBD) while drag the HTML file into the message
+body. Verify the HTML file is NOT displayed inline and the attachment name
+is NOT listed in the attachment area, but is displayed as a link.</li>
+
+<li>
+Use the Insert menu option "Insert Link" to insert the HTML file. Verify
+the HTML file is NOT displayed inline and the attachment name is NOT listed
+in the attachment area, but is displayed as a link.</li>
+
+<li>
+Use the formatting toolbar (below the address pane) to insert the HTML
+file. Verify the HTML file is NOT displayed inline and the attachment name
+is NOT listed in the attachment area, but is displayed as a link.</li>
+
+<li>
+Right mouse drag and drag the native file into the message body. (Feature
+TBD) Verify a dialog appears asking you to:</li>
+
+<ol TYPE=a>
+<li>
+Insert as attachment</li>
+
+<li>
+Insert as Link</li>
+
+<li>
+Insert inline</li>
+
+<li>
+Cancel</li>
+</ol>
+</ol>
+
+<li>
+For each test case, start a html mail message and use bookmark file to
+perform these operations:</li>
+
+<ol>
+<li>
+Drag a bookmark file into the attachment area. Verify it is NOT displayed
+inline and the attachment name is NOT listed in the attachment area, but
+is displayed as a link.</li>
+
+<li>
+Drag a bookmark file into the message body. Verify you can not drag the
+file.&nbsp; The cursor changes to a circle with a line through it.</li>
+</ol>
+
+<li>
+For each test case, start a html mail message and use page proxy icon file
+to perform these operations:</li>
+
+<ol>
+<li>
+Drag a page proxy icon into the attachment area. Verify it is NOT displayed
+inline and the attachment name is NOT listed in the attachment area, but
+is displayed as a link.</li>
+
+<li>
+Drag a page proxy icon file into the message body. Verify you can not drag
+the file.&nbsp; The cursor changes to a circle with a line through it.</li>
+</ol>
+
+<li>
+For each test case, start a html mail message and use a non-native file
+(doc/xls) to perform these operations:</li>
+
+<ol>
+<li>
+Drag a non-native file into the attachment area. Verify the native file
+is NOT displayed inline or as a link, but the attachment name is listed
+in the attachment area.</li>
+
+<li>
+Use the File menu option "attach" to attach a non-native file. Verify the
+native file is NOT displayed inline or as a link, but the attachment name
+is listed in the attachment area.</li>
+
+<li>
+Use the "Attach" button from the toolbar to attach a non-native file. Verify
+the native file is NOT displayed inline or as a link, but the attachment
+name is listed in the attachment area.</li>
+
+<li>
+Click in the attachment area to bring up the attachment dialog then attach
+the file. Verify the native file is NOT displayed inline or as a link,
+but the attachment name is listed in the attachment area.</li>
+
+<li>
+Use a special key combination (TBD) while drag the native file into the
+message body. Verify the native file is NOT displayed inline and the attachment
+name is NOT listed in the attachment area, but is displayed as a link.</li>
+
+<li>
+Right mouse drag and drag the non-native file into the message body. (Feature
+TBD) Verify a dialog appears asking you to:</li>
+
+<ol TYPE=a>
+<li>
+Insert as attachment</li>
+
+<li>
+Insert as Link</li>
+
+<li>
+Insert inline options is disabled or not available</li>
+
+<li>
+Cancel</li>
+</ol>
+
+<li>
+Drag a non-native file into the message body. Verify you can not drag the
+file.&nbsp; The cursor changes to a circle with a line through it.</li>
+</ol>
+
+<li>
+Open the Address Book window and for each test case, start a html mail
+message</li>
+
+<ol>
+<li>
+Drag and drop an address book entry icon into the attachment area and verify
+that a vCard is attached.</li>
+
+<li>
+Drag and drop an address book entry icon into the message body and verify
+you can not drag the file.&nbsp; The cursor changes to a circle with a
+line through it.</li>
+</ol>
+
+<li>
+Start a html mail message then drag and drop an personal address book file
+from your hard drive into the attachment area. Verify the address book
+show up in the attachment area.</li>
+
+<li>
+Open the Messenger window and for each test case, start a html mail message.</li>
+
+<ol>
+<li>
+Drag the message icon into the attachment pane. Verify the message is listed
+in the attachment area.</li>
+
+<li>
+Drag the thread icon into the attachment pane. Verify the message is listed
+in the attachment area.</li>
+</ol>
+
+<li>
+Methods of deleting a attachment file</li>
+
+<ol>
+<li>
+Verify you can delete attachments through the attachment area.</li>
+
+<li>
+Verify you can delete only one attachment at a time through the attachment
+area.</li>
+
+<li>
+Verify you can delete attachments through the file menu option "attach->delete
+attachment".</li>
+
+<li>
+Verify you can delete only one attachment at a time through the file menu
+option.</li>
+
+<li>
+Verify you can delete a selected attachment using the delete key.</li>
+
+<li>
+Verify you can delete a selected attachment using the del key on the numeric
+keypad.</li>
+
+<li>
+Verify you can delete a selected attachment using the Edit | Delete menu
+option.</li>
+</ol>
+
+<li>
+Send a file attachment that you have set the mail option "UUencode instead
+of mime attachment".</li>
+
+<ol>
+<li>
+Verify you can UUencode an attachment using the Compose option "UUencode
+instead of mime attachment".</li>
+
+<li>
+Verify in the message envelop, the paper clip icon appears displaying the
+number of attachments.</li>
+
+<li>
+View the page source and verify the Encoding Type in the message is displayed
+as "x-uuencode".</li>
+
+<li>
+View the page source and verify the "Content-Transfer-Encoding" for the
+attachment is displayed as "x-uuencode".</li>
+
+<li>
+View the page source and verify the "Content-Type" for the message is displayed
+as "multipart/mixed" (note - assume no signature or vCard attachment).</li>
+
+<li>
+Save the attachment and verify the file name with the correct name.</li>
+
+<li>
+Using the original application that created the attachment, open the attachment.</li>
+
+<li>
+Using BBedit (Mac) or some other utility, do a file compare to verify the
+attachment integrity is the same with the original attachment.</li>
+</ol>
+
+<li>
+Attach a vCard file to a mail message using attach button from the toolbar,
+or drag and drop into the attachment area.</li>
+
+<ol>
+<li>
+Verify the vCard file does NOT displays inline.</li>
+
+<li>
+Verify the vCard file is listed in the attachment area.</li>
+</ol>
+
+<li>
+Attach a vCard file to a mail message using the attach button drop down
+menu choice "Personal Card (vCard)".</li>
+
+<ol>
+<li>
+Verify the vCard file does NOT displays inline.</li>
+
+<li>
+Verify the vCard file is NOT listed in the attachment area.</li>
+</ol>
+
+<li>
+Attach a vCard file to a mail message using the File menu option to attach
+a "Personal Card (vCard)".</li>
+
+<ol>
+<li>
+Verify the vCard file does NOT displays inline.</li>
+
+<li>
+Verify the vCard file is NOT listed in the attachment area.</li>
+</ol>
+
+<li>
+Set the user preference to include a vCard file for every mail message.</li>
+
+<ol>
+<li>
+Verify the vCard file does displays inline.</li>
+
+<li>
+Verify the signature file is NOT listed in the attachment area.</li>
+</ol>
+
+<li>
+Attach a signature file to a mail message using the File menu, attach button,
+or drag and drop into the attachment area.</li>
+
+<ol>
+<li>
+Verify the signature file does NOT displays inline.</li>
+
+<li>
+Verify the signature file is listed in the attachment area.</li>
+</ol>
+
+<li>
+Set the user preference to include a signature file for every mail message.</li>
+
+<ol>
+<li>
+Verify the signature file does displays inline.</li>
+
+<li>
+Verify the signature file is NOT listed in the attachment area.</li>
+</ol>
+
+<li>
+Use the attach button/file menu to attach a shortcut file (Mac = alias,
+Windows shortcut file and Linux = symbolic link). Verify the shortcut file
+is listed in the in the attachment area.</li>
+
+<li>
+Drag a URL link into the attachment area.</li>
+
+<ol>
+<li>
+If the URL is to a web page link, then verify that the web page is attached.</li>
+
+<li>
+If the URL is to a file local file, then the URL is attached. (TBD).</li>
+</ol>
+
+<li>
+Drag and drop to attach a shortcut file (Mac = alias, Windows shortcut
+file and Linux = symbolic link) into the attachment pane. Verify the shortcut
+file is listed in the in the attachment area.</li>
+
+<li>
+Drag one directory/folder into the attachment area.</li>
+
+<ol>
+<li>
+Verify the contents of the directory/folder are listed in the attachment
+area.</li>
+
+<li>
+Verify all the files listed are included with the message when sent.</li>
+</ol>
+
+<li>
+Drag multiple directories/folders into the attachment area. (See Issues)</li>
+
+<ol>
+<li>
+Verify that you can/can not drag the file contents.</li>
+
+<li>
+Verify that you receive an warning message.</li>
+</ol>
+
+<li>
+For each test case, start a new message and use the</li>
+
+<ol>
+<li>
+File | Attach menu option to</li>
+
+<ol TYPE=a>
+<li>
+Verify you can attach 1 file.</li>
+
+<li>
+Verify you can attach a group of files.</li>
+
+<li>
+Verify if there are more attachment that can be displayed in the attachment
+pane that a vertical scroll bar appears and you can scroll up and down
+through the list.</li>
+</ol>
+
+<li>
+Attach button on the Compose Toolbar</li>
+
+<ol TYPE=a>
+<li>
+Verify you can attach 1 file.</li>
+
+<li>
+Verify you can attach a group of files.</li>
+
+<li>
+Verify if there are more attachment that can be displayed in the attachment
+pane that a vertical scroll bar appears and you can scroll up and down
+through the list.</li>
+</ol>
+
+<li>
+Mouse click in the attachment area</li>
+
+<ol TYPE=a>
+<li>
+Verify you can attach 1 file.</li>
+
+<li>
+Verify you can attach a group of files.</li>
+
+<li>
+Verify if there are more attachment that can be displayed in the attachment
+pane that a vertical scroll bar appears and you can scroll up and down
+through the list.</li>
+</ol>
+
+<li>
+Drag &amp; Drop from the desktop</li>
+
+<ol TYPE=a>
+<li>
+Verify you can attach 1 file.</li>
+
+<li>
+Verify you can attach a group of files.</li>
+
+<li>
+Verify if there are more attachment that can be displayed in the attachment
+pane that a vertical scroll bar appears and you can scroll up and down
+through the list.</li>
+</ol>
+
+<li>
+Drag &amp; Drop from file manager (Window Explorer, Linux File Manager,
+Mac (TBD))</li>
+
+<ol TYPE=a>
+<li>
+Verify you can attach 1 file.</li>
+
+<li>
+Verify you can attach a group of files.</li>
+
+<li>
+Verify if there are more attachment that can be displayed in the attachment
+pane that a vertical scroll bar appears and you can scroll up and down
+through the list.</li>
+</ol>
+</ol>
+
+<li>
+For each type of file, start a new message and attach the file type and
+send the message. Verify that the image is received and that the attachment
+can be saved.</li>
+
+<ol>
+<li>
+Inline file supported by program</li>
+
+<ol TYPE=a>
+<li>
+Forward message as attachment</li>
+
+<li>
+Attaching saved mail message file</li>
+
+<li>
+Gif</li>
+
+<ul>
+<li>
+non animated gif</li>
+
+<li>
+animated gif</li>
+</ul>
+
+<li>
+Jpeg</li>
+
+<li>
+PNG</li>
+
+<li>
+HTML</li>
+
+<li>
+Text files (such as notepad files)</li>
+</ol>
+
+<li>
+Windows native files from applications such as PaintBrush, Notepad, Write,
+Wordpad, Media Player, Dr Watson Log file</li>
+
+<ol TYPE=a>
+<li>
+Gif (Windows 98 Paintbrush)</li>
+
+<li>
+JPEG (Windows 98 Paintbrush)</li>
+
+<li>
+BMP</li>
+
+<li>
+PCX</li>
+
+<li>
+Tiff</li>
+
+<li>
+Text Document</li>
+
+<li>
+Text Document, MS-DOS format</li>
+
+<li>
+Word for Windows 6.0 Documents</li>
+
+<li>
+Rich Text Format (RTF)</li>
+
+<li>
+Write Documents (Windows 95 &amp; NT 4.0)</li>
+
+<li>
+Unicode Text Document (Windows 98)</li>
+
+<li>
+Wav sound file</li>
+
+<li>
+Postscript file (print to file)</li>
+
+<li>
+Mpeg movie</li>
+
+<li>
+Video Clip</li>
+
+<li>
+Movie Clip (Windows 98)</li>
+
+<li>
+Dr Watson log file (.wlg)</li>
+</ol>
+
+<li>
+Unix native files from applications such as Image Viewer, Text Editor,
+Icon Editor, SnapShot</li>
+
+<ol TYPE=a>
+<li>
+Gif</li>
+
+<li>
+JFIF (JPEG)</li>
+
+<li>
+Postscript file</li>
+
+<li>
+Tiff</li>
+
+<li>
+Sun Raster</li>
+
+<li>
+XPM</li>
+
+<li>
+Tar</li>
+
+<li>
+Gzip</li>
+
+<li>
+.m.pm (Icon Editor format)</li>
+</ol>
+
+<li>
+Mac native files from applications such as Teach Text</li>
+
+<ol TYPE=a>
+<li>
+Teach&nbsp; text file</li>
+
+<li>
+Gif with preview</li>
+
+<li>
+JPEG with preview</li>
+
+<li>
+TIFF</li>
+
+<li>
+Quicktime</li>
+
+<li>
+PICT image</li>
+
+<li>
+Apple Double</li>
+
+<li>
+Apple Single</li>
+
+<li>
+Stuff IT .sit files</li>
+</ol>
+
+<li>
+Microsoft Office 97 (PC) file types</li>
+
+<ol TYPE=a>
+<li>
+Word document</li>
+
+<li>
+Excel document</li>
+
+<li>
+PowerPoint document</li>
+
+<li>
+Office binder document</li>
+
+<li>
+Imaging for Windows (bundled with MS Office)</li>
+
+<ul>
+<li>
+Tiff</li>
+
+<li>
+Fax Document (.awd)</li>
+
+<li>
+BMP</li>
+</ul>
+</ol>
+
+<li>
+Microsoft Office 98 (Mac) file types</li>
+
+<ol TYPE=a>
+<li>
+Word document</li>
+
+<li>
+Excel document</li>
+
+<li>
+PowerPoint document</li>
+
+<li>
+Office binder document</li>
+</ol>
+
+<li>
+Microsoft Office 2000 file types</li>
+
+<ol TYPE=a>
+<li>
+Word document</li>
+
+<li>
+Excel document</li>
+
+<li>
+PowerPoint document</li>
+
+<li>
+Office binder document</li>
+</ol>
+
+<li>
+Adobe Acrobat PDF format</li>
+
+<li>
+Web Page</li>
+
+<ol TYPE=a>
+<li>
+Web page from a secure site</li>
+
+<li>
+Web page from unsecured site</li>
+
+<li>
+Simple content</li>
+
+<ul>
+<li>
+No frames</li>
+
+<li>
+Text</li>
+
+<li>
+Graphics</li>
+
+<li>
+Blinking text</li>
+
+<li>
+Tables</li>
+
+<li>
+Forms</li>
+</ul>
+
+<li>
+Complex content</li>
+
+<ul>
+<li>
+Frames</li>
+
+<li>
+Java Applet</li>
+
+<li>
+Javascript</li>
+</ul>
+
+<li>
+Sample Web pages to use</li>
+
+<ul>
+<li>
+marketwatch.com</li>
+
+<li>
+www.nettaxi.com</li>
+
+<li>
+www.news.com</li>
+
+<li>
+foxsports.com</li>
+
+<li>
+support.microsoft.com</li>
+
+<li>
+cbs.marketwatch.com</li>
+
+<li>
+cnnsi.com</li>
+
+<li>
+www.quicken.com</li>
+
+<li>
+www.buy.com</li>
+
+<li>
+download.mcafee.com</li>
+
+<li>
+www.mayohealth.org</li>
+
+<li>
+women.com</li>
+
+<li>
+jcpenny.com</li>
+
+<li>
+ivillage.com</li>
+
+<li>
+homearts.com</li>
+
+<li>
+mailbits.com</li>
+
+<li>
+www.qvc.com</li>
+
+<li>
+valupage.com</li>
+
+<li>
+123greetings.com</li>
+
+<li>
+onhealth.com</li>
+
+<li>
+www.thecase.com</li>
+
+<li>
+www.bn.com</li>
+
+<li>
+netcenter.com</li>
+
+<li>
+www.netscape.com</li>
+
+<li>
+help.netscape.com</li>
+</ul>
+
+<li>
+Web Pages from International sites</li>
+
+<ul>
+<li>
+Should include sampling of tier 1 languages such as</li>
+
+<ol>
+<li>
+Japanese</li>
+
+<li>
+French</li>
+
+<li>
+German</li>
+
+<li>
+Korean</li>
+
+<li>
+Chinese</li>
+</ol>
+</ul>
+</ol>
+
+<li>
+Verify you can send an attachment that does not have a file extension</li>
+
+<ol TYPE=a>
+<li>
+Verify sending an in line file such as a jpeg or gif.</li>
+
+<li>
+Verify sending a Word document with no .doc extension.</li>
+
+<li>
+Verify sending an Excel document with no extension.</li>
+
+<li>
+Verify sending a Powerpoint document with no extension.</li>
+
+<li>
+Verify sending a Web page with no .html extension.</li>
+
+<li>
+Verify sending a Web page with no .htm extension.</li>
+
+<li>
+Verify sending a vCard to with no .vcf extension.</li>
+</ol>
+</ol>
+</ol>
+
+<p><br><b>Special Test Cases</b>
+<br>These test cases are mention here explicitly so these cases would not
+be missed.
+<ol TYPE=A>
+<li>
+Attachment name (previous Communicator 4.0x bug)</li>
+
+<ol>
+<li>
+Verify if you have a file attachment with a slash in its name is preserved
+and is not converted to a colon when the attachment name is displayed or
+saved.</li>
+
+<br>Don't write anything in the message body but attach one file, Verified
+the received message does not have an empty text/plain part body.&nbsp;
+(Compare with Outlook 2000 as reference.)
+<li>
+Test whether you receive a warning message whenever the user sends any
+attachment which is over the set limit in order to prevent a mail server
+from being brought down or jamming some low speed lines. (TBD)</li>
+
+<li>
+When you send a mail message that bounces, the mailer daemon's bounce message
+is generally a multipart mime message where your original message is enclosed
+as a message/rfc822 attachment.&nbsp; Verify whether you are able to easily&nbsp;
+get at this attachment so you can re-address, edit and resend it. (TBD).</li>
+</ol>
+
+<li>
+Attachment Preferences</li>
+
+<ol>
+<li>
+Manually edit the prefs.js file and test the attachment user_pref("mail.file_attach_binary",
+true) to allows you to specify file attachment should be send as binary.&nbsp;
+If you use this user preference and forward a message, the message body
+and file attachment of the forwarded message should not unreadable. (Suggestion,
+forward a message that has an attached BMP file.)</li>
+
+<li>
+Manually edit the prefs.js file and test the attachment user_pref("mail.forward_message_mode",
+1)&nbsp; to toggle between forwarding attachment inline verses as an attachment.&nbsp;
+(0 = attachment, 1=inline).</li>
+</ol>
+</ol>
+
+<p><br><b>Compatibility Tests</b>
+<br>These test cases are designed to ensure we work between different platform,
+different Communicator versions, and other email programs.
+<ol TYPE=A>
+<li>
+Cross Platform tests using Communicator 5.0.&nbsp; Take a non-native file
+(MS Office document) and attach it to a mail message. Send the message
+and view the message once it reached its final destination.</li>
+
+<ol>
+<li>
+Send the mail message from Windows to Mac. Verify the attachment can be
+opened.</li>
+
+<li>
+Send the mail message from Mac to Windows. Verify the attachment can be
+opened.</li>
+
+<li>
+Send the mail message from Windows to Mac to Linux to Windows. Verify the
+attachment can be opened.</li>
+
+<li>
+Send the mail message from Mac to Windows to Linux to Mac. Verify the attachment
+can be opened.</li>
+</ol>
+
+<li>
+Use the messages you sent above and verified the attachment can be save
+to your hard drive after it has been to its final destination.</li>
+
+<ol>
+<li>
+View the message sent from Windows to Mac. Verify the attachment is saved.</li>
+
+<li>
+View the mail message from Mac to Windows. Verify the attachment is saved.</li>
+
+<li>
+View the mail message from Windows to Mac to Linux to Windows. Verify the
+attachment is saved.</li>
+
+<li>
+View the mail message from Mac to Windows to Linux to Mac. Verify the attachment
+is saved.</li>
+</ol>
+
+<li>
+Cross Platform tests using Communicator 5.0.&nbsp; Take a native file (gif/jpeg/html)
+and attach it to a mail message. Send the message and view the message
+once it reached its final destination.</li>
+
+<ol>
+<li>
+Send the mail message from Windows to Mac. Verified the attachment is displayed
+inline.</li>
+
+<li>
+Send the mail message from Mac to Windows. Verified the attachment is displayed
+inline.</li>
+
+<li>
+Send the mail message from Windows to Mac to Linux to Windows. Verified
+the attachment is displayed inline.</li>
+
+<li>
+Send the mail message from Mac to Windows to Linux to Mac. Verified the
+attachment is displayed inline.</li>
+
+<li>
+Send the mail message from Windows to Linux. Verified the attachment is
+displayed inline.</li>
+
+<li>
+Send the mail message from Linux to Windows. Verified the attachment is
+displayed inline.</li>
+
+<li>
+Send the mail message from Linux to Mac. Verified the attachment is displayed
+inline.</li>
+
+<li>
+Send the mail message from Mac to Linux. Verified the attachment is displayed
+inline.</li>
+
+<li>
+Send the mail message from Linux to Mac to Windows to Linux. Verified the
+attachment is displayed inline.</li>
+</ol>
+
+<li>
+Cross Platform tests using Communicator 4.x to send a file attachment and
+viewed under Communicator 5.0. Take a non-native file (MS Office document)
+and attach it to a mail message. Send the message and view the message
+once it reached its final destination.</li>
+
+<ol>
+<li>
+Send the mail message from Windows to Mac. Verify the attachment can be
+opened.</li>
+
+<li>
+Send the mail message from Mac to Windows. Verify the attachment can be
+opened.</li>
+
+<li>
+Send the mail message from Windows to Mac to Linux to Windows. Verify the
+attachment can be opened.</li>
+
+<li>
+Send the mail message from Mac to Windows to Linux to Mac. Verify the attachment
+can be opened.</li>
+</ol>
+
+<li>
+Use the messages you sent above and verified the attachment can be save
+to your hard drive after it has been to its final destination.</li>
+
+<ol>
+<li>
+View the message sent from Windows to Mac. Verify the attachment is saved.</li>
+
+<li>
+View the mail message from Mac to Windows. Verify the attachment is saved.</li>
+
+<li>
+View the mail message from Windows to Mac to Linux to Windows. Verify the
+attachment is saved.</li>
+
+<li>
+View the mail message from Mac to Windows to Linux to Mac. Verify the attachment
+is saved..</li>
+</ol>
+
+<li>
+Compatibility receiving attachment from other email programs. Using the
+following third party email programs, send a mail message containing a
+file attachment and receive it using Communicator 5.0. (Note. Tests may
+be limited due to time constraints)</li>
+
+<ol>
+<li>
+Sent from Eudora, verify you can save/open the attachment using Communicator.</li>
+
+<li>
+Sent from Microsoft Express, verify you can save/open the attachment using
+Communicator.</li>
+
+<li>
+Sent from Microsoft Outlook, verify you can save/open the attachment using
+Communicator.</li>
+
+<li>
+Sent from the current email program that is included with Windows 2000.
+Verify you can save/open the attachment using Communicator.</li>
+
+<li>
+Sent from the current email program that is included with Office 2000.
+Verify you can save/open the attachment using Communicator.</li>
+</ol>
+
+<li>
+Compatibility sending a file attachment to other email programs.&nbsp;
+Using the Communicator 5.0, send a mail message containing a file attachment
+and receive it using the following third party email program. (Note. Tests
+may be limited due to time constraints)</li>
+
+<ol>
+<li>
+Received in Eudora, verify you can save/open the attachment.</li>
+
+<li>
+Received in Microsoft Express, verify you can save/open the attachment.</li>
+
+<li>
+Received in Microsoft Outlook, verify you can save/open the attachment.</li>
+
+<li>
+Received in the current email program that is included with Windows 2000,
+verify you can save/open the attachment.</li>
+
+<li>
+Received in the current email program that is included with Office 2000,
+verify you can save/open the attachment.</li>
+</ol>
+</ol>
+
+<p><br><b>Stress Tests</b>
+<br>Additional test are to be determined later and coverage of each area
+depends on available time and resources.
+<ol TYPE=A>
+<li>
+Length of attachment name. What happens when the program tries to save/open
+a file whose name fills its entire buffer.</li>
+
+<li>
+Number of files attachments in a given message.&nbsp; Dragging your hard
+drive icon or large directory to the attachment area.</li>
+
+<li>
+File size limit.&nbsp; Attaching and sending very large attachments (10
+MB or larger).</li>
+
+<li>
+Limit system resources. No swap space available on hard drive or available
+application memory.</li>
+
+<li>
+Reached maximum disk space allocation for your unix account or hard drive
+is full.&nbsp; Saving file attachments or downloading mail messages to
+hard drive.</li>
+
+<li>
+Corner cases. Interrupting saving large attachments.</li>
+</ol>
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-attachment.html&amp;rev=&amp;root=/cvsroot/">Last modified December 10,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

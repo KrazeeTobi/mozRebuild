@@ -1,0 +1,280 @@
+<HTML>
+<HEAD>
+<TITLE>Xlib Toolkit</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+
+
+
+<h3>
+Xlib Toolkit Information</h3>
+<b>Project Goals</b>
+<blockquote>The goal of the xlib toolkit project in mozilla is many fold:</blockquote>
+
+<blockquote><b>Code Reuse and Multiple Toolkits</b>
+<p>The fact of the matter is that there will always be more than one toolkit
+for Unix.&nbsp; Right now the big players include Motif, GTK+&nbsp;and&nbsp;QT.&nbsp;
+Each of these toolkits unfortunately has its own look and feel for many
+things including menus and scrollbars..&nbsp; None of these toolkits is
+going away anytime soon and it is inevitable that there will be ports of
+mozilla to each of these toolkits.
+<p>Some of the toolkit will be done inside of Netscape and donated to the
+mozilla project and some will be done by the mozilla.org community.&nbsp;
+However, each new toolkit burdens the dedicated individuals who want to
+maintain the sanity of The Project.&nbsp; Even more troubling is the amount
+of duplicated code that will be in each of the toolkit ports and will have
+to maintained.
+<p>One of the goals of the Xlib toolkit project is to create a common base,
+written in Xlib, that will include all of the functionality that is common
+across the Unix toolkits. &nbsp;The majority of the code will include simple
+drawing and image handling in the gfx module.&nbsp; It will also include
+some of the widget side of the toolkit.&nbsp; Some candidates include the
+nsWindow class which is the simple drawing surface used by the html layout
+and the XP widgets.
+<p>One of the project goals should be to make it very easy to plug in your
+toolkit of choice. &nbsp;This means that you will be able to use Mozilla
+in your Motif, GTK+ or QT application. &nbsp;Until the world chooses the
+One True Toolkit or dies in the process, Mozilla should be able to run
+on all the toolkits without hardship to people writing applications.
+<p><b>Stand alone Browser</b>
+<p>It should also be possible to have a stand alone Mozilla browser that
+is based entirely in Xlib.&nbsp;&nbsp;While this compromises one of the
+primary goals of the many Desktop Projects for Unix and Unix-like systems,
+it allows for a lightweight browser implementation that could be used on
+a Kiosk system, or on very old hardware.&nbsp; The fact is that Mozilla
+contains most of the functionality of the modern Unix widget toolkits and
+it is a very small stretch to turn it into a complete toolkit system.
+<p><b>Internationalization</b>
+
+<p>Not all toolkits are created equal.&nbsp; Right now the only
+toolkit with good International support is Motif. &nbsp;The next
+versions of both QT and GTK+&nbsp;promise to include Unicode support
+but neither of those are available now and Mozilla should still target
+the widest audience possible.  &nbsp;This includes using current
+versions of the toolkits instead of bleeding edge versions. &nbsp;In
+Xlib it is possible to do internationalization without the support of
+the toolkit and much of the infrastructure for that is already in
+place.
+
+<p><b>A Look to The Future</b>
+<p>Past the initial 5.0 release, it has been made clear that mozilla will
+probably be moving to an almost entirely gfx based widget system. &nbsp;The
+reason for this is that there are many part of XUL and HTML&nbsp;4.0 and
+CSS&nbsp;that require widgets are capable of functionality that normal
+toolkits don't encompass.&nbsp; An example of this would be transparency
+of text fields which none of the toolkits currently do.
+<p>An Xlib based mozilla would allow all of the toolkits in question to
+take advantage of this without any changes.&nbsp; Also, at what point do
+you want to keep using a toolkit if you only need it for scrollbars and
+menus?</blockquote>
+<b>Project Status</b>
+
+<blockquote>
+
+The Xlib only version of Mozilla is <a
+href="http://people.redhat.com/blizzard/mozilla/">almost
+done</a>.  It will currently build, run and render pages.  You can
+navigate web sites via links, scroll around in windows, just like a
+real browser!  There are still some things that are incomplete as of
+the last update of this page.  You still can't <a
+href="http://bugzilla.mozilla.org/show_bug.cgi?id=9920">open a new url
+from the url bar</a> but you should be able to very soon.
+
+<p>
+
+There are very few things left to do.  Below is a list of the features
+that are still unimplemented or serious, obvious bugs.  There is a bug
+report open for each of them.  If you find a reproducible bug in the
+front end, please take the time to open a new bug.  It will really
+help getting it all finished up.
+
+<p>
+
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR ALIGN=LEFT>
+<TH>
+ID
+</th>
+<TH valign=left>
+Sev
+</th>
+<TH valign=left>
+Pri
+</th>
+<TH valign=left>
+Plt
+</th>
+<TH valign=left>
+Owner
+</th>
+<TH valign=left>
+State
+</th>
+<TH valign=left>
+Result
+</th>
+<TH  valign=left>
+Summary
+</th>
+</TR>
+
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9744">9744</A> </td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>NEW</nobr></td><td><nobr></nobr></td><td>scrolling widgets fails to move drop down windows</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9908">9908</A> </td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>NEW</nobr></td><td><nobr></nobr></td><td>xlib widgets don't compress expose events</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9909">9909</A> </td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>NEW</nobr></td><td><nobr></nobr></td><td>xlib gfx doesn't use shared images and pixmaps</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9910">9910</A> </td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>NEW</nobr></td><td><nobr></nobr></td><td>xlib doesn't support the clipboard</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9911">9911</A> </td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>NEW</nobr></td><td><nobr></nobr></td><td>xlib code doesn't support drag and drop</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9912">9912</A> </td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>ASSI</nobr></td><td><nobr></nobr></td><td>xlib widgets don't have menus</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9913">9913</A> </td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>NEW</nobr></td><td><nobr></nobr></td><td>gfx text widget in xlib doesn't draw correctly</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9918">9918</A> </td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>NEW</nobr></td><td><nobr></nobr></td><td>xlib widget set needs to set window manager hints</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9920">9920</A> </td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>NEW</nobr></td><td><nobr></nobr></td><td>gfx url field in xlib browser won't open new pages</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=9934">9934</A></td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>NEW</nobr></td><td><nobr></nobr></td><td>text selection doesn't work with xlib widgets</td></TR>
+<TR VALIGN=TOP ALIGN=LEFT><TD><A HREF="http://bugzilla.mozilla.org/show_bug.cgi?id=10058">10058</A></td><td><nobr>nor</nobr></td><td><nobr>P3</nobr></td><td><nobr>PC</nobr></td><td><nobr>blizzard@redhat.com</nobr></td><td><nobr>ASSI</nobr></td><td><nobr></nobr></td><td>xlib widgets don't handle test9 very well - problems with embedded children and scrolling</td></tr>
+</TABLE>
+
+
+</blockquote>
+
+<b>Want to help out?</b>
+
+<blockquote>
+
+Please <a href="mailto:blizzard@redhat.com">drop me some email</a> and
+let me know you're working on something.  That way we won't end up
+with more than one person working on the same thing.
+
+</blockquote>
+
+<b>Building the xlib only widget set</b>
+
+<blockquote>
+
+When you untar the source, run configure like this:
+
+<pre>
+./configure --enable-toolkit=xlib
+</pre>
+
+It should build from there out of the box.  Once it's done building
+you should have an apprunner and a viewer binary.  You should also add
+the following line in your ~/.mozilla/mozProfile/prefs.js file:
+
+<pre>
+user_pref("nglayout.widget.mode", 2);
+</pre>
+
+This will turn on gfx widgets.  The xlib widget set doesn't implement
+any of its own widgets except for a simple scrollbar.  Gfx widgets
+will be on before the next milestone and all of the old native widgets
+will be depreciated.  This includes a gfx scrollbar so when the gfx
+scrollbar lands the xlib native scrollbar widget will go away, too.
+
+</blockquote>
+
+<b>Embedding mozilla into other toolkits</b>
+
+<blockquote>
+
+I've been doing a lot of thinking about this recently and I've come up
+with some solutions which should allow you to embed the xlib browser
+into your gtk, qt or motif application.  I'll post more here when I've
+got code.
+
+I'm waiting for the timers to be separated from the individual gfx
+toolkits.  Once that's done I can write sample code for each of the
+toolkits.
+
+</blockquote>
+
+<hr><font size=-1>
+<!-- hhmts start -->
+Last modified: Sat Jul 17 10:53:49 EDT 1999
+<!-- hhmts end -->
+<address>
+<a href="mailto:blizzard@redhat.com">Christopher Blizzard</a><br><br>
+</address>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/xlib.html&amp;rev=&amp;root=/cvsroot/">Last modified August 13,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

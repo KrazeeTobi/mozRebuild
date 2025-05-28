@@ -1,0 +1,482 @@
+<HTML>
+<HEAD>
+<TITLE>Composition Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>5.0 Project (seamonkey)</b>
+<br><b>Mail and News Component</b>
+<br><b>Composition</b>
+<p>Written by: <a href="mailto:pmock@netscape.com">Peter Mock</a>
+<p><b>History:</b>
+<br>012599&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Created
+<br>012899&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Added extended character
+test
+<br>02202000&nbsp;&nbsp;&nbsp; Posted to Mozilla.org
+<p><b>References:</b>
+<br>UI Specification:&nbsp;&nbsp; Composition UI spec
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Master Messenger UI spec
+<p>
+<hr WIDTH="100%">
+<br>Description: this test spec applies for plain text and html editor,
+unless noted.
+<p><b>Preferences</b>
+<br>(Open the account profile preference to display the default mail compose
+editor window.)
+<ol TYPE=A>
+<li>
+Set the format preference for plain text editor</li>
+
+<ol>
+<li>
+Verify that this preference can be enable this option.</li>
+
+<li>
+Verify that only one preference can be enabled at a time.</li>
+
+<li>
+Verify that this preference is persistent after you close the preference
+dialog</li>
+
+<li>
+Set up multiple user accounts.&nbsp; Verify you can set one account to
+use plain text and the other set to html editor</li>
+</ol>
+
+<li>
+Set the format preference for HTML editor</li>
+
+<ol>
+<li>
+Repeat the above set of tests for HTML editor.</li>
+</ol>
+</ol>
+<b></b><b></b>
+<p><b>Visual</b>
+<br>Start a new mail message.&nbsp; Verify the properties that make up
+the compose window.&nbsp; (brief tests because area overlap with menus
+test specs.
+<ol TYPE=A>
+<li>
+Verify the compose window is made up of these areas:</li>
+
+<ol>
+<li>
+Title</li>
+
+<li>
+Menus</li>
+
+<li>
+Addressing pane</li>
+
+<li>
+Attachment area</li>
+
+<li>
+Subject field</li>
+
+<li>
+HTML tool bar (available only in HTML compose editor)</li>
+
+<li>
+Status bar</li>
+</ol>
+
+<li>
+Verify changes from 4.x</li>
+
+<ol>
+<li>
+The option button has been removed from compose toolbar.</li>
+
+<li>
+The option pane has been removed from the Addressing pane.</li>
+
+<li>
+The attachment pane is located to the right of the Addressing area.</li>
+
+<ol TYPE=a>
+<li>
+A vertical scroll bar appears in the attachment area if there are more
+attachment than can be listed.</li>
+
+<li>
+There is a tool tip that displays the complete name of the attachment if
+the name is longer than the width of the attachment area.</li>
+</ol>
+
+<li>
+The intelligent send attachment drop down menu is now located under the
+Message menu</li>
+</ol>
+</ol>
+<b></b><b></b>
+<p><b>Basic Functionality</b>
+<ol TYPE=A>
+<li>
+Start a mail compose window from different communicator windows.</li>
+
+<ol>
+<li>
+Start a new mail message from the browser window</li>
+
+<li>
+Start a new mail message from the page compose window</li>
+
+<li>
+Start a new mail message from the address book</li>
+
+<li>
+Start a new mail message from the messenger window</li>
+
+<li>
+Start a new mail message from the message window</li>
+
+<li>
+Start a new mail message from a new compose window.</li>
+</ol>
+
+<li>
+Start a mail compose window using the following methods</li>
+
+<ol>
+<li>
+Menu items</li>
+
+<li>
+Short cut key</li>
+
+<li>
+Mnemonics</li>
+
+<li>
+Toolbar</li>
+</ol>
+
+<li>
+Use the modifier key to bring up the compose window opposite on what you
+specified as you default settings.</li>
+
+<ol>
+<li>
+On the windows platform, use the control key.</li>
+
+<li>
+On the macintosh platform, use the command key.</li>
+
+<li>
+On linux platform, use the alt key.</li>
+</ol>
+
+<li>
+Start a Plain Text compose window and create a message which contains:</li>
+
+<ol>
+<li>
+Empty message area</li>
+
+<li>
+Space</li>
+
+<li>
+Multiple spaces</li>
+
+<li>
+Single character (non space)</li>
+
+<li>
+Word</li>
+
+<li>
+Sentence</li>
+
+<li>
+Paragraph</li>
+
+<li>
+Extended character (accented)</li>
+</ol>
+
+<li>
+Start a HTML compose window and create message which contains:</li>
+
+<ol>
+<li>
+Empty message area</li>
+
+<li>
+Space</li>
+
+<li>
+Multiple spaces</li>
+
+<li>
+Normal text</li>
+
+<li>
+Bold text</li>
+
+<li>
+Italic text</li>
+
+<li>
+Underline text</li>
+
+<li>
+Bold italic text</li>
+
+<li>
+Bullet list</li>
+
+<li>
+Number list</li>
+
+<li>
+Indented text</li>
+
+<li>
+Inserted image</li>
+
+<li>
+Table</li>
+
+<li>
+Color text</li>
+
+<li>
+Font size</li>
+
+<li>
+Add different HTML (as time permits)</li>
+</ol>
+
+<li>
+Address mail message primary address:</li>
+
+<ol>
+<li>
+Single address</li>
+
+<li>
+Multiple address</li>
+
+<li>
+Single Newsgroup</li>
+
+<li>
+Multiple Newsgroup</li>
+</ol>
+
+<li>
+Address mail message with multiple types:</li>
+
+<ol>
+<li>
+To: and Cc:</li>
+
+<li>
+To: and Bcc:</li>
+
+<li>
+To:, Cc:, and Bcc:</li>
+
+<li>
+To: and Newsgroup:</li>
+
+<li>
+To:, Cc:, Bcc:</li>
+
+<li>
+To:, Cc:, Bcc:, Newsgroup</li>
+
+<li>
+Newsgroup and Follow-up to:</li>
+
+<li>
+To: and Reply to:</li>
+</ol>
+
+<li>
+Enable different message options:</li>
+
+<ol>
+<li>
+Uuencode attachments</li>
+
+<li>
+Return receipt</li>
+
+<li>
+Intelligent Send</li>
+
+<ol TYPE=a>
+<li>
+Send as Plain Text</li>
+
+<li>
+Send as HTML only</li>
+
+<li>
+Send as Plain Text and HTML</li>
+</ol>
+
+<li>
+Fcc:</li>
+</ol>
+
+<li>
+Compose different type of mail/new messages then</li>
+
+<ol>
+<li>
+Save as Draft</li>
+
+<li>
+Save as Template</li>
+
+<li>
+Send message later</li>
+
+<li>
+Synchronize mail folder</li>
+
+<li>
+Go off-line</li>
+</ol>
+</ol>
+<b></b><b></b>
+<p><b>Additional Test cases</b>
+<ol TYPE=A>
+<li>
+Set Message preference to "Send message that use 8 bit characters" -> "As
+is"</li>
+
+<ol>
+<li>
+Send yourself a plain text message with no extended characters then view
+the page source.&nbsp; All the characters should display normally.</li>
+
+<li>
+Send yourself a plain text message with extended characters then view the
+page source.&nbsp; All the characters should display normally.</li>
+</ol>
+
+<li>
+Set Message preference to "Send message that use 8 bit characters" -> "Using
+the 'quoted printed' MIME encoding"</li>
+
+<ol>
+<li>
+Send yourself a plain text message with no extended characters then view
+the page source.&nbsp; All the characters should display normally.</li>
+
+<li>
+Send yourself a plain text message with extended characters then view the
+page source.&nbsp; All the extended characters should be converted to two
+characters octals.&nbsp; (Example 0A)&nbsp; The non-extended characters
+should be displayed normally.</li>
+</ol>
+
+<li>
+Compose one or mail message that contains the following characters</li>
+
+<ol>
+<li>
+Verify the non-extended character is displayed correctly.</li>
+
+<li>
+View the Page Source, verify the non-extended character is displayed correctly.</li>
+</ol>
+</ol>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-composition.html&amp;rev=&amp;root=/cvsroot/">Last modified February 21,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,407 @@
+<HTML>
+<HEAD>
+<TITLE>Configurable Chrome</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+<H1>Configurable Chrome</H1>
+<I> by Dave Hyatt</I> (<a href="mailto:hyatt@netscape.com">hyatt@netscape.com</a>)<BR>
+<I>Last Modified </I>4/7/99<BR>
+<H2> <B>What is Chrome?</B></H2>
+The <I>chrome </I>is that part of the application window that lies outside of 
+a window's content area. Toolbars, menu bars, progress bars, and window title 
+bars are all examples of elements that are typically part of the chrome. 
+<h2>1. Chrome Providers</h2>
+<p>A supplier of chrome for a given window type (e.g., for the navigator window) 
+  is called a <i>chrome provider</i>. There are four types of chrome providers: 
+  <i>skin providers, content providers, platform providers, </i>and <i>localization 
+  providers. </i> </p>
+<p>A skin provider is responsible for providing a complete set of files that describe 
+  the visual appearance of the chrome. Typically a skin provider will provide 
+  CSS files and images. A content provider is responsible for providing a complete 
+  set of files for defining the structure of the chrome (e.g., the actual contents, 
+  such as menu items and toolbar buttons). The platform provider provides all 
+  of the files necessary to distinguish certain platforms. The platform provider 
+  typically provides both appearance and structure information. The localization 
+  provider is responsible for providing the actual string resources that entities 
+  in the XUL expand into. </p>
+<p>The four providers work together to supply a complete set of chrome for a particular 
+  window, from the images on the toolbar buttons to the files that describe the 
+  text, contents and appearance of the window itself. </p>
+<p>The main source file for a window description comes from the content provider, 
+  and it can be any file type viewable from within Mozilla. It will typically 
+  be a XUL file, since XUL is designed for describing the contents of windows 
+  and dialogs. Since anyone can write a XUL file and supply images, anyone can 
+  be a chrome provider for a particular window. For example, NetCenter could be 
+  the user's chrome provider for the messenger window, but another site like MozillaZine 
+  could be the user's preferred chrome provider for the navigator window.</p>
+<p>Even within a particular window, the user may choose different providers for 
+  portions of the chrome. For example, the user might (for the navigator window) 
+  be using the MozillaZine skin, NetCenter's content, the BeOS platform, and surfing 
+  the Web in Klingon. It's all up to the user what to choose.</p>
+<p>Because the files that come from the providers can live anywhere (e.g., on 
+  the user's local hard drive or on a remote site), the chrome itself can reside 
+  on multiple web sites and can be downloaded dynamically, thus allowing providers 
+  to supply new services and commands as part of the chrome, and to update the 
+  user interface without having to make any change in the source code of the application. 
+  This feature is referred to as <i>downloadable chrome.</i></p>
+<h2>2. The Chrome Registry</h2>
+<p>The Mozilla client maintains a table known as the <i>chrome registry</i> that 
+  provides mappings from window types (a string identifier) to information about 
+  each of the four providers for the window types. For each provider type, a unique 
+  name is specified for the current provider, a base directory at which all of 
+  the files are located is specified, as well as the location of the main file 
+  to load for the provider type. In addition a URL to an archive (e.g., a JAR 
+  file) can be specified. The archive is optional, but it is required in order 
+  to prevent remote chrome files from being downloaded one at a time (which could 
+  adversely impact the time from the window open to finished chrome display).</p>
+<p>The preferred naming convention to use if you have a window of type <i>foo</i> 
+  is to use <i>Foo</i> (first letter capitalized) as your window type name, <i>foo.xul 
+  </i>as your initial source file name, <i>foo.css </i>as your initial CSS file 
+  name, <i>fooContent.jar </i>as the archive for all structural chrome information, 
+  and <i>fooSkin.jar</i> as the archive for all visual chrome information, <i>fooPlatform.jar</i> 
+  for all platform chrome information, and <i>fooLocale.jar </i>as the archive 
+  for localization information.</p>
+<p>The registry file is called <i>registry.rdf</i> and it resides in the user's 
+  profile directory (or in the user's .netscape directory on UNIX).</p>
+<p><b>Example registry.rdf file:</b></p>
+<pre>&lt;r:RDF xmlns:r=&quot;http://www.w3.org/TR/WD-rdf-syntax#&quot; <br>         xmlns=&quot;http://chrome.mozilla.org/rdf#&quot;&gt;
+  &lt;chrome r:ID=&quot;chrome://navigator/&quot;&gt;
+   &lt;skin&gt; 
+     &lt;r:Description r:ID=&quot;chrome://navigator/skin/&quot;&gt;
+       &lt;base&gt;resource:/res/samples/&lt;/base&gt;
+       &lt;main&gt;navigator.css&lt;/main&gt;
+     &lt;/r:Description&gt; 
+   &lt;/skin&gt; </pre>
+<pre>   &lt;content&gt; 
+     &lt;r:Description r:ID=&quot;chrome://navigator/content/&quot;&gt;
+       &lt;base&gt;resource:/res/samples/&lt;/base&gt;
+       &lt;main&gt;navigator.xul&lt;/main&gt; 
+     &lt;/r:Description&gt; 
+   &lt;/content&gt;
+	
+   ... locale and platform entries similar to skin and content ...
+
+  &lt;/chrome&gt;
+  
+   ... other chrome entries for communicator, messenger, composer, etc. ...
+
+&lt;/r:RDF&gt; </pre>
+<p>A registry entry can also contain a list of other resources within the registry 
+  that it is dependent on. This provides the client chrome cache (see below) with 
+  the hint that it needs to know which files are involved for a particular window. 
+  This will typically be used when all windows are loading from some common base, 
+  e.g., in order, for example, to ensure that a skin from the common base could 
+  be applied to all windows.</p>
+<p> This chrome registry is configurable and persistent, and thus a user can swap 
+  in a different entry for any item in the table. For example, the user could 
+  decide to retain his chrome content, but to drop in a new<i> skin</i>, e.g., 
+  the MozillaZine skin. The registry could simply be edited, and the URL for the 
+  skin file could be changed to point to the location of the new file to use.</p>
+<h2>3. Chrome URLs</h2>
+<p>New windows can be opened via JavaScript. For example, a new window can simply 
+  be opened by passing in the URL of a XUL file, e.g.,</p>
+<p><font face="Courier New, Courier, mono">window.openChromeWindow(&quot;MyNewWindowName&quot;, 
+  &quot;http://www.foopy.com/myCoolXUL.xul&quot;);</font></p>
+<p>The file will then be loaded just as a normal Web page might load. </p>
+<p>To open a window of a particular type, e.g., a new navigator window, however, 
+  we don't want to give an explicit URL in the open call, since we don't know 
+  who the user might have as a content provider for the navigator window. If we 
+  were to hardcode a URL in our file, then we would be choosing a specific structure 
+  and content for the navigator window, one that might conflict with what the 
+  user has chosen.</p>
+<p>Therefore rather than passing in the URL of a XUL file, the page designer should 
+  use a window type instead, specified using a <i>chrome URL</i>. </p>
+<p><font face="Courier New, Courier, mono">window.open(&quot;MyNewBrowserWindow&quot;, 
+  &quot;chrome://navigator/&quot;);</font></p>
+<p>When a URL of the form <i>chrome</i>://<i>WindowType</i>/&quot; is encountered, 
+  the default XUL file for that <i>WindowType </i>is loaded by looking up the 
+  entry in the chrome registry. Note that <i>chrome://WindowType/ </i>and <i>chrome://WindowType/content/</i> 
+  are synonymous.</p>
+<p>Any content files for a particular window type can be referenced using chrome 
+  content URLS, with the assumption that <i>chrome://WindowType/content/</i> refers 
+  to the base directory specified for content in the chrome registry.</p>
+<h2>4. Skins</h2>
+<p>CSS is the preferred mechanism whereby look and feel can be abstracted from 
+  the structure described in the XUL file. In typical HTML, the inclusion of a 
+  CSS files is sufficient to bring in a distinct look to apply to the file. The 
+  rub is that the URL of the CSS file has to be changed if the user wants the 
+  look to change.</p>
+<p>We cannot specify an explicit CSS file in the XUL file. If we did so, we would 
+  be hardcoding the particular skin that would be applied to the window content, 
+  and we want to allow for customization of skins without forcing the user to 
+  edit the XUL file (or to generate a new XUL file).</p>
+<p>We achieve this separation by specifying a chrome URL that can be used to access 
+  the files provided by the skin provider. When a URL of the form <i>chrome://WindowType/skin/ 
+  </i>is encountered, the default CSS file for that <i>WindowType</i> is loaded 
+  from the skin provider.</p>
+<p>Any files from the skin provider can be referenced using chrome URLS, with 
+  the assumption that <i>chrome://WindowType/skin/ </i>refers to the base directory 
+  of the skin provider as specified in the chrome registry.</p>
+<p><b>Example:</b></p>
+<p>Suppose that the MozillaZine skin archive, navigatorSkin.jar contains an image 
+  called <i>throbberBusy.gif </i>in an images subdirectory. This resource can 
+  be referenced using the following URL:</p>
+<p><font face="Courier New, Courier, mono">chrome://navigator/skin/images/throbberBusy.gif</font></p>
+<H2>5. Platform-Specific Chrome</H2>
+<p>The default looks and feels as well as some of the XUL content will vary from 
+  platform to platform. For example, the Mac has items in the Apple menu and its 
+  OK and CANCEL buttons aren't in the same positions within dialogs as on Windows.</p>
+<p>It will be necessary to ship with a different set of XUL fragments and CSS 
+  files on each platform. This is handled by abstracting out platform-specific 
+  fragments and styles into separate entries in the chrome registry. </p>
+<p>On the different platforms, the entries in the chrome registry will be different. 
+  Platform-specific CSS and XUL can then be loaded using chrome URLs without the 
+  app developer having to know which platform he/she is developing on.</p>
+<h2>6. Localization of Chrome</h2>
+<p>For different languages, the text that appears on toolbar buttons, in tooltips, 
+  in dialog controls, and elsewhere within the window will be language-specific. 
+  XUL writers should be able to refer to DTDs (for entity expansion) and other 
+  specific information without having to know which language the user currently 
+  has selected. </p>
+<p>Again, this can be accomplished through different entries in the chrome registry. 
+</p>
+<H2><b>7. The Chrome Cache</b></H2>
+<p>When the user opens up a new application window, the chrome should be immediately 
+  accessible, regardless of whether or not it originally came from a remote site. 
+  In order to accomplish this, all files referenced using chrome URLs reside in 
+  a special chrome cache.</p>
+<p>This cache is contained in a subdirectory of the main installation directory 
+  called <i>chrome</i>. Note that this means that the cache is user-independent, 
+  which allows all of the chrome to be accessed by all users (without duplicating 
+  the UI files across multiple user caches).</p>
+<p>The <i>chrome </i>directory contains a subdirectory for each window type. Within 
+  each window type directory there are four subdirectories. The first is <i>skin, 
+  </i>in which all skin files reside. There is also a subdirectory called <i>content,</i> 
+  in which all of the content files reside. The remaining two directories, <i>platform</i> 
+  and <i>locale</i>, are for the platform-specific and locale-specific files. 
+  Within each provider type directory is a subdirectory for each named provider 
+  that is currently being observed by a user. The cache is smart enough to remove 
+  any provider directories that are no longer in use by users.</p>
+<p>All chrome URLs reference the cache. No URLs are ever fetched remotely when 
+  a chrome URL is requested. The updating instead happens at some later point 
+  through the use of a background thread. </p>
+<p>When Mozilla open a particular window type for the first time in a session, 
+  a background thread pings all of the remote files found in the chrome cache 
+  for that window type to see if any of them are dirty (this is why it's advisable 
+  to put all chrome in JAR files). Upon discovery of a dirty file, the Mozilla 
+  client makes a randomized decision about when it should really download the 
+  new file (ranging from immediately to up to two weeks in the future). The randomized 
+  decision is the same for all files within the same window type (so that synchronization 
+  can be maintained when portions of the chrome for a window need to be updated 
+  simultaneously).</p>
+<p>The background thread then checks to see if any of its files need to be downloaded 
+  (based on a randomized decision it already made some time in the past), and 
+  it then updates the files. The changes do not happen dynamically but will take 
+  effect the next time the user opens the window. This update happens automatically. 
+  The user is not prompted; the chrome simply updates.</p>
+<p>The randomized decision about when to update is necessary to enable NetCenter 
+  (with its enormous user base) to have appropriately staggered updates when a 
+  chrome change is made. (Otherwise millions of users would be hitting the server 
+  more or less within hours of one another.)</p>
+<p> When a chrome URL is specified, the client does the following:</p>
+<ol>
+  <li>The window type entry is found in the chrome registry. </li>
+  <li>If an archive is specified, then the client looks in the archive first. 
+    If the file is found there it is used.</li>
+  <li>If the file is not found in the JAR file, then the client looks in the appropriate 
+    place in the chrome cache for the file. If the file is found in the cache, 
+    it is used.</li>
+  <li>If the file is not found in the cache, the client will attempt to fetch 
+    it from its original location. If the file is found there, it is used. If 
+    not, then the client will give up the ghost.</li>
+</ol>
+<p><b>Directory Structure Outline:</b></p>
+<pre><b>[Mozilla]
+  [chrome]
+    [navigator]
+         [skin]
+           [default]
+             navigatorSkin.jar
+             ... other files bundled with navigator ...
+           ... other skins used by users for navigator ...
+         [content]
+           [default]
+             navigatorContent.jar
+             ... other files bundled with navigator ...
+	 [platform]
+	   [default]
+             ... optional JAR file and other files ...
+         [locale]
+           [default]
+             ... optional JAR file and other files ...
+    ... subdirectories for other specific window types ...
+ </b></pre>
+<H2>8. Local Annotation of Chrome </H2>
+<p>Some changes to the chrome's content and to the chrome's skin are made using 
+  <i>local annotations</i>. These <i>local annotations</i> are profile-specific, 
+  and are written into RDF's local store and serialized as .RDF files (so that 
+  the user can easily edit or blow away local annotations).</p>
+<p>The user never makes local annotations explicitly. They happen as a side effect 
+  of certain UI gestures. For example, if the user removes the <i>Back</i> button 
+  from the command toolbar, then an annotation is made that the back button is 
+  no longer present on the user's toolbars. If the user resizes a window, then 
+  an annotation is made to remember the new size of the window. If the user hides 
+  columns in the bookmarks tree view or collapses a toolbar, annotations are made 
+  for that user only.</p>
+<p>When and how to annotate downloaded chrome is up to the XUL writers. The XUL 
+  language itself contains policies for describing whether or not changes to a 
+  particular AOM tree are persistent or non-persistent. Only persistent changes 
+  result in local annotations being made to the chrome.</p>
+<P><B>Policies for Fixing Mistakes - </B>Nodes can be deleted from toolbars or 
+  properties of nodes can be changed that render the view unusable. It is important 
+  therefore to provide the user with a way to recover if he/she makes a mistake. 
+  The first line of defense for deletion is to bring up a dialog that double-checks 
+  the deletion request. <I>No item should be deleted without first prompting the 
+  user. </I>Next, all changes should be reversible using the <I>Undo </I>system. 
+  Finally, there should be a blanket reset option for the chrome that returns 
+  it to the state specified in the original files. 
+<h2>9. Modifying the Chrome through JavaScript</h2>
+<p>A script writer can modify the chrome in a number of different ways. First, 
+  the script writer can use normal DOM APIs to add or remove content from XUL. 
+  If the changes made are persistent, then local annotations (see section 8 above) 
+  will be made to the user's chrome. For example, a script might collapse a toolbar 
+  or change the name of a toolbar button. These changes would result in local 
+  annotations. These local annotations can also be made by speaking the lower-level 
+  RDF APIs.</p>
+<p>A script writer can change the user's skin, content, platform, or locale by 
+  using the lower-level RDF APIs to manipulate the chrome registry. A sample code 
+  snippet below shows how to change the chrome registry to apply a different skin 
+  to the navigator window. [Note: right now to get a handle to RDF from within 
+  a XUL document, you can just say document.rdf. This will eventually go away, 
+  to be replaced with the proper mechanism for obtaining the rdf service.]</p>
+<pre>function applySkin(baseDirectory, skinFileName)
+{
+  var ds = document.rdf.GetDataSource(&quot;rdf:chrome&quot;);
+  // For M4 builds, use this line instead.
+  // var ds = document.rdf.GetDataSource(&quot;resource:/chrome/registry.rdf&quot;);
+
+  var sourceNode = document.rdf.GetResource(&quot;chrome://navigator/skin/&quot;);
+  var baseArc = document.rdf.GetResource(&quot;http://chrome.mozilla.org/rdf#base&quot;);
+  var mainArc = document.rdf.GetResource(&quot;http://chrome.mozilla.org/rdf#main&quot;);
+  
+  // Get the old targets
+  var oldBaseTarget = ds.GetTarget(sourceNode, baseArc, true);
+  var oldMainTarget = ds.GetTarget(sourceNode, mainArc, true);
+
+  // Get the new targets
+  var newBaseTarget = document.rdf.GetLiteral(baseDirectory);
+  var newMainTarget = document.rdf.GetLiteral(skinFileName);
+ 
+  // Unassert the old relationships
+  ds.Unassert(sourceNode, baseArc, oldBaseTarget);
+  ds.Unassert(sourceNode, mainArc, oldMainTarget);
+
+  // Assert the new relationships (note that we want a reassert rather than
+  // an unassert followed by an assert, once reassert is implemented)
+  ds.Assert(sourceNode, baseArc, newBaseTarget);
+  ds.Assert(sourceNode, mainArc, newMainTarget);
+
+  // Flush the modified data source to disk
+  // (Note: crashes in M4 builds, so don't use Flush() until fix checked in)
+  ds.Flush();
+
+  // Open up a new window to see your new chrome, since changes aren't yet dynamically
+  // applied to the current window
+}</pre>
+<p>Note that scripts that manipulate the chrome registry will have to be signed, 
+  and they won't be allowed to make the change automatically.</p>
+<p>There will ultimately be a higher-level API for accomplishing this (so that 
+  an intimate knowledge of RDF isn't required to accomplish this). [TODO: Define 
+  higher-level API. :) ]</p>
+<h2>10. Themes</h2>
+<p>A <i>theme</i> is an RDF file that specifies its own chrome registry. When 
+  a theme is installed, all of the entries contained in the theme's chrome registry 
+  are copied into the user's chrome registry. This allows chrome writers to specify 
+  a theme for several different window types and provider types at once and have 
+  the theme be installed in one fell swoop onto the user's machine.</p>
+<p>[TODO: Discuss this in more detail. Define API for theme manipulation.]</p>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/ConfigChromeSpec.html&amp;rev=&amp;root=/cvsroot/">Last modified April  8,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

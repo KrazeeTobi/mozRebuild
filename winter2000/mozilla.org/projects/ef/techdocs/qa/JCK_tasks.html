@@ -1,0 +1,421 @@
+<HTML>
+<HEAD>
+   <TITLE>Tasks remaining for JCK compliance</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H1><B>Pending Issues/Tasks for passing JCK and unit tests</B></H1>
+
+<B>This page can be accessed via CVS for modification:</B>
+<UL>
+<LI>
+<B>set your CVSROOT environment variable to /h/warp/warp/webroot</B>
+
+<LI>
+<B>cvs co projects/java/ElectricalFire/qa/JCK_tasks.html</B>
+</UL>
+
+<HR NOSHADE WIDTH="100%">
+<BR><B><FONT><FONT SIZE=+1>JVM Tests</FONT></FONT></B>
+
+<P>Note 1: reasons for failure may be only one of several reasons why a
+test is failing.
+<BR>Note 2: many are failing because of badClassFormat -- we need to investigate
+whether these failures are legitimate.
+<BR>
+<TABLE BORDER=0 WIDTH="100%" BGCOLOR="#CCCCCC" >
+ <TR>
+  <TD BGCOLOR="#33CCFF">
+
+<CENTER><B><FONT><FONT SIZE=+1>No.</FONT></FONT></B></CENTER>
+  </TD>
+  <TD BGCOLOR="#33CCFF">
+
+<CENTER><B><FONT><FONT SIZE=+1>Test</FONT></FONT></B></CENTER>
+  </TD>
+  <TD BGCOLOR="#33CCFF">
+
+<CENTER><B><FONT><FONT SIZE=+1>Reason for Failure</FONT></FONT></B></CENTER>
+  </TD>
+  <TD BGCOLOR="#33CCFF">
+
+<CENTER><B><FONT><FONT SIZE=+1>Responsible</FONT></FONT></B></CENTER>
+  </TD>
+ </TR>
+ <TR>
+  <TD><B>1</B></TD>
+  <TD><B>anewarray00801</B></TD>
+  <TD>
+class loading (native) exceptions are natively thrown, and not currently
+handled by Java
+  </TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>2</B></TD>
+  <TD>
+<B>athrow00101&nbsp;</B>
+<BR><B>athrow00201&nbsp;</B>
+<BR><B>athrow00202&nbsp;</B>
+<BR><B>athrow00401</B>
+  </TD>
+  <TD VALIGN=TOP>
+verifier does not allow methods without explicit return
+or throw as final bytecode, even if the code is dead.
+  </TD>
+  <TD VALIGN=TOP>Waldemar</TD>
+ </TR>
+ <TR>
+  <TD><B>3</B></TD>
+  <TD><B>checkcast01001</B></TD>
+  <TD>same as #1</TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>4</B></TD>
+  <TD>
+<B>getfield00801</B>
+<BR><B>getfield01101</B>
+<BR><B>getfield01102</B>
+<BR><B>getfield01103</B>
+<BR><B>getfield01301</B>
+<BR><B>getfield01701</B>
+  </TD>
+  <TD>same as #1</TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>5</B></TD>
+  <TD>
+<B>getstatic00601</B>
+<BR><B>getstatic00801</B>
+<BR><B>getstatic00802</B>
+<BR><B>getstatic00803</B>
+<BR><B>getstatic00901</B>
+  </TD>
+  <TD>same as #1</TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>6</B></TD>
+  <TD>
+<B>idiv00201</B>
+<BR><B>irem00101</B>
+<BR><B>irem00601</B>
+  </TD>
+  <TD VALIGN=TOP>
+currently have no strategy for dealing with integer exceptions
+-- need to be intercepted.
+  </TD>
+  <TD VALIGN=TOP>Simon</TD>
+ </TR>
+ <TR>
+  <TD><B>7</B></TD>
+  <TD>
+<B>ifnonnull00201</B>
+<BR><B>ifnull00101</B>
+  </TD>
+  <TD VALIGN=TOP>
+both appear to be looking for "javasoft/sqe/tests/jvm_cover/ifnonnull00201",
+which doesn't appear to exist, or same as #1
+  </TD>
+  <TD VALIGN=TOP><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>8</B></TD>
+  <TD>
+<B>if_acmpcond00101</B>
+<BR><B>if_acmpcond00201</B>
+  </TD>
+  <TD>
+both appear to be looking for "javasoft/sqe/tests/jvm_cover/ifnonnull00201",
+which doesn't appear to exist, or same as #1
+<BR>(error 3 -- badClassFormat)
+  </TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>9</B></TD>
+  <TD>
+<B>invokespecial01701</B>
+<BR><B>invokespecial01801</B>
+  </TD>
+  <TD>same as #1</TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>10</B></TD>
+  <TD>
+<B>invokestatic00801</B>
+<BR><B>invokestatic00901</B>
+  </TD>
+  <TD VALIGN=TOP>same as #1</TD>
+  <TD VALIGN=TOP><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>11</B></TD>
+  <TD><B>invokevirtual01901</B></TD>
+  <TD>same as #1</TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>12</B></TD>
+  <TD><B>instanceof01201</B></TD>
+  <TD>same as #1?</TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>13</B></TD>
+  <TD><B>monitorexit00201</B></TD>
+  <TD>If objectref is null, monitorexit throws a NullPointerException.</TD>
+  <TD>Bjorn</TD>
+ </TR>
+ <TR>
+  <TD><B>14</B></TD>
+  <TD><B>new00202</B></TD>
+  <TD>same as #1</TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>15</B></TD>
+  <TD>
+<B>putfield00701</B>
+<BR><B>putfield01001</B>
+<BR><B>putfield01002</B>
+<BR><B>putfield01003</B>
+<BR><B>putfield01801</B>
+  </TD>
+  <TD VALIGN=TOP>
+same as #1: if the specified field exists but is a static
+field, putfield throws an IncompatibleClassChangeError
+<BR>other exceptions are expected in the second and subsequent tests
+  </TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>16</B></TD>
+  <TD>
+<B>putstatic00701</B>
+<BR><B>putstatic00901</B>
+<BR><B>putstatic00902</B>
+<BR><B>putstatic00903</B>
+<BR><B>putstatic01001</B>
+  </TD>
+  <TD VALIGN=TOP>same as #1: Incompatible-Class-ChangeError expected</TD>
+  <TD><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>17</B></TD>
+  <TD>
+<B>ret00101</B>
+<BR><B>ret_w00101</B>
+  </TD>
+  <TD VALIGN=TOP>same as #2</TD>
+  <TD VALIGN=TOP>Waldemar</TD>
+ </TR>
+</TABLE>
+
+
+<P>
+<HR NOSHADE WIDTH="100%">
+<BR><B><FONT><FONT SIZE=+1>Old Information</FONT></FONT></B>
+<BR>(ie not known if these problems still exist)
+<BR>
+<TABLE CELLPADDING=2 WIDTH="100%" BGCOLOR="#D4D4D4" >
+ <TR BGCOLOR="#B5B5F4">
+  <TD WIDTH="10%" BGCOLOR="#D4D4D4"><B>What</B></TD>
+  <TD>
+T002: Fix Class::getConstructor
+
+<P>Laurent sez: Should return an array of Constructor, so if you invoke
+getParameterTypes() on one of its element you expect to execute Constructor_getParameterType().
+Method_getParameterType is called instead ? Did I miss something.
+Anyway the result of getParameterType is not what we expect.
+  </TD>
+ </TR>
+ <TR>
+  <TD><B>Status</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>Owner</B></TD>
+  <TD BGCOLOR="#E4E4E4">kini</TD>
+ </TR>
+ <TR>
+  <TD><B>Tests</B></TD>
+  <TD BGCOLOR="#E4E4E4">
+<FONT COLOR="#330000">ConstructorTests -TestCaseID
+ConstructorTest0005</FONT>
+  </TD>
+ </TR>
+</TABLE>
+
+<TABLE CELLPADDING=2 WIDTH="100%" BGCOLOR="#D4D4D4" >
+ <TR BGCOLOR="#B5B5F4">
+  <TD WIDTH="10%" BGCOLOR="#D4D4D4"><B>What</B></TD>
+  <TD>
+<FONT COLOR="#330000">T003: Class.newInstance() should not allow private
+class instantiation</FONT>
+  </TD>
+ </TR>
+ <TR>
+  <TD><B>Status</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>Owner</B></TD>
+  <TD BGCOLOR="#E4E4E4">kini</TD>
+ </TR>
+ <TR>
+  <TD><B>Tests</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+</TABLE>
+
+<TABLE CELLPADDING=2 WIDTH="100%" BGCOLOR="#D4D4D4" >
+ <TR BGCOLOR="#B5B5F4">
+  <TD WIDTH="10%" BGCOLOR="#D4D4D4"><B>What</B></TD>
+  <TD>
+<FONT COLOR="#330000">T006: Assertion in x86Win32ExceptionHandler.cpp
+line 210&nbsp;</FONT>
+
+<P><FONT COLOR="#330000">STATUS:EXCEPTION. Assertion thrown.</FONT>
+<BR><FONT COLOR="#330000">File: E:\src\ns\electricalfire\Runtime\System\md\x86\x86Win32ExceptionHandler.cpp</FONT>
+<BR><FONT COLOR="#330000">Linenumber: 210</FONT>
+<BR><FONT COLOR="#330000">Netscape_Java_java_lang_Thread_currentThread()
+not implemented</FONT>
+<BR><FONT COLOR="#330000">*** Unhandled Exception Error: java.lang.NullPointerException</FONT>
+  </TD>
+ </TR>
+ <TR>
+  <TD><B>Status</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>Owner</B></TD>
+  <TD BGCOLOR="#E4E4E4">Simon</TD>
+ </TR>
+ <TR>
+  <TD><B>Tests</B></TD>
+  <TD BGCOLOR="#E4E4E4">javasoft/sqe/tests/api/java/lang/RunnableTest</TD>
+ </TR>
+</TABLE>
+
+<TABLE CELLPADDING=2 WIDTH="100%" BGCOLOR="#D4D4D4" >
+ <TR BGCOLOR="#B5B5F4">
+  <TD WIDTH="10%" BGCOLOR="#D4D4D4"><B>What</B></TD>
+  <TD><FONT COLOR="#330000">T007: RuntimeTests Fail.</FONT></TD>
+ </TR>
+ <TR>
+  <TD><B>Status</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>Owner</B></TD>
+  <TD BGCOLOR="#E4E4E4">&nbsp;Simon</TD>
+ </TR>
+ <TR>
+  <TD><B>Tests</B></TD>
+  <TD BGCOLOR="#E4E4E4">
+javasoft/sqe/tests/api/java/lang/Runtime/RuntimeTests18
+<BR>javasoft/sqe/tests/api/java/lang/Runtime/RuntimeTests21
+<BR>javasoft/sqe/tests/api/java/lang/Runtime/RuntimeTests30
+  </TD>
+ </TR>
+</TABLE>
+
+<TABLE CELLPADDING=2 WIDTH="100%" BGCOLOR="#D4D4D4" >
+ <TR BGCOLOR="#B5B5F4">
+  <TD WIDTH="10%" BGCOLOR="#D4D4D4"><B>What</B></TD>
+  <TD><FONT COLOR="#330000">T010: java.lang.String tests fail</FONT></TD>
+ </TR>
+ <TR>
+  <TD><B>Status</B></TD>
+  <TD BGCOLOR="#E4E4E4">
+Class loading bug for string constants. Needs a UTF
+decoder and a StringPool wich accepts a JavaString as a key.
+  </TD>
+ </TR>
+ <TR>
+  <TD><B>Owner</B></TD>
+  <TD BGCOLOR="#E4E4E4">laurent->sriram</TD>
+ </TR>
+ <TR>
+  <TD><B>Tests</B></TD>
+  <TD BGCOLOR="#E4E4E4">
+javasoft/sqe/tests/api/java/lang/String/CharAtTests
+-TestCaseID ALL
+<BR>javasoft/sqe/tests/api/java/lang/String/CompareToTests -TestCaseID
+ALL
+<BR>javasoft/sqe/tests/api/java/lang/String/HashCodeTests -TestCaseID ALL
+<BR>javasoft/sqe/tests/api/java/lang/String/IndexOfTests -TestCaseID ALL
+<BR>javasoft/sqe/tests/api/java/lang/String/LastIndexOfTests -TestCaseID
+ALL
+<BR>javasoft/sqe/tests/api/java/lang/String/RegionMatchesTests -TestCaseID
+ALL
+<BR>javasoft/sqe/tests/api/java/lang/String/ReplaceTests -TestCaseID ALL
+<BR>javasoft/sqe/tests/api/java/lang/String/TrimTests -TestCaseID ALL
+  </TD>
+ </TR>
+</TABLE>
+
+<TABLE CELLPADDING=2 WIDTH="100%" BGCOLOR="#D4D4D4" >
+ <TR BGCOLOR="#B5B5F4">
+  <TD WIDTH="10%" BGCOLOR="#D4D4D4"><B>What</B></TD>
+  <TD><FONT COLOR="#330000">T011: java.lang.Errors need to be fully implemented</FONT></TD>
+ </TR>
+ <TR>
+  <TD><B>Status</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>Owner</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>Tests</B></TD>
+  <TD BGCOLOR="#E4E4E4">javasoft/sqe/tests/api/java/lang/ErrorsTest</TD>
+ </TR>
+</TABLE>
+
+<TABLE CELLPADDING=2 WIDTH="100%" BGCOLOR="#D4D4D4" >
+ <TR BGCOLOR="#B5B5F4">
+  <TD WIDTH="10%" BGCOLOR="#D4D4D4"><B>What</B></TD>
+  <TD><FONT COLOR="#330000">T012: java.lang.Exceptions need to be fully implemented</FONT></TD>
+ </TR>
+ <TR>
+  <TD><B>Status</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>Owner</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>Tests</B></TD>
+  <TD BGCOLOR="#E4E4E4">javasoft/sqe/tests/api/java/lang/ExceptionsTest</TD>
+ </TR>
+</TABLE>
+
+<TABLE CELLPADDING=2 WIDTH="100%" BGCOLOR="#D4D4D4" >
+ <TR BGCOLOR="#B5B5F4">
+  <TD WIDTH="10%" BGCOLOR="#D4D4D4"><B>What</B></TD>
+  <TD><FONT COLOR="#330000">T013: java.io need to be fully implemented</FONT></TD>
+ </TR>
+ <TR>
+  <TD><B>Status</B></TD>
+  <TD BGCOLOR="#E4E4E4"><BR></TD>
+ </TR>
+ <TR>
+  <TD><B>Owner</B></TD>
+  <TD BGCOLOR="#E4E4E4">sailesh</TD>
+ </TR>
+ <TR>
+  <TD><B>Tests</B></TD>
+  <TD BGCOLOR="#E4E4E4">javasoft/sqe/tests/api/java/io</TD>
+ </TR>
+</TABLE>
+
+</BODY>
+</HTML>

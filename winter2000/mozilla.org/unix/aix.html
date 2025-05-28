@@ -1,0 +1,281 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla on AIX FAQ</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+   
+
+
+
+<center>
+<h1>
+Mozilla on AIX FAQ</h1></center>
+
+<center>Questions or comments to <a href="news://news.mozilla.org/netscape.public.mozilla.unix">news://news.mozilla.org/netscape.public.mozilla.unix</a>.
+<p>Authors: Jim Dunn &lt;jdunn@netscape.com></center>
+
+<hr>
+<ol>
+<li>
+<a href="#version">OS&nbsp;Version</a></li>
+
+<li>
+<a href="#compiler">What compiler should I use?</a></li>
+
+<li>
+<a href="#build">How do I build?</a></li>
+
+<li>
+<a href="#shmat">"Gdk-WARNING **:shmat failed!" error message</a></li>
+
+<li>
+<a href="#issues">Cross-compiler plugin/module compatibility, vtables,
+and name-mangling</a></li>
+
+<li>
+Toplevel bug (<a href="http://bugzilla.mozilla.org/show_bug.cgi?id=18688">#18688</a>)
+that is tracking the progress.</li>
+</ol>
+
+<hr>
+<ul>
+<li>
+<a NAME="version"></a><b>OS Version(s):</b></li>
+
+<ul>AIX 4.3.2 : To determine use the following command to get the version
+(uname -n to get the OS type)
+<ul>/usr/bin/lslpp -lc | /usr/bin/grep bos.rte: | /usr/bin/head -1 |&nbsp;
+/usr/bin/cut -f3 -d:</ul>
+</ul>
+
+<li>
+<a NAME="compiler"></a><b>What compiler should I use?</b></li>
+
+<br>Right now we have only xlC 3.6.4 working.&nbsp; We have played around
+with gcc/g++ but had problems dealing with the linker.&nbsp;
+<table BORDER offset="0" >
+<tr>
+<td>Compiler</td>
+
+<td>Good</td>
+
+<td>Bad</td>
+
+<td>Notes</td>
+</tr>
+
+<tr>
+<td>xlC 3.6.4.0<a href="#xlc_version">*</a></td>
+
+<td>Nothing else is working as of yet.</td>
+
+<td>Weak C++ support, lots of special handling is required to build.&nbsp;
+xlC 5.0&nbsp; should fix this&nbsp; problem but it isn't available yet.</td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>gcc 2.7.2 &amp; egcs</td>
+
+<td>
+<li>
+Classic compiler, lots of support on many platforms.</li>
+
+<li>
+Purify support</li>
+</td>
+
+<td>Hasn't produced a workable version. Bad integration with AIX's linker.&nbsp;
+Not sure if this will be compatible with AIX's OJI component.</td>
+
+<td>Good luck in getting this to run!</td>
+</tr>
+</table>
+<a NAME="xlc_version"></a>To determine what level of xlC you are using:
+<ol>/usr/bin/lslpp -lc | /usr/bin/grep xlC.rte: | /usr/bin/head -1 | /usr/bin/cut
+-f3 -d:</ol>
+
+<li>
+<a NAME="build"></a>How do I build?</li>
+
+<ul>
+<li>
+gtk &amp; glib</li>
+
+<ul>We are currently using version 1.2.4 of both of these.</ul>
+
+<li>
+<a NAME="gtkshared"></a>Due to a limitation of xlC 3.6.4 linker we need
+to make a shared 'gtk' library.&nbsp; So if the gtk/gdk/gmodule libs are
+in say /usr/wpc/lib, do the following: (see <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=21117">#21117</a>)</li>
+
+<ul>
+<li>
+/usr/ibmcxx/bin/makeC++SharedLib_r -p1 -brtl -bso -o libshared_gtk.so -L/usr/wpc/lib
+-lgtk -lgdk -lgmodule -lXext -lX11 -lm</li>
+
+<li>
+chmod +x libshared_gtk.so</li>
+
+<li>
+true libshared_gtk.so</li>
+
+<li>
+cp libshared_gtk.so /usr/wpc/lib</li>
+
+<li>
+edit /usr/wpc/bin/gtk-config changing the 2nd to the last</li>
+
+<li>
+line from "echo $libdirs -lgtk -lgdk $my_glib_libs -lXext -lX1 -lm" to
+"echo $libdirs -lshared_gtk -lXext -lX1 -lm"</li>
+</ul>
+
+<li>
+pull the tree</li>
+
+<ul>
+<li>
+cvs co mozilla/client.mk</li>
+
+<li>
+cd mozilla</li>
+
+<li>
+gmake -f client.mk pull_all</li>
+</ul>
+
+<li>
+build</li>
+
+<ul>
+<li>
+export CC=xlc_r</li>
+
+<li>
+export CXX=xlC_r</li>
+
+<li>
+export CFLAGS='-DAIX -DAIX4_3'</li>
+
+<li>
+export CXXFLAGS='-DAIX -DAIX4_3'</li>
+
+<li>
+export LDFLAGS='-brtl -bso'</li>
+
+<li>
+add /usr/ibmcxx/bin &amp; /usr/wpc/bin (where</li>
+
+<li>
+autoconf/gmake/gtk-config... exist)</li>
+
+<li>
+autoconf -l build/autoconf</li>
+
+<li>
+gmake</li>
+</ul>
+</ul>
+
+<li>
+<a NAME="shmat"></a><b>"Gdk-WARNING **:shmat failed!" error message</b></li>
+
+<br>You did not build the <a href="#gtkshared">gtk shared library</a>
+<li>
+<a NAME="issues"></a><b>Cross-compiler plugin/module compatibility, vtables,
+and name-mangling issues</b></li>
+
+<br>These issues are still being fleshed out.</ul>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/aix.html&amp;rev=&amp;root=/cvsroot/">Last modified February  3,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

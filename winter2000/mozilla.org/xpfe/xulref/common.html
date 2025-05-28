@@ -1,0 +1,455 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; U) [Netscape]">
+</head>
+<body>
+<p align="right"><i>XUL Programmer's Reference Manual</i></p>
+
+<h1>
+<a NAME="Common AttributesIDX"></a><b><font color="#000099"><font size=+2>General
+XUL attributes</font></font></b></h1>
+
+<table BORDER=0 COLS=1 WIDTH="100%" >
+<tr>
+<td BGCOLOR="#FFFFFF">
+<table BORDER=0 CELLSPACING=0 COLS=1 WIDTH="50%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td WIDTH="70%"><b><font face="Arial,Helvetica"><font color="#FFFFFF">Attributes</font></font></b></td>
+</tr>
+
+<tr>
+<td><a href="#id">id</a></td>
+</tr>
+
+<tr>
+<td><a href="#chrome">chromeclass</a></td>
+</tr>
+
+<tr>
+<td><a href="#context">context</a></td>
+</tr>
+
+<tr>
+<td><a href="#style">style</a></td>
+</tr>
+
+<tr>
+<td><a href="#persist">persist</a></td>
+</tr>
+
+<tr>
+<td><a href="#popup">popup</a></td>
+</tr>
+
+<tr>
+<td><a href="#popupanchor">popupanchor</a></td>
+</tr>
+
+<tr>
+<td><a href="#popupalign">popupalign</a></td>
+</tr>
+
+<tr>
+<td><a href="#draggest">ondraggesture</a></td>
+</tr>
+
+<tr>
+<td><a href="#dragdrop">ondragdrop</a></td>
+</tr>
+
+<tr>
+<td><a href="#dragover">ondragover</a></td>
+</tr>
+
+<tr>
+<td><a href="#dragexit">ondragexit</a></td>
+</tr>
+</table>
+
+<p>A number of attributes are common to all XUL widgets and can be imagined
+as being inherited from an anonymous base class. This section describes
+those common attributes.
+<br>&nbsp;
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="id"></a><b><font color="#FFFFFF"><font size=+1>id</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>id</b> uniquely identifies an element in a XUL file.<a NAME="id attribute IDX"></a></blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element id="<i>string</i>"></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu <b>id</b>="file_men"></tt>
+<br><tt>&nbsp; &lt;menupopup></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;menuitem <b>id</b>="new_item" value="New"
+disabled="true" /></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;menuitem value="Open" /></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;menuitem value="Exit" /></tt>
+<br><tt>&nbsp; &lt;/menupopup></tt>
+<br><tt>&lt;/menu></tt></blockquote>
+<b>Notes</b>
+<blockquote>All XUL widgets can use the <b>id</b> attribute. Use <b>id</b>
+to access and manipulate DOM elements in XUL. For example, the following
+javascript function retrieves the New menuitem above, which can then be
+interrogated for its state, attributes, etc.:
+<p><tt>is_new = document.getElementById("new_item");</tt>
+<br><tt>current_state = is_new.getAttribute("disabled");</tt>
+<br><tt>if (current_state = true) { ... }&nbsp;</tt>
+<p>The <b>id</b> attribute can also be used to identify structures in&nbsp;<a NAME="overlaysIDX"></a>overlay
+files that will overlay the basic UI defined in a XUL file. For example,
+when subtrees such as menus are defined in an overlay and given an id (e.g.,
+<b>id</b>="file_menu")
+identical to a node in the base file, those subtrees are interpolated into
+the structure of the XUL interface. See <a href="http://www.mozilla.org/xpfe/xptoolkit/overlays.html">overlays</a>
+for more information.
+<br>&nbsp;
+<br>&nbsp;</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="class"></a><b><font color="#FFFFFF"><font size=+1>class</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>class</b> is an&nbsp;<a NAME="class attribute IDX"></a>optional
+attribute used for styling XUL widgets.&nbsp;</blockquote>
+
+<p><br><b>Syntax</b>
+<blockquote><tt>&lt;element class="<i>string</i>"></tt></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><tt>&lt;box class="borderless"></tt></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>The <b>class</b> attribute works exactly like the class attribute
+in HTML. As in HTML, the XUL <b>class</b> attribute corresponds to the
+class selector in style definitions. For example, the element <tt>&lt;box
+class="mybox"></tt> will pick up style information defined in <tt>box.mybox
+{style statements...} </tt>where an unclassed
+<tt>&lt;box></tt> element
+will not. The <b>class</b> attribute can be used to style almost any XUL
+widget. XUL also provides the ability to provide style information for
+any elements of a particular class. In other words, you can define style
+information for an anonymous class (i.e., <tt>.myClass {style statements...}</tt>)
+in a stylesheet, and any element that uses the attribute <b>class</b>="myClass"
+will pick up that style information.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="style"></a><b><font color="#FFFFFF"><font size=+1>style</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>style</b> specifies style sheet information in-line with
+a widget.<a NAME="style attribute IDX"></a></blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>style</b>="<i>style statement[ ; style statement2;
+style statement3; ]</i>"></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu value="Edit" <b>style</b>="background-color:lightblue"></tt></blockquote>
+<b>Notes</b>
+<blockquote>Though this is a legal attribute for most widgets, in general
+it's preferable to specify all style information in the .css files located
+in the skin subdirectory of a particular package. This allows interfaces
+to be&nbsp;<a NAME="skinning XUL IDX"></a>"skinned" consistently.
+<br><b>Warning:&nbsp;</b> When a style is specified in-line, more global
+and critical style information can be overwritten to the detriment of the
+overall look of the UI.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="persist"></a><b><font color="#FFFFFF"><font size=+1>persist</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>persist</b> specifies which attributes o<a NAME="persist attribute IDX"></a>f
+a widget are to be stored persistently, so that they can be recalled as
+user preferences when the application is restarted.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>persist</b>="<i>attribute1 [ attribute2
+attribute3 etc.]"></i></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;window id="main-window" xmlns:html="http://www.w3.org/TR/REC-html40"</tt>
+<br><tt>&nbsp; xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"</tt>
+<br><tt>&nbsp; xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"</tt>
+<br><tt>&nbsp; onload="Startup()"</tt>
+<br><tt>&nbsp; onunload="Shutdown()"</tt>
+<br><tt>&nbsp; title="&amp;mainWindow.title;"&nbsp;</tt>
+<br><tt>&nbsp; windowtype="navigator:browser"</tt>
+<br><tt>&nbsp; align="vertical"</tt>
+<br><tt>&nbsp; width="640" height="480"</tt>
+<br><tt>&nbsp; x="10" y="10"</tt>
+<br><tt>&nbsp; <b>persist</b>="width height x y"</tt>
+<br><tt>&nbsp; ondraggesture="return GeneralDrag(event);">&nbsp;</tt></blockquote>
+<b>Notes</b>
+<blockquote>The persisted values are separated by spaces only. The <b>persist</b>
+attribute is often used to preserve the size and location of the root window
+and other positionable, non-modal XUL windows. The example above preserves
+the width, height, horizontal position, and vertical position on the screen,
+respectively. But the <b>persist</b> attribute can be used to persist <i>any
+attribute on any element in XUL</i>. Examples of other attributes that
+can be persisted include the state of menus (e.g., checked or not), the
+visibility of particular toolbars, and the relative size of elements within
+the main window.</blockquote>
+<tt>&nbsp;</tt></td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="popup"></a><b><font color="#FFFFFF"><font size=+1>popup</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>popup</b> is an&nbsp;<a NAME="popup attribute, XUL IDX"></a>optional
+attribute that specifies the id of a <a href="popupref.html">popup</a>
+associated with the element.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>popup</b>="<i>popup element id</i></tt>"></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu value="Edit" <b>popup</b>="editor_popup"></tt></blockquote>
+<b>Notes</b>
+<blockquote>The popup identified with this attribute can be either a menu
+or a window type popup. The content of the popup subtree is displayed when
+the user left clicks the element. The popup uses its own <a href="popupref.html#popupalign">popupalign</a>
+and <a href="popupref.html#popupanchor">popupanchor</a> attributes to position
+the popup content in relation to the element.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="popupanchor"></a><b><font color="#FFFFFF"><font size=+1>popupanchor</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>popupanchor</b> is an optional attribute for specifying
+where popup content should be anchored on<a NAME="popupanchor IDX"></a>
+the element.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>popupanchor</b>="none | topleft | topright
+| bottomleft | bottomright" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;element id="edit-context"</tt>
+<br><tt><b>&nbsp;&nbsp; </b>popup="editor-popup" <b>popupanchor</b>="topleft"</tt>
+<br><tt>&nbsp;&nbsp; popupalign="bottomright" /></tt></blockquote>
+<b>Notes</b>
+<blockquote>The <b>popupanchor</b> attribute can be used to specify that
+the popup content should come up anchored to one of the four corners of
+the content object (e.g., the button popping up the content). If omitted,
+no anchoring occurs. Instead the popup content comes up directly underneath
+the mouse event coordinates. This point (either directly under the mouse
+or attached to one of the four corners) is called the <i>originating point</i>.&nbsp;
+<p>By default the popup content appears with its top left point located
+directly underneath the point at which the user's mouse goes down (on tooltips
+the content is displaced by the height of the mouse cursor). <b>popupanchor</b>
+works in conjunction with <b><a href="#popupalign">popupalign</a></b> to
+position the popup content on the element. The default value for both <b>popupanchor</b>
+and <b>popupalign</b> is "none."
+<br>&nbsp;</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="popupalign"></a><b><font color="#FFFFFF"><font size=+1>popupalign</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>popupalign</b> is an optional attribute for specifying which
+side of the pop<a NAME="popupalign IDX"></a>up content should be attached
+to the <b><a href="#popupanchor">popupanchor</a></b>.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>popupalign</b>="none | topleft | topright
+| bottomleft | bottomright" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;element id="edit-context"</tt>
+<br><tt><b>&nbsp;&nbsp; </b>popup="editor-popup" popupanchor="topleft"</tt>
+<br><tt>&nbsp;&nbsp; <b>popupalign</b>="bottomright" /></tt></blockquote>
+<b>Notes</b>
+<blockquote>The <b>popupalign</b> attribute can be used to specify which
+corner of the popup content is tied to the originating point. If omitted,
+the default is topleft. The example below shows how to create the traditional
+buttons with attached left mouse menus that exist in the 4.x Communicator
+product. If omitted, no anchoring occurs. Instead the popup content comes
+up directly underneath the mouse event coordinates. This point (either
+directly under the mouse or attached to one of the four corners) is called
+the <i>originating point</i>.&nbsp;
+<p>By default the popup content appears with its top left point located
+directly underneath the point at which the user's mouse goes down (on tooltips
+the content is displaced by the height of the mouse cursor). The default
+value for both <b>popupanchor</b> and <b>popupalign</b> is "none."
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="chrome"></a><b><font color="#FFFFFF"><font size=+1>chromeclass</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>chromeclass</b> is an optional attribute for specifying
+what type of chrome is being loaded.&nbsp;<a NAME="chromeclass IDX"></a></blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>chromeclass</b>="<i>string</i>"></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;splitter id="sidebar-splitter" collapse="before" persist="state
+hidden"&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <b>chromeclass</b>="extrachrome" onclick="dumpStats();">></tt></blockquote>
+<b>Notes</b>
+<blockquote><b>chromeclass</b> is used to label an element as belonging
+to a certain class of chrome objects, e.g., "toolbar", "menubar", etc.This
+is used as a hint to the window.open method, which takes flags that can
+be used to show/hide elements of chrome, e.g., toolbars, menubars, status
+bars, etc. Because the chrome is totally configurable using XUL, some kind
+of hint needs to be supplied to the <i>window.open</i> implementation so
+that it knows how to locate specific chrome elements.&nbsp;</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="context"></a><b><font color="#FFFFFF"><font size=+1>context</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>context</b> is an optional attribute for specifying what
+type of chrome is being loaded.&nbsp;<a NAME="context attribute IDX"></a></blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>context</b>="<i>string</i>"></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;box <b>context</b>="context" flex="100%"></tt></blockquote>
+<b>Notes</b>
+<blockquote>XXX</blockquote>
+
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="draggest"></a><b><font color="#FFFFFF"><font size=+1>ondraggesture</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>ondraggesture</b> is an event listener for the draggesture
+event.&nbsp;<a NAME="ondraggesture attribute IDX"></a>draggesture is fired
+every time the user appears to be beginning a drag operation.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>ondraggesture</b>="<i>event handler code</i></tt>"></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu value="Edit" <b>ondraggesture</b>="GetExtraImg()"></tt></blockquote>
+<b>Notes</b>
+<blockquote>It can be difficult to detect drag gestures. The&nbsp;<a NAME="draggesture event IDX"></a>draggesture
+event is fired when the user holds the mouse down and moves some distance
+without letting up on the mouse button. It is up to the application developer
+to decide whether the gesture constitutes a real drag and whether to use
+it or not. See <a href="common.html#dragdrop">ondragdrop</a>, <a href="common.html#dragover">ondragover</a>,
+and <a href="common.html#dragexit">ondragexit</a> for more information
+on drag and drop functionality in XUL.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="dragdrop"></a><b><font color="#FFFFFF"><font size=+1>ondragdrop</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><a NAME="ondragdrop attribute IDX"></a><b>ondragdrop</b> is
+an event listener for the dragdrop event.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>ondragdrop</b>="<i>event handler code</i>"></tt></blockquote>
+<b>Example</b><a NAME="events, dragdrop IDX"></a>
+<blockquote><tt>&lt;toolbar id="PersonalToolbar" chromeclass="toolbar"
+persist="collapsed"&nbsp;</tt>
+<br><tt>&nbsp; dragdroparea="innermostBox"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ondraggesture="return BeginDragPersonalToolbar(event);"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <b>ondragdrop</b>="return DropPersonalToolbar(event);"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ondragover="return DragOverPersonalToolbar(event);"></tt></blockquote>
+<b>Notes</b>
+<blockquote>A widget's dragdro<a NAME="dragdrop event IDX"></a>p event
+is fired when the user drops an item onto that widget. See <a href="common.html#draggest">ondraggesture</a>,
+<a href="common.html#dragover">ondragover</a>,
+and <a href="common.html#dragexit">ondragexit</a> for more information
+on drag and drop functionality in XUL.</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="dragover"></a><b><font color="#FFFFFF"><font size=+1>ondragover</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>ondragover<a NAME="ondragdrop attribute IDX"></a></b> is
+an event listener for the dragover event.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>ondragover</b>="<a NAME="events, dragover IDX"></a><i>event
+handler code</i>"></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;toolbar id="PersonalToolbar" chromeclass="toolbar"
+persist="collapsed"&nbsp;</tt>
+<br><tt>&nbsp; dragdroparea="innermostBox"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ondraggesture="return BeginDragPersonalToolbar(event);"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ondragdrop="return DropPersonalToolbar(event);"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <b>ondragover</b>="return DragOverPersonalToolbar(event);"></tt></blockquote>
+<b>Notes</b>
+<blockquote><b>dragover</b>&nbsp;<a NAME="dragover event IDX"></a>is fired
+when an object is dragged over the top of an element. For example, if you
+drag an object over a toolbar with the intention of dropping it onto a
+bookmark window, the toolbar's <b>ondragover</b> event handler attribute
+receives the dragover event. Events of this kind can be used to create
+styles for drag-aware widgets over which elements are dragged. See <a href="common.html#draggest">ondraggesture</a>,
+<a href="common.html#dragdrop">ondragdrop</a>, and <a href="common.html#dragexit">ondragexit</a>
+for more information on drag and drop functionality in XUL.</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="dragexit"></a><b><font color="#FFFFFF"><font size=+1>ondragexit</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote>ondragexit<a NAME="ondragexit attribute IDX"></a> is an event
+listener for the dragexit event.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;element <b>ondragexit</b>="<i>event handler code</i>"></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu value="Edit"&nbsp;<a NAME="events, dragexit IDX"></a><b>ondragexit</b>="doDragDone()"></tt></blockquote>
+<b>Notes</b>
+<blockquote>dragexit<a NAME="dragexit event IDX"></a> is fired when a drag
+operation has been completed. See <a href="common.html#draggest">ondraggesture</a>,
+<a href="common.html#dragdrop">ondragdrop</a>, and <a href="common.html#dragover">ondragover</a>
+for more information on drag and drop functionality in XUL.</blockquote>
+&nbsp;</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+<p align="right"><i>Last updated: 13:10 1/26/00 <a href="mailto:oeschger@netscape.com">Ian Oeschger</a></i></p>
+</body>
+</html>

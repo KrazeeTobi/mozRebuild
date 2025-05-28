@@ -1,0 +1,726 @@
+<HTML>
+<HEAD>
+<TITLE>Start Page Testspecpec</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.0 Project (seamonkey)</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mail and News Component</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Start Page</b>
+<p>Written by: <b><a href="mailto:pmock@netscape.com">Peter Mock</a></b><b></b>
+<p><b>History:</b>
+<br>010699&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Incorporated Communicator
+4.5 test spec.
+<br>033099&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Updated with changes
+from UI spec.
+<br>01112000&nbsp;&nbsp;&nbsp; Adding additional test cases
+<p><b>References:</b>
+<br>UI Specification:
+<p>
+<hr WIDTH="100%">
+<br>Description: Started in Communicator 4.5, when you launched Messenger
+the start page automated loaded in the message pane.&nbsp; This page linked
+to Netscape netcenter portal pointing to available services.&nbsp; The
+idea was instead of leaving the message pane blank, we could show the user
+some useful content by loading a web page into that window.&nbsp; As soon
+as the user selected a message in any way, the start page would be replaced
+by a normal message.&nbsp; The feature was available only on Win32 platforms
+but 5.0, it will be available on all platforms.&nbsp; The public mozilla
+and commercial build will point to different start pages.&nbsp; The mozilla
+start page is to be determine by the net community. The commercial build
+will point to netcenter services.
+<br>&nbsp;
+<p><b>Start Page Preference Setting</b>
+<br>Goal: Verify what are the default preference for the start page. The
+start page setting can be changed through the individual user preference
+or directly through the netscape preference file "prefs.js".
+<ol TYPE=A>
+<li>
+Verify if the preference setting is not the same as the 4.5 start page
+preference for public mozilla build.</li>
+
+<ol>
+<li>
+View the mailnews-ns.js to verify the user_pref("mailnews.start_page.url",
+"http://www.mozilla.org");</li>
+
+<li>
+View the prefs.js file to verify the user_pref("mailnews.start_page.url",
+"http://www.mozilla.org");</li>
+
+<li>
+View the prefs.js file to verify the start page&nbsp; user_pref("mailnews.start_page.enabled",
+true);</li>
+</ol>
+
+<li>
+User preference dialog</li>
+
+<ol>
+<li>
+Verify there is a user interface preference.</li>
+
+<ol TYPE=a>
+<li>
+Verify the interface has a check box to enable/disable the feature.</li>
+
+<li>
+Verify the interface has a location field to enter in your URL".</li>
+
+<li>
+Verify the interface has a "Use Current Page" button.</li>
+
+<li>
+Verify the interface has a "Select File".</li>
+</ol>
+
+<li>
+Verify whether this preference is per profile.</li>
+
+<li>
+Verify the text wording of the user preference.</li>
+
+<li>
+Verify you can change the default web page.</li>
+
+<ol TYPE=a>
+<li>
+Verify you can manually type in a new url into the location field.</li>
+
+<li>
+Verify you can use the "Use Current Page" button to change the default
+page to the current page displayed in the browser window.</li>
+
+<li>
+Verify you can use the "Select File" button to select a local web page.</li>
+
+<li>
+Verify you can leave the location field blank.</li>
+
+<li>
+Verify you can have an incorrect url.</li>
+</ol>
+
+<li>
+Verify the preference is enabled by default.</li>
+
+<li>
+Verify this option can be changed and the setting is persistent after the
+dialog is closed.</li>
+
+<li>
+Verify the preference takes effect immediately without needing to restart.</li>
+</ol>
+</ol>
+
+<p><br><b>Start Page Loading</b>
+<br>These tests should be performed under IMAP, POP, and NNTP.
+<ol TYPE=A>
+<li>
+Verify that when the Mail Start Page is loading, the Stop button is enabled
+and the netscape logo icon indicates progress.</li>
+
+<li>
+Verify the start page is dismissed when the user starts views a mail message.
+(other cases TBD).</li>
+
+<li>
+Single click on another mail folder but do not select a message.&nbsp;
+Verify that the mail start page is still loaded.</li>
+
+<li>
+Single click on a mail or news server icon/name. Verify that the mail start
+page is still loaded.</li>
+
+<li>
+First time the 3 pane mail window is opened.&nbsp; Verify the start page
+loads when:</li>
+
+<ol>
+<li>
+The first time messenger is started and the message pane is open.</li>
+
+<li>
+Verify the Start Page loads only once</li>
+
+<li>
+Verify that launching Communicator into both the browser (with a home page
+being loaded to different url) and Messenger will display the mail start
+page.</li>
+
+<li>
+Start messenger from the command line option.&nbsp; (e.g. mozilla -mail.&nbsp;
+The mac will have its own icon to launch directly into Messenger.)</li>
+
+<li>
+Start Communicator (to the browser window) then select a bookmark mail
+message. A separate message window should open. Open the 3 pane mail window
+then verify the start page does load.</li>
+</ol>
+
+<li>
+In the message pane, verify all the content menu items are grayed.</li>
+
+<li>
+Verify that you can not bookmark the start page.</li>
+
+<li>
+Different 3 pane mail window configurations</li>
+
+<ol>
+<li>
+Once the start page has been loaded.</li>
+
+<ol TYPE=a>
+<li>
+Collapse and expand the folder pane. Verify the start page is still loaded.</li>
+
+<li>
+Collapse and expand the message pane. Verify the start page is still loaded.</li>
+
+<li>
+Minimize the messenger window then restore. Verify the start page is still
+loaded.</li>
+</ol>
+
+<li>
+Verify the 3 pane mail window configurations work for first time the 3
+pane mail window is opened. (by default, all panes are expanded.)</li>
+
+<li>
+Set your 3 pane mail window to collapse the folder pane so that only the
+thread pane and the message pane are displayed.&nbsp; Exit and restart
+Communicator.&nbsp; Open the mail window (now 2 pane) for the first time.&nbsp;
+Verify the mail start page will be loaded.</li>
+
+<li>
+Verify if the message pane has been collapsed that the start page appears
+when it has been expanded</li>
+
+<li>
+Load the URL for the start page in the browser window then open the Messenger.&nbsp;
+Verify the start page loads</li>
+</ol>
+
+<li>
+IMAP specific tests - verify that the mail start page loads and no conflicts
+occur with other operations that may be occurring at the same time.</li>
+
+<ol>
+<li>
+Open messenger. The password dialog appears but the start page does not
+load until the password dialog is dismissed after you enter your password
+or you cancel the dialog.</li>
+
+<li>
+Open messenger and log into mail and verify the IMAP headers downloads.</li>
+
+<li>
+Verify the Start Page loads connecting to a Messenger 4.x server</li>
+
+<li>
+Verify the Start Page loads connecting to a Messenger 3.x server</li>
+</ol>
+
+<li>
+POP specific tests - verify that the mail start page loads and no conflicts
+occur with other operations that may be occurring at the same time.</li>
+
+<ol>
+<li>
+No summary file for inbox file</li>
+
+<li>
+Open a mail folder that has a large summary file.&nbsp; Verify that the
+start page doesn't start loading until the summary file is done loading.</li>
+</ol>
+
+<li>
+News specific tests - verify that the mail start page loads and no conflicts
+occur with other operations that may be occurring at the same time.</li>
+
+<ol>
+<li>
+Subscribe to a new newsgroup that you have not viewed before.&nbsp; Verify
+the newsgroup headers still download.</li>
+
+<ol TYPE=a>
+<li>
+Open a newsgroup that had more than the allocated number of headers to
+download so that the dialog prompt appears.</li>
+
+<li>
+Open a newsgroup that had less then the allocated number of headers to
+download so that the dialog prompt does not appear.</li>
+</ol>
+</ol>
+
+<li>
+Disabling of preference through the prefs.js preference file</li>
+
+<ol>
+<li>
+Verify that setting the preference to false will not enable the mail start
+page feature and the mail start page will not attempt to load the next
+time launch messenger.</li>
+
+<li>
+Verify that setting the URL to an empty string will not enable the mail
+start page feature and the mail start page will not attempt to load.</li>
+</ol>
+</ol>
+
+<p><br><b>Interruption of Loading of Mail Start Page</b>
+<br>These tests should be performed under IMAP, POP, and NNTP.
+<ol TYPE=A>
+<li>
+Verify that the mail start page stops loading when the following actions
+are performed:</li>
+
+<ol>
+<li>
+Click the Stop toolbar button</li>
+
+<li>
+Select a message</li>
+
+<li>
+Select another folder</li>
+
+<li>
+Perform for IMAP, POP, and NNTP</li>
+</ol>
+
+<li>
+Verify that the mail start page continues to load when the following actions
+are performed:</li>
+
+<ol>
+<li>
+Sorting of the messages in the thread pane by clicking on the column headers.&nbsp;
+You are not necessarily selecting a message here.</li>
+
+<li>
+Expanding the newsgroup list in the folder pane.&nbsp; You are not necessarily
+selecting another folder/newsgroup here.</li>
+
+<li>
+Perform a random set of commands (that are enabled) as the start page is
+loading to verify that no adverse effects happen.&nbsp; This is probably
+best performed when dialed in on a slow connection (i.e.. 28.8K modem).</li>
+</ol>
+
+<li>
+Closing of the mail window</li>
+
+<ol>
+<li>
+Verify that as the mail start page is loading, closing the mail window
+will have no adverse effect.</li>
+
+<li>
+Verify that as the mail start page is loading, collapsing the message pane
+will have no adverse effect.&nbsp; The mail start page will stop loading.
+Showing the message pane again will not attempt to re-load the mail start
+page.</li>
+
+<li>
+Verify that as the mail start page is loading, exiting Communicator will
+have no adverse effect.</li>
+</ol>
+</ol>
+
+<p><br><b>Non Loading of Mail Start Page</b>
+<br>The Mail Start Page should not load or attempt to load for the following.
+<ol TYPE=A>
+<li>
+Verify if you disable the start page through the preference dialog,&nbsp;
+the start page does not load.</li>
+
+<li>
+Verify if you delete the contents of the start page location field url
+through the preference dialog, the start page does not load.</li>
+
+<li>
+Verify if you set the start page location field to an incorrect through
+the preference dialog, the start page does not load.</li>
+
+<li>
+Verify if the web site specified in the location field is busy that it
+should time out after a specific amount of time.</li>
+
+<li>
+Verify the start page does not load if the message pane was collapsed by
+default.</li>
+
+<li>
+Any subsequent time that the 3 pane mail window is opened during a Communicator
+session</li>
+
+<ol>
+<li>
+Close all open 3 pane mail windows, but do not close the browser or composer
+windows.&nbsp; Bring up the 3 pane mail window again.&nbsp; Verify that
+the mail start page does not load.</li>
+
+<li>
+Preference set to open a new mail window when double-clicking on a mail
+folder.&nbsp; Double-click on another mail folder.&nbsp; Verify that when
+the second 3 pane mail window opens, the mail start page does not load.</li>
+</ol>
+
+<li>
+Set your 3 pane mail window to collapse the message pane so that only the
+folder pane and the thread pane are displayed.&nbsp; Exit and restart Communicator.&nbsp;
+Open the mail window (now 2 pane) for the first time.&nbsp; Verify there
+is no attempt to load the mail start page.</li>
+
+<ol>
+<li>
+Select a message in the thread pane and expand the message pane. Verify
+there is no attempt to load the mail start page and that the contents of
+the selected message display fine.</li>
+
+<li>
+Select a message in the thread pane and open into a separate message window.&nbsp;
+Verify there is no attempt to load the mail start page and that the contents
+of the selected message display fine.</li>
+</ol>
+
+<li>
+Mail Notification Program (nsnotify.exe, This feature is yet to be determine
+if it will be implemented in seamonkey)</li>
+
+<ol>
+<li>
+Start Communicator via the Mail Notification Program to bring up a mail
+compose window.&nbsp; Verify the mail start page does load if the message
+pane is open by default.</li>
+
+<li>
+Start Communicator via the Mail Notification Program to bring up the Messenger
+window, the mail start page does load (assume Communicator was not previous
+running) and if the message pane is open by default.</li>
+</ol>
+</ol>
+
+<p><br><b>Mail Start Page Content</b>
+<br>Note: QA will NOT be checking for the accuracy of any information found
+on the start page besides verifying the visual layout of this page and
+that URL links are click able.
+<ol TYPE=A>
+<li>
+Verify that the correct start page gets loaded.</li>
+
+<li>
+Verify that all URL links located on this start page can be accessed.&nbsp;
+When the URL is clicked, a browser window opens to load the URL.</li>
+
+<li>
+Verify URL gets added to history and is accessible from the history window.</li>
+
+<li>
+Re-size the message pane and/or the 3 pane mail window.&nbsp; Verify that
+the start page content gets reloaded and re-sized correctly.</li>
+
+<li>
+Substitute a page with frames as the default mail start page. Even though
+the specification states that the default mail start page cannot be set
+to one containing frames, verify that no bad side effects occur.</li>
+
+<li>
+Preference set to disable JavaScript in mail/news.&nbsp; Set your default
+mail start page to a test page that has JavaScript in it.&nbsp; Exit and
+restart Communicator.&nbsp; Open the 3 pane mail window.&nbsp; Verify that
+the JavaScript functionality in the mail start page does not execute/work.</li>
+</ol>
+
+<p><br><b>Operations when Mail Start Page is loaded</b>
+<ol TYPE=A>
+<li>
+Menu items (including context menus)</li>
+
+<ol>
+<li>
+Access each menu item that gets enabled from the 3 pane mail window when
+the mail start page is loaded.&nbsp; Verify that the result of selecting
+each menu item makes sense and functions properly.</li>
+
+<li>
+Review each menu item that gets disabled from the 3 pane mail window when
+the mail start page is loaded.&nbsp; Verify that the disabling of these
+menu items are acceptable.</li>
+
+<li>
+Right click to bring up the context menu.&nbsp; Verify that the context
+menu items are the same ones displayed if you were to bring up the context
+menu for any html message displayed in the message pane.&nbsp; Exceptions
+would be any item having to do with replying, forwarding, or any action
+related to thinking that the mail start page is a mail message.&nbsp; Perform
+for various elements of the mail start page:</li>
+
+<ol TYPE=a>
+<li>
+blank spaces</li>
+
+<li>
+URL</li>
+
+<li>
+images</li>
+
+<li>
+selected text</li>
+
+<li>
+tables</li>
+</ol>
+</ol>
+
+<li>
+Toolbar buttons</li>
+
+<ol>
+<li>
+Access each toolbar button that gets enabled from the 3 pane mail window
+when the mail start page is loaded.&nbsp; Verify that the result of clicking
+each toolbar button makes sense and functions properly.</li>
+
+<li>
+Review each toolbar button that gets disabled from the 3 pane mail window
+when the mail start page is loaded.&nbsp; Verify that the disabling of
+these toolbar buttons are acceptable.</li>
+</ol>
+
+<li>
+Verify that you can/cannot choose add bookmark to add the mail start page
+URL to your bookmark list.</li>
+
+<li>
+Re-size the 3 pane mail window.&nbsp; Re-sizing the window should work
+as expected.</li>
+</ol>
+
+<p><br><b>Additional Start Page tests</b>
+<br>The logo icon is located on the upper right corner of any window.&nbsp;
+It's the mozilla icon for public build and netscape icon for the commercial
+build.&nbsp; Clicking on the icon will cause the default url to be loaded
+in the browser window. These url are different for mozilla and commercial
+builds.
+<ol TYPE=A>
+<li>
+Open messenger then click on the logo icon in the upper right corner of
+messenger window while the start page is loading.&nbsp; Verify the start
+page loading is not affected.</li>
+
+<li>
+Open messenger then click on the logo icon in the upper right corner of
+any non mail window will continue to load the default url into a browser
+window.&nbsp; Verify for:</li>
+
+<ol>
+<li>
+Browser window</li>
+
+<li>
+Composer window</li>
+
+<li>
+Mail Compose window</li>
+
+<li>
+Calendar</li>
+</ol>
+
+<li>
+Verify that the tooltip for the logo icon in any of the mail windows is
+accurate.</li>
+
+<li>
+Verify that clicking on the the logo icon has no effect on any selected
+message in the 3 pane Mail window.&nbsp; We do not change anything in the
+message pane of that window.</li>
+
+<li>
+Verify that these preferences work for the following different profiles:</li>
+
+<ol>
+<li>
+New profile created in seamonkey</li>
+
+<li>
+Upgrade profile created in 4.0x to seamonkey</li>
+
+<li>
+Upgrade profile created in current version of 4.x to seamonkey</li>
+</ol>
+</ol>
+
+<p><br><b>Off-line Conditions</b>
+<ol TYPE=A>
+<li>
+Off-line check box in multiple user profile dialog</li>
+
+<ol>
+<li>
+Check the check box to work off-line in this dialog.&nbsp;&nbsp; Bring
+up the 3 pane mail window.&nbsp; Verify that the mail start page does not
+attempt to and does not load.</li>
+
+<li>
+Uncheck the check box to work off-line in this dialog.&nbsp; Bring up the
+3 pane mail window.&nbsp; Verify that the mail start page loads.</li>
+</ol>
+
+<li>
+Single user account (one mail or news server)</li>
+
+<ol>
+<li>
+Set your preferences to always start Communicator off-line.&nbsp; Exit
+and restart Communicator.&nbsp; Bring up the 3 pane mail window.&nbsp;
+Verify that the mail start page does not attempt to and does not load.</li>
+
+<li>
+Set your off-line preferences to show the Ask Me dialog at startup.&nbsp;
+Exit and restart Communicator and select to work off-line.&nbsp; Bring
+up the 3 pane mail window.&nbsp; Verify that the mail start page does not
+attempt to and does not load.</li>
+</ol>
+
+<li>
+Multiple user account (multiple mail server and/or news servers)</li>
+
+<ol>
+<li>
+Set your preferences to always start Communicator off-line.&nbsp; Exit
+and restart Communicator.&nbsp; Bring up the 3 pane mail window.&nbsp;
+Verify that the mail start page does not attempt to and does not load.</li>
+
+<li>
+Set your off-line preferences to show the Ask Me dialog at startup.&nbsp;
+Exit and restart Communicator and select to work off-line.&nbsp; Bring
+up the 3 pane mail window.&nbsp; Verify that the mail start page does not
+attempt to and does not load.</li>
+</ol>
+
+<li>
+Go Online (Assume messenger has not been open before.)</li>
+
+<ol>
+<li>
+Start Communicator and work off-line.&nbsp; Go online before bringing up
+the 3 pane mail windows.&nbsp;&nbsp; Open the 3 pane mail window. Verify
+that the mail start page does load.</li>
+
+<li>
+Start Communicator online and then choose to work off-line.&nbsp;&nbsp;
+Go online again before bringing up any 3 pane mail windows in this session.&nbsp;
+Open the 3 pane mail window.&nbsp; Verify that the mail start page does
+load.</li>
+
+<li>
+Start Communicator and work off-line.&nbsp; Open the 3 pane mail window.&nbsp;
+Select a message in a folder that you have downloaded to read off-line.&nbsp;
+The contents of the message gets displayed in the message pane.&nbsp; Go
+online.&nbsp; Verify that the mail start page does not load and replace
+the contents shown in the message pane.</li>
+</ol>
+
+<li>
+Physically disconnect your computer from the network.&nbsp; Your mail protocol
+is to use POP.&nbsp; Start Communicator and open the 3 pane mail window.&nbsp;
+Verify the mail start page does not load and no errors are encountered.</li>
+
+<li>
+Verify that if Communicator is configured for dial on demand, the mail
+start page will cause computer to dial and connect</li>
+</ol>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-startpage.html&amp;rev=&amp;root=/cvsroot/">Last modified January 11,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

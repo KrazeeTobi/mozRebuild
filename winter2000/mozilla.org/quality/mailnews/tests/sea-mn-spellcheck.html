@@ -1,0 +1,728 @@
+<HTML>
+<HEAD>
+<TITLE>Spell Check Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+<h2>
+Feature Test Specification</h2>
+<b>5.0 Project (seamonkey)</b>
+<br><b>Mail News Component</b>
+<br><b>Spell Check</b>
+<p>Written by: <a href="mailto:pmock@netscape.com">Peter Mock</a>
+<p><b>History:</b>
+<br>03171999&nbsp;&nbsp;&nbsp; Created
+<br>01192000&nbsp;&nbsp;&nbsp; Revised and updated to match UI spec
+<p><b>References:</b>
+<br>UI Specifications: Spell Check Dialog Specification <a href="http://www.mozilla.org/editor/ui_specs/SpellCheckerDlg.html#SpellCheckerDialog">http://www.mozilla.org/editor/ui_specs/SpellCheckerDlg.html</a>
+<p>
+<hr WIDTH="100%">
+<br>Description: The user chooses it to initiate a spell check session.
+If there is a selection, the check applies to the selection in the document.
+If there is no selection, the entire content of the document is checked.&nbsp;
+Plain text and rich text mail compose windows are to be covered under POP,
+IMAP, and News.
+<p><b>Preferences and UI</b>
+<br>This preference allows you to automatically spell check your mail message
+when you send the dialog.
+<ol TYPE=A>
+<li>
+Open the mail &amp; news message preferences and verify the following:</li>
+
+<ol>
+<li>
+Verify there is a spell check section.</li>
+
+<li>
+Verify the wording for this option says "Spell check messages before sending".</li>
+
+<li>
+Verify there is a check box to enable or disable the option.</li>
+
+<li>
+Verify you can enable this option.</li>
+
+<li>
+Verify the preference is persistent if you switch to another preference
+category then back.</li>
+
+<li>
+Verify the preference is persistent if you close the preference dialog.</li>
+
+<li>
+Exit seamonkey and view the prefs.js file.&nbsp; Verify the user pref statement
+is preference for this feature.&nbsp; e.g.</li>
+
+<br>user_pref("mail.SpellCheckBeforeSend", true);
+<li>
+Verify you can disable this option through the user preference.</li>
+
+<li>
+Verify you can disable this option through the messages preferences.</li>
+</ol>
+
+<li>
+Verify the spell check can be started from the followings windows:</li>
+
+<ol>
+<li>
+Page Composer menu</li>
+
+<li>
+Page Composer toolbar</li>
+
+<li>
+Mail Compose window menu</li>
+
+<li>
+Page Composer toolbar</li>
+
+<li>
+Accelerator key</li>
+
+<li>
+Mnemonic</li>
+</ol>
+
+<li>
+Start a mail message and bring up the spell check dialog properties.&nbsp;
+Verify the following:</li>
+
+<ol>
+<li>
+Verify the title says, "Check Spelling".</li>
+
+<li>
+Verify there is an area that displays misspelled word.</li>
+
+<li>
+Verify there is a field where you can enter or choose from the suggested
+list a word that you can replace the misspelled word with.</li>
+
+<li>
+Verify there is a suggestion area that displays suggestions of possible
+spelling.</li>
+
+<li>
+Verify there is a language menu.</li>
+
+<li>
+Verify there are the following buttons:</li>
+
+<ol TYPE=a>
+<li>
+Check Word</li>
+
+<li>
+Ignore</li>
+
+<li>
+Ignore All</li>
+
+<li>
+Change</li>
+
+<li>
+Change All</li>
+
+<li>
+Add Word</li>
+
+<li>
+Edit</li>
+
+<li>
+Close</li>
+</ol>
+
+<li>
+Verify you have the typical windows properties (control button, re-size
+corner, etc.).</li>
+</ol>
+
+<li>
+In the spell check dialog, click on the Edit button to bring up the Personal
+Dictionary</li>
+
+<ol>
+<li>
+Verify the title says "Personal Dictionary".</li>
+
+<li>
+Verify there is a field where you can enter a new word or choose the suggested
+word.</li>
+
+<li>
+Verify there is an area that display words in the dictionary.</li>
+
+<li>
+Verify there are the following buttons:</li>
+
+<ol TYPE=a>
+<li>
+Add</li>
+
+<li>
+replace</li>
+
+<li>
+Remove</li>
+
+<li>
+Close</li>
+</ol>
+
+<li>
+Verify you have the typical windows properties (control button, re-size
+corner, etc.).</li>
+</ol>
+
+<li>
+Start a new message and don't type anything in the message.&nbsp; Bring
+up the spell check dialog. When the "Word" editbox is empty:</li>
+
+<ol>
+<li>
+Verify that the "Check Word" buttons is disabled.</li>
+
+<li>
+Verify that the "Add Word" buttons is disabled.</li>
+</ol>
+</ol>
+
+<p><br><b>Basic Functionality.</b>
+<br>For each test case, start a mail message then spell check the message.
+<ol TYPE=A>
+<li>
+Enter an e-mail recipient in the address pane but leave the rest of the
+message empty.&nbsp; Verify the spell check reports no misspelled words.</li>
+
+<li>
+Spell check a mail message with no spelling errors. For each case, verify
+the spell check reports no misspelled words.</li>
+
+<ol>
+<li>
+Leave the subject field and message body blank.</li>
+
+<li>
+Type in a subject field and leave the message body blank.</li>
+
+<li>
+Leave the subject field blank and type in something for the message body.</li>
+
+<li>
+Type in a space in the subject field and leave the message body blank.</li>
+
+<li>
+Leave the subject field blank and type in a space in the message body.</li>
+</ol>
+
+<li>
+Send a mail message with one misspelled word.&nbsp; For each case, verify
+the spell check reports misspelled words.</li>
+
+<ol>
+<li>
+Misspell a word in the subject field and leave the message body blank.</li>
+
+<li>
+Leave the subject field blank and misspell a word in the message body.</li>
+
+<li>
+Misspell a word in the subject field and in the message body.</li>
+</ol>
+
+<li>
+Verify you can close the spell check dialog without making any substitution.</li>
+
+<li>
+Verify the misspelled word is displayed in the dialog.</li>
+
+<ol>
+<li>
+Misspell a word (such as communicate) in the subject field.</li>
+
+<li>
+Misspell a word (such as communicate) in the message body.</li>
+
+<li>
+Misspell a word in the subject field and message body.&nbsp; Verify the
+misspelled word in the subject field is found first.</li>
+</ol>
+
+<li>
+Verify a list of alternative spelling for a word is displayed for a misspelled
+word.</li>
+
+<ol>
+<li>
+Misspell the word "receive" by interchanging two letters, e.g. "recieve"</li>
+
+<li>
+Misspell the word "receive" by omitting a letter, e.g. receiv</li>
+
+<li>
+Misspell the word "receive" completely, e.g. xyzabcef.&nbsp; Verify no
+word suggestions appear.</li>
+</ol>
+
+<li>
+Highlight only a portion of your mail message. Verify only the highlighted
+portion of your mail message is spell checked.</li>
+
+<ol>
+<li>
+Highlight a single letter.</li>
+
+<li>
+Highlight a single word.</li>
+
+<li>
+Highlight a sentence.</li>
+
+<li>
+Highlight a paragraph.</li>
+
+<li>
+Highlight the entire message body.</li>
+
+<li>
+Highlight just the contents of the subject field.</li>
+
+<li>
+Highlight only part of a word.</li>
+</ol>
+
+<li>
+Quoted text.&nbsp; Verify that the quoted text is not spell check.</li>
+
+<ol>
+<li>
+Reply to a new message.</li>
+
+<li>
+Reply to all recipients on a new message.</li>
+
+<li>
+Paste text as quotation in a new message.</li>
+
+<li>
+Reply to a message that has multiple replies.</li>
+
+<li>
+Reply to a message that has plain text and rich text replies.</li>
+</ol>
+
+<li>
+Enter in a proper name not in the dictionary, such as Netcenter, five times
+in your mail message.</li>
+
+<ol>
+<li>
+Verify you can click on the ignore button to skip to the next word.</li>
+
+<li>
+Verify after ignoring the misspell word, it automatically finds the next
+misspelled word.</li>
+
+<li>
+Verify you can click on the ignore all button to skip all occurrence of
+this misspelled word..</li>
+</ol>
+
+<ol>
+<li>
+Verify once the end of the mail document is reach, spell check is done.</li>
+
+<li>
+Send the mail message and verify the changes were reflected in the received
+mail message.</li>
+</ol>
+
+<li>
+Repeat the above test but verify the following:</li>
+
+<ol>
+<li>
+Verify you can press replace button to substitute a misspelled word with
+an alternative word that you manually type in.</li>
+
+<li>
+Verify after replacing a misspell word, it automatically finds the next
+misspell word.</li>
+
+<li>
+Verify you can press replace all button to substitute all occurrences of
+this misspelled word with alternative word that you manually type in.</li>
+
+<li>
+Verify you can press replace all button to substitute all occurrences of
+this misspelled word with alternative word that the spell checker recommends.</li>
+
+<li>
+Verify once the end of the mail document is reach, spell check is done.</li>
+
+<li>
+Send the mail message and verify the changes were reflected in the received
+mail message.</li>
+</ol>
+
+<li>
+Misspell five different words and replace them with the recommended word.</li>
+
+<ol>
+<li>
+Send the mail message and verify the changes were reflected in the received
+mail message.</li>
+
+<li>
+Send later the mail message and verify the changes were reflected in the
+unsent message folder.</li>
+
+<li>
+Save the mail message as a draft and verify the changes were reflected
+in the draft folder.</li>
+
+<li>
+Save the mail message as a Template/Stationary and verify the changes were
+reflected in the Template/Stationary folder.</li>
+</ol>
+
+<li>
+Open the spell check personal dictionary and verify you can close this
+dialog</li>
+
+<ol>
+<li>
+Verify no changes have occurred in your mail compose window.</li>
+
+<li>
+Verify no words were added in your personal dictionary.</li>
+</ol>
+
+<li>
+Misspelled a word and add it the dictionary.</li>
+
+<ol>
+<li>
+Spell check a new mail message that contains the word you previously added
+word to the dictionary. Verify this word is not longer reported as being
+misspelled.</li>
+
+<li>
+Edit the personal dictionary and remove the previously added from the dictionary.</li>
+
+<li>
+Spell check a new mail message that contains the word you just deleted
+from the dictionary.</li>
+</ol>
+
+<li>
+Misspell several words and add each misspelled word to the dictionary then
+open the personal dictionary.</li>
+
+<ol>
+<li>
+Verify you can replace an existing word in the dictionary.</li>
+
+<li>
+Verify you can not replace a report if the field "new word" is blank.</li>
+
+<li>
+Verify you can not add a word that already exist in the dictionary.</li>
+
+<li>
+Verify that extra spaces before or after the new word removed before being
+added to the dictionary.</li>
+</ol>
+
+<li>
+Enable the preference to spell check before sending.&nbsp; Try to send
+a mail message.</li>
+
+<ol>
+<li>
+This message contains no spelling errors.&nbsp; Verify the spell check
+dialog reports no misspelled words.</li>
+
+<li>
+This message has a proper name not in the dictionary, e.g. Netcenter. Verify
+you can ignore the changes and send the message.</li>
+
+<li>
+This message has a proper name not in the dictionary, e.g. Netcenter. Verify
+you can replace this word and send the message.</li>
+
+<li>
+This message is incomplete.&nbsp; You decide you want to continue editing
+the document.&nbsp; Verify you can cancel the spell check and send operation.</li>
+</ol>
+
+<li>
+Verify you can not undo a spell check operation.</li>
+
+<li>
+In the spell check dialog, change the language menu selection.&nbsp; (The
+language menu allows the user can change the dictionary against which the
+check is performed by changing a selection in the Language pop-up menu.)</li>
+
+<ol>
+<li>
+Verify the word is spelled checked against the selected language.&nbsp;
+(The number or types of languages is not yet determined).</li>
+</ol>
+
+<li>
+Bring up the spell check dialog then use the mnemonic to perform the following
+operations</li>
+
+<ol>
+<li>
+Check Word</li>
+
+<li>
+Ignore</li>
+
+<li>
+Ignore All</li>
+
+<li>
+Change</li>
+
+<li>
+Change All</li>
+
+<li>
+Add Word</li>
+
+<li>
+Edit</li>
+
+<li>
+Close</li>
+</ol>
+
+<li>
+Bring up the spell check dialog and open the personal dictionary then use
+the mnemonic to perform the following operations</li>
+
+<ol>
+<li>
+Add</li>
+
+<li>
+replace</li>
+
+<li>
+Remove</li>
+
+<li>
+Close</li>
+</ol>
+</ol>
+
+<p><br><b>Additional Tests</b>
+<ol TYPE=A>
+<li>
+Start spell checking from the current insert point (caret location) rather
+than the top of the document. (Feature TBD)</li>
+
+<ol>
+<li>
+Verify that spell check start from your insertion point.</li>
+
+<li>
+After reaching the end of the document, verify if spell checking continues
+from the top until the original insert point is reached.</li>
+</ol>
+
+<li>
+Spell check a mail message that contain various content including:</li>
+
+<ol>
+<li>
+Plain text</li>
+
+<li>
+Rich text</li>
+
+<li>
+Signature file</li>
+
+<li>
+Personal Vcard</li>
+
+<li>
+Inserted Images</li>
+
+<li>
+Attached binary file</li>
+
+<li>
+Attached text file</li>
+
+<li>
+Text contents less than 32k in size.</li>
+
+<li>
+Text contents greater than 32 or equal to 32k</li>
+</ol>
+
+<li>
+Start multiple compose windows.</li>
+
+<ol>
+<li>
+Open the spell check dialog and verify you can not open another spell check
+dialog while the dialog is still open in the other message.</li>
+
+<li>
+Verify you receive an warning message if you already have the spell check
+dialog open in another compose window.</li>
+</ol>
+
+<li>
+Spell check different length of&nbsp; a word.</li>
+
+<ol>
+<li>
+1 character</li>
+
+<li>
+2 characters</li>
+
+<li>
+3 characters</li>
+
+<li>
+4 characters</li>
+
+<li>
+5 characters</li>
+
+<li>
+Greater than 5 characters but less than 11</li>
+
+<li>
+Greater than 10 characters but less than 21</li>
+
+<li>
+Greater than 20 characters but less than 30</li>
+
+<li>
+Greater than 128</li>
+
+<li>
+Less than 255 but greater than 250</li>
+
+<li>
+Greater than 255</li>
+</ol>
+
+<li>
+Try to add additional words as the Personal Dictionary has a file size
+of:</li>
+
+<ol>
+<li>
+5k</li>
+
+<li>
+10k</li>
+
+<li>
+under 32k</li>
+
+<li>
+32k and over</li>
+</ol>
+</ol>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-spellcheck.html&amp;rev=&amp;root=/cvsroot/">Last modified January 20,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

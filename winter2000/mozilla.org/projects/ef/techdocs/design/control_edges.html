@@ -1,0 +1,333 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Primitive Graph Control Edges</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Primitive Graph Format</H2>
+
+
+<H2>Control Layer</H2>
+
+
+<H2><FONT SIZE=+4>Control Edge Details</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="control_layer.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"><IMG SRC="../arrows/up.gif" 
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="control_schedule.html"><IMG SRC=
+"../arrows/right.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+</P>
+
+<P>Control flow edges chart possible paths of execution through a set of
+control nodes. Let us now take a look at several useful graph-theoretical
+definitions as well as the procedure for designating which control flow
+edges are forward edges and which are backward edges.</P>
+
+<H2>Graph Theory Definitions</H2>
+
+
+<H3><A NAME="cycle"></A>Cycles</H3>
+
+
+<P>A <STRONG>cycle</STRONG> is any control flow path A -&gt; N<FONT SIZE=-2>1</FONT>
+-&gt; N<FONT SIZE=-2>2</FONT> -&gt; ... -&gt; N<VAR><FONT SIZE=-2>n</FONT></VAR><FONT
+ SIZE=-2>-1</FONT> -&gt; A that starts and ends at the same control node
+and contains at least one edge. A cycle is not necessarily a <A HREF="#loop">loop</A>;
+we use the term <I>loop</I> in a more specialized way.</P>
+
+<H3><A NAME="reachable"></A>Reachability</H3>
+
+
+<P>A control node B is <STRONG>reachable</STRONG> from control node A iff
+there exists some control flow path A -&gt; N<FONT SIZE=-2>1</FONT> -&gt;
+N<FONT SIZE=-2>2</FONT> -&gt; ... -&gt; N<VAR><FONT SIZE=-2>n</FONT></VAR><FONT
+ SIZE=-2>-1</FONT> -&gt; B. In particular, every node is reachable from
+itself.</P>
+
+<H3><A NAME="dominator"></A><A NAME="postdominator"></A>Dominators and Postdominators</H3>
+
+
+<P>A control node A <STRONG>dominates</STRONG> control node B iff every
+control flow path from <VAR>begin</VAR> to B contains A. In particular,
+every node dominates itself.</P>
+
+<P>A control node A <STRONG>postdominates</STRONG> control node B iff every
+control flow path from B to <VAR>end</VAR> contains A. In particular, every
+node postdominates itself. Note that, by this definition, if there is no
+path from B to <VAR>end</VAR> then every node postdominates B.</P>
+
+<P>Dominators and postdominators can be computed easily using the general
+dataflow algorithm; see page 671 of <A HREF="../bibliography.html#ASU86">[ASU86]</A>.</P>
+
+<H2><A NAME="dfs"></A>Depth-First Search</H2>
+
+
+<P>To proceed further we compute a <STRONG>depth-first spanning tree</STRONG>
+of the control graph by following the algorithm on page 662 of <A HREF=
+"../bibliography.html#ASU86">[ASU86]</A> on <I>all</I> edges of the control
+graph. This algorithm yields the node numbers visible in the control layer
+nodes.</P>
+
+<H3>Forward and Backward Edges</H3>
+
+
+<P>Ignoring exception and return edges for the moment, we define a <A NAME=
+"edge_fwd"></A><STRONG>forward edge</STRONG> to be any control flow edge
+whose source node has a number less than the destination node; all remaining
+control flow edges are <A NAME="edge_back"></A><STRONG>backward edges</STRONG>.
+Backward edges are what <A HREF="../bibliography.html#ASU86">[ASU86]</A>
+calls <EM>retreating edges</EM>; forward edges are what <A HREF="../bibliography.html#ASU86">[ASU86]</A>
+calls <EM>advancing edges</EM> and <EM>cross edges</EM>. We can make several
+useful observations:</P>
+
+<P><EM>A control graph with only forward edges is connected and acyclic.</EM>
+This graph is connected because every edge in the depth-first spanning tree
+is a forward edge. It is acyclic because every cycle N<FONT SIZE=-2>0</FONT>
+-&gt; N<FONT SIZE=-2>1</FONT> -&gt; N<FONT SIZE=-2>2</FONT> -&gt; ... -&gt;
+N<VAR><FONT SIZE=-2>n</FONT></VAR><FONT SIZE=-2>-1</FONT> -&gt; N<FONT SIZE=-2>0</FONT>
+must include some <VAR>k</VAR> such that N<VAR><FONT SIZE=-2>k</FONT></VAR>
+&gt;= N<VAR><FONT SIZE=-2>k</FONT></VAR><FONT SIZE=-2>+1</FONT>. As an immediate
+corollary:</P>
+
+<P><EM>Every <A HREF="#cycle">cycle</A> in the control graph includes a
+backward edge</EM>.</P>
+
+<P>We call a backward edge whose target dominates its source a <A NAME=
+"edge_back_regular"></A><STRONG>regular backward edge</STRONG> (called a
+<I>back edge</I> in <A HREF="../bibliography.html#ASU86">[ASU86]</A>). All
+other backward edges are <A NAME="edge_back_irregular"></A><STRONG>irregular
+backward edges</STRONG>. Note that, by the construction of the depth-first
+spanning tree, a forward edge's target cannot dominate its source, so every
+edge whose target dominates its source is a regular backward edge. Thus,
+<EM>the set of regular backward edges can be defined without making use
+of the depth-first search and is therefore independent of the choices we
+make in the depth-first search</EM>.</P>
+
+<P><EM>If a control graph is <A HREF="#reducible">reducible</A>, it contains
+only regular backward edges</EM> (see page 663 of <A HREF="../bibliography.html#ASU86">[ASU86]</A>).
+If the control graph is <A HREF="#irreducible">irreducible</A>, it will
+include at least one irregular backward edge. The set of irregular backward
+edges will vary depending on how we choose to traverse the control graph
+in the depth-first search -- see the three possible traversals in Figure
+1 which result in different designations of forward edges (dark red) and
+backward edges (light red). To avoid inconsistencies we will choose one
+depth-first traversal and use it consistently throughout the translator's
+phases.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD>
+<IMG SRC="graphics/irreducible_example.gif" ALIGN="BOTTOM" WIDTH="482" 
+HEIGHT="231" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TH><A NAME="figure1"></A>Figure 1</TH>
+ </TR>
+</TABLE>
+</P>
+
+<H3>Exception Edges</H3>
+
+
+<P>Let us now consider exception edges. We would like all exception edges
+to behave like forward edges so that constraint <A HREF="control_layer.html#CYCLES1">CYCLES1</A>
+holds; in other words, for each exception edge, we'd like its source's number
+to be less than its destination's number. If the graph satisfies this property
+(in practice most will), we're done.</P>
+
+<P><A NAME="exception_transformation"></A>For some graphs, such as the one
+in <A HREF="#figure2">Figure 2a</A>, no matter how we conduct our depth-first
+search we will obtain an exception edge whose source's number is not less
+than its destination's number. If this happens, we modify the graph by splitting
+the catch node that is the target of each such exception edge, as shown
+in <A HREF="#figure2">Figure 2b</A>, where the catch node C has been split
+into two catch nodes C1 and C2 followed by an aexc node C3, which is now
+the loop header.</P>
+
+<P>The graph has been transformed so that the only backward edge is the
+edge from C2 to C3. If a catch node such as C2 has only one incoming edge,
+then its depth-first number must necessarily be greater than its predecessor's
+number, so its incoming exception edge behaves like a forward edge. Note
+that in this example the exception edges pointing to catch node C1 already
+behaved like forward edges, so it was not necessary to split node C1 further.</P>
+
+<P>The aexc node C3 must have at least one outgoing exception edge for handling
+asynchronous exceptions. We create such edges (shown exiting from the right
+side of node C3) as appropriate.</P>
+
+<P>An end node can also be a target of an exception edge. Fortunately we
+never have to split the end node because the end node has no successors,
+so every edge pointing to the end node behaves like a forward edge.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="BOTTOM">
+<IMG SRC="graphics/exception_cycle_example_a.gif" WIDTH="145" HEIGHT="235"
+ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="BOTTOM">
+<IMG SRC="graphics/exception_cycle_example_b.gif" WIDTH="199" HEIGHT="235"
+ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD>(a) Original</TD>
+  <TD>(b) Modified</TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="2">&nbsp;<A NAME="figure2"></A>Figure 2</TH>
+ </TR>
+</TABLE>
+</P>
+
+<H3>Return Edges</H3>
+
+
+<P>The <A HREF="control_layer.html#cf_edge_return">return edge</A> always
+has the end node as its target and the end node has no successors, so the
+return edge always behaves like a forward edge.</P>
+
+<H3><A NAME="reducible"></A><A NAME="irreducible"></A>Reducible and Irreducible
+Graphs</H3>
+
+
+<P>A control graph is considered to be <STRONG>reducible</STRONG> if it
+follows certain structured programming coventions. The following are all
+equivalent definitions of a reducible control graph:</P>
+
+<UL>
+  <LI><IMG SRC="graphics/irreducible_subgraph.gif" ALIGN="RIGHT" WIDTH="131"
+  HEIGHT="95" NATURALSIZEFLAG="3">Each cycle in the graph has a single entry
+  point.
+  <LI>We can partition the graph's edges into forward and backward edges
+  such that the set of forward edges is connected and acyclic and the target
+  of each backward edge <A HREF="#dominator">dominates</A> its source.
+  <LI>Reducing the graph by interval analysis (page 666 of <A HREF="../bibliography.html#ASU86">[ASU86]</A>)
+  reduces it to a single node.
+  <LI>The control graph has no subgraph of the form diagrammed on the right.
+  (The paths are disjoint except at the nodes indicated.)
+</UL>
+
+<P>Any control graph that is not reducible is called <STRONG>irreducible</STRONG>.
+All unoptimized Java source programs yield reducible graphs, although some
+compiler optimizations might generate irreducible control graphs by the
+time the Java source is converted to bytecodes.</P>
+
+<H3><A NAME="loop"></A>Loops</H3>
+
+
+<P>Given any regular backward edge E with source A and target H, we define
+the <STRONG>natural loop</STRONG> of E to be the union of {H} with the set
+of all control nodes N for which there exists a path from N to A that does
+not include H (see page 604 of <A HREF="../bibliography.html#ASU86">[ASU86]</A>).
+We will refer to node H as the natural loop's <STRONG>header</STRONG>.</P>
+
+<P>Given any node H that is the target of at least one backward edge, we
+define the <STRONG>loop</STRONG> headed by H to be the union of all natural
+loops whose headers are H.</P>
+
+<P>Note that not every <A HREF="#cycle">cycle</A> is a loop. For example,
+the graph in <A HREF="#figure1">Figure 1</A> above does not contain any
+loops because it has no regular backward edges.</P>
+
+<P><A NAME="loop_tree"></A>Loops have the nice property that two loops in
+a graph are either disjoint or one is entirely contained within the other
+(see page 605 of <A HREF="../bibliography.html#ASU86">[ASU86]</A>). Hence,
+we can classify all loops in a graph into a tree whose leaves are the innermost
+loops, parents represent loops that contain the loops represented by their
+children, and whose root represents the entire graph.</P>
+
+<H2>Example</H2>
+
+
+<P>Consider the control graph in <A HREF="#figure3">Figure 3</A>. This graph
+is <A HREF="#irreducible">irreducible</A> because it contains two entry
+points (15 and 21) into the cycle 15-&gt;16-&gt;17-&gt;20-&gt;21-&gt;15
+and two entry points (23 and 26) into the cycle 23-&gt;26-&gt;27-&gt;28-&gt;23.
+The depth-first search arbitrarily decided to make control edges 21-&gt;15
+and 28-&gt;23 into irregular backward edges (it could have instead made
+edge 13-&gt;15 into an irregular backward edge had it traversed the nodes
+in a different order; it could also have tried to make edge 23-&gt;26 into
+an irregular backward edge, which would have required node 26 to be <A 
+HREF="#exception_transformation">split</A> into two catch nodes and another
+aexc node).</P>
+
+<P>This graph contains eight loops, each of which is shaded with a different
+color in <A HREF="#figure4">Figure 4</A>. The headers of all of the loops
+are highlighted. Figure 4 also shows the hierarchy of the loops as a tree.
+By convention the root of that tree is always the <A HREF="control_layer.html#cf_begin">begin
+node</A>, even though that node is never the header of a loop.</P>
+
+<P>Highlights:</P>
+
+<UL>
+  <LI>Loop 4 contains nodes {4, 5, 6, 7}. There is no separate inner loop
+  which just contains nodes {4, 5} because all natural loops with the same
+  header are considered to be one loop.
+  <LI>An aexc node might have an incoming control edge from itself. Node
+  25 is an example of this.
+  <LI>Every loop must have an aexc node as its header, but not every aexc
+  node is the header of a loop. For example, aexc node 15 is not the header
+  of any loop because its incoming backward edge 21-&gt;15 is irregular.
+  Node 23 has both an incoming regular backward edge 24-&gt;23 and an incoming
+  irregular backward edge 28-&gt;23; this node is the header of the loop
+  {23, 24} induced by the regular backward edge.
+  <LI>A control edge is not uniquely specified by its source and target.
+  For example, there are two control edges from node 11 to node 18.
+</UL>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD>
+<IMG SRC="graphics/control_example.gif" WIDTH="424" HEIGHT="424" ALIGN=
+"BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TH><A NAME="figure3"></A>Figure 3</TH>
+ </TR>
+</TABLE>
+</P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="BOTTOM">
+<IMG SRC="graphics/control_example_colored.gif" WIDTH="424" HEIGHT="424"
+ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="BOTTOM">
+<IMG SRC="graphics/control_example_loops.gif" WIDTH="154" HEIGHT="190" 
+ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN="CENTER">Loops of the Control Graph</TD>
+  <TD ALIGN="CENTER">Loop Hierarchy Tree</TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="2">&nbsp;<A NAME="figure4"></A>Figure 4</TH>
+ </TR>
+</TABLE>
+<HR ALIGN=LEFT></P>
+
+</BODY>
+</HTML>

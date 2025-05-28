@@ -1,0 +1,398 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; U) [Netscape]">
+   <title>Titled Buttons</title>
+</head>
+<body>
+&nbsp;
+<table BORDER=0 CELLSPACING=0 COLS=1 WIDTH="100%" >
+<tr>
+<td>
+<div align=right><i>XUL Programmer's Reference Manual</i></div>
+</td>
+</tr>
+
+<tr>
+<td>
+<h1>
+<font color="#000099"><font size=+2>&lt;titledbutton /></font></font></h1>
+
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Attributes</font></b></td>
+
+<td><b><font color="#FFFFFF">Common Children</font></b></td>
+</tr>
+
+<tr>
+<td><a href="#value">value</a></td>
+
+<td>* * *</td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#class">class</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#onclick">onclick</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#oncommand">oncommand</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="#tooltiptext">tooltip</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#default">default</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#disabled">disabled</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#toggled">toggled</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#src">src</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#crop">crop</a></td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>
+<h3>
+<a NAME="Button classes IDX"></a>Button Classes</h3>
+&lt;titledbutton> is the name of the XUL button widget. &lt;titledbutton>
+inherits from &lt;<a href="boxref.html">box</a>>, so it uses that widget's
+positioning atttibutes, and it can be styled using various button <a href="boxref.html#class">classes</a>.
+Button behavior is defined largely in the stylesheets. The states of the
+button -- inactive, active, and hover (which is the state the button is
+in when the mouse is over the button but no click has been made)-- correspond
+to three pseudo-classes that commonly describe button behavior. The following
+example style definitions work together to make the button push down when
+it's clicked and highlight when the mouse hovers over it:</td>
+</tr>
+
+<tr>
+<td>
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>titledbutton.bookmarkbutton {
+&nbsp;&nbsp; margin: 0px;
+&nbsp;&nbsp; max-width: 8em;
+&nbsp;&nbsp; font: inherit;
+&nbsp;&nbsp; font-size: smaller;
+&nbsp;&nbsp; color: #99CCCC;
+&nbsp;&nbsp; border: none;
+&nbsp;&nbsp; padding: 1px;
+&nbsp;&nbsp; background-image: none;
+}
+
+titledbutton.bookmarkbutton:hover {
+&nbsp;&nbsp; color: #CCFFFF;
+}
+
+titledbutton.bookmarkbutton:active {
+&nbsp;&nbsp; color: #CCFFFF;
+&nbsp;&nbsp; padding-left: 2px;
+&nbsp;&nbsp; padding-top: 2px;
+&nbsp;&nbsp; padding-right: 0px;
+&nbsp;&nbsp; padding-bottom: 0px;
+}</pre>
+</td>
+</tr>
+</table>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td>Note that the first class, bookmarkbutton, reflects the style of the
+button when it is inactive. When the mouse hovers, the button turns a light
+green color, as described in the ":hover" pseudo-class. When the button
+is clicked, the padding style definitions make the button look like it
+is being depressed.
+<h3>
+<a NAME="Button events IDX"></a>Button Events</h3>
+Event listeners can be attached to&nbsp;<a NAME="events, button events IDX"></a>buttons
+to invoke commands. For example, the titledbutton's onclick event (note
+the lowercase event: XUL does not follow the JavaScript convention of naming
+events with middle caps, as in "onClick") can call a JavaScript function,
+as in the following example:
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>&lt;titledbutton class="pane"&nbsp;
+&nbsp;&nbsp; value="&amp;TOC.label;"&nbsp;
+&nbsp;&nbsp; oncommand="GetDoc('contents.html')"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+</blockquote>
+See the <a href="#oncommand">oncommand</a> attribute for more information
+about attaching event listeners to buttons.
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="value"></a><b><font color="#FFFFFF"><font size=+1>value</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>value</b> is a required attribute used to provide a label
+for the button.<a NAME="value attribute, button IDX"></a></blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;titledbutton <b>value</b>="<i>string</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;titledbutton id="pushme" class="push" <b>value</b>="Push
+Me" /></tt></blockquote>
+<b>Notes</b>
+<blockquote>It is legal not to provide a value for a button, but the button
+may be invisible if there is not value to constrain the size of the actual
+button and no styling information that specifies its position and size.</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="onclick"></a><b><font color="#FFFFFF"><font size=+1>onclick</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>onclick</b> is an event<a NAME="onclick attribute, buttons IDX"></a>
+listener attribute used for adding functionality to XUL buttons.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;titledbutton onclick="<i>javascript statements or javascript
+function call"</i></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;titledbutton value="Print" id="print" onclick="alert('Printing
+Document'); Print();" /></tt></blockquote>
+<b>Notes</b>
+<blockquote>The onclick event listener is a way to invoke commands from
+buttons. <b>Note that <a href="#oncommand">oncommand</a> is the preferred
+way to attach an event handler to a button</b>. <b>onclick</b> is deprecated,
+though still available.
+<p>The click event is fired whenever the user clicks the button. You can
+put the JavaScript inline with the event listener, you can call JavaScript
+functions defined in the &lt;head> section of the XUL file in a <tt>&lt;html:script>...&lt;/html:script></tt>
+element, of you can call JavaScript functions defined in a separate source
+file which is loaded with the <tt>&lt;html:script language="javascript"
+<b>src="<i>source_file_name.js</i>"</b>
+/></tt> construction.</blockquote>
+&nbsp;
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="oncommand"></a><b><font color="#FFFFFF"><font size=+1>oncommand</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>oncommand</b> is an event<a NAME="oncommand attribute, buttons IDX"></a>
+listener attribute used for adding functionality to XUL buttons.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;titledbutton oncommand="<i>javascript statements or
+javascript function call"</i></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;titledbutton value="Print" id="print" oncommand="alert('Printing
+Document'); Print();" /></tt></blockquote>
+<b>Notes</b>
+<blockquote>The oncommand event listener is a common way to invoke commands
+from buttons. It replaces <b><a href="#onclick">onclick</a></b> as the
+primary way to attach an event handler to a titlebutton.
+<p>You can put the JavaScript inline with the event listener, you can call
+JavaScript functions defined in the &lt;head> section of the XUL file in
+a <tt>&lt;html:script>...&lt;/html:script></tt> element, of you can call
+JavaScript functions defined in a separate source file which is loaded
+with the <tt>&lt;html:script language="javascript"
+<b>src="<i>source_file_name.js</i>"</b>
+/></tt> construction.</blockquote>
+
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="tooltiptext"></a><b><font color="#FFFFFF"><font size=+1>tooltiptext</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>tooltiptext<a NAME="tooltiptext attribute, buttons IDX"></a></b>
+is an optional attribute used to specify tooltip text for the button.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;titledbutton <b>tooltiptext</b>="<i>string</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;titledbutton id="send_mail" class="push" <b>tooltiptext</b>="Send
+Mail (Ctrl + M)" /></tt></blockquote>
+<b>Notes</b>
+<blockquote>If you want to display longer or structured text within the
+tooltip window, you must use the <b><a href="toolbar.html#tooltip">tooltip</a></b>
+attribute instead</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="default"></a><b><font color="#FFFFFF"><font size=+1>default</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>default</b> is an optional attribute used to specify which
+button in a group is the default.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;titledbutton <b>default</b>="true | false" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;titledbutton id="quit" <b>default</b>="true" /></tt></blockquote>
+<b>Notes</b>
+<blockquote>None.</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="disabled"></a><b><font color="#FFFFFF"><font size=+1>disabled</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>disabled</b> is an<a NAME="disabled attribute, buttons IDX"></a>
+optional attribute used to gray out buttons that are disabled.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;titledbutton <b>disabled</b>="true | false" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;titledbutton id="new" class="push" <b>disabled</b>="true"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>You can use JavaScript to check this attribute and determine
+whether a given operaton is enabled or not, as in the following example:
+<br>&nbsp;
+<table BORDER=0 COLS=1 WIDTH="80%" BGCOLOR="#CCCCCC" >
+<tr>
+<td>XXX insert HelpBack() function example here. XXX</td>
+</tr>
+</table>
+</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="toggled"></a><b><font color="#FFFFFF"><font size=+1>toggled</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>toggled</b> is an optional attribute used to specify the&nbsp;<a NAME="toggled atttribute, buttons IDX"></a>toggle
+state of a button.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;titledbutton <b>toggled</b>="0 | 1 | 2" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;titledbutton id="local" class="push" <b>toggled</b>="1"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>0 means that toggling is off, 1 means that it's on, and 2 means
+that the toggling is mixed.</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="src"></a><b><font color="#FFFFFF"><font size=+1>src</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>src</b> is an optional attribute for loading button images.<a NAME="src attribute, buttons IDX"></a></blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;titledbutton <b>src</b>="<i>URL</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;titledbutton id="security" <b>src</b>="images\lock_and_key.gif"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>None.</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="crop"></a><b><font color="#FFFFFF"><font size=+1>crop</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>crop</b> is an optional attribute for spe<a NAME="crop attribute, buttons IDX"></a>cifying
+which part of a button's text, if any, will be cropped if it is too large.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;titledbutton id="string" value="Button Name" <b>crop</b>="left
+| right | none | center" ></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;titledbutton id="string" value="Very Long Button Name"
+<b>crop</b>="none"
+></tt></blockquote>
+<b>Notes</b>
+<blockquote>None.</blockquote>
+
+<div align=right>
+<p><i>Last updated: 1/31/00 <a href="mailto:oeschger@netscape.com">Ian
+Oeschger</a></i></div>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

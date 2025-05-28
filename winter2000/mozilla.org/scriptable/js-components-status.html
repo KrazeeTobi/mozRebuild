@@ -1,0 +1,247 @@
+<HTML>
+<HEAD>
+<TITLE>JavaScript XPCOM Components Status</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<h2><center>JavaScript XPCOM Components Status</center></h2>
+<h3><center>Draft 1</center></h3>
+
+
+<h3>Introduction</h3>
+<blockquote>
+
+In the document <a href="xpjs-components.html">XPJS Components Proposal</a> I
+proposed that we build a system for implementing xpcom components and services
+in JavaScript - components that could be used transparently by any other xpcom
+components.
+
+<p>
+
+<a href="mailto:shaver@mozilla.org">Mike Shaver</a> has since done the 
+work to make this system work. This document will explain the status of that
+work and will try to detail the limitations of the system as currently implemented.
+
+</blockquote>
+
+<h3>Implementation</h3>
+<blockquote>
+
+The system, of course, is all based on <a href="index.html">XPConnect</a>. The 
+main innovation was in factoring out the system that xpcom uses to instantiate
+components. Previously there was a builtin component loader that assumed that
+all components were implemented in C/C++ and either loaded from a DLL or via
+factory instances registered (non-persistently) at runtime. Mike broke this code
+out to build a plugable component loader system. He then wrote one loader for native
+components loaded from DLLs and one for JavaScript components loaded from .js
+files. This is an extensible system and we can expect that others will write
+additional loaders in the future.
+
+<p>
+
+The JS component loader implementation is in <a
+href="http://lxr.mozilla.org/seamonkey/source/js/src/xpconnect/loader/">/js/src/xpconnect/loader/</a>.
+As far as I know Mike Shaver did not write any detailed documentation about its
+use. In a nutshell... It will try to load for registration and use as a
+component any .js files it discovers in the 'components' directory during
+autoregistration time; i.e. the same directory where native components in DLLs
+are located. I'm not sure if it will attempt to discover these files everytime
+the app is started or only during autoregistration [shaver clarification?].
+
+<p>
+
+The best document that I know of is in the sample at <a
+href="http://lxr.mozilla.org/seamonkey/source/xpcom/sample/nsSample.js">xpcom/sample/nsSample.js</a>.
+I think it worth noting that this is both a sample and a bit of a test bed.
+There is some unnecessary debug code. And the boilerplate code really ought to
+be reorganized a bit with the customizable part broken out as separate variables
+so that future JS component implementors can just copy the common blocks and
+fill in their own strings for progids and iids etc. Nevertheless, it is the sample we have and the comments in the sample explain how to use the system.
+
+<p> 
+
+An additional source of info on the evolution of the system (for the hardcore
+curious) is the discussions on the <a
+href="news://news.mozilla.org/netscape.public.mozilla.xpcom">xpcom
+newsgroup</a>. Search the  subjects for keywords like: JS components, component
+loader.
+
+<p>
+
+Any .js file that shows up in the components directory is a likely example of JS
+component usage. Currently, there is a sidebar component. Mike Shaver had
+implemented the category manager using JS, but it was reimplemented in C++. Not
+because its implementation in JS was not viable, but simply because it was
+decided that xpcom should not have a core service which required JavaScript and
+XPConnect. This would have limited xpcom's usefulness in some non-browser
+embeddings where JavaScript might not otherwise be needed or wanted.
+
+
+</blockquote>
+
+<h3>Bugs</h3>
+<blockquote>
+
+<ul>
+
+<li><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=24688">24688</a> - 
+runtime errors in wrapped JS are not made obvious
+
+<blockquote> We lack a good place to send JS error reports. The current webshell
+error reporting system only works for JS code run on DOM JSContexts (and it
+lacks a JSConsole within the app). Right now JS errors in JS components are
+caught at the xpconnect layer and are printed to the native console in debug
+builds, but are dropped on  the floor in release builds. This hinders the
+development and testing of JS components. 
+
+</blockquote>
+
+
+<li><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=25180">25180</a> -
+xpconnect needs wrappers for JS -> JS communication 
+
+<blockquote> Currently when xpconnect is reflecting an object into JavaScript and
+discovers that the object is a wrapped JS object then it will simply unwrap the
+object and pass it through. This means that if a component is implemented in JS and then <b>used</b>
+by some other JS client code then the client code will be passed the original JS
+object. The bad thing here is that this JS object will not <i>look</i> like any
+other xpconnect wrapped interface. This turns out to be a serious limitation in
+practice.
+
+</blockquote>
+
+
+<li><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=27867">27867</a> - 
+xpconnect does not always work well with DOM objects
+
+<blockquote>
+
+One of the obvious things that people might want to do with JS components is to
+manipulate the DOM and otherwise do user interface activities. A great deal of
+interaction between JS components and DOM objects is possible. But some
+activities are simply not supported in the current system. If one starts down
+this path then it is very possible to reach a point where the thing you want to
+do just can't be done. Ultimately we will reimplement the DOM system to itself
+use xpconnect and these limitations will go away.
+
+
+</blockquote>
+
+<li><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=26725">26725</a>
+Access denied to XPConnect service
+
+<blockquote>
+This is a security issue that should be fixed real soon now.
+</blockquote>
+
+</ul>
+
+</blockquote>
+
+<h3>Conclusions and Recommendations</h3>
+<blockquote>
+
+I still think that JavaScript components have a bright future. However, due to
+the limitations of the system I can't unconditionally recommend their use at this
+time. Some of the limitations really are not likely to be satisfactorily
+addressed until after we finish a shipping browser and then go back to really
+clean things up. Still, The JS components system is in place and will be in use.
+If it looks like the right way to do your component then go for it. Just be aware
+of the limitations.
+
+</blockquote>
+
+<hr>
+<b>document history...</b>
+<font size="-1">
+<ul>
+<li><code>15 Feb 2000 - <a href="mailto:jband@netscape.com">John Bandhauer &lt;jband@netscape.com&gt;</a> - </code>initial creation of document
+</ul>
+</font>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/scriptable/js-components-status.html&amp;rev=&amp;root=/cvsroot/">Last modified February 15,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

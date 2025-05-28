@@ -1,0 +1,183 @@
+<HTML>
+<HEAD>
+<TITLE>Key Binding</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Key Binding</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="events.html">Previous: Focus and Command Dispatching</a>]
+[<a href="popups.html">Next: Popup Content</a>]
+<p>
+<b>Feature Owners:</b> <a href="mailto:saari@netscape.com">Chris Saari</a><br>
+<p>
+<b>Change History</b><br>
+<ul>
+<li>8/22/99 - Added description of oncommand event. Updated spec to mention the separation of
+command and control.
+</ul>
+<p>
+<i>Key bindings</i> are convenience nodes that can be used to easily set up key event handlers
+on nodes without having to write the JavaScript to check for various keys being down (when
+those keys might even need to be different on multiple platforms).
+<p>
+A set of key bindings is defined using the <font color=green>keyset</font> tag.  It is assumed
+that all key bindings that occur within the <font color=green>keyset</font> are bound to the
+parent node of the key set.
+<p>
+A keyset contains <font color=green>key</font> nodes as its children, where each node represents
+a single key binding.  Key nodes contain several relevant attributes: the <font color=red>key</font>
+attribute is used to specify the primary key of the binding (e.g., the key that could potentially
+be used in conjunction with zero or more <i>modifier</i> keys).  The value of this attribute is
+case-insensitive, so "S" means the same thing as "s". 
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>&lt;window ... &gt;
+  &lt;keyset&gt;
+    &lt;key id="saveKey" key="s"/&gt;
+    &lt;key id="newKey" key="n"/&gt;
+  &lt;/keyset&gt;
+...
+&lt;/window&gt;
+</table>
+<p>
+Modifier conditions can also be specified, in which case the key binding only applies if the keys
+represented by the modifier conditions are down at the time the primary key is triggered.  There
+are three different attributes used to represent the modifier keys (and to provide a cross-platform
+abstraction): <font color=red>command</font>, <font color=red>shift</font>, and
+<font color=red>alt</font>.  The attribute's value is <font color=orange>true</font> if
+the modifier should be present.  If the attribute is not present, then it is assumed that the
+ modifier is not required.
+<p>
+For GTK, Mac, and Windows, the equivalent keys for the modifier attributes are shown below.  
+<p>
+<table width=80% bgcolor=#d0d0d0 border=1 cellspacing=0 cellpadding=0 align=center>
+<tr><th>Modifier</th><th>GTK</th><th>Macintosh</th><th>Windows</th></tr>
+<tr><th>command</th><td>control</td><td>command</td><td>control</td></tr>
+<tr><th>alt</th><td>alt</td><td>option</td><td>alt</td></tr>
+<tr><th>shift</th><td>shift</td><td>shift</td><td>shift</td></tr>
+<tr><th>control</th><td>control</td><td>control</td><td>control</td></tr>
+</table>
+<p>
+Key nodes can have key event handlers placed on them that will fire in the context of the
+<font color=green>key</font> node if the conditions set up on the
+<font color=green>key</font> node are satisfied.
+<p>
+The four possible event handlers are <font color=purple>keydown</font>, <font color=purple>keyup</font>,
+and <font color=purple>keypress</font>, and <font color=purple>command</font>.  <font color=purple>command</font>
+fires at the same time as <font color=purple>keypress</font> and is a convenience method for command
+nodes (see <a href="broadcasters.html">Broadcasters and Observers</a> for details). 
+The event handlers can be added to the key nodes through script or as
+attributes (<font color=red>onkeydown</font>, <font color=red>onkeyup</font>, <font color=red>onkeypress</font>,
+or <font color=red>oncommand</font>).
+The event handlers refer to the primary key in the key binding and not to the modifier keys.
+<p>
+<table align=center width=80% border=1 bgcolor=#d0d0d0>
+<tr><td>
+<pre>&lt;window ... &gt;
+  &lt;keyset&gt;
+    &lt;key id="saveKey" key="s" command="true" onkeydown="performSave()"/&gt;
+    &lt;key id="newKey" key="n" command="true" onkeydown="openFile()"/&gt;
+  &lt;/keyset&gt;
+...
+&lt;/window&gt;
+</table>
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="events.html">Previous: Focus and Command Dispatching</a>]
+[<a href="popups.html">Next: Popup Content</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/xptoolkit/keys.html&amp;rev=&amp;root=/cvsroot/">Last modified December  5,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

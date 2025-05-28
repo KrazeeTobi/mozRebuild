@@ -1,0 +1,747 @@
+<HTML>
+<HEAD>
+<TITLE>Foward Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.0 Project (Seamonkey)</b>
+<br><b><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </i>Mail and News
+Component</b>
+<br><b><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i> Forward</b>
+<p>Written by: <a href="mailto:esther@netscape.com">Esther Goes</a>
+<br>Original specs by Peter Mock &amp; Laurel Carlson
+<p><b>History:</b>
+<br>122398 Started updating original spec from Nova
+<br>012299 Finished first draft
+<br>012799 Added Third Party scenarios
+<br>020399 Updating per first review (fenella)
+<br>030299 Updating per second review (pmock)
+<br>071499 Updating per more UI information
+<p><b>Reviewed By: </b><a href="mailto:pmock@netscape.com">Peter Mock</a>,
+<a href="mailto:fenella@netscape.com">Fenella</a>
+<p><b>References:</b>
+<br>UI Specification:&nbsp; No Seamonkey spec yet
+<br>Other:&nbsp; <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-composition.html">Composition
+test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-layout-plain.html">Plain
+Text test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-layout-html.html">HTML
+test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-attachment.html">Attachments
+test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-basfunc-intelligent.html">Intelligent
+Send test spec</a>, <a href="http://www.mozilla.org/quality/mailnews/tests/sea-mn-basfunc-return-receipt.html">Return
+Receipt test spec</a>, (note: all links may not be active yet)
+<br>&nbsp;
+<p>
+<hr WIDTH="100%">
+<br>Description: <b>Perform these tests in both HTML &amp; Plain text modes
+-you can change between these modes in the Mail and News Preferences|Formatting.&nbsp;&nbsp;
+Forward both a Mail message and a Newsgroup message.&nbsp; (NOTE: Preference
+for accessing Plain text format may change)</b>
+<p><b>Windows Using Forward</b>
+<ol TYPE=A>
+<li>
+Windows from which you can Forward a message</li>
+
+<ol>
+<li>
+3 Pane UI</li>
+
+<li>
+Message Window</li>
+
+<li>
+3 Pane UI collapsed to 2 pane UI</li>
+
+<ol TYPE=a>
+<li>
+Collapse the Thread pane only</li>
+
+<li>
+Collapse the Message pane only</li>
+
+<li>
+Collapse the Folder pane only</li>
+</ol>
+
+<li>
+3 Pane UI collapsed to 1 pane UI</li>
+
+<ol TYPE=a>
+<li>
+Collapse the Thread pane and Folder leaving the Message pane opened,&nbsp;
+then reply to a message</li>
+
+<li>
+Collapse the Message pane and Folder pane leaving the Thread pane opened,
+then reply to a message</li>
+</ol>
+
+<li>
+Sidebar (Folder Pane)</li>
+</ol>
+</ol>
+<b>Preferences for Forwarding - </b>(Found in Preferences, listed under
+Messages, the first item "By default, forward messages:[drop-down list]").&nbsp;
+<ol TYPE=A>
+<li>
+Inline</li>
+
+<ol>
+<li>
+Verify that with this option selected, this is the default for the Forward
+<b>Toolbar</b>
+button (single click)</li>
+
+<li>
+Verify that with this option selected, this it the default for the <b>menu
+item</b> "Forward" listed under Message</li>
+</ol>
+
+<li>
+Quoted</li>
+
+<ol>
+<li>
+Verify that with this option selected, this is the default for the Forward
+<b>Toolbar</b>
+button (single click)</li>
+
+<li>
+Verify that with this option selected, this it the default for the <b>menu
+item</b> "Forward" listed under Message</li>
+</ol>
+
+<li>
+As Attachment</li>
+
+<ol>
+<li>
+Verify that with this option selected, this is the default for the Forward
+<b>Toolbar</b>
+button (single click)</li>
+
+<li>
+Verify that with this option selected, this it the default for the <b>menu
+item</b> "Forward" listed under Message</li>
+</ol>
+</ol>
+<b>Location of Forwarding options</b>
+<ol TYPE=A>
+<li>
+Toolbar button "Forward"</li>
+
+<ol>
+<li>
+Verify a click and hold of the Forward button will bring up a menu listing
+(3) options: Inline, Quoted &amp; As Attachments</li>
+
+<li>
+Verify for each of these (3) options you can Forward a message in HTML
+format&nbsp; (<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify for each of these (3) options you can Forward a message in plain
+text format&nbsp; (<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify the mnemonic (aka-access keys=underlined character of a Toolbar
+menu item) for each option listed below works as directed, click and hold
+the button will bring up the list.&nbsp; Press the related key to perform
+the action.</li>
+
+<ol TYPE=a>
+<li>
+&nbsp;Inline (currently "I")</li>
+
+<li>
+Quoted (currently "Q")</li>
+
+<li>
+&nbsp;As Attachment&nbsp; (currently "A")</li>
+</ol>
+</ol>
+
+<li>
+Menubar&nbsp; (Perform these tests with both Mail &amp; News messages)</li>
+
+<ol>
+<li>
+Verify that under Message|Forward As&nbsp;&nbsp; there are (3) options:
+Inline, Quoted &amp; Attachment</li>
+
+<li>
+Verify for each of these (3) options, you can Forward a message in HTML
+format&nbsp; (<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify for each of these (3) options&nbsp; you can Forward a message in
+plain text format&nbsp; (<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify the mnemonic (aka-access keys=underlined character of a menu item)
+for each option listed below works as directed, click and hold the button
+will bring up the list.&nbsp; Press the related key to perform the action.</li>
+
+<ol TYPE=a>
+<li>
+Forward&nbsp; (currently "F")</li>
+
+<li>
+Forward As|Inline (currently "I")</li>
+
+<li>
+Forward As|Quoted (currently "Q")</li>
+
+<li>
+Forward As|Attachment&nbsp; (currently "A")</li>
+</ol>
+
+<li>
+Verify the Shortcut key (aka-accelorator keys=combination of keys) for
+each option listed below works as directed:</li>
+
+<ol TYPE=a>
+<li>
+Forward=Ctrl+L</li>
+
+<li>
+Forward As|Quoted=Ctrl+Shift+L</li>
+</ol>
+</ol>
+
+<li>
+Context Menu&nbsp; (right mouse click on mail or news message to bring
+up the Context menu)</li>
+
+<ol>
+<li>
+Verify right mouse click will bring up a menu listing (3) options: Forward
+As Attachment, Forward Quoted &amp; Forward Inline</li>
+
+<li>
+Verify for each of the (3) options, you can Forward a message in HTML format&nbsp;
+(<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify for each of the (3) options, you can Forward a message in plain
+text format&nbsp; (<i>change the format in the Preferences</i>)</li>
+
+<li>
+Verify the mnemonic (aka-access keys=underlined character of a <b>Context</b>
+menu item) for each option listed below works as directed:</li>
+
+<ol TYPE=a>
+<li>
+Forward As Attachment (currently "F")</li>
+
+<li>
+Forward Quoted (currently "Q")</li>
+
+<li>
+Forward Inline (currently "I")</li>
+</ol>
+</ol>
+</ol>
+<b>Basic Functionality of Forward</b>
+<ol TYPE=A>
+<li>
+When quoting text (using the Quote button or menu item) while forwarding
+a message:</li>
+
+<ol>
+<li>
+Plain text compose Quoted text uses ">" to begin each quoted sentence</li>
+
+<li>
+HTML Quoted text does not use ">" to begin each quoted sentence but uses
+a blue bar "|"</li>
+</ol>
+
+<li>
+Verify the Reply options in the Preferences|Messages panel are not being
+applied to forwarded messages (currently "select the quoted text" is being
+applied to forwarded messages and it should not be applied because it has
+no functionality)</li>
+
+<li>
+Forward-testing multiple messages&nbsp; (Perform these tests with both
+Mail &amp; News messages)</li>
+
+<ol>
+<li>
+Forward multiple plain text messages-verify all messages are forwarded
+to correct recipient</li>
+
+<li>
+Forward multiple HTML messages-verify all messages are forwarded to correct
+recipient</li>
+
+<li>
+Forward a mixture of HTML &amp; Plain text messages-verify all messages
+are forwarded to correct recipient</li>
+
+<li>
+Forward as Quoted multiple plain text messages-verify all messages are
+forwarded to correct recipient (not sure if this allowed, currently "Quoted"
+is grayed out when multiple messages are selected)</li>
+
+<li>
+Forward as Quoted multiple HTML messages-verify all messages are forwarded
+to correct recipient (not sure if this allowed, currently "Quoted" is grayed
+out when multiple messages are selected)</li>
+
+<li>
+Forward as Quoted a mixture of HTML &amp; Plain text messages-verify all
+messages are forwarded to correct recipient (not sure if this allowed,
+currently "Quoted" is grayed out when multiple messages are selected)</li>
+</ol>
+</ol>
+<b>Compose Window when Forwarding</b>
+<ol TYPE=A>
+<li>
+Address pane when Forwarding a messages&nbsp; (Perform these tests with
+both Mail &amp; News messages)</li>
+
+<ol>
+<li>
+Address field tab (try all of the Addressing formats)</li>
+
+<ol TYPE=a>
+<li>
+To:=will send the message</li>
+
+<li>
+&nbsp;Cc:=will send the message</li>
+
+<li>
+&nbsp;Bcc:=will send the message</li>
+
+<li>
+Group=will send the message (but must be a valid newsgroup address)</li>
+
+<li>
+Reply To:=not valid without To, CC or Bcc, if a valid scenario, message
+will send</li>
+
+<li>
+Follow-up To:=not valid without To, CC or Bcc, if a valid scenario, message
+will send</li>
+
+<li>
+A mix of the above=will send if all are valid, will give message if any
+are invalid</li>
+</ol>
+
+<li>
+Drag &amp; Drop</li>
+
+<ol TYPE=a>
+<li>
+verify dragging a addresses from the Address Book to the Compose window
+address pane, placing name below the inserted Reply name works correctly</li>
+
+<li>
+verify dragging multiple addresses from the Address Book to the Compose
+window address pane, placing names below the inserted Reply name works
+correctly</li>
+</ol>
+
+<li>
+Copying &amp; Pasting name</li>
+
+<ol TYPE=a>
+<li>
+verify copying and pasting names in the Compose window address pane, placing
+names below the inserted Reply name works correctly</li>
+</ol>
+
+<li>
+Deleting Name</li>
+
+<ol TYPE=a>
+<li>
+verify the menu option for delete does <b>not </b>work in the address field</li>
+
+<li>
+verify selecting a name and clicking the "Del" key twice removes: first
+the name, then the icon</li>
+
+<li>
+verify selecting one of the icons in the Address field and clicking the
+"Del" key removes the name and the icon</li>
+
+<li>
+verify selecting the last icon in the Address field an clicking the "Del"
+key does <b>not</b> remove the&nbsp; icon but will remove the name if there
+is one on the line</li>
+</ol>
+
+<li>
+Attachment tab (See Attachment Feature Test Plan for more comprehensive
+tests)</li>
+
+<ol TYPE=a>
+<li>
+Using Toolbar button Attach, select one of each and verify they show up
+in the Attachment pane and arrive properly</li>
+
+<li>
+File (one of each)</li>
+
+<ul TYPE=SQUARE>
+<li>
+Text</li>
+
+<li>
+HTML</li>
+
+<li>
+Binary (e.g. Gif/JPEG/BMP)</li>
+
+<li>
+vCard</li>
+</ul>
+
+<li>
+Web Page</li>
+
+<ul TYPE=SQUARE>
+<li>
+One that is valid</li>
+
+<li>
+One that is not valid</li>
+</ul>
+
+<li>
+My Address Book card</li>
+
+<li>
+Signature (Preference setting)</li>
+</ol>
+
+<li>
+Option tab</li>
+
+<ol TYPE=a>
+<li>
+Signed &amp; Encrypted (to be tested by TBD Security)</li>
+
+<li>
+Uuencode&nbsp; (covered in Attachments test spec, see link above)</li>
+
+<li>
+Format (covered in Intelligent Send test spec, see link above)</li>
+
+<li>
+Return Receipt (covered in Return Receipt test spec, see link above)</li>
+
+<li>
+Intelligent Send option (covered in Intelligent Send test spec, see link
+above)</li>
+</ol>
+
+<li>
+Subject field</li>
+
+<ol TYPE=a>
+<li>
+Verify the subject line has Fwd: at the beginning</li>
+
+<li>
+Send one of each priority options, verify they arrive with the proper priority</li>
+
+<li>
+Sort the messages by Thread, verify the Forwarded message is sorted as
+a separate message from the original</li>
+</ol>
+
+<li>
+Priority: Highest, High, Normal, Low, Lowest (test one of each)</li>
+
+<li>
+Message area (to be tested see Composition test spec, Plain Text test spec.
+HTML test spec)</li>
+</ol>
+
+<li>
+Address Book Picker when Forwarding a message (Perform these tests with
+both Mail &amp; News messages)</li>
+
+<ol>
+<li>
+Addressing messages by typing a name in the Addressing field with matches
+found in:</li>
+
+<ol TYPE=a>
+<li>
+Personal Address Book-verify the matching address fills in</li>
+
+<li>
+Default Directories added during install -verify the matching address fills
+in</li>
+
+<li>
+A Corporate Directory added by user -verify the matching address fills
+in</li>
+</ol>
+
+<li>
+Perform the following operation using the Address picker (by clicking the
+Address toolbar button) while in a Forward-Compose window</li>
+
+<ol TYPE=a>
+<li>
+Select a name and click on the To: button-verify the address is added to
+the bucket, clicking OK fills in the name in the addressing field</li>
+
+<li>
+Select a name and click on the Cc: button-verify the address is added to
+the bucket, clicking OK fills in the name in the addressing field</li>
+
+<li>
+Select a name and click on the Bcc: button-verify the address is added
+to the bucket, clicking OK fills in the name in the addressing field</li>
+
+<li>
+Select a name, click on the To: button, then remove from bucket-verify
+the address does not fill in the To: field</li>
+
+<li>
+Click on the Cancel button to abort a selection</li>
+
+<li>
+Send message, verify sending to correct addresses</li>
+</ol>
+</ol>
+
+<li>
+Spell check messages before sending=On&nbsp; for a Forwarded message (Perform
+these tests with both Mail &amp; News messages)</li>
+
+<ol>
+<li>
+Verify message is spell checked before forwarded message is sent.</li>
+</ol>
+
+<li>
+Sending Action (Perform these tests with both Mail &amp; News messages)</li>
+
+<ol>
+<li>
+Send Now-verify the message is sent immediately</li>
+
+<li>
+Send Later-verify the message is put in the Outbox</li>
+
+<li>
+Save as Draft-verify the message is put in the Drafts folder (try this
+with Draft folder=local and IMAP)</li>
+
+<li>
+Save as Template-verify the message is put in the Template folder (try
+this with Template folder=local and IMAP)</li>
+
+<li>
+Intelligent Send (See the Intelligent Send Feature test plan)</li>
+</ol>
+</ol>
+<b>Forwarding from Communicator to Third Party Mail Products: AOL, Outlook
+Express, Outlook 97, Eudora </b>(<i>Check with Third Party products to
+see how they handle these forwarding options we send.&nbsp; If results
+are not what we would expect, and is a bug in Third Party product, document
+results for Release Notes</i>)
+<ol TYPE=A>
+<li>
+Forward Inline a:</li>
+
+<ol>
+<li>
+Plain text message</li>
+
+<ol TYPE=a>
+<li>
+with no attachment, verify message is received</li>
+
+<li>
+with 1 attachment, verify attachment can be viewed</li>
+
+<li>
+with more than 1 attachment, verify attachments can be viewed</li>
+</ol>
+
+<li>
+HTML message</li>
+
+<ol TYPE=a>
+<li>
+with no attachment, verify message is received</li>
+
+<li>
+with 1 attachment, verify attachment can be viewed</li>
+
+<li>
+with more than 1 attachment, verify attachments can be viewed</li>
+</ol>
+</ol>
+
+<li>
+Forward as Attachment a:</li>
+
+<ol>
+<li>
+Plain text message</li>
+
+<ol TYPE=a>
+<li>
+with no attachment, verify message is received</li>
+
+<li>
+with 1 attachment, verify attachment can be viewed</li>
+
+<li>
+with more than 1 attachment, verify attachments can be viewed</li>
+</ol>
+
+<li>
+HTML message</li>
+
+<ol TYPE=a>
+<li>
+with no attachment, verify message is received</li>
+
+<li>
+with 1 attachment, verify attachment can be viewed</li>
+
+<li>
+with more than 1 attachment, verify attachments can be viewed</li>
+</ol>
+</ol>
+
+<li>
+Forward as Quoted a:</li>
+
+<ol>
+<li>
+Plain text message</li>
+
+<ol TYPE=a>
+<li>
+with no attachment, verify message is received</li>
+
+<li>
+with 1 attachment, verify attachment can be viewed</li>
+
+<li>
+with more than 1 attachment, verify attachments can be viewed</li>
+</ol>
+
+<li>
+HTML message</li>
+
+<ol TYPE=a>
+<li>
+with no attachment, verify message is received</li>
+
+<li>
+with 1 attachment, verify attachment can be viewed</li>
+
+<li>
+with more than 1 attachment, verify attachments can be viewed</li>
+</ol>
+</ol>
+</ol>
+
+<hr WIDTH="100%">
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-forward.html&amp;rev=&amp;root=/cvsroot/">Last modified July 14,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

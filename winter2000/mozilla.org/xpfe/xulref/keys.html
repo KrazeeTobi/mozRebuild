@@ -1,0 +1,542 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Ian Oeschger">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; U) [Netscape]">
+   <title>The &lt;key> Element</title>
+</head>
+<body>
+<table>
+<tr><td><p align="right"><i>XUL Programmer's Reference Manual</i></p></td></tr>
+<tr>
+<td>
+<h1>
+<font color="#000099"><font size=+2>&lt;key></font></font></h1>
+
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font face="Arial,Helvetica"><font color="#FFFFFF">Attributes</font></font></b></td>
+
+<td><b><font face="Arial,Helvetica"><font color="#FFFFFF">Common Children</font></font></b></td>
+</tr>
+
+<tr>
+<td><i><font face="Arial,Helvetica"><a href="common.html#id">id</a></font></i></td>
+
+<td><font face="Arial,Helvetica">&nbsp;* * *</font></td>
+</tr>
+
+<tr>
+<td><font face="Arial,Helvetica"><a href="#key">key</a></font></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><font face="Arial,Helvetica"><a href="#command">command</a></font></td>
+
+<td><font face="Arial,Helvetica">&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><a href="#alt">alt</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#shift">shift</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#control">control</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><font face="Arial,Helvetica"><a href="#onkeydown">onkeydown</a></font></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><font face="Arial,Helvetica"><a href="#onkeyup">onkeyup</a></font></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><font face="Arial,Helvetica"><a href="#onkeypress">onkeypress</a></font></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><font face="Arial,Helvetica"><a href="#oncommand">oncommand</a></font></td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<br>&lt;key> is a XUL key binding widget.<a NAME="key bindings IDX"></a>
+Key bindings define a relationship between between keystroke combinations
+and functionality in the interface. Keys&nbsp;<a NAME="keys and keysets IDX"></a>are
+typically grouped into keysets.
+<br>&nbsp;
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="key"></a><b><font color="#FFFFFF"><font size=+1>key</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>key</b> is an attribute r<a NAME="bindings IDX"></a>equired
+to specify the primary key of the binding for an event handler.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;key id="<i>string</i>" <b>key</b>="<i>keyboard character</i>"
+/></tt></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><tt>&lt;keyset></tt>
+<br><tt>&nbsp;&nbsp; &lt;key id="newKey" <b>key</b>="n" onkeydown="New()"
+/></tt>
+<br><tt>&nbsp;&nbsp; &lt;key id="openKey" <b>key</b>="o" onkeydown="Open()"
+/></tt>
+<br><tt>&nbsp;&nbsp; &lt;key id="saveKey" <b>key</b>="s" onkeydown="Save()"
+/></tt>
+<br><tt>&lt;/keyset></tt></blockquote>
+<b>Notes</b>
+<blockquote>The value of <b>key</b> is case-insensitive, so "S" means the
+same thing as "s". When there is no modifier specified, the primary key
+works by itself to prompt the event handler. When a modifier and a key
+are specified, then both need to be pressed to prompt the event hander.</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="command"></a><b><font color="#FFFFFF"><font size=+1>command</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>command </b>is an optional attribute for specifying command
+keys to be used in&nbsp;<a NAME="command attribute, IDX"></a>conjunction
+with the primary <a href="#key">key</a> to prompt event handlers.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;key id="<i>string</i>" key="<i>keyboard character</i>"
+<b>command</b>="[
+true | false]" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;key id="saveKey" key="s" <b>command</b>="true" onkeydown="Save()"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>The example above defines a key binding for the command + s
+key combination. The command keys vary from platform to platform, as shown
+in the following table:
+<br>&nbsp;
+<table BORDER=0 COLS=4 WIDTH="80%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Modifier</font></b></td>
+
+<td><b><font color="#FFFFFF">GTK</font></b></td>
+
+<td><b><font color="#FFFFFF">Macintosh</font></b></td>
+
+<td><b><font color="#FFFFFF">Windows</font></b></td>
+</tr>
+
+<tr>
+<td><b>command</b></td>
+
+<td>control</td>
+
+<td>command</td>
+
+<td>control</td>
+</tr>
+
+<tr>
+<td><b>alt</b></td>
+
+<td>alt</td>
+
+<td>option</td>
+
+<td>alt</td>
+</tr>
+
+<tr>
+<td><b>shift</b></td>
+
+<td>shift</td>
+
+<td>shift</td>
+
+<td>shift</td>
+</tr>
+
+<tr>
+<td><b>control</b></td>
+
+<td>control</td>
+
+<td>control</td>
+
+<td>control</td>
+</tr>
+</table>
+</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="alt"></a><b><font color="#FFFFFF"><font size=+1>alt</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>alt </b>is an optional attribute for specifying command
+keys to be used in&nbsp;<a NAME="alt attribute, keys IDX"></a>conjunction
+with the primary <a href="#key">key</a> to prompt event handlers.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;key id="<i>string</i>" key="<i>keyboard character</i>"
+<b>alt</b>="[
+true | false]" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;key id="saveKey" key="s" <b>alt</b>="true" onkeydown="Save()"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>The example above defines a key binding for the alt + s key
+combination. The alt keys vary from platform to platform, as shown in the
+following table:
+<br>&nbsp;
+<table BORDER=0 COLS=4 WIDTH="80%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Modifier</font></b></td>
+
+<td><b><font color="#FFFFFF">GTK</font></b></td>
+
+<td><b><font color="#FFFFFF">Macintosh</font></b></td>
+
+<td><b><font color="#FFFFFF">Windows</font></b></td>
+</tr>
+
+<tr>
+<td><b>command</b></td>
+
+<td>control</td>
+
+<td>command</td>
+
+<td>control</td>
+</tr>
+
+<tr>
+<td><b>alt</b></td>
+
+<td>alt</td>
+
+<td>option</td>
+
+<td>alt</td>
+</tr>
+
+<tr>
+<td><b>shift</b></td>
+
+<td>shift</td>
+
+<td>shift</td>
+
+<td>shift</td>
+</tr>
+
+<tr>
+<td><b>control</b></td>
+
+<td>control</td>
+
+<td>control</td>
+
+<td>control</td>
+</tr>
+</table>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="shift"></a><b><font color="#FFFFFF"><font size=+1>shift</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>shift </b>is an optional attribute for specifying command
+keys to be used in&nbsp;<a NAME="shift attribute, keys IDX"></a>conjunction
+with the primary <a href="#key">key</a> to prompt event handlers.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;key id="<i>string</i>" key="<i>keyboard character</i>"
+<b>shift</b>="[
+true | false]" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;key id="saveKey" key="s" <b>shift</b>="true" onkeydown="Save()"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>The example above defines a key binding for the shift + s key
+combination. The modifier keys vary from platform to platform, as shown
+in the following table:
+<br>&nbsp;
+<table BORDER=0 COLS=4 WIDTH="80%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Modifier</font></b></td>
+
+<td><b><font color="#FFFFFF">GTK</font></b></td>
+
+<td><b><font color="#FFFFFF">Macintosh</font></b></td>
+
+<td><b><font color="#FFFFFF">Windows</font></b></td>
+</tr>
+
+<tr>
+<td><b>command</b></td>
+
+<td>control</td>
+
+<td>command</td>
+
+<td>control</td>
+</tr>
+
+<tr>
+<td><b>alt</b></td>
+
+<td>alt</td>
+
+<td>option</td>
+
+<td>alt</td>
+</tr>
+
+<tr>
+<td><b>shift</b></td>
+
+<td>shift</td>
+
+<td>shift</td>
+
+<td>shift</td>
+</tr>
+
+<tr>
+<td><b>control</b></td>
+
+<td>control</td>
+
+<td>control</td>
+
+<td>control</td>
+</tr>
+</table>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="control"></a><b><font color="#FFFFFF"><font size=+1>control</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>control </b>is an<a NAME="control attribute, keys IDX"></a>
+optional attribute for specifying command keys to be used in conjunction
+with the primary <a href="#key">key</a> to prompt event handlers.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;key id="<i>string</i>" key="<i>keyboard character</i>"
+<b>control</b>="[
+true | false]" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;key id="saveKey" key="s" <b>control</b>="true" onkeydown="Save()"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>The example above defines a key binding for the control + s
+key combination. The modifier keys vary from platform to platform, as shown
+in the following table:
+<br>&nbsp;
+<table BORDER=0 COLS=4 WIDTH="80%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Modifier</font></b></td>
+
+<td><b><font color="#FFFFFF">GTK</font></b></td>
+
+<td><b><font color="#FFFFFF">Macintosh</font></b></td>
+
+<td><b><font color="#FFFFFF">Windows</font></b></td>
+</tr>
+
+<tr>
+<td><b>command</b></td>
+
+<td>control</td>
+
+<td>command</td>
+
+<td>control</td>
+</tr>
+
+<tr>
+<td><b>alt</b></td>
+
+<td>alt</td>
+
+<td>option</td>
+
+<td>alt</td>
+</tr>
+
+<tr>
+<td><b>shift</b></td>
+
+<td>shift</td>
+
+<td>shift</td>
+
+<td>shift</td>
+</tr>
+
+<tr>
+<td><b>control</b></td>
+
+<td>control</td>
+
+<td>control</td>
+
+<td>control</td>
+</tr>
+</table>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="onkeydown"></a><b><font color="#FFFFFF"><font size=+1>onkeydown</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>onkeydown</b> is an optional attribute for creating event
+handlers for key bindings.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;key id="<i>string</i>" key="<i>keyboard character</i>"
+<b>onkeydown</b>="<i>event
+handler code</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;key id="saveKey" key="S" <b>onkeydown</b>="Save()"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>The keydown event is fired when the user first depresses the
+key specified by the key attribute (and the modifiers). The keypress event
+is effecctively equivalent to the keydown and keyup events together.</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="onkeyup"></a><b><font color="#FFFFFF"><font size=+1>onkeyup</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>onkeyup</b> is an optional attribute for creating event
+handlers for key bindings.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;key id="<i>string</i>" key="<i>keyboard character</i>"
+<b>onkeyup</b>="<i>event
+handler code</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;key id="saveKey" key="S" <b>onkeyup</b>="Save()" /></tt></blockquote>
+<b>Notes</b>
+<blockquote>The keyup event is fired when the user releases the key specified
+by the key attribute (and the modifiers). The keypress event is effecctively
+equivalent to the keydown and keyup events together.</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="onkeypress"></a><b><font color="#FFFFFF"><font size=+1>onkeypress</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>onkeypress</b> is an optional attribute for creating event
+handlers for key bindings.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;key id="<i>string</i>" key="<i>keyboard character</i>"
+<b>onkeypress</b>="<i>event
+handler code</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;key id="saveKey" key="S" <b>onkeypress</b>="Save()"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>The keypress event is fired when the user presses the key specified
+by the key attribute (and the modifiers). The keypress event is effecctively
+equivalent to the keydown and keyup events together.</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="oncommand"></a><b><font color="#FFFFFF"><font size=+1>oncommand</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>oncommand</b> is an optional attribute for creating event
+handlers for key bindings.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;key id="<i>string</i>" key="<i>keyboard character</i>"
+<b>oncommand</b>="<i>event
+handler code</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;key id="saveKey" key="S" <b>oncommand</b>="Save()"
+/></tt></blockquote>
+<b>Notes</b>
+<blockquote>XXX. This still has to be updated. The keypress event is fired
+when the user presses the key specified by the key attribute (and the modifiers).
+The keypress event is effecctively equivalent to the keydown and keyup
+events together.</blockquote>
+
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td></td>
+</tr>
+</table>
+
+<br>&nbsp;
+<p align="right"><i>Last updated: 13:10 1/26/00 <a href="mailto:oeschger@netscape.com">Ian Oeschger</a></i></p>
+</body>
+</html>

@@ -1,0 +1,113 @@
+Feature Test Spec
+5.0 Project (Sea-Monkey)
+Mail and News Component
+mn-html-to-txt.txt
+
+Written by:  Alan S. Jones (asj@ipa.net)
+Last updated:  January 19, 2000
+
+http://bugzilla.mozilla.org/show_bug.cgi?id=16507
+Bug was assigned to and fixed by: Ben Bucksch <mozilla.news@bucksch.org>
+
+Because this feature is testing conversion and includes test cases, this test spec is 
+written in text and not html.
+
+---------------------------------------------------------------------------
+
+*bold* -> <b>bold</b>
+/italic/  -> <i>italic</i>
+_underline_  <em> emphasis</em>
+|code|  -> <code>code</code>
+
+(c) -> &copy (copyright sign)
+(r) -> &reg  (registered trade mark sign)
++/- -> &plusmn (plus or minus sign)
+
+^2  -> <sup>2</sup>
+a^25 -> a<sup>25</sup>
+a^b  -> not converted
+
+The following strings are not substituted:
+|TXT   |HTML     |Reason
++------+---------+----------
+ ->     &larr;    Bug #454
+ =>     &lArr;    dito
+ <-     &rarr;    dito
+ <=     &rArr;    dito
+ (tm)   &trade;   dito
+ 1/4    &frac14;  is triggered by 1/4 Part 1, 2/4 Part 2, ...
+ 3/4    &frac34;  dito
+ 1/2    &frac12;  similar
+
+Other Characters to consider:
+http://www.htmlhelp.com/reference/html40/entities/symbols.html
+http://www.htmlhelp.com/reference/html40/entities/latin1.html
+http://www.htmlhelp.com/reference/html40/entities/special.html
+
+:-)  -> smile.gif
+:)   -> smile.gif
+:-(  -> frown.gif
+:(   -> frown.gif
+;-)  -> wink.gif
+;)   -> wink.gif (will not work)
+;-P  -> sick.gif
+
+URL Tests
+www.mozilla.org
+http://www.mozilla.org
+<http://www.mozilla.org>
+"http://www.mozilla.org"
+
+<a href="http://www.mozilla.org.com">"Mozilla site"</a>
+<a href="http://www.mozilla.org.com">Mozilla site</a>
+<URL:http://www.mozilla.org>
+
+<news://news.mozilla.org/1234@any.msg.id.com>
+
+<URL:http://www.mozilla.org  (will not work)
+
+Mail Tests
+asj@ipa.net
+mailto:asj@ipa.net
+<asj@bigfoot.com>
+
+SPECIAL TEST CASES
+
+5 * 3 * 4 = 60 -> should do nothing
+
+In all cases, please tale special care about special cases, like line
+start, line end and special characters, and unusual real life cases (like
+the multiplication above or "bla (mozilla@bucksch.org, " or source code).
+
+Damage done to ASCII art by text-to-HTML algorithms:
+
++---------------------------------------------------------------------+
+|[] Mozilla preferences ::::::::::::::::::::::::::::::::::::::::::::: |
++---------------------------------------------------------------------+
+|/Standard settings\/Mail accounts\/News servers\/Browser zones\_____ |
+||                  `""""""""""""""""""""""""""""""""""""""""""""""""||
+|| Standard settings apply unless overridden by settings for a       ||
+|| particular mail account, news server, or browser zone.            ||
+||                                                                   ||
+||  Category             Display - Colors :::::::::::::::::::::::::: ||
+|| +-------------------+                                             ||
+|| |= General =========| When a page does not specify colors, use:   ||
+|| |= Display =========| (:[SILLY SMILEY FACE] for backgrounds       ||
+|| |   Languages       | (##) for text                               ||
+|| |   Fonts           | [UNINTELLIGENTLY LINKED @ SYMBOL]) for links||
+|| | > Colors <        | (OO) for previously-visited links           ||
+|| |   Style sheets    | (**) for highlighted links                  ||
+|| |   Cookies         |                                             ||
+|| |   JavaScript      | ( ) Always use these colors, ignoring those ||
+|| |   Java            |     specified in the document               ||
+|| |= Navigator =======| (*) Use colors specified in the document    ||
+|| |= Messenger =======|  *test*                                     ||
+|| |= Composer ========|                                             ||
+|| +-------------------+ ::::::::::::::::::::::::::::::::::::::::::: ||
+|`-------------------------------------------------------------------'|
+|( Help )                                        ( Cancel ) (( Save ))|
++---------------------------------------------------------------------+
+
+
+
+

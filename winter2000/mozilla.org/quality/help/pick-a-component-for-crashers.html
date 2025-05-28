@@ -1,0 +1,313 @@
+<HTML>
+<HEAD>
+<TITLE>Bug Triager's Guide: How to pick a component for crashing bugs</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+<script>
+function searchLXRForModuleName( aForm ) {
+    var aName = new String(aForm.moduleName.value);
+    if ( aName.match(/(.*)(\.dll)/i) ) {
+        aName = aName.match(/(.*)(\.dll)/i)[1];
+    }
+
+    var searchString = "http://lxr.mozilla.org/seamonkey/search?string="+
+        "DLLNAME.*%3D.*"+aName+"&regexp=on";
+    window.open( searchString, "moduleName" );
+}
+function searchLXRForFunctionName( anElement ) {
+    var aName = anElement.value;
+    var searchString = "http://lxr.mozilla.org/seamonkey/search?string="+aName;
+    window.open( searchString, "functionName" );
+}
+</script>
+
+
+
+<center><font size=+2><b>Bug Triager's Guide</b></font></center>
+<center><b>How to Pick a Component for Crashing Bugs</b></center>
+    <p>
+    <center><font color=#660000><b>DRAFT</b></FONT><br>
+    comments to <a href="cbegle@mozilla.org">cbegle@mozilla.org</a></center>
+
+
+<ul>
+<li>    <a href="#crash_without_stack_trace">Program crashed, no stack trace is available</a>
+<li>    <a href="#crash_with_stack_trace">Program crashed, stack trace is attached</a>
+<li>    <a href="#assertion_with_stack_trace">Program threw an assertion, stack trace is attached</a>
+</ul>
+<p>
+<hr>
+<p>
+
+<a name="crash_without_stack_trace"</a>
+<h3>Program Crashed, no stack trace is available</h3>
+<b>Windows</b>
+    <blockquote>
+    If you crash, and know what module you crashed in, type the module name here:
+    <form name=moduleForm>
+    <input type=text name=moduleName>
+    </input>
+    <input type=button value="Search For Module" onClick=searchLXRForModuleName(this.form)></input>
+    </form>
+
+    The result of the search should be a file called <b><tt>makefile.win</tt></b>.
+    The makefile.win's directory name should give you a clue to the bug's
+    correct Component.
+    <p>
+    For example, searching for the dll name <a href="http://lxr.mozilla.org/seamonkey/search?string=DLLNAME.*%3D.*uconv&regexp=on"
+    target="other">
+    <tt>uconv</tt></a> would result in a makefile.win that lives under <tt>/intl/uconv</tt>.
+    Based on the <tt>intl</tt> directory name, you could guess that the bug was in Internationalization.
+
+    <p>
+    Here's <a href="http://lxr.mozilla.org/seamonkey/search?string=DLLNAME.*%3D&regexp=on"
+    target="other">
+    a list</a> of most of the DLLs and libraries in Mozilla.
+
+    </blockquote>
+
+<a name="crash_with_stack_trace"></a>
+<h3>Crash - With a Stack Trace</h3>
+    <blockquote>
+    If you're triaging a bug that has a stack trace, a good first place to look
+    is the first line in the stack trace.  For example:
+    <p>
+    <tt>
+    <blockquote>
+    <b>SinkContext::FlushText</b>(int * 0x00000000, int 0) <b>line 1985</b> + 6 bytes
+    <br>SinkContext::FlushTags() line 1778
+    <br>HTMLContentSink::DidBuildModel(HTMLContentSink * const 0x03fd7bd0, int 0) line
+    2191
+    <br>CNavDTD::DidBuildModel(CNavDTD * const 0x02d633a0, unsigned int 0, int 1,
+    <br>nsIParser * 0x03fd7da0, nsIContentSink * 0x03fd7bd0) line 696 + 14 bytes
+    <br>nsParser::DidBuildModel(unsigned int 0) line 587 + 55 bytes
+    <br>nsParser::ResumeParse(nsIDTD * 0x00000000, int 1) line 1017
+    nsParser::OnStopRequest(nsParser * const 0x03fd7da4, nsIChannel * 0x02e2db30,
+    <br>nsISupports * 0x00000000, unsigned int 0, const unsigned short * 0x00000000) line 1407 + 19 bytes
+    </tt>
+    </blockquote>
+    <p>
+
+    Here's what we can learn from from the first line of that stack trace:
+    <table>
+    <tr>
+    <td>    <tt>FlushText</tt>
+    <td>    Name of the function where Mozilla crashed
+    </tr>
+    <tr>
+    <td>    <tt>SinkContext</tt>
+    <td>    Class of which the function FlushText is a member
+    </tr>
+    <tr>
+    <td>    <tt>line 1985</tt>
+    <td>    Line number in the file that defines FlushText
+    </td>
+    </tr>
+    </table>
+
+    <p>
+    A good first guess is to assign it to whoever wrote line 1985 of
+    SinkContext::FlushText.
+    <p>
+    <ol>
+    <li>    Use LXR to find the definition of SinkContext::FlushText.
+    <p>
+    <form name=functionForm>
+    <input type=text name=functionName value="SinkContext::FlushText" size=30>
+    </input>
+    <input type=button value="Text Search"
+        onClick="searchLXRForFunctionName(this.form.functionName)" ></input>
+    </form>
+
+         The search result should show you the directory and file where this
+        function is defined.  In this, case the file lives under the "layout"
+        hierarchy, in the file <a href=
+        "http://lxr.mozilla.org/seamonkey/source/layout/html/document/src/nsHTMLContentSink.cpp"
+        target="other">
+        nsHTMLContentSink.cpp</a>.
+
+    <p><li>    We can figure out who wrote the code that crashed by going to the top
+            of nsHTMLContentSink.cpp, and clicking the link to <a href=
+        "http://bonsai.mozilla.org/cvsblame.cgi?file=mozilla/layout/html/document/src/nsHTMLContentSink.cpp"
+        target="other">
+        CVS Blame</a>.  This shows us who wrote each line of code in this file.
+    <p><li>    Now we can go to line 1985, and see that vidur@netscape.com wrote that line
+        of code.
+
+    <p><li>    Change the bug report's component to Layout component, and assign the
+            bug to vidur@netscape.com.
+    </ol>
+    <p>
+    Sometimes, it's not this straightforward; the code that really caused the
+    problem might not be right at the top of the stack.  In that case, the person
+    you assinged it to will probably re-assign the bug to someone who owns the code
+    higher on the stack.
+    </blockquote>
+
+<a name="assertion_with_stack_trace"></a>
+<h3>Code threw an assertion, stack trace is attached</h3>
+    <blockquote>
+
+    If the first line in the stack trace starts with nsDebug, that means
+    that some code threw an assertion.  You want to look up the code that
+    threw the assertion, not the assertion itself.
+    <p>
+    If the first functions in a stack trace are members of <tt><b>nsDebug</b></tt>,
+    that means that the application threw an assertion.      In this case, you want
+    to look up the code that threw the assertion (the line that is in bold), not
+    the code in the assertion itself.   For example:
+    <p>
+    <tt>
+
+    nsDebug::Assertion(const char * 0x01061bd8, const char * 0x01061b8c, const char
+    * 0x01061b54, int 1071) line 189 + 13 bytes
+    <br>nsDebug::WarnIfFalse(const char * 0x01061bd8, const char * 0x01061b8c, const
+        char * 0x01061b54, int 1071) line 247 + 21 bytes
+    <br><b>nsXULWindow::NotifyObservers(nsXULWindow * const 0x01f87ff0, const unsigned
+        short * 0x0012e5f0, const unsigned short * 0x0012e84c) line 1071 + 96 bytes</b>
+    <br>nsContentTreeOwner::SetJSDefaultStatus(nsContentTreeOwner * const 0x02bb9554,
+        const unsigned short * 0x0012e84c) line 214 + 35 bytes
+    <br>GlobalWindowImpl::SetDefaultStatus(GlobalWindowImpl * const 0x02b6c540, const
+        nsString & {...}) line 797
+    <br>...
+    </tt>
+    <p>
+
+    Here's what we can learn from the first line after all the nsDebug stuff:
+    <table>
+    <tr>
+    <td>    <tt>NotifyObservers</tt>
+    <td>    Function that called the assertion
+    </tr>
+    <tr>
+    <td>    <tt>nsXULWindow</tt>
+    <td>    Class of which the function NotifyObservers is a member
+    </tr>
+    <tr>
+    <td>    <tt>line 1071</tt>
+    <td>    Line number in the file that defines NotifyObservers that
+            makes the assertion
+    </td>
+    </tr>
+    </table>
+    <p>
+    Now we just follow the same steps as a crash.
+    <ol>
+    <li> Search for the function
+    <a href="http://lxr.mozilla.org/seamonkey/ident?i=NotifyObservers">
+    NotifyObservers</a> using LXR.  You want to find out where it is defined as a
+    function.
+    <form name=functionForm2>
+    <input type=text name=functionName2 size=30 value="nsXULWindow::NotifyObservers"></input>
+    <input type=button value="Search for Function" onClick=searchLXRForFunctionName(this.form.functionName2) ></input>
+    </form>
+    Your search result should find that the function is defined in the file
+    <a href="http://lxr.mozilla.org/seamonkey/source/xpfe/appshell/src/nsXULWindow.cpp" target="other">
+    nsXULWindow.cpp</a>
+
+    <p>
+    <li>    Once you are looking at
+        <a href="http://lxr.mozilla.org/seamonkey/source/xpfe/appshell/src/nsXULWindow.cpp">
+        nsXULWindow.cpp</a>, you can click the link at the top of that
+    page that says <a href="http://bonsai.mozilla.org/cvsblame.cgi?file=mozilla/xpfe/appshell/src/nsXULWindow.cpp">
+    CVS Blame</a>.  This shows you who wrote each line of code in this file.
+    <p>
+    <li>
+    Now look at line 1071 of that file.
+    You can see that the person who wrote this code is tbogard@netscape.net,
+    and with a little poking around you find that his Bugzilla ID is
+    travis@netscape.com.  Now you know the right owner for the bug.
+
+    <p><li>Now you can change the component of this bug to XP Tookit/Widgets, and the
+    owner of the bug to travis@netscape.com.
+    </ol>
+    <p>
+
+    Sometimes it's not that straightforward; the code that really caused the
+    problem might not be right at the bottom of the stack.
+    </blockquote>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/help/pick-a-component-for-crashers.html&amp;rev=&amp;root=/cvsroot/">Last modified February 24,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,1082 @@
+<HTML>
+<HEAD>
+<TITLE>compose: nsIMsgComposeService interface</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   <!-- Descrpt: 
+     Author: ppandit@netscape.com
+     Revs: 09/23/99
+     ToDo:	1) Implement error trapping routine
+	 		2) Use RDF to verify values instead of just Set and Get.
+			3) Complete testcases
+	 	
+   - The contents of this file are subject to the Mozilla Public
+   - License Version 1.1 (the "License"); you may not use this file
+   - except in compliance with the License. You may obtain a copy of
+   - the License at http://www.mozilla.org/MPL/
+   - 
+   - Software distributed under the License is distributed on an "AS
+   - IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+   - implied. See the License for the specific language governing
+   - rights and limitations under the License.
+   -
+   - The Original Code is Mozilla Communicator client code.
+   -
+   - The Initial Developer of the Original Code is Netscape Communications
+   - Corporation.  Portions created by Netscape are Copyright (C) 1999
+   - Netscape Communications Corporation.  All Rights Reserved.
+   - 
+   - Contributor(s):
+   - Par Pandit
+   - Gerardo Kvaternik
+   -->
+<SCRIPT TYPE="text/javascript" SRC="../testlib.js">
+</SCRIPT>
+
+<SCRIPT TYPE="text/javascript">
+var result = true;
+</SCRIPT>
+
+
+
+
+<!-- NGLayer code -->
+
+<FORM name="results" action="/ngdriver/cgi-bin/writeresults.cgi" method="post">
+<SCRIPT TYPE="text/javascript">
+
+document.write('<input name="resultsfile" type="hidden" value="' + window.opener.document.resultsform.resultsfile.value + '">');
+
+</SCRIPT>
+<input type="hidden" name="textarea">
+</FORM>
+
+<center><b><font size=+2><font color="FF0000">TEST: nsIMsgCompFields interface</font></font></center>
+<br>
+<hr>
+<center><b><font color="#3333FF"><font size=+1>The script embedded in this html file tests the
+following calls</font></font></b></center>
+
+<p><font size=+1>instanceofcompfields = Components.classes['component://netscape/messengercompose/composefields'].createInstance();</font>
+<br><font size=+1>interfaceofcompfields = instanceofcompfields.QueryInterface(Components.interfaces.nsIMsgCompFields);</font>
+
+<center>
+<p><b><font color="#3333FF"><font size=+1>Here are the results</font></font></b>
+</center>
+
+<br>
+<br>
+<form name="testcasesform">
+<TABLE BORDER CELLPADDING=5>
+<TR>
+<TD><input type="button" value="Copy()" onclick="Do_Copy();"></TD>
+<TD></TD>
+<TD ROWSPAN=7>Output Results<BR>
+       <TEXTAREA NAME="textarea" ROWS=20 COLS=28>This is the text area</TEXTAREA></TD>
+<TD ROWSPAN=7 ALIGN=center VALIGN=center>
+       <INPUT TYPE=button VALUE="Clear Output Results" NAME="clearbutton"></TD>
+</TR>
+<TD><input type="button" value="SetFrom()" onClick="Do_SetFrom();"></TD>
+<TD><input type="button" value="GetFrom()" onClick="Do_GetFrom();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetReplyTo()" onClick="Do_SetReplyTo();"></TD>
+<TD><input type="button" value="GetRepltTo()" onClick="Do_GetReplyTo();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetTo()" onClick="Do_SetTo();"></TD>
+<TD><input type="button" value="GetTo()" onClick="Do_GetTo();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetCc()" onClick="Do_SetCc();"></TD>
+<TD><input type="button" value="GetCc()" onClick="Do_GetCc();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetBcc()" onClick="Do_SetBcc();"></TD>
+<TD><input type="button" value="GetBcc()" onClick="Do_GetBcc();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetFcc()" onClick="Do_SetFcc();"></TD>
+<TD><input type="button" value="GetFcc()" onClick="Do_GetFcc();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetNewsBcc()" onClick="Do_SetNewsBcc();"></TD>
+<TD><input type="button" value="GetNewsBcc()" onClick="Do_GetNewsBcc();"></TD>
+<TD><input type="button" value="SetNewsFcc()" onClick="Do_SetNewsFcc();"></TD>
+<TD><input type="button" value="GetNewsFcc()" onClick="Do_GetNewsFcc();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetNewsgroups()" onClick="Do_SetNewsgroups();"></TD>
+<TD><input type="button" value="GetNewsgroups()" onClick="Do_GetNewsgroups();"></TD>
+<TD><input type="button" value="SetFollowupTo()" onClick="Do_SetFollowupTo();"></TD>
+<TD><input type="button" value="GetFollowupTo()" onClick="Do_GetFollowupTo();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetSubject()" onClick="Do_SetSubject();"></TD>
+<TD><input type="button" value="GetSubject()" onClick="Do_GetSubject();"></TD>
+<TD><input type="button" value="SetAttachments()" onClick="Do_SetAttachments();"></TD>
+<TD><input type="button" value="GetAttachments()" onClick="Do_GetAttachments();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetOrganization()" onClick="Do_SetOrganization();"></TD>
+<TD><input type="button" value="GetOrganization()" onClick="Do_GetOrganization();"></TD>
+<TD><input type="button" value="SetReferences()" onClick="Do_SetReferences();"></TD>
+<TD><input type="button" value="GetReferences()" onClick="Do_GetReferences();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetOtherRandomHeaders()" onClick="Do_SetOtherRandomHeaders();"></TD>
+<TD><input type="button" value="GetOtherRandomHeaders()" onClick="Do_GetOtherRandomHeaders();"></TD>
+<TD><input type="button" value="SetNewspostUrl()" onClick="Do_SetNewspostUrl();"></TD>
+<TD><input type="button" value="GetNewspostUrl()" onClick="Do_GetNewspostUrl();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetDefaultBody()" onClick="Do_SetDefaultBody();"></TD>
+<TD><input type="button" value="GetDefaultBody()" onClick="Do_GetDefaultBody();"></TD>
+<TD><input type="button" value="SetPriority()" onClick="Do_SetPriority();"></TD>
+<TD><input type="button" value="GetPriority()" onClick="Do_GetPriority();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetMessageEncoding()" onClick="Do_SetMessageEncoding();"></TD>
+<TD><input type="button" value="GetMessageEncoding()" onClick="Do_GetMessageEncoding();"></TD>
+<TD><input type="button" value="SetCharacterSet()" onClick="Do_SetCharacterSet();"></TD>
+<TD><input type="button" value="GetCharacterSet()" onClick="Do_GetCharacterSet();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetMessageId()" onClick="Do_SetMessageId();"></TD>
+<TD><input type="button" value="GetMessageId()" onClick="Do_GetMessageId();"></TD>
+<TD><input type="button" value="SetHTMLPart()" onClick="Do_SetHTMLPart();"></TD>
+<TD><input type="button" value="GetHTMLPart()" onClick="Do_GetHTMLPart();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetTemplateName()" onClick="Do_SetTemplateName();"></TD>
+<TD><input type="button" value="GetTemplateName()" onClick="Do_GetTemplateName();"></TD>
+<TD><input type="button" value="SetReturnReceipt()" onClick="Do_SetReturnReceipt();"></TD>
+<TD><input type="button" value="GetReturnReceipt()" onClick="Do_GetReturnReceipt();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetAttachVCard()" onClick="Do_SetAttachVCard();"></TD>
+<TD><input type="button" value="GetAttachVCard()" onClick="Do_GetAttachVCard();"></TD>
+<TD><input type="button" value="SetBody()" onClick="Do_SetBody();"></TD>
+<TD><input type="button" value="GetBody()" onClick="Do_GetBody();"></TD>
+</TR>
+<TR>
+<TD><input type="button" value="SetUUEncodeAttachments()" onClick="Do_SetUUEncodeAttachments();"></TD>
+<TD><input type="button" value="GetUUEncodeAttachments()" onClick="Do_GetUUEncodeAttachments();"></TD>
+<TD><input type="button" value="SetTheForcePlainText()" onClick="Do_SetTheForcePlainText();"></TD>
+<TD><input type="button" value="GetTheForcePlainText()" onClick="Do_GetTheForcePlainText();"></TD>
+</TR>
+</TR>
+</TABLE>
+</form>
+
+<input type="button" value="SendComposeMessage" onclick="JustSend();">
+
+<SCRIPT TYPE="text/javascript">
+// Needed for testcases
+var service;
+var theinterface;
+var instanceofcompfields;
+var interfaceofcompfields;
+
+var msgComposeService = Components.classes["component://netscape/messengercompose"].getService();
+msgComposeService = msgComposeService.QueryInterface(Components.interfaces.nsIMsgComposeService);
+var msgCompose = null;
+
+
+var msgService = Components.classes['component://netscape/messenger/services/session'].getService(Components.interfaces.nsIMsgMailSession);
+var accountManager = msgService.accountManager;
+var defaultAccount = accountManager.defaultAccount;
+var serverType = defaultAccount.incomingServer.type;
+var serverUsername = defaultAccount.incomingServer.username;
+var serverHostname = defaultAccount.incomingServer.hostName; 
+var serverPrettyName = defaultAccount.incomingServer.prettyName;
+var serverURI = defaultAccount.incomingServer.serverURI;
+dump("Server Type is " + serverType + "\n");
+var identity = defaultAccount.defaultIdentity;
+var identityEmail = identity.email;
+var mycompose = msgComposeService.InitCompose(window, null, 0, 0, null,identity);
+
+dump("Pretty name is " + serverPrettyName + "\n");
+dump("Username name is " + serverUsername + "\n");
+dump("Server URI is " + serverURI + "\n");
+dump("Hostname is " + serverHostname + "\n");
+
+//onerror = "handlerText";
+var sFilename = "mncompose004.html";
+var tc = 0;
+aTestcases = new Array();
+
+aTestcases[tc++] = new Testcase(sFilename,
+                               "nsIMsgCompFields",
+                               "Pass",
+                               GetTheComposeSession(),
+                               "Bug report required");        //Bug #, if any
+
+writeResults(aTestcases);
+
+function GetTheComposeSession() {
+
+	instanceofcompfields = Components.classes['component://netscape/messengercompose/composefields'].createInstance();
+	interfaceofcompfields = instanceofcompfields.QueryInterface(Components.interfaces.nsIMsgCompFields);
+
+	document.testcasesform.textarea.value = "Inside Initialize function";
+	
+	Do_SetFrom();
+	Do_SetTo();
+	Do_SetReplyTo();
+	Do_SetSubject();
+	Do_SetDefaultBody();
+	Do_SetBody();
+	Do_SetPriority();
+	JustSend();
+		
+	if (result)
+    	return ( "Pass" );
+	else
+		return ( "Fail");
+}
+
+// ----------------------------------------------------
+// void Copy(in nsIMsgCompFields pMsgCompFields);
+function Do_Copy()
+{
+var tempto = interfaceofcompfields.GetTo();
+if (tempto != "")
+	mycompose.compFields.Copy(interfaceofcompfields);
+else {
+	Do_SetTo();
+	mycompose.compFields.Copy(interfaceofcompfields);
+	tempto = interfaceofcompfields.GetTo();
+}
+
+var mycomposeto = mycompose.compFields.GetTo();
+dump("tempto = " + tempto + "\n");
+dump("mycomposeto = " + mycomposeto + "\n");
+if (tempto == mycomposeto) {
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<br>" + "Copy passes";
+} else {
+	document.testcasesform.textarea.value = "Copy fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// void SetHeader(in long header, in wstring value);
+function Do_SetHeader()
+{
+// This method does not require a testcase since it has not been decided if it will continue to
+// be exposed trhough XPConnect
+}
+
+// ----------------------------------------------------
+// wstring GetHeader(in long header);
+function Do_GetHeader()
+{
+// This method does not require a testcase since it has not been decided if it will continue to
+// be exposed trhough XPConnect
+}
+
+// ----------------------------------------------------
+// void SetBoolHeader(in long header, in boolean bValue);
+function Do_SetBoolHeader()
+{
+// This method does not require a testcase since it has not been decided if it will continue to
+// be exposed trhough XPConnect
+}
+
+// ----------------------------------------------------
+// boolean GetBoolHeader(in long header);
+function Do_GetBoolHeader()
+{
+// This method does not require a testcase since it has not been decided if it will continue to
+// be exposed trhough XPConnect
+}
+
+// ----------------------------------------------------
+// void SetFrom(in wstring value);
+function Do_SetFrom()
+{
+dump("Step 1");
+interfaceofcompfields.SetFrom(identityEmail);
+dump("Step 2");
+var s = interfaceofcompfields.GetFrom();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<br>" + "SetFrom passes";
+else
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<br>" + "SetFrom fails";
+}
+
+// ----------------------------------------------------
+// wstring GetFrom();
+function Do_GetFrom()
+{
+interfaceofcompfields.SetFrom(identityEmail);
+var s = interfaceofcompfields.GetFrom();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "GetFrom passes";
+else
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "GetFrom fails";
+}
+
+// void SetReplyTo(in wstring value);
+function Do_SetReplyTo()
+{
+interfaceofcompfields.SetReplyTo(identityEmail);
+var s = interfaceofcompfields.GetReplyTo();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetReplyTo passes";
+else
+	document.testcasesform.textarea.value = "SetReplyTo fails";
+}
+
+// wstring GetReplyTo();
+function Do_GetReplyTo()
+{
+interfaceofcompfields.SetReplyTo(identityEmail);
+var s = interfaceofcompfields.GetReplyTo();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetReplyTo passes";
+else
+	document.testcasesform.textarea.value = "SetReplyTo fails";
+}
+
+// void SetTo(in wstring value);
+function Do_SetTo()
+{
+interfaceofcompfields.SetTo(identityEmail);
+var s = interfaceofcompfields.GetTo();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetTo passes";
+else
+	document.testcasesform.textarea.value = "SetTo fails";
+}
+
+// wstring GetTo();
+function Do_GetTo()
+{
+interfaceofcompfields.SetTo(identityEmail);
+var s = interfaceofcompfields.GetTo();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "GetTo passes";
+else {
+	document.testcasesform.textarea.value = "GetTo fails";
+	result = false;
+}
+}
+
+// void SetCc(in wstring value);
+function Do_SetCc()
+{
+interfaceofcompfields.SetCc(identityEmail);
+var s = interfaceofcompfields.GetCc();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetCc passes";
+else {
+	document.testcasesform.textarea.value = "SetCc fails";
+	result = false;
+}
+}
+
+// wstring GetCc();
+function Do_GetCc()
+{
+interfaceofcompfields.SetCc(identityEmail);
+var s = interfaceofcompfields.GetCc();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "GetCc passes";
+else {
+	document.testcasesform.textarea.value = "GetCc fails";
+	result = false;
+}
+}
+
+// void SetBcc(in wstring value);
+function Do_SetBcc()
+{
+interfaceofcompfields.SetBcc(identityEmail);
+var s = interfaceofcompfields.GetBcc();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetBcc passes";
+else {
+	document.testcasesform.textarea.value = "SetBcc fails";
+	result = false;
+}
+}
+
+// wstring GetBcc();
+function Do_GetBcc()
+{
+interfaceofcompfields.SetBcc(identityEmail);
+var s = interfaceofcompfields.GetBcc();
+document.testcasesform.textarea.value = s;
+if (s == identityEmail)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "GetBcc passes";
+else {
+	document.testcasesform.textarea.value = "GetBcc fails";
+	result = false;
+}
+}
+
+// void SetFcc(in wstring value);
+function Do_SetFcc()
+{
+var location;
+if (serverType == "imap") {
+	location = "imap://ppandit@nsmail-2/Sent";
+	dump("SetFcc says imap\n");
+}
+else if (serverType == "pop3") {
+	location = "mailbox://ppandit@nsmail-2/Sent";
+}
+
+interfaceofcompfields.SetFcc(location);
+var s = interfaceofcompfields.GetFcc();
+if (s == location)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetFcc passes";
+else {
+	document.testcasesform.textarea.value = "SetFcc fails";
+	result = false;
+}
+}
+
+// wstring GetFcc();
+function Do_GetFcc()
+{
+var location;
+if (serverType == "imap") {
+	location = "imap://ppandit@nsmail-2/Sent";
+}
+else if (serverType == "pop3") {
+	location = "mailbox://ppandit@nsmail-2/Sent";
+}
+
+interfaceofcompfields.SetFcc(location);
+var s = interfaceofcompfields.GetFcc();
+if (s == location)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "GetFcc passes";
+else {
+	document.testcasesform.textarea.value = "GetFcc fails";
+	result = false;
+}
+}
+
+// void SetNewsFcc(in wstring value);
+function Do_SetNewsFcc()
+{
+var newsserver = accountManager.FindServer("","news.mozilla.org","nntp");
+dump("News server type is " + newsserver.type + "\n");
+dump("News server host is " + newsserver.hostName + "\n");
+dump("Pretty name is " + serverPrettyName + "\n");
+dump("Username name is " + serverUsername + "\n");
+dump("Server URI is " + serverURI + "\n");
+dump("Hostname is " + serverHostname + "\n");
+
+var location = serverURI + "/Sent";
+dump("location = " + location + "\n");
+if (serverType == "imap") {
+	location = "imap://ppandit@nsmail-2/Sent";
+}
+else if (serverType == "pop3") {
+	location = "mailbox://ppandit@nsmail-2/Sent";
+}
+
+interfaceofcompfields.SetNewsFcc(location);
+var s = interfaceofcompfields.GetNewsFcc();
+if (s == location)
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetNewsFcc passes";
+else {
+	document.testcasesform.textarea.value = "SetFcc fails";
+	result = false;
+}
+/*
+if (newsserverType == "nntp") {
+	location = "imap://ppandit@nsmail-2/Sent";
+}
+else {
+	document.testcasesform.textarea.value = "SetNewsFcc fails";
+	result = false;
+	return;
+}
+*/	
+}
+
+// wstring GetNewsFcc();
+function Do_GetNewsFcc()
+{
+}
+
+// void SetNewsBcc(in wstring value);
+function Do_SetNewsBcc()
+{
+}
+
+// wstring GetNewsBcc();
+function Do_GetNewsBcc()
+{
+}
+
+// void SetNewsgroups(in wstring value);
+function Do_SetNewsgroups()
+{
+}
+
+// wstring GetNewsgroups();
+function Do_GetNewsgroups()
+{
+}
+
+// void SetFollowupTo(in wstring value);
+function Do_SetFollowupTo()
+{
+}
+
+// wstring GetFollowupTo();
+function Do_GetFollowupTo()
+{
+}
+
+// void SetSubject(in wstring value);
+function Do_SetSubject()
+{
+interfaceofcompfields.SetSubject("testing IMsgCompFields");
+var s = interfaceofcompfields.GetSubject();
+// document.testcasesform.textarea.value = s;
+if (s == "testing IMsgCompFields")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetSubject passes";
+else {
+	document.testcasesform.textarea.value = "SetSubject fails";
+	result = false;
+}
+}
+
+// wstring GetSubject();
+function Do_GetSubject()
+{
+interfaceofcompfields.SetSubject("testing IMsgCompFields");
+var s = interfaceofcompfields.GetSubject();
+document.testcasesform.textarea.value = s;
+if (s == "testing IMsgCompFields")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "GetSubject passes";
+else {
+	document.testcasesform.textarea.value = "GetSubject fails";
+	result = false;
+}
+}
+
+// void SetAttachments(in wstring value);
+function Do_SetAttachments()
+{
+}
+
+// wstring GetAttachments();
+function Do_GetAttachments()
+{
+}
+
+// void SetOrganization(in wstring value);
+function Do_SetOrganization()
+{
+interfaceofcompfields.SetOrganization("Mozilla");
+var s = interfaceofcompfields.GetOrganization();
+// document.testcasesform.textarea.value = s;
+if (s == "Mozilla")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<br>" + "SetOrganization passes";
+else {
+	document.testcasesform.textarea.value = "SetOrganization fails";
+	result = false;
+}
+}
+
+// wstring GetOrganization();
+function Do_GetOrganization()
+{
+}
+
+// void SetReferences(in wstring value);
+function Do_SetReferences()
+{
+}
+
+// wstring GetReferences();
+function Do_GetReferences()
+{
+}
+
+// void SetOtherRandomHeaders(in wstring value);
+function Do_SetOtherRandomHeaders()
+{
+}
+
+// wstring GetOtherRandomHeaders();
+function Do_GetOtherRandomHeaders()
+{
+}
+
+// void SetNewspostUrl(in wstring value);
+function Do_SetNewsportUrl()
+{
+}
+
+// wstring GetNewspostUrl();
+function Do_GetNewspostUrl()
+{
+}
+
+// void SetDefaultBody(in wstring value);
+function Do_SetDefaultBody()
+{
+interfaceofcompfields.SetDefaultBody("Booze is the only answer");
+var s = interfaceofcompfields.GetDefaultBody();
+// document.testcasesform.textarea.value = s;
+if (s == "Booze is the only answer")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<br>" + "SetPriority passes";
+else {
+	document.testcasesform.textarea.value = "SetPriority fails";
+	result = false;
+}
+}
+
+// wstring GetDefaultBody();
+function Do_GetDefaultBody()
+{
+interfaceofcompfields.SetDefaultBody("Booze is the only answer");
+var s = interfaceofcompfields.GetDefaultBody();
+// document.testcasesform.textarea.value = s;
+if (s == "Booze is the only answer")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<br>" + "GetPriority passes";
+else {
+	document.testcasesform.textarea.value = "GetPriority fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// void SetPriority(in wstring value);
+function Do_SetPriority()
+{
+interfaceofcompfields.SetPriority("Highest");
+var s = interfaceofcompfields.GetPriority();
+// document.testcasesform.textarea.value = s;
+if (s == "Highest")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<br>" + "SetPriority passes";
+else {
+	document.testcasesform.textarea.value = "SetPriority fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// wstring GetPriority();
+function Do_GetPriority()
+{
+interfaceofcompfields.SetPriority("Highest");
+var s = interfaceofcompfields.GetPriority();
+// document.testcasesform.textarea.value = s;
+if (s == "Highest")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<br>" + "GetPriority passes";
+else {
+	document.testcasesform.textarea.value = "GetPriority fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// void SetMessageEncoding(in wstring value);
+function Do_SetMessageEncoding()
+{
+// need more information on how to test
+}
+
+// ----------------------------------------------------
+// wstring GetMessageEncoding();
+function Do_GetMessageEncoding()
+{
+// need more information on how to test
+}
+
+// ----------------------------------------------------
+// void SetCharacterSet(in wstring value);
+function Do_SetCharacterSet()
+{
+interfaceofcompfields.SetCharacterSet("ISO-8859-1");
+var s = interfaceofcompfields.GetCharacterSet();
+document.testcasesform.textarea.value = s;
+if (s == "ISO-8859-1")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetCharacterSet passes";
+else {
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetCharacterSet fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// wstring GetCharacterSet();
+function Do_GetCharacterSet()
+{
+interfaceofcompfields.SetCharacterSet("ISO-8859-1");
+var s = interfaceofcompfields.GetCharacterSet();
+document.testcasesform.textarea.value = s;
+if (s == "ISO-8859-1")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetCharacterSet passes";
+else {
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetCharacterSet fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// void SetMessageId(in wstring value);
+function Do_SetMessageID()
+{
+// need more information on how to test
+}
+
+// ----------------------------------------------------
+// wstring GetMessageId();
+function Do_GetMessageId()
+{
+// need more information on how to test
+}
+
+// ----------------------------------------------------
+// void SetHTMLPart(in wstring value);
+function Do_SetHTMLPart()
+{
+// need more information on how to test
+}
+
+// ----------------------------------------------------
+// wstring GetHTMLPart();
+function Do_GetHTMLPart()
+{
+// need more information on how to test
+}
+
+// ----------------------------------------------------
+// void SetTemplateName(in wstring value);
+function Do_SetTemplateName()
+{
+interfaceofcompfields.SetTemplateName("Template Name");
+var s = interfaceofcompfields.GetTemplateName();
+// document.testcasesform.textarea.value = s;
+if (s == "Template Name")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "\n" + "SetTemplateName passes";
+else {
+	document.testcasesform.textarea.value = "SetTemplateName fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// wstring GetTemplateName();
+function Do_GetTemplateName()
+{
+interfaceofcompfields.SetTemplateName("Template Name");
+var s = interfaceofcompfields.GetTemplateName();
+// document.testcasesform.textarea.value = s;
+if (s == "Template Name")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "\n" + "GetTemplateName passes";
+else {
+	document.testcasesform.textarea.value = "GetTemplateName fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// void SetReturnReceipt(in boolean value);
+function Do_SetReturnReceipt()
+{
+interfaceofcompfields.SetReturnReceipt(true);
+var bool = interfaceofcompfields.GetReturnReceipt();
+if (!bool) {
+	document.testcasesform.textarea.value = "SetReturnReceipt fails";
+	result = false;
+}
+
+interfaceofcompfields.SetReturnReceipt(false);
+var bool = interfaceofcompfields.GetReturnReceipt();
+if (bool) {
+	document.testcasesform.textarea.value = "SetReturnReceipt fails";
+	result = false;
+}	
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetReturnReceipt passes";
+}
+
+// ----------------------------------------------------
+// boolean GetReturnReceipt();
+function Do_GetReturnReceipt()
+{
+interfaceofcompfields.SetReturnReceipt(true);
+var bool = interfaceofcompfields.GetReturnReceipt();
+if (!bool) {
+	document.testcasesform.textarea.value = "GetReturnReceipt fails";
+	result = false;
+}
+
+interfaceofcompfields.SetReturnReceipt(false);
+var bool = interfaceofcompfields.GetReturnReceipt();
+if (bool) {
+	document.testcasesform.textarea.value = "GetReturnReceipt fails";
+	result = false;
+}	
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetReturnReceipt passes";
+}
+
+// ----------------------------------------------------
+// void SetAttachVCard(in boolean value);
+function Do_SetAttachVCard()
+{
+interfaceofcompfields.SetAttachVCard(true);
+var bool = interfaceofcompfields.GetAttachVCard();
+if (!bool) {
+	document.testcasesform.textarea.value = "GetAttachVCard fails";
+	result = false;
+}
+
+interfaceofcompfields.SetAttachVCard(false);
+var bool = interfaceofcompfields.GetAttachVCard();
+if (bool) {
+	document.testcasesform.textarea.value = "SetAttachVCard fails";
+	result = false;
+}	
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetAttachVCard passes";
+}
+
+// ----------------------------------------------------
+// boolean GetAttachVCard();
+function Do_GetAttachVCard()
+{
+interfaceofcompfields.SetAttachVCard(true);
+var bool = interfaceofcompfields.GetAttachVCard();
+if (!bool) {
+	document.testcasesform.textarea.value = "GetAttachVCard fails";
+	result = false;
+}
+
+interfaceofcompfields.SetAttachVCard(false);
+var bool = interfaceofcompfields.GetAttachVCard();
+if (bool) {
+	document.testcasesform.textarea.value = "GetAttachVCard fails";
+	result = false;
+}	
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "\n" + "GetAttachVCard passes";
+}
+
+// ----------------------------------------------------
+// void SetBody(in wstring value);
+function Do_SetBody()
+{
+interfaceofcompfields.SetBody("Body Part: MailNews QA");
+var s = interfaceofcompfields.GetBody();
+document.testcasesform.textarea.value = s;
+if (s == "Body Part: MailNews QA")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetBody passes";
+else {
+	document.testcasesform.textarea.value = "SetBody fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// wstring GetBody();
+function Do_GetBody()
+{
+interfaceofcompfields.SetBody("Body Part: MailNews QA");
+var s = interfaceofcompfields.GetBody();
+document.testcasesform.textarea.value = s;
+if (s == "Body Part: MailNews QA")
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "GetBody passes";
+else {
+	document.testcasesform.textarea.value = "GetBody fails";
+	result = false;
+}
+}
+
+// ----------------------------------------------------
+// void SetUUEncodeAttachments(in boolean value);
+function Do_SetUUEncodeAttachments()
+{
+interfaceofcompfields.SetUUEncodeAttachments(true);
+var bool = interfaceofcompfields.GetUUEncodeAttachments();
+if (!bool) {
+	document.testcasesform.textarea.value = "SetUUEncodeAttachments fails";
+	result = false;
+}
+
+interfaceofcompfields.SetUUEncodeAttachments(false);
+var bool = interfaceofcompfields.GetUUEncodeAttachments();
+if (bool) {
+	document.testcasesform.textarea.value = "SetUUEncodeAttachments fails";
+	result = false;
+}	
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetUUEncodeAttachments passes";
+}
+
+// ----------------------------------------------------
+// boolean GetUUEncodeAttachments();
+function Do_GetUUEncodeAttachments()
+{
+nterfaceofcompfields.SetUUEncodeAttachments(true);
+var bool = interfaceofcompfields.GetUUEncodeAttachments();
+if (!bool) {
+	document.testcasesform.textarea.value = "SetUUEncodeAttachments fails";
+	result = false;
+}
+
+interfaceofcompfields.SetUUEncodeAttachments(false);
+var bool = interfaceofcompfields.GetUUEncodeAttachments();
+if (bool) {
+	document.testcasesform.textarea.value = "SetUUEncodeAttachments fails";
+	result = false;
+}	
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetUUEncodeAttachments passes";
+}
+
+// ----------------------------------------------------
+// void SetTheForcePlainText(in boolean value);
+function Do_SetTheForcePlainText()
+{
+interfaceofcompfields.SetTheForcePlainText(true);
+var bool = interfaceofcompfields.GetTheForcePlainText();
+if (!bool) {
+	document.testcasesform.textarea.value = "SetTheForcePlainText fails";
+	result = false;
+}
+
+interfaceofcompfields.SetTheForcePlainText(false);
+var bool = interfaceofcompfields.GetTheForcePlainText();
+if (bool) {
+	document.testcasesform.textarea.value = "SetTheForcePlainText fails";
+	result = false;
+}	
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "SetTheForcePlainText passes";
+}
+
+// ----------------------------------------------------
+// boolean GetTheForcePlainText();
+function Do_GetTheForcePlainText()
+{
+interfaceofcompfields.SetTheForcePlainText(true);
+var bool = interfaceofcompfields.GetTheForcePlainText();
+if (!bool) {
+	document.testcasesform.textarea.value = "GetTheForcePlainText fails";
+	result = false;
+}
+
+interfaceofcompfields.SetTheForcePlainText(false);
+var bool = interfaceofcompfields.GetTheForcePlainText();
+if (bool) {
+	document.testcasesform.textarea.value = "GetTheForcePlainText fails";
+	result = false;
+}	
+	document.testcasesform.textarea.value = document.testcasesform.textarea.value + "<p>" + "GetTheForcePlainText passes";
+}
+
+// ----------------------------------------------------
+function JustSend()
+{
+Do_Copy();
+dump("Starting Send");
+var msgService = Components.classes['component://netscape/messenger/services/session'].getService(Components.interfaces.nsIMsgMailSession);
+var accountManager = msgService.accountManager;
+var defaultAccount = accountManager.defaultAccount;
+var identity = defaultAccount.defaultIdentity;
+mycompose.SendMsg(0, identity, null);
+dump("Default identity is " + identity.email + "\n");
+dump("Finish Send");
+}
+</script>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/ngdriver/suites/mail/mncompose004.html&amp;rev=&amp;root=/cvsroot/">Last modified September 28,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

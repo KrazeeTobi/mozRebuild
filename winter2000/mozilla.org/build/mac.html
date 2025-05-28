@@ -1,0 +1,885 @@
+<HTML>
+<HEAD>
+<TITLE>Building Mac Mozilla</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<style type="text/css">
+<!--
+body {
+	color: #000000;
+	background: #FFFFFF;
+	margin-left: 5%;
+}
+
+p.note {
+	font-style:	italic
+}
+-->
+</style>
+
+
+
+
+
+<center><h1><a name="Building_Mac_Mozilla">Building Mac Mozilla</a></h1></center>
+
+<hr>
+<h3>Table of Contents</h3>
+<!--index-->
+<ul>
+	<li><a href="#Building_Mac_Mozilla">Building Mac Mozilla</a>
+	<li><a href="#System_Requirements">System Requirements</a>
+	<li><a href="#Tools_and_resources">Tools and resources</a>
+	<li><a href="#Obtaining_the_source_code_and_building_it">Obtaining the source code and building it</a>
+	<li><a href="#Running_Perl_scripts">Running Perl scripts</a>
+	<li><a href="#Building_Mac_Mozilla_the_first_time">Building Mac Mozilla the first time</a>
+	<li><a href="#Help_My_build_failed_Why">Help! My build failed! Why?</a>
+	<li><a href="#OK_so_my_build_finished_What_now">OK, so my build finished. What now?</a>
+	<li><a href="#Debugging_tips">Debugging tips</a>
+	<li><a href="#Updating_and_Building_Mac_Mozilla_on_subsequent_occasions">Updating and Building Mac Mozilla on subsequent occasions</a>
+	<li><a href="#More_about_the_build_system">More about the build system</a>
+</ul>
+<!--/index-->
+
+<hr>
+<p>
+This page aims to be the complete source of information for people
+building Mozilla on the Macintosh.  Please report deficiencies to <a
+href="mailto:sfraser@netscape.com"><tt>sfraser@netscape.com</tt></a>.
+Please do not email me with questions about how to do stuff, or
+suggestions for improving the build process, or anything else that does
+not concern information on this page itself.  Such questions should be
+posted to the newsgroup <a href="news://news.mozilla.org/netscape.public.mozilla.mac">
+<tt>netscape.public.mozilla.mac</tt></a>
+</p>
+
+<p>If you are a programmer on another platform, and you need
+information to make your changes Macintosh-friendly, there
+is a page just for you
+<a href="mac-for-xp-folk.html">here</a>.
+</p>
+
+<hr>
+
+<h3><a name="System_Requirements">System Requirements</a></h3>
+
+<p>To build and run Mozilla, you'll need a beefy Mac with at least 1Gb of disk space,
+and 128Mb or more of memory. For serious development, we'd recommend a 300MHz 604 or G3
+and 256Mb RAM. In particular, linking the layout.mcp project requires 80Mb free RAM, and
+in an optimized build, you will need around 100Mb of free RAM to build JavaScript.mcp.
+</p>
+<p>
+To run Mozilla, you must have MacOS 8.5 or later installed.
+</p>
+
+<hr>
+
+<h3><a name="Tools_and_resources">Tools and resources</a></h3>
+
+<p>Here is the list of software you have to have installed to build Mozilla on the Mac:
+<p>
+<p class="note">
+<strong>Note</strong>: For those internal to Netscape, there is a pre-prepared development environment on a local
+AppleShare server. Please contact a Mac guru for details.
+</p>
+
+<table border="1" cellpadding="12">
+	<tr valign=top>
+		<td align=right>
+			<p>
+			CodeWarrior Pro 5.
+			</p>
+		</td>
+		<td>
+			<p>
+			Start with a clean installation of
+			<a href="http://www.metrowerks.com">Metrowerks</a> CodeWarrior Pro 5.
+			</p>
+		</td>
+	</tr>
+
+	<tr valign=top>
+		<td align=right><p>
+		<a href="http://www.metrowerks.com/download/index.taf?function=detail&amp;updates_uid=256">Codewarrior Pro 5 updates</a>
+		</td>
+		<td><p>
+			You should download and install the CodeWarrior Pro 5.3 update.
+			As with all such updates, you should rebuild your Mac OS precompiled headers,
+			and runtime and standard libraries using the scripts provided by Metrowerks
+			(see the update Readme for details).
+			</p>
+			<p>
+			Note that you will need Metronub 1.3.8 to debug with the CW Pro 5.3 debugger.
+			There is a bug in the 5.3 updater that means that this Metronub is not always
+			installed, in which case you will have to install it manually.
+			</p>
+			<p>
+			Also note that it is possible to use the old external debugger from CW Pro 2,
+			MWDebug 1.7.4 (and Metronub 1.3.7) even with .xSYM files from Pro 5. Some
+			people prefer this.
+			</p>
+			<p>
+			After finishing your CodeWarrior installation, change the memory allocation
+			to the IDE to around 24Mb (Get Info in the Finder).
+			</p>
+		</td>
+	</tr>
+
+	<tr valign=top>
+		<td align=right><p>
+			<a href="ftp://ftp.metrowerks.com/pub/updates/CWPRO4/CodeWarrior_Plugin_SDK.sit.hqx">
+			CodeWarrior Plugin SDK</a>
+		</td>
+		<td>
+			<p>
+			We build a CW plugin, the <tt>xpidl</tt> compiler, as part of the build process, so
+			you need the CodeWarrior Plugin SDK. Install this in the Mac OS Support folder.
+			</p>
+			<p>
+			Note that the first time you build Mozilla, you will probably get an error when
+			building the first IDL project (xpcomIDL.mcp). If this happens, quit and restart
+			the CodeWarrior IDE so that it picks up the xpidl project that was just built. Then
+			restart the build.
+			</p>
+		</td>
+	</tr>
+
+	<tr valign=top>
+		<td align=right><p>ToolServer</td>
+		<td>
+			<p>
+			If you did an installation of CodeWarrior that includes CodeWarrior MPW, then
+			you should already have ToolServer installed (in the MPW folder).
+			</p>
+			<p>
+			If you didn't install CodeWarrior MPW, then you will need to install ToolServer
+			and its tools by hand. Drag the folder 'CodeWarrior MPW:MPW' from the
+			CW Pro 5 Tools CD to your hard disk. This folder contains the ToolServer application.
+			</p>		
+			<p>
+			If you are running Mac OS 9 or later, you will need to update ToolServer.
+			You can download ToolServer 3.5 from 
+			<a href="http://developer.apple.com/tools/mpw-tools/">Apple's MPW Tools page</a>
+			(a current version is
+			<a href="ftp://ftp.apple.com/developer/Tool_Chest/Core_Mac_OS_Tools/MPW_etc./MPW-GM/MPW/ToolServer.sit.hqx">here</a>).
+			Simply replace the ToolServer application with this new version.
+			</p>
+			<p>
+			The only ToolServer tool that is currently used by the build system is
+			MakeStub.
+			</p>
+			<p class="note">Sometimes, problems can occur when CodeWarrior attempts to
+			start up ToolServer. If your build appears to halt when building the stubs
+			target of NSStdLib.mcp, this could be the problem. Often, simply clicking
+			on the desktop to deactivate the IDE causes ToolServer to fire up properly.
+			If this still does not work, try moving ToolServer to your startup volume.
+			If problems persist, check that you only have one copy of ToolServer installed
+			on your machine.
+			</p>
+	</td>
+	</tr>
+		
+	<tr valign=top>
+		<td align=right><p>
+			<a href="http://www.perl.com/CPAN/ports/mac/Mac_Perl_520r4_appl.bin">
+			MacPerl distribution</a></td>
+		<td><p>
+			Download, decompress, and install.
+			You can install this anywhere, but it is recommended that 
+			you install it next to your CodeWarrior folder for easy reference.
+			</p>
+			<p>
+			After installation, set the memory partition size of the MacPerl
+			application to around 16Mb (by doing a Get Info in the Finder).
+			</p>
+			<p>
+			You may also want to set a preference to enable double-click
+			launch of the perl scripts. This preference is set by selecting "Preferences..."
+			from the Edit Menu. Click on the "Script" button and hit the radio button 
+			"Run Scripts opened from Finder".
+			</p>
+		</td>
+	</tr>
+
+	<tr valign=top>
+		<td align=right><p>
+			<a href="http://www.perl.com/CPAN-local/authors/id/CNANDOR/cpan-mac-0.40.sit.bin">
+			cpan-mac distribution</a></td>
+		<td><p>This is a set of tools by Chris Nandor, and makes installation of new modules
+			easier. Download, and decompress. If you have more than one copy of MacPerl installed,
+			run the copy of MacPerl that you want to install on. Now make a folder called 'site_perl'
+			in the same directory as the MacPerl application. Go to the 'Libraries' panel of the
+			MacPerl preferences, and add this 'site_perl' folder as a library path, so that it
+			gets searched before the others.
+			</p>
+			<p>
+			Now run 'INSTALL.plx' in the cpan-mac distribution that you just downloaded. It will
+			install lots of files into the 'site_perl' folder. When it asks you if you want to install
+			the droplets, click 'Yes'. You'll use one of these droplets to install the next two pieces.
+			</p>
+		</td>
+	</tr>
+
+	<tr valign=top>
+		<td align=right><p>
+			<a href="http://www.perl.com/CPAN-local/modules/by-category/04_Operating_System_Interfaces/Mac/Mac-AppleEvents-Simple-0.81.tgz">
+			Perl AppleEvents module</a></td>
+		<td>
+			<p>
+			This is a Perl module that makes AppleEvent scripting easier. Download the file,
+			but <em>do not decompress it.</em> To install, drag the downloaded file,
+			'Mac-AppleEvents-Simple-0.81.tgz', onto the 'installme.plx' droplet that
+			was installed with the cpan-mac module. This will install files into the site_perl
+			directory.
+			</p>
+		</td>
+	</tr>
+
+	<tr valign=top>
+
+	<td align=right><p>
+			<a href="http://www.perl.com/CPAN-local/modules/by-category/04_Operating_System_Interfaces/Mac/Mac-Apps-Launch-1.70.tar.gz">
+			Perl Launch module</a></td>
+		<td>
+			<p>
+			This is a Perl module for launching applications. Download the file,
+			but <em>do not decompress it.</em> To install, drag the downloaded file,
+			'Mac-Apps-Launch-1.70.tar.gz', onto the 'installme.plx' droplet that
+			was installed with the cpan-mac module. This will install files into the site_perl
+			directory.
+			</p>
+		</td>
+	</tr>
+
+</table>
+
+<h2><a name="Obtaining_the_source_code_and_building_it">Obtaining the source code and building it</a></h2>
+
+<p>
+Using the <a href="http://www.maccvs.org">MacCVS Pro client</a>,
+create a new CVS session file, or download a ready-made session
+file <a href="MozillaSession.sit">here</a>. If you are making a new
+session file, set your preferences from <tt>Edit -&gt;
+Session Settings</tt>:
+
+<p><table border="1">
+	<tr valign=top>
+		<th colspan=2><p>Checkout and Update Options</th>
+	</tr>
+	<tr valign=top>
+
+		<td><p>Local Tree Directory</td>
+		<td><p>
+			Wherever you'd like the source code to be kept. A built tree currently
+			uses about 508Mb of disk space. Ensure that the tree is on an HFS+ volume,
+			otherwise the amount of space used will be much more.
+		</td>
+	</tr>
+	<tr valign=top>
+		<td><p>Merge Policy</td>
+		<td><p><tt>Auto Merge Text Files and Update Binary Files</tt></td>
+	</tr>
+	<tr valign=top>
+		<td><p>Default Module</td>
+		<td><p><tt>mozilla/build/mac</tt></td>
+	</tr>
+	<tr valign=top>
+		<td><p>Default Revision</td>
+	<td><p><tt>(LEAVE BLANK)</tt></td>
+	</tr>
+	<tr valign=top>
+		<th colspan=2><p>Remote Host Information</th>
+	</tr>
+	<tr valign=top>
+	<td><p>Server Hostname</td>
+	<td><p><tt>cvs-mirror.mozilla.org</tt></td>
+	</tr>
+	<tr valign=top>
+		<td><p>CVS User Name</td>
+	<td><p><tt>anonymous</tt></td>
+	</tr>
+	<tr valign=top>
+
+	<td><p>CVS Password</td>
+		<td><p><tt>anonymous</tt></td>
+	</tr>
+
+	<tr valign=top>
+		<td><p>CVS Root</td>
+
+	<td><p><tt>/cvsroot</tt></td>
+	</tr>
+	<tr valign=top>
+
+	<td><p>Network Time Out</td>
+		<td><p><tt>10 Minutes</tt></td>
+
+	</tr>
+	<tr valign=top>
+		<th colspan=2><p>Encoding and File Mappings</th>
+	</tr>
+	<tr valign=top>
+		<td><p>Add</td>
+
+	<td><p>You may want to map the .pl extension to MacPerl, so that
+		you can double-click on the build scripts from the Finder.
+	Click <tt>Add</tt> and enter 
+			<pre>Suffix <tt>.pl</tt>, Type <tt>TEXT</tt>, Creator <tt>McPL</tt></pre>
+			<p>Be sure to use Macintosh linefeeds!
+			<p>You may also wish to add mappings for MacPerl modules (.pm), 
+			JavaScript (.js), XUL (.xul), CSS (.css), DTD files (.dtd)
+			and HTML (.html) to map them to your favorite editor (e.g. use <tt>R*ch</tt> for BBEdit).
+		</td>
+	</tr>
+</table>
+
+<h4><a name="Running_Perl_scripts">Running Perl scripts</a></h4>
+
+<p>Some folks use BBEdit and BBEdit perl
+extensions as their build environment. This allows you to edit the build
+scripts inside BBEdit, and use the extensions to run it inside MacPerl.
+You can also use Alpha and its Perl mode to do the same
+thing.
+
+<p>You can even try to run the build scripts
+from MPW, but some have reported that MPW perl tool often crashes.
+
+<hr>
+<h3><a name="Building_Mac_Mozilla_the_first_time">Building Mac Mozilla the first time</a></h3>
+
+<p><strong>Warning:</strong> You will be downloading tens of megabytes of source code.
+If you are using a modem connection, be prepared for hours and hours of download time.
+
+<p>Before pulling the source code, always make sure the Macintosh build column
+on <a href="http://cvs-mirror.mozilla.org/webtools/tinderbox/showbuilds.cgi?tree=SeaMonkey&amp;hours=4&amp;nocrap=1">
+tinderbox</a> is green.  Redness on tinderbox presages a pull that will not build.  If the
+Macintosh build is showing red, You might as well go to a movie and try later.  You should add
+this tinderbox link to your bookmarks, even to your personal toolbar.
+
+<table border="1" cellpadding="10">
+<tr><td bgcolor="#DDDDCC">
+<p><a href="http://cvs-mirror.mozilla.org/webtools/tinderbox/showbuilds.cgi?tree=SeaMonkey&amp;hours=4&amp;nocrap=1">
+Tinderbox</a> is your one-stop shop for build process information. Be aware that
+the tree (the source code repository) is changing hourly, and you'll find people
+checking in code day and night. You want to pull your source when the tree is good
+and building (when it shows green). The columns to look at are "Mac Debug Clbr",
+"Mac Opt Clbr", and "Mac Opt Depend". Here is what those mean:
+<p>
+<dl>
+	<dt>Mac Debug Clbr
+	<dd>The Macintosh Debug, Clobber build. This builds the debug targets
+	of all projects, and is 'clobber', which means that it pulls a fresh source
+	tree for each build. This makes it slow.
+
+	<dt>Mac Opt Clbr
+	<dd>The Macintosh Optimized, Clobber build. This builds the non-debug targets
+	of all projects, and is 'clobber', which means that it pulls a fresh source
+	tree for each build. This makes it slow.
+	
+	<dt>Mac Opt Dep
+	<dd>The Macintosh Optimized, Depend build. This just pulls updates into an existing
+	tree and rebuilds, which can be much faster.
+</dl>
+</td></tr>
+</table>
+
+<p>Now, to start the build process, there are some things you have
+to do only the first time:
+<p>
+<ol>
+	<li><p>Check out the module <tt>mozilla/build/mac</tt>. 
+	If you've followed the instructions above, you can 
+	just select the menu <br><tt>Action | Check Out Default
+	Module</tt>.
+    <p>
+	<li><p>Once CVS is done checking out the build directory,
+	go to your local tree directory and open it.
+	Drill down to the
+	<tt>:mozilla:build:mac:</tt> folder, and
+	you should see several build scripts waiting for you.
+	<p>
+	<p>You should also see the <tt>RunTSScript</tt>
+	MPW compiler. You'll need to place a copy of this in your 
+	CodeWarrior Pro 5 folder, in <tt>Metrowerks CodeWarrior:CodeWarrior
+	Plugins:Compilers:</tt>. Quit and restart the IDE after doing this.
+	<p>
+
+	<li><p>Run <tt>PullNGlayout.pl</tt> to download
+	to rest of the source. Just drag that file onto MacPerl, or
+	run it in MacPerl whatever other way you prefer.
+	
+	<p>The first time you run <tt>PullNGlayout.pl</tt>, 
+	it will prompt you for the location of the CodeWarrior application
+	(if not already running), and your CVS session file. 
+	This file will be used to check out the rest of the tree.
+
+	<p>When the checkout is done, run <tt>BuildNGLayoutDebug.pl</tt> from
+	MacPerl.  This script will build all the projects and 
+	create a Macintosh application directory in
+	<tt>:mozilla:dist:viewer_debug:</tt> within your source tree.
+	In that folder, you'll find a couple of applications:
+	Mozilla, which is what will become the final browser, and
+	vier, which is a small app that is used for testing the
+	layout engine.
+</ol>
+
+
+<hr>
+<h3><a name="Help_My_build_failed_Why">Help! My build failed! Why?</a></h3>
+
+<p>
+Common reasons for build failure:
+</p>
+<ol>
+	<li><p>
+		<i>I get errors from MacPerl when I try to run the scripts!</i>		
+		</p>
+		<p>
+		This is probably because there is something wrong with your installation
+		of MacPerl, or the additions that are required. Ensure that you followed
+		the installation instructions above.
+		</p>
+	</li>
+	<li><p>
+		<i>When I run PullNGLayout.pl, MacPerl tells me that the checkout failed!</i>
+		</p>
+		<p>
+		This is actually normal, or at least fairly common. There are files in the tree
+		with names that are too long for the Mac filesystem (luckily, none that Mac needs!),
+		and these and other minor CVS errors can confuse the checkout process.
+		</p>
+		<p>
+		If you have changes in your tree, and you get CVS conflicts when updating, then
+		you'll certainly see checkout errors. In that case, look at the messages window
+		in MacCVS for conflict warnings, and deal with the conflicts.
+		</p>
+	</li>
+	<li>
+		<p>
+		<i>This is my first time building, and my build fails at XPCOMIDL.mcp with a message
+		about xpidl not being found</i>
+		</p>
+		<p>
+		We build the xpidl plugins as part of the build, but the IDE does not pick these up
+		without quitting and restarting. We tried to script this quit and restart, but it
+		made MacPerl unhappy. So the first time you build, you'll have to quit and restart the
+		IDE by hand, then restart the build. (See below for details on how to make that second
+		rebuild faster.)
+		</p>
+	</li>
+	<li>
+		<p>
+		<i>When the build gets to NSStdLib.mcp, it stalls.</i>
+		</p>
+		<p>
+		What's happening here is that we're building the Stubs target of NSStdLib.mcp,
+		which uses the RunTSScript CodeWarrior plugin to fire up ToolServer, which builds
+		a stubs library (using the MakeStub tool) from the .exp file of that project. (Got it?)
+		So a number of things can go wrong here:
+		</p>
+		<ul>
+			<li>You didn't copy the 'RunTSScript' CW tool from mozilla:build:mac to your
+				CodeWarrior Plugins folder.
+			<li>ToolServer is not happy. Make sure that you can run it standalone (or
+				via CodeWarrior's ToolServer menu), and that you don't have multiple copies
+				on your machine.
+			<li>You're suffering from some weirdness with events, that causes things to
+				stall until you switch the IDE to the background. Often just clicking around
+				will get things moving again.
+		</ul>
+		<p>
+		</p>
+	</li>
+
+	<li>
+		<p>
+		<i>Linking NSRuntime.mcp fails with various link errors</i>
+		</p>
+		<p>
+		This is probably because building NSStdLib stubs failed. Check for the file
+		'NSStdLibStubs' in mozilla:dist:client_stubs. If it is missing, check that 
+		the Stubs target of NSStdLib.mcp builds ok (see above).
+		</p>
+	</li>
+
+	<li>
+		<p>
+		<i>The build halts because some code does not compile! How the heck can this
+		ever work?</i>
+		</p>
+		<p>
+		You probably updated your tree at a bad time. Don't forget to check
+		<a href="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey&amp;nocrap=1">Tinderbox</a> before you update!
+		</p>
+	</li>
+
+	<li>
+		<p>
+		<i>layout.mcp fails to link, with some random error.</i>
+		</p>
+		<p>
+		You probably don't have enough free memory available. Quit other programs, and try again.
+		</p>
+	</li>
+
+	<li>
+		<p>
+		<i>JavaScript.mcp fails to compile, with an out of memory error.</i>
+		</p>
+		<p>
+		Building JavaScript.mcp in optimized mode (especially the file jsinterp.c) takes huge
+		amounts of memory; we seem to hit some pathological case in the CW optimizer. You can
+		either try to free up enough memory (on a 128Mb machine, restart the machine, load
+		CodeWarrior and nothing else, and you should be able to just about build the project).
+		Or you can cheat, and add <tt>#pragma optimization_level 2</tt> at the top of jsinterp.c.
+		</p>
+	</li>
+
+</ol>
+
+<hr>
+<h3><a name="OK_so_my_build_finished_What_now">OK, so my build finished. What now?</a></h3>
+
+<p>
+Congratulations!
+</p>
+
+<p>
+Now, to run the Mozilla browser, look in mozilla:dist:viewer_debug (or just :viewer if you built
+optimized). You should find the app, 'MozillaDebug', and a .xSYM file. To run, or start debugging,
+run this app or load the .xSYM file in CodeWarrior.
+</p>
+<p>
+You'll also notice that this app is only around 200K in size. That's because most of the code
+lives in shared libraries, which go into the Essential Files folder (these are libs that are
+loaded automatically by CFM), and the Components folder (these libs are XPCOM modules, and are
+loaded by the app at runtime). So when you are debugging, you'll have to grovel around in these
+folders for the appropriate .xSYM files.
+</p>
+
+<hr>
+<h3><a name="Debugging_tips">Debugging tips</a></h3>
+
+<p>
+So you've hit an assertion, or found a crash. How to debug it? It's often easiest to run Mozilla
+without the debugger first, so you drop into MacsBug on an assertion or crash. You can then get a stack,
+and log this to a file (<tt>log my_crash,sc,log</tt>).
+</p>
+<p>
+If you're in the Metrowerks debugger and halt for some reason, it can be a little harder to find out
+where you are. For some reason (unknown at this point), code on the stack that comes from shared libs
+in the Components folder does not display the fragment name, so it can be hard to find the right
+.xSYM file for that code. One thing you can do, if you run with VM off, is to drop into MacsBug, and
+type 'wh 0AEE2324' (where that's an address that shows up on the stack in the debugger), and MacsBug
+will tell you which code fragment that comes from. If VM is on, you'll have to play a guessing game,
+or consult the stack crawl from MacsBug, or use <a href="http://lxr.mozilla.org/seamonkey/">LXR</a>
+to search for relevant code.
+</p>
+
+<hr>
+<h3><a name="Updating_and_Building_Mac_Mozilla_on_subsequent_occasions">Updating and Building Mac Mozilla on subsequent occasions</a></h3>
+
+<p>
+Subsequent builds are a little easier.
+</p>
+
+<ol>
+	<li>
+		<p>
+		Before pulling the source code, always make sure the Macintosh build
+		on <a href="http://cvs-mirror.mozilla.org/webtools/tinderbox/showbuilds.cgi?tree=SeaMonkey&amp;hours=4&amp;nocrap=1">
+		tinderbox</a> is green.  Redness on tinderbox indicates a pull that will not build.
+		If the Macintosh build is showing red, you might as well go to a movie and try later.  
+		</p>
+	</li>
+	<li>
+		<p>
+		Check out <tt>:mozilla:build:mac:</tt> again. This is because the scripts you
+		use to pull and build the tree themselves reside in the tree. Therefore, if
+		somebody has checked in changes to these scripts,
+		you need to ensure that you are pulling and building with the latest version of the scripts.
+		</p>
+	</li>
+	<li>
+		<p>
+		Run <tt>PullNGlayout.pl</tt> to update your local tree with changes
+		from the Mozilla repository.
+		</p>
+	</li>
+	<li>
+		<p>Run <tt>BuildNGLayoutDebug.pl</tt> from MacPerl. 
+		This script will build all the projects and create a Macintosh
+		application directory in <tt>:mozilla:dist:viewer_debug:</tt>
+		within your source tree.
+		</p>
+	</li>
+</ol>
+
+<p>
+Often, you'll want to do incremental builds to just rebuild one or a few projects after making a change
+to the source, or fixing a problem that halted your build. In particular, you might want to avoid
+the steps that install headers and resources using MANIFEST files, as this is particularly time-consuming.
+</p>
+<p>
+You can adjust what gets done when you run the 'BuildNGLayoutDebug.pl' script by opening
+it (e.g. in BBEdit), and editing some settings. Look for the line
+</p>
+<pre>
+  $build{all}    = 1;  # Turn off to do individual builds, or to do "most"
+</pre>
+<p>
+and the list of <tt>build{foo}</tt>s beneath it. If <tt>$build{all} == 1</tt>, then everything will get built.
+To build just a few things, set <tt>$build{all} = 0</tt>, <tt>$build{most} = 0</tt>, and turn on individual
+parts of the build (e.g. <tt>$build{nglayout} = 1)</tt>. The parts you'll most want to avoid doing if
+not necessary are:
+</p>
+<pre>
+  $build{dist}      = 0;    # this copies headers to mozilla:dist using MANIFESTS.
+  $build{resources} = 0;    # this copies resources to mozilla:dist:viewer&lt;_debug&gt;:
+  $build{xpidl}     = 0;    # this builds the xpidl compiler
+  $build{idl}       = 0;    # this builds all the IDL projects, regenerating many .h files
+</pre>
+<p>
+The list of things in the $build{} array is in the order in which they are built, so
+you'll normally want to set elements to 1 from some starting point down (e.g. everything
+after <tt>nglayout</tt>). Messing with the build system like this does require some understanding
+of what the dependencies are, so only do it if you are familiar enough with how things work.
+</p>
+
+
+<hr>
+<h3><a name="More_about_the_build_system">More about the build system</a></h3>
+
+<p>
+The build system uses MacPerl to drive various Mac applications
+with AppleScript and AppleEvents. It consists of 3 perl scripts:
+</p>
+
+<table border="1">
+	<tr valign=top>
+		<td align=right><p><tt>PullNGLayout.pl</tt></td>
+		<td>
+		<p>
+		Pulls the source tree required to build NGLayout. 
+		To use the script, run it with MacPerl.
+		The first time you run it, an open-file dialog box will come up. 
+		Direct it to the MacCVS Session file that you used 
+		to check out the script. Open the session, and the perl script 
+		will then send a series of checkout commands to MacCVS 
+		and pull the required sources.
+		</p>
+		</td>
+	</tr>
+
+	<tr valign=top>
+		<td align=right><p><tt>BuildNGLayout&lt;Debug&gt;.pl</tt></td>
+		<td>
+		<p>
+		Configures various build options and starts a build of NGLayout.
+		This is the script that drives the entire build process. As described
+		above, you can do partial builds by editing the <tt>$build{}</tt> array in this file.
+		If you don't want to edit the original, make a copy, and edit then run that.		
+		</p>
+		</td>
+	</tr>
+
+	<tr valign=top>
+		<td align=right><p><tt>NGLayoutBuildList.pm</tt></td>
+		<td>
+		<p>
+		This file contains the master list of projects to build, and has various
+		helper routines. It also contains a list of MANIFEST files to process to
+		move header files to mozilla:dist, and install resources.
+		</p>
+		</td>
+	</tr>
+</table>
+
+<p>
+Once you have checked out, you run <tt>BuildNGLayout&lt;Debug&gt;.pl</tt>, and the build
+progresses like this:
+</p>
+<ol>
+	<li><p><tt><b>dist</b></tt> stage.</p>
+		<p>
+		First, header files from various directories in the tree are copied to
+		(actually, aliases are made in) mozilla:dist. This is done mainly to simplify
+		project access paths. Each directory that contains public header files contains
+		a file called <tt>MANIFEST</tt>, and NGLayoutBuildList.pm runs through this list
+		of MANIFEST files, making aliases to the header files listed therein.		
+		</p>
+	</li>
+
+	<li><p><tt><b>resources</b></tt> stage.</p>
+		<p>
+		This stage copies (again, aliases) resource files from their locations in the
+		tree to various folders in <tt>mozilla:dist:viewer&lt;_debug&gt;</tt>, where the final
+		application will go. Because Mozilla is a cross-platform effort and uses a UI
+		described in XUL and CSS, these resources consist of XUL, CSS, GIF and other files.
+		The resource installation process uses a series of MANIFEST files in much the
+		same way as the <tt>dist</tt> phase.
+		</p>
+	</li>
+
+	<li><p><tt><b>xpidl</b></tt> stage.</p>
+		<p>
+		This phase builds the xpidl compiler (which is used during the next, <tt>idl</tt>, phase).
+		It builds one project that makes the following tools in you CodeWarrior Plugins folder:
+		<tt>Compilers:xpidl</tt>, <tt>Linkers:xpt Linker</tt>, <tt>Preference Panels:xpidl Settings</tt>.
+		</p>
+	</li>
+	
+	<li><p><tt><b>idl</b></tt> stage.</p>
+		<p>
+		This phase builds a series of IDL projects. These projects use the xpidl compiler to convert
+		IDL (Interface Description Language) files into C++ .h files, and .xpt files (which contain
+		information on the interfaces that JavaScript can use to call C++ functions). The header
+		files that are generated are again aliased into directories in <tt>mozilla:dist</tt>.
+		</p>
+	</li>
+
+	<li><p><tt><b>stubs</b></tt> stage.</p>
+		<p>
+		This phase builds the one stub library that we need, NSStdLibStubs, using the RunTSScript tool
+		to tell ToolServer to build a stubs library from a .exp file.
+		</p>
+	</li>
+</ol>
+
+<p>
+From here on, the stages build normal CodeWarrior projects that generate shared libraries.
+Note that after building a project, the Perl script makes an alias to the shared library
+(and, optionally, its .xSYM file) in one fo the folders in <tt>mozilla:dist:viewer&lt;_debug&gt;</tt>.
+The various groupings are:
+</p>
+
+<dl>
+	<dt><tt>runtime</tt>
+	<dd>Low-level support libraries (which include some MSL code)
+	<dt><tt>common</tt>
+	<dd>A miscellaneous set of Mozilla utility libs (e.g. xpcom, JavaScript, zlib)
+	<dt><tt>imglib</tt>
+	<dd>Libraries for image decoding
+	<dt><tt>necko</tt>
+	<dd>The networking and protocol libraries
+	<dt><tt>browserutils</tt>
+	<dd>Various feature libraries (e.g. profile management)
+	<dt><tt>intl</tt>
+	<dd>Libraries for international features (e.g. charset detection and conversion)
+	<dt><tt>nglayout</tt>
+	<dd>The core layout libraries (e.g. DOM, HTML parser, layout)
+	<dt><tt>editor</tt>
+	<dd>Editor libraries
+	<dt><tt>viewer</tt>
+	<dd>The viewer testbed application
+	<dt><tt>xpapp</tt>
+	<dd>Various browser-level feature libraries (e.g. find, search, history, related links)
+	<dt><tt>extensions</tt>
+	<dd>Mozilla extensions (e.g. irc chat)
+	<dt><tt>mailnews</tt>
+	<dd>Mailnews libraries
+	<dt><tt>apprunner</tt>
+	<dd>The project that builds the Mozilla executable
+</dl>
+
+<hr>
+
+<h3>More information</h3>
+
+<p>
+For more information about the Mac build system, or how to contribute to the Mac Mozilla project,
+please post on the <a href="news://news.mozilla.org/netscape.public.mozilla.mac">
+<tt>netscape.public.mozilla.mac</tt></a> newsgroup.
+</p>
+
+<hr>
+
+Last changed 17-Feb-2000<br>
+<a href="mailto:sfraser@netscape.com">Simon Fraser</a>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/build/mac.html&amp;rev=&amp;root=/cvsroot/">Last modified February 18,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

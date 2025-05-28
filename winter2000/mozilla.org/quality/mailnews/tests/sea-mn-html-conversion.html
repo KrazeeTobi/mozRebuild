@@ -1,0 +1,590 @@
+<HTML>
+<HEAD>
+<TITLE>HTML to Plain Text Conversion Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>5.0 Project (seamonkey)</b>
+<br><b>Mail and News Component</b>
+<br><b>HTML to Plain Text conversion</b>
+<p>Written by: <b><a href="mailto:pmock@netscape.com">Peter Mock</a></b>
+<p><b>History:</b>
+<br>01021998&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Created
+<br>02182000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Posted to mozilla.org
+<p>Reference: n/a
+<br>
+<hr WIDTH="100%">
+<br>Description: the focus of these tests center on the accuracy of our
+conversion from HTML to Plain text.&nbsp; The Intelligent Send functionality
+is covered in another test spec.
+<p><b>Basic Functionality</b>
+<br>We will test the basic areas of conversion.&nbsp; It is assumed that
+the default compose editor is HTML text
+<br>Start a html compose window.&nbsp; Copy from a page composer window
+or attach a HTML page that contain one or more of the following HTML element.&nbsp;
+Verify that the HTML to Plain Text conversion occurs.
+<p><b>(HTML 3.2 Tags to test)</b>
+<ol TYPE=A>
+<li>
+Head Element Properties</li>
+
+<ol>
+<li>
+Title Element</li>
+
+<li>
+Style Element</li>
+
+<li>
+Script Element</li>
+
+<li>
+Isindex Element</li>
+
+<li>
+Base Element</li>
+
+<li>
+Meta Element</li>
+
+<li>
+Link Element</li>
+</ol>
+
+<li>
+Body Properties</li>
+
+<ol>
+<li>
+Headings (H1 - H6)</li>
+
+<li>
+Address Elements</li>
+
+<li>
+Block level Elements</li>
+
+<ol TYPE=a>
+<li>
+Paragraphs</li>
+
+<li>
+Unordered lists</li>
+
+<li>
+Ordered (i.e numbered) lists</li>
+
+<li>
+Definition lists</li>
+
+<li>
+Preformatted text</li>
+
+<li>
+Document divisions</li>
+
+<li>
+Text Alignment</li>
+
+<li>
+Blockquote</li>
+
+<li>
+Fill-out forms</li>
+
+<li>
+Primitive HTML forms</li>
+
+<li>
+Horizontal rules</li>
+
+<li>
+Table can be nested</li>
+</ol>
+
+<li>
+Text level Elements</li>
+
+<ol TYPE=a>
+<li>
+Font sytle elements</li>
+
+<li>
+Phrase elements</li>
+
+<li>
+Form Fields</li>
+
+<li>
+The A (anchor) elements</li>
+
+<li>
+IMG - inline images</li>
+
+<li>
+APPLET (Java Applets)</li>
+
+<li>
+Fonts elements</li>
+</ol>
+</ol>
+</ol>
+<b></b>
+<p><br><b>(HTML 4.0 Tags to test)</b>
+<ol TYPE=A>
+<li>
+Language information</li>
+
+<li>
+Text direction</li>
+
+<li>
+Text</li>
+
+<ol>
+<li>
+White space</li>
+
+<li>
+Structured Text</li>
+
+<li>
+Quotations</li>
+
+<li>
+Lines and Paragraph</li>
+
+<li>
+INS and DEL elements (Marking document changes)</li>
+</ol>
+
+<li>
+Lists</li>
+
+<ol>
+<li>
+Unordered lists, ordered lists, and list items</li>
+
+<li>
+Definition lists</li>
+
+<li>
+DIR and MENU elements</li>
+</ol>
+
+<li>
+Tables</li>
+
+<ol>
+<li>
+Table Elements</li>
+
+<li>
+Table Caption Elements</li>
+
+<li>
+Row groups</li>
+
+<li>
+Columns groups</li>
+
+<li>
+Table rows</li>
+
+<li>
+Table cells</li>
+
+<li>
+Borders and rules</li>
+
+<li>
+Horizontal and vertical alignment</li>
+
+<li>
+Cell margins</li>
+
+<li>
+Categorizing cells</li>
+
+<li>
+Algorithm to find heading information</li>
+</ol>
+
+<li>
+Links</li>
+
+<ol>
+<li>
+Anchors and links</li>
+
+<li>
+Link titles</li>
+
+<li>
+The A Elements</li>
+
+<li>
+Anchors with the id attributes</li>
+
+<li>
+Document relationship: the LINK elements</li>
+
+<li>
+Forward and reverse links</li>
+
+<li>
+Path Information: the Base elements</li>
+
+<li>
+Resolving relative URL</li>
+</ol>
+
+<li>
+Objects, Images, and Applets</li>
+
+<ol>
+<li>
+The IMG element (including an image)</li>
+
+<li>
+The Object element (generic inclusion)</li>
+
+<li>
+The Param element (object initialization)</li>
+
+<li>
+The Applet element</li>
+
+<li>
+Image Maps</li>
+
+<li>
+Visual presentation of images, objects, and applets</li>
+
+<ol TYPE=a>
+<li>
+Width and height</li>
+
+<li>
+White space around images and objects</li>
+
+<li>
+Borders</li>
+
+<li>
+Alignment</li>
+</ol>
+
+<li>
+Alternate text</li>
+</ol>
+
+<li>
+Style Sheets</li>
+
+<li>
+Alignment, Font Style, and Horizontal Rules</li>
+
+<ol>
+<li>
+Formatting</li>
+
+<ol TYPE=a>
+<li>
+Background color</li>
+
+<li>
+Alignment</li>
+
+<li>
+Floating Objects</li>
+</ol>
+
+<li>
+Fonts</li>
+
+<ol TYPE=a>
+<li>
+Font Style Elements</li>
+
+<ul>
+<li>
+TT element</li>
+
+<li>
+I element</li>
+
+<li>
+B element</li>
+
+<li>
+BIG element</li>
+
+<li>
+SMALL element</li>
+
+<li>
+STRIKE element</li>
+
+<li>
+S element</li>
+
+<li>
+U element</li>
+</ul>
+
+<li>
+Font Modifier elements</li>
+
+<ul>
+<li>
+Font</li>
+
+<li>
+Basefont</li>
+</ul>
+
+<li>
+Rules</li>
+
+<ul>
+<li>
+The HR element</li>
+</ul>
+</ol>
+</ol>
+
+<li>
+Frames</li>
+
+<ol>
+<li>
+Layout of frame</li>
+
+<ol TYPE=a>
+<li>
+The Frameset element</li>
+
+<li>
+The Frame element</li>
+</ol>
+
+<li>
+Alternate content</li>
+
+<ol TYPE=a>
+<li>
+The Noframe element</li>
+
+<li>
+Long description of frames</li>
+</ol>
+
+<li>
+Inline frame</li>
+
+<ol TYPE=a>
+<li>
+The Iframe element</li>
+</ol>
+</ol>
+
+<li>
+Forms</li>
+
+<ol>
+<li>
+Controls</li>
+
+<ol TYPE=a>
+<li>
+Control Types</li>
+
+<ul>
+<li>
+buttons</li>
+
+<li>
+checkboxes</li>
+
+<li>
+radio buttons</li>
+
+<li>
+menus</li>
+
+<li>
+text input</li>
+
+<li>
+file select</li>
+
+<li>
+hidden controls</li>
+
+<li>
+object controls</li>
+</ul>
+
+<li>
+Control Types with Input</li>
+
+<ul>
+<li>
+text</li>
+
+<li>
+password</li>
+
+<li>
+checkbox</li>
+
+<li>
+radio</li>
+
+<li>
+submit</li>
+
+<li>
+image</li>
+
+<li>
+reset</li>
+
+<li>
+button</li>
+
+<li>
+hidden</li>
+
+<li>
+file</li>
+</ul>
+</ol>
+
+<li>
+The Form element</li>
+
+<li>
+The Input element</li>
+
+<li>
+The Button element</li>
+
+<li>
+The Select, Optgroup, and Option element</li>
+
+<li>
+The Textarea element</li>
+
+<li>
+The Isindex element</li>
+
+<li>
+The Label element</li>
+
+<li>
+The Fieldset and Legent elements (adding structure to forms)</li>
+</ol>
+
+<li>
+Scripts</li>
+
+<ol>
+<li>
+The Script element</li>
+
+<li>
+The Noscript element</li>
+</ol>
+</ol>
+
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-html-conversion.html&amp;rev=&amp;root=/cvsroot/">Last modified February 21,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

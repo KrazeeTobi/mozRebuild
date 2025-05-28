@@ -1,0 +1,389 @@
+<HTML>
+<HEAD>
+<TITLE>mozilla.org</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<h1>
+Key Events in SeaMonkey</h1>
+last modified:
+<br>9/28/1999 <a href="mailto:tague@netscape.com">Tague</a> and <a href="mailto:brade@netscape.com">Kathy</a>'s
+proposal
+<br>9/19/99 Results of second meeting&nbsp;&nbsp;&nbsp; Steve Clark (buster@netscape.com)
+<br>9/15/99 Initial draft&nbsp;&nbsp;&nbsp; Steve Clark (buster@netscape.com)
+<hr NOSHADE WIDTH="100%">
+<br>&nbsp;
+<h2>
+1. Introduction</h2>
+This document is a specification for all aspects of key events in SeaMonkey
+applications.&nbsp; It describes key event generation, propogation, and
+processing.&nbsp; It is particularly important for platform developers
+to understand the key event generation section.
+<br>&nbsp;
+<h2>
+2. Key Event Generation</h2>
+Native input methods (used when typing Japanese), aka IME, must have first
+crack at all keyboard events this includes accelerators and keybindings
+because they might be used by the native input method (such as to turn
+them on and off).&nbsp; While the IME is active, key events (keydown, keypress,
+keyup) will not be generated.&nbsp; IME input generates text events which
+are handled by a separate set of handlers.&nbsp; If a key event isn't consumed
+by the native input method, it will result in a sequence as described below.
+<p>Each keyboard input results in 3 separate key events:&nbsp; KeyDown,
+followed by KeyPress, followed KeyUp.&nbsp; All platforms must generate
+these events in this sequence for every keyboard input (except IME events).
+<p>Key repeat (automatic generation of keyevents when a key is held down)
+results in a sequence of a KeyDown event, followed by multiple keypress
+events, terminated by a KeyUp event.&nbsp; A keypress event should be generated
+for each platform key repeat event recieved.
+<p>Each key event has 2 data fields:&nbsp; a virtual key code and a computed
+character code.&nbsp; The key code corresponds to the physical key that
+was typed.&nbsp; The char code represents the Unicode character that results
+from the keyboard input.&nbsp; The char code field is never set during
+KeyDown or KeyUp events.&nbsp; It is only set during a KeyPress event in
+which the key maps to an actual character.&nbsp; The following table describes
+how these data are interpreted for each type of key event:
+<br>&nbsp;
+<table BORDER WIDTH="600" >
+<tr>
+<td>
+<center><b>Key Event</b></center>
+</td>
+
+<td>
+<center><b>key code</b></center>
+</td>
+
+<td>
+<center><b>char code</b></center>
+</td>
+</tr>
+
+<tr>
+<td>KeyDown</td>
+
+<td>set</td>
+
+<td>0 (ignored)</td>
+</tr>
+
+<tr>
+<td>KeyPress</td>
+
+<td>if char code is set, key code is not set
+<br>so key code is only set for input that doesn't map to a character,
+like "home" key or for dead key actions</td>
+
+<td>set if the key typed represents a character determined by nsIsPrintable(),&nbsp;
+<br>otherwise 0 (ignored)</td>
+</tr>
+
+<tr>
+<td>KeyUp</td>
+
+<td>set</td>
+
+<td>0 (ignored)</td>
+</tr>
+</table>
+
+<p>Key listeners are responsible for knowing when to use key codes and
+when to use char codes.&nbsp; In particular, the platform must not try
+to map these data in any way other than as specified in the table above.
+<p>There are a few special cases that need to be described:
+<ul>
+<li>
+If an alphanumeric key (a - z or 0-9) is pressed,
+a charcode value must be returned, even if a modifier bit is set.
+If the charcode is a resulting
+character which should be inserted in an editor,
+all 4 modifier flags should be cleared (0).  If the charcode
+is not a character but instead a command or keybinding,
+all modifier flags should be left intact. 
+</li>
+
+<li>
+<font color="#000000">Modifier</font> keys (<font color="#000000">such
+as </font>shift, alt, control, command) pressed in isolation generate the
+same event sequence as normal keys.&nbsp; This is for completeness, so
+an app can choose to do something special when any of these keys are pressed
+in isolation.</li>
+
+<li>
+Dead keys (<font color="#000000">such as</font><font color="#FF0000"> </font>keyboard
+input used to generate accented characters) generate the same event sequence
+as normal keys.&nbsp; <b>Key events have a bit that says whether the keyboard
+input was from a dead key action</b>.&nbsp; The char code for a dead key
+is always 0 (ignored).</li>
+
+<li>
+The absolute order of key events generated by a combination of keys is
+indeterminate.&nbsp; For example, if shift and A are pressed, the keyup
+events could come in either order.</li>
+
+<li>
+There won't be a distinction between right and left modifier keys (nor
+distinction between keyboard and keypad keys).</li>
+
+<li>
+Platform special keys (Windows key, contextual menu key on Windows, Macintosh
+startup key, monitor control keys, etc.) do not propagate events.&nbsp;
+They should be handled in platform code if necessary.</li>
+</ul>
+
+<h2>
+3. Key Event Propogation</h2>
+Key events are DOM events, and follow all the normal DOM event rules for
+propogation.&nbsp; See <a href="http://www.w3.org/TR/WD-DOM-Level-2/events.html">http://www.w3.org/TR/WD-DOM-Level-2/events.html</a>.&nbsp;
+Key event propogation is entirely XP.
+<h2>
+4. Key Event Processing</h2>
+from Tom Pixley (joki@netscape.com)
+<blockquote>Internally we're using the consumeNoDefault flag.&nbsp; Now
+ignore that for a second.&nbsp; From the DOM perspective, there are three
+things that can be done to an event during processing.&nbsp; One is cancelling
+the default action.&nbsp; This is the equivalent of setting the consume
+flag.&nbsp; This does *not* prevent further processing.&nbsp; It simply
+prevents the default action of the system.&nbsp; Now in most cases the
+system would be the browser itself but since much of the browser is implemented
+inside the content area this is a little confusing as the system is really
+now Gecko, not the browser, and since Gecko doesn't generally do too much
+with the event themselves, cancelling the default action won't buy you
+much.</blockquote>
+
+<blockquote>Then there are two other methods, preventCapture and preventBubble.&nbsp;
+These methods will, respectively, prevent further handling by lower Nodes
+in the tree after capturing and prevent further handling by higher Nodes
+in the tree during bubbling.&nbsp; If you wish a lower or higher level
+Node to get an event and then stop the event from going further you need
+to use these flags.&nbsp; The consumeNoDefault flag will only tell the
+system to stop processing the event but it will still go give the event
+to all the other DOM handlers. Note that one of the properties of DOM event
+processing is that an event processor cannot prevent propogation of the
+event to other listeners on that same node.&nbsp; Since DOM does not provide
+for ordering of event delivery to listeners on a single node, there is
+no general mechanism to allow for any communication between them.</blockquote>
+Key listeners are responsible for knowing when to look at key codes and
+when to look at char codes.
+<p>Key listeners should handle keyboard input using the KeyPress event
+handler.
+<p>For the editor KeyPress handler, any charCode that is non-zero should
+be a valid unicode character which can be inserted.&nbsp; Keybindings and
+accelerators should cancel the event if it shouldn't be inserted in the
+editor.&nbsp; The keybinding component needs to look at key events prior
+to the editor component.
+<p>Character mapping occurs in the platform specific code, prior to the
+keypress event being generated.&nbsp; When a key combination, such alt+'s'
+could be both a keybinding and a character, the platform code will translate
+it into the appropriate Unicode character for the keypress event.&nbsp;
+Keybindings need to match against the generated Unicode character in the
+keypress event.&nbsp; The only exception to this is keys like Home or Page
+Up which don't have a Unicode character representation.&nbsp; For this
+case, keybindings should use the keycode in the keypress event.
+<br>&nbsp;
+<h2>
+5. Sample Code</h2>
+
+<p><br>boolean IsNonCharacterKey(nativeKeyCode)
+<br>{
+<br>&nbsp;boolean isNonPrintable;
+<p>&nbsp;//
+<br>&nbsp;// this table is used to determine which keys are special and
+should not generate a charCode
+<br>&nbsp;//
+<br>&nbsp;switch (nativeKeycode)
+<br>&nbsp;{
+<br>&nbsp; // modifier keys
+<br>&nbsp; case kShiftKeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable =
+true; break;
+<br>&nbsp; case kMetaKeyCode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+isNonPrintable = true; break;
+<br>&nbsp; case kCapsLockKeyCode:&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kControlKeyCode:&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kAltKeyCode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+isNonPrintable = true; break;
+<br>&nbsp; case kClearKeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable =
+true; break;
+<p>&nbsp; // function keys
+<br>&nbsp; case kF1KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF2KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF3KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF4KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF5KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF6KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF7KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF8KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF9KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF10KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF11KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kF12KeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kPauseKeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable =
+true; break;
+<br>&nbsp; case kScrollLockKeyCode:&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kPrintScreenKeyCode:&nbsp;&nbsp; isNonPrintable = true;
+break;
+<p>&nbsp; // misc. keys
+<br>&nbsp; case kInsertKeyCode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+isNonPrintable = true; break;
+<br>&nbsp; case kDeleteKeyCode:&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kTabKeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kBackspaceKeyCode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+isNonPrintable = true; break;
+<p>&nbsp; // navigation keys
+<br>&nbsp; case kEscapeKeyCode:&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kHomeKeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable =
+true; break;
+<br>&nbsp; case kEndKeyCode:&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kPageUpKeyCode:&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kPageDownKeyCode:&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kLeftArrowKeyCode:&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kRightArrowKeyCode:&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kUpArrowKeyCode:&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kDownArrowKeyCode:&nbsp;&nbsp;&nbsp; isNonPrintable = true;
+break;
+<br>&nbsp; case kReturnKeyCode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+isNonPrintable = true; break;
+<br>&nbsp; case kEnterKeyCode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+isNonPrintable = true; break;
+<p>&nbsp; default:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; isNonPrintable =
+false; break;
+<br>&nbsp;}
+<br>&nbsp;return isNonPrintable;
+<br>}
+<p>// logic for determining if a keyevent is printable
+<br>boolean nsIsPrintable(nativeEvt)
+<br>{
+<br>&nbsp;&nbsp;&nbsp; if (IsNonCharacterKey(nativeEvt.keyCode)) return
+false;
+<br>&nbsp;&nbsp;&nbsp; if (nativeEvt.charCode &lt; 32)) return false;
+<br>&nbsp;&nbsp;&nbsp; if (IsDeadKey(nativeEvt)) return false;
+<p>&nbsp;&nbsp;&nbsp; return true;
+<br>}
+<p>&nbsp;&nbsp;&nbsp; // logic for generating a key down
+<br>&nbsp;&nbsp;&nbsp; domEvent.charcode = 0;
+<br>&nbsp;&nbsp;&nbsp; domEvent.keyCode = PlatformToDOMKeyCode(nativeEvt.keyCode);
+<p>&nbsp;&nbsp;&nbsp; // logic for generating a key press
+<br>&nbsp;&nbsp; if (nsIsPrintable(nativeEvt))
+<br>&nbsp;&nbsp;&nbsp; {
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; domEvent.charCode = ConvertToUnicode(nativeEvt.charCode);
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; domEvent.keyCode = 0;
+<br>&nbsp;&nbsp;&nbsp; }
+<br>&nbsp;&nbsp;&nbsp; else
+<br>&nbsp;&nbsp;&nbsp; {
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; domEvent.keyCode = PlatformToDOMKeyCode(nativeEvt.keyCode);
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; domEvent.charCode = 0;
+<br>&nbsp;&nbsp;&nbsp; }
+<p>&nbsp;&nbsp;&nbsp; // logic for generating a key up
+<br>&nbsp;&nbsp;&nbsp; domEvent.charcode = 0;
+<br>&nbsp;&nbsp;&nbsp; domEvent.keyCode = PlatformToDOMKeyCode(nativeEvt.keyCode);
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/editor/key-event-spec.html&amp;rev=&amp;root=/cvsroot/">Last modified October  7,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

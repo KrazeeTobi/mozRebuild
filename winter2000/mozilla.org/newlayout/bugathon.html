@@ -1,0 +1,747 @@
+<HTML>
+<HEAD>
+<TITLE>The Gecko BugAThon</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<center><a href="http://www.mozilla.org/newlayout/bugathon.html"><img SRC="bugathon.gif" height=60 width=468></a></center>
+
+<center>
+<h2>
+The Gecko BugAThon</h2></center>
+
+<center><i>Help save Gecko engineers from imminent doom!</i></center>
+
+<p>&nbsp;Contents:
+<ul>
+<li>
+&nbsp;<a href="#bugathon">What is the BugAThon?</a></li>
+
+<li>
+&nbsp;<a href="#testcase">What is a Simplified Test Case, and How Do I
+Sign Up to Make One?</a></li>
+
+<li>
+&nbsp;<a href="#rules">The Rules</a></li>
+
+<li>
+&nbsp;<a href="#findbugs">How to Find Open Bugs with Blank Status Lines</a></li>
+
+<li>
+&nbsp;<a href="#codes">What Do All Those Codes Mean? What Codes Should
+I Use?</a></li>
+
+<li>
+&nbsp;Updates:</li>
+
+<ul>
+<li>
+&nbsp;<a href="#dom"><i>Calling all JavaScripters: </i>Vidur Apparao added
+to the BugAThon for Document Object Model Bugs!</a></li>
+
+<li>
+&nbsp;<a href="#layerbugs">All LAYER, ILAYER, document.layers[] and document.all()
+Bugs Must Be INVALIDated!</a></li>
+
+<li>
+&nbsp;<a href="#banner">Add the BugAThon Banner Ad to Your Site!</a></li>
+
+<li>
+&nbsp;<a href="#deadline">Gecko BugAThon Deadline Eliminated!</a></li>
+</ul>
+</ul>
+
+<h3>
+<a NAME="bugathon"></a>What is the BugAThon?</h3>
+A call for volunteers: a quick check in Bugzilla shows that Tom Pixley,
+Chris Karnaze, Kipp Hickman, and Eric Pollman currently have 371 open bugs
+between them, of which 300 have blank status entries and need to be decomposed
+to a simple test case. Collectively, they are The Most Doomed of the Doomed.
+<p>Do you care about web standards? Do you hate working around browser
+bugs? Don't just stand there--with engineers bleeding by the side of the
+road to shipping Gecko, are you going to be the Philistine or the Good
+Samaritan?
+<p>You can help, and you don't need to be a C++ engineer! Simplifying bug
+reports to the simplest possible test case doesn't take too long per bug,
+but when you've got this many bugs, it really adds up. And every hour Gecko
+engineers spend decomposing bug reports is an hour they can't spend on
+FIXING bugs. The more bugs net volunteers simplify, the faster Gecko engineers
+can fix them, and the fewer bugs we'll ship!
+<p>So, in the spirit of public television telethons, here's the deal: if
+you sign up and decompose to a simple test case the listed number of bugs
+to the owner's satisfaction, you will earn the listed valuable reward:
+<br>&nbsp;
+<table BORDER >
+<tr>
+<td><b>Pledge Level</b></td>
+
+<td><b>Reward</b></td>
+</tr>
+
+<tr>
+<td>5 bugs</td>
+
+<td>invitation to the Gecko launch party</td>
+</tr>
+
+<tr>
+<td>10 bugs</td>
+
+<td>the invitation, plus an attractive Gecko stuffed animal</td>
+</tr>
+
+<tr>
+<td>12 bugs</td>
+
+<td>the invitation, plus an attractive Gecko stuffed animal autographed
+by Rick Gessner, the Father of Gecko</td>
+</tr>
+
+<tr>
+<td>15 bugs</td>
+
+<td>the invitation, plus a Gecko T-shirt</td>
+</tr>
+
+<tr>
+<td>17 bugs</td>
+
+<td>the invitation, plus a Gecko T-shirt signed by the grateful engineer</td>
+</tr>
+
+<tr>
+<td>20 bugs</td>
+
+<td>the invitation, plus a Gecko T-shirt signed by the whole raptor team</td>
+</tr>
+</table>
+
+<h3>
+<a NAME="testcase"></a>What is a Simplified Test Case, and How Do I Sign
+Up to Make One?</h3>
+A simplified test case means the simplest possible web page that still
+reproduces the bug. If you remove any more characters from the file of
+the simplified test case, you no longer see the bug. To turn a web page
+that shows a bug into a simplified test case, you:
+<ol>
+<li>
+<a href="http://bugzilla.mozilla.org/createaccount.cgi">Open a Bugzilla
+account</a> and download the <a href="http://www.mozilla.org/projects/seamonkey/release-notes/">latest
+milestone build</a> of the Mozilla browser.</li>
+
+<li>
+To claim a bug, choose one of the open bugs from the search links below
+and enter <b>[MAKINGTEST]</b> and your email address in the "Status Whiteboard"
+field so others know you've claimed it and effort isn't duplicated.</li>
+
+<li>
+Download the web page that shows the bug to your local machine.</li>
+
+<ul>
+<li>
+Make sure to download any linked JavaScript .js files, CSS .css files,
+frameset .html files, or image files as well. You can find the names of
+those files and figure out the URLs to get them by doing a View-->Page
+Source on the main page. For example, if http://www.foo.com/resume.html
+contains an IMG link to mypicture.jpeg, you'll want to type http://www.foo.com/mypicture.jpeg
+into the browser, then right click over the image and Save Image As ...
+to the same directory you put resume.html in.</li>
+</ul>
+
+<li>
+Using a text editor (like Notepad on Windows, SimpleText on the Mac, or
+vi or emacs on UNIX), start removing HTML markup, CSS rules, and lines
+of JavaScript from the page. Start by removing the parts of the page that
+seem unrelated to the bug. Every few minutes, check the page to make sure
+it still reproduces the bug.</li>
+
+<li>
+When you've cut away as much HTML, CSS, and JavaScript as you can, and
+cutting away any more causes the bug to disappear, you're done. Attach
+the test case to the Bugzilla bug report (as a ZIP file if the test case
+includes multiple files) and mark the bug <b>[TESTCASE]</b> in the "Status
+Whiteboard" field so engineering knows the bug is ready to be crushed.</li>
+</ol>
+
+<h3>
+<a NAME="rules"></a>The Rules</h3>
+Please only claim five bugs at a time and decompose those five bugs to
+test cases before you claim the next five. This is to prevent people from
+signing up from 20 bugs, procrastinating, and then dropping out of the
+BugAThon, which would prevent others from claiming the bugs and the prizes.
+<p>The fine print:
+<ul>
+<li>
+bugs resolved as DUPs (duplicate of another bug report), WORKSFORME (when
+you do the test yourself, you don't see the bug), and INVALID (reporter
+misunderstanding or other problem with the report) instead of as valid
+with a simplified test case only score as half a bug each. Example: 9 valid
+bugs with test cases plus 2 DUPs plus 4 WORKSFORME count as 12 "finished"
+bugs and earn you an autographed stuffed animal.</li>
+
+<li>
+If a testcase already exists as an attachment or is referenced within the
+notes and you verify that it's definitive and can't be simplified further,
+that counts.</li>
+
+<li>
+If you get all the way up to the group-signed T-Shirt, you *can* qualify
+for a stuffed animal as well by doing 12 more.</li>
+</ul>
+To qualify as a finished bug, the bug must be completed with:
+<ul>
+<li>
+an attached simplest-as-possible test case</li>
+
+<li>
+the summary line updated if necessary</li>
+
+<li>
+a status message reading [TESTCASE] plus a statement of what needs to be
+fixed to the extent you can explain it</li>
+
+<li>
+the description written up in accordance with the mozilla bug writing guidelines
+at&nbsp; <a href="http://www.mozilla.org/quality/bug-writing-guidelines.html">http://www.mozilla.org/quality/bug-writing-guidelines.html</a></li>
+
+<li>
+the engineer's verbal agreement to me (when the prize is claimed) that
+it's been decomposed satisfactorily</li>
+</ul>
+When you're ready to claim your bounty for squashing your bugs, email <a href="mailto:ekrock@netscape.com">ekrock@netscape.com</a>
+with:
+<p>i) your name
+<br>ii) your physical mailing address
+<br>iii) your list of finished bugs
+<br>iv) your score (iii modified for DUPs/WORKSFORME/INVALID)
+<br>v) the reward(s) you're claiming
+<br>vi) your T-shirt size if claiming a T-shirt
+<p>So it's a race! The easiest bugs will go first, so act now to claim
+and crush YOUR bugs. Ladies and gentlemen, start your browsers!!!
+<h3>
+<a NAME="findbugs"></a>How to Find Open Bugs that Need a Test Case</h3>
+Use these links to find open bugs that need a test case:
+<br>&nbsp;
+<table BORDER >
+<tr>
+<td><b>Engineer</b></td>
+
+<td><b>Email</b></td>
+
+<td><b>Typical Bugs on this List</b></td>
+</tr>
+
+<tr>
+<td><a NAME="dombuglist"></a><a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=vidur&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%28%5Cw*%5CW*%29*%28%5C%5BTESTCASE%5C%5D%7C%5C%5BDONTTEST%5C%5D%7C%5C%5BNOTESTCASENEEDED%5C%5D%7C%5C%5BMAKINGTEST%5C%5D%7C%5C%5BHAVE%29%28%5Cw*%5CW*%29*&status_whiteboard_type=notregexp&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">Vidur
+Apparao</a></td>
+
+<td>vidur</td>
+
+<td>JavaScript Document Object Model: DOM0, DOM1, DOM2 CSS Interface</td>
+</tr>
+
+<tr>
+<td><a NAME="events"></a><a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=joki&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%28%5Cw*%5CW*%29*%28%5C%5BTESTCASE%5C%5D%7C%5C%5BDONTTEST%5C%5D%7C%5C%5BNOTESTCASENEEDED%5C%5D%7C%5C%5BMAKINGTEST%5C%5D%7C%5C%5BHAVE%29%28%5Cw*%5CW*%29*&status_whiteboard_type=notregexp&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">Tom
+Pixley</a></td>
+
+<td>joki</td>
+
+<td>DOM 2 Events</td>
+</tr>
+
+<tr>
+<td><a NAME="css"></a><a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=karnaze&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%28%5Cw*%5CW*%29*%28%5C%5BTESTCASE%5C%5D%7C%5C%5BDONTTEST%5C%5D%7C%5C%5BNOTESTCASENEEDED%5C%5D%7C%5C%5BMAKINGTEST%5C%5D%7C%5C%5BHAVE%29%28%5Cw*%5CW*%29*&status_whiteboard_type=notregexp&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">Chris
+Karnaze</a></td>
+
+<td>karnaze</td>
+
+<td>Table Layout; CSS</td>
+</tr>
+
+<tr>
+<td><a NAME="frames"></a><a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=pollmann&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%28%5Cw*%5CW*%29*%28%5C%5BTESTCASE%5C%5D%7C%5C%5BDONTTEST%5C%5D%7C%5C%5BNOTESTCASENEEDED%5C%5D%7C%5C%5BMAKINGTEST%5C%5D%7C%5C%5BHAVE%29%28%5Cw*%5CW*%29*&status_whiteboard_type=notregexp&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">Eric
+Pollman</a></td>
+
+<td>pollmann</td>
+
+<td>Layout; Frames</td>
+</tr>
+
+<tr>
+<td><a NAME="xml"></a><a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=nisheeth&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%28%5Cw*%5CW*%29*%28%5C%5BTESTCASE%5C%5D%7C%5C%5BDONTTEST%5C%5D%7C%5C%5BNOTESTCASENEEDED%5C%5D%7C%5C%5BMAKINGTEST%5C%5D%7C%5C%5BHAVE%29%28%5Cw*%5CW*%29*&status_whiteboard_type=notregexp&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">Nisheeth
+Ranjan</a></td>
+
+<td>nisheeth</td>
+
+<td>XML</td>
+</tr>
+
+<tr>
+<td><a NAME="plugin"></a><a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=av%40netscape.com&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%28%5Cw*%5CW*%29*%28%5C%5BTESTCASE%5C%5D%7C%5C%5BDONTTEST%5C%5D%7C%5C%5BNOTESTCASENEEDED%5C%5D%7C%5C%5BMAKINGTEST%5C%5D%7C%5C%5BHAVE%29%28%5Cw*%5CW*%29*&status_whiteboard_type=notregexp&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">Andrei
+Volkov</a></td>
+
+<td>av@netscape.com (fully expand or you'll get travis's bugs too)</td>
+
+<td>Mozilla Plug-in API</td>
+</tr>
+
+<tr>
+<td><a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=kipp&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%28%5Cw*%5CW*%29*%28%5C%5BTESTCASE%5C%5D%7C%5C%5BDONTTEST%5C%5D%7C%5C%5BNOTESTCASENEEDED%5C%5D%7C%5C%5BMAKINGTEST%5C%5D%7C%5C%5BHAVE%29%28%5Cw*%5CW*%29*&status_whiteboard_type=notregexp&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">Kipp
+Hickman</a></td>
+
+<td>kipp</td>
+
+<td></td>
+</tr>
+</table>
+
+<p>Or, if you prefer, you can go to <a href="http://bugzilla.mozilla.org/query.cgi">http://bugzilla.mozilla.org/query.cgi</a>
+and manually search with these parameters:
+<br>&nbsp;
+<table BORDER >
+<tr>
+<td>Status</td>
+
+<td>NEW or ASSIGNED or REOPENED</td>
+
+<td>[select all 3]</td>
+</tr>
+
+<tr>
+<td>Email</td>
+
+<td>karnaze</td>
+
+<td>Assigned To</td>
+</tr>
+
+<tr>
+<td>Status whiteboard</td>
+
+<td>(\w*\W*)*(\[TESTCASE\]|\[DONTTEST\]|\[NOTESTCASENEEDED\]|\[MAKINGTEST\]|\[HAVE)(\w*\W*)*</td>
+
+<td>not (regular expression)</td>
+</tr>
+</table>
+
+<p>Substitute another email address from the list above to find another
+engineer's bugs.
+<p>If you want to look at [TESTCASE] bugs (bugs which already have a finished
+test case), you can use these links: <a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=vidur&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%5BTESTCASE%5D&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Importance&form_name=query">Vidur</a>,
+<a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=joki&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%5BTESTCASE%5D&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Importance&form_name=query">Tom</a>,
+<a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=karnaze&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%5BTESTCASE%5D&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Importance&form_name=query">Chris</a>,
+<a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=pollmann&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%5BTESTCASE%5D&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Importance&form_name=query">Eric</a>,
+and <a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=kipp&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%5BTESTCASE%5D&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Importance&form_name=query">Kipp</a>.
+<h3>
+<a NAME="codes"></a>What Do All Those Codes Mean? What Codes Should I Use?</h3>
+For a complete, up-to-date list of codes used in Bugzilla bug reports,
+see <a href="http://www.mozilla.org/quality/bugzilla-code-definitions.html">code
+definitions for bugzilla</a>. Here's a brief summary of the codes most
+relevant to the BugAThon. Hints for proper code usage:
+<ul>
+<li>
+codes are preceded and followed by square brackets (e.g. [LAYER], not LAYER)</li>
+
+<li>
+codes should be in all-caps (e.g. [LAYER], not [Layer] or [layer])</li>
+
+<li>
+codes should use alphanumeric characters (A..Z0..9) only; don't use special
+characters like hypens, periods, colons, apostrophes, etc.</li>
+
+<li>
+in multi-word codes, just jam the words together; don't separate them with
+spaces, hyphens, etc. (e.g. [DONTTEST], not [DONT TEST])</li>
+</ul>
+There are exceptions to these rules based on historical usage. <a href="http://www.mozilla.org/quality/bugzilla-code-definitions.html">code
+definitions for bugzilla</a> is the definitive reference when in doubt.
+<p>These codes are used in the Summary field to describe a bug:
+<br>&nbsp;
+<table BORDER >
+<tr>
+<td><b>Code</b></td>
+
+<td><b>Meaning</b></td>
+</tr>
+
+<tr>
+<td><b>[4.xP]</b></td>
+
+<td>Because of this bug, Mozilla is not currently backwardly-compatible
+with the behavior of Navigator 4.x. (The code stands for "4.x Parity.")</td>
+</tr>
+
+<tr>
+<td><b>[LAYER]</b></td>
+
+<td>This tag has two meanings. Rarely, it means "Mozilla is not ignoring
+the LAYER tag, as it should." But usually it means "This bug is INVALID;
+the page lays out poorly because it uses the LAYER tag, ILAYER tag, document.layers[],
+document.all(), and/or related proprietary features of Navigator 4.x markup
+and the Navigator 4.x DOM or the IE DOM." See <a href="#layerbugs">Update:
+All LAYER, ILAYER, document.layers[], document.all(), and User Agent Bugs
+Must Be INVALIDated!</a> for more about this.</td>
+</tr>
+
+<tr>
+<td><b>[USERAGENT]</b></td>
+
+<td>This bug is INVALID; the page lays out poorly because the site is failing
+to detect the Mozilla/5.0 user agent string and returning a page that is
+optimized for some other browser.</td>
+</tr>
+</table>
+
+<p>These codes are used in the Status field to describe a bug's status
+in the BugAThon:
+<br>&nbsp;
+<table BORDER >
+<tr>
+<td><b>Code</b></td>
+
+<td><b>Meaning</b></td>
+</tr>
+
+<tr>
+<td><b>[DONTTEST]</b></td>
+
+<td>For some reason, this bug does not need a test case, so no one should
+sign up to create one. For example, this bug might be a reminder from engineering
+to itself that internal changes need to be made in the code. Putting <b>[DONTTEST]</b>
+in the Status field removes the bug from the <a href="#findbugs">lists
+of bugs that need test cases</a>.</td>
+</tr>
+
+<tr>
+<td><b>[MAKINGTEST]</b></td>
+
+<td>A volunteer has signed up to create a test case for this bug. Putting
+<b>[MAKINGTEST]</b>
+in the Status field removes the bug from the <a href="#findbugs">lists
+of bugs that need test cases</a>. It should be followed by the volunteer's
+email address so we know who signed up.</td>
+</tr>
+
+<tr>
+<td><b>[TESTCASE]</b></td>
+
+<td>A volunteer has finished a test case for this bug. Putting <b>[TESTCASE]</b>
+in the Status field removes the bug from the <a href="#findbugs">lists
+of bugs that need test cases</a>.&nbsp;</td>
+</tr>
+</table>
+
+<h3>
+<a NAME="dom"></a>Update: Vidur Apparao added to the BugAThon for Document
+Object Model Bugs!</h3>
+Just two weeks ago, Vidur was concerned that he didn't have enough Document
+Object Model (DOM) bugs filed against him, and he even asked me to help
+get more people testing our DOM support.
+<p>What's the DOM? The DOM is the object model of HTML elements on the
+page which we access from JavaScript. It has three levels:
+<ul>
+<li>
+The DOM level 0 has no formal definition, but it refers to the core browser
+DOM for forms, frames, windows, and events that was supported by Nav3 and
+IE3. It's important to make sure Gecko's support for DOM0 is solid to avoid
+breaking the JavaScript pages that are out on the web already. The DOM0
+includes HTML document objects like <i>document.forms[index]</i>,
+<i>images[],
+applets[], links[], forms[], </i>and<i> anchors[];</i> document methods
+like <i>open(), write(), </i>and<i> close();&nbsp; </i>the <i>window</i>
+object and methods; and HTML events such as <i>onclick,</i> <i>mouseover,
+</i>and
+<i>onsubmit</i>.</li>
+
+<li>
+The DOM level 1 is the industry standard Document Object Model formally
+defined by the W3C with Core language-independent features (such as the
+Node interface for getting and setting attributes) as well as HTML-specific
+features, many of which are also considered "DOM0" functionality.</li>
+
+<li>
+The DOM level 2 is currently under development. It adds features such as
+event capturing, handling, and bubbling and the ability to set style sheet
+properties.</li>
+</ul>
+In a classic example of how you should be careful what you ask for, suddenly
+Vidur's open bug count has jumped from 40 to 112--and I haven't yet lifted
+a finger! Vidur <i>swears</i> he didn't have one too many at the cantina
+before the last milestone. We have our doubts, especially because he was
+in charge of moving the bottomless keg from Building 22 to Building 21,
+and we think he may have taken personal responsibility for "cleaning it
+out" before the move. (Vidur's a very conscientious guy, you see.)
+<p>We'll be watching Vidur (and the keg!) more closely in the future. In
+the meantime, Vidur is now Respectably Doomed, and in sympathy, we're adding
+him to the BugAThon. Do you know JavaScript? This is the perfect chance
+for you to help. We need to get <a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=vidur&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%28%5Cw*%5CW*%29*%28%5C%5BTESTCASE%5C%5D%7C%5C%5BDONTTEST%5C%5D%7C%5C%5BNOTESTCASENEEDED%5C%5D%7C%5C%5BMAKINGTEST%5C%5D%7C%5C%5BHAVE%29%28%5Cw*%5CW*%29*&status_whiteboard_type=notregexp&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">Vidur's
+open, no-status bugs</a> reduced to simple-as-possible test cases. That
+means stripping out as much JavaScript and HTML from the test page as you
+can while still reproducing the bug. The less time Vidur spends simplifying
+bug reports, the more time he can spend fixing bugs.
+<p>And let's face it: we JavaScripters have a real interest in getting
+these bugs fixed. The more DOM bugs Vidur fixes, the fewer we'll have to
+work around when the product ships! So let's spend time now to find, fix,
+and simplify DOM bugs instead of spending time after the release working
+around them! JavaScripters, let's simplify <a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=vidur&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%28%5Cw*%5CW*%29*%28%5C%5BTESTCASE%5C%5D%7C%5C%5BDONTTEST%5C%5D%7C%5C%5BNOTESTCASENEEDED%5C%5D%7C%5C%5BMAKINGTEST%5C%5D%7C%5C%5BHAVE%29%28%5Cw*%5CW*%29*&status_whiteboard_type=notregexp&cmdtype=doit&newqueryname=&order=%22Importance%22&form_name=query">Vidur's
+open, no-status bugs</a> today!
+<p>P.S. The usual disclaimer about DOM support in Gecko: Gecko will <a href="http://www.mozilla.org/newlayout/faq.html#Which open standards">fully
+support DOM0 and DOM1</a>. There is <a href="http://www.mozilla.org/newlayout/faq.html#Which open standards">no
+commitment to support any of DOM2</a> in the first release of Gecko or
+Nav5, but some support is in the current builds and we of course welcome
+bug reports regarding that functionality.
+<p>P.P.S. When you file new Document Object Model bugs in Bugzilla, be
+sure to use the correct component:
+<br>&nbsp;
+<table BORDER >
+<tr>
+<td><b>Component</b></td>
+
+<td><b>Meaning</b></td>
+</tr>
+
+<tr>
+<td>DOM Level 0</td>
+
+<td>Incompatibilities with the DOM of Nav3. (Mark [4.xP] in the Summary
+field.)</td>
+</tr>
+
+<tr>
+<td>DOM Level 1</td>
+
+<td>Incompatibilities with the W3C <a href="http://www.w3.org/TR/REC-DOM-Level-1/">DOM1
+specification</a>. (Mark {dom1} in the Summary field.)</td>
+</tr>
+
+<tr>
+<td>DOM Level 2</td>
+
+<td>Incompatibilities with the latest working draft of the under-development
+W3C <a href="http://www.w3.org/TR/WD-DOM-Level-2/">DOM2 specification</a>.
+(Mark {dom2} in the Summary field.)</td>
+</tr>
+
+<tr>
+<td>JavaScript Engine</td>
+
+<td><i>Don't file DOM bugs against "JavaScript Engine"!</i> The JavaScript
+Engine component is only for core JavaScript (ECMAScript) language and
+interpreter bugs</td>
+</tr>
+</table>
+
+<p>If you haven't already, please read the description of <a href="http://bugzilla.mozilla.org/describecomponents.cgi?product=Browser">what
+each Browser component name in Bugzilla means</a>.
+<h3>
+<a NAME="layerbugs"></a>Update: All LAYER, ILAYER, document.layers[], document.all(),
+and User Agent Bugs Must Be INVALIDated!</h3>
+If you hit a page that doesn't display well or has JavaScript errors in
+Mozilla because the page uses MS IE4/5 DOM features, Nav4 Layer DOM features,
+or the LAYER/ILAYER tag, don't file a bug in Bugzilla. Mozilla won't support
+these proprietary features. (See <a href="http://sites.netscape.net/ekrock/standards.html">http://sites.netscape.net/ekrock/standards.html</a>
+for details.) Instead, use the below email creation templates to send an
+email to the page's owner asking them to upgrade the page to support W3C
+standards.
+<p>If you are examining a bug report in Bugzilla and realize that it's
+caused by these issues, please do the following:
+<ol>
+<li>
+Code the bug [LAYER] in the Status field so we can track which sites have
+these problems.</li>
+
+<li>
+Resolve the bug as INVALID.</li>
+
+<li>
+Use the below template pages to send an email to the bug reporter and the
+web site owner informing them of the need to upgrade the page to support
+standards.</li>
+</ol>
+You can <i>really</i> help mozilla.org (and Vidur in particular) by finding
+and INVALIDing these erroneous bug reports. This will help keep Vidur's
+plate clean so he can focus on real DOM bugs.
+<p>If the page supports IE4/5 but not HTML 4.0/W3C DOM, use this template:
+<br><a href="http://sites.netscape.net/ekrock/fixit/ie.html">http://sites.netscape.net/ekrock/fixit/ie.html</a>
+<p>If the page supports Nav4 but not HTML 4.0/W3C DOM, use this template:
+<br><a href="http://sites.netscape.net/ekrock/fixit/layer.html">http://sites.netscape.net/ekrock/fixit/layer.html</a>
+<p>If the page is breaking because of user agent detection problems, use
+this template:
+<br><a href="http://sites.netscape.net/ekrock/fixit/useragent.html">http://sites.netscape.net/ekrock/fixit/useragent.html</a>
+<p>Use the "user agent" template when a page doesn't work or has a JavaScript
+error because the client-side JavaScript isn't detecting the Navigator
+5 Mozilla/5.0 userAgent string, or when a server-side CGI is returning
+the wrong page because it's not detecting the Mozilla/5.0 HTTP USER_AGENT
+string or is choking on the HTTP 1.1 CONTENT_TYPE string (which is now
+off by default, and may well stay that way).
+<p>Hint to avoid filing bogus bugs: if content on a page doesn't position
+correctly or there's a JavaScript error, do a View Source and look (or
+copy and paste and search in a text editor) for the strings document.all
+and layer (case insensitive). If you find those strings in the JavaScript
+or the HTML markup, think twice before filing a bug. Create a simplified
+test case without the proprietary features and see if the problems still
+occurs.
+<h3>
+<a NAME="banner"></a>Update: Add the BugAThon Banner Ad to Your Site!</h3>
+Glenn Davis of&nbsp; <a href="http://www.projectcool.com/">ProjectCool.com</a>
+has kindly given us this banner ad to help promote the BugAThon:
+<center>
+<p><a href="http://www.mozilla.org/newlayout/bugathon.html"><img SRC="bugathon.gif" height=60 width=468></a></center>
+
+<p>Please add the banner ad to your web pages! To add the banner ad to
+a web page:
+<ol>
+<li>
+place the mouse cursor over the image, right-click the mouse button, and
+choose "Save Image As ..." from the popup context menu that is displayed</li>
+
+<li>
+save the image as bugathon.gif in the same directory as your web page</li>
+
+<li>
+add the below HTML to your web page</li>
+</ol>
+
+<pre>&lt;center>&lt;a href="http://www.mozilla.org/newlayout/bugathon.html">
+&lt;img SRC="bugathon.gif" height=60 width=468>&lt;/a>&lt;/center></pre>
+
+<h3>
+<a NAME="deadline"></a>Update: Gecko BugAThon Deadline Eliminated!</h3>
+The BugAThon is going great! Look at these displays of major heroism:
+<ul>
+<li>
+In just the first two weeks of the effort, we cut Chris Karnaze's open,
+no status bug list from 164 on 6/23 to 47 on 7/6!</li>
+
+<li>
+Ian Hickson stayed up until 5:40 a.m. and simplified 18 bugs the first
+night of the BugAThon, and has processed over 42 bugs to date total!</li>
+
+<li>
+Sam Allen's resolved 35 bugs as DUPs!</li>
+
+<li>
+Look at all these test cases we've created for <a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=joki&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%5BTESTCASE%5D&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Importance&form_name=query">Tom</a>,
+<a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=karnaze&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%5BTESTCASE%5D&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Importance&form_name=query">Chris</a>,
+<a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=pollmann&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%5BTESTCASE%5D&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Importance&form_name=query">Eric</a>,
+and <a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=kipp&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&changedin=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=%5BTESTCASE%5D&status_whiteboard_type=substring&cmdtype=doit&newqueryname=&order=Importance&form_name=query">Kipp</a>!</li>
+</ul>
+... and read these comments from participants:
+<ul>
+<li>
+"As a result of announcing the bug contest, I've gotten a bazillion bugzilla
+notifications today." -- Chris Karnaze</li>
+
+<li>
+"The thing is, I am quite happy to work for Mozilla just to get a decent,
+free, standards compliant browser onto the market. That is an incentive
+in itself. The rest is just a bonus...." -- Ian Hickson</li>
+
+<li>
+"Glad I could help. I've made a recent move from HTML/JavaScript/CSS development
+to QA and was glad to get some practice in. I would be happy to do some
+beta testing in the future as well if you need it." -- Erin Pierce</li>
+</ul>
+Because the BugAThon is going so well and so many people have expressed
+interest in participating going forward, we're eliminating the August 15th
+deadline and making the BugAThon an ongoing effort. (Rick and Eric aren't
+guaranteeing that we'll buy and mail stuffed Geckos until the end of time,
+but we're eliminating the August 15th deadline and will keep awarding prizes
+for the foreseeable future.) Welcome to all new Net contributors!
+<p>
+<hr WIDTH="50%">
+<p>Disclaimers: Conditions subject to change without notice. Rewards subject
+to substitution with goods of equivalent value. All decisions are final.
+This is not an official contest. It is not sponsored by mozilla.org, Netscape
+Communications, or America Online; it is an incentive program to recognize
+Internet volunteers which is being run by Rick Gessner and Eric Krock directly.
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/newlayout/bugathon.html&amp;rev=&amp;root=/cvsroot/">Last modified December 21,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

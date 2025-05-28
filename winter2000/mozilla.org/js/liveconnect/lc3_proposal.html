@@ -1,0 +1,245 @@
+<HTML>
+<HEAD>
+<TITLE>LiveConnect Release 3 Goals/Features</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<H1 ALIGN=CENTER>LiveConnect Version 3 Goals</H1>
+
+<TABLE BORDER CELLPADDING=3 >
+ <TR BGCOLOR="#DDDDDD">
+  <TH WIDTH="20%">
+<CENTER><B><FONT SIZE=+2>Task/Feature</FONT></B>
+<BR><B><FONT SIZE=-1>(listed in decreasing</FONT></B>
+<BR><B><FONT SIZE=-1>order of importance)</FONT></B></CENTER></TH>
+  <TD>
+
+<CENTER><B><FONT SIZE=+2>Details</FONT></B></CENTER>
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+
+<CENTER>Thread-safety</CENTER>
+  </TD>
+  <TD>
+The LC2 release of LiveConnect is not completely thread-safe.
+(Original applications of LiveConnect, such as OJI, did not demand strict
+thread-safety, so it was not a top priority for LC2.)
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+
+<CENTER>Rhino compatibility</CENTER>
+  </TD>
+  <TD>
+Rhino (JavaScript-in-Java) and LC2 behavior diverge in subtle ways,
+particularly in the area of error-handling.&nbsp; Both Rhino and LC2 should
+be modified so that a single set of tests can be used for both versions
+of LiveConnect.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+
+<CENTER>Convergence with OJI LiveConnect</CENTER>
+  </TD>
+  <TD>
+The OJI project has made modifications to the LiveConnect APIs to adapt
+it for their needs and placed the result in a separate directory.
+The sources need to be merged into a single codebase.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+
+<CENTER>Predictable overloaded
+<BR>method resolution</CENTER>
+  </TD>
+  <TD>
+When more than one overloaded Java method is compatible with the number
+and types of arguments in an invocation from JS, the choice of Java method
+is made arbitrarily, by using the first one enumerated by the Java reflection
+APIs.&nbsp; Unfortunately, the ordering of methods when enumerating is
+not governed by any specification, so differences between JVM vendors can
+lead to inconsistencies in LiveConnect behavior.
+
+<P>Instead, we will define a <A HREF="lc3_method_overloading.html">JVM-independent
+set of rules</A> to choose among overloaded Java methods.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+
+<CENTER>Explicit overloaded
+<BR>method resolution</CENTER>
+  </TD>
+  <TD>
+The weak correspondence between the JS language typing system and Java's
+results in ambiguity and/or shadowing when resolving among overloaded Java
+methods, e.g. JS's number type can map to any of Java's floating-point
+or integral types: byte, char, short, int, long, float, double.
+
+<P>We need a way to bypass the method overload resolution process and <A HREF="lc3_method_overloading.html#ExplicitMethod">explicitly
+specify the method to be invoked</A>.&nbsp; For example:
+
+<P><TT><FONT SIZE=-1>myPrintMethod = java.io.PrintStream["print(double)"];</FONT></TT>
+<BR><TT><FONT SIZE=-1>myPrintMethod(13);</FONT></TT>
+<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+
+<CENTER>Invocation of Java static methods using a Java instance</CENTER>
+  </TD>
+  <TD>
+The Java language allows static methods to be invoked using either
+the class name or a reference to an instance of the class, but current
+versions of LiveConnect allow only the former.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+
+<CENTER><I>java.lang.String</I> objects "inherit"
+<BR>JS string methods</CENTER>
+  </TD>
+  <TD>
+In current versions of LiveConnect, it is necessary to convert Java
+Strings to JS strings before using them as the receivers of JS string methods,
+typically by appending an empty string to the Java string, e.g.
+
+<P>
+<UL>
+ <TT>s = new java.lang.String("foo")</TT>
+ <BR><TT>s = s + "";&nbsp; // </TT><I>s is now a JS string</I>
+ <BR><TT>s.match("oo")</TT>
+</UL>
+
+<P>The goal is to eliminate the requirement for explicit conversion to
+a JS string by treating <I>java.lang.String</I> objects as a special case
+that "inherit" all the methods of JS strings, i.e. so that the second statement
+in the example above becomes superfluous.
+<BR>
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+
+<CENTER>JavaArray objects "inherit"
+<BR>JS array methods</CENTER>
+  </TD>
+  <TD>
+The JS Array functions are intentionally generic, so it should be possible
+to apply JS array utility methods such as reverse() and join() on JavaArray
+objects.
+  </TD>
+ </TR>
+ <TR>
+  <TD ROWSPAN="2">
+
+<CENTER>Support for new
+<BR>JS language features</CENTER>
+  </TD>
+  <TD>
+Add support for <TT>instanceof</TT> and <TT>in</TT> additions to ECMA
+language.
+  </TD>
+ </TR>
+ <TR>
+  <TD>
+<A HREF="liveconnect-exceptions.html">Java exceptions converted to
+JS exceptions</A>.&nbsp; Uncaught exceptions propagated to Java callers,
+i.e. when Java calls JS calls Java.
+  </TD>
+ </TR>
+</TABLE>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/js/liveconnect/lc3_proposal.html&amp;rev=&amp;root=/cvsroot/">Last modified January 15,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

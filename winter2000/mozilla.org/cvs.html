@@ -1,0 +1,403 @@
+<HTML>
+<HEAD>
+<TITLE>source code via cvs</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="./"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+<!-- created by jwz, 27-Apr-98 -->
+<!-- updated by leaf@mozilla.org, 21-Jun-98 -->
+
+
+<!-- I know this is evil, but so is the fact that there's no way to tell
+     PRE that it's ok to run off the edge of a table cell...  without
+     this, the document becomes as wide as the PRE section, which is
+     too wide.  And wrapping the lines is not acceptable.  Kill me now.
+     --jwz.  -->
+<table width=390 cellspacing=0 cellpadding=0 border=0><tr><td> <!-- suck! -->
+
+
+<H1 ALIGN=CENTER>source code via cvs</H1>
+
+<P> In addition to the <A HREF="source.html">other methods</A>, the
+Mozilla source code is available via CVS.
+<P> What's CVS?  CVS is the Concurrent Versions System.
+Start at <A HREF="http://www.cyclic.com/cvs/info.html">
+Cyclic Software's pages</A> to learn more and read the
+<A HREF="http://www.cyclic.com/cvs/doc-blandy-text.html">tutorial</A>.
+
+
+<P> Anyone can check out the sources via CVS, but only certain 
+people have the ability to check in. Those people, basically, are 
+the <A HREF="owners.html">module owners</A> and their delegates.  
+Read our document on <A HREF="hacking/">hacking mozilla</A> to find 
+out how to get the ability to check in.
+
+<P> To check out the sources, you need to be running CVS 1.10 or 
+later, and have your <B><TT>$CVSROOT</TT></B> set to
+<UL><PRE>
+<B>:pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot</B>
+</PRE></UL>
+
+<P>The password for user <B>anonymous</B> is <B>anonymous</B>.
+
+<P> What follows are more in-depth instructions on two topics:
+<P><UL>
+
+ <P><LI> <A HREF="#checkout">First</A>, detailed platform-specific
+  instructions on how to check out the source repository from scratch.
+
+ <P><LI> <A HREF="#sandbox">Second</A>, assuming you have previously
+   downloaded the source code from our FTP server, how to convert your
+   existing source directory into one that can be used with our CVS server
+   (meaning you will only need to download the files that have changed since
+   the FTP archive was constructed, rather than downloading the whole thing
+   again.)  
+</UL>
+
+
+<P><BR>
+<A NAME="checkout">
+<P><HR><FONT SIZE="+1"><B>cvs checkout</B></FONT><HR><P>
+</A>
+
+<P> Here is how you do a cvs checkout from our server on various platforms.
+
+<P> Also note that CVS is slower than FTP, if you start from scratch. 
+
+<P> So, please read this entire document, including the
+<A HREF="#sandbox">conversion</A> section, before doing anything rash.
+
+<P><UL>
+
+ <P><B><LI>Unix:</B><P>
+
+ You can find the most recent version of CVS at cyclic.com's
+ <A HREF="http://www.cyclic.com/cvs/unix.html">Unix</A> pages.
+ You check out as follows.  (Syntax is for csh; if you use sh, I'm sure
+ you'll know what to do.  If you don't, you've got bigger problems...)
+
+</ul></td></tr></table><ul> <!-- suck! -->
+
+
+<P><UL><PRE>
+% <B>setenv CVSROOT :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot    </B>
+% <B>cvs login</B>
+(Logging in to anonymous@cvs-mirror.mozilla.org)
+CVS password: <B>anonymous</B>
+
+% <B>cvs checkout mozilla/client.mk</b>
+U mozilla/client.mk
+
+% <B>cd mozilla</B>
+% <B>make -f client.mk checkout</B>
+</PRE></UL>
+
+This basically automates the following manual process:
+
+<P><UL><PRE>
+% <B>cvs -z3 checkout SeaMonkeyAll</B>
+cvs server: Updating mozilla
+U mozilla/CHANGES.html
+U mozilla/LEGAL
+U mozilla/LICENSE
+U mozilla/Makefile
+...
+% <B>cvs -z3 checkout -r NSPRPUB_RELEASE_4_0_20000218 mozilla/nsprpub</B>
+U mozilla/nsprpub/Makefile
+U mozilla/nsprpub/Makefile.in
+U mozilla/nsprpub/configure
+...
+</PRE></UL>
+
+</ul><table width=390 cellspacing=0 cellpadding=0 border=0><tr><td><ul> <!-- suck! -->
+
+
+ <P> You only ever need to run <NOBR><TT><B>cvs login</B></TT></NOBR> once.
+  It will remember anonymous's password in your <TT><B>$HOME/.cvspass</B></TT>
+  file.
+
+ <P> The <TT><B>-z3</B></TT> parameter is to cause the files (and diffs) to
+  be compressed while in transit.  This is almost always the right thing to
+  do; so much so that you should probably just put
+  <NOBR><TT><B>cvs -z3</B></TT></NOBR> in your <TT><B>$HOME/.cvsrc</B></TT>
+  file, to make it be the default on all CVS commands.
+
+  <P>(Note that <B>-z9</B> offers a logarithmic improvement in compression
+  at an exponential cost in CPU time.  Therefore, we recommend <B>-z3</B>; 
+  that seems to be about optimal in most cases.)
+
+ <P><B><LI>Windows:</B><P>
+
+You must have CVS version <B>1.10</B> or newer.  Versions 1.9.27 and earlier,
+including version 1.9, have bugs.  In particular, if the cvs process never
+terminates, you need to upgrade.
+
+<P>You can find a suitably recent version of CVS at cyclic.com's
+ <A HREF="http://download.cyclic.com/pub/cvs-1.10/windows/">Windows</A> pages.
+
+<P> In order to use cvs under Windows, you must have unpacked the source from
+the `tar' file, not from a `zip'.  The zip file format does not store dates
+with enough accuracy for cvs, so updating source unpacked from a zip with cvs
+takes a really long time because the cvs client must send most files to the
+server to determine if they have changed.
+
+<P> The checkout procedure is similar to that for Unix:
+
+</ul></td></tr></table><ul> <!-- suck! -->
+
+<P><UL><PRE>
+C:\> <B>set CVSROOT=:pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot    </B>
+C:\> <B>set HOME=\TEMP</B>
+C:\> <B>cvs login</B>
+(Logging in to anonymous@cvs-mirror.mozilla.org)
+CVS password: <B>anonymous</B>
+C:\> <B>cvs checkout mozilla/client.mak</B>
+U mozilla/client.mak
+
+C:\> <B>cd mozilla</B>
+C:\> <B>nmake -f client.mak pull_all</B>
+
+</PRE></UL>
+
+Which automates the following manual process:
+
+<P><UL><PRE>
+C:\> <B>cvs -z3 checkout SeaMonkeyAll</B>
+cvs server: Updating mozilla
+U mozilla/CHANGES.html
+U mozilla/LEGAL
+U mozilla/LICENSE
+U mozilla/Makefile
+...
+C:\> <B>cvs -z3 checkout -r NSPRPUB_RELEASE_4_0_20000218  mozilla/nsprpub</B>
+U mozilla/nsprpub/Makefile
+U mozilla/nsprpub/Makefile.in
+U mozilla/nsprpub/configure
+...
+</PRE></UL>
+
+</ul><table width=390 cellspacing=0 cellpadding=0 border=0><tr><td><ul> <!-- suck! -->
+
+
+
+ <P> If the <TT><B>-z3</B></TT> parameter doesn't work, that means you don't
+ have cvs and/or gzip installed correctly.  Your life will be much easier if
+ you correct this, rather than omitting that parameter.
+
+ <P> You also need to have the <B><TT>HOME</TT></B> environment variable
+ set to a sensible directory, or cvs will complain.
+
+ <P><B><LI>Macintosh:</B><P>
+
+ We know of two CVS options for Macintosh that work with our CVS server:
+ those are ``<A HREF="http://www.maccvs.org/">MacCVS Pro</A>'' and
+ ``<A HREF="http://www.wincvs.org/">MacCVS</A>.''  Despite the
+ similar names, the two packages are unrelated.
+
+ <P> MacCVS Pro is a GUI program, while MacCVS is a command-line program
+ that works with MPW, and behaves more like the Unix and Windows CVS clients.
+
+ <P>
+ <DL>
+  <P><DT><B>To use MacCVS Pro:</B></DT>
+  <DD>Download it from
+    <A HREF="http://www.maccvs.org/download/">maccvs.org</A>.  
+    Then follow the instructions on the Mac
+    <A HREF="http://www.mozilla.org/build/mac.html">build page</A>. 
+
+    <P>Note that MacCVS Pro does not support the <TT><B>-z3</B></TT> parameter
+    for compressed transfers, which means that your checkouts will be
+    painfully, glacially, unconscionably slow.
+
+  <P><DT><B>To use MacCVS:</B></DT>
+  <DD>Download it from <A HREF=" http://www.wincvs.org/">wincvs.org</A>
+    (yes, that does say `wincvs').
+    You need version <B>3.1a7</B> or later (earlier versions won't work.)
+    Then do the following:
+
+    <P><OL>
+
+     <P><LI> Install the MPW CVS tool:
+
+       <P>Copy <B><TT>cvs</TT></B> (a MPW tool) and <B><TT>cvs2.Lib</TT></B>
+       into your <B>MPW Tools</B> folder;
+
+     <P><LI> Set some environment variables inside MPW:<BR>
+
+</td></tr></table><ul><ul> <!-- suck! -->
+
+<P><UL><PRE>
+set CVSROOT ':pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot'
+set USER 'anonymous'
+set CVS_GETPASS 'anonymous'
+set MAC_DEFAULT_RESOURCE_ENCODING AppleSingle
+export CVSROOT
+export USER
+export CVS_GETPASS
+export MAC_DEFAULT_RESOURCE_ENCODING
+</PRE></UL>
+
+</ol></dd></dl></ul><table width=390 cellspacing=0 cellpadding=0 border=0><tr><td><ul><dl><dd><ol start=3>  <!-- suck! -->
+
+     <P><LI> Log in into CVS from inside MPW (you only need to do this
+       once):<BR>
+
+<P><PRE>
+cvs login
+</PRE>
+
+     <P><LI> Check out the tree:
+<P><PRE>
+cvs checkout mozilla
+</PRE>
+
+    </OL>
+
+    <P>Note that, like MacCVS Pro, MacCVS does not support the
+    <TT><B>-z3</B></TT> parameter for compressed transfers, which means
+    that your checkouts will be painfully, glacially, unconscionably slow.
+
+  <P><DT><B>Other Mac CVS tools:</B></DT>
+   <DD>There are a few different CVS options for MacOS listed on
+   cyclic.com's <A HREF="http://www.cyclic.com/cvs/mac.html">Macintosh</A> 
+   pages, but I don't currently know which, if any, of these work with the
+   mozilla.org cvs server.  The beatings will continue until answers are found.
+   Thank you for your patience.
+
+  </DL>
+
+ <P><B><LI>OS/2:</B><P>
+
+ You can find a suitably recent version of CVS at cyclic.com's
+ <A HREF="http://www.cyclic.com/cvs/os2.html">OS/2</A> pages.
+ The checkout instructions for OS/2 are identical to those for Windows,
+ above.
+
+ <P> There is one detail, however: currently, the most recent OS/2 code for
+ Mozilla is not (yet) on the trunk of the CVS tree: it is on a branch.  So,
+ if you are doing OS/2 development, you probably want to check out that
+ branch instead.  You do that like so:
+<P><UL><PRE>
+C:\> <B>cvs -z3 checkout -r OS2_BRANCH mozilla</B>
+</PRE></UL><P>
+
+<P> See the <A HREF="http://www.cyclic.com/cyclic-pages/books.html">CVS
+documentation</A> for more information on how branches work.
+
+</UL>
+
+
+<P><BR>
+<A NAME="sandbox">
+<P><HR><FONT SIZE="+1"><B>converting a tarball to a working cvs sandbox
+</B></FONT><HR><P>
+</A>
+
+<P> Chances are, you've already downloaded the source code from our
+<A HREF="download.html">FTP</A> server (or one of its many 
+<A HREF="mirrors.html">mirror sites</A>).  Even if you haven't, you might
+want to consider doing so: it's faster than checking out the whole tree
+over CVS.
+
+<P> Our source tarballs contain CVS info.  If you have a tarball dated
+1998-04-29 or later, it is already set up to talk to our public server,
+<B>cvs-mirror.mozilla.org</B>.  All you need to do is this:
+
+<P><UL>
+ <LI> <A HREF="download.html">download</A> a tarball;
+ <LI> unpack it;
+ <LI> and run ``<TT><NOBR>cvs -z3 checkout -PA ModuleName</NOBR></TT>'' 
+      in the same directory you unpacked the tarball, where 
+      'ModuleName' is the name of the module
+      you're working on (SeaMonkeyAll is recommended. To list all the
+      modules in the repository, 'cvs co -c'). 
+ <LI> <FONT COLOR="red">BEWARE!</FONT> Attempting to perform the above
+      will clobber any local changes you have made, if you are using 
+      any CVS client previous to version 1.9. You have been warned.
+</UL>
+
+<P> That's it!  This will cause the server to send the changes that have 
+been made in the CVS repository since the time the tarball was created,
+bringing you up to date.
+
+</td></tr></table> <!-- suck! -->
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/cvs.html&amp;rev=&amp;root=/cvsroot/">Last modified February 22,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

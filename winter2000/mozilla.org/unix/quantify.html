@@ -1,0 +1,275 @@
+<HTML>
+<HEAD>
+<TITLE>Profiling Mozilla using Quantify under Solaris</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+  
+  
+
+  
+    <div align="center">
+      <h1>Profiling Mozilla using Quantify under Solaris</h1>
+      Questions or comments to <a
+	href="news://news.mozilla.org/netscape.public.mozilla.unix">news://news.mozilla.org/netscape.public.mozilla.unix</a>.
+      <p>
+	Author: Dan Mosedale &lt;dmose@mozilla.org&gt;
+      </p>
+    </div>
+
+    <p>
+      This document was written while using Quantify version 4.5.1 for
+      Solaris 2.6 with the Sun Workshop 5.0 compilers in
+      <tt>-compat=4</tt> mode.  However, almost everything here is
+      likely to apply to gcc/gdb as well, and Quantify does indeed
+      support (some versions of) it.  If you do have experience with
+      other versions and/or compilers, please post to
+      <a href="news://news.mozilla.org/netscape.public.mozilla.unix">
+	news://news.mozilla.org/netscape.public.mozilla.unix</a>, and
+      I'll add details to this page.
+    </p>
+    
+    <ol>
+    
+      <li>
+	<b>Find a Solaris machine with plenty of memory, swap, CPU
+	cycles, and fast I/O.</b>
+	<ul>
+	  <p>
+	    <li>
+	      I've been using an Ultra 2 with one 296-Mhz UltraSPARC-II
+	      processor, 256 megabytes of RAM, and 512 megabytes of swap
+	      space.  It's still slow going.
+	    </li>
+	  </p>
+	  <p>
+            <li>
+	      Install any necessary patches for the OS, compilers, and
+	      C++ runtime.  See the <a href="solaris.html">Mozilla on
+	      Solaris FAQ</a> for some information about this.
+            </li>
+          </p>
+	</ul>
+      </li>
+
+      <li>
+	<b>Get a working Solaris build with the proper
+	  optimization &amp; debugging options.</b>
+	<ul>
+	    <p>
+	  <li>
+	    Use the <tt>--disable-debug</tt> flag to configure.  Even
+	    though we want debugging symbols in the object, we don't want
+	    all the extra assertion checks, as these will hurt
+	    performance.
+	  </li>
+	</p>
+	<p>	
+      <li>
+	Set the <tt>--enable-optimize</tt> and
+	<tt>--enable-X11-shm</tt> flags to configure.  There's
+	no point in profiling code without the usual
+	optimizations.  
+      </li>
+    </p>
+    
+    <p>
+      <li>
+	Be sure to build with debugging symbols by adding "-g" to
+	<tt>CFLAGS</tt> and <tt>CXXFLAGS</tt> before running configure.
+      </li>
+    </p>
+
+    <p>
+      <li>
+	Unless you're trying to profile using a networked X
+	connection, read the section in the <a
+	href="solaris.html">Mozilla on Solaris FAQ</a> about X11
+	shared memory and make sure that it's actually working.
+      </li>
+    </p>
+    </ul>
+
+    <li><b>Build a quantified version of the browser.</b>
+      <ul>
+	<p>
+	  <li>
+	    I like to use the
+	    <tt>-collection-granularity=function</tt> option to
+	    Quantify, as this makes the runs less painfully slow:
+	    <pre>
+cd xpfe/bootstrap
+gmake QUANTIFYOPTIONS="-collection-granularity=function" \
+    quantify
+</pre>
+	  </li>
+	</p>
+      </ul>
+    </li>
+
+
+    <li><b>Invoke Quantify.</b>
+      <ul>
+	<p>
+  	  <li>
+	    In order to get useful data out of Quantify, lazy binding
+	    in the runtime linker must be turned off.  This will change the
+	    performance characteristics of the code somewhat; see <a
+	    href="http://www.rational.com/technotes/devtools_html/Quantify_html/technote_6063.html">Rational
+	    Technical Note 6063</a> for details.  To do this, make sure
+	    that the <tt>LD_BIND_NOW</tt> environment variable is set
+	    to 1, and that the <tt>QUANTIFYOPTIONS</tt> environment variable
+	    contains the <tt>-force-dlopen-rtld-now</tt> switch.  I
+	    generally also use <tt>-record-dynamic-library-data=no</tt>,
+	    since I presume that the previous changes cause any data
+	    recorded to be less meaningful.
+	  </li>
+        </p>
+	<p>
+	  <li>
+	    <tt>-avoid-recording-system-calls=SYS_exit,SYS_poll,SYS_door</tt>
+	    will filter out some other junk that would otherwise
+            contaminate the data.
+	  </li>
+	</p>
+        <p>  
+	  <li>
+	    My experience is that running data collection for the
+	    entire duration of the program doesn't usually generate
+	    terribly helpful data.  So I've had the most success
+	    starting quantify under the debugger with data collection
+	    turned off using <tt>-record-data=no</tt>, and then
+	    calling into the Quantify API from the debugger to turn it
+	    on for just the duration of the task that I want to
+	    profile.
+	  </li>
+	</p>
+        <p>  
+	  <li>
+ 	    Typically, I end up with an invocation of mozilla looking
+ 	    something like this:
+<pre>
+cd ../../dist/bin
+env LD_BIND_NOW=1 QUANTIFYOPTIONS="\
+  -force-dlopen-rtld-now -record-dynamic-library-data=no \
+  -avoid-recording-system-calls=SYS_exit,SYS_poll,SYS_door \
+  -record-data=no" \
+  ./run-mozilla.sh -g -d dbx mozilla-bin.quantify
+</pre>
+	  </li>
+	</p>
+      </ul>
+    </li>
+    <li>
+      <b>Use the debugger to control data collection.</b>
+      <p>
+	Start the program under debugger control.  When you get to the
+	point where you want to turn on profiling, break into the
+	debugger.  Then turn on data recording:
+      <pre>
+(dbx 2) print quantify_start_recording_data()
+quantify_start_recording_data() = 1
+</pre>
+        Continue executing your program, and perform whatever task it
+        is you'd like to profile.  When you've finished, break into
+        the debugger again, turn off data recording, and tell Quantify
+        to save the data:
+      <pre>
+(dbx 4) print quantify_stop_recording_data()
+quantify_stop_recording_data() = 1
+(dbx 5) print quantify_save_data()
+<i>[gobs of output elided to save space]</i>
+quantify_save_data() = 1
+(dbx 6)
+</pre>
+        The output from <tt>quantify_save_data()</tt> will tell you
+        how to then view the data using <tt>quantify -view</tt>.
+      <p>
+	Note: gdb users will need to use the <tt>call</tt> command to
+	invoke Quantify's API functions instead of <tt>print</tt>.
+      </p>
+    </li>
+  </ol>
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/quantify.html&amp;rev=&amp;root=/cvsroot/">Last modified February  8,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

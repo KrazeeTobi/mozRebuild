@@ -1,0 +1,206 @@
+<HTML>
+<HEAD>
+<TITLE>The Life Of An HTML HTTP Request</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<FONT SIZE=+3><B>The Life Of An HTML HTTP Request</B></FONT><BR>
+Alexander Larsson &lt;<A HREF="mailto:alex@cendio.se">alex@cendio.se</A>&gt;
+<P>
+<BR>
+
+<img src="url_load.gif">
+<p>
+
+<b>(1)</b>
+The loading of the url is started in nsWebShell::DoLoadURL (called
+from some LoadURL or LoadURI variant in the webshell). The webshell
+then tells it's DocumentLoader to load (command "view") the specified
+url. [note: Passes nsWebShell.mObserver as nsIStreamObserver and the
+webshell as nsIContentViewerContainer to the DocLoader.] 
+<p>
+
+<b>(2)</b>
+The Document Loader calls NS_OpenURI with the url to begin transfering
+the requested file. Necko (the network library) checks the url scheme
+(the first part of the url, http: in this case) and locates the
+correct nsIProtocolHandler (in this case nsHTTPHandler) and asks it
+for a nsIChannel (nsHTTPChannel). The channel represents the
+connection to the server, and is the source of the html data stream.
+<p>
+
+<b>(3)</b>
+When data is starting to come from the webserver the nsIChannel calls
+the OnStartRequest in the DocumenLoader. Now the channel knows the
+content type of the incoming data, so the DocumentLoader can find an
+nsIDocumentLoaderFactory for the "text/html" content type (in this
+case an nsLayoutDLF). This factory is then told to create a
+nsIContentViewer. The factory creates a ContentViewer. In most cases
+(including this) it also creates a nsIDocument (nsHTMLDocument) and
+binds it to the ContentViewer (nsIDocumentViewer in that case). The
+ContentViewer is then Embed():ed into the ContentViewerContainer (the
+WebShell).
+<p>
+
+<b>(4)</b>
+The document then creates a nsIParser for parsing the input stream.
+For HTML document this is an nsParser, which also implements
+nsIStreamListener. This StreamListener is returned to the
+DocumentLoader and connected to the nsIChannel of the request.
+<p>
+
+<b>(5)</b>
+The Document (nsHTMLDocument) also creates a nsIContentSink
+(nsHTMLContentSink) and connects it to the parser and the
+document. The parser then parses the stream it gets via it's
+StreamListener interface and converts it to nsIParserNodes which it
+places in the ContentSink.
+<p>
+
+The parser typically gets data from the stream in 8kb blocks and
+parses these blocks, block by block. After every parsed block it
+passes the parsed data as nsIParserNodes to the ContentSink unless the
+parser has been temporarily blocked, in wich case it waits until it gets
+unblocked before parsing the cached data it has receieved while being
+blocked.
+<p>
+
+<b>(6)</b>
+The contentsink then builds up nsIContent nodes that describe the
+document. These content nodes are created by calling functions like
+NS_NewHTMLXxxxElement(). These element nodes implement the
+nsIHTMLContent interface as well as their respective DOM interfaces.
+nsIContent::AppendChild() is used to build the content tree but
+AppendChild takes a "aNotify" argument that marks if it should notify
+the document about the content model changes or not. This argument is
+always PR_FALSE when the content sink calls AppendChild. The content
+sink tells the document about content model changes (NotifyBody()) in
+places like nsHTMLContentSink::WillInterrupt() and
+nsHTMLContentSink::DidBuildModel(). WillInterrup is called by the parser
+between every 8kb block of data (unless the parser is temporarily
+blocked).
+<p>
+
+<b>(7)</b>
+Since the presentation shell (nsPresShell) has registred as an
+DocumentObserver with the nsIDocument it also gets notified of changes
+in the Document/Content tree. This is used to create and update the
+nsIFrame hierarchy. This is done by the nsCSSFrameConstructor, which
+creates frames for each Content node according to the rules specified
+in the user agent stylesheet (ua.css) and the document specific style
+sheets. Each Content node corresponds to one or more nsIFrame, except
+content with displaytype "none". If there are several frames created
+from a content node, then the first of these are called the "primary"
+node, and the following frames can be found by using the
+GetNextInFlow() method of nsIFrame.
+The initial reflow is done by the nsHTMLContentSink::StartLayout(),
+StartLayout() calls PresShell::InitialReflow(). StartLayout is called
+quite early in the parsing process, for HTML it's called in
+nsHTMLContentSink::OpenBody() (among other places).
+<p>
+
+<i>TODO: How are nsIFrames reflowed after a change when they already exist?</i>
+<p>
+
+<b>(8)</b>
+Each nsIFrame knows how how to draw itself on the screen. When the
+PresShell [Note: not true, who really does the call?]  has layouted
+(reflowed) the frames it calls nsIFrame::Paint() method of all
+frames. These get passed references to the presentation context and a
+rendering context to do the drawing on. The rendering context
+implementation is a native class (nsGtkRenderingContext on unix) that
+knows how to draw in a window.
+<p>
+
+<i>TODO: Views, ViewManager, EventStateManager? </i>
+
+<P>
+<A HREF="url_load.dia">Diagram</A> created with 
+<A HREF="http://www.lysator.liu.se/~alla/dia/dia.html">DIA</A>.
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/url_load.html&amp;rev=&amp;root=/cvsroot/">Last modified October  8,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

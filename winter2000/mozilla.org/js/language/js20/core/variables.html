@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>JavaScript 2.0 Variables</TITLE>
+<LINK rel=stylesheet href="../../styles.css">
+<LINK rel=Start href="../index.html">
+<LINK rel=Contents href="../index.html">
+<LINK rel=Prev href="definitions.html">
+<LINK rel=Next href="functions.html">
+<SCRIPT type="text/javascript" language="JavaScript1.2" src="../../unicodeCompatibility.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+<TR>
+  <TD valign=TOP nowrap>
+    <DIV class=title2><SPAN class=top-title>JavaScript 2.0</SPAN></DIV>
+    <DIV class=title2>Core Language</DIV>
+    <DIV class=title1>Variables</DIV>
+  </TD>
+  <TD valign=TOP nowrap align=RIGHT><A href="definitions.html"><IMG src="../../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="../index.html"><IMG src="../../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="functions.html"><IMG src="../../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+</TR>
+</TABLE>
+
+<P class=mod-date>Wednesday, February 16, 2000</P>
+
+<H2>Variable Definitions</H2>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-VariableDefinition"></A><VAR class=nonterminal>VariableDefinition</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-VariableDefinitionKind"><VAR class=nonterminal>VariableDefinitionKind</VAR></A>&nbsp;<VAR class=nonterminal><A href="#N-VariableBindingList">VariableBindingList</A><SUP><SPAN class=nonterminal-attribute>allowIn</SPAN></SUP></VAR></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-VariableDefinitionKind"></A><VAR class=nonterminal>VariableDefinitionKind</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE class=terminal-keyword>var</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE class=terminal-keyword>const</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-VariableBindingList"></A><VAR class=nonterminal>VariableBindingList<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-VariableBinding">VariableBinding</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-VariableBindingList">VariableBindingList</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR>&nbsp;<CODE class=terminal-keyword>,</CODE>&nbsp;<VAR class=nonterminal><A href="#N-VariableBinding">VariableBinding</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-VariableBinding"></A><VAR class=nonterminal>VariableBinding<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-TypedIdentifier">TypedIdentifier</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR>&nbsp;<VAR class=nonterminal><A href="#N-VariableInitializer">VariableInitializer</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-TypedIdentifier"></A><VAR class=nonterminal>TypedIdentifier<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="expressions.html#N-Identifier"><VAR class=nonterminal>Identifier</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="expressions.html#N-Identifier"><VAR class=nonterminal>Identifier</VAR></A>&nbsp;<CODE class=terminal-keyword>:</CODE>&nbsp;<VAR class=nonterminal><A href="expressions.html#N-TypeExpression">TypeExpression</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-VariableInitializer"></A><VAR class=nonterminal>VariableInitializer<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE class=terminal-keyword>=</CODE>&nbsp;<VAR class=nonterminal><A href="expressions.html#N-AssignmentExpression">AssignmentExpression</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>b</SPAN></SPAN></SUP></VAR></DIV>
+</DIV>
+
+<P>A variable defined with <CODE class=terminal-keyword>var</CODE> can be modified, while one defined with <CODE class=terminal-keyword>const</CODE>
+is read-only. <A href="expressions.html#N-Identifier"><VAR class=nonterminal>Identifier</VAR></A> is the name of the variable
+and <VAR class=nonterminal><A href="expressions.html#N-TypeExpression">TypeExpression</A></VAR> is its type. <A href="expressions.html#N-Identifier"><VAR class=nonterminal>Identifier</VAR></A>
+can be any non-reserved identifier. <VAR class=nonterminal><A href="expressions.html#N-TypeExpression">TypeExpression</A></VAR>
+is evaluated at the time the variable definition is evaluated and should evaluate to a type <VAR>t</VAR>.</P>
+
+<P>If provided, <VAR class=nonterminal><A href="expressions.html#N-AssignmentExpression">AssignmentExpression</A></VAR> gives
+the variable's initial value <VAR>v</VAR>. If <VAR class=nonterminal><A href="expressions.html#N-AssignmentExpression">AssignmentExpression</A></VAR>
+is not provided in a <CODE class=terminal-keyword>var</CODE> definition, then <CODE>undefined</CODE> is assumed; if <CODE>undefined</CODE>
+cannot be <A href="../libraries/types.html#coercion">coerced</A> to type <VAR>t</VAR> then any attempt to read the variable
+prior to writing a valid value into it will result in an error. <VAR class=nonterminal><A href="expressions.html#N-AssignmentExpression">AssignmentExpression</A></VAR>
+is evaluated just after the <VAR class=nonterminal><A href="expressions.html#N-TypeExpression">TypeExpression</A></VAR> is
+evaluated. The value <VAR>v</VAR> is then coerced to the variable's type <VAR>t</VAR> and stored in the variable. If the variable
+is defined using <CODE class=terminal-keyword>var</CODE>, any values subsequently assigned to the variable are also coerced
+to type <VAR>t</VAR> at the time of each such assignment.</P>
+
+<P>Multiple variables separated by commas can be defined in the same <A href="#N-VariableDefinition"><VAR class=nonterminal>VariableDefinition</VAR></A>.
+The values of earlier variables are available in the <VAR class=nonterminal><A href="expressions.html#N-TypeExpression">TypeExpression</A></VAR>s
+and <VAR class=nonterminal><A href="expressions.html#N-AssignmentExpression">AssignmentExpression</A></VAR>s of later variables.</P>
+
+<P>If omitted, <VAR class=nonterminal><A href="expressions.html#N-TypeExpression">TypeExpression</A></VAR> defaults to type
+<CODE>any</CODE>. Thus, the definition</P>
+
+<PRE>var a, b=3, c:Integer=7, d, e:Type=Boolean, f:Number, g:e, h:int;</PRE>
+
+<P>is equivalent to:</P>
+
+<PRE>var a:any=undefined;
+var b:any=3;
+var c:Integer=7;
+var d:Integer=undefined;  // coerced to NaN
+var e:Type=Boolean;
+var f:Number=undefined;   // coerced to NaN
+var g:Boolean=undefined;  // coerced to false
+var h:int=undefined;      // coerced to int(0)</PRE>
+
+<H3>Constant Definitions</H3>
+
+<P><CODE class=terminal-keyword>const</CODE> means that <A href="expressions.html#N-Identifier"><VAR class=nonterminal>Identifier</VAR></A>
+cannot be written after its value is set. Its value can be set by an <VAR class=nonterminal><A href="expressions.html#N-AssignmentExpression">AssignmentExpression</A></VAR>
+if one is provided. If one is not provided then the constant can be written exactly once using a regular assignment statement;
+any attempt to read the constant prior to writing its value will result in an error. For example:</P>
+
+<PRE>const c:Integer;
+
+function f(x) {return x+c}
+
+f(3);  // error: c's value is not defined
+c = 5;
+f(3);  // returns 8
+c = 5; // error: redefining c</PRE>
+
+<P>Just like any other definition, a constant may be rebound after leaving its scope. For example, the following is legal;
+<CODE>j</CODE> is local to the block, so a new <CODE>j</CODE> binding is created each time through the loop:</P>
+
+<PRE>var k = 0;
+for (var i = 0; i &lt; 10; i++) {
+  local const j = i;
+  k += j;
+}</PRE>
+
+<HR>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TD valign=BOTTOM nowrap>
+      <ADDRESS><A href="mailto:waldemar@netscape.com">Waldemar Horwat</A><BR>
+      Last modified Wednesday, February 16, 2000</ADDRESS>
+    </TD>
+    <TD valign=TOP nowrap align=RIGHT><A href="definitions.html"><IMG src="../../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="../index.html"><IMG src="../../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="functions.html"><IMG src="../../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+  </TR>
+</TABLE>
+</BODY>
+</HTML>

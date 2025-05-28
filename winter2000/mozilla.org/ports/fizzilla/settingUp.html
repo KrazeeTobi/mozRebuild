@@ -1,0 +1,504 @@
+<HTML>
+<HEAD>
+<TITLE>Project Fizz</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<H1>Building Fizzilla</H1>
+
+<P>by Mike Pinkerton<BR>
+last modified on 2/23/2000</P>
+
+<H2><FONT COLOR="#FF0000">Note, this is not complete.</FONT></H2>
+
+<H2>How to build...</H2>
+
+<P>There are 3 major steps to setup and build:</P>
+
+<UL>
+   <LI>Download, build, and install gLib</LI>
+   
+   <LI>Download, build, and install libIDL</LI>
+   
+   <LI>Download, tweak, tweak, and build Mozilla.</LI>
+</UL>
+
+<P>
+
+<HR>
+
+</P>
+
+<H2>Building glib-1.2.6</H2>
+
+<P><A HREF="http://www.gtk.org/">http://www.gtk.org/</A></P>
+
+<P><TABLE BORDER=0 WIDTH="100%">
+   <TR>
+      <TD>
+         <P>1. Download</P>
+         
+         <UL>
+            <LI><A HREF="ftp://ftp.gtk.org/pub/gtk/v1.2/glib-1.2.6.tar.gz">ftp://ftp.gtk.org/pub/gtk/v1.2/glib-1.2.6.tar.gz</A></LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>2. Extract</P>
+         
+         <UL>
+            <LI>% gzip -d -c glib-1.2.6.tar.gz | tar xvf -</LI>
+            
+            <LI>% cd glib-1.2.6/</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>3. Workaround cpp bug - Radar #2398808: "Macros with
+         Variable Numbers of Arguments (## args) don't work."</P>
+         
+         <UL>
+            <LI>% setenv CFLAGS -traditional-cpp</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>4. Build</P>
+         
+         <UL>
+            <LI>&nbsp;% ./configure
+            --host=powerpc-apple-rhapsody10.0</LI>
+            
+            <LI>% make</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>5. Install (you need to be root)</P>
+         
+         <UL>
+            <LI>% su root</LI>
+            
+            <LI># make install</LI>
+            
+            <LI># exit</LI>
+            
+            <LI>% cd ..</LI>
+         </UL>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<P>
+
+<HR>
+
+</P>
+
+<H2>Building libIDL-0.6.8</H2>
+
+<P><A HREF="http://hpux.cs.utah.edu/hppd/hpux/Gtk/libIDL-0.6.8/">http://hpux.cs.utah.edu/hppd/hpux/Gtk/libIDL-0.6.8/</A></P>
+
+<P>(note: why are we getting the HP/UX version? There has got to be a
+better one out there)</P>
+
+<P><TABLE BORDER=0 WIDTH="100%">
+   <TR>
+      <TD>
+         <P>1. Download</P>
+         
+         <UL>
+            <LI><A HREF="ftp://hpux.cs.utah.edu/hpux/Gtk/libIDL-0.6.8/libIDL-0.6.8-ss-11.00.tar.gz">ftp://hpux.cs.utah.edu/hpux/Gtk/libIDL-0.6.8/libIDL-0.6.8-ss-11.00.tar.gz</A></LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>2. Extract</P>
+         
+         <UL>
+            <LI>% gzip -d -c libIDL-0.6.8-ss-11.00.tar.gz | tar xvf
+            -</LI>
+            
+            <LI>% cd libIDL-0.6.8/</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>3. Disable HP/UX Patches</P>
+         
+         <UL>
+            <LI>% mv HPUX.Install HPUX.Install.not</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>4. Workaround cpp bug - Radar #2398808: "Macros with
+         Variable Numbers of Arguments (## args) don't work."</P>
+         
+         <UL>
+            <LI>% setenv CFLAGS -traditional-cpp</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>5. Build</P>
+         
+         <UL>
+            <LI>% ./configure --host=powerpc-apple-rhapsody10.0</LI>
+            
+            <LI>% make</LI>
+         </UL>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P>6. Install</P>
+         
+         <UL>
+            <LI>% su root</LI>
+            
+            <LI># make install
+            
+            <UL>
+               <LI>(ignore "rename libIDL-0.6.sl.4.4 to libIDL.sl: No
+               such file or directory")</LI>
+            </UL>
+            </LI>
+            
+            <LI># exit</LI>
+            
+            <LI>% cd ..</LI>
+         </UL>
+      </TD>
+   </TR>
+</TABLE>
+&nbsp;</P>
+
+<H1>Warning: </H1>
+
+<P>At this point we have created a version of libIDL that will not
+correctly generate constants in header files. Mozilla will not build.
+Check the newsgroups for how we are going to solve this or a
+workaround.</P>
+
+<P>
+
+<HR>
+
+</P>
+
+<H2>Building mozilla-source-M10</H2>
+
+<P>http://www.mozilla.org/</P>
+
+<P>&nbsp;</P>
+
+<P>1. Download</P>
+
+<P>ftp://ftp.mozilla.org/pub/mozilla/releases/m10/src/mozilla-source-M10.tar.gz</P>
+
+<P>&nbsp;</P>
+
+<P>2. Extract</P>
+
+<P>% gzip -d -c mozilla-source-M10.tar.gz | tar xvf -</P>
+
+<P>% cd mozilla/</P>
+
+<P>&nbsp;</P>
+
+<P>3. Workaround for &lt;math.h&gt; bug</P>
+
+<P>Radar #2381837: "symbol "exception" defined in both &lt;new.h&gt;
+and &lt;math.h&gt;"</P>
+
+<P>% su root</P>
+
+<P># patch -p0 &lt; ../math_h.patch</P>
+
+<P># exit</P>
+
+<P>&nbsp;</P>
+
+<P>4. Patch Mozilla for Mac OS X</P>
+
+<P>% patch -p1 &lt; ../macosx-mozilla-M10.patch</P>
+
+<P>(this step isn't really necessary once we fix the bug in
+libIDL)</P>
+
+<P>&nbsp;</P>
+
+<P>5. Install PowerPlant header files, required by Carbon
+'widget'</P>
+
+<P>% cp your_PowerPlant_folder/PP_Macros.h widget/src/mac/</P>
+
+<P>% cp your_PowerPlant_folder/PP_Messages.h widget/src/mac/</P>
+
+<P>% cp your_PowerPlant_folder/PP_Types.h widget/src/mac/</P>
+
+<P>&nbsp;</P>
+
+<P>6. Build, Pass 1</P>
+
+<P>% ./configure --host=powerpc-apple-rhapsody10.0
+--disable-tests</P>
+
+<P>% make</P>
+
+<P>(will stop on "duplicate case value `nsIPref::ePrefInt'"
+error)</P>
+
+<P>&nbsp;</P>
+
+<P>7. Workaround for IDL compiler bug</P>
+
+<P>The IDL compiler is broken. When an IDL file says "const long foo
+= 1234", the generated header file says "enum { foo = 0 }". The
+constant has the value 0, which is incorrect.</P>
+
+<P>&nbsp;</P>
+
+<P>% patch -p1 &lt; ../macosx-mozillaM10-headers.patch</P>
+
+<P>Now we need to rebuild part of xpcom...</P>
+
+<P>% cd xpcom/components/</P>
+
+<P>% rm *.o</P>
+
+<P>(don't 'make clean', or else you'll wipe out patched headers)</P>
+
+<P>% make</P>
+
+<P>% cd ../build/</P>
+
+<P>(now you're in mozilla/xpcom/build/)</P>
+
+<P>% make</P>
+
+<P>% cd ../../</P>
+
+<P>(back to top-level directory)</P>
+
+<P>&nbsp;</P>
+
+<P>8. Build, Pass 2</P>
+
+<P>% make</P>
+
+<P>(will stop in 'widget', being unable to find library
+gfx_macDYLIB)</P>
+
+<P>&nbsp;</P>
+
+<P>9. Rebuild 'gfx' as a dylib</P>
+
+<P>Here's the deal: 'gfx' should be a Mach-O dynamic library.
+However, something somewhere attempts to load in 'gfx' manually. You
+end up with the error "nsNativeComponentLoader:
+GetFactory(libgfx_mac.dylib) Load FAILED with error: Undefined error:
+0", because all Mozilla components are assumed to be Mach-O bundle
+files, not Mach-O dynamic library files. The workaround is to build
+'gfx' first as a bundle file, to satisfy whatever part of Mozilla is
+trying to load it in, then rebuild it as a dylib under a different
+name, so that 'widget' will be able to link against it later. The
+result is "gfx_mac.dylib", which is a bundle, and
+"gfx_macDYLIB.dylib", which is an actual dylib. Not pretty, but it'll
+do for now.</P>
+
+<P>&nbsp;</P>
+
+<P>% cd gfx/src/mac</P>
+
+<P>% emacs Makefile</P>
+
+<P>* Comment out the line "DSO_LDOPTS = -bundle"</P>
+
+<P>* Change the LIBRARY_NAME to "gfx_macDYLIB"</P>
+
+<P>% make</P>
+
+<P>% cd ../../../</P>
+
+<P>(back to top-level directory)</P>
+
+<P>&nbsp;</P>
+
+<P>10. Build, Pass 3</P>
+
+<P>% make</P>
+
+<P>(will stop in 'editor', which is ok)</P>
+
+<P>&nbsp;</P>
+
+<P>11. Build the viewer app</P>
+
+<P>% cd webshell/tests/viewer/</P>
+
+<P>% make</P>
+
+<P>% cd ../../../</P>
+
+<P>(back to top-level directory)</P>
+
+<P>&nbsp;</P>
+
+<P>12. Workaround for current NSPR config</P>
+
+<P>% cd dist/bin</P>
+
+<P>% ln -s . Rhapsody10.0_DBG.OBJ</P>
+
+<P>&nbsp;</P>
+
+<P>13. Run</P>
+
+<P>% ./viewer</P>
+
+<P>
+
+<HR>
+
+written by Mike Pinkerton (<A HREF="mailto:pinkerton@netscape.com">pinkerton@netscape.com</A>)</P>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/ports/fizzilla/settingUp.html&amp;rev=&amp;root=/cvsroot/">Last modified February 23,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

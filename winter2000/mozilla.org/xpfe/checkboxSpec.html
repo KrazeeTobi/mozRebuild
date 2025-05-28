@@ -1,0 +1,247 @@
+<HTML>
+<HEAD>
+<TITLE>Toolbar Spec</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+<!--This file created 5/5/99 7:38 PM by Claris Home Page version 3.0 30 Day Trial-->
+
+   
+   <X-CLARIS-WINDOW TOP=59 BOTTOM=745 LEFT=361 RIGHT=1013>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+
+
+<H1>Checkbox Spec</H1>
+
+<P>by Mike Pinkerton<BR>
+Last Modified 5/5/99</P>
+
+<H2>Overview</H2>
+
+<P>This document is the engineering details behind the XUL checkbox,
+which in addition to being a normal checkbox, can also be placed into
+a "tri-state" mode that adds a third, mixed, state.</P>
+
+<P>
+
+<HR>
+
+</P>
+
+<H2><A NAME=Syntax></A>Syntax</H2>
+
+<P>The XUL syntax for Checkboxes.</P>
+
+<H4><B>Toolboxes</B></H4>
+
+<P><TABLE BORDER=1 WIDTH="90%">
+   <TR>
+      <TD WIDTH="14%">
+         <P><B>Tag</B></P>
+      </TD>
+      <TD WIDTH="29%">
+         <P><B>Children</B></P>
+      </TD>
+      <TD WIDTH="29%">
+         <P><B>Attributes</B></P>
+      </TD>
+      <TD WIDTH="57%">
+         <P><B>Description</B></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH="14%">
+         <P>checkbox</P>
+      </TD>
+      <TD WIDTH="29%">
+         <P>n/a</P>
+      </TD>
+      <TD WIDTH="29%">
+         <P>value</P>
+      </TD>
+      <TD WIDTH="57%">
+         <P>A normal checkbox. To place in tristate mode, set the
+         value to "2". From that moment on, the checkbox will behave
+         as a tristate.</P>
+      </TD>
+   </TR>
+</TABLE>
+&nbsp;</P>
+
+<P><B>Important usage note:</B> You must use the getAttribute and
+setAttribute JavaScript functions to access the "value" attribute.
+This is because we don't support the value property for non-HTML
+content elements in XUL.</P>
+
+<P>Modify the look of the checkbox using CSS. xul.css uses the
+following two style rules, one for normal state, one for the
+depressed state (when the mouse is down and within the checkbox):</P>
+
+<PRE>checkbox {
+   display:inline;
+   border: 1px solid black;
+}
+
+checkbox&#91;depress&#93; {
+   background: darkGray;
+   border: 1px inset black;
+}</PRE>
+
+<P>
+
+<HR>
+
+</P>
+
+<H2><A NAME=Behavior></A>Behavior</H2>
+
+<P>The expected behavior of the checkbox is the following:</P>
+
+<P>In "normal" mode, clicking the box will toggle the value between
+on and off, represented by the "value" attribute having the
+<I>string</I> values "1" and "0", respectively. The transitions,
+starting in the "on" state, are as follows:</P>
+
+<BLOCKQUOTE>on "1" -&gt; off "0" -&gt; on "1"</BLOCKQUOTE>
+
+<P>To get the checkbox into tristate mode, set the "value" attribute
+to "2". This will set the tristate checkbox to a "mixed" state and
+make it so that it is forever a tristate checkbox. The transitions,
+starting in "mixed" state, are as follows: </P>
+
+<BLOCKQUOTE>mixed "2" -&gt; on "1" -&gt; off "0" -&gt; mixed "2"</BLOCKQUOTE>
+
+<H2>
+
+<HR>
+
+Examples</H2>
+
+<P>Here is an example of XUL for both kinds of checkboxes. The first
+checkbox behaves normally. By setting the second checkbox's value to
+"2," it becomes a tristate checkbox from that moment on.</P>
+
+<P>Notice that you must use the getAttribute and setAttribute
+JavaScript functions to access the "value" attribute. This is because
+we don't support the value property for non-HTML content.</P>
+
+<PRE>&lt;?xml version="1.0"?&gt; 
+&lt;?xml-stylesheet href="xul.css" type="text/css"?&gt; 
+
+&lt;!DOCTYPE window&gt; 
+
+&lt;window style="width: 100%; height: 100%" xmlns:html="http://www.w3.org/TR/REC-html40"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        onload="setTri()"&gt; 
+
+&lt;html:h1&gt;TriStateCheckbox Test 1&lt;/html:h1&gt;
+
+&lt;html:script&gt;
+
+function setTri()
+{
+  var tsbox = document.getElementById("tristate"); tsbox.setAttribute("value", "2");
+}
+
+&lt;/html:script&gt;
+
+&lt;html:hr/&gt;
+
+&lt;!-- this is a normal checkbox --&gt;
+&lt;checkbox/&gt;Dual state&lt;html:br/&gt;
+
+&lt;!-- this is a tristate checkbox after the setTri() function has been called --&gt;
+&lt;checkbox id="tristate"/&gt;Tri state baby!&lt;html:br/&gt;
+
+&lt;html:button onclick="setTri()"&gt;Click Me To Set TriState&lt;/html:button&gt;
+
+&lt;/window&gt;</PRE>
+
+<P>
+
+<HR>
+
+maintained by <A HREF="http://people.netscape.com/pinkerton">Mike
+Pinkerton</A> (<A HREF="mailto:pinkerton@netscape.com">pinkerton@netscape.com</A>)</P>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/checkboxSpec.html&amp;rev=&amp;root=/cvsroot/">Last modified May  6,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

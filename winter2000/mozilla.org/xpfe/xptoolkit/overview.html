@@ -1,0 +1,241 @@
+<HTML>
+<HEAD>
+<TITLE>Overview of a Package</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<table width=100% cellspacing=0>
+<tr>
+<td bgcolor="#6699ff"><font size=+1 color=white face="Century Gothic">Overview of a Package</font>
+<tr>
+<td>
+<p>
+[<a href="index.html">Table of Contents</a>] [<a href="introduction.html">Previous: Introduction</a>]
+[<a href="xulintro.html">Next: Introduction to a XUL Document</a>]
+<p>
+A hunk of UI machinery (including the description of its structure, appearance, behavior, and localizable
+strings)
+is called a <i>package</i>.  Sample packages in the Communicator product 
+include Navigator, Messenger, Preferences, Bookmarks
+and Composer.  Packages can communicate with one another and may share functionality (which can
+be abstracted into a common package).
+<p>
+The contents of a package can be divided into five primary components.
+<p>
+<b>1. Content</b> - An XML-based description of the UI structure. This XML description will typically make
+use of two namespaces to define the UI.  The first is <a href="http://www.w3.org/MarkUp/">HTML</a>,
+as defined in the <a href="http://www.w3.org/TR/xhtml1/">XHTML working draft</a>.  The second namespace
+is called XUL.  XUL stands for XML-based User Interface Language, and this namespace provides 
+additional widgets, features, and capabilities above and beyond what is available in HTML (e.g.,
+menubars, tab widgets, toolbars, etc.).
+<p>
+<IMG BORDER=0 align="center" src="http://www.mozilla.org/xpfe/aom/dialog_tree.gif" alt="A dialog has a (DOM) content tree" height=286 width=572>
+<p>
+When Gecko's layout engine walks over this content tree, it instantiates widgets that correspond
+to the given tags (e.g., Gecko knows to make a menubar when it sees the tag "menubar").  In Gecko,
+these widgets are referred to as <i>frames</i> (not to be confused with the HTML frames found in 
+framesets).
+
+These frames own pixels (and other presentation facilities, e.g., sound channels).
+They are the building blocks from which user interfaces are constructed.
+        A radio-button is a widget,
+                as is a menu, or a scrollbar.
+        Widgets hook into the underlying document object model (DOM) and can use JavaScript
+		to communicate with services when actions are performed on the widgets.
+        E.g., a button (which is a widget) labeled "Print",
+                might be configured to call the <i>printPage</i> method of
+                an underlying browser service.
+<p>
+XPToolkit provides a cross-platform implementation for all of the XUL tags.  It is the intent that
+one day these implementations will be pluggable, so that a third party will be able to 
+drop in a completely
+different implementation of a given widget, but for now that is not the case.
+</P>
+
+<P>
+        Widgets can be simple or complex.
+        They can even be composed of other widgets.
+        A toolbar-widget, for example,
+                can contain several button widgets.
+</P>
+
+<IMG BORDER=0 align="center" src="http://www.mozilla.org/xpfe/aom/two_layers.gif" alt="Widgets are a `layer' above content tree" height=462 width=563>
+<p>
+<b>2. Appearance</b> - The appearance of the content can be customized using
+<a href="http://www.w3.org/Style/CSS/">Cascading Style Sheets</a>.  Just as style can be applied to
+HTML content, it can also be applied to XUL content.  The individual widgets defined in XUL are
+responsive to CSS1 (and even some CSS2) properties, and their 
+appearance is therefore highly customizable.
+<p> 
+<b>3. Behavior</b> - The behavior of the package is defined using JavaScript, services, and 
+the application object model.
+<p>
+<b>The Application Object Model</b><br>
+        The XPToolkit is a collection of facilities
+                that cooperate through a shared model of their environment.
+        Much as the <A href="http://www.w3c.org/DOM/">Document Object Model</A> defines a shared
+                environment that can be assumed by any script or service that wants to work with a document,
+                the Application Object Model (AOM) defines the environment assumed by components of the
+                XPToolkit.
+        This is a major part of the overall XPToolkit architecture.
+<P>
+        The AOM defines (some of) the objects and relationships
+                that compose the UI and related services of an application built on the XPToolkit.
+        This object model is a super-set of the DOM, as a running app is expected to have one or more
+                documents whose content is accessed through a strictly DOM compliant API.
+        In the same way that we provide access to the DOM API both internally,
+                e.g., to compiled C or C++,
+                and externally,
+                e.g., to a Java applet or to a hunk of JavaScript,
+                the AOM is the primary mechanism for working with the XPToolkit,
+                for both compiled code and scripts.
+<p>
+<b>Services</b><br>
+        Services are the work-horses of an application.
+        Services perform actual application-specific tasks,
+                such as printing, fetching a the data at the other end of a URL, or sequencing some DNA.
+        Services are controlled and directed with messages,
+                usually sent by widgets,
+                e.g., when the user pushes the "Print" button.
+</P>
+
+<P>
+        The implementation of a service is typically ignorant of the details
+                of its own user interface, if it even has one
+                (e.g., it might be `faceless').
+        It merely exposes functions that enable messages to be sent to the service.
+        In fact, the same service may be exploited by different UIs, even at the same time.
+</P>
+<p>
+It is permissible of course for a service to know how to operate on a certain type of widget,
+e.g., a service might know how to populate a listbox with some data, but it is bad form for
+the service to contain any hardcoded knowledge of a content tree's internal structure (e.g.,
+a service shouldn't assume that it is operating on the second frame in a window's frames
+array).
+<p>
+A service can be written entirely in JavaScript or it can be a mixture of JavaScript and 
+C++.  The service permits access to its C++ code by exposing a scriptable interface using 
+<a href="http://www.mozilla.org/scriptable/">XPIDL and
+XPConnect</a>. The service can therefore be instantiated and used entirely from JavaScript, even
+though the bulk of its implementation might be in C++.
+<p>
+<IMG BORDER=0 align="center" src="http://www.mozilla.org/xpfe/aom/all_layers.gif" alt="Services are a layer code below the content tree" height=535 width=565>
+<p>
+<b>4. Locale</b> - The fourth component of the package is that of locale.  The locale component
+includes all localizable strings as well as other information necessary to supply the
+appropriate appearance and behavior for the package. 
+<p>
+Locale therefore overlaps with
+the previous three components, as it may overlay content, appearance, and behavior as
+necessary to ensure that the package conforms to a specific locale.
+<p>
+String resources are maintained in an external DTD, which allows the strings to be referenced using
+entities in XML. By separating the locale information from the rest of the package components, it
+becomes easier to switch between different locales without having to alter the other
+components of the package.
+<p>
+<b>5. Platform</b> - The final component of a package is platform-specific information.  Like 
+the locale component, this component overlaps with the first three, as it may be necessary to
+overlay different content, appearance, and behavior on top of the rest of the package components
+in order to ensure that the UI conforms to the desired look and feel on a given platform.
+<p>
+<b>The Whole Package</b><br>
+Together, all five of these components make up a complete package. By enforcing this separation
+among the components of the package, it becomes possible to swap out individual pieces of the
+package.  For example, new "skins" can be applied to an existing package by swapping out its
+appearance component with another.  Platform looks and feels can be swapped out by replacing
+the platform component. Different behavior can even be defined for the same content.
+<p>
+<hr size=1 solid>
+[<a href="index.html">Table of Contents</a>] [<a href="introduction.html">Previous: Introduction</a>]
+[<a href="xulintro.html">Next: Introduction to a XUL Document</a>]
+<hr size=1 solid>
+Contact us at <a href="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</a>.
+Want to complain about the new documentation? Email <a href="mailto:hyatt@netscape.com">Dave Hyatt</a>.
+<p>
+</table>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/xptoolkit/overview.html&amp;rev=&amp;root=/cvsroot/">Last modified May 12,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

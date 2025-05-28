@@ -1,0 +1,512 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Primitive Graph Control Scheduling</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Primitive Graph Format</H2>
+
+
+<H2>Control Layer</H2>
+
+
+<H2><FONT SIZE=+4>Control Scheduling</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"../electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="control_edges.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="control_layer.html"><IMG SRC=
+"../arrows/up.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A><A HREF="control_schedule_example.html"><IMG SRC="../arrows/right.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A></PRE>
+
+<DL>
+  <DT><P ALIGN=RIGHT><A HREF="control_schedule_example.html"><FONT SIZE=+2>Example</FONT></A>
+  <DT><P ALIGN=RIGHT><A HREF="control_schedule_proof.html"><FONT SIZE=+2>Proof</FONT></A>
+</DL>
+  </TD>
+ </TR>
+</TABLE>
+</P>
+
+<P>How do we convert a control graph into a linear instruction stream with
+branches? On this page we present an algorithm that should produce good
+code that tries to minimize the following:</P>
+
+<OL>
+  <LI>The number of conditional and unconditional branches encountered dynamically
+  when the function is executed,
+  <LI>The size of the generated function, and
+  <LI>The number of cache misses -- to help with cache performance code executed
+  together should be located together.
+</OL>
+
+<H3>Introduction</H3>
+
+
+<P>In general, without additional information such as profiles we won't
+know how often individual control nodes are executed, so we can't produce
+an optimal dynamic schedule. Consider a simple if-then-else control graph
+below. There are 4! = 24 ways to order the four control nodes A, B, C, and
+D. Many of these result in several unnecessary branches; <A HREF="#figure1">Figure
+1</A> lists four reasonable orderings.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="6" CELLPADDING="0">
+ <TR>
+  <TD ROWSPAN="2" NOWRAP ALIGN="CENTER">
+<P ALIGN=LEFT><A NAME="figure1"></A><IMG SRC="graphics/control_if_then_else.gif"
+ALIGN="BOTTOM" WIDTH="122" HEIGHT="159" NATURALSIZEFLAG="3">
+  </TD>
+  <TH NOWRAP ALIGN="LEFT" VALIGN="BOTTOM"><P ALIGN=LEFT>Order 1</TH>
+  <TH NOWRAP ALIGN="LEFT" VALIGN="BOTTOM"><P ALIGN=LEFT>Order 2</TH>
+  <TH NOWRAP ALIGN="LEFT" VALIGN="BOTTOM"><P ALIGN=LEFT>Order 3</TH>
+  <TH NOWRAP ALIGN="LEFT" VALIGN="BOTTOM"><P ALIGN=LEFT>Order 4</TH>
+ </TR>
+ <TR>
+  <TD NOWRAP VALIGN="TOP">
+<PRE>L0: <FONT COLOR="#FF0000">A</FONT>
+    bc L1
+    <FONT COLOR="#FF0000">B</FONT>
+    bra L2
+L1: <FONT COLOR="#FF0000">C</FONT>
+L2: <FONT COLOR="#FF0000">D</FONT>
+    return  </PRE>
+  </TD>
+  <TD NOWRAP VALIGN="TOP">
+<PRE>L0: <FONT COLOR="#FF0000">A</FONT>
+    bnc L1
+    <FONT COLOR="#FF0000">C</FONT>
+    bra L2
+L1: <FONT COLOR="#FF0000">B</FONT>
+L2: <FONT COLOR="#FF0000">D</FONT>
+    return  </PRE>
+  </TD>
+  <TD NOWRAP VALIGN="TOP">
+<PRE>L0: <FONT COLOR="#FF0000">A</FONT>
+    bc L1
+    <FONT COLOR="#FF0000">B</FONT>
+L2: <FONT COLOR="#FF0000">D</FONT>
+    return
+L1: <FONT COLOR="#FF0000">C</FONT>
+    bra L2</PRE>
+  </TD>
+  <TD NOWRAP VALIGN="TOP">
+<PRE>L0: <FONT COLOR="#FF0000">A</FONT>
+    bnc L1
+    <FONT COLOR="#FF0000">C</FONT>
+L2: <FONT COLOR="#FF0000">D</FONT>
+    return
+L1: <FONT COLOR="#FF0000">B</FONT>
+    bra L2</PRE>
+  </TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="5">Figure 1</TH>
+ </TR>
+</TABLE>
+</P>
+
+<P>Here <CODE>bc</CODE> branches if the condition is true, <CODE>bnc</CODE>
+branches if the condition is false, and <CODE>bra</CODE> branches unconditionally.
+For simplicity we assume that the execution cost of any of the three kinds
+of branches is the same, regardless of whether a conditional branch was
+taken or not.</P>
+
+<P>The code in orders 1 and 4 will execute two branches if it takes the
+path through B and one branch if it takes the path through C. The code in
+orders 2 and 3 will execute one branch if it takes the path through B and
+two branches if it takes the path through C. Without knowing the relative
+frequency of execution of B and C we don't know which order to prefer.</P>
+
+<P>Nevertheless, there are assumptions we can make that are usually true
+in practice. We will assume that a loop is executed several times on the
+average so that the graph in <A HREF="#figure2">Figure 2</A> should be scheduled
+using order 5 instead of order 6 because order 5 has in one fewer branch
+in each iteration of the loop even though order 6 has one fewer branch when
+the loop is executed zero times.</P>
+
+<P><TABLE BORDER="0" CELLSPACING="6" CELLPADDING="0">
+ <TR>
+  <TD WIDTH="10" ROWSPAN="2" NOWRAP ALIGN="CENTER">
+<P ALIGN=LEFT><A NAME="figure2"></A><IMG SRC="graphics/control_while.gif"
+ALIGN="BOTTOM" WIDTH="122" HEIGHT="159" NATURALSIZEFLAG="3">
+  </TD>
+  <TH NOWRAP ALIGN="LEFT" VALIGN="BOTTOM"><P ALIGN=LEFT>Order 5</TH>
+  <TH NOWRAP ALIGN="LEFT" VALIGN="BOTTOM"><P ALIGN=LEFT>Order 6</TH>
+ </TR>
+ <TR>
+  <TD NOWRAP VALIGN="TOP">
+<PRE>L0: <FONT COLOR="#FF0000">A</FONT>
+    bra L2
+L1: <FONT COLOR="#FF0000">C</FONT>
+L2: <FONT COLOR="#FF0000">B</FONT>
+    bc L1
+    <FONT COLOR="#FF0000">D</FONT>
+    return  </PRE>
+  </TD>
+  <TD NOWRAP VALIGN="TOP">
+<PRE>L0: <FONT COLOR="#FF0000">A</FONT>
+L1: <FONT COLOR="#FF0000">B</FONT>
+    bnc L2
+    <FONT COLOR="#FF0000">C</FONT>
+    bra L1
+L2: <FONT COLOR="#FF0000">D</FONT>
+    return  </PRE>
+  </TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="3">Figure 2</TH>
+ </TR>
+</TABLE>
+</P>
+
+<H2>The Scheduling Algorithm</H2>
+
+
+<P>In brief, we schedule control nodes according to the following guidelines:</P>
+
+<UL>
+  <LI>We place all control nodes that can be reached without throwing an
+  exception before any control nodes that can only be reached via an exception
+  handler. We apply this rule recursively to handlers of exceptions that
+  can be thrown from exception handlers, etc.
+  <LI>We schedule <A HREF="control_edges.html#loop">loops</A> from the innermost
+  to the outermost. We try to keep the nodes in each loop contiguous.
+  <LI>We schedule acyclic code trying to minimize the number of unconditional
+  branches.
+</UL>
+
+<P>The scheduling process is described in more detail below. <FONT COLOR="#007F00">The
+stages are illustrated in green text using the example control graph from
+the </FONT><A HREF="control_edges.html">control edge details page</A><FONT
+ COLOR="#007F00">.</FONT></P>
+
+<H3>1. Discover loops</H3>
+
+
+<P>In this stage we discover the <A HREF="control_edges.html#loop_tree">loop
+hierarchy tree</A>. It's likely that this information will already be available
+from previous stages of the compiler. <FONT COLOR="#007F00">The results
+of this stage are illustrated in </FONT><A HREF="#figure3">Figure 3</A><FONT
+ COLOR="#007F00">.</FONT></P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="BOTTOM">
+<A NAME="figure3"></A><IMG SRC="graphics/control_example_colored.gif" ALIGN=
+"BOTTOM" WIDTH="424" HEIGHT="424" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="BOTTOM">
+<IMG SRC="graphics/control_example_loops.gif" ALIGN="BOTTOM" WIDTH="154"
+HEIGHT="190" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN="CENTER">Control Graph</TD>
+  <TD ALIGN="CENTER">Loop Hierarchy Tree</TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="2">&nbsp;Figure 3</TH>
+ </TR>
+</TABLE>
+</P>
+
+<H3>2. Determine main body nodes</H3>
+
+
+<P>Since exception handlers are executed less frequently than the main body
+of the function, we'd like to schedule the main body without interference
+from control flow paths to or from exception handlers. We determine which
+nodes are in the main body of the function by marking the begin node and
+then taking the transitive closure of marking the targets of all forward
+and backward (but not return or exception) control edges whose sources are
+marked.</P>
+
+<P>For the next few stages, we will call the main body nodes <STRONG>working
+nodes</STRONG>. All nodes outside the main body are <STRONG>non-working
+nodes</STRONG>.</P>
+
+<P><FONT COLOR="#007F00">The result of doing this process in our example
+is illustrated in </FONT><A HREF="#figure4">Figure 4</A><FONT COLOR="#007F00">,
+in which all non-working nodes are greyed out.</FONT></P>
+
+<P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="BOTTOM">
+<A NAME="figure4"></A><IMG SRC="graphics/control_example_main.gif" WIDTH=
+"424" HEIGHT="424" ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+  <TD VALIGN="BOTTOM">
+<IMG SRC="graphics/control_example_loops_main.gif" WIDTH="154" HEIGHT="190"
+ALIGN="BOTTOM" NATURALSIZEFLAG="3">
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN="CENTER">Control Graph</TD>
+  <TD ALIGN="CENTER">Loop Hierarchy Tree</TD>
+ </TR>
+ <TR>
+  <TH COLSPAN="2">&nbsp;Figure 4</TH>
+ </TR>
+</TABLE>
+</P>
+
+<H3><A NAME="section3"></A>3. Schedule from the inside out</H3>
+
+
+<P>At this point we'll walk the loop hierarchy tree and schedule the leaf
+loops using the approach outlined below. After scheduling all subloops of
+a loop we can then schedule the loop. We ignore loops whose headers are
+non-working nodes -- such loops must consiste entirely of non-working nodes.
+Having scheduled all the loops in the main body of the function, we can
+then schedule the main body itself using the approach below.</P>
+
+<P><FONT COLOR="#007F00">In our example, we might schedule the loops in
+the following order: loop 4, loop 12, loop 16, loop 9, loop 2, loop 25,
+and then the main body (starts at node 1).</FONT></P>
+
+<P>Let us now take a look at how to schedule one loop or the main body.
+We'll call the portion that we're scheduling (either a loop or the entire
+main body) a <STRONG>region</STRONG> REG.</P>
+
+<P>We will produce a schedule S<FONT SIZE=-2>REG</FONT> for region REG.
+S<FONT SIZE=-2>REG</FONT> is a set of one or more <STRONG>cliques</STRONG>,
+where each clique is an ordered list of working nodes in REG. The order
+in which the cliques should be scheduled is not determined as long as the
+cliques are not interleaved.</P>
+
+<H4><A NAME="phase3a"></A>3a. Determining the nodes in a region</H4>
+
+
+<P>Given a region REG:</P>
+
+<DL>
+  <DD>Let R<FONT SIZE=-2>local</FONT> be the set of nodes in REG that are
+  not contained in any subloop of REG.
+  <DD>Let R<FONT SIZE=-2>subheaders</FONT> be the set of headers of immediate
+  subloops of REG.
+  <DD>Let R<FONT SIZE=-2>combined</FONT> be the union of R<FONT SIZE=-2>local</FONT>
+  and R<FONT SIZE=-2>subheaders</FONT>.
+</DL>
+
+<P>We will define R to be the intersection of R<FONT SIZE=-2>combined</FONT>
+and the set of all working nodes. We will also define RR to be the intersection
+of REG and the set of all working nodes.</P>
+
+<P><FONT COLOR="#007F00">In our example, if we're scheduling loop 2, REG
+is loop 2 and the above sets are as follows:</FONT></P>
+
+<DL>
+  <DD><FONT COLOR="#007F00">REG = {2, 3, ..., 24, 26, 27, 28, 29}</FONT>
+  <DD><FONT COLOR="#007F00">R</FONT><FONT COLOR="#007F00" SIZE=-2>local</FONT><FONT
+   COLOR="#007F00"> = {2, 3, 8, 22, 29}</FONT>
+  <DD><FONT COLOR="#007F00">R</FONT><FONT COLOR="#007F00" SIZE=-2>subheaders</FONT><FONT
+   COLOR="#007F00"> = {4, 9, 23, 27}</FONT>
+  <DD><FONT COLOR="#007F00">R</FONT><FONT COLOR="#007F00" SIZE=-2>combined</FONT><FONT
+   COLOR="#007F00"> = {2, 3, 4, 8, 9, 22, 23, 27, 29}</FONT>
+  <DD><FONT COLOR="#007F00">R = {2, 3, 4, 8, 9}</FONT>
+  <DD><FONT COLOR="#007F00">RR = {2, 3, ..., 21}</FONT>
+</DL>
+
+<H4><A NAME="phase3b"></A>3b. Initializing long edge flags</H4>
+
+
+<P>With each edge E: A-&gt;B for which at least one of A or B is in R, we
+associate a flag long(E) that states whether the edge E is a <STRONG>short</STRONG>
+or <STRONG>long</STRONG> edge. Informally, an edge is long if there is no
+reason to try to place node B immediately after node A.</P>
+
+<P>We initialize the flag long(E) for each edge E: A-&gt;B for which at
+least one of A or B is in R as follows:</P>
+
+<OL>
+  <LI>If A is outside RR, then E is a long edge (this will only happen if
+  B is the region header H or if A is a non-working node).
+  <LI>If E is any exception or return edge, then E is a long edge (this will
+  only happen when scheduling exception handlers after the function's main
+  body has already been scheduled).
+  <LI>If E is any backward edge, then E is a long edge.
+  <LI>If A is a switch node, then E is a long edge (on our target architectures
+  there is no reason to keep a switch statement contiguous with any of its
+  successors).
+  <LI>If A is a node in some subloop inside REG, then let L be the largest
+  subloop smaller than REG that contains A. Since we schedule loops from
+  the inside out, we have already computed the schedule S<FONT SIZE=-2>L</FONT>
+  of loop L. If A is <I>not</I> the last node of some clique in S<FONT SIZE=-2>L</FONT>,
+  then E is a long edge.
+  <LI>If B is a node in some subloop inside REG, then let L be the largest
+  subloop smaller than REG that contains B. If B is <I>not</I> the first
+  node in some clique in the schedule S<FONT SIZE=-2>L</FONT> of loop L,
+  then E is a long edge. (Note that both A and B cannot be in L, because
+  if they were then A=B=the header of L, so E is a backward edge, and we
+  already covered that case.)
+  <LI>Otherwise, E is a short edge.
+</OL>
+
+<H4><A NAME="phase3c"></A>3c. Defining ready nodes</H4>
+
+
+<P>We will call a node N <A NAME="ready"></A><STRONG>ready</STRONG> if each
+of its incoming edges E: A-&gt;N is long.</P>
+
+<P>We will call a node N <STRONG>ready with respect to</STRONG> node P if,
+for each of N's incoming edges E: A-&gt;N, either E is long or A=P.</P>
+
+<H4><A NAME="phase3d"></A>3d. Linear scheduling</H4>
+
+
+<P>Let H be region REG's header (i.e. the function's begin node or the loop's
+header). We always make H be the first node in the first clique C<FONT SIZE=-2>1</FONT>
+of our region's schedule S<FONT SIZE=-2>REG</FONT>.</P>
+
+<DL>
+  <DT>We initialize a set W to be the set of nodes in the region remaining
+  to be scheduled. Initially W contains all nodes in R except for H:
+  <DD>W := R - {H}
+  <DT>We initialize a stack T of cliques of subloops waiting to be scheduled.
+  Initially the stack T is empty:
+  <DD>T := []
+</DL>
+
+<P>Let P be the last node scheduled; initially P is H. As long either W
+or T isn't empty, we pick out the next node N to schedule as follows:</P>
+
+<OL>
+  <LI><A NAME="alternative1"></A><I>Alternative 1. </I>If there exists a
+  node N in W such that there exists at least one short edge from P to N
+  and node N is ready with respect to P, then we pick any such node N to
+  be the next node.
+  <LI><A NAME="alternative2"></A><I>Alternative 2. </I>Otherwise, if the
+  stack T isn't empty, we pop a clique C<I><FONT SIZE=-2>k</FONT></I> from
+  T, make it be the next clique of S<FONT SIZE=-2>REG</FONT>, make every
+  edge from P to any node A remaining in W into a long edge, set P to be
+  the last node of C<I><FONT SIZE=-2>k</FONT></I>, and continue with step
+  1 above.
+  <LI><A NAME="alternative3"></A><I>Alternative 3. </I>Otherwise, there must
+  exist a node N in W such that node N is ready with respect to P. We pick
+  any such node N to be the next node.
+</OL>
+
+<P>After we have picked node N, we remove N from the set W and make every
+edge from P to any node A remaining in W into a long edge. Then:</P>
+
+<OL>
+  <LI>If N is not the header of a subloop:
+  <OL>
+    <OL>
+      <LI>If there exists some edge from P to N then we append node N to the
+      current clique in our region's schedule S<FONT SIZE=-2>REG</FONT>;
+      <LI>Otherwise, we start a new clique C<I><FONT SIZE=-2>n</FONT></I> in
+      S<FONT SIZE=-2>REG</FONT> and make N be C<I><FONT SIZE=-2>n</FONT></I>'s
+      first node.
+    </OL>
+    <LI>In either case, we let P := N.
+  </OL>
+  <LI>If N is the header of a subloop L:
+  <OL>
+    <LI>Let C<I><FONT SIZE=-2>k</FONT></I> be the clique of L's schedule S<FONT
+     SIZE=-2>L</FONT> that contains node N.
+    <OL>
+      <LI>If N is the first node of C<I><FONT SIZE=-2>k</FONT></I> and there
+      exists some edge from P to N then we append the entire clique C<I><FONT
+       SIZE=-2>k</FONT></I> to the current clique in our region's schedule S<FONT
+       SIZE=-2>REG</FONT>;
+      <LI>Otherwise, we start a new clique C<I><FONT SIZE=-2>n</FONT></I> in
+      S<FONT SIZE=-2>REG</FONT> and make C<I><FONT SIZE=-2>k</FONT></I> be C<I><FONT
+       SIZE=-2>n</FONT></I>'s beginning.
+    </OL>
+    <LI>In either case, we let P be the last node of C<I><FONT SIZE=-2>k</FONT></I>.
+    Also, if S<FONT SIZE=-2>L</FONT> contained more than one clique, we push
+    all cliques in S<FONT SIZE=-2>L</FONT> except C<I><FONT SIZE=-2>k</FONT></I>
+    onto T.
+  </OL>
+</OL>
+
+<P>Having scheduled a node or clique, we continue with the next node or
+clique.</P>
+
+<P><B>Correctness. </B>Why are we guaranteed that (1) the algorithm will
+terminate and (2) not get stuck not able to choose any of the three alternatives?
+See the <A HREF="control_schedule_proof.html">proof</A>.</P>
+
+<H4><A NAME="phase3e"></A>3e. Loop scheduling</H4>
+
+
+<P>Step 3d will always produce a linear schedule S<FONT SIZE=-2>REG</FONT>
+for a region REG, with the header H being the first node of the first clique
+C<FONT SIZE=-2>1</FONT>. As <A HREF="#figure2">Figure 2</A> illustrates,
+this is often not the best thing to do. We fix it as follows:</P>
+
+<P>Let C<FONT SIZE=-2>k</FONT> be the last clique in S<FONT SIZE=-2>REG</FONT>
+such that the last node N of C<FONT SIZE=-2>k</FONT> satisfies the following
+properties:</P>
+
+<OL>
+  <LI>There exists an edge from N to H.
+  <LI>There are no short edges E: N-&gt;A for which A is outside R.
+  <LI>N is not a switch node.
+  <LI>N is not H.
+</OL>
+
+<P>If such a clique C<FONT SIZE=-2>k</FONT> exists, we remove the last node
+N of C<FONT SIZE=-2>k</FONT> and prepend it to C<FONT SIZE=-2>1</FONT>.
+Now as long as C<FONT SIZE=-2>k</FONT> ends with some node N' that satisfies
+all of the properties below, we remove N' from the end of C<FONT SIZE=-2>k</FONT>
+and prepend it to C<FONT SIZE=-2>1</FONT>:</P>
+
+<OL>
+  <LI>There are no short edges E: N'-&gt;A for which A is outside R.
+  <LI>N' is not a switch node.
+  <LI>N' is not H.
+</OL>
+
+<P>We stop either when C<FONT SIZE=-2>k</FONT> is empty or we stop at some
+node N'. If C<FONT SIZE=-2>k</FONT> is empty, we remove it from the list
+of cliques in S<FONT SIZE=-2>REG</FONT>. At this point our schedule S<FONT
+ SIZE=-2>REG</FONT> is complete.</P>
+
+<H3><A NAME="section4"></A>4. Schedule exception handlers</H3>
+
+
+<P>After we have scheduled the main body using the algorithm from <A HREF=
+"#section3">section 3</A>, we can schedule the exception handlers for the
+function. Let {H<FONT SIZE=-2>1</FONT>, H<FONT SIZE=-2>2</FONT>, ..., H<FONT
+ SIZE=-2>n</FONT>} be the <CODE>catch</CODE> nodes all of whose incoming
+edges come from nodes that have already been scheduled (either in the main
+body of the function or in other exception handlers that we scheduled).
+If there are no such <CODE>catch</CODE> nodes and yet we haven't scheduled
+every node in our function then we must have an exception handler that handles
+exceptions from itself. When this happens we just make {H<FONT SIZE=-2>1</FONT>,
+H<FONT SIZE=-2>2</FONT>, ..., H<FONT SIZE=-2>n</FONT>} be the set of all
+remaining unscheduled <CODE>catch</CODE> nodes.</P>
+
+<P>Now we create a phantom node H that has one long edges pointing to each
+of H<FONT SIZE=-2>1</FONT>, H<FONT SIZE=-2>2</FONT>, ..., H<FONT SIZE=-2>n</FONT>.
+We make our set of working nodes be all nodes reachable from H that have
+not been scheduled yet. We apply the algorithm from <A HREF="#section3">section
+3</A> to H (and the subloops of its region) to schedule our set of exception
+handlers. If there are still unscheduled nodes, we go back to the beginning
+of <A HREF="#section4">section 4</A>.</P>
+
+<H3><FONT COLOR="#007F00">Example</FONT></H3>
+
+
+<P><FONT COLOR="#007F00">See the </FONT><A HREF="control_schedule_example.html">next
+page</A><FONT COLOR="#007F00"> for the results of applying the scheduling
+algorithm to our </FONT><A HREF="#figure4">Figure 4</A><FONT COLOR="#007F00">
+example.</FONT><HR ALIGN=LEFT></P>
+
+</BODY>
+</HTML>

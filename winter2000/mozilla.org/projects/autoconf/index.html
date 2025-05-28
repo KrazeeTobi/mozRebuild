@@ -1,0 +1,166 @@
+<HTML>
+<HEAD>
+<TITLE>Autoconf: The Next Generation</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+<font size="6">
+<center>More Adventures of Autoconf in Mozilla<br>
+<font size="2">Last updated: <i>1999/08/13</i>
+</center>
+<hr>
+<font size="3">
+<P>
+<h2>The Revival</h2>
+Autoconf has become the primary build system for Mozilla.  This means that autoconf has inherited all of the traditional build problems.  Yay! ;-)
+<P>
+<h2>Task list</h2>
+In no particular order, here are some outstanding build issues:
+<ol>
+<h3><li>Clean up the build system.<br></h3>
+In particular, configure.in, config.mk and rules.mk could use a good cleansing.  These three have cruft after cruft piled on top of them.  For instance, there is no need for the ifdef USE_AUTOCONF s scattered throughout those files.  Since autoconf is the default, the non-autoconf settings should be removed.  If someone needs to look at them for "historical" reasons, then let them put <a href="../../bonsai.html">bonsai</a> to good use.
+
+<h3><li>Replacing the 3 pass system<br></h3>
+Currently, everytime you do a 'make', it actually does a 'make export libs install'.  This should be consolidated into a single pass.
+<P>
+There are two relatively difficult ways of doing this:
+<ul>
+<li>Determine the intermodule dependencies and change the order of the directories so that modules only gets built after the modules it depends upon do. This is currently impossible due to the circular dependencies between some modules.
+<li>Allow modules to directly reference other modules in INCLUDES rather than export the public headers into the $DIST/include directory.  This has the potential side effect of modules using other modules private headers rather than public ones. 
+</ul>
+<P>
+Unfortunately, this has become near impossible to do now that we are using XPIDL generated headers.  These headers are generated in a number of modules during the export pass.
+<P>
+
+<h3><li>Add a proper install target<br></h3>
+Currently, 'make install' just builds any targets in PROGRAM and installs them in $DIST/bin .  Eventually, it'd be nice if 'make install' actually installed the relevant bins, headers and libs into the place designated by $prefix (set by configure).
+<P>
+
+<h3><li>Removing custom scripts<br></h3>
+The functionality in the detect_motif & detect_glibc scripts should be encapsulated in the aclocal.m4 file as m4 scripts that can be used natively by autoconf.  <a href="http://www.jwz.org/">JWZ</a> improved the motif detection routines in <a href="http://www.jwz.org/xscreensaver/">xscreensaver</a> so it may be possible to borrow the routines from there.
+<P>
+
+<h3><li>Support for win32<br></h3>
+Currently, the win32 build system uses a separate set of makefile.win s to build Mozilla.  This separation of build targets means that sooner or later a win32 developer is going to forget to update Makefile.in or a non-win32 developer will forget to update makefile.win.
+<P>
+It would seem as though the easiest way to accomplish this goal would be to make the windows build use confiure and GNU make.  Unfortunately, it's not as simple was that.  To use configure, we need /bin/sh, GNU autoconf, GNU m4 and GNU make for win32.  The best known GNU tools for win32 are Cygnus' <a href="http://sourceware.cygnus.com/cygwin/">cygwin</a> tools.  These tools use a posix emulation layer to make porting standard unix programs a snap.  However, this emulation layer slows things down tremendously.  There is the <a href="http://www.xraylith.wisc.edu/~khan/software/gnu-win32/">mingw</a> runtime which allows you to build native win32 apps that do not require the posix emulation layer.  GNU make and bash built by mingw may allow us to avoid the speed penalty introduced by the posix emulation layer.
+<P>
+
+<h3><li>Cross compiling support<br></h3>
+It is not always feasible nor practical to build Mozilla natively on a given platform.  Modifying the build system to make mozilla cross-compilable would easily solve this problem. <br>
+So far, the framework for cross-compiling has been setup and NSPR has successfully been cross-compiled for i386-mingw32 from i386-linux.  
+<P>
+
+<h3><li>Autoconf for <a href="../..//docs/refList/refNSPR/index.html">NSPR</a><br></h3>
+NSPR has traditionally used its own build system which is similar but separate from the classic build system.<br>
+Rationale that has been presented for not switching to autoconf previously was 
+<ul>
+<li>NSPR is used in other build systems so it should not be tied to Mozilla's build system and<br>
+<li>autoconf does not run under win32.<br>
+</ul>
+Making NSPR use autoconf will not make NSPR dependent upon Mozilla in any way.  Autoconf does run under win32 but it requires unix tools like sh and m4.  Another compelling reason to use autoconf for NSPR is that it is near impossible to cross-compile using the classic build system.  Autoconf simplifies the cross-compiling process significantly.
+<P>
+This task is about 90% complete.  All that remains is to move the logic from the various nsprpub/config/*.mk files into nsprpub/configure.in and add support for MSVC.
+</ol>
+<P>
+Tasks 1, 5, 6 and 7 are well under way.  The work in progress can be found on the <a href="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&module=all&branch=AUTOCONF_NSPR_WIN32_XCOMPILE_19990621_BRANCH&branchtype=match&dir=&file=&filetype=match&who=&whotype=match&sortby=Date&hours=2&date=all&mindate=&maxdate=&cvsroot=%2Fcvsroot">AUTOCONF_NSPR_WIN32_XCOMPILE_19990621_BRANCH</a> branch.
+<h2>Build Maintenance</h2>
+For those interested in maintaining autoconf related files, I suggest you first familiarize yourself with the <a href="http://www.cygnus.com/~ian/configure/">configure system</a>.  And reading the <a href="http://www.lns.cornell.edu/public/COMP/info/autoconf/autoconf_toc.html">info pages</a> wouldn't hurt either.
+<P>
+Transitioning from the old build system is fairly straightforward.  The most obvious change you will see is that the old system placed the object files in platform specific directories in the source tree while autoconf places the object files into a platform specific object tree that mimics the source tree.  Under the old system, there is the $DEPTH variable which specifies how far into the tree from the top you are.  Since autoconf uses separate object trees, $DEPTH's meaning could change depending upon whether you needed a derived file (anything not contained in CVS) or a specific source file.  Because of this, there are 2 standard autoconf variables that are used along with $DEPTH to determine which file is being referenced.<br>
+<P>
+<li><strong>$topsrcdir</strong> refers to the location that the configure script actually resides (in this case, mozilla/).
+<li><strong>$srcdir</strong> refers to the source directory that corresponds to the object directory the Makefile is in.
+<li><strong>$DEPTH</strong> is only used to reference files relative to the top of the object tree.
+<P>
+Any files at are explicitly referenced with a relative path should $(srcdir) prepended to them.  The most obvious example of such files are the header files (which are currently installed into a separated directory).  For long lists of files, I generally use:
+<pre>
+EXPORTS := $(addprefix ($srcdir)/, $(EXPORTS))
+</pre>
+<P>
+Currently, there is one configure script for the entire mozilla client.  For a "proper" autoconf setup, one could argue there needs to be one per module so that each module can be completely independent.  Since all of the modules are currently not completely independent, separate configure scripts would be overkill. 
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/autoconf/index.html&amp;rev=&amp;root=/cvsroot/">Last modified August 14,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

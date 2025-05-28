@@ -1,0 +1,475 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Tinderbox Mail/News Smoke Test</title>
+<SCRIPT TYPE="text/javascript" SRC="mntimer.js">
+</SCRIPT>
+</head>
+<body>
+<script type="text/javascript">
+var inboxfolder;
+var timeoutid;
+var intervalid;
+// AccountManager interface
+var accountManager;
+// SmtpService Interface
+var smtpservice;
+// SmtpServer - used for CreateSmtpServer()
+var smtpserver;
+// Default Account (if no previous accounts then it should be the one we create
+var defaultAccount;
+// The server type (pop3,imap,news) of the default account
+var serverType;
+// The default account's incoming server
+var incomingserver;
+// The inteface for the incomingserver
+var verifiedincomingserver;
+// The default idenity
+var identity;
+
+// Time Stamp used for the subject header
+var time;
+
+// Pop instance
+var instanceofpop3service;
+// Pop interface
+var interfaceofpop3service;
+// Contains messages from inboxfolder 
+var arrayofmessages;
+// Contains messages after being converted to javascript
+var convertedarrayofmessages;
+
+
+
+function getAccountManager()
+{
+
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+	accountManager = Components.classes["component://netscape/messenger/account-manager"].getService(Components.interfaces.nsIMsgAccountManager);
+	dump("AM = " + accountManager + "\n");
+}
+
+function getSmptServer()
+{
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+	smtpservice = Components.classes["component://netscape/messengercompose/smtp"].getService(Components.interfaces.nsISmtpService);
+	dump("SMTPSERVICE =	" + smtpservice + "\n");
+
+	smtpserver = smtpservice.defaultServer;
+	smtpserver.username = "parp4";
+	smtpserver.password = "parp4";
+	smtpserver.hostname = "parp.mcom.com";
+
+	dump("SMTPSERVER CREATED \n");
+}
+
+function disableXPConnectSecurity()
+{
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+}
+
+function createAccount() {
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+// POP Account
+	try { 
+
+	dump("********Now we have " + accountManager.accounts.Count() + " accounts\n");
+	var account = accountManager.createAccount();
+	var identity = accountManager.createIdentity();
+	var server = accountManager.createIncomingServer("parp4", "parp.mcom.com", "pop3");
+	account.addIdentity(identity);
+	account.incomingServer = server;
+
+	dump("Created identity " + identity + "\n");
+	dump("Created server " + server + "\n");
+	dump("Now we have " + accountManager.allServers.Count() + " servers\n");
+	server.prettyName = "parp4";
+	server.hostName = "parp.mcom.com";
+	server.username = "parp4";
+	server.password = "parp4";
+//	server.localPath = "c:\\Program Files\\Netscape\\users\\parp3\\ImapMail\\parp.mcom.com";
+
+	identity.identityName = "parp4";
+	identity.fullName = "parp4";
+	identity.email = "parp4@parp.mcom.com";
+
+	dump("********Now we have " + accountManager.accounts.Count() + " accounts\n");
+	dump("Sucessfully created an Account\n");
+	}
+	catch (e) {
+	dump("Oakland\n");
+	dump("E = " + e + "\n");
+	}
+}
+
+function removeAccount() {
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+//Imap Account
+try { 
+
+	dump("********Now we have " + accountManager.accounts.Count() + " accounts\n");
+	var old_count = accountManager.accounts.Count();
+
+	var accounts = accountManager.accounts;
+	dump(" #ACCounts = " + accounts.Count() + "\n");
+	var JSAccounts = nsISupportsArray2JSArray(accounts, Components.interfaces.nsIMsgAccount);
+	for (var i=0; i < JSAccounts.length; i++) {
+		dump(" i = " + i + "\n");
+		dump("Account " + i + " Key = " + JSAccounts[i].key + "\n");
+		if (i == 0) {
+			accountManager.removeAccount(JSAccounts[i]);
+			dump("After removeaccount in For \n");
+		}
+	}
+	//am.removeAccount(account);
+	dump("After removeAccount \n");
+
+	dump("********Now we have " + accountManager.accounts.Count() + " accounts\n");
+	var new_count = accountManager.accounts.Count();
+	if (new_count == old_count - 1 ) {
+		dump("Sucessfully Deleted an Account\n");
+		// Code to write to File Passed
+	} 
+	else {
+		// Code to write to file Failed
+	}
+	} catch (e) {
+	dump("San Francisco\n");
+	dump("E = " + e + "\n");
+
+	}
+}
+
+function DeleteMessage() {
+
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+		var supportsarray = Components.classes["component://netscape/supports-array"].getService(Components.interfaces.nsISupportsArray);
+		dump("ARRAY = " + supportsarray + "\n");
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+		var msgwindow = Components.classes["component://netscape/messenger/msgwindow"].getService(Components.interfaces.nsIMsgWindow);
+		dump("MSGWINDOW = " + msgwindow + "\n");
+
+		for (var j=0; j < accountManager.allServers.Count(); j++) {
+		var server = accountManager.allServers.GetElementAt(j).QueryInterface(Components.interfaces.nsIMsgIncomingServer);
+		if ((server.type == 'imap') || (server.type == 'pop3'))  {
+			var rootFolder = server.RootFolder;
+			var subFolderEnumerator = rootFolder.GetSubFolders();
+			var subfolders = nsIEnumerator2JSArray(subFolderEnumerator, Components.interfaces.nsIMsgFolder);
+			for (var i=0; i< subfolders.length; i++) {
+			//	dump("Inside For \n");
+				if((subfolders[i].name == 'Inbox') || (subfolders[i].name == 'INBOX')) {
+			//		dump("Inside If \n");
+					var messages_enumerator = subfolders[i].getMessages();
+					var messages = nsISimpleEnumerator2JSArray(messages_enumerator, Components.interfaces.nsIMessage);
+					dump("After conversion \n");
+			//		dump("MESSAGES = " + messages + "\n");
+					for (var k=0; k < messages.length; k++) {
+						if (messages[k].subject == time) {
+							dump(k + " subject = " + messages[k].subject + "\n");
+							dump(k + " Recepients = " + messages[k].recipients + "\n");
+
+							supportsarray.AppendElement(messages[k]);
+							dump("Added to Array \n");
+
+							subfolders[i].deleteMessages(supportsarray, msgwindow, true);
+							dump("After Delete Msg \n");
+						}
+
+					}
+				}
+			}
+				
+		}
+	}
+}
+
+// var msgService = Components.classes['component://netscape/messenger/services/session'].getService(Components.interfaces.nsIMsgMailSession);
+// var accountManager = msgService.accountManager;
+// disableXPConnectSecurity();
+
+// netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+// var accountManager =  Components.classes["component://netscape/messenger/account-manager"].getService(Components.interfaces.nsIMsgAccountManager);
+function getServerObjects()
+{
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+	if (accountManager)
+		dump("accountManager is okay\n");
+	defaultAccount = accountManager.defaultAccount;
+	if (defaultAccount)
+		dump("defaultAccount is okay\n");
+	serverType = defaultAccount.incomingServer.type;
+		dump("Server Type is " + serverType + "\n");
+	incomingserver = defaultAccount.incomingServer;
+		dump("Incoming Server is " + incomingserver + "\n");
+	// identity is a global variable
+	identity = defaultAccount.defaultIdentity;
+}
+
+// nsIMsgCompose InitCompose(in nsIDOMWindow aWindow, in wstring originalMsgURI, in long type, in long format, in long compFieldsAddr);
+function SendTheMessage()
+{
+	dump("ENTERING SENDTHEMESSAGE()\n");
+	
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+	var msgComposeService = Components.classes["component://netscape/messengercompose"].getService();
+msgComposeService = msgComposeService.QueryInterface(Components.interfaces.nsIMsgComposeService);
+	var msgCompose = null;
+	var MAX_RECIPIENTS = 0;
+	var numAttachments = 0;
+	var currentAttachment = null;
+	var other_header = "";
+	var update_compose_title_as_you_type = true;
+
+	var mycompose = msgComposeService.InitCompose(window, null, 0, 0, null,identity);
+	mycompose.compFields.SetFrom(identity.email);
+	mycompose.compFields.SetTo(identity.email);
+	time = getTimeStamp();
+	mycompose.compFields.SetSubject(time);
+	mycompose.compFields.SetCharacterSet("ISO-8859-1");
+	mycompose.compFields.SetBody("This is the body\n");
+
+	mycompose.SendMsg(0, identity, null);
+}
+
+function getPopInterface()
+{
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+	instanceofpop3service = Components.classes['component://netscape/messenger/popservice'].getService();
+disableXPConnectSecurity();
+	interfaceofpop3service = instanceofpop3service.QueryInterface(Components.interfaces.nsIPop3Service);
+
+	if (interfaceofpop3service)
+	{
+		dump("interfaceofpop3service is okay\n");
+	} else {
+		dump("interfaceofpop3service does not exist\n");
+	}
+}
+
+function nsISupportsArray2JSArray(array, IID) {
+    var result = new Array;
+    var length = array.Count();
+    for (var i=0; i< length; i++) {
+      result[i] = array.GetElementAt(i).QueryInterface(IID);
+    }
+    return result;
+}
+
+function nsIEnumerator2JSArray(enumerator, iface) {
+
+        var array = new Array;
+
+        var i=0;
+
+        var done = false;
+
+    while (!done) {
+                var element = enumerator.currentItem();
+
+                array[i] = element.QueryInterface(iface);
+
+                try {
+                        enumerator.next();
+                } catch (ex) {
+                        done=true;
+
+                }
+                i++;
+        }
+        return array;
+}
+
+function nsISimpleEnumerator2JSArray(enumerator, iface) {
+
+        var array = new Array;
+
+        var i=0;
+
+    while (enumerator.HasMoreElements()) {
+                var element = enumerator.GetNext();
+
+                array[i] = element.QueryInterface(iface);
+
+                i++;
+        }
+        return array;
+}
+
+
+
+var urlListener = {
+  OnStartRunningUrl: function  (aUrl) {
+  // dump("Inside OnStartRunningUrl\n");
+},
+  OnStopRunningUrl: function (aUrl, aExitCode) {
+  // dump("Inside OnStopRunningUrl\n");
+}
+};
+
+// ****************************************************************************
+// Here is all the statements
+getAccountManager();
+getSmptServer();
+createAccount();
+getServerObjects();
+SendTheMessage();
+getPopInterface();
+// verifyrecvmail();
+
+if (incomingserver.type == 'pop3')
+{
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+	verifiedincomingserver = 	incomingserver.QueryInterface(Components.interfaces.nsIPop3IncomingServer);
+	dump("Verified Server is " + verifiedincomingserver + "\n");
+	var test = 
+	interfaceofpop3service.GetNewMail(urlListener, verifiedincomingserver);
+	dump("Test is " + test + "\n");
+	var checktest =
+	interfaceofpop3service.CheckForNewMail(urlListener,inboxfolder,verifiedincomingserver);
+	dump("CheckTest is " + checktest + "\n");
+} 
+else if (incomingserver.type == 'imap')
+{
+	verifiedincomingserver = incomingserver.QueryInterface(Components.interfaces.nsIImapIncomingServer);
+	dump("Verified Server is " + verifiedincomingserver + "\n");
+}
+else if (incomingserver.type == 'nntp')
+{
+	verifiedincomingserver = incomingserver.QueryInterface(Components.interfaces.nsINntpIncomingServer);
+	dump("Verified Server is " + verifiedincomingserver + "\n");
+}
+else if (incomingserver.type == 'none')
+{
+	dump("There is no incoming server\n");
+
+	// error code needed here
+}
+
+if ((incomingserver.type == 'imap') || (incomingserver.type == 'pop3'))
+{
+	// Get the phantom root folder
+	var rootFolder = incomingserver.RootFolder;
+	// Get all the subfolders for this account
+	var subFolderEnumerator = rootFolder.GetSubFolders();
+	// Convert the subfolders into a javascript array containing nsIMsgFolder interfaces
+	var subfolders = nsIEnumerator2JSArray(subFolderEnumerator, Components.interfaces.nsIMsgFolder);
+	// Out the names of the folders and save the Inbox folder into a variable
+	for (var i=0; i < subfolders.length; i++)
+	{
+		if ((subfolders[i].name == 'INBOX') || (subfolders[i].name == "Inbox"))
+		{
+			inboxfolder = subfolders[i];
+			dump("Have now have the inbox folder\n");
+		}
+		var foldername = subfolders[i].name;
+		// dump("foldername is " + foldername + "\n");
+	}
+}
+
+dump("Step 2\n");
+
+// Get all the messages from the Inbox
+try {
+	arrayofmessages = inboxfolder.getMessages();
+} catch (ex) {
+	dump("Could not get the Messages from the inbox\n");
+}
+
+dump("Step 3\n");
+// Convert the array of messages into a javascript array containing nsIMessage interfaces
+try {
+	convertedarrayofmessages = nsISimpleEnumerator2JSArray(arrayofmessages,Components.interfaces.nsIMessage);
+	document.write("<br>" + "The converted array of messages is " + convertedarrayofmessages.length + "\n");
+} catch (ex) {
+dump("Could not get converted nsIMessage array:" + ex + "\n");
+}
+
+dump("Step 4\n");
+// Get the number of Unread Messages from the Inbox. 
+// Do not go into any subfolders that might exist under Inbox
+var numberofunreadmessages = inboxfolder.getNumUnread(false);
+
+// Display the number of unread messages before we start our testcase
+document.writeln("<br>" + "The number of unread messages is " + numberofunreadmessages + "<br>");
+
+// Make the current number of unread messages the same as the number of unread messages
+var currentunread = numberofunreadmessages;
+
+// function we will use later
+function getnumread()
+{
+	// numberofunreadmessages = inboxfolder.getNumUnread(false);
+	currentunread = inboxfolder.getNumUnread(false)
+	dump("Inside getnumread\n");
+}
+
+// function we will use later
+function displaymessage() 
+{
+	dump("Inside displaymessage()\n");
+	dump("currentunread is " + currentunread  + "\n");
+	document.writeln("<br>" + "currentunread is " + currentunread + "<br>");
+}
+
+function stopthetestifok()
+{
+	dump("Inside stopthetestifok()\n");
+	dump("currentunread is " + currentunread + "\n");
+	dump("numberofunreadmessages is " + numberofunreadmessages + "\n");
+	if (currentunread > numberofunreadmessages)
+	{
+		clearInterval(intervalid);
+		dump("Clear the interval\n");
+	}
+}
+
+function getNewMail()
+{
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+	interfaceofpop3service.GetNewMail(urlListener, verifiedincomingserver);
+}
+
+function checkForNewMail()
+{
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+	interfaceofpop3service.CheckForNewMail(urlListener,inboxfolder,verifiedincomingserver);
+}
+
+
+// This function does the actual checking of mail. 
+// We assume that the Send message operation from above works
+// dothecheck() will be called from within a setInterval() call so that
+// if we do not have the message yet we will rerun dothecheck()
+function dothecheck() 
+{
+	if (currentunread <= numberofunreadmessages)
+	{
+		dump("currentunread is " + currentunread + "\n");
+		// timeoutid = setTimeout("settimes()",60000);
+		dump("Now get mail\n");
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+		timeoutid = setTimeout("getNewMail()",60000);
+		timeoutid = setTimeout("checkForNewMail()",75000);
+		timeoutid = setTimeout("getnumread()",90000);
+		timeoutid = setTimeout("displaymessage()",105000);
+	}
+	timeoutid = setTimeout("stopthetestifok()",125000);
+}
+//  start the check process in 5 seconds
+intervalid = setInterval("dothecheck()",120000);
+timeoutid = setTimeout("DeleteMessage()",250000);
+timeoutid = setTimeout("removeAccount()",265000);
+</script>
+</body>
+</html>

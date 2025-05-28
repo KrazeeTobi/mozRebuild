@@ -1,0 +1,199 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Broadcasters &amp; Observers</title>
+</head>
+<body>
+<table BORDER=0 COLS=1 WIDTH="100%" >
+<tr>
+<td>
+<div align=right><i>XUL Programmer's Reference Manual</i></div>
+</td>
+</tr>
+
+<tr>
+<td>
+<h1>
+<font color="#000099"><font size=+2>&lt;<a href="broadcast.html">broadcaster</a>></font></font></h1>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Attributes</font></b></td>
+
+<td><b><font color="#FFFFFF">Common Children</font></b></td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td>&nbsp;* * *</td>
+</tr>
+
+<tr>
+<td>action</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>value</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>oncommand</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td>
+<h1>
+<font color="#000099"><font size=+2>&lt;<a href="observe.html">observes</a>></font></font></h1>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Attributes</font></b></td>
+
+<td><b><font color="#FFFFFF">Common Children</font></b></td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td>&nbsp;* * *</td>
+</tr>
+
+<tr>
+<td><a href="observe.html#element">element</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="observe.html#attribute">attribute</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>mapto</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>event</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<br>Broadcasters and Observers are a mechanism for making any number of
+elements aware of state and event information from a single, "broadcasting"
+element. This mechanism is useful for preserving the consistency of different
+UI elements (such as the Cut command in a context menu, the Cut toolbar
+button, and the Cut command from the Edit menu) when they perform the same
+tasks. The broadcaster/observer relationship is flexible and powerful. 
+The following sections provide examples of different ways in which this relationship can be expressed in XUL.
+
+<h3>Simple Observers</h3>
+<p>Broadcasters are typically invisible elements, though they don't
+need to be. Any element can be a broadcaster or observer, and the broadcaster/observer
+relationship can exist between any two elements. When an element that is
+not explicitly a broadcaster is broadcasting information, the observing
+elements observe by naming the broadcasting element with the <b>element</b>
+attribute. The following example shows this weakest sort of broadcaster/observer relationship, which is that between two regular elements:
+<blockquote>
+<table BORDER=0 WIDTH="60%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>
+&lt;menuitem name="cut" />
+&nbsp;
+&lt;titledbutton value="Cut">
+&nbsp; &lt;observes element="cut" attribute="disabled"/>
+&lt;/titledbutton>
+...</pre>
+</td>
+</tr>
+</table>
+</blockquote>
+<h3>One-to-Many Broadcasting</h3>
+<p>Though this is a simple way to take advantage of broadcasting, it is inefficient because it puts a normal menuitem in a position of broadcasting to a button, which is one of its UI peers. A better mechanism is to define a separate broadcaster node to which all the visible UI elements pay attention. In this way, the state of the node can be maintained in a single place and tracked consistently.</p>
+<blockquote>
+<table BORDER=0 WIDTH="60%" BGCOLOR="#D0D0D0">
+<tr><td><pre>&lt;broadcaster id="cut"/>
+ ...
+&lt;menuitem name="Cut">
+ &lt;observes element="cut" attribute="disabled"/>
+&lt;/menuitem>
+ ...
+&lt;titledbutton value="Cut">
+ &lt;observes element="cut" attribute="disabled"/>
+&lt;/titledbutton>
+ ... 
+</pre>
+</td></tr></table>
+</blockquote>
+<h3>Command Nodes and the <b>observes</b> Attribute</h3>
+<p>In the preceding example, the menuitem and the titledbutton pick up the <b>disabled</b> attribute of the broadcaster node. The broadcaster node have any number of attributes that can be observed by other elements. When you want to broadcast all the attributes of a node, you can also use a slightly different construct. Compare the following example:
+<blockquote>
+<table BORDER=0 WIDTH="60%" BGCOLOR="#D0D0D0">
+<tr><td><pre>
+&lt;command id="cutCommand" 
+  oncommand="specialCut()" 
+  value="Cut Me!"
+  disabled="false" /> 
+
+&lt;menuitem <b>observes</b>="cutCommand"/> 
+&lt;titledbutton <b>observes</b>="cutCommand"/> 
+&lt;key <b>observes</b>="cutCommand"/>  
+... 
+</pre>
+</td></tr></table>
+</blockquote>
+<p>In this construct, the broadcaster is a <i>commmand node</i>, whose responsibility it is to broadcast command functionality to all elements that observe it. Access to the specialCut() command is centralized in a single place. In a way, it's also protected by the disabled attribute, which controls whether any of the observing nodes can use the command and whether their own UI ought to reflect the availability of the command or not. A UI element observing the <b>cutCommand</b> broadcaster is automatically disabled because of the way that observers pick up the attributes of broadcasters in this second type of broadcaster/observer relationship. In all cases where the UI element includes a <b>value</b> attribute that specifies what's actually displayed, the broadcaster's <b>value</b> attribute is also used.
+<h3>Other Observer Attributes</h3>
+<p>&nbsp;
+
+</td>
+</tr>
+</table>
+<br>&nbsp;
+<div align=right>
+<p><i>Last updated: 2/21/00 <a href="mailto:oeschger@netscape.com">Ian
+Oeschger</a></i></div>
+
+</body>
+</html>

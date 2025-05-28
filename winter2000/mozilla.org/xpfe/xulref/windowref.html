@@ -1,0 +1,450 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (Win98; U) [Netscape]">
+   <title>The &lt;window> Element</title>
+</head>
+<body>
+&nbsp;
+<table BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#FFFFFF" >
+<tr>
+<td>
+<div align=right><i>XUL Programmer's Reference Manual</i></div>
+</td>
+</tr>
+
+<tr>
+<td>
+<h1>
+<b><font color="#000099"><font size=+2>&lt;window>
+</font></font><font color="#FFFFFF">Attributes</font></b></h1>
+
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Attributes</font></b></td>
+
+<td><b><font color="#FFFFFF">Common Children</font></b></td>
+</tr>
+
+<tr>
+<td><a href="#title">title</a></td>
+
+<td><a href="toolref.html#toolbar">toolbar</a></td>
+</tr>
+
+<tr>
+<td><a href="#titlemod">titlemodified</a></td>
+
+<td>html:script&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#titlemensep">titlemenuseparator</a></td>
+
+<td><a href="menubar.html">menubar</a></td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td><a href="boxref.html">box</a></td>
+</tr>
+
+<tr>
+<td><a href="#xmlns">xmlns</a></td>
+
+<td><a href="keyset.html">keyset</a></td>
+</tr>
+
+<tr>
+<td><a href="#onload">onload</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#onunload">onunload</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>windowtype</td>
+
+<td BGCOLOR="#000099"><b><font color="#FFFFFF">Methods</font></b></td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#align">align</a></i></td>
+
+<td><a href="#open">open()</a></td>
+</tr>
+
+<tr>
+<td><a href="boxref.html#width">width</a>,
+<a href="boxref.html#height">height</a></td>
+
+<td><a href="#opendialog">openDialog()</a></td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#persist">persist</a></i></td>
+
+<td><a href="#sizetocontent">sizeToContent()&nbsp;</a></td>
+</tr>
+
+<tr>
+<td>x, y</td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="common.html#draggest">ondraggesture</a></td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<br>The root&nbsp;<a NAME="window element IDX"></a>element in a XUL file
+and the top level of the interface it defines is the <a href="windowref.html">&lt;window></a>
+widget. All XUL files must contain one and only one window element. The
+entire XUL interface is defined within this root element.
+<br>&nbsp;
+<p>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="title"></a><b><font color="#FFFFFF"><font size=+1>title</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote>The <b>title</b> attribute specifies the name that appears
+in the title bar of the window. It is used in conjunction with the other
+title attri<a NAME="window title IDX"></a>butes to handle the display of
+information in the title bar at various times.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>title="<i>window title</i>"</tt>
+<br><tt>where <i>window title</i> is a string containing the name of the
+window</tt></blockquote>
+<b>Example</b>
+<blockquote><a NAME="title atttribute, windows IDX"></a><tt>&lt;window
+id="sample"</tt>
+<blockquote><b><tt>title="Sample Window"</tt></b>
+<br><tt>titlemodifier=" Sample"></tt></blockquote>
+</blockquote>
+<b>Notes</b>
+<blockquote>When no content appears in the browser, the <b>title</b> attribute
+is used for the title. When content is loaded, the title bar displays the
+name of the content and then the <b><a href="#titlemod">titlemodifier</a></b>
+instead. For example, when netscape's Netcenter is loaded in the Mozilla
+browser, the title bar displays "Netcenter - Mozilla."
+<p>If you are titling your windows, make sure you use all the title attributes
+to avoid naming inconsistencies in the title bar.
+<br>&nbsp;</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="titlemod"></a><b><font color="#FFFFFF"><font size=+1>titlemodifier</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote>The <b>titlemodifier</b> attribute specifies the portion of
+the title that appears after the content is named.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>titlemodifier="<i>window title</i>"</tt>
+<br>where <i>window title</i> is a string containing the name of the window</blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;window id="sample"</tt>
+<blockquote><tt>title="Sample Window"</tt>
+<br><tt><b>titlemodifier=" Sample"</b>></tt></blockquote>
+</blockquote>
+<b>Notes</b>
+<blockquote>When content is loaded in the browser, the title bar displays
+the name of the content and then the <b>titlemodifier</b> instead. For
+example, when netscape's Netcenter is loaded in the Mozilla browser, the
+title bar displays "Netcenter - Mozilla."
+<p>If you are titling your windows, make sure you use all the title attributes
+to avoid naming inconsistencies in the title bar. When there is no content
+loaded, the browser uses the regular <b><a href="#title">title</a></b>
+attribute.
+<blockquote>&nbsp;</blockquote>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="titlemensep"></a><b><font color="#FFFFFF"><font size=+1>titlemenuseparator</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote>The <b>titlemenuseparator</b> attribute specifies the string
+that separates the content name and the <b>titlemodifier</b>.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>titlemodifier="characters"</tt>
+<br>where <i>characters</i> is a string representing the separator</blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;window id="sample"</tt>
+<blockquote><tt>title="Sample Window"</tt>
+<br><tt>titlemodifier=" Sample"</tt>
+<br><b><tt>titlemenuseparator=" - "></tt></b></blockquote>
+</blockquote>
+<b>Notes</b>
+<blockquote>When content is loaded in the browser, the title bar displays
+the name of the content and the <b>titlemodifier</b> separated by the <b>titlemenuseparator</b>.
+The example XUL above, when browsing the Netcenter site, would result in
+a title bar displaying "Netcenter - Sample."
+<p>If you are titling your windows, make sure you use all the title attributes
+to avoid naming inconsistencies in the title bar. When there is no content
+loaded, the browser uses the regular <b><a href="#title">title</a></b>
+attribute.</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="xmlns"></a><b><font color="#FFFFFF"><font size=+1>xmlns</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote>The <b>xmlns</b> window attribute is used to make xml namespace
+declarations for the XUL file.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote>The three commonly declared namespaces in a XUL file are:
+<blockquote><tt>xmlns:html="http://www.w3.org/TR/REC-html40"</tt>
+<br><tt>xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"</tt>
+<br><tt>xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"</tt></blockquote>
+</blockquote>
+<b>Notes</b>
+<blockquote>The three namespace declarations listed above seldom vary.
+The first is the standard&nbsp;<a NAME="namespaces IDX"></a>namespace declaration
+for HTML 4.0, and the second is the namespace declaration for RDF, which
+is used to organize and display resources in the browser. The last one,
+though subject to change as XUL becomes fully standardized, is the namespace
+declaration for XUL itself. Gecko requires this declaration in order
+to resolve the XML elements in your XUL file to XUL widgets.</blockquote>
+
+<blockquote>&nbsp;</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="onload"></a><b><font color="#FFFFFF"><font size=+1>onload</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>onload</b> is an event handler attribute for the root window
+element. The load event is fired eac<a NAME="onload attribute IDX"></a>h
+time the window defined by the &lt;window> element is loaded, or opened,
+but before the window is displayed.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;window id="id"</tt>
+<blockquote><tt>title="title"</tt>
+<br><tt>onload="javascript or javascript function call"</tt></blockquote>
+</blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;window id="main-window"</tt>
+<blockquote><tt>title="Mozilla"</tt>
+<br><tt><b>onload="StartupConfig()</b>"</tt></blockquote>
+</blockquote>
+<b>Notes</b>
+<blockquote>To create a callback for the load event, place javascript in
+the onload event listener. The javascript can be a series of javascript
+statements separated by semicolons or a call to a javascript function defined
+elsewhere. Any configuration or content changes which must be made before
+the window displays should be placed in this callback.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="onunload"></a><b><font color="#FFFFFF"><font size=+1>onunload</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>onunload</b> is an event listener for the root window element.
+The unload event is fire<a NAME="onunload attribute, windows IDX"></a>d
+each time the window defined by the &lt;window> element is closed or exited,
+but before the window actually disappears.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;window id="id"</tt>
+<blockquote><tt>title="title"</tt>
+<br><tt>onunload="javascript or javascript function call"</tt></blockquote>
+</blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;window id="main-window"</tt>
+<blockquote><tt>title="Mozilla"</tt>
+<br><tt><font size=+0><b>onunload="</b>WindowCloseExtras()><b>"</b></font></tt></blockquote>
+</blockquote>
+<b>Notes</b>
+<blockquote>None.
+<br>&nbsp;</blockquote>
+
+<blockquote>&nbsp;</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="open"></a><b><font color="#FFFFFF"><font size=+1>open()</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>open</b> is the window element's&nbsp;<a NAME="open method, windows IDX"></a>method
+for opening other XUL windows and dialogs.</blockquote>
+<b>Syntax</b>
+<blockquote><a NAME="methods: open()IDX"></a><tt>window.<b>open</b>(URL[,
+windowName[, windowFeatures]])&nbsp;</tt></blockquote>
+<b>Example</b>
+<blockquote><a NAME="window.open() IDX"></a><tt>window.open("chrome://help/content/help.xul",
+"Help Window", "chrome")</tt></blockquote>
+<b>Notes</b>
+<blockquote>The <i>windowFeatures</i> argument allows you to specify additional
+features of the window being opened.&nbsp;
+<p><b>titlebar</b> - The window can be created with or without a titlebar.&nbsp;
+<br><b>close</b> - The window can be created with or without a close widget.&nbsp;
+<br><b>chrome</b> - Normally, the URL given to window.open is treated as
+a content URL. That is, Mozilla generates a browser window and loads the
+given URL into its content area, as window.open has always behaved. However,
+the presence of a chrome flag in the windowFeatures parameter will cause
+the given URL to be treated as the window chrome, itself. It will be treated
+as the top-level window contents; it will not be
+<br>wrapped in a browser window. The window will also be sized to wrap
+its contents.&nbsp;
+<br><b>dependent </b>- The new window belongs to the calling window, on
+operating systems that support this behaviour. This is the kind of window
+that is minimized along with its parent/owner; a "popup" or "transient"
+window, or whatever word your OS has chosen to use.&nbsp;
+<br><b>dialog</b> - Use a dialog-style window border.&nbsp;
+<br><b>modal</b> - The window will be run modally. The call to window.open
+will not return until the user has dismissed the window. Note that modal
+implies dependent.&nbsp;
+<p>When the <i>windowFeatures</i> argument is not given, the opener assumes
+that the specified resource is content for its own window and not a new
+window.
+<p>See <a href="#opendialog">openDialog()</a> for an even more flexible
+method for opening new windows.
+<p><b>Default Behaviour</b> - As always, if no parameter is passed, all
+chrome is assumed turned on. Exceptions are the behaviour flags <b>chrome</b>,
+<b>dependent</b>, <b>dialog</b> and <b>modal</b>: these are not turned
+on unless done explicitly. If any string at all, even a zero-length string,
+is given in the features parameter, any features not explicitly mentioned
+are assumed off. <b>titlebar</b> and <b>close</b> are the two exceptions:
+they are not considered off unless explicitly mentioned ("titlebar=no"),
+since anything else would break extant script.</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<blockquote>&nbsp;</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="opendialog"></a><b><font color="#FFFFFF"><font size=+1>openDialog()</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>openDialog</b> is an extension of the window&nbsp;<a NAME="openDialog() method, windowIDX"></a>elements
+<a href="#open">open()</a> method that provides some additional control
+over the process of opening new windows in the UI.</blockquote>
+<b>Syntax</b>
+<blockquote><a NAME="methods: openDialog()IDX"></a><tt>window.<b>openDialog</b>(URL[,
+windowName[, windowFeatures[, args]]])&nbsp;</tt></blockquote>
+<b>Example</b>
+<blockquote><a NAME="window.openDialog() IDX"></a><tt>window.<b>openDialog</b>("chrome://help/content/help.xul",&nbsp;<br>
+&nbsp; "Help Window", "chrome",&nbsp;</tt>
+<br><tt>&nbsp; "special")</tt></blockquote>
+<b>Notes</b>
+<blockquote>The <i>windowFeatures</i> argument allows you to specify additional
+features of the window being opened.&nbsp;
+<p><b>titlebar</b> - The window can be created with or without a titlebar.&nbsp;
+<br><b>close</b> - The window can be created with or without a close widget.&nbsp;
+<br><b>chrome</b> - Normally, the URL given to window.open is treated as
+a content URL. That is, Mozilla generates a browser window and loads the
+given URL into its content area, as window.open has always behaved. However,
+the presence of a chrome flag in the windowFeatures parameter will cause
+the given URL to be treated as the window chrome, itself. It will be treated
+as the top-level window contents; it will not be
+<br>wrapped in a browser window. The window will also be sized to wrap
+its contents.&nbsp;
+<br><b>dependent </b>- The new window belongs to the calling window, on
+operating systems that support this behaviour. This is the kind of window
+that is minimized along with its parent/owner; a "popup" or "transient"
+window, or whatever word your OS has chosen to use.&nbsp;
+<br><b>dialog</b> - Use a dialog-style window border.&nbsp;
+<br><b>modal</b> - The window will be run modally. The call to window.open
+will not return until the user has dismissed the window. Note that modal
+implies dependent.&nbsp;
+<p>When the <i>windowFeatures</i> argument is not given, the opener assumes
+that the specified resource is content for its own window and not a new
+window.
+<p>The additional parameters you can pass in <i>args </i>will be bundled
+up in a JavaScript array and added to the newly created window as a property
+named arguments. They may be referenced in the JavaScript of the window
+at any time, including during the execution of an onload handler. These
+parameters may be used, then, to pass arguments to and from the dialog
+window.
+<p><b>Default behaviour</b> - The chrome and dialog features are always
+assumed on, unless explicitly turned off ("chrome=no"). <b>openDialog</b>
+treats the absence of the features parameter as does window.open, (that
+is, an empty string sets all features to off) except <b>chrome</b> and
+<b>dialog</b>, which default to on. If the features parameter is a zero-length
+string, or contains only one or more of the behaviour features (<b>chrome</b>,
+<b>dependent</b>, <b>dialog</b> and <b>modal</b>) the chrome features are
+assumed "OS' choice." That is, window creation code is not given specific
+instructions, but is instead allowed to select the chrome that best fits
+a dialog&nbsp;
+<br>on that operating system.&nbsp;
+<br>&nbsp;</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="sizetocontent"></a><b><font color="#FFFFFF"><font size=+1>sizeToContent()</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>sizeToContent()</b> is the window element's&nbsp;<a NAME="sizeToContent() method, windowIDX"></a>method
+for opening reflowing an open window.</blockquote>
+<b>Syntax</b>
+<blockquote><a NAME="methods:sizeToContent()IDX"></a><tt>window.<b>sizeToContent</b>()&nbsp;</tt></blockquote>
+<b>Example</b>
+<blockquote><a NAME="window.sizeToContent()IDX"></a><tt>window.<b>sizeToContent</b>()</tt></blockquote>
+<b>Notes</b>
+<blockquote>This reflows the window's content, and wraps the window around
+those contents. It functions even on fixed size windows (that is, windows
+with the "resizable" flag turned off.) This function's intended use is
+with intrinsically sized windows (those which are designed to wrap themselves
+to fit their content) after changing that content, presumably during the
+execution of an onload handler.&nbsp;</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+<div align=right>
+<p><i>Last updated: 2/17/00 <a href="mailto:oeschger@netscape.com">Ian
+Oeschger</a></i></div>
+
+</body>
+</html>

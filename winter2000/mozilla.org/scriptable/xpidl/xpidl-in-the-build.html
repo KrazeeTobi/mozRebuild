@@ -1,0 +1,166 @@
+<HTML>
+<HEAD>
+<TITLE>XPIDL in the build</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+    <H1 ALIGN=CENTER>Adding XPIDL interface files to the build process</H1>
+
+    We've a few rules to the build process to make it easy to create
+    headers and xpt typelib files from XPIDL interface files.
+
+    <UL>
+      <LI><b>Windows and Unixes:</b>
+      <br>Define XPIDLSRCS in your
+      Makefile.in or makefile.win, listing all the .idl files that you
+      want to compile.  rules.mk and rules.mak will use this variable to
+      <UL>
+      <LI>create .h files for each .idl file and export them to the
+      include directory.
+      <LI>create .xpt files for each .idl file
+      <LI>link the .xpt files together into $(MODULE).xpt
+      <LI>export the resulting .xpt file to the components directory.
+      </UL>
+      If you have several directories with the same MODULE that you want to compile .idl files in, you may want to define XPIDL_MODULE as well with a new name to avoid conflicts.   The build system will use XPIDL_MODULE instead.
+      
+      <p><LI><b>Macintosh:</b>
+      <br><a href="mailto:mcmullen@netscape.com">John McMullen</a> contributed the following instructions:
+      <ol>
+        <li>Start with an existing idl project, eg mozilla/xpfe/components/history/macbuild/historyIDL.mcp.
+        <li>Copy this project file to the desired location (by convention, in <tt>mozilla/foo/macbuild</tt>),
+            and rename it "fooIDL.mcp". 
+        <li>Open the project file. 
+        <li>Switch to the "targets" tab. 
+        <li>Double-click on the "headers" target, to bring up the settings window.
+        <li>On the "Target"/"Target settings" panel, change the output directory to your liking. 
+        <li>On the "Target"/"Access paths" panel, make sure that the only access path is to
+            ::::dist:idl: (your number of leading colons will vary). Other needed access paths
+            may get added automatically when you add your idl files.
+        <li>On the "Language Settings"/"xpidl Settings" panel change the linker output to "foo.headers". 
+        <li>Close the settings window, and save the changes. 
+        <li>Double-click the "history.xpt" target, to bring up the settings window.
+        <li>On the "Target"/"Target settings" panel, change the target name to "foo.xpt". 
+        <li>On the "Target"/"Access paths" panel, make sure that the only access path is to
+            ::::dist:idl: (your number of leading colons will vary). Other needed access paths
+            may get added automatically when you add your idl files.
+        <li>On the "Language Settings"/"xpidl Settings" panel change the linker output to "foo.xpt" 
+        <li>Close the settings window, and save the changes. 
+        <li>Switch to the "Files" tab. 
+        <li>Select all the files in the list, and remove them from the project (eg, using cmd-delete). 
+        <li>Add your foo idl files to the project. (or proceed to the next step, and add the files
+            later). 
+        <li>Open MacCVS Pro, and find your new file fooIDL.mcp. Select it and choose "Orphan Files"
+            to remove the previous MacCVS information. At this point, you can check the new file in,
+            if you want. 
+        <li>If you want your IDL files to be exported, a file MANIFEST_IDL must be added to the
+            same directory as the .idl file. Add the name of your .idl file to MANIFEST_IDL,
+            leaf name only, one file per line.
+        <li>Finally, modify the build script that drives the build, namely
+            <tt>mozilla/build/mac/NGLayoutBuildList.pm</tt>. Find
+            the function BuildClientDist(). Add lines such as these:<br>
+            <br>
+            <tt>
+            InstallFromManifest(":mozilla:foo:public:MANIFEST_IDL", "$distdirectory:idl:");<br>
+            BuildIDLProject(":mozilla:foo:macbuild:fooIDL.mcp",	"foo");<br>
+            <br>
+            </tt>
+            The first line exports your idl headers to dist (assuming
+            you want this, and have created the manifest file in a
+            previous step). The second line causes the .h and the .xpt
+            files to be generated. Be sure that, if your idl files
+            include other idl files, that your new lines follow the lines
+            that export the headers on which they depend.  <li>You're
+            done!
+      </ol>
+    </UL>
+
+<i><a href="mailto:mccabe@netscape.com">mccabe@netscape.com</a></i>
+<!-- hhmts start -->
+<p>Last modified: Fri Jun  4 11:02:49 PDT 1999
+<!-- hhmts end -->
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/scriptable/xpidl/xpidl-in-the-build.html&amp;rev=&amp;root=/cvsroot/">Last modified June  4,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

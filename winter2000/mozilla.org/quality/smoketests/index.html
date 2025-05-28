@@ -1,0 +1,1380 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla QA Smoke Tests</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<center>
+<h1>
+mozilla qa smoke tests</h1></center>
+
+<center><b>by Mozilla QA</b>
+<br><b>page maintained by <a href="mailto:leger@netscape.com">Jan Leger</a>
+- last updated 01/18/00</b>
+<p><font color="#330033">Jump to <a href="#install">Installation</a>,
+<a href="#browser">Browser</a>,
+<a href="#ender">Ender</a>,
+<a href="#mail">Mail</a>,
+<a href="#international">International</a>
+testcases.</font>
+<br><b><font color="#FF0000">Please use</font></b><font color="#330033"><a href="http://www.mozilla.org/projects/seamonkey/release-notes/">latest
+build</a>!</font></center>
+
+<p><b>What are smoke tests?</b>
+<blockquote>The Mozilla QA Smoke Tests are a minimal set of testcases which
+are required to pass/work in order to bless a mozilla build as stable and
+acceptable for testing.</blockquote>
+<b>How do I use these tests?</b>
+<blockquote>Currently these tests are outlined to run manually.&nbsp; Links
+are provided for page load tests; all other tests are defined.&nbsp; An
+automated version of these testcases for Win32, Mac and Linux will be posted
+shortly and URL link placed *here* when ready.</blockquote>
+<a NAME="install"></a>
+<table BORDER COLS=4 WIDTH="100%" >
+<tr BGCOLOR="#CCCCCC">
+<td WIDTH="2%" BGCOLOR="#CCCCCC">
+<center><b>Test&nbsp;</b>
+<br><b>#</b></center>
+</td>
+
+<td WIDTH="8%">
+<center><b>Test&nbsp;</b>
+<br><b>Area</b></center>
+</td>
+
+<td WIDTH="5%">
+<center><b>Coverage</b>
+<br><b>Type</b></center>
+</td>
+
+<td WIDTH="36%">
+<center><b>Installation Smoke Tests</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>1</font></center>
+</td>
+
+<td>
+<center><font size=-1>Installation</font></center>
+</td>
+
+<td WIDTH="5%">
+<center><font size=-1>Startup</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Install and launch Apprunner</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>2</font></center>
+</td>
+
+<td>
+<center><font size=-1>Installation</font></center>
+</td>
+
+<td>
+<center><font size=-1>Profile&nbsp;</font>
+<br><font size=-1>Manager</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Create a 5.0 profile:&nbsp;</font>
+<br><font size=-1>&nbsp;1. Remove mozregistry.dat and Users50(Win) OR mozregistry
+and Documents&nbsp;&nbsp; folder (Mac) OD registry and .mozilla (Linux)&nbsp;</font>
+<br><font size=-1>&nbsp;2. Run apprunner to bring up Create Profile Wizard&nbsp;</font>
+<br><font size=-1>&nbsp;3. Choose&nbsp; [NEXT], enter profile data, [FINISH]&nbsp;</font>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp; *<i>This should launch Seamonkey
+with the created profile&nbsp;</i></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>3</font></center>
+</td>
+
+<td>
+<center><font size=-1>Installation</font></center>
+</td>
+
+<td>
+<center><font size=-1>Profile&nbsp;</font>
+<br><font size=-1>Manager</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Migrate a 4.x profile (4.x > 5.0)&nbsp;</font>
+<br><font size=-1>&nbsp;1. Remove mozregistry.dat and Users50(Win) OR&nbsp;
+mozregistry and Documents&nbsp; folder (Mac) OR registry and .mozilla (Linux)&nbsp;</font>
+<br><font size=-1>&nbsp;2. Run apprunner -installer&nbsp;</font>
+<br><font size=-1>&nbsp;3. Select a profile&nbsp; to migrate from list
+(*if only one 4.x profile exists, it will be migrated silently)&nbsp;</font>
+<br><font size=-1>&nbsp;4. Press [START]&nbsp;</font>
+<br><i><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp; *This should launch Seamonkey
+with the migrated profile&nbsp;</font></i></td>
+</tr>
+</table>
+
+<p><a NAME="browser"></a>
+<table BORDER COLS=4 WIDTH="100%" >
+<tr BGCOLOR="#FFCCCC">
+<td WIDTH="4%" BGCOLOR="#FFCCCC">
+<center><b>Test&nbsp;</b>
+<br><b>#</b></center>
+</td>
+
+<td WIDTH="8%">
+<center><b>Test&nbsp;</b>
+<br><b>Area</b></center>
+</td>
+
+<td WIDTH="10%">
+<center><b>Coverage</b>
+<br><b>Type</b></center>
+</td>
+
+<td WIDTH="36%">
+<center><b>Browser Smoke Tests</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>1</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.yahoo.com">www.yahoo.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>2</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.netscape.com">www.netscape.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>3</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://my.netscape.com">my.netscape.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>4</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.excite.com">www.excite.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>5</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.microsoft.com">www.microsoft.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>6</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.city.net">www.city.net</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>7</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.mirabilis.com">www.mirabilis.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>8</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.pathfinder.com/welcome">www.pathfinder.com/welcome</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>9</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.warnerbros.com/home_moz3_day.html">www.warnerbros.com/home_moz3_day.html</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>10</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.cnn.com">www.cnn.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>11</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.usatoday.com">www.usatoday.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>12</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.hotwired.com">www.hotwired.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>13</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.hotbot.com">www.hotbot.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>14</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Page Load</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.browserwatch.com/">http://www.browserwatch.com/</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>15</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Basic Functional</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Open a new browser window - File|New Browser Window</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>16</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Basic Functional</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Use File->OpenWebLocation to visit http://my.netscape.com.
+Click on a link&nbsp;</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>17</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Basic Functional</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Click on Back/Fwd Buttons</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>18</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Basic Functional</font></center>
+</td>
+
+<td>&nbsp;<font size=-1>In the url bar type and visit a url of choice</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>19</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Basic Functional</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Open a file - File|Open</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>20</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Bookmarks</font></center>
+</td>
+
+<td><font size=-1>&nbsp;1. Add a Bookmark (Bookmarks | Add Current Page).&nbsp;</font>
+<br><font size=-1>&nbsp;2. Select Bookmarks |Manage Bookmarks.&nbsp;</font>
+<br><font size=-1>&nbsp;3. Locate new bookmark and double-click.&nbsp;</font>
+<br><font size=-1>&nbsp; *This should launch a new, chromed Browser window.&nbsp;</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>21</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>History</font></center>
+</td>
+
+<td><font size=-1>&nbsp;1. Browse any page.&nbsp;</font>
+<br><font size=-1>&nbsp;2. Select Tasks|Tools|History.&nbsp;</font>
+<br><font size=-1>&nbsp;3. Select the new url in History View and double-click.&nbsp;</font>
+<br><font size=-1>&nbsp; <i>*This should launch a new, chromed Browser
+window.</i></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+.</td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>22</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Frames</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.mozilla.org/quality/browser/bft/bft_frame_index.html">www.mozilla.org/quality/browser/bft/bft_frame_index.html</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>23</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Tables</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.mozilla.org/quality/browser/bft/bft_nested_table.html">www.mozilla.org/quality/browser/bft/bft_nested_table.html</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>24</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Java</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load&nbsp;<a href="http://java.sun.com/"> java.sun.com</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>25</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Javascript</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.mozilla.org/quality/browser/bft/bft_browser_js.html">http://www.mozilla.org/quality/browser/bft/bft_browser_js.html</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>26</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>PNG</font>
+<br><font size=-1>Images</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.mozilla.org/quality/browser/bft/bft_browser_imagemap.html">www.mozilla.org/quality/browser/bft/bft_browser_imagemap.html</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>27</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>JPEG/Animated</font>
+<br><font size=-1>GIF Images</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.mozilla.org/quality/browser/bft/bft_multi_images.html">www.mozilla.org/quality/browser/bft/bft_multi_images.html</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>28</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Transparencies</font>
+<br><font size=-1>Alpha Channel</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.mozilla.org/quality/browser/bft/bft_image_trans.html">www.mozilla.org/quality/browser/bft/bft_image_trans.html</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>29</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Window scrolling</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Load <a href="http://www.mozilla.org/quality/browser/bft/bft_browser_html_mix3.html">www.mozilla.org/quality/browser/bft/bft_browser_html_mix3.html</a></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>30</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Sidebar</font></center>
+</td>
+
+<td><font size=-1>&nbsp;1. Load <a href="http://www.mozilla.org/">http://www.mozilla.org/</a>.</font>
+<br><font size=-1>&nbsp;2. Click on expand bar (far left) to open and close
+the Sidebar.</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>31</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Sidebar</font></center>
+</td>
+
+<td><font size=-1>&nbsp;1. Click on Related Links folder in Sidebar&nbsp;</font>
+<br><font size=-1>&nbsp;2. Try a few related links.</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>32</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Sidebar</font></center>
+</td>
+
+<td><font size=-1>&nbsp;1. Click on Customize button at very top of sidebar
+panel.&nbsp;</font>
+<br><font size=-1>&nbsp;2. Customize screen should come upwith list of
+panels at top left.&nbsp;</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>33</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>AutoFill</font></center>
+</td>
+
+<td><font size=-1>&nbsp;1. Click <a href="http://people.netscape.com/morse/wallet/samples/INTERVIEW.HTML">here</a>
+and enter first and last name.&nbsp;</font>
+<br><font size=-1>&nbsp;2. Select Edit - Wallet - Capture Form&nbsp;</font>
+<br><i><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp; Should be asked for password.&nbsp;</font></i>
+<br><font size=-1>&nbsp;3. Enter a password, then re-enter it when asked.&nbsp;</font>
+<br><font size=-1>&nbsp;4. Shutdown, restart and go <a href="http://people.netscape.com/morse/wallet/samples/amazon.html">here</a>.&nbsp;</font>
+<br><font size=-1>&nbsp;5. Go to Edit - Wallet - Safe Form Fill.&nbsp;</font>
+<br><font size=-1>&nbsp;&nbsp;&nbsp; <i>Should be asked for password, enter
+same as before.&nbsp;</i></font>
+<br><i><font size=-1>&nbsp;&nbsp;&nbsp; Safe Form Fill screen should come
+up with your first and last name listed.&nbsp;</font></i>
+<br><font size=-1>&nbsp;6. Click&nbsp; OK.&nbsp;</font>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp; <i>Should dismiss screen and
+fill in your name on form.&nbsp;</i></font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>34</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Single Signon</font></center>
+</td>
+
+<td><font size=-1>&nbsp;1. Go to <a href="http://people.netscape.com/paulmac/login.html">http://people.netscape.com/paulmac/login.html&nbsp;</a></font>
+<br><font size=-1>&nbsp;2. Enter a username/password combo of squiddy/calamari
+and hit OK&nbsp;</font>
+<br><font size=-1>&nbsp;3. Choose OK to enable SingleSignon, then OK to
+save this signon, then enter a password and hit OK&nbsp;</font>
+<br><i><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp; (Known bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=12807">12807</a>&nbsp;
+- password dialogue is ugly on Mac)&nbsp;</font></i>
+<br><font size=-1>&nbsp;4. Go to Wallet - Display Signons and confirm signon
+has been saved.</font>
+<br><i><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp; (Known bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=12043">12043</a>
+- Display Signons blank on Mac, causes hang)&nbsp;</font></i>
+<br><font size=-1>&nbsp;5. Exit and re-start b rowser&nbsp;</font>
+<br><font size=-1>&nbsp;6. Return to http://people.netscape.com/paulmac/login.html&nbsp;</font>
+<br><font size=-1>&nbsp;7. You should be asked for a password&nbsp;</font>
+<br><font size=-1>&nbsp;8. After entering a password and hitting OK, the
+signon should be filled.&nbsp;</font>
+<br><font size=-1>&nbsp;9. Finally, hit check to see if the correct signon
+was recalled.</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>&nbsp;35</font></center>
+</td>
+
+<td>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td>
+<center><font size=-1>Exit Browser</font></center>
+</td>
+
+<td><font size=-1>&nbsp;File | Exit OR File | Quit to exit Browser and
+Apprunner.&nbsp;</font></td>
+</tr>
+</table>
+
+<p><a NAME="ender"></a>
+<table BORDER COLS=4 WIDTH="100%" >
+<tr BGCOLOR="#FFCC99">
+<td WIDTH="2%" BGCOLOR="#FFCC99">
+<center><b>Test&nbsp;</b>
+<br><b>#</b></center>
+</td>
+
+<td WIDTH="8%">
+<center><b>Test&nbsp;</b>
+<br><b>Area</b></center>
+</td>
+
+<td WIDTH="5%">
+<center><b>Coverage</b>
+<br><b>Type</b></center>
+</td>
+
+<td WIDTH="36%">
+<center><b>Ender Smoke Tests</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>1</font></center>
+</td>
+
+<td>
+<center><font size=-1>Ender</font></center>
+</td>
+
+<td WIDTH="5%">
+<center><font size=-1>Basic Functional</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Open Editor via Tasks menu and select Insert Text
+from Debug menu.</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>2</font></center>
+</td>
+
+<td>
+<center><font size=-1>Ender</font></center>
+</td>
+
+<td>
+<center><font size=-1>Basic Functional</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Select some text and use toolbar icons to <b>bold</b>,
+<i>italicize</i>,
+<u>underline</u>
+and change <font color="#CC0000">color</font> (Win32 only) of the text.</font></td>
+</tr>
+</table>
+
+<p><a NAME="mail"></a>
+<table BORDER COLS=4 WIDTH="100%" >
+<tr BGCOLOR="#FFFFCC">
+<td WIDTH="4%" BGCOLOR="#FFFFCC">
+<center><b>Test&nbsp;</b>
+<br><b>#</b></center>
+</td>
+
+<td WIDTH="8%">
+<center><b>Test&nbsp;</b>
+<br><b>Area</b></center>
+</td>
+
+<td WIDTH="10%">
+<center><b>Coverage</b>
+<br><b>Type</b></center>
+</td>
+
+<td WIDTH="36%">
+<center><b>Mail Smoke Tests</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>1</font></center>
+</td>
+
+<td>
+<center><font size=-1>Mail</font></center>
+</td>
+
+<td>
+<center><font size=-1>Start Mail</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Open Messenger via Tasks | Messenger menu item
+from the browser or start with -mail&nbsp;</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>2</font></center>
+</td>
+
+<td>
+<center><font size=-1>Mail</font></center>
+</td>
+
+<td>
+<center><font size=-1>Send Mail</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Compose a new message and send it&nbsp;</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>3</font></center>
+</td>
+
+<td>
+<center><font size=-1>Mail</font></center>
+</td>
+
+<td>
+<center><font size=-1>Receive Mail</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Choose to get mail&nbsp;</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>4</font></center>
+</td>
+
+<td>
+<center><font size=-1>Mail</font></center>
+</td>
+
+<td>
+<center><font size=-1>Read Mail</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Open a mail and</font> <font size=-1>read it</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>5</font></center>
+</td>
+
+<td>
+<center><font size=-1>Mail</font></center>
+</td>
+
+<td>
+<center><font size=-1>Open Folder</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Expand the folder list (local mail) and select
+a folder</font></td>
+</tr>
+
+<tr>
+<td>
+<center><font size=-1>6</font></center>
+</td>
+
+<td>
+<center><font size=-1>Mail</font></center>
+</td>
+
+<td>
+<center><font size=-1>Close Mail</font></center>
+</td>
+
+<td><font size=-1>&nbsp;Use close box to close Messenger</font></td>
+</tr>
+</table>
+
+<p><a NAME="international"></a>
+<table BORDER WIDTH="100%" >
+<tr BGCOLOR="#CCCCCC">
+<td VALIGN=TOP>
+<center><b>Test&nbsp;</b>
+<br><b>#</b></center>
+</td>
+
+<td VALIGN=TOP>
+<center><b>Test&nbsp;</b>
+<br><b>Area</b></center>
+</td>
+
+<td VALIGN=TOP>
+<center><b>Coverage</b>
+<br><b>Type</b></center>
+</td>
+
+<td VALIGN=TOP>
+<center><b>International Smoke Tests</b></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>1</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Startup</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Launch Apprunner</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>2</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.yahoo.co.jp/index.html">http://www.yahoo.co.jp/index.html&nbsp;</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>3</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.zdnet.co.jp/pcweek/">http://www.zdnet.co.jp/pcweek/</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>4</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.zdnet.co.jp/">http://www.zdnet.co.jp/</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>5</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.tvspielfilm.de">http://www.tvspielfilm.de</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>6</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.focus.de">http://www.focus.de</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>7</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.joongang.co.kr/">http://www.joongang.co.kr/</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>8</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.dongailbo.co.kr/">http://www.dongailbo.co.kr/</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>9</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.chinatimes.com.tw/">http://www.chinatimes.com.tw/</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>10</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.china.com/gb">http://www.china.com/gb</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>11</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center>&nbsp;<font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center>&nbsp;<font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>Load</font> <font size=-1><a href="http://www.china.com/zh_tw/china">http://www.china.com/zh_tw/china</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>12</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Top Site</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.ntt.co.jp/index-j.html">http://www.ntt.co.jp/</a></font></td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=TOP>
+<center><font size=-1>13</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>JavaApplets</font></center>
+</td>
+
+<td VALIGN=TOP><font color="#330033"><font size=-1>&nbsp;Load
+<a href="http://people.netscape.com/erik/sev-nsi-java.html">http://people.netscape.com/erik/sev-nsi-java.html</a></font></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>14</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Multilingual&nbsp;</font>
+<br><font size=-1>UTF-8 page</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.unicode.org/unicode/iuc10/x-utf8.html">http://www.unicode.org/unicode/iuc10/x-utf8.html</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>15</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Multilingual page using NCRs</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Load <a href="http://www.unicode.org/unicode/iuc10/x-ncr.html">http://www.unicode.org/unicode/iuc10/x-ncr.html</a></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>16</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Mail</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Send Mail</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Using View | Character Set menu, compose
+mail messages in Western, Japanese, and UTF-8 with both headers &amp; body
+containing 8-bit characters. Send them with strict MIME-compliant headers
+and body for each chraset.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>17</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Mail</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Read Mail</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;Display Western, Japanese, and UTF-8
+headers and body containing 8-bit characters correctly if they are strictly
+MIME-compliant</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><font size=-1>18</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Browser</font></center>
+</td>
+
+<td VALIGN=TOP>
+<center><font size=-1>Exit</font></center>
+</td>
+
+<td VALIGN=TOP><font size=-1>&nbsp;File | Quit to exit Apprunner.</font></td>
+</tr>
+</table>
+
+<p>
+<hr WIDTH="100%">
+<p><b><i>Page History</i></b>
+<br><font size=-1>01/18/00 - leger - Fixed broken target links.</font>
+<br><font size=-1>10/15/99 - lchiang - Minor corrections to layout of Int'l
+table</font>
+<br><font size=-1>10/14/99 - lchiang - Replaced with new International
+section, provided by msanz</font>
+<br><font size=-1>10/11/99 - leger - Added File->OpenWebLocation and type
+URL Basic Functional Tests; reorganized page by product.</font>
+<br><font size=-1>10/06/99 - leger - Added Profile Manager testcases; removed
+http://168.160.224.76/real/game/index.htm from int'l page loads.</font>
+<br><font size=-1>09/08/99 - leger - Updated Autofill test</font>
+<br><font size=-1>09/07/99 - leger - Updated Javascript Applet test to
+mozilla Javascript test QA page instead of abcnews.com</font>
+<br><font size=-1>09/01/99 - leger - Corrected Single SignOn bug #.</font>
+<br><font size=-1>08/31/99 - leger - Added Single Signon smoke test.</font>
+<br><font size=-1>08/16/99 - leger - Added Bookmark and History smoke tests.</font>
+<br><font size=-1>06/30/99 - leger - Fixed Smoke Test #9, URL link has
+incorrect.</font>
+<br><font size=-1>06/22/99 - leger - Added Autofill smoke test.</font>
+<br><font size=-1>06/22/99 - leger - Added a third Sidebar test.</font>
+<br><font size=-1>06/18/99 - leger - Added www.browserwatch.com load test.</font>
+<br><font size=-1>06/16/99 - leger - Added Sidebar tests.</font>
+<br><font size=-1>06/10/99 - leger - Added bug # info for Intl page load;
+moved from version # to Last Updated date.</font>
+<br><font size=-1>06/07/99 - leger - Updated Ender "color" test to be for
+win32 only; not implemented on Mac or Linux yet.</font>
+<br><font size=-1>06/04/99 - leger - Ender smoke tests updated; added my.netscape.com
+bug #; gave doc a version # for easy reference.</font>
+<br><font size=-1>05/19/99 - leger - International smoke tests added.</font>
+<br><font size=-1>05/06/99 - leger - Original page created.</font>
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/smoketests/index.html&amp;rev=&amp;root=/cvsroot/">Last modified January 18,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

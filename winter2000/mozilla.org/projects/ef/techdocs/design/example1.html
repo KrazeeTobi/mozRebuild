@@ -1,0 +1,225 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Primitive Graph Example 1</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000">Electrical Fire</FONT></H2>
+
+
+<H2>Design</H2>
+
+
+<H2>Primitive Graph Format</H2>
+
+
+<H2><FONT SIZE=+4>Example 1</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC="../electricalfire.gif"
+ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A>  <A HREF=
+"bytecode_mappings.html"><IMG SRC="../arrows/left.gif" ALIGN="BOTTOM" WIDTH=
+"37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="primitive_graph.html"><IMG SRC=
+"../arrows/up.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A><A HREF="runtime.html"><IMG SRC="../arrows/right.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>To illustrate the primitive graph format we take a look at an example
+of a Java function, its bytecode representation, and its primitive graph
+representation.</P>
+
+<H3>Source Code</H3>
+
+
+<P>The Java function is a simple string-to-int parser:</P>
+
+<PRE>public static int strToNum(String s) throws NumberFormatException
+	{
+	char a[] = s.toCharArray();
+	boolean negative = false;
+	int i = 0;
+	int n = 0;
+
+	if (a.length&gt;i &amp;&amp; a[i]=='-')
+		{
+		negative = true;
+		i++;
+		}
+	if (i == a.length)
+		throw new NumberFormatException();
+	while (i != a.length)
+		{
+		if (a[i] &gt;= '0' &amp;&amp; a[i] &lt;= '9')
+			{
+			n = n*10 + a[i] - '0';
+			i++;
+			}
+		else
+			throw new NumberFormatException();
+		}
+	return negative ? -n : n;
+	}</PRE>
+
+<P><CODE>javac</CODE> produces the following bytecode representation:</P>
+
+<PRE><I><FONT SIZE=-1>.method public static strToNum(Ljava/lang/String;)I</FONT></I>
+<I><FONT SIZE=-1>        .throws java/lang/NumberFormatException</FONT></I>
+
+<I><FONT SIZE=-1>        .limit stack 3</FONT></I>
+<I><FONT SIZE=-1>        .limit locals 5</FONT></I>
+<FONT SIZE=-1>        aload_0</FONT>
+<FONT SIZE=-1>        invokevirtual java/lang/String/toCharArray()[C</FONT>
+<FONT SIZE=-1>        astore_1</FONT>
+<FONT SIZE=-1>        iconst_0</FONT>
+<FONT SIZE=-1>        istore_2</FONT>
+<FONT SIZE=-1>        iconst_0</FONT>
+<FONT SIZE=-1>        istore_3</FONT>
+<FONT SIZE=-1>        iconst_0</FONT>
+<FONT SIZE=-1>        istore 4</FONT>
+<FONT SIZE=-1>        aload_1</FONT>
+<FONT SIZE=-1>        arraylength</FONT>
+<FONT SIZE=-1>        iload_3</FONT>
+<FONT SIZE=-1>        if_icmple Label1</FONT>
+<FONT SIZE=-1>        aload_1</FONT>
+<FONT SIZE=-1>        iload_3</FONT>
+<FONT SIZE=-1>        caload</FONT>
+<FONT SIZE=-1>        bipush 45</FONT>
+<FONT SIZE=-1>        if_icmpne Label1</FONT>
+<FONT SIZE=-1>        iconst_1</FONT>
+<FONT SIZE=-1>        istore_2</FONT>
+<FONT SIZE=-1>        iinc 3 1</FONT>
+<FONT SIZE=-1>Label1: iload_3</FONT>
+<FONT SIZE=-1>        aload_1</FONT>
+<FONT SIZE=-1>        arraylength</FONT>
+<FONT SIZE=-1>        if_icmpne Label4</FONT>
+<FONT SIZE=-1>        new java/lang/NumberFormatException</FONT>
+<FONT SIZE=-1>        dup</FONT>
+<FONT SIZE=-1>        invokenonvirtual java/lang/NumberFormatException/&lt;init&gt;()V</FONT>
+<FONT SIZE=-1>        athrow</FONT>
+<FONT SIZE=-1>Label2: aload_1</FONT>
+<FONT SIZE=-1>        iload_3</FONT>
+<FONT SIZE=-1>        caload</FONT>
+<FONT SIZE=-1>        bipush 48</FONT>
+<FONT SIZE=-1>        if_icmplt Label3</FONT>
+<FONT SIZE=-1>        aload_1</FONT>
+<FONT SIZE=-1>        iload_3</FONT>
+<FONT SIZE=-1>        caload</FONT>
+<FONT SIZE=-1>        bipush 57</FONT>
+<FONT SIZE=-1>        if_icmpgt Label3</FONT>
+<FONT SIZE=-1>        iload 4</FONT>
+<FONT SIZE=-1>        bipush 10</FONT>
+<FONT SIZE=-1>        imul</FONT>
+<FONT SIZE=-1>        aload_1</FONT>
+<FONT SIZE=-1>        iload_3</FONT>
+<FONT SIZE=-1>        caload</FONT>
+<FONT SIZE=-1>        iadd</FONT>
+<FONT SIZE=-1>        bipush 48</FONT>
+<FONT SIZE=-1>        isub</FONT>
+<FONT SIZE=-1>        istore 4</FONT>
+<FONT SIZE=-1>        iinc 3 1</FONT>
+<FONT SIZE=-1>        goto Label4</FONT>
+<FONT SIZE=-1>Label3: new java/lang/NumberFormatException</FONT>
+<FONT SIZE=-1>        dup</FONT>
+<FONT SIZE=-1>        invokenonvirtual java/lang/NumberFormatException/&lt;init&gt;()V</FONT>
+<FONT SIZE=-1>        athrow</FONT>
+<FONT SIZE=-1>Label4: iload_3</FONT>
+<FONT SIZE=-1>        aload_1</FONT>
+<FONT SIZE=-1>        arraylength</FONT>
+<FONT SIZE=-1>        if_icmpne Label2</FONT>
+<FONT SIZE=-1>        iload_2</FONT>
+<FONT SIZE=-1>        ifeq Label5</FONT>
+<FONT SIZE=-1>        iload 4</FONT>
+<FONT SIZE=-1>        ineg</FONT>
+<FONT SIZE=-1>        ireturn</FONT>
+<FONT SIZE=-1>Label5: iload 4</FONT>
+<FONT SIZE=-1>        ireturn</FONT>
+<I><FONT SIZE=-1>.end method</FONT></I></PRE>
+
+<H3>Bytecode Processor's Representation</H3>
+
+
+<P ALIGN=CENTER><A NAME="Figure1"></A><B>Figure 1. Basic Blocks</B></P>
+
+<P ALIGN=CENTER><IMG SRC="graphics/example1_basic_blocks.gif" ALIGN="BOTTOM"
+WIDTH="486" HEIGHT="648" NATURALSIZEFLAG="3"></P>
+
+<P>The bytecode processor finds the basic blocks and transfers of control
+in the raw bytecode program to produce the graph above.</P>
+
+<P>That graph is not quite a complete representation of the function because
+it does not represent exceptional control flow paths. A number of the bytecodes
+(<CODE>athrow</CODE>, <CODE>invokevirtual</CODE>, <CODE>invokenonvirtual</CODE>,
+<CODE>arraylength</CODE>, and <CODE>caload</CODE>) can cause exceptions,
+and asynchronous exceptions can also occur. These additional control flow
+paths will be represented in the primitive graph constructed below. For
+now, each instruction or sequence of instructions is annotated with information
+about where exceptions should go. In this graph there are no catch or finally
+handlers, so every instruction is annotated with an exceptional path (not
+shown in the figure) that goes to the end node.</P>
+
+<P><FONT COLOR="#FF0000">Caution: The primitive graph below corresponds
+to an older specification of primitive graphs. The graph below should be
+corrected for:</FONT></P>
+
+<UL>
+  <LI><FONT COLOR="#FF0000">The <CODE>aexc</CODE> node must be the target
+  of a backward control flow edge, not the source.</FONT>
+  <LI><FONT COLOR="#FF0000">The control edges pointing to the <CODE>end</CODE>
+  node should be exception and return edges.</FONT>
+  <LI><CODE><FONT COLOR="#FF0000">lookupvirtual</FONT></CODE><FONT COLOR="#FF0000">,
+  <CODE>invokevirtual</CODE>, and <CODE>arraylength</CODE> are now comprised
+  of simpler primitives.</FONT>
+  <LI><FONT COLOR="#FF0000">Null pointer and array range checks are now done
+  using separate opcodes that throw exceptions directly.</FONT>
+  <LI><FONT COLOR="#FF0000">The <I>offset</I> is included as part of the
+  <CODE>+a</CODE> primitive.</FONT>
+  <LI><FONT COLOR="#FF0000">The condition (=, !=, etc.) should be part of
+  the <CODE>if</CODE> control node instead of inside its own primitive.</FONT>
+  <LI><CODE><FONT COLOR="#FF0000">new</FONT></CODE><FONT COLOR="#FF0000">
+  nodes should be system calls.</FONT>
+  <LI><CODE><FONT COLOR="#FF0000">new</FONT></CODE><FONT COLOR="#FF0000">
+  nodes should have outgoing tuple edges instead of pairs of memory and address
+  edges.</FONT>
+</UL>
+
+<H3>Primitive Graph</H3>
+
+
+<P ALIGN=CENTER><A NAME="Figure2"></A><B>Figure 2. Primitive Graph&nbsp;&nbsp;&nbsp;</B><FONT
+ SIZE=-1><A HREF="graphics/example1_primitive_graph.ps">[level 2 color postscript
+version]</A></FONT></P>
+
+<P ALIGN=CENTER><IMG SRC="graphics/example1_primitive_graph.gif" ALIGN=
+"BOTTOM" WIDTH="505" HEIGHT="766" NATURALSIZEFLAG="3"></P>
+
+<P>The complete primitive graph for our sample function is shown in the
+figure above. Since the graph is fairly complex, its control flow and dataflow
+layers are shown separately in figures <A HREF="#Figure3">3</A> and <A 
+HREF="#Figure4">4</A> below.</P>
+
+<P ALIGN=CENTER><A NAME="Figure3"></A><B>Figure 3. Primitive Graph's Control
+Flow Layer&nbsp;&nbsp;&nbsp;</B><FONT SIZE=-1><A HREF="graphics/example1_control_layer.ps">[level
+2 color postscript version]</A></FONT></P>
+
+<P ALIGN=CENTER><IMG SRC="graphics/example1_control_layer.gif" ALIGN="BOTTOM"
+WIDTH="505" HEIGHT="766" NATURALSIZEFLAG="3"></P>
+
+<P ALIGN=CENTER><A NAME="Figure4"></A><B>Figure 4. Primitive Graph's Dataflow
+Layer&nbsp;&nbsp;&nbsp;</B><FONT SIZE=-1><A HREF="graphics/example1_data_layer.ps">[level
+2 color postscript version]</A></FONT></P>
+
+<P ALIGN=CENTER><IMG SRC="graphics/example1_data_layer.gif" ALIGN="BOTTOM"
+WIDTH="505" HEIGHT="766" NATURALSIZEFLAG="3"><HR><P></P>
+
+</BODY>
+</HTML>

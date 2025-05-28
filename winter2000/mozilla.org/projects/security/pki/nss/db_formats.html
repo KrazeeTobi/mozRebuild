@@ -1,0 +1,200 @@
+<HTML>
+<HEAD>
+<TITLE>cert7.db</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+
+<center><h2>
+cert7.db</h2>
+<i><FONT SIZE="-1">
+Newsgroup: 
+<A HREF="news://news.mozilla.org/netscape.public.mozilla.crypto">netscape.public.mozilla.crypto</A><BR>
+
+Technical contact: 
+<A HREF="mailto:roeber@netscape.com?subject=cert7.db feedback">Frederick Roeber</A></FONT></i><BR>
+
+<i><FONT SIZE="-1">Yell at the manager: 
+<A HREF="mailto:lord@netscape.com?subject=cert7.db feedback">Bob Lord</A></FONT></i>
+</center>
+
+<p>Based on the number of requests we get, we suspect that many people will
+want to use the NSS source code to figure out the format of the cert7.db
+databases. To save you some effort, here is some internal documentation
+we wrote a couple years ago. (Note that 
+<a href="http://www.sei.cmu.edu/publications/documents/99.reports/99tn010/99tn010chap03.html">some
+people</a> have already worked this out; we just couldn't comment on it
+at the time.)
+
+<p><b>Warning:</b> Do not access the cert7.db or key3.db files directly. 
+The format is changing, the files are likely to get corrupted if you access 
+them, and crytpo programs should not be designed to work with key material directly. 
+See below for details.
+
+<p>For information about record types stored in cert7.db, see 
+<A HREF="pcertdb.html">Physical Format of pcertdb</A>.
+
+
+<p>Netscape never released the format for these databases, for several
+reasons:
+<ul>
+<li>
+We wanted to be able to change the format without incurring an external
+support burden. (Note that the current cert and key database formats
+are the 7th and 3rd, respectively!)</li>
+
+<li>
+Some of the trust information hinted at how some operations, including
+step-up, worked. US export regulations prohibited us from saying anything about
+some types of operations.</li>
+
+<li>
+The existing code is "brittle" with respect to database corruption.</li>
+
+<li>
+We wanted to discourage people from expecting that key material is available
+to their programs. Programs that need to do crypto should not be designed
+to work with databases of certs and keys; instead, they should be written to work
+with cryptographic tokens. This approach ensures programs don't have to be redesigned
+to work with crypto hardware (such as smart cards). This was one of the factors
+that went into the design of Personal Security Manager.</li>
+</ul>
+This was not an attempt at "security through obscurity." As the people
+who reverse-engineered the databases found, all sensitive information is
+secured with PKCS#5 password-based encryption.
+
+<p>We'd still like to encourage anyone wanting access to these files to
+think carefully about why they want to do this. A few things to keep
+in mind:
+<ul>
+<li>
+The format is going to change. The NSS 3.0 design calls for all sources
+of data to be "data-only" PKCS#11 modules. This set of modules
+is expected to include</li>
+</ul>
+
+<ul>
+<ul>
+<li>
+one that hits an LDAP server</li>
+
+<li>
+one for "built-in" default root certs and trust information</li>
+
+<li>
+one or more high-performance modules designed for servers; this may include
+one based on Sleepycat's Berkeley database</li>
+
+<li>
+one based on whatever database is selected for Mozilla</li>
+
+<li>
+and perhaps even more . . .</li>
+</ul>
+<br>
+In short: in the future there will be many sources of data, not just
+these two databases (or their direct replacements); also, the format will
+undoubtedly change to better fit with the object model of PKCS#11. 
+Finally, the authors of Berkeley DB admit that there are bugs that
+can cause corruption; they've been after us for ages to upgrade.
+<li>
+The existing code is still "brittle" with respect to database corruption. 
+Most management operations (listing certs, adding certs, fixing corruption,
+etc.) can be done with the tools in security/cmd; we'd like to encourage
+you to use those tools first if possible.</li>
+
+<li>
+Programs wishing to do crypto should not be designed to work with direct
+access to key material. This material may well be irretrievably locked
+inside a hardware token that can do operations without revealing
+the key material. If you don't keep this in mind, your program will
+have to be rewritten when such hardware becomes more common. You
+may well find that the NSS or PSM libraries better suit your needs.</li>
+</ul>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/security/pki/nss/db_formats.html&amp;rev=&amp;root=/cvsroot/">Last modified February 11,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

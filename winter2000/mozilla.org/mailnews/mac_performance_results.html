@@ -1,0 +1,1061 @@
+<HTML>
+<HEAD>
+<TITLE>Mail Performance Results</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<center><b><font size=+2>Mail Performance Results - Mac</font></b>
+<p><b>Post feedback to: <a href="news://news.mozilla.org/netscape.public.mozilla.mail-news">netscape.public.mozilla.mail-news</a></b>
+<br><script>
+document.write("<i>Last Updated: " + document.lastModified + "</i>")
+</script>
+
+<br>
+<hr SIZE=1 NOSHADE WIDTH="100%"></center>
+<b>General</b>:
+<br><a href="#Introduction">Introduction</a>
+<br><a href="#Test">Test Machine Configuration</a>
+<br><a href="#Notes">Notes</a>
+<br><b>Results:</b>
+<br><a href="#Startup">Startup</a>
+<br><a href="#POP">POP</a>
+<br><a href="#IMAP">IMAP</a>
+<br><a href="#News">News</a>
+<br><a href="#Address">Address Book</a>
+<br><a href="#Compose">Message Compose</a>
+<br>
+<hr WIDTH="100%">
+<br><a NAME="Introduction"></a><b>Introduction</b>
+<br>We are evaluating and testing the performance of various mail tasks.
+At this time, we are using Communicator 4.7 as a reference to compare the
+results. Bugs will be filed and tracked for tasks where the performance
+is not acceptable or slower than 4.7. The builds used are the Netscape
+commercial builds and the dates of the builds are listed in parenthesis
+in the results table. We hope to execute these tests on a regular basis
+as well as add additional mail tasks that can be measured. Improving performance
+is a continual process and we will be adding more as time goes on!
+<p><a NAME="Test"></a><b>Test Machine Configurations:</b>
+<dir>
+<li>
+Mac:</li>
+
+<dir>
+<li>
+Mac PPC 8.5.1, 150 Mhz.</li>
+
+<li>
+64 MB RAM</li>
+
+<li>
+LAN</li>
+
+<li>
+Last Build tested on 1/27/00.</li>
+</dir>
+
+<li>
+Linux: (Click&nbsp; <a href="http://www.mozilla.org/mailnews/linux_performance_results.html">here</a>
+for latest results)</li>
+
+<dir>
+<li>
+Pentium 133 Mhz.</li>
+
+<li>
+64 MB RAM.</li>
+
+<li>
+Red Hat 6.0</li>
+
+<li>
+LAN</li>
+
+<li>
+Last Build Tested on 2/16/00.</li>
+</dir>
+
+<li>
+Windows:&nbsp; (Click&nbsp; <a href="http://www.mozilla.org/mailnews/win_performance_results.html">here</a>&nbsp;
+for latest results)</li>
+
+<ul>
+<li>
+Pentium 133 Mhz</li>
+
+<li>
+64 MB RAM and 32MB RAM*</li>
+
+<li>
+Windows 95</li>
+
+<li>
+LAN</li>
+
+<li>
+Last Build tested on 02/23/00.</li>
+</ul>
+*After initial tests were done with 32MB RAM, we increased the memory to
+64MB RAM; nothing else on the test machine was changed.</dir>
+<a NAME="Notes"></a><b>Notes:</b>
+<ul>
+<li>
+All the time measurements are in seconds.</li>
+
+<li>
+Currently, tests are done manually with a stop watch. Error rate: +/- 1
+seconds.</li>
+
+<li>
+Legend:</li>
+
+<ul>
+<li>
+NI - not implemented in the build being tested</li>
+
+<li>
+NT - not testable in the build being tested.</li>
+
+<li>
+SD - Standard Deviation of 5 Test runs.</li>
+</ul>
+</ul>
+<a NAME="Results"></a><b>Results</b>:
+<center><table BORDER WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr ALIGN=CENTER VALIGN=BOTTOM BGCOLOR="#C0C0C0">
+<td ROWSPAN="2"><b>No.</b></td>
+
+<td ROWSPAN="2"><b>Feature/Task</b></td>
+
+<td ROWSPAN="2"><b>Test</b></td>
+
+<td ROWSPAN="2" <b><b>4.7 Performance</b>
+<br><b><font color="#FF0000">(64 MB RAM)</font></b></td>
+
+<td COLSPAN="2"><b>Seamonkey Performance</b>
+<br><b>(1/27/00)</b>
+<br><b><font color="#FF0000">(64 MB RAM)</font></b></td>
+</tr>
+
+<tr>
+<td>
+<center><b>Mean</b></center>
+</td>
+
+<td>
+<center><b>SD</b></center>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="6" BGCOLOR="#FFFFFF"><b>Mail<a NAME="Startup"></a>Startup</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Mail Startup after Navigator&nbsp;</td>
+
+<td>Launch Navigator and then open Mail</td>
+
+<td ALIGN=CENTER VALIGN=CENTER>3.30</td>
+
+<td>
+<center>&nbsp;15.656</center>
+</td>
+
+<td>
+<center>&nbsp;0.247</center>
+</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Mail Startup First</td>
+
+<td>Launch Mail (no other Seamonkey Components are loaded)</td>
+
+<td>
+<center>&nbsp;6.47</center>
+</td>
+
+<td>
+<center>&nbsp;21.378</center>
+</td>
+
+<td>
+<center>&nbsp;0.378</center>
+</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Maximize the Mail Window</td>
+
+<td>After starting Mail, maximize the Mail window</td>
+
+<td>
+<center>&nbsp;0.89</center>
+</td>
+
+<td>
+<center>&nbsp;1.624</center>
+</td>
+
+<td>
+<center>&nbsp;0.272</center>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="6" BGCOLOR="#FFFFFF"><a NAME="POP"></a><b>POP Mail</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>POP: Mail Download</td>
+
+<td>Download 500 messages (no summary file)</td>
+
+<td>
+<center>&nbsp;10.89</center>
+</td>
+
+<td>
+<center>&nbsp;22.762</center>
+</td>
+
+<td>
+<center>&nbsp;0.670</center>
+</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>POP: Summary File Creation</td>
+
+<td>Create summary file for 1,000 message Inbox (summary file does not
+yet exist)</td>
+
+<td>
+<center>&nbsp;20.68</center>
+</td>
+
+<td>
+<center>&nbsp;34.490</center>
+</td>
+
+<td>
+<center>&nbsp;0.720</center>
+</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>POP: Load Summary File</td>
+
+<td>Load summary file for 1,000 message Inbox (summary file exists)</td>
+
+<td>
+<center>&nbsp;2.58</center>
+</td>
+
+<td>
+<center>&nbsp;6.922</center>
+</td>
+
+<td>
+<center>&nbsp;0.172</center>
+</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>POP: Sort Folder</td>
+
+<td>Select a folder with 1,000 messages; sort by subject, then reverse
+the sort order of subject</td>
+
+<td>
+<center>&nbsp;4.75</center>
+</td>
+
+<td>
+<center>&nbsp;11.240</center>
+</td>
+
+<td>
+<center>&nbsp;0.209</center>
+</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>POP: Display 5 Messages without Attachment</td>
+
+<td>Display 5 10-Kb messages that contain HTML formatting</td>
+
+<td>
+<center>&nbsp;8.76</center>
+</td>
+
+<td>
+<center>&nbsp;25.544</center>
+</td>
+
+<td>
+<center>&nbsp;0.315</center>
+</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>POP: Display 2 Messages with Attachments</td>
+
+<td>Display 2 10-Kb message that each have 100 Kb attachments</td>
+
+<td>
+<center>&nbsp;10.15</center>
+</td>
+
+<td>
+<center>62.320</center>
+</td>
+
+<td>
+<center>0.915</center>
+</td>
+</tr>
+
+<tr>
+<td>7</td>
+
+<td>POP: File 5 Messages</td>
+
+<td>File 5 10-Kb messages from the POP Inbox to a local folder</td>
+
+<td>
+<center>&nbsp;2.06</center>
+</td>
+
+<td>
+<center>&nbsp;5.464</center>
+</td>
+
+<td>
+<center>&nbsp;0.107</center>
+</td>
+</tr>
+
+<tr>
+<td>8</td>
+
+<td>POP: Delete 5 Messages</td>
+
+<td>Delete 5 10-Kb messages from the POP Inbox</td>
+
+<td>
+<center>&nbsp;9.92</center>
+</td>
+
+<td>
+<center>&nbsp;33.520</center>
+</td>
+
+<td>
+<center>&nbsp;0.388</center>
+</td>
+</tr>
+
+<tr>
+<td>9</td>
+
+<td>POP: Create New Folder</td>
+
+<td>Create a new POP folder</td>
+
+<td>
+<center>&nbsp;2.97</center>
+</td>
+
+<td>
+<center>&nbsp;3.218</center>
+</td>
+
+<td>
+<center>&nbsp;0.095</center>
+</td>
+</tr>
+
+<tr>
+<td>10</td>
+
+<td>POP: Undo Delete Message</td>
+
+<td>In a POP account, select and delete a message, then undo the delete</td>
+
+<td>
+<center>&nbsp;1.16</center>
+</td>
+
+<td>
+<center>&nbsp;1.944</center>
+</td>
+
+<td>
+<center>&nbsp;0.045</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>11</center>
+</td>
+
+<td>POP: Scroll Bar</td>
+
+<td>In a POP account, select a folder with 500 messages, Scroll to the
+bottom of Thread Pane</td>
+
+<td>
+<center>&nbsp;1.24</center>
+</td>
+
+<td>
+<center>&nbsp;2.176</center>
+</td>
+
+<td>
+<center>&nbsp;0.090</center>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="6" BGCOLOR="#FFFFFF"><a NAME="IMAP"></a><b>IMAP Mail</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>IMAP: Header Download</td>
+
+<td>Download 1,000 email headers (no summary file)</td>
+
+<td>
+<center>&nbsp;28.71</center>
+</td>
+
+<td>
+<center>&nbsp;45.494</center>
+</td>
+
+<td>
+<center>&nbsp;0.484</center>
+</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>IMAP: Update IMAP Summary File</td>
+
+<td>Download an additional 50 headers to an IMAP Inbox that already contains
+1,000 headers (summary file exists)</td>
+
+<td>
+<center>5.17</center>
+</td>
+
+<td>
+<center>&nbsp;45.920</center>
+</td>
+
+<td>
+<center>&nbsp;0.593</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>3</center>
+</td>
+
+<td>IMAP: Load Summary File</td>
+
+<td>Load summary file for 1,000 message Inbox (summary file exists)</td>
+
+<td>
+<center>&nbsp;2.48</center>
+</td>
+
+<td>
+<center>&nbsp;12.326</center>
+</td>
+
+<td>
+<center>0.164&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>IMAP: Display 5 Messages without Attachment</td>
+
+<td>Display 5 10-Kb messages that contain HTML formatting</td>
+
+<td>
+<center>&nbsp;9.06</center>
+</td>
+
+<td>
+<center>&nbsp;23.266</center>
+</td>
+
+<td>
+<center>0.242&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>IMAP: Download and Display 2 Messages with Attachments</td>
+
+<td>Download and display 2 10-Kb message that each have 100 Kb attachments</td>
+
+<td>
+<center>&nbsp;11.91</center>
+</td>
+
+<td>
+<center>98.592</center>
+</td>
+
+<td>4.706</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>IMAP: File 5 Messages</td>
+
+<td>File 5 10-Kb messages from the IMAP Inbox to an IMAP folder</td>
+
+<td>
+<center>&nbsp;2.09</center>
+</td>
+
+<td>
+<center>&nbsp;4.202</center>
+</td>
+
+<td>
+<center>0.131&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>7</td>
+
+<td>IMAP: Delete 5 Messages</td>
+
+<td>Delete 5 10-Kb messages from the IMAP Inbox</td>
+
+<td>
+<center>&nbsp;10.89</center>
+</td>
+
+<td>
+<center>&nbsp;27.256</center>
+</td>
+
+<td>
+<center>0.212&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>8</td>
+
+<td>IMAP: Move Messages to Local Folder</td>
+
+<td>Move 100 10-Kb Messages from IMAP server to local folder</td>
+
+<td>
+<center>&nbsp;15.93</center>
+</td>
+
+<td>
+<center>&nbsp;75.316</center>
+</td>
+
+<td>
+<center>2.088&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>9</td>
+
+<td>IMAP: Create New IMAP Folder</td>
+
+<td>Create a new IMAP folder</td>
+
+<td>
+<center>&nbsp;1.68</center>
+</td>
+
+<td>
+<center>&nbsp;4.244</center>
+</td>
+
+<td>
+<center>0.098&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>10</td>
+
+<td>IMAP: Expand Folder List</td>
+
+<td>Select an IMAP account and expand the folder list for that account;
+the folder list should contain at least 20 folders</td>
+
+<td>
+<center>&nbsp;1.10</center>
+</td>
+
+<td>
+<center>&nbsp;0.972</center>
+</td>
+
+<td>
+<center>0.047&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="6" BGCOLOR="#FFFFFF"><a NAME="News"></a><b>News</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>NNTP: Header Download</td>
+
+<td>Download 1,000 news headers from NNTP Server (no summary file)</td>
+
+<td>
+<center>&nbsp;8.76</center>
+</td>
+
+<td>
+<center>&nbsp;23.762</center>
+</td>
+
+<td>
+<center>0.336&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>NNTP: Update Summary File</td>
+
+<td>Download an additional 50 headers to a newsgroup that already contains
+1,000 headers (summary file exists)</td>
+
+<td>.</td>
+
+<td>
+<center>NT</center>
+</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>NNTP: Load Summary File.</td>
+
+<td>Load summary file for 1,000 message newsgroup (summary file exists)</td>
+
+<td>
+<center>&nbsp;3.17</center>
+</td>
+
+<td>
+<center>&nbsp;11.474</center>
+</td>
+
+<td>
+<center>0.268&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>NNTP: Display 5 Messages</td>
+
+<td>Display 5 5-Kb messages (plain text)</td>
+
+<td>
+<center>&nbsp;7.12</center>
+</td>
+
+<td>
+<center>&nbsp;28.796</center>
+</td>
+
+<td>
+<center>0.359&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>NNTP: Delete Message</td>
+
+<td>Delete a news message that you have posted</td>
+
+<td>
+<center>&nbsp;1.59</center>
+</td>
+
+<td>
+<center>&nbsp;4.798</center>
+</td>
+
+<td>
+<center>0.099&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>NNTP: Mark All Read</td>
+
+<td>Mark ~500 News Messages as read</td>
+
+<td>
+<center>&nbsp;2.32</center>
+</td>
+
+<td>
+<center>&nbsp;23.842</center>
+</td>
+
+<td>
+<center>0.206&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="6" BGCOLOR="#FFFFFF"><a NAME="Address"></a><b>Address Book</b>
+<br>There is no 'Status Bar' in Address Book. We couldn't test "Open a
+local address book that contains 200 address book cards" and others at
+this time.</td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Open Local Address Book</td>
+
+<td>Open a local address book that contains 200 address book cards</td>
+
+<td>.</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>View 5 Address Book Cards</td>
+
+<td>View 5 address book cards (out of a total of 200 cards in the address
+book)</td>
+
+<td>.</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Open "Edit Card" Dialogue</td>
+
+<td>Open the Edit Card Dialogue by double clicking on an address book entry</td>
+
+<td>
+<center>&nbsp;0.65</center>
+</td>
+
+<td>
+<center>&nbsp;6.106</center>
+</td>
+
+<td>
+<center>0.128&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="6" BGCOLOR="#FFFFFF"><b>Message<a NAME="Compose"></a>Compose</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Open Compose Window</td>
+
+<td>Open the Compose Window</td>
+
+<td>
+<center>&nbsp;1.12</center>
+</td>
+
+<td>
+<center>&nbsp;10.786</center>
+</td>
+
+<td>
+<center>0.172&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Auto-complete</td>
+
+<td>Auto-complete 5 email addresses against a 200 card local address book</td>
+
+<td>.</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Address Message to 10 Recipients</td>
+
+<td>Address an email message to 10 recipients: type in first email address,
+press return, type in second email address, ...</td>
+
+<td>.</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Add 2 Attachments</td>
+
+<td>Add 2 100-Kb attachments to a message</td>
+
+<td>
+<center>&nbsp;4.24</center>
+</td>
+
+<td>
+<center>&nbsp;9.544</center>
+</td>
+
+<td>
+<center>0.168&nbsp;</center>
+</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Compose HTML Message</td>
+
+<td>After addressing message and entering subject line, tab into message
+body and:
+<ul>
+<li>
+Bold some text&nbsp;</li>
+
+<li>
+Insert a link&nbsp;</li>
+
+<li>
+Insert a GIF image&nbsp;</li>
+
+<li>
+Add a bulleted list&nbsp;</li>
+
+<li>
+Indent a paragraph&nbsp;</li>
+
+<li>
+Center a paragraph&nbsp;</li>
+
+<li>
+Select and delete some text</li>
+</ul>
+Note: must use exactly the same text, images and formatting across tests</td>
+
+<td>
+<center>&nbsp;1.25</center>
+</td>
+
+<td>bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=25259">25259</a></td>
+
+<td>.&nbsp;</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Send Message (No Attachment)</td>
+
+<td>Send a 10 Kb HTML formatted email message</td>
+
+<td>
+<center>&nbsp;1.38</center>
+</td>
+
+<td>bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=25259">25259</a></td>
+
+<td>.&nbsp;</td>
+</tr>
+
+<tr>
+<td>7</td>
+
+<td>Send Message With Attachment</td>
+
+<td>Send a 10 Kb HTML formatted email message with a 100 Kb attachment</td>
+
+<td>
+<center>&nbsp;4.02</center>
+</td>
+
+<td>bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=25259">25259</a></td>
+
+<td>.&nbsp;</td>
+</tr>
+</table></center>
+
+<p>
+<hr WIDTH="100%">
+<br>Table initially created by Sol Goldfarb
+<br>Timings updated by <a href="mailto:suresh@netscape.com">Suresh Kasinathan</a>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/mailnews/mac_performance_results.html&amp;rev=&amp;root=/cvsroot/">Last modified February 24,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

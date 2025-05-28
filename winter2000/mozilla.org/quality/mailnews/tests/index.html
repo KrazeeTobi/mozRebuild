@@ -1,0 +1,431 @@
+<HTML>
+<HEAD>
+<TITLE>Functional / UI Tests</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<center><b><font size=+2>Mozilla MailNews Functional / UI Tests</font></b>
+<p><b>by Lisa Chiang &lt;<a href="mailto:lchiang@netscape.com">lchiang@netscape.com</a>></b>
+<br><b>last modified 01/20/2000 14:43</b></center>
+
+<p>These test specifications are living documents. The tests outlined are
+manual at this time. Think any areas are missing from here? If so, let
+<a href="mailto:lchiang@netscape.com">me</a>
+know. (It'll be even better if you can write the test specs for them!)
+<p>Not all features are currently implemented. See this bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=10791">query</a>
+for features which still need work.
+<br>&nbsp;
+<table BORDER=0 COLS=3 WIDTH="100%" >
+<tr VALIGN=TOP>
+<td><b>** <i>New</i> ** Features which got implemented and need test specifications
+written for them</b>
+<p>(No/Minimal Netscape QA resources available). Contact <a href="mailto:lchiang@netscape.com">lchiang</a>
+if you can help!
+<ul>
+<li>
+Improve Plain Text to HTML - see bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=16507">16507</a>
+for how the feature will work</li>
+
+<li>
+MIME-linkifier - see bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=6032">6032</a></li>
+
+<li>
+Support format=flowed - see bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=16398">16398</a></li>
+
+<li>
+Support of the X-Face header - see bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20417">20417</a></li>
+</ul>
+<b>Address Book</b>
+<ul>
+<li>
+<a href="sea-mn-addrb.html">Address Book</a></li>
+
+<li>
+Import / export</li>
+
+<li>
+<a href="sea-mn-addrb-ldap.html">LDAP via address book</a></li>
+
+<li>
+<a href="sea-mn-addrb-pinpt.html">Pinpoint addressing</a></li>
+</ul>
+<b>Basic Functionality - Messages</b>
+<ul>
+<li>
+<a href="sea-mn-navigate-bookmark.html">Bookmark</a></li>
+
+<li>
+<a href="sea-mn-delete.html">Delete</a></li>
+
+<li>
+<a href="sea-mn-navigate-flag.html">Flag</a></li>
+
+<li>
+<a href="sea-mn-forward.html">Forward</a></li>
+
+<li>
+<a href="sea-mn-getmsg.html">Get Message</a></li>
+
+<li>
+<a href="sea-mn-navigate-ignore.html">Ignore</a></li>
+
+<li>
+Intelligent send</li>
+
+<li>
+Mail notify (biff)</li>
+
+<li>
+<a href="sea-mn-navigate-mark.html">Mark messages</a></li>
+
+<li>
+<a href="sea-mn-movecopyfccmsg.html">Move/copy/fcc</a></li>
+
+<li>
+<a href="sea-mn-navigate-go.html">Navigate</a></li>
+
+<li>
+<a href="sea-mn-basfunc-print.html">Print</a></li>
+
+<li>
+<a href="sea-mn-reply.html">Reply</a></li>
+
+<li>
+<a href="sea-mn-basfunc-return-receipt.html">Return Receipt</a></li>
+
+<li>
+<a href="sea-mn-saveas-msg.html">Save As</a></li>
+
+<li>
+<a href="sea-mn-send.html">Send</a></li>
+
+<li>
+<a href="sea-mn-sendlater.html">Send Later</a></li>
+
+<li>
+<a href="sea-mn-navigate-view-sort.html">Sort</a></li>
+
+<li>
+<a href="sea-mn-navigate-view-msg.html">Views</a></li>
+
+<li>
+<a href="sea-mn-navigate-watch.html">Watch</a></li>
+</ul>
+<b>Composition / Layout (Display) of Messages</b>
+<ul>
+<li>
+<a href="sea-mn-attachment.html">Attachments</a></li>
+
+<li>
+<a href="sea-mn-composition.html">Composition</a></li>
+
+<li>
+<a href="sea-mn-pagesource.html">Page Source</a></li>
+
+<li>
+<a href="sea-mn-drafts.html">Draft</a></li>
+
+<li>
+<a href="sea-mn-helperapps.html">Helper applications</a></li>
+
+<li>
+<a href="sea-mn-layout.html">Layout (Message Display)</a></li>
+
+<li>
+<a href="sea-mn-html-conversion.html">HTML to Plain Text conversion</a></li>
+
+<li>
+<a href="sea-mn-mpod.html">MIME-parts-on-demand</a></li>
+
+<li>
+<a href="sea-mn-replyquote.html">Reply (Quote)</a></li>
+
+<li>
+<a href="sea-mn-spellcheck.html">Spell check</a></li>
+
+<li>
+<a href="sea-mn-templates.html">Templates</a></li>
+
+<li>
+<a href="sea-mn-startpage.html">Start Page</a></li>
+</ul>
+</td>
+
+<td><b>Filters</b>
+<ul>
+<li>
+Advanced scenarios</li>
+
+<li>
+General UI</li>
+
+<li>
+Basic functionality within mail</li>
+
+<li>
+Basic functionality within news</li>
+</ul>
+<b>Mail Folders</b>
+<br>For the test specifications written by Stacey Curtis, please contact<a href="mailto:huang@netscape.com">Karen
+Huang</a> for any questions or comments.
+<ul>
+<li>
+<a href="sea-mn-folders-compact.html">Compact</a></li>
+
+<li>
+<a href="sea-mn-folders-create.html">Create</a></li>
+
+<li>
+<a href="sea-mn-folders-delete.html">Delete</a></li>
+
+<li>
+<a href="sea-mn-downloadsize.html">Download Size Limit</a></li>
+
+<li>
+<a href="sea-mn-folders-drag.html">Drag/drop</a></li>
+
+<li>
+<a href="sea-mn-folders-expand.html">Expand/collapse</a></li>
+
+<li>
+<a href="sea-mn-folders-manage.html">Mail Server administration</a></li>
+
+<li>
+<a href="sea-mn-folders-open.html">Open</a></li>
+
+<li>
+<a href="sea-mn-folders-properties.html">Properties</a></li>
+
+<li>
+<a href="sea-mn-folders-rename.html">Rename</a></li>
+
+<li>
+<a href="sea-mn-folders-special.html">Special folder rules</a></li>
+
+<li>
+<a href="sea-mn-folders-subscribe.html">Subscribe/unsubscribe</a></li>
+
+<li>
+<a href="sea-mn-folders-update.html">Update message count</a></li>
+</ul>
+<b>Multiple Accounts / Account Setup</b>
+<ul>
+<li>
+Mail</li>
+
+<li>
+News</li>
+</ul>
+<b>Newsgroups</b>
+<br>For the test specifications written by Stacey Curtis, please contact
+<a href="mailto:huang@netscape.com">Karen
+Huang</a> for any questions or comments.
+<ul>
+<li>
+<a href="sea-mn-newsgroups-addserver.html">Add/delete servers</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-diskspace.html">Disk space</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-drag.html">Drag/drop</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-expand.html">Expand/collapse</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-open.html">Open</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-post.html">Post</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-pretty.html">Pretty names</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-properties.html">Properties</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-expired.html">Remove expired articles</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-serveradmin.html">Server administration</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-subscribe.html">Subscribe/unsubscribe</a></li>
+
+<li>
+<a href="sea-mn-newsgroups-update.html">Update message count</a></li>
+</ul>
+</td>
+
+<td><b>Interoperability Tests</b>
+<br>For the test specifications written by Stacey Curtis, please contact
+<a href="mailto:huang@netscape.com">Karen
+Huang</a> for any questions or comments.
+<ul>
+<li>
+<a href="sea-mn-imap-interop.html">IMAP</a></li>
+
+<li>
+MIME Compliance</li>
+</ul>
+<b>Offline</b>
+<blockquote>
+<li>
+Advanced scenarios</li>
+
+<li>
+<a href="sea-mn-offline-mail.html">Basic functionality within mail</a></li>
+
+<li>
+<a href="sea-mn-offline-news.html">Basic functionality within news</a></li>
+
+<li>
+<a href="sea-mn-offline-comp.html">Composition</a></li>
+
+<li>
+<a href="sea-mn-offline-ui.html">General UI</a></li>
+</blockquote>
+
+<p><br><b>Search</b>
+<ul>
+<li>
+Advanced scenarios</li>
+
+<li>
+Basic functionality within mail</li>
+
+<li>
+Basic functionality within news</li>
+
+<li>
+Custom headers</li>
+
+<li>
+Find in page</li>
+
+<li>
+General UI</li>
+</ul>
+<b>User Interface</b>
+<ul>
+<li>
+<a href="sea-mn-3-pane.html">Mail window</a></li>
+
+<li>
+<a href="sea-mn-menus.html">Menus</a></li>
+
+<li>
+<a href="sea-mn-popups.html">Pop-up menus</a></li>
+
+<li>
+<a href="sea-mn-windows.html">Properties of each window</a></li>
+
+<li>
+<a href="sea-mn-sidebar.html">SideBar</a></li>
+
+<li>
+<a href="sea-mn-toolbars.html">Toolbars</a></li>
+</ul>
+<b>User Scenarios</b>
+<ul>
+<li>
+Advanced scenarios</li>
+
+<li>
+Basic scenarios</li>
+</ul>
+</td>
+</tr>
+</table>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/index.html&amp;rev=&amp;root=/cvsroot/">Last modified February 21,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

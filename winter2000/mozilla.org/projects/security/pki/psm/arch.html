@@ -1,0 +1,270 @@
+<HTML>
+<HEAD>
+<TITLE>Personal Security Manager Architecture(PSM)</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<center>
+<h2>Personal Security Manager Architecture</h2>
+
+<i><FONT SIZE="-1">
+Newsgroup: 
+<A HREF="news://news.mozilla.org/netscape.public.mozilla.crypto">netscape.public.mozilla.crypto</A><BR>
+
+Technical contact: 
+<A HREF="mailto:mwelch@netscape.com?subject=Open Source PSM Architecture Feedback">Mark Welch</A></FONT></i><BR>
+
+<i><FONT SIZE="-1">Yell at the manager: 
+<A HREF="mailto:lord@netscape.com?subject=Open Source PSM Architecture Feedback">Bob Lord</A></FONT></i></center>
+
+
+<p>Personal Security Manager (PSM) is a client-independent desktop
+security module. It performs PKI operations on behalf of desktop
+client applications, including certificate and key management, SSL, S/MIME,
+cryptographic token support, and centralized administration.
+<h2>
+PSM Components</h2>
+The PSM suite consists of two major pieces: the PSM daemon
+itself and the PSM client library. PSM itself is a daemon, running in
+a separate process. Applications use PSM functionality by calling
+the PSM client library, which communicates with PSM using an
+RPC-like protocol over a local socket connection.
+<p>
+<p><img SRC="security-module.jpg" height=330 width=667>
+<p>
+<h3>
+The PSM Daemon</h3>
+PSM itself is a daemon, running in a separate process. It performs
+cryptographic operations, wraps client network traffic using SSL, and performs many
+other kinds of PKI operations.
+<h3>
+The PSM Client Library</h3>
+In order to use PSM, a client application must link with the PSM client
+library. This library consists of several layers:
+<h4>
+The Transport Layer</h4>
+This layer provides a reliable transport stream abstraction for connection
+to PSM. The properties of the connection are:
+<ul>
+<li>
+a reliable stream</li>
+
+<li>
+two way communication</li>
+
+<li>
+provides a file descriptor that can be used with select()</li>
+</ul>
+Possible implementations of the transport layer include TCP sockets, Unix
+domain sockets, named pipes, and a shared memory transport (some operating
+systems provide select()'able semaphores that can be used to implement
+this). However, the transport layer in the PSM client library must
+currently agree with the implementation used by PSM on the given platform.
+<p>The transport layer is provided by the client application on a platform-dependent
+basis:
+<ul>
+<li>
+On Unix or Linux, the client socket function is expected to create a Unix domain
+socket.</li>
+
+<li>
+On Windows, a TCP socket is expected.</li>
+
+<li>
+On MacOS (running Open Transport), a TCP socket/endpoint is expected.</li>
+</ul>
+
+<h4>
+The Protocol Library</h4>
+The protocol library encodes and decodes messages passed along the control
+channel. The protocol library is shared between the client library and
+the PSM daemon.
+<p><b>The Client Library API</b>
+<p>The client library API manages connections to PSM, and provides
+client-side abstractions for objects and services contained within PSM.
+Eventually, this API will grow to resemble a subset of the <a href="[NEED LINK HERE]">NSS API</a>,
+with higher-level functions and UI facilities added for ease of integration.
+<h2>
+The PSM GUI</h2>
+PSM may require user input to perform certain operations.  The application
+may choose from one of two methods for dealing with these exceptional conditions. 
+The application may allow PSM to use its own built-in HTML dialog-based 
+GUI, which is similar to the security UI curently implemented in
+Communicator. The other option [currently not implemented] is for
+PSM to send messages back to the application requesting the information
+required to continue.
+<p>When PSM requires user feedback and it is configured to use the internal
+HTML dialog-based GUI, the following process is used to display the dialog
+and get back the results:
+<ol>
+<li>
+If the NSS function running in PSM requires additional information to continue,
+and it calls a callback function that has been registered to address the particular
+exceptional condition.</li>
+
+<li>
+The callback function sends a message to the client application requesting
+an HTML window with the required dimensions, and a URL to be loaded into
+the window. The URL points to a port on the local machine that is
+serviced by PSM.</li>
+
+<li>
+The client application creates a window of the requested dimensions that
+is capable of displaying HTML, and loads the requested URL.</li>
+
+<li>
+The HTTP request for the URL is sent to a port on the local machine that
+is serviced by PSM. The URL provides enough information to PSM for
+it to generate the correct HTML stream for the dialog.</li>
+
+<li>
+The HTML is displayed in the window by the application.</li>
+
+<li>
+The user provides the required input to the dialog and submits it.</li>
+
+<li>
+The URL for submitting the dialog's form data also points to the PSM HTTP
+port on the local machine.</li>
+
+<li>
+PSM accepts the form post, and returns a response to the application that
+will cause the dialog window to be closed.</li>
+
+<li>
+The required information is extracted from the posted response and returned
+to NSS so that the original operation may be completed.</li>
+</ol>
+Use of the internal GUI requires that the application have the ability
+to display HTML in a window. Non-browser applications may still take
+advantage of the built-in GUI by using an available HTML display component.
+<h2>
+The PSM Protocol</h2>
+The application communicates with PSM using an RPC-like protocol over a
+control channel. In addition to this control channel, there may be
+several data channels in use to pass bulk data to and from PSM.
+<p>When the application starts up, or (in the case of Mozilla) when
+the https module is loaded for the first time, it initializes the PSM client
+library. The client library will start PSM if it is not already running,
+and then open a control channel to it. Each application will have
+its own control channel to PSM and will require separate authentication
+for access to the resources controlled by PSM. PSM will [eventually]
+be able to support a large number of applications at one time, though at
+the moment, only one at a time is supported. (There is some infrastructure
+within PSM itself to support multiple clients; as NSS exposes
+multi-client functionality, PSM will follow suit.)
+<p>In addition to the control channel, several data channels may be in
+use by a particular application at any one time. These data channels
+will be used for bulk data transfer, such as SSL connections, operations
+on cryptographic messages (PKCS #7 and S/MIME), or any other operation
+that requires transfer of a large amount of data to PSM.
+<p>The PSM protocol is described in detail in another document <font color="#FF0000">[forthcoming]</font>. 
+In brief, it supports the following types of operations:
+<ul>
+<li>
+Cryptographic operations</li>
+
+<li>
+Connection management for bulk data connections used for cryptographic
+operations, including basic crypto, PKCS #7, and SSL</li>
+
+<li>
+Messages to manipulate and query objects maintained by PSM such as certificates,
+trust information, tokens, keys, etc.</li>
+
+<li>
+GUI management messages</li>
+
+<li>
+Status reporting</li>
+
+<li>
+Messages reporting exceptional conditions requiring some data from the
+application or user</li>
+</ul>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/security/pki/psm/arch.html&amp;rev=&amp;root=/cvsroot/">Last modified February 11,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

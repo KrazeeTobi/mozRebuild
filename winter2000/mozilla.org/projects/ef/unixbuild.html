@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<TITLE>Unix Build Instructions</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<CENTER>
+  <B>ElectricalFire Compiler</B>
+</CENTER>
+<H1 ALIGN=CENTER>Unix Build Instructions</H1>
+<CENTER>
+  Authors: <A HREF="mailto:Artur%20Biesiadowski%20%3Cabies@pg.gda.pl%3E,Scott%20Furman%20%3Cfur@netscape.com%3E">Artur 
+  Biesiadowski and Scott Furman</A> <BR>
+  Last Modified:
+  <SCRIPT>document.write(document.lastModified);</SCRIPT>
+  <BR>
+  <HR WIDTH="30%">
+  <H2 ALIGN="LEFT">Requirements</H2>
+</CENTER>
+<BLOCKQUOTE>ElectricalFire can be built under x86 Linux or FreeBSD. 
+  <UL>
+    <LI> C++ compiler (egcs 1.0.3, the compiler that ships with RedHat5.2, is 
+      known to work. Other compilers <I>might</I> work. Please write and let us 
+      know which other compilers you've had success with.) 
+    <LI>Perl installed. It is available in most unix distributions. 
+    <LI>JDK 1.2 classes from Sun. (JDK 1.1.* will probably work, but has not been 
+      tested.) <I>Editor: We hope that it will someday be possible to use the 
+      Classpath open-source Java runtime library replacement instead of the JDK.</I> 
+    <LI>If you will be debugging ElectricalFire, you will need a thread-aware 
+      debugger, such as gdb 4.17 or later.
+  </UL>
+</BLOCKQUOTE>
+<H2>Get the code</H2>
+<BLOCKQUOTE>Download the code using <A HREF="http://www.mozilla.org/cvs.html">CVS</A>:</BLOCKQUOTE>
+<BLOCKQUOTE> 
+  <BLOCKQUOTE><TT>cvs co mozilla/ef</TT> <BR>
+    <TT>cvs co mozilla/nsprpub</TT></BLOCKQUOTE>
+</BLOCKQUOTE>
+<H2>Setup the Build Environment<BR>
+</H2>
+<BLOCKQUOTE>
+  <LI><A HREF="http://java.sun.com/products/jdk/1.2/">Download</A> Sun's JDK1.2 
+    and unpack it.&nbsp; (You will need a Solaris or Windows machine to unpack 
+    the distribution, but the only files required is the platform-independent 
+    <CODE>rt.jar</CODE> file.) Set your CLASSPATH environment variable to point 
+    to the JDK's <TT>rt.jar</TT> file. For example,<BR>
+    <BR>
+    <CODE>setenv CLASSPATH ~user/jdk1.2/jre/lib/rt.jar</CODE><BR>
+    <BR>
+  <LI>Set your library search path to point to the NSPR library. (You might want 
+    to build the library first as outlined in the &quot;Build ElectricalFire&quot; 
+    section below, so as to be sure you use the correct path.)<BR>
+    <BR>
+    <CODE><FONT SIZE="2">setenv LD_LIBRARY_PATH /mozilla/dist/Linux_All_DBG.OBJ/bin</FONT></CODE> 
+  </BLOCKQUOTE>
+<H2>Build ElectricalFire</H2>
+<UL>
+  <LI> Build the NSPR library. (This is a step you will rarely need to repeat): 
+    <BLOCKQUOTE> 
+      <P><CODE>cd mozilla/nsprpub; gmake; cd ../..</CODE><BR>
+      </P>
+    </BLOCKQUOTE>
+  <LI>Build the ElectricalFire compiler: </LI>
+</UL>
+<UL>
+  <UL>
+    <PRE><TT>cd mozilla/ef; gmake
+cd Packages; gmake</TT></PRE>
+    <I>Editor: This second gmake invocation in the Packages directory is temporary 
+    until I can fix the damn build rules. </I> 
+  </UL>
+</UL>
+<H2>Running ElectricalFire</H2>
+<BLOCKQUOTE> 
+  <P>The build process above creates an executable named <CODE>sajava</CODE>, 
+    located under the <CODE>mozilla/ef/dist/</CODE> directory. (The exact path 
+    depends on which platform you are building for. <FONT SIZE="3">For example, 
+    it might be</FONT><FONT SIZE="2"> </FONT><CODE><FONT SIZE="2">mozilla/ef/dist/Linux_x86_</FONT></CODE><FONT SIZE="2"><CODE>DBG.OBJ/</CODE></FONT><CODE>bin/sajava</CODE>.) 
+    <CODE>sajava</CODE> acts as a command-line replacement for the JDK <CODE>java</CODE> 
+    command. Before using <CODE>sajava</CODE>, ensure that your environment variables 
+    are set up correctly:</P>
+  <UL>
+    <LI><CODE>CLASSPATH</CODE> should remain set as above, unless you want to 
+      add additional directories/jars in which to search for classes.</LI>
+    <LI><CODE>LD_LIBRARY_PATH</CODE> should point to the directory containing 
+      ElectricalFire's libEF.so and also to the NSPR installation directory. The 
+      exact path will vary depending on the platform you are building on. For 
+      example:<BR>
+      <BR>
+      <CODE><FONT SIZE="2">setenv LD_LIBRARY_PATH /mozilla/ef/dist/Linux_x86_DBG.OBJ/lib:/mozilla/dist/Linux_All_DBG.OBJ/bin</FONT></CODE> 
+    </LI>
+  </UL>
+</BLOCKQUOTE>
+</BODY>
+</HTML>

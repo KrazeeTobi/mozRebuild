@@ -1,0 +1,284 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (Win98; U) [Netscape]">
+   <title>The &lt;menu> Element</title>
+</head>
+<body>
+&nbsp;
+<table WIDTH="100%" >
+<tr>
+<td>
+<div align=right><i>XUL Programmer's Reference Manual</i></div>
+</td>
+</tr>
+
+<tr>
+<td>
+<h1>
+<b><font color="#000099"><font size=+2>&lt;menu></font></font></b></h1>
+
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Attributes</font></b></td>
+
+<td><b><font color="#FFFFFF">Common Children</font></b></td>
+</tr>
+
+<tr>
+<td><a href="#value">value</a></td>
+
+<td>&lt;<a href="menupop.html">menupopup</a>></td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#flex">flex</a></i></td>
+
+<td>&lt;menuseparator /></td>
+</tr>
+
+<tr>
+<td><a href="#key">key</a></td>
+
+<td>&lt;separator />&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#checked">checked</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#disabled">disabled</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#class">class</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#acceltext">acceltext</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#access">accesskey</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#crop">crop</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#orient">orient</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#autostretch">autostretch</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+
+<p>The &lt;menu> element usually appears as a child of a &lt;<a href="menubar.html">menubar</a>>,
+but doesn't have to. Menus popup in various places: as context menus overlaying
+content, at the bottom of the browser, and so on. Typically, a menu has
+a &lt;<a href="menupopup.html">menupopup</a>> as a child. A menu can only
+contain a single menupopup as a direct child, though submenus can be defined
+by creating menus as children of menupopups. In the menupopup a number
+of menu items are defined. A simple File menu is defined as follows:
+<blockquote>&nbsp;
+<table BGCOLOR="#CCCCCC" >
+<tr>
+<td><a NAME="File menu exampleIDX"></a><a NAME="XUL menu exampleIDX"></a><font face="Courier New,Courier">&lt;menu
+value="File"></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp; &lt;menupopup></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;menuitem value="Open" /></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;menuitem value="Close" oncommand="window.close()"/></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;menuseparator/></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;menuitem value="Save" /></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;menuitem value="Exit"/></font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp; &lt;/menupopup></font>
+<br><font face="Courier New,Courier">&lt;/menu></font></td>
+</tr>
+</table>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="value"></a><b><font color="#FFFFFF"><font size=+1>value</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><a NAME="value attribute for a menuIDX"></a><b>value</b> is
+a required attribute used for naming the menu element.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;menu <b>value</b>="<i>string</i>" /></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu <b>value</b>="File" /</tt></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>None.</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="access"></a><b><font color="#FFFFFF"><font size=+1>accesskey</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><a NAME="accesskey attributeIDX"></a><b>accesskey</b> is an
+optional attribute for specifying a shortkey for a menu or menuitem.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;menu id="<i>string</i>" accesskey="<i>character</i>"></tt></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><tt>&lt;menu id="formatMenu" value="&amp;formatMenu.label;"
+<b>accesskey</b>="&amp;formatmenu.accesskey;"></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;menupopup id="formatMenuPopup"></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;menuitem id="pageProperties"/></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;/menupopup></tt>
+<br><tt>&lt;/menu></tt></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>Menus can have&nbsp;<a NAME="shortcut keysIDX"></a>shortcut
+keys and accelerators defined. The shortcut key is a single letter that
+can be used (on some platforms) to quickly access the menu in&nbsp;<a NAME="acceleratorsIDX"></a>combination
+with another key (e.g., ALT). The attribute for specifying this key is
+<b>accesskey</b>.
+Note that the <b>accesskey</b> should use a localized entity, as in the
+example above, to ensure that the character with the keys available on
+the keyboard.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="disabled"></a><b><font color="#FFFFFF"><font size=+1>disabled</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>disabled<a NAME="disabled, menuIDX"></a></b> is an optional
+attribute used to gray out menus and menuitems.</blockquote>
+
+<p><br><b>Syntax</b>
+<blockquote><tt>&lt;menu id="string" <b>disabled</b>="true | false" ></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu id="Edit" <b>disabled</b>="true" ></tt></blockquote>
+<b>Notes</b>
+<blockquote>Maintain and check&nbsp;<a NAME="stateIDX" SUBIX="positioning"></a>the
+state of disabled to see whether certain menu operations are available,
+as in the following example:
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#D0D0D0" >
+<tr>
+<td>
+<pre>XXX INsert example from help stuff here XXX.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+</td>
+</tr>
+</table>
+</blockquote>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="acceltext"></a><b><font color="#FFFFFF"><font size=+1>acceltext</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>acceltext<a NAME="acceltext, menu attributeIDX"></a></b>
+is an optional attribute used to override the assembled acceltext for a
+menu or menuitem.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;menu id="string" <b>acceltext</b>="<i>string</i>" ></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu id="Edit" <b>acceltext</b>="&lt;Ctrl> + &lt;X>
+(Cut)" ></tt></blockquote>
+<b>Notes</b>
+<blockquote>Accelerator text is generated automatically by putting together
+the &lt;<a href="keyref.html">key</a>> and any modifier keys (e.g., the
+control key). When you do not specify the <b>acceltext</b> attribute for
+a key element defined as &lt;key id="skip" key="s" and alt="true" />, for
+instance, the acceltext is S+<a NAME="attributesIDX" SUBIX="positioning"></a>Alt;
+if you supply a value for acceltext for this key, then that value overrides
+the default text.</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="key"></a><b><font color="#FFFFFF"><font size=+1>key</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>key</b> is an optional&nbsp;<a NAME="key, menu attributeIDX"></a>attribute
+used to specify a key binding for the menu.</blockquote>
+
+<p><br><b>Syntax</b>
+<blockquote><tt>&lt;menu id="string" <b>key</b>="<i>key identifier</i>"
+></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu id="Save" <b>key</b>="saveKey" ></tt></blockquote>
+<b>Notes</b>
+<blockquote>None.</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="crop"></a><b><font color="#FFFFFF"><font size=+1>crop</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>crop<a NAME="crop, menu attributeIDX"></a></b>is an optional
+attribute for specifying which part of a menu's text, if any, will be cropped
+if it is too large.</blockquote>
+<b>Syntax</b>
+<blockquote><tt>&lt;menu id="string" value="Menu Name" <b>crop</b>="left
+| right | none" ></tt></blockquote>
+<b>Example</b>
+<blockquote><tt>&lt;menu id="string" value="Very Long Menu Name" <b>crop</b>="none"
+></tt></blockquote>
+<b>Notes</b>
+<blockquote>None.</blockquote>
+
+<br>&nbsp;
+<div align=right><i>Last updated: 2/17/00 <a href="mailto:oeschger@netscape.com">Ian
+Oeschger</a></i></div>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

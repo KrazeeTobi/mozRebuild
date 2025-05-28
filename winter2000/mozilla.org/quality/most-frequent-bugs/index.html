@@ -1,0 +1,1537 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla Most Frequent Bugs</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<center>
+<h1>
+mozilla qa most frequent bugs</h1></center>
+
+<center><b>by Mozilla QA</b>
+<br><b>Page maintained by <a href="mailto:leger@netscape.com">Jan Leger</a>
+- Last Updated February 19, 2000</b>
+<p><b><font color="#CC0000">PLEASE MAKE SURE YOU ARE USING LATEST BUILD!!</font></b>
+<br><b>Current Stable Checkpoint Release Milestone is <a href="http://www.mozilla.org/projects/seamonkey/release-notes/">M13</a></b>
+<br><b>OR Get the Latest Daily Build <a href="http://www.mozilla.org/binaries.html">here</a>.</b>
+<p><b><i><font color="#330033">If you have already read this page....</font></i></b>
+<br><b><i><font color="#330033">jump to latest product bug info: </font></i><a href="#browser">Browser</a>,
+<a href="#editor">Editor</a>,
+<a href="#mail">Mail</a>,
+<a href="#cck">CCK</a></b></center>
+
+<p><b>What are "most frequent bugs"?</b>
+<blockquote>The Mozilla QA Most Frequent Bugs page is a living document
+which lists the known open bugs which occur most frequently in recent builds
+of mozilla.&nbsp; This information is provided in order to assist in minimizing
+the amount of duplicate bugs entered into Bugzilla which in turn cuts down
+on development time
+<p>If you have a "most frequent bug" which occurs to users often and you
+believe it should be on this list, e-mail the bug # to <a href="mailto:leger@netscape.com">Jan
+Leger</a>.</blockquote>
+<b>How do I use this list?</b>
+<ol>
+<li>
+Go the product where you found the bug.</li>
+
+<li>
+Review the most frequent bugs list.&nbsp; Areas are listed alphabetically
+for each product.</li>
+
+<li>
+If problem is listed:</li>
+
+<ul>
+<li>
+Click on Bug # link to confirm that you have found the same bug and comment
+if you have additional information.&nbsp; Or move on with your testing
+of the product.</li>
+</ul>
+
+<li>
+If problem not listed:</li>
+
+<ul>
+<li>
+Go to the <a href="http://bugzilla.mozilla.org/query.cgi">Bugzilla Query/Search</a>
+page to try and locate a similar bug that has already been written.</li>
+
+<li>
+If you find your bug in Bugzilla, feel free to comment with any new or
+additional data you may have.</li>
+
+<li>
+If you cannot find your problem already documented in Bugzilla:</li>
+
+<ul>
+<li>
+Go to <a href="http://bugzilla.mozilla.org/">Bugzilla</a> and post a new
+bug.</li>
+</ul>
+</ul>
+
+<br>&nbsp;
+<table BORDER COLS=4 WIDTH="85%" >
+<tr BGCOLOR="#CCCCCC">
+<td COLSPAN="4" BGCOLOR="#FFFFFF">
+<center><a NAME="browser"></a><b><font size=+1>browser</font></b></center>
+</td>
+</tr>
+
+<tr BGCOLOR="#CCCCCC">
+<td WIDTH="25%">
+<center><b>Area</b></center>
+</td>
+
+<td WIDTH="5%">
+<center><b>Bug #</b></center>
+</td>
+
+<td WIDTH="50%">
+<center><b>Problem</b></center>
+</td>
+
+<td>
+<center><b>Status</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Apprunner-Launch</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=6909">6909</a></center>
+</td>
+
+<td>
+<center>Failure on launch for Win32 users</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Apprunner-Exit/Close</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=7799">7799</a></center>
+</td>
+
+<td>
+<center>Misc crash on Exit problems</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Apprunner-StartUp</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=10650">10650</a></center>
+</td>
+
+<td>
+<center>Linux: Mismatched GTK versions between mozilla binary and theme</center>
+</td>
+
+<td>
+<center>Will fix in M20</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Cut, Copy, Paste</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=14026">14026</a></center>
+</td>
+
+<td>
+<center>Copy/Paste/Cut (etc) disabled within Browser</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Downloading</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=6141">6141</a></center>
+</td>
+
+<td>
+<center>FTP download&nbsp; problems</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Downloading</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=16043">16043</a></center>
+</td>
+
+<td>
+<center>Saving downloads does not suggest a file name</center>
+</td>
+
+<td>
+<center>Will fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>HTML Form Controls</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=18934">18934</a></center>
+</td>
+
+<td>
+<center>Textarea [TAB] should move to next field, not 6 spaces.</center>
+</td>
+
+<td>
+<center>Will fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>HTML Form Controls</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=25624">25624</a></center>
+</td>
+
+<td>
+<center>Submitting, the first item on a &lt;SELECT>, rather than the SELECTED
+item</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>HTML Frames</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=14827">14827</a></center>
+</td>
+
+<td>
+<center>FRAME and IFRAME attribute scrolling=no is ignored</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Images</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=3195">3195</a></center>
+</td>
+
+<td>
+<center>Problems with progressive display of interlaced PNG</center>
+</td>
+
+<td>
+<center>Will fix in M17</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Images</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=21036">21036</a></center>
+</td>
+
+<td>
+<center>Imglib needs to support the necko cache, after it is enabled</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Java</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=25156">25156</a></center>
+</td>
+
+<td>
+<center>Java Plug-in 1.3beta crashes</center>
+</td>
+
+<td>
+<center>Will fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Keyboard Shortcuts</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=22529">22529</a></center>
+</td>
+
+<td>
+<center>All keyboard shortcuts not implemented yet.</center>
+</td>
+
+<td>
+<center>Will fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Keyboard Shortcuts</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=9701">9701</a></center>
+</td>
+
+<td>
+<center>nsWebShell Key events not working until focus set in window (TAB,
+PgDn, ALT+, CTRL+)</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Layout</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=588">588</a></center>
+</td>
+
+<td>
+<center>Full justification of text doesn't work</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Layout</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=11491">11491</a></center>
+</td>
+
+<td>
+<center>Background color not covering all backround region</center>
+</td>
+
+<td>
+<center>Will fix in M16</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Layout</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=24597">24597</a></center>
+</td>
+
+<td>
+<center>Text field has image from area behind window</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Memory</center>
+</td>
+
+<td>
+<center>&nbsp;<a href="http://bugzilla.mozilla.org/show_bug.cgi?id=4201">4201</a></center>
+</td>
+
+<td>
+<center>Quit at startup if largest unused memory block &lt; 12 MB</center>
+</td>
+
+<td>
+<center>&nbsp;Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Menus</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=4689">4689</a></center>
+</td>
+
+<td>
+<center>Help Menu items not wired up yet</center>
+</td>
+
+<td>
+<center>Will fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Menus</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=18613">18613</a></center>
+</td>
+
+<td>
+<center>Mnemonic/shortcut keys should be provided to all pull-down menu
+items</center>
+</td>
+
+<td>
+<center>Investigating fix date</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Menus</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=5563">5563</a></center>
+</td>
+
+<td>
+<center>Undo/Redo menu items should dim after operation</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Menus</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=21019">21019</a></center>
+</td>
+
+<td>
+<center>Menu layout/drawing problems (testing available screen space)</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Networking</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=1582">1582</a></center>
+</td>
+
+<td>
+<center>HTTP referer not sent -&nbsp;
+<br>&nbsp; This breaks many CGI sites</center>
+</td>
+
+<td>
+<center>Will Fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Networking</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=17570">17570</a></center>
+</td>
+
+<td>
+<center>HTTP Refresh problem (change columns in bugzilla)</center>
+</td>
+
+<td>
+<center>Will Fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Networking</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=23709">23709</a></center>
+</td>
+
+<td>
+<center>Crash in nsSocketTransport::OnFound on home.netscape.com cnn.com</center>
+</td>
+
+<td>
+<center>Will Fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Performance</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=17325">17325</a></center>
+</td>
+
+<td>
+<center>Limit number of incremental reflows; this slowing large pages down</center>
+</td>
+
+<td>
+<center>Will Fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Prefs UI (libPref)</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=9917">9917</a></center>
+</td>
+
+<td>
+<center>Prefs gives: javascript error: pref is not defined</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Prefs UI</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=21838">21838</a></center>
+</td>
+
+<td>
+<center>Need to disable unused prefs</center>
+</td>
+
+<td>
+<center>Will Fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Profile Picker</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=24911">24911</a></center>
+</td>
+
+<td>
+<center>Profile picker shows no profiles</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Progress Window</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=21358">21358</a></center>
+</td>
+
+<td>
+<center>Unknown File Type dialogs spew when js used to load ftp url</center>
+</td>
+
+<td>
+<center>Will Fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Scrolling</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=5161">5161</a></center>
+</td>
+
+<td>
+<center>Scrolling using arrow keys gets "stuck" partway down page</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Scrolling</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=7347">7347</a></center>
+</td>
+
+<td>
+<center>Unable to scroll with mouse wheels</center>
+</td>
+
+<td>
+<center>May fix in M20</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Scrolling</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=14827">14827</a></center>
+</td>
+
+<td>
+<center>FRAME and IFRAME attribute scrolling=no is ignored</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Scrolling</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20387">20387</a></center>
+</td>
+
+<td>
+<center>Scroll bars appearing in single line text control</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Scrolling</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20185">20185</a></center>
+</td>
+
+<td>
+<center>absolute position elements repaint wrong w/GFX scrollbars on</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Security</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=26336">26336</a></center>
+</td>
+
+<td>
+<center>A form submit where action='https://...' produces no user warning.</center>
+</td>
+
+<td>
+<center>Will Fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Selection</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=23530">23530</a></center>
+</td>
+
+<td>
+<center>Selecting/highlighting displays blank</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Sidebar</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=25576">25576</a></center>
+</td>
+
+<td>
+<center>Customize sidebar "hangs" the app</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>SSL</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=13785">13785</a></center>
+</td>
+
+<td>
+<center>Many SSL issues/bugs open.</center>
+</td>
+
+<td>
+<center>Will Fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>SSL</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=24901">24901</a></center>
+</td>
+
+<td>
+<center>There are no security warnings.</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Toolbars</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=8636">8636</a></center>
+</td>
+
+<td>
+<center>Greyed out toolbar chrome buttons flash during&nbsp;
+<br>page draw</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>URL Bar</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=4722">4722</a></center>
+</td>
+
+<td>
+<center>Can not cut &amp; paste in to URL bar</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>XUL</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=14513">14513</a></center>
+</td>
+
+<td>
+<center>Window size does not persist</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>XUL</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=23401">23401</a></center>
+</td>
+
+<td>
+<center>Page Up/Down does not work: XUL controllers clobbered?</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<table BORDER COLS=4 WIDTH="85%" >
+<tr BGCOLOR="#CCCCCC">
+<td COLSPAN="4" BGCOLOR="#FFFFFF">
+<center><a NAME="editor"></a><b>editor</b></center>
+</td>
+</tr>
+
+<tr BGCOLOR="#CCCCCC">
+<td>
+<center><b>Area</b></center>
+</td>
+
+<td>
+<center><b>Bug #</b></center>
+</td>
+
+<td>
+<center><b>Problem</b></center>
+</td>
+
+<td>
+<center><b>Status</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Color Selection</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=23739">23739</a></center>
+</td>
+
+<td>
+<center>Color Picker onclick handler is not called when in XUL popup</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Cut, Copy, Paste</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=14026">14026</a></center>
+</td>
+
+<td>
+<center>Copy/Paste/Cut (etc) disabled within Browser</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Drag and Drop</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=6255">6255</a></center>
+</td>
+
+<td>
+<center>Drag and Drop needs to be implemented</center>
+</td>
+
+<td>
+<center>Will fix in M17</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Fonts</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=18774">18774</a></center>
+</td>
+
+<td>
+<center>Increase/Decrease font size need to be written</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Image Dialog</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=9753">9753</a></center>
+</td>
+
+<td>
+<center>Constrain is not hooked up for image sizes</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Image Dialog</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=9754">9754</a></center>
+</td>
+
+<td>
+<center>Default image size isn't loaded into h/w fields</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Image Dialog</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=9755">9755</a></center>
+</td>
+
+<td>
+<center>Edit image button is missing</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Menus</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=5563">5563</a></center>
+</td>
+
+<td>
+<center>Undo/Redo menu items should dim after operation</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Spellcheck</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=6864">6864</a></center>
+</td>
+
+<td>
+<center>Mac: Spellcheck not operational</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Spellcheck</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=27011">27011</a></center>
+</td>
+
+<td>
+<center>Spellchecker crashes after second time you use it</center>
+</td>
+
+<td>
+<center>Will fix in M15</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Tables</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20973">20973</a></center>
+</td>
+
+<td>
+<center>Implement missing table editing behavior and Table Properties dialog</center>
+</td>
+
+<td>
+<center>Will fix in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>View Source</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=22178">22178</a></center>
+</td>
+
+<td>
+<center>View source function missing from editor</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<table BORDER COLS=4 WIDTH="85%" >
+<tr BGCOLOR="#CCCCCC">
+<td COLSPAN="4" BGCOLOR="#FFFFFF">
+<center><a NAME="mail"></a><b><font size=+1>mail&nbsp;</font></b>
+<br>Check <a href="http://www.mozilla.org/mailnews/milestones.html">here</a>
+for Mail features not in yet! - If feature not in, no new bug needed.</center>
+</td>
+</tr>
+
+<tr BGCOLOR="#CCCCCC">
+<td>
+<center><b>Area</b></center>
+</td>
+
+<td>
+<center><b>Bug #</b></center>
+</td>
+
+<td>
+<center><b>Problem</b></center>
+</td>
+
+<td>
+<center><b>Status</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Account Setup</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=24668">24668</a></center>
+</td>
+
+<td>
+<center>Crash when clicking on Finish on Account Setup - new profiles only</center>
+</td>
+
+<td>
+<center>Win/Mac Fixed in M13&nbsp;
+<br>Linux Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Display</center>
+</td>
+
+<td>
+<center>Many bugs for this
+<br>See <a href="http://bugzilla.mozilla.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&bugidtype=include&bug_id=&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&short_desc=unread&short_desc_type=substring&long_desc=&long_desc_type=substring&bug_file_loc=&bug_file_loc_type=substring&status_whiteboard=&status_whiteboard_type=substring&keywords=&keywords_type=anywords&field0-0-0=noop&type0-0-0=noop&value0-0-0=&cmdtype=doit&newqueryname=&order=Reuse+same+sort+as+last+time">here</a></center>
+</td>
+
+<td>
+<center>Unread mail count if incorrect.</center>
+</td>
+
+<td>
+<center>Will fix in&nbsp;
+<br>M14 thru M16</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Editing</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=24072">24072</a></center>
+</td>
+
+<td>
+<center>Composer mnemonics are placing letters in the message</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>IMAP</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=23312+">23312</a></center>
+</td>
+
+<td>
+<center>Freeze on "folder/" in .mailboxlist of UW-IMAP</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Memory</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=2915">2915</a></center>
+</td>
+
+<td>
+<center>Big memory leak in "Search Messages"</center>
+</td>
+
+<td>
+<center>Will fix in M17</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>MIME</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=20626">20626</a></center>
+</td>
+
+<td>
+<center>Quoted Plain text quoted messsage has the ">" displayed as blue
+bar</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Networking</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=24715">24715</a></center>
+</td>
+
+<td>
+<center>Shouldn't get error after sending mail or save as draft/template
+from Cyrus</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Selection</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=23530">23530</a></center>
+</td>
+
+<td>
+<center>Selecting/highlighting displays blank</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Windows</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=21223">21223</a></center>
+</td>
+
+<td>
+<center>Window default location is incorrect</center>
+</td>
+
+<td>
+<center>Fixed in M14</center>
+</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<table BORDER COLS=4 WIDTH="85%" >
+<tr BGCOLOR="#CCCCCC">
+<td COLSPAN="4" BGCOLOR="#FFFFFF">
+<center><a NAME="cck"></a><b><font size=+1>cck</font></b></center>
+</td>
+</tr>
+
+<tr BGCOLOR="#CCCCCC">
+<td>
+<center><b>Area</b></center>
+</td>
+
+<td>
+<center><b>Bug #</b></center>
+</td>
+
+<td>
+<center><b>Problem</b></center>
+</td>
+
+<td>
+<center><b>Status</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>&nbsp;None at this time</center>
+</td>
+
+<td>
+<center>&nbsp;TBD</center>
+</td>
+
+<td>
+<center>&nbsp;TBD</center>
+</td>
+
+<td>
+<center>&nbsp;TBD</center>
+</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<table BORDER COLS=4 WIDTH="85%" >
+<tr BGCOLOR="#CCCCCC">
+<td COLSPAN="4" BGCOLOR="#FFFFFF">
+<center><a NAME="international"></a><b><font size=+1>international</font></b>.</center>
+</td>
+</tr>
+
+<tr BGCOLOR="#CCCCCC">
+<td>
+<center><b>Area</b></center>
+</td>
+
+<td>
+<center><b>Bug #</b></center>
+</td>
+
+<td>
+<center><b>Problem</b></center>
+</td>
+
+<td>
+<center><b>Status</b></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<center>Menu/XUL</center>
+</td>
+
+<td>
+<center><a href="http://bugzilla.mozilla.org/show_bug.cgi?id=11586">11586</a></center>
+</td>
+
+<td>
+<center>Win/Unix: XP menus&nbsp;
+<br>need to be scrollable</center>
+</td>
+
+<td>
+<center>Will fix in M15&nbsp;
+<br>Workaround was in&nbsp;
+<br><a href="http://www.mozilla.org/projects/seamonkey/release-notes/m9.html">M9
+Release Notes</a></center>
+</td>
+</tr>
+</table>
+</ol>
+
+<hr WIDTH="100%">
+<br><i><font color="#FF0000"><font size=-1>Note: This is a living doc where
+bug info is updated often.&nbsp; Daily bug info will not be noted here.</font></font></i>
+<br><i><font color="#FF0000"><font size=-1>Please see Last Updated date
+in title of this doc to know if your seeing farily current data.</font></font></i>
+<br><i><font color="#FF0000"><font size=-1>History is for layout/instruction
+changes only.</font></font></i>
+<p><b><i><font size=-1>Page History</font></i></b>
+<br><font size=-1>06/08/99 - leger - original page created</font>
+<br><font size=-1>06/09/99 - leger - added milestone planning links; deleted
+NSPR table, not really needed at this time</font>
+<br><font size=-1>06/09/99 - leger - removed all known Fixed in M7 bugs.</font>
+<br><font size=-1>08/18/99 - leger - added International section</font>
+<br><font size=-1>02/07/99 - leger - removed links to current feature planning,
+most docs out-of-date; added link to Bugzilla query page.</font>
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/most-frequent-bugs/index.html&amp;rev=&amp;root=/cvsroot/">Last modified February 19,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

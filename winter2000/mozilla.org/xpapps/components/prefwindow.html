@@ -1,0 +1,211 @@
+<HTML>
+<HEAD>
+<TITLE>class PrefWindow</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="wsm.css">
+
+
+
+<h1 id="header">PrefWindow</h1>
+<div id="headerul"></div>
+<div align="right" id="contact">
+ Contact: <a href="mailto:rgoodger@ihug.co.nz?subject=WidgetStateManager">Ben Goodger</a>
+</div>
+
+<h2>Table of Contents</h2>
+<table width="100%">
+ <tr><td><li>Introduction</td><td>1</td></tr>
+ <tr><td><li>Instantiation</td><td>1</td></tr>
+ <tr><td><li>Saving Page Data</td><td>1</td></tr>
+ <tr><td><li>Retrieving Page Data</td><td>2</td></tr>
+ <tr><td><li>Convenience/Utility/Internal Functions</td><td>3</td></tr>
+ <tr><td><li>Data Storage Internals</td><td>6</td></tr>
+</table>
+
+<h2>Introduction</h2>
+<p>PrefWindow is the class used by the Mozilla Preferences window to manage preference 
+   saving, retrieval, and page switching. It can be extended to perform any number 
+   of other tasks. If you are creating an application using Mozilla technology, 
+   rather than assuming that you can place your application preferences in the 
+   Mozilla panel, it is probably wise to develop your own prefs system to avoid 
+   overcrowding. If your application demands a large number of different prefs panels, 
+   then PrefWindow (and the associated XUL) may be useful in developing such a 
+   system. PrefWindow relies on the WidgetStateManager class described in a 
+   <a href="widgetstatemanager.html">separate document</a>.
+
+<h2>Use &amp; Instantiation</h2>
+<p>Rather than describe the instantiation process, as this is a fairly specialised 
+   class, I'll point you to the place where it is implemented: chrome://pref/content/pref.xul. 
+   This guide will focus on how to make panels that interact with this class.
+
+<h2>Link to Mozilla</h2>
+<p>This class is somewhat linked to Mozilla. It loads the default mozilla user 
+   profile preferences, and saves to them. You may wish to store preferences in 
+   your own file, in your own configuration folder. The interface nsIPref allows 
+   you to save and load from different preferences files. For these purposes you 
+   should modify the PrefWindow code accordingly. 
+   
+<h2>Flow Overview of PrefWindow</h2>   
+<p>When the PrefWindow object is created, the appropriate interface(s) are initialised, 
+   button handlers are set, and any queued page data is loaded (PREF_onload). If 
+   the page that is loaded in the IFRAME does not have an entry in the associated 
+   WidgetStateManager's DataManager, the page's elements are pre-filled from user 
+   preferences (PREF_onpageload). When the user switches panels, the data in the 
+   current page is saved, the page changed, and the new page populated either from 
+   the DataManager or user preferences. (PREF_SwitchPage). When the user clicks 
+   the OK button, the current page data is saved (PREF_onok), then for each element 
+   in the Data Manager (PREF_DoSavePrefs) the appropriate pref type is set (PREF_ParsePref).
+
+<h2>Requirements for Prefs Panels</h2>
+<p>Each panel must contain the following in the onload event handler for the &lt;window&gt;:
+<blockquote>
+  <code>onload="if( parent.handle ) parent.handle.onpageload( tag ); else parent.queuedTag = tag;"</code>
+</blockquote>
+<p>where 'tag' is the string representing the current tag. In the case of the 
+   Mozilla implementation of PrefWindow, parent.handle refers to the PrefWindow 
+   object itself. If you have instantiated it as another variable, you must use 
+   parent.yourVariableName instead.
+<p>This piece of code sends a request to the PrefWindow for the data associated 
+   with this page, if a PrefWindow object exists in the containing window. This 
+   can either be from the WidgetStateManager DataManager, or from user prefs 
+   (see description above). This request is sent only if the PrefWindow object 
+   exists. As the PrefWindow object is only created once the entire window has 
+   loaded, the initial prefs panel has loaded in the IFRAME and makes the population 
+   request before the PrefWindow object is created, thus the test for the existence 
+   of a PrefWindow object. If a PrefWindow does not exist, the pref panel is "queued" 
+   and then initialised when the PrefWindow is initialised.
+<p>If you are using the Automatic Data Saving provided by the WidgetStateManager, 
+   all your form widgets must contain some extra attributes. In the past, Prefs 
+   panel form elements described themselves by their id attribute. Now however 
+   the various aspects of a prefs form element are described by these attributes:
+
+ <blockquote>
+  <blockquote>
+    <table class="paramtable">
+     <tr>
+      <td valign="top"><code>id</code></td>
+      <td>the id of the element. can be anything.</td>
+     </tr>
+     <tr>
+      <td valign="top"><code>pref</code></td>
+      <td>true if the element is a pref element. unset otherwise</td>
+     </tr>
+     <tr> 
+      <td valign="top"><code>preftype</code></td>
+      <td>either bool, int, color or string. Refers to the type of pref.</td>
+     </tr>
+     <tr> 
+      <td valign="top"><code>prefstring</code></td>
+      <td>a string representing the pref in the prefs.js file.</td>
+     </tr>
+     <tr> 
+      <td valign="top"><code>prefindex</code></td>
+      <td>a string representing the index of the pref. Used for radiobuttons, 
+          where several widgets refer to the same pref, and some distinction 
+          between them is required. </td>
+     </tr>
+    </table>
+  </blockquote>
+ </blockquote>
+ <br>
+ <u>Example:</u><br>
+ <blockquote>
+  <code>
+    &lt;html:input id="toolbarStyle2" type="radio" name="toolbarStyle2"
+     pref="true" preftype="int" prefindex="2"
+     prefstring="browser.toolbar.style" /&gt;
+  </code>
+  <br>
+  Creates a radiobutton with id toolbarStyle2, the third element in the group 
+  "toolbarStyle2", and creates the integer pref "browser.toolbar.style"
+ </blockquote>
+
+<p> 
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpapps/components/prefwindow.html&amp;rev=&amp;root=/cvsroot/">Last modified December 12,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,1067 @@
+<HTML>
+<HEAD>
+<TITLE>5.0 Menu UI Framework Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+<style type="text/css">
+<!--
+.menutopmenu {  background-color: #EEEEEE; border: outset 1px; padding-top: 2px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; font-family: Tahoma, Arial, sans-serif; font-size: 3.5mm; font-weight: bold; line-height: normal; text-align: left; position:relative; width: 200px}
+.menueditor {  background-color: #FFFFCC; border: outset 1px; padding-top: 2px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; font-family: Tahoma, Arial, sans-serif; font-size: 3.5mm; font-weight: bold; line-height: normal; text-align: left; position:relative; width: 200px; font-style: italic}
+.menushortcut { text-align: left;; font-weight: bold; color: #FFFFFF; background-color: #666666}
+.menuchangeable {background-color: #99CCCC; color: #000000;; font-style: italic}
+.menuselected {background-color: #CCDDCC; color=#FFFFFF}
+.underlined {  text-decoration: underline}
+.note {  font-weight: normal; color: #6699FF; text-decoration: none}
+.menuFunctionkey { text-align: left;; font-weight: bold; color: #FF9933; background-color: #666666}
+body {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; background-color: white;}
+-->
+</style>
+
+
+
+<table border=0 cellspacing=0 cellpadding=2 width="100%" >
+  <tr> 
+    <td valign=BOTTOM>
+      <h2>5.0</h2>
+    </td>
+    <td valign=BOTTOM> 
+      <div align=right>UI Specification</div>
+    </td>
+  </tr>
+  <tr bgcolor="#66CCCC"> 
+    <td>
+      <h1><b>Main Menus Framework</b></h1>
+    </td>
+    <td> 
+      <div align=right><b><i>Last 
+        Modification: </i></b><b><i><b>
+        <script language="JavaScript">
+<!--
+// Drag the item from the left window and
+// drop it here. Or click the right mouse button
+// and select 'Insert to Script' from the popup menu.
+// The code is inserted at the current
+// cursor position.
+document.write(document.lastModified, "<BR>");
+
+//-->
+</script>
+        </b></i></b></div>
+    </td>
+  </tr>
+</table>
+<table border=0 cellspacing=0 cellpadding=0 width="100%" >
+  <tr> 
+    <td valign=TOP width="49%"><b>Author</b><a href="mailto:german@netscape.com"> 
+      German W. Bauer&nbsp;</a> <br>
+      <b>Creation Date:</b>&nbsp; 09 March1999&nbsp;</td>
+    <td valign=TOP><b>Status:</b> Implemetable Framework 
+      Specification</td>
+  </tr>
+  <tr> 
+    <td valign=TOP width="49%"><b>What's related:&nbsp;</b> 
+      <blockquote> 
+        <p>Design <a href="#Overview">Overview</a> 
+          <br>
+          Design <a href="#Cheatsheet">Cheatsheet</a> 
+          <br>
+          Design <a href="#Details">Details&nbsp;</a></p>
+        <p><b>Specific</b> Application Menus:</p>
+        <ul>
+          <li>Navigator main menu specification 
+            (to be added shortly)</li>
+          <li>Messenger main menu specificaton (to 
+            be added shortly) </li>
+        </ul>
+      </blockquote>
+    </td>
+    <td valign=TOP><b>Feature Team</b> <br>
+      &nbsp; 
+      <blockquote>&nbsp; 
+        <table border=0 cellspacing=2 cellpadding=2 bgcolor="#333333" >
+          <tr> 
+            <td> 
+              <table border=0 nosave >
+                <tr bgcolor="#FFFFFF"> 
+                  <td valign=TOP>Engineering Lead</td>
+                  <td><a href="mailto:don">Don Melton</a></td>
+                </tr>
+                <tr bgcolor="#FFFFFF"> 
+                  <td>Marketing Navigator</td>
+                  <td><a href="mailto:michaell@netscape.com">Michael 
+                    LaGuardia, John Gable, Kevin Yen</a></td>
+                </tr>
+                <tr bgcolor="#FFFFFF"> 
+                  <td>Marketing Messenger</td>
+                  <td><a href="mailto:sol">Sol Goldfarb 
+                    </a></td>
+                </tr>
+                <tr bgcolor="#FFFFFF"> 
+                  <td>XPFE menus</td>
+                  <td><a href="mailto:pinkerton">Chris 
+                    Saari </a></td>
+                </tr>
+                <tr bgcolor="#FFFFFF"> 
+                  <td>QA</td>
+                  <td>?</td>
+                </tr>
+                <tr bgcolor="#FFFFFF" nosave> 
+                  <td nosave>Tech Pubs/Help Menu</td>
+                  <td>Verena Houchi</td>
+                </tr>
+                <tr bgcolor="#FFFFFF" nosave> 
+                  <td nosave>UI Design</td>
+                  <td><a href="mailto:scotty">German 
+                    Bauer</a></td>
+                </tr>
+                <tr bgcolor="#FFFFFF"> 
+                  <td colspan="2"> 
+                    <center>
+                    </center>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<p>recent updates:</p>
+<p>12/21/99: replaced FONT tags with CSS stylesheets for all aspects of document, 
+  made small fonts easier to read for Linux users<br>
+  9/17/99: added keyboard shortcuts, mnemonics (watch for upcoming additions to 
+  Nav and Mail menu specs)</p>
+<h3><a name="Overview"></a>Summary/Overview</h3>
+This document desribe the cross-platform (and where 
+possible cross-application) main menu structure, as well as hiliting the policy 
+for dynamically extending the menus with net-based functionality and features(even 
+after 5.0 has been launched). 
+<h3> Goals</h3>
+<p>Keep the menu stracture consistent accross apps, platforms - even after functionality 
+  may get dynamically added after the launch of 5.0. Keeping a basic 
+  menu structure intact and making sure it does not break when new apps/services 
+  get added later increases learnability and discoverability for end users.</p>
+<h3> Target Audience</h3>
+<blockquote>The target user for this feature are 
+  5.0 users as described in the 5.0 PRD 
+  <h3> </h3>
+</blockquote>
+<h3> User Tasks</h3>
+<blockquote>&nbsp; 
+  <table border=0 cellpadding=2 bgcolor="#333333" >
+    <tr> 
+      <td colspan="3"> 
+        <table border=0 >
+          <tr bgcolor="#66CCCC"> 
+            <td valign=TOP><b>Fundamental Tasks</b></td>
+            <td valign=TOP><b>Intermediate Tasks</b></td>
+            <td valign=TOP><b>Advanced Tasks</b></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr bgcolor="#330033"> 
+            <td colspan="3" bgcolor="#CCCCCC">Common 
+              to all data view panes</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td valign=TOP> 
+              <ul>
+                <li>Access 5.0 functionality with 
+                  mouse'</li>
+                <li>'Cue card' for Communicator 
+                  functionality </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+            <td valign=TOP>
+              <p>Mouseless access to most Communicator 
+                functionality via menmonics (Win, Linux)</p>
+              <p>Use Keyboard acclerators as shortcut to most commonly used functionality</p>
+            </td>
+            <td valign=TOP>Configuring menus and 
+              possibly shortcuts (not in 
+              5.0)</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</blockquote>
+<hr align="LEFT" width="40%" size="4" noshade color="#66cccc">
+<h2><a name="Cheatsheet"></a>Design Cheatsheet 
+</h2>
+<p><b>Legend:</b> </p>
+<blockquote>
+  <p>Areas where future applications/services can extend the menu are <span class="menuchangeable">marked 
+    like this </span><br>
+    Keyboard shortcuts combined with Ctrl(Win), Cmd(Mac) or Alt(Linux) are <span class="menushortcut">marked 
+    like this</span><br>
+    Keyboard shortcuts to be used stand-alone are <span class="menuFunctionkey">marked 
+    like this</span><br>
+    Notes are <span class="note">marked like this</span><br>
+    Keyboard mnemonics (Win, Linux) are <span class="underlined">marked like this</span></p>
+</blockquote>
+<table border="0" cellpadding="4" width="80%" style="margin-bottom: 30px;">
+  <tr valign="top"> 
+    <td width="20%"> <span class="menutopmenu"><span class="underlined">F</span>ile</span></td>
+    <td width="20%"><span class="menutopmenu"><span class="underlined">E</span>dit</span></td>
+    <td width="20%"><span class="menutopmenu"><span class="underlined">V</span>iew</span></td>
+    <td width="20%"><span class="menutopmenu"><span class="underlined">S</span>earch</span></td>
+  </tr>
+  <tr valign="top"> 
+    <td width="20%"> 
+      <div id="File"  class="menutopmenu"> <span class="underlined">N</span>ew 
+        AppDefItem<BR>
+        N<span class="underlined">e</span>w&nbsp;&nbsp;&gt;<BR>
+        <span class="underlined">O</span>pen AppDefItem&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;O&nbsp;</span><br>
+        Other Open<BR>
+        <HR>
+        <span class="underlined">C</span>lose&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;W&nbsp;</span> 
+        <span class="note">CtrlF4 work on Win?</span><br>
+        <span class="underlined">S</span>ave&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;S&nbsp;</span><BR>
+        <HR>
+        <div class="menuchangeable"> App Specific<BR>
+          App Specific<BR>
+          App Specific<BR>
+        </div>
+        <HR>
+        <span class="underlined">I</span>mport...<BR>
+        <span class="underlined">E</span>xport...<BR>
+        <HR>
+        Offline&nbsp;&nbsp;&gt;<BR>
+        <HR>
+        Pa<span class="underlined">g</span>e Setup...<BR>
+        P<span class="underlined">r</span>int Preview...&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Shift-P&nbsp;</span><BR>
+        <span class="underlined">P</span>rint...&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;P&nbsp;</span><BR>
+        <HR>
+        <span class="underlined">Q</span>uit &nbsp;&nbsp;<span class="menushortcut">&nbsp;Q&nbsp; 
+        </span> &nbsp;<span class="note">Alt-F4 work on Win?</span></div>
+    </td>
+    <td width="20%" > 
+      <div id="Edit"  class="menutopmenu"> <span class="underlined">U</span>ndo&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Z&nbsp;</span><BR>
+        <span class="underlined">R</span>edo&nbsp;&nbsp;<span class="note"><span class="note">Ma</span>c</span>&nbsp;<span class="menushortcut">&nbsp;Shift-Z&nbsp;</span><span class="note"><span class="note">Others</span></span>&nbsp;<span class="menushortcut">&nbsp;Y&nbsp;</span><BR>
+        <HR>
+        Cu<span class="underlined">t</span>&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;X&nbsp;</span><BR>
+        <span class="underlined">C</span>opy&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;C&nbsp;</span><br>
+        <span class="underlined">P</span>aste&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;V&nbsp;</span><BR>
+        <span class="underlined">D</span>elete&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Del 
+        </span><BR>
+        <HR>
+        Select <span class="underlined">A</span>ll&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;A&nbsp;</span><BR>
+        <HR>
+        <span class="menuchangeable">App Specific<BR>
+        App Specific<BR>
+        App Specific</span><BR>
+        <HR>
+        Pre<span class="underlined">f</span>erences... &nbsp;&nbsp;<span class="menushortcut">&nbsp;E&nbsp;</span></div>
+    </td>
+    <td width="20%"> 
+      <div id="View"  class="menutopmenu"> <span class="underlined">T</span>oolbars&nbsp;&nbsp;&gt;<BR>
+        Sidebar&nbsp;&nbsp;&gt;<BR>
+        <HR>
+        <div class="menuchangeable"> App Specific<BR>
+          App Specific<BR>
+          App Specific<BR>
+        </div>
+        <HR>
+        Enlarge Text Size&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;+&nbsp;</span><BR>
+        Reduce Text Size&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;-&nbsp;</span><BR>
+        <HR>
+        <span class="underlined">R</span>eload&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;R&nbsp;</span><BR>
+        Show I<span class="underlined">m</span>ages<BR>
+        <span class="underlined">S</span>top&nbsp;&nbsp;&nbsp;<span class="note"><span class="note">Ma</span>c</span><span class="menushortcut">&nbsp;.&nbsp;</span>&nbsp;<span class="note">Others</span><span class="menushortcut">&nbsp;Esc&nbsp;</span><BR>
+        <HR>
+        Page So<span class="underlined">u</span>rce&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;U&nbsp;</span><BR>
+        Page <span class="underlined">I</span>nfo&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;I&nbsp;</span><BR>
+        <HR>
+        T<span class="underlined">r</span>anslate&nbsp;&nbsp;&gt;<BR>
+        <span class="underlined">C</span>haracter Set... </div>
+    </td>
+    <td width="20%" > 
+      <div id="Search"  class="menutopmenu"> <span class="underlined">F</span>ind 
+        in this...&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;F&nbsp;</span><BR>
+        Find A<span class="underlined">g</span>ain&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;G 
+        </span><BR>
+        <HR>
+        Search Parent Item...&nbsp;&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Shift-F&nbsp;</span><BR>
+        Search Parent Item...<BR>
+        <div class="menuchangeable"> App Specific<BR>
+          App Specific<BR>
+          App Specific<BR>
+        </div>
+        <HR>
+        <span class="menuchangeable">Other Search service <br>
+        Other Search service<br>
+        Other Search service<br>
+        </span><span class="menutopmenu">(Input: NC, JohnG)</span><BR>
+        <HR>
+        Smart Search... &nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Shift-S&nbsp;</span></div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+
+
+<p>&nbsp;</p><table border="0" cellpadding="4" width="100%">
+  <tr valign="top"> 
+    <td width="20%"><span class="menutopmenu"><span class="underlined">G</span>o 
+      (optional)</span></td>
+    <td width="20%"> <span class="menueditor">Editor Inserts</span></td>
+    <td width="20%"> <span class="menutopmenu"><span class="menuchangeable">App 
+      Specific</span></span></td>
+    <td width="20%"><span class="menutopmenu"><span class="underlined">T</span>asks</span></td>
+    <td width="20%"><span class="menutopmenu"><span class="underlined">H</span>elp 
+      (Input: VeraH)</span></td>
+  </tr>
+  <tr valign="top"> 
+    <td width="20%" > 
+      <div id="Go"  class="menutopmenu"> 
+        <div class="menuchangeable"> App Specific<br>
+          App Specific<br>
+          App Specific </div>
+        <hr>
+        <div class="menuchangeable"> App Specific<br>
+          App Specific<br>
+          App Specific </div>
+      </div>
+    </td>
+    <td width="20%"> 
+      <div class="menueditor"> 
+	</div> 
+    </td>
+    <div class="menuchangeable"> 
+      <td bgcolor="#CCFFCC" class="menuchangeable" width="20%" ><div class="menutopmenu">&nbsp; </div></td>
+    </div>
+    <td width="20%" > 
+      <div id="Communicator"  class="menutopmenu"> <span class="underlined">N</span>avigator&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;1&nbsp;</span><br>
+        <span class="underlined">M</span>ail&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;2&nbsp;</span><br>
+        <span class="underlined">C</span>hat&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;3&nbsp;</span><br>
+        <span class="underlined">A</span>ddress Book&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;4&nbsp;</span><br>
+        <hr>
+        <div class="menuchangeable"> Services A&nbsp;&nbsp;&gt;<br>
+          Services B&nbsp;&nbsp;&gt;<br>
+          Services C&nbsp;&nbsp;&gt;<br>
+          Services D&nbsp;&nbsp;&gt;<br>
+        </div>
+        <hr>
+        <div class="menuchangeable">Services E&nbsp;&nbsp;&gt;<br>
+          Services F&nbsp;&nbsp;&gt;<br>
+          Services G&nbsp;&gt;<br>
+          Services H&nbsp;&nbsp;&gt;<br>
+        </div>
+        <hr>
+        <span class="underlined"></span> <span class="underlined">S</span>ecurity 
+        Info&nbsp;&nbsp;&nbsp;<span class="menushortcut">Shift-I&nbsp;</span> 
+        <hr>
+        <span class="underlined">T</span>ools&nbsp;&nbsp;&gt; 
+        <hr>
+        <span class="underlined">G</span>o To Window&nbsp;&nbsp;&gt;<br>
+      </div>
+    </td>
+    <td width="20%"> 
+      <div id="Help"  class="menutopmenu"> <span class="underlined">H</span>elp 
+        Contents&nbsp;&nbsp;&nbsp;<span class="menuFunctionkey">&nbsp;F1&nbsp;</span><br>
+        <hr>
+        How <span class="underlined">T</span>o Tutorial<br>
+        Help <span class="underlined">C</span>hannel<br>
+        <hr>
+        <span class="underlined">S</span>oftware Updates<br>
+        T<span class="underlined">e</span>chnical Support<br>
+        <span class="underlined">R</span>elease Notes<br>
+        <hr>
+        <span class="underlined">A</span>bout Product </div>
+    </td>
+  </tr>
+</table>
+<br>
+<h3>What's New</h3>
+<h4>File Menu</h4>
+<ul>
+  <li>The first item in each File menu will be a "new" item 
+    appropriate to the current application. In Navigator that will be "New Navigator 
+    Window ".</li>
+  <li>The New submenu will still exist, but it will contain 
+    commonly used items from throughout communicator </li>
+</ul>
+<h4>Edit</h4>
+<ul>
+  <li>Searching and Finding has been consolidated into its 
+    own menu "Search"</li>
+</ul>
+<h4>View</h4>
+<ul>
+  <li>The Show submenu is replaced with Toolbars, which is 
+    what the Show menu mostly contained anyway. Toolbars will users to hide toolbars 
+    completely </li>
+  <li>Sidebar submenu will contain sidebar specific view commands. 
+    TBD. Among other things this will aloow users to hide the sidebar completely</li>
+  <li>Translate will expose translation services if they exist 
+    in Navigator</li>
+</ul>
+<h4>Search</h4>
+<ul>
+  <li>Find and Search in one menu</li>
+  <li>Menu is context sensitive</li>
+  <li>Menu contains hooks for searching in the rest of the 
+    application</li>
+  <li>search spec will be uploaded shortly </li>
+</ul>
+<h4></h4>
+<hr align="LEFT" width="40%" size="4" noshade color="#66cccc">
+<h2><a name="Details"></a>Design Details 
+</h2>
+<h2>&nbsp;</h2>
+<h3>Web Look and Feel</h3>
+<p>Sea-Monkey will be the first application to have a <b>platform 
+  independent </b> look and feel. To this end, there will be one set of menus 
+  for both Macintosh and Windows. Exit will become Quit , The Macintosh will still 
+  have a single menubar across the top of the screen.
+<h3>&nbsp; </h3>
+<h3>Menu Details</h3>
+<p>&nbsp;</p>
+<hr size="5" noshade width="400" align="left">
+<h4>File Menu </h4>
+<table border="0" cellpadding="4" width="100%">
+  <tr valign="top">
+    <td width="20%"> <span class="menutopmenu"><span class="underlined">F</span>ile</span></td>
+    <td width="12%">Structure</td>
+    <td width="12%" class="menuchangeable">Extensibility</td>
+  </tr>
+  <tr valign="top">
+    <td width="20%"> 
+      <div id="File"  class="menutopmenu"> <span class="underlined">N</span>ew 
+        AppDefItem<br>
+        N<span class="underlined">e</span>w&nbsp;&nbsp;&gt;<br>
+        <span class="underlined">O</span>pen AppDefItem&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;O&nbsp;</span><br>
+        Other Open<br>
+        <hr>
+        <span class="underlined">C</span>lose&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;W&nbsp;</span> 
+        <span class="note">CtrlF4 should work on Win?</span><br>
+        <span class="underlined">S</span>ave&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;S&nbsp;</span><br>
+        <hr>
+        <div class="menuchangeable"> App Specific<br>
+          App Specific<br>
+          App Specific<br>
+        </div>
+        <hr>
+        <span class="underlined">I</span>mport...<br>
+        <span class="underlined">E</span>xport...<br>
+        <hr>
+        Offline&nbsp;&nbsp;&gt;<br>
+        <hr>
+        Pa<span class="underlined">g</span>e Setup...<br>
+        P<span class="underlined">r</span>int Preview...&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Shift-P&nbsp;</span><br>
+        <span class="underlined">P</span>rint...&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;P&nbsp;</span><br>
+        <hr>
+        <span class="underlined">Q</span>uit &nbsp;&nbsp;<span class="menushortcut">&nbsp;Q&nbsp; 
+        </span> &nbsp;<span class="note">Alt-F4 should work on Win?</span></div>
+    </td>
+    <td > 
+      <div id="Edit"> 
+        <p><b>New/Open...</b><b>(submenu)</b><br>
+          will show the default new item first, before a submenu 
+          giving a access to other core new items. These items are to be presented 
+          consistently across apps like this:</p>
+        <table width="50%" border="0">
+          <tr valign="top"> 
+            <td width="20%"> <span class="menutopmenu">N<span class="underlined">e</span>w&nbsp;&nbsp;&nbsp;&gt;</span></td>
+          </tr>
+          <tr valign="top"> 
+            <td width="20%"> 
+              <div id="File"  class="menutopmenu"> <span class="menuchangeable">App 
+                specific</span><br>
+                <hr>
+                <span class="underlined">N</span>avigator Window&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;N&nbsp;</span><br>
+                <span class="underlined">M</span>essage&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;M&nbsp;</span><br>
+                <span class="underlined">A</span>ddress Book Card<br>
+                <span class="underlined">I</span>nstant Message </div>
+            </td>
+          </tr>
+        </table>
+        The top part of that submenu may include secondary level 
+        New items that are specific top that app. Local top and global bottom 
+        part of to be separated.  
+        <p><b>Closing/Save...</b><br>
+          Same as most apps on OSs,Close will close the current 
+          window</p>
+        <p><b><span class="menuchangeable">AppSpecific...</span></b><span class="menuchangeable"><br>
+          This is an area where apps can extend the search menu 
+          if needed. This section may not available on some applications</span></p>
+        <p><b>Export/Import...</b><br>
+          This area is reserved for import/export tools such as 
+          with other devices (Palm etc), may not appear on all windows.</p>
+        <p><b>Offline...(submenu)<br>
+          </b>If we have this functionality in 5.0 this will allow 
+          toggle offline state as well as sync items</p>
+        <p><b>Printing...</b><br>
+          Standard OS stuff... </p>
+        <p><b>Quitting</b><br>
+           Quit will exit Communicator as a whole. </p>
+      </div>
+    </td>
+    <td class="menuchangeable"> 
+      <div id="View"> 
+        <p><b>Location:</b><br>
+          Top portion of New <b>sub-</b>menu</p>
+        <p><b>Kinds of items to be put there:</b><br>
+          Secondary new items that relate to the current application</p>
+      <p><b>Location:</b><br>
+          Between the Save and import/export items</p>
+        <p><b>Kinds of items to be put there:</b><br>
+          Items that directly relate to global functions in that 
+          context, such as &quot;Empty Trash&quot; when viewing folders in Messenger.</p>
+      </div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<hr size="5" noshade width="400" align="left">
+<h4>Edit Menu </h4>
+<table border="0" cellpadding="4" width="100%">
+  <tr valign="top">
+    <td width="20%"><span class="menutopmenu"><span class="underlined">E</span>dit</span></td>
+    <td width="12%">Structure</td>
+    <td width="12%" class="menuchangeable">Extensibility</td>
+  </tr>
+  <tr valign="top">
+    <td width="20%" > 
+      <div id="Edit"  class="menutopmenu"> <span class="underlined">U</span>ndo&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Z&nbsp;</span><br>
+        <span class="underlined">R</span>edo&nbsp;&nbsp;&nbsp;<span class="note"><span class="note">Ma</span>c</span>&nbsp;<span class="menushortcut">&nbsp;Shift-Z&nbsp;</span><span class="note"><span class="note">&nbsp;&nbsp;Others</span></span>&nbsp;<span class="menushortcut">&nbsp;Y&nbsp;</span><br>
+        <hr>
+        Cu<span class="underlined">t</span>&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;X&nbsp;</span><br>
+        <span class="underlined">C</span>opy&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;C&nbsp;</span><br>
+        <span class="underlined">P</span>aste&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;V&nbsp;</span><br>
+        <span class="underlined">D</span>elete&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Del 
+        </span><br>
+        <hr>
+        Select <span class="underlined">A</span>ll&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;A&nbsp;</span><br>
+        <hr>
+        <span class="menuchangeable">App Specific<br>
+        App Specific<br>
+        App Specific</span><br>
+        <hr>
+        Pre<span class="underlined">f</span>erences... &nbsp;&nbsp;<span class="menushortcut">&nbsp;E&nbsp;</span></div>
+    </td>
+    <td > 
+      <div id="Edit"> 
+        <p><b>Undo/Redo Transactions</b><br>
+          Generally will show the default new item first, before 
+          a submenu giving a access to other core new items</p>
+        <p><b>Clipboard Transfer...</b><br>
+          Same as most apps on OSs</p>
+        <p><b>Selection...</b><br>
+          Select All... awlays available - refers to selecting 
+          all of the content, apps may add app specific selections here</p>
+        <p><b><span class="menuchangeable">AppSpecific...</span></b><span class="menuchangeable"><br>
+          This is an area where apps can extend the edit menu 
+          if needed. This section may not available on some applications</span></p>
+        <p><b>Preferences...</b><br>
+          Common access point to the prefs dialog</p>
+      </div>
+    </td>
+    <td class="menuchangeable"> 
+      <div id="View"> 
+        <p><b>Location:</b><br>
+          Items can be added to the Selection section as well 
+          as below the selection and above the prefs selection</p>
+        <p><b>Kinds of items to be put there:</b><br>
+          Items that directly affect the selected content or deal 
+          with the clipboard. Spell checking may also go there for the Editor.</p>
+      </div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<hr size="5" noshade width="400" align="left">
+<h4>View Menu </h4>
+<table border="0" cellpadding="4" width="100%">
+  <tr valign="top">
+    <td width="20%"><span class="menutopmenu"><span class="underlined">V</span>iew</span></td>
+    <td width="12%">Structure</td>
+    <td width="12%" class="menuchangeable">Extensibility</td>
+  </tr>
+  <tr valign="top">
+    <td width="20%"> 
+      <div id="View"  class="menutopmenu"> <span class="underlined">T</span>oolbars&nbsp;&nbsp;&gt;<br>
+        Sidebar&nbsp;&nbsp;&gt;<br>
+        <hr>
+        <div class="menuchangeable"> App Specific<br>
+          App Specific<br>
+          App Specific<br>
+        </div>
+        <hr>
+        Enlarge Text Size&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;+&nbsp;</span><br>
+        Reduce Text Size&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;-&nbsp;</span><br>
+        <hr>
+        <span class="underlined">R</span>eload&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;R&nbsp;</span><br>
+        Show I<span class="underlined">m</span>ages<br>
+        <span class="underlined">S</span>top&nbsp;&nbsp;&nbsp;<span class="note"><span class="note">Ma</span>c</span><span class="menushortcut">&nbsp;.&nbsp;</span>&nbsp;<span class="note">Others</span><span class="menushortcut">&nbsp;Esc&nbsp;</span><br>
+        <hr>
+        Page So<span class="underlined">u</span>rce&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;U&nbsp;</span><br>
+        Page <span class="underlined">I</span>nfo&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;I&nbsp;</span><br>
+        <hr>
+        T<span class="underlined">r</span>anslate&nbsp;&nbsp;&gt;<br>
+        <span class="underlined">C</span>haracter Set... </div>
+    </td>
+    <td > 
+      <div id="Edit"> 
+        <p><b>Toolbars &gt; (submenu)...</b><br>
+          This sections lets users toggle the visibility of the 
+          toolbars </p>
+        <p><b>Sidebar &gt; (submenu)...</b><br>
+          This is menu functionality that offers redundant access 
+          to opening and closing as well as customizing the sidebar</p>
+        <p><b><span class="menuchangeable">AppSpecific...</span></b><span class="menuchangeable"><br>
+          This is an area where apps can extend the view menu 
+          if needed. This section may not available on some applications</span></p>
+        <p><b>Text Size...</b><br>
+          This will directly affect the default text size for 
+          all content areas</p>
+        <p><b>Reload/Stop/Images...<br>
+          </b>This will affect the content display behavior, similar 
+          to the reload and stop buttons on the main toolbar. Show Images can 
+          be used to turn off images for faster download and page display.</p>
+        <p><b>Page...</b><br>
+          Items related to the page source and information related 
+          to the page (can we include some security info when this dialog is brought 
+          up?) </p>
+        <p><b>Translate &gt;</b> <b>(submenu)</b><br>
+          This feature will be driven from Netcenter but will 
+          enable users to view web page translated into different language</p>
+        <p><b>Character Set</b>...<br>
+          Similar to 4.5, but:<br>
+          Rather than making this a huge, unmanagemable window 
+          we recommend a picklist dialog</p>
+      </div>
+    </td>
+    <td class="menuchangeable"> 
+      <div id="View"> 
+        <p><b>Location:</b><br>
+          Between the Save and import/export items</p>
+        <p><b>Kinds of items to be put there:<br>
+          </b> This<b> </b>will include 
+          things that affect how the content of the page is viewn, for example 
+          if we add the capability to display content using 
+          a other style sheets, these will be exposed in this section.</p>
+      </div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<hr size="5" noshade width="400" align="left">
+<h4>Search Menu </h4>
+<table border="0" cellpadding="4" width="100%">
+  <tr valign="top">
+    <td width="20%"><span class="menutopmenu"><span class="underlined">S</span>earch</span></td>
+    <td width="12%">Structure</td>
+    <td width="12%" class="menuchangeable">Extensibility</td>
+  </tr>
+  <tr valign="top">
+    <td width="20%" > 
+      <div id="Search"  class="menutopmenu"> <span class="underlined">F</span>ind 
+        in this...&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;F&nbsp;</span><br>
+        Find A<span class="underlined">g</span>ain&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;G 
+        </span><br>
+        <hr>
+        Search Parent Item...&nbsp;&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Shift-F&nbsp;</span><br>
+        Search Parent Item...<br>
+        <div class="menuchangeable"> App Specific<br>
+          App Specific<br>
+          App Specific<br>
+        </div>
+        <hr>
+        <span class="menuchangeable">Other Search service <br>
+        Other Search service<br>
+        Other Search service<br>
+        </span><span class="menutopmenu">(Input: NC, JohnG)</span><br>
+        <hr>
+        Smart Search...&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;Shift-S&nbsp;</span> 
+      </div>
+    </td>
+    <td > 
+      <div id="Edit"> 
+        <p><b>Find...</b><br>
+          This invokes the find dialog directly related to finding 
+          on the currently viewn page</p>
+        <p><b><span class="menuchangeable">AppSpecific Search...</span></b><span class="menuchangeable"><br>
+          This is an area where apps can extend the search menu 
+          if needed. This section may not available on some applications</span></p>
+        <p><b><span class="menuchangeable">Globally accessible Search...</span></b><span class="menuchangeable"><br>
+          The items below the app specifc search options will 
+          always be accessible from the search menu, giving users one consistent 
+          entry points to their mosten often used search needs</span></p>
+        <p><b>Smart Search...</b>(placeholder term)<br>
+          A universal search dialog box. see <a href="http://gooey/client/5.0/specs/search/">search 
+          specification</a> and search PRD </p>
+      </div>
+    </td>
+    <td class="menuchangeable"> 
+      <div id="View"> 
+        <p><b>Location:</b><br>
+          In the second section below Find... and the Smart Search... 
+          section</p>
+        <p><b>Kinds of items to be put there:<br>
+          </b></p>
+        <p><b>App Specifc area </b> </p>
+        <p>This will be dependent on the app, for example Messenger 
+          will be basing its search on the currently active folder, may offer 
+          to search one or more levels above in the hierarchy of folders</p>
+        <p><b>Other Search services</b></p>
+        <p>A set of globally accessible and dynamically updateable 
+          search services as determined by PM and Netcenter</p>
+      </div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+<p>&nbsp;</p><hr size="5" noshade width="400" align="left">
+<h4>Go Menu </h4>
+<table border="0" cellpadding="4" width="100%">
+  <tr valign="top">
+    <td width="20%"><span class="menutopmenu"><span class="underlined">G</span>o 
+      (optional)</span></td>
+    <td width="12%">Structure</td>
+    <td width="12%" class="menuchangeable">Extensibility</td>
+  </tr>
+  <tr valign="top">
+    <td width="20%" > 
+      <div id="Go"  class="menutopmenu"> 
+        <div class="menuchangeable"> App Specific<br>
+          App Specific<br>
+          App Specific </div>
+        <hr>
+        <div class="menuchangeable"> App Specific<br>
+          App Specific<br>
+          App Specific </div>
+      </div>
+    </td>
+    <td > 
+      <div id="Edit"> 
+        <p><b>Navigation...</b><br>
+          This sections lets users go back and forth in the history 
+          of visited places. What these places are depends on the application, 
+          e.g in Navigator it's the current windows history of URLs, in messengers 
+          this lets users traverse the history of messages previously read.</p>
+        <p>While this &quot;go&quot; menu is optional it is very 
+          desirable to give users the abaility to trace back the history of places 
+          visited in any of the C5 applications</p>
+        <p><b><span class="menuchangeable">AppSpecific...</span></b><span class="menuchangeable"><br>
+          This is an area where apps can extend the go menu if 
+          needed. This section may not available on some applications</span></p>
+      </div>
+    </td>
+    <td class="menuchangeable"> 
+      <div id="View"> 
+        <p><b>Location:</b><br>
+          Below the basic navigation section</p>
+        <p><b>Kinds of items to be put there:<br>
+          </b> This will include items that 'transport' the user 
+          to well nown places in the application or the application's content 
+          store, for example in Messenger this would include &quot;Next Unread 
+          Message&quot; </p>
+      </div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+<hr size="5" noshade width="400" align="left">
+<h4>Editor Inserted Menus </h4>
+<table border="0" cellpadding="4" width="100%">
+  <tr valign="top"> 
+    <td width="20%"> <span class="menueditor">Insert</span></td>
+    <td width="20%"> <span class="menueditor">Format</span></td>
+    <td width="12%">Structure</td>
+    <td width="12%" class="menuchangeable">Extensibility</td>
+  </tr>
+  <tr valign="top"> 
+    <td width="20%"> 
+      <div class="menueditor"> </div>
+    </td>
+    <td width="20%"> 
+      <div class="menueditor"> </div>
+    </td>
+    <td > 
+      <div id="Edit"> 
+        <p><b>Purpose</b><br>
+          These menus get inserted into this location whenever 
+          a ender rich text field that can be edited receives focus. These menus 
+          are also visible in Mail and IM compose.</p>
+        <p>&nbsp;</p>
+      </div>
+    </td>
+    <td class="menuchangeable"> 
+      <div id="View"> 
+        <p><b>specific tool plugins make go to the bottom of the 
+          Insert or Format menus</b> </p>
+      </div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<hr size="5" noshade width="400" align="left">
+<h4>App Specific Menu Extensions</h4>
+<table border="0" cellpadding="4" width="100%" class="menuchangeable">
+  <tr valign="top">
+    <td width="12%"> 
+      <div class="menutopmenu"> 
+        <div class="menuchangeable">App Specific</div>
+      </div>
+    </td>
+    <td width="12%">Structure</td>
+    <td width="12%" class="menuchangeable">Extensibility</td>
+  </tr>
+  <tr valign="top">
+    <td >&nbsp; </td>
+    <td > 
+      <div id="Edit"> 
+        <p><b><span class="menuchangeable">AppSpecific...</span></b><span class="menuchangeable"><br>
+          This is an area where apps can include their own top 
+          level menus</span></p>
+        <p>&nbsp;</p>
+        </div>
+    </td>
+    <td> 
+      <div id="View"> 
+        <p><b>Location:</b><br>
+          App-specific top level menus have to be inserted after 
+          the &quot;Go&quot; menu, but before the &quot;Tasks&quot; and &quot;Help&quot; 
+          menu</p>
+        <p><b>Kinds of menus to put there:<br>
+          </b> Similar to 4.5 these are for example the &quot;Message&quot; 
+          top level menu for Messenger, or the &quot;Insert&quot; and &quot;Format&quot; 
+          menus for Ender/Composer.</p>
+      </div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+<p>&nbsp;</p><hr size="5" noshade width="400" align="left">
+<h4>Tasks Menu </h4>
+<table border="0" cellpadding="4" width="100%">
+  <tr valign="top">
+    <td width="20%"><span class="menutopmenu"><span class="underlined">T</span>asks 
+      (Input: NC, JohnG)</span></td>
+    <td width="12%">Structure</td>
+    <td width="12%" class="menuchangeable">Extensibility</td>
+  </tr>
+  <tr valign="top">
+    <td width="20%" > 
+      <div id="Communicator"  class="menutopmenu"> <span class="underlined">N</span>avigator&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;1&nbsp;</span><br>
+        <span class="underlined">M</span>ail&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;2&nbsp;</span><br>
+        <span class="underlined">C</span>hat&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;3&nbsp;</span><br>
+        <span class="underlined">A</span>ddress Book&nbsp;&nbsp;&nbsp;<span class="menushortcut">&nbsp;4&nbsp;</span><br>
+        <hr>
+        <div class="menuchangeable"> Services A&nbsp;&nbsp;&gt;<br>
+          Services B&nbsp;&nbsp;&gt;<br>
+          Services C&nbsp;&nbsp;&gt;<br>
+          Services D&nbsp;&nbsp;&gt;<br>
+        </div>
+        <hr>
+        <div class="menuchangeable">Services E&nbsp;&nbsp;&gt;<br>
+          Services F&nbsp;&nbsp;&gt;<br>
+          Services G&nbsp;&gt;<br>
+          Services H&nbsp;&nbsp;&gt;<br>
+        </div>
+        <hr>
+        <span class="underlined"></span> <span class="underlined">S</span>ecurity 
+        Info&nbsp;&nbsp;&nbsp;<span class="menushortcut">Shift-I&nbsp;</span> 
+        <hr>
+        <span class="underlined">T</span>ools&nbsp;&nbsp;&gt; 
+        <hr>
+        <span class="underlined">G</span>o To Window&nbsp;&nbsp;&gt;<br>
+      </div>
+    </td>
+    <td > 
+      <div id="Edit"> 
+        <p><b>Core Applications</b><b>...</b><br>
+          This sould include the 3 or 4 applications we name core 
+          level, and thi section will not be changed for consistency reasons. 
+          If an application component is not installed, we can show the user how 
+          to install the application. Alternatively, third party app integration 
+          can be used here (e.g. Eudora can be substituted for Messenger ifthe 
+          user desires)</p>
+        <p><b><span class="menuchangeable">Other applications/service 
+          categories (submenus)...</span></b><span class="menuchangeable"><br>
+          This is an area where users can quickly gain access 
+          to non-core applications such as Qwest services. Similar to the taskbar 
+          the items accessible here will be grouped into meaningful categories 
+          as needed. This section is updatebale and extensible</span></p>
+        <p><b>Security...</b><br>
+          This will provide general access to all things related 
+          to Security</p>
+        <p><b>Tools (submenu) (<span class="menuchangeable">extensible</span>)...<br>
+          </b>A set of special and usually highly technical tools 
+          that affect the overall C5 behavior. Examples include a &quot;Plugin 
+          Info&quot; dialog, as well as server tools, Java and JavaScript consoles 
+          and debuggers etc.</p>
+        <p><b>Go To Window</b>&nbsp;&gt;<br>
+          This lets users quickly toggle between open window.</p>
+      </div>
+    </td>
+    <td class="menuchangeable"> 
+      <div id="View"> 
+        <p><b>Location:</b><br>
+          Below the core application section as well as inside 
+          the Tools section</p>
+        <p><b>Kinds of items to be put there:<br>
+          </b> See the <span class="menuchangeable"> 
+          taskbar</span> specification for groups 
+          of items that may appear here.</p>
+        <p>Also we need to include registration, member services 
+          and possibly NetWatch here.</p>
+      </div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+<p>&nbsp;</p><hr size="5" noshade width="400" align="left">
+<h4>Help Menu (owned by VeraH)</h4>
+<br>
+<table border="0" cellpadding="4" width="100%">
+  <tr valign="top">
+    <td width="20%"><span class="menutopmenu"><span class="underlined">H</span>elp 
+      (Input: VeraH)</span></td>
+    <td width="12%">Structure</td>
+    <td width="12%" class="menuchangeable">Extensibility</td>
+  </tr>
+  <tr valign="top">
+    <td width="20%"> 
+      <div id="Help"  class="menutopmenu"> <span class="underlined">H</span>elp 
+        Contents&nbsp;&nbsp;&nbsp;<span class="menuFunctionkey">&nbsp;F1&nbsp;</span><br>
+        <hr>
+        How <span class="underlined">T</span>o Tutorial<br>
+        Help <span class="underlined">C</span>hannel<br>
+        <hr>
+        <span class="underlined">S</span>oftware Updates<br>
+        T<span class="underlined">e</span>chnical Support<br>
+        <span class="underlined">R</span>elease Notes<br>
+        <hr>
+        <span class="underlined">A</span>bout Product </div>
+    </td>
+    <td > 
+      <div id="Edit"> 
+        <p><b>Contents &gt;...</b><br>
+          Index, posibly aggregated from both Netcenter and local 
+          sources through RDF</p>
+        <p><b>How-to &gt;...</b><br>
+          A tutorial that answers commonly asked questions</p>
+        <p><b>Help Channel...</b><br>
+          This will point users to a Netcenter based help channel 
+          with a 'club like atmosphere' (original quote Netcenter folks), a Netscapers 
+          Anonymous so to speak, were there will be central and up-to-date help 
+          facility and users can exchange tips and tricks for using Netscape products</p>
+        <p><b>Other Misc Items...</b><br>
+          This will include things like Updates, TechSupp and 
+          release notes for the specifc C5 release</p>
+        <p><b>About</b><b>...<br>
+          </b>This is the standard page displaying the Communicator 
+          'identity' page indicating the version and potentially other info about 
+          this release of C5</p>
+      </div>
+    </td>
+    <td class="menuchangeable"> 
+      <div id="View"> 
+        <p>We should be really careful to keep the help menu as short as possible, 
+          in order to not decrease its effectiveness as evidenced in 4.5.(see 
+          help menu proposal for reasoning here)</p>
+      </div>
+    </td>
+    <div class="menuchangeable"> </div>
+  </tr>
+</table>
+<p>&nbsp;</p>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/ui/netscape/menu_framework/index.html&amp;rev=&amp;root=/cvsroot/">Last modified December 21,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

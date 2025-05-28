@@ -1,0 +1,267 @@
+<HTML>
+<HEAD>
+<TITLE>Page Source Feature Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<h2>
+Feature Test Spec</h2>
+<b>5.0 Project (seamonkey)</b>
+<br><b>Mail and News Component</b>
+<br><b>Page Source (related to mail)</b>
+<p>Written by: <b><a href="mailto:pmock@netscape.com">Peter Mock</a></b>
+<p><b>History:</b>
+<br>010799&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Created
+<br>012899&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Added additional testcases
+<br>02152000&nbsp;&nbsp;&nbsp; More test added
+<p><b>References:</b>
+<br>UI Specification:
+<br>Other: Dogbert's New Message (Compose)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gromit's Mail
+Compose Specification
+<p>
+<hr WIDTH="100%">
+<br>Description: These tests applies to Mail and News.
+<ol TYPE=A>
+<li>
+Start a new Plain Text message</li>
+
+<ol>
+<li>
+Type in some text then send the message.</li>
+
+<ol TYPE=a>
+<li>
+Verify the Content-Type is "text/plain; charset=us-ascii"</li>
+
+<li>
+Verify that there is no HTML comment tags</li>
+
+<li>
+Verify the time stamp from the server is correct.&nbsp; Example:&nbsp;
+Received: from netscape.com ([208.12.40.134]) by dredd.mcom.com (Netscape
+Messaging Server 4.0) with ESMTP id F57EWQ01.8R8 for &lt;pmock@netscape.com>;
+Thu, 7 Jan 1999 11:17:14 -0800</li>
+
+<li>
+Verify the time zone is correct for your region</li>
+
+<li>
+Verify the date stamp for the message that is used to displayed in the
+Thread pane is correct.&nbsp; Example: Date: Thu, 07 Jan 1999 11:17:13
+-0800</li>
+
+<li>
+Verify the X-Mailer information is correct for the platform.&nbsp; Example:
+X-Mailer: Mozilla 4.5 [en]C-NSCP&nbsp; (Win98; U)</li>
+
+<li>
+Verify the X-Accept-Language&nbsp; is correct.&nbsp; Example: X-Accept-Language:
+en</li>
+
+<li>
+Verify the MIME-Verision is correct.&nbsp; Example: MIME-Version: 1.0</li>
+
+<li>
+Verify the message contents is in Plain Text and not HTML</li>
+</ol>
+
+<li>
+Type in some rich text and the characters are not extended.&nbsp; Verify
+the Content-Transfer-Encoding is 7bit</li>
+
+<li>
+Type in some rich text with extended characters and send message.&nbsp;
+Verify the Content-Transfer-Encoding is 8bit</li>
+</ol>
+
+<li>
+Start with a new HTML message</li>
+
+<ol>
+<li>
+Type in some rich text then send the message.</li>
+
+<ol TYPE=a>
+<li>
+Verify the Content-Type is "text/html; charset=us-ascii"</li>
+
+<li>
+Verify the HTML comment read, "&lt;!doctype html public "-//w3c//dtd html
+4.0 transitional//en">"</li>
+
+<li>
+Verify the time stamp from the server is correct.&nbsp; Example:&nbsp;
+Received: from netscape.com ([208.12.40.134]) by dredd.mcom.com (Netscape
+Messaging Server 4.0) with ESMTP id F57EWQ01.8R8 for &lt;pmock@netscape.com>;
+Thu, 7 Jan 1999 11:17:14 -0800</li>
+
+<li>
+Verify the time zone is correct for your region</li>
+
+<li>
+Verify the date stamp for the message that is used to displayed in the
+Thread pane is correct.&nbsp; Example: Date: Thu, 07 Jan 1999 11:17:13
+-0800</li>
+
+<li>
+Verify the X-Mailer information is correct for the platform.&nbsp; Example:
+X-Mailer: Mozilla 4.5 [en]C-NSCP&nbsp; (Win98; U)</li>
+
+<li>
+Verify the X-Accept-Language&nbsp; is correct.&nbsp; Example: X-Accept-Language:
+en</li>
+
+<li>
+Verify the MIME-Verision is correct.&nbsp; Example: MIME-Version: 1.0</li>
+
+<li>
+Verify the message contents is in HTML and not plain text.</li>
+</ol>
+
+<li>
+Type in some rich text and the characters are not extended.&nbsp; Verify
+the Content-Transfer-Encoding is 7bit</li>
+
+<li>
+Type in some rich text with extended characters and send message.&nbsp;
+Verify the Content-Transfer-Encoding is 7bit</li>
+</ol>
+
+<li>
+Using Intelligent Send</li>
+
+<ol>
+<li>
+Send a new message as Plain Text only</li>
+
+<ol TYPE=a>
+<li>
+Verify the message is displayed as Plain Text</li>
+
+<li>
+Verify the message Content-Type is "text/plain; charset=us-ascii"</li>
+
+<li>
+Verify the message Content-Transfer-Encoding is 7 bit for non-extended
+character and 8 bit for any extended character.</li>
+</ol>
+
+<li>
+Send a new message as HTML only</li>
+
+<ol TYPE=a>
+<li>
+Verify the message is displayed as HTML</li>
+
+<li>
+Verify the message Content-Type is "text/html; charset=us-ascii"</li>
+
+<li>
+Verify the message Content-Transfer-Encoding is always 7 bit no matter
+if the message contains extended characters.</li>
+</ol>
+</ol>
+
+<ol>
+<li>
+Send a message as Plain Text and HTML</li>
+
+<ol TYPE=a>
+<li>
+Verify the message is displayed with a Plain Text and HTML sections for
+the message portion.</li>
+
+<li>
+Verify the Content-Type is correct.&nbsp; It will vary depending on the
+message content and whether it contains any attachments.</li>
+</ol>
+</ol>
+</ol>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-pagesource.html&amp;rev=&amp;root=/cvsroot/">Last modified February 21,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

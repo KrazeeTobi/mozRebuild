@@ -1,0 +1,1491 @@
+<HTML>
+<HEAD>
+<TITLE>Open Folders Feature Test Plan</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<script LANGUAGE="JavaScript">
+  document.write("<CENTER><FONT COLOR=Red SIZE=-1>");
+  document.write("Last modified on ", document.lastModified);
+  document.write("</CENTER></FONT>");
+</script>
+
+
+<h2>
+Feature Test Spec</h2>
+
+<blockquote>
+<b> 5.0 Project (Sea-Monkey)</b>
+<br><b> Mail and News Component</b>
+<br><b></b><i> </i><b>Folders:
+Open</b>
+</blockquote>
+
+<p>Written by: <b><a href="mailto:scurtis@netscape.com">Stacey Curtis</a></b>
+
+<p><b>References:</b>
+<br>UI Specification:
+<br>Other:
+<br>Approx. number of test cases: 97
+<p>
+<hr WIDTH="100%">
+<br>Description: Opening Folders (Selecting and displaying or otherwise
+manipulating the message store of)
+<br>
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr>
+<td>.</td>
+
+<td><b>Access methods (can be performed while following the test cases
+contained in other tables)</b></td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td>
+<center><b>Expected Outcome (if not obvious)</b></center>
+</td>
+</tr>
+
+<tr NOSAVE>
+<td NOSAVE>1</td>
+
+<td>Direct: Single-click (in folder pane)</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Direct: Context menu "open" item</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Navigate: Via a form of "next" navigation from a previous mail folder</td>
+
+<td>All forms of such navigation will be tested in the navigation test
+plan.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Navigate: Via a form of "next" navigation from a previous mail folder</td>
+
+<td>All forms of such navigation will be tested in the navigation test
+plan.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Filter a message to</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>File or copy a message to</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Top-level folder with no subfolders</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>(Exception: for Cyrus IMAP servers, top-level under the inbox)</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Top-level folder of hierarchy</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>(Exception: for Cyrus IMAP servers, top-level under the inbox)</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Folder in middle of hierarchy</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Folder at bottom of hierarchy (20-30 levels deep)</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>NoSelect folder</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>IMAP only. See how to create a NoSelect folder in Create folder test
+plan.</td>
+
+<td>(Folder should not be openable)</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Messages-only folder</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>IMAP-only. See how to create a messages-only folder in Create folder
+test plan.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Dual-use folder</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>IMAP only. See how to create a dual-use folder in Create folder test
+plan.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Folder with unusual ascii characters</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>(Try several, as done in the create folders test plan)</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Local folder</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Movemail folder</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Sent folder</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Drafts folder</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Trash folder</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Templates folder</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Inbox</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Subfolder of Inbox</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Via access method #1</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Via access method #2</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Via access method #3</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Via access method #4</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Via access method #5</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>Via access method #6</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+<br>
+<table BORDER WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td NOSAVE></td>
+
+<td>
+<center><b>Perform these additional tasks</b></center>
+</td>
+
+<td>
+<center><b>Notes</b></center>
+</td>
+
+<td><b>Expected Outcome (if not obvious)</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Open a folder with a very large number of messages (5,000)</td>
+
+<td>.</td>
+
+<td>Note time taken. Compare it to 4.5 performance.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Open an empty folder</td>
+
+<td>.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>Open a folder with read-only privileges</td>
+
+<td>Use Messaging Server 4.0 to set privilege levels.</td>
+
+<td>.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Open a shared folder</td>
+
+<td>Only if folder sharing is in 5.0, which looks unlikely.</td>
+
+<td>.</td>
+</tr>
+</table>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-folders-open.html&amp;rev=&amp;root=/cvsroot/">Last modified April  1,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

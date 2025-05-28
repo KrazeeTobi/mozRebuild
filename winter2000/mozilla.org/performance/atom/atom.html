@@ -1,0 +1,152 @@
+<HTML>
+<HEAD>
+<TITLE>Using hiprof on Mozilla under Digital Unix</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+<h1><center>Using hiprof on Mozilla under Digital Unix</center></h1><hr>
+<h2>Instrumentation</h2>
+Hiprof is a profiler built around the ATOM tool available under Digital Unix.
+I believe that ATOM and Hiprof are a standard part of Digital Unix 4.0, so
+if you are developing under Digital Unix you should have them.  ATOM tools
+work by taking a non-stripped executable and generating a new executable
+which can analyze itself as it runs.  This process is pretty simple for
+a statically linked executable which does not load any shared libraries at
+runtime.  It gets a little more complicated when dealing with dynamically
+linked executables which also do runtime loading.
+<p><h2>Scripts</h2>
+I have put together a couple of scripts which take care of all this.
+Both of these scripts are meant to be run from the top of your build tree.
+The first script, <a href="hiprofme">hiprofme</a> is used to create the
+instrumented executable.  The second script, <a href="gprofme">gprofme</a>,
+is used to analyze the data produced when the instrumented executable is
+run.
+<p>
+Right now they are very dependent on the specific environment that I use.
+I would like to fix that in the future, but for right now you will have to
+edit them to reflect your environment.  My environment is shown below.
+Note that I do not build in the source tree.  I don't think you would have a
+problem if you did, I just don't.
+<pre>
+    /group/jlnance/tmp is --prefix for glib, gtk, nspr, and IDL.
+    /group/jlnance/tmp/src/mozilla is the top of the mozilla source.
+    /group/jlnance/tmp/src/bm is where I build the source.
+    /group/jlnance/tmp/atomlibs is where I store instrumented shared libs.
+</pre>
+<P><h2>Running</h2>
+To use all this first build apprunner.  Then create the atomlibs directory
+and run the hiprofme script.  You should now have an executable called
+dist/bin/apprunner.hiprof.  Now run it:<pre>
+    pushd dist/bin
+    setenv LD_LIBRARY_PATH /group/jlnance/tmp/atomlibs
+    ./apprunner.hiprof
+    popd
+</pre>
+When I ran it I had a little problem getting it to quit.  When I selected the
+quit menu, it would take down the window, but then it would hang.  I just
+killed it with ^C after a few seconds and this did not seem to hurt anything.
+Now you can run the gprofme script, and it will dump out a profile.  I have
+a script called <a href="gprof2html">gprof2html</a> to convert the profile
+into html.  To run it do:
+<pre>
+gprofme | awk -f gprof2html >gprof.html
+</pre>
+<p><h2>Advanced</h2>
+Hiprof is a very nice profiler.  It allows you to combine profiles from
+multiple runs, dump profile information from a running process with out killing
+it, and to profile only part of a run.  These scripts are meant as starting
+points rather than as the definitive way to use the tools.  If you get the
+scripts working, I would encourage you to read more about hiprof and other
+ATOM tools:
+<ul>
+<li> <A href="http://alisa.ucsd.edu/cgi/webman?SEARCH+man5+hiprof.5.gz">
+     hiprof man page</A>
+<li> <A href="http://alisa.ucsd.edu/cgi/webman?SEARCH+man5+third.5.gz">
+     third degree man page</A>
+<li> <A href="http://alisa.ucsd.edu/cgi/webman?SEARCH+man1+atom.1.gz">
+     atom man page</A>
+<li> <A href="http://alisa.ucsd.edu/cgi/webman?SEARCH+man1+gprof.1.gz">
+     gprof man page</A>
+</ul>
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/performance/atom/atom.html&amp;rev=&amp;root=/cvsroot/">Last modified June  3,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

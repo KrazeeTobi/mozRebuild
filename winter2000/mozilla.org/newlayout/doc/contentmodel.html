@@ -1,0 +1,204 @@
+<HTML>
+<HEAD>
+<TITLE>New Layout: Content Model</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<HR WIDTH="100%"><h2>New Layout: The Content Model</h2>
+<BR>
+Author: <a href="mailto:kipp@netscape.com">Kipp 
+Hickman</a> <BR>
+Last update: 1May98
+<HR WIDTH="100%">
+<BR>
+<TABLE COLS=1 WIDTH="70%" >
+<TR BGCOLOR="#FFFFCC">
+<TD><B>Overview</B></TD>
+</TR>
+</TABLE>
+
+
+<P>Documents (e.g. html files) are translated
+into content models (approximately equal to a w3c document object model)
+by type specific parsers or translators. For html, an html parser translates
+text, tags, comments and entities into a stream of method calls on a parser
+"content sink". The content sink translates the method calls into a content
+model.
+
+<P>The primary content API is nsIContent.
+Content objects can:
+<UL>
+<LI>
+contain other content objects</LI>
+
+<LI>
+they have access back to the containing
+document</LI>
+
+<LI>
+they have attributes</LI>
+
+<LI>
+they can provide a content delegate
+which is used to create a frame (this is how content gets reflowed so it's
+presentable)</LI>
+</UL>
+The primary document API is nsIDocument.
+Document objects can:
+<UL>
+<LI>
+contain a root content object</LI>
+
+<LI>
+contain zero or more presentation shells</LI>
+
+<LI>
+contain zero or more document observers</LI>
+</UL>
+When structural changes are made to
+the content model the document is notified and then passes on the notification
+to the document observers.
+<BR>
+<BR>
+<TABLE COLS=1 WIDTH="70%" >
+<TR BGCOLOR="#FFFFCC">
+<TD><B>HTML Specifics</B></TD>
+</TR>
+</TABLE>
+
+
+<P>The html content sink is located
+in mozilla/layout/html/document/src/nsHTMLContentSink; in it you will find
+the code that maps tag names into specific content objects. You will also
+find code to periodically trigger an incremental reflow operation so that
+the content is reflowed before the entire document is loaded.
+
+<P>The html content objects reside primarily
+in mozilla/layout/html/base/src; in there you will find nsHTMLContainer;
+this class is used for all of the simple html containers (those whose behavior
+is dictated nearly 100% by the style system).
+
+<P>HTML tables require more content
+and layout support, so the code is broken out into it's own sub-directory:
+mozilla/layout/html/table.
+
+<P>HTML form elements are also in their
+own subdirectory: mozilla/layout/html/forms.
+<BR>
+<TABLE COLS=1 WIDTH="70%" >
+<TR BGCOLOR="#FFFFCC">
+<TD><B>Roadmap</B></TD>
+</TR>
+</TABLE>
+
+
+<P>Currently there is too strong a binding
+between the html content code and the html layout code. In particular,
+much of the layout logic is "content neutral" and is bound more to css
+style than it is html. We plan on breaking the code more firmly apart so
+that the various layout algorithms can be reused (e.g. on an xml content
+tree).
+
+<P>The largely undone portion of the
+content code is the DOM. Expect changes in the content code as the DOM
+implementation moves forward.
+
+<P>On the document side of things, we
+have yet to implement anything other than the html document. Document objects
+need to be created that know how to map other file formats into html. Examples
+include plain text and image files. The primary complexity with solving
+this problem lies in connecting the document type discovery logic (in netlib)
+with a factory mechanism for creating document handlers (implementations
+of nsIDocument).
+<BR>
+<TABLE COLS=1 WIDTH="70%" >
+<TR BGCOLOR="#FFFFCC">
+<TD><B>Known Bugs</B></TD>
+</TR>
+</TABLE>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/newlayout/doc/contentmodel.html&amp;rev=&amp;root=/cvsroot/">Last modified July 15,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

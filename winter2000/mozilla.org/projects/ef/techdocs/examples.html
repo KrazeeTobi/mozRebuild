@@ -1,0 +1,763 @@
+<HTML>
+<HEAD>
+  <TITLE>Electrical Fire Questions</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+      LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<P><TABLE WIDTH="100%" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+ <TR>
+  <TD VALIGN="TOP" NOWRAP>
+<H2><FONT COLOR="#FF0000" SIZE=+4>Electrical Fire</FONT></H2>
+
+
+<H2><FONT SIZE=+4>Examples</FONT></H2>
+  </TD>
+  <TD VALIGN="TOP" NOWRAP ALIGN="RIGHT">
+
+      <PRE><A HREF="../index.html"><IMG SRC=
+"electricalfire.gif" ALIGN="BOTTOM" WIDTH="37" HEIGHT="37" NATURALSIZEFLAG=
+"3"></A>  <A HREF="design/optimizations.html"><IMG SRC="arrows/left.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A><A HREF="index.html"><IMG SRC=
+"arrows/up_dark.gif" WIDTH="37" HEIGHT="37" ALIGN="BOTTOM" NATURALSIZEFLAG=
+"3"></A><A HREF="questions.html"><IMG SRC="arrows/right.gif" ALIGN="BOTTOM"
+WIDTH="37" HEIGHT="37" NATURALSIZEFLAG="3"></A></PRE>
+  </TD>
+ </TR>
+</TABLE>
+
+<P></P>
+
+<P>The following are examples of Electrical Fire at work.</P>
+
+<H2><A NAME="Sieve"></A>Sieve</H2>
+
+
+<UL>
+  <LI><A HREF="#sieve_src">Source Code</A>
+  <LI><A HREF="#sieve_bytecode">Bytecode representation</A>
+  <LI><A HREF="#sieve_pg">Primitive Graph representation</A>
+  <LI><A HREF="#sieve_code">Code Generation</A>
+  <LI><A HREF="#seive_performance">Performance</A>
+</UL>
+
+<P><A NAME="sieve_src"></A><B><FONT SIZE=+1>Source Code</FONT></B></P>
+
+<P>The Java function fed to Electrical Fire is a seive function:</P>
+
+<PRE>  public static void sieve(int a[])
+	{
+        int k1 = 1;
+        int i2 = 0;
+        int j2 = 0;
+        int an[] = a;
+        
+        j2++;
+        an[0] = 1;
+        an[1] = 2;
+        k1 = 2;
+   
+        for (int i1 = 3; i1 &lt; 2048; i1++)
+        {
+            boolean flag1;
+            i2 = 1;
+            for (flag1 = true; i2 &lt; k1 &amp;&amp; flag1; i2++)
+                if (an[i2] &gt; 0 &amp;&amp; an[i2] &lt;= i1 / 2 &amp;&amp; i1 % an[i2] == 0)
+                    flag1 = false;
+            if (flag1)
+            {
+                k1++;
+                an[k1 - 1] = i1;
+            }
+        }
+  	}</PRE>
+
+<P></P>
+
+<P><A NAME="sieve_bytecode"></A><B><FONT SIZE=+1>Bytecode Representation</FONT></B></P>
+
+<P>The equivalent bytecode of the given source code:</P>
+
+<PRE>0000:  04                   iconst_1
+0001:  3C                   istore_1
+0002:  03                   iconst_0
+0003:  3D                   istore_2
+0004:  03                   iconst_0
+0005:  3E                   istore_3
+0006:  2A                   aload_0
+0007:  3A 04                astore 4
+0009:  84 03 01             iinc 3,1
+000C:  19 04                aload 4
+000E:  03                   iconst_0
+000F:  04                   iconst_1
+0010:  4F                   iastore
+0011:  19 04                aload 4
+0013:  04                   iconst_1
+0014:  05                   iconst_2
+0015:  4F                   iastore
+0016:  05                   iconst_2
+0017:  3C                   istore_1
+0018:  06                   iconst_3
+0019:  36 05                istore 5
+001B:  A7 004A              goto 0x0065
+001E:  04                   iconst_1
+001F:  3D                   istore_2
+0020:  04                   iconst_1
+0021:  36 06                istore 6
+0023:  A7 0025              goto 0x0048
+0026:  19 04                aload 4
+0028:  1C                   iload_2
+0029:  2E                   iaload
+002A:  9E 001B              ifle 0x0045
+002D:  19 04                aload 4
+002F:  1C                   iload_2
+0030:  2E                   iaload
+0031:  15 05                iload 5
+0033:  05                   iconst_2
+0034:  6C                   idiv
+0035:  A3 0010              if_icmpgt 0x0045
+0038:  15 05                iload 5
+003A:  19 04                aload 4
+003C:  1C                   iload_2
+003D:  2E                   iaload
+003E:  70                   irem
+003F:  9A 0006              ifne 0x0045
+0042:  03                   iconst_0
+0043:  36 06                istore 6
+0045:  84 02 01             iinc 2,1
+0048:  1C                   iload_2
+0049:  1B                   iload_1
+004A:  A2 0008              if_icmpge 0x0052
+004D:  15 06                iload 6
+004F:  9A FFD7              ifne 0x0026
+0052:  15 06                iload 6
+0054:  99 000E              ifeq 0x0062
+0057:  84 01 01             iinc 1,1
+005A:  19 04                aload 4
+005C:  1B                   iload_1
+005D:  04                   iconst_1
+005E:  64                   isub
+005F:  15 05                iload 5
+0061:  4F                   iastore
+0062:  84 05 01             iinc 5,1
+0065:  15 05                iload 5
+0067:  11 0800              sipush 2048
+006A:  A1 FFB4              if_icmplt 0x001E
+006D:  B1                   return</PRE>
+
+<P>After reading in the bytecodes, a bytecode graph is generated:</P>
+
+<BLOCKQUOTE>
+  <P>The bytecode graph has 15 bytecode blocks:</P>
+</BLOCKQUOTE>
+
+<PRE>    B0 (00DB7508): 1 predecessors
+        0000:  04                   iconst_1
+        0001:  3C                   istore_1
+        0002:  03                   iconst_0
+        0003:  3D                   istore_2
+        0004:  03                   iconst_0
+        0005:  3E                   istore_3
+        0006:  2A                   aload_0
+        0007:  3A 04                astore 4
+        0009:  84 03 01             iinc 3,1
+        000C:  19 04                aload 4
+        000E:  03                   iconst_0
+        000F:  04                   iconst_1
+        0010:  4F                   iastore
+        0011:  19 04                aload 4
+        0013:  04                   iconst_1
+        0014:  05                   iconst_2
+        0015:  4F                   iastore
+        0016:  05                   iconst_2
+        0017:  3C                   istore_1
+        0018:  06                   iconst_3
+        0019:  36 05                istore 5
+        001B:  A7 004A              goto 0x0065
+    Successors: B1
+    B1 (00DB7560): 2 predecessors
+        0065:  15 05                iload 5
+        0067:  11 0800              sipush 2048
+        006A:  A1 FFB4              if_icmplt 0x001E
+    Successors: B13, B2
+    B2 (00DB75B8): 1 predecessors
+        001E:  04                   iconst_1
+        001F:  3D                   istore_2
+        0020:  04                   iconst_1
+        0021:  36 06                istore 6
+        0023:  A7 0025              goto 0x0048
+    Successors: B3
+    B3 (00DB7610): 2 predecessors
+        0048:  1C                   iload_2
+        0049:  1B                   iload_1
+        004A:  A2 0008              if_icmpge 0x0052
+    Successors: B4, B10
+    B4 (00DB7878): 1 predecessors
+        004D:  15 06                iload 6
+        004F:  9A FFD7              ifne 0x0026
+    Successors: B10, B5
+    B5 (00DB7668): 1 predecessors
+        0026:  19 04                aload 4
+        0028:  1C                   iload_2
+        0029:  2E                   iaload
+        002A:  9E 001B              ifle 0x0045
+    Successors: B6, B9
+    B6 (00DB7718): 1 predecessors
+        002D:  19 04                aload 4
+        002F:  1C                   iload_2
+        0030:  2E                   iaload
+        0031:  15 05                iload 5
+        0033:  05                   iconst_2
+        0034:  6C                   idiv
+        0035:  A3 0010              if_icmpgt 0x0045
+    Successors: B7, B9
+    B7 (00DB7770): 1 predecessors
+        0038:  15 05                iload 5
+        003A:  19 04                aload 4
+        003C:  1C                   iload_2
+        003D:  2E                   iaload
+        003E:  70                   irem
+        003F:  9A 0006              ifne 0x0045
+    Successors: B8, B9
+    B8 (00DB77C8): 1 predecessors
+        0042:  03                   iconst_0
+        0043:  36 06                istore 6
+    Successors: B9
+    B9 (00DB76C0): 4 predecessors
+        0045:  84 02 01             iinc 2,1
+    Successors: B3
+    B10 (00DB7820): 2 predecessors
+        0052:  15 06                iload 6
+        0054:  99 000E              ifeq 0x0062
+    Successors: B11, B12
+    B11 (00DB7928): 1 predecessors
+        0057:  84 01 01             iinc 1,1
+        005A:  19 04                aload 4
+        005C:  1B                   iload_1
+        005D:  04                   iconst_1
+        005E:  64                   isub
+        005F:  15 05                iload 5
+        0061:  4F                   iastore
+    Successors: B12
+    B12 (00DB78D0): 2 predecessors
+        0062:  84 05 01             iinc 5,1
+    Successors: B1
+    B13 (00DB7980): 1 predecessors
+        006D:  B1                   return
+    Successors: B14
+    B14 (00DB74B0): 1 predecessors
+        End block</PRE>
+
+<P></P>
+
+<P><A NAME="sieve_pg"></A><B><FONT SIZE=+1>Primitive Graph Representation:</FONT></B></P>
+
+<P>Here is a contextual representation of the primitive graph with some
+optimizations performed:</P>
+
+<UL>
+  <LI>ControlGraph 013E03E8 (65 producers)
+  <LI>beginNode: N0
+  <LI>endNode: N30
+  <LI>returnNode: N29
+  <LI>Control nodes:
+</UL>
+
+<PRE>    Begin Node N0 (013E03F4):
+    Predecessors: 
+    Primitives:
+        wm1  := Arg_M  argMEM
+        va2  := Arg_A  arg0
+    Successors: N1
+    Exc Node N1 (013E0658):
+    Predecessors: N0
+    Primitives:
+        Exc  ChkNull  va2
+    Successors: N2, N30
+    Exc Node N2 (013E0760):
+    Predecessors: N1
+    Primitives:
+        va4  := AddI_A  va2, 4
+        vi5  := LdC_I  va4
+        Exc  LimitR  0, vi5
+    Successors: N3, N30
+    Exc Node N3 (013E09A0):
+    Predecessors: N2
+    Primitives:
+        va6  := AddI_A  va2, 8
+        wm7  := StI_I  wm1, va6, 1
+        Exc  ChkNull  va2
+    Successors: N4, N30
+    Exc Node N4 (013E0BD8):
+    Predecessors: N3
+    Primitives:
+        va8  := AddI_A  va2, 4
+        vi9  := LdC_I  va8
+        Exc  LimitR  1, vi9
+    Successors: N5, N30
+    Block Node N5 (013E0E18):
+    Predecessors: N4
+    Primitives:
+        va10  := AddI_A  va2, 12
+        wm11  := StI_I  wm7, va10, 2
+        wi12  := Const_I  3
+        wi13  := Const_I  2
+    Successors: N6
+    AExc Node N6 (013E1070):
+    Predecessors: N5, N28
+    Phi nodes:
+        vi14  := Phi_I  wi12, vi65
+        vi15  := Phi_I  wi13, vi64
+        va16  := Phi_A  va2, va24
+        vm17  := Phi_M  wm11, vm63
+    Successors: N7, N30
+    If Node N7 (013E1128):
+    Predecessors: N6
+    Primitives:
+        vc18  := CmpI_I  vi14, 2048
+        IfLt  vc18
+    Successors: N29, N8
+    Block Node N8 (013E13C0):
+    Predecessors: N7
+    Primitives:
+        wi19  := Const_I  1
+        wi20  := Const_I  1
+    Successors: N9
+    AExc Node N9 (013E1458):
+    Predecessors: N8, N23
+    Phi nodes:
+        vi21  := Phi_I  vi15, vi21
+        vi22  := Phi_I  wi19, vi54
+        vi23  := Phi_I  wi20, vi53
+        va24  := Phi_A  va16, va24
+        vm25  := Phi_M  vm17, vm25
+        vi26  := Phi_I  vi14, vi26
+    Successors: N10, N30
+    If Node N10 (013E1510):
+    Predecessors: N9
+    Primitives:
+        vc27  := Cmp_I  vi22, vi21
+        IfGe  vc27
+    Successors: N11, N24
+    If Node N11 (013E1950):
+    Predecessors: N10
+    Primitives:
+        vc28  := CmpI_I  vi23, 0
+        IfNe  vc28
+    Successors: N24, N12
+    Exc Node N12 (013E1BE8):
+    Predecessors: N11
+    Primitives:
+        Exc  ChkNull  va24
+    Successors: N13, N30
+    Exc Node N13 (013E1E20):
+    Predecessors: N12
+    Primitives:
+        va29  := AddI_A  va24, 4
+        vi30  := LdC_I  va29
+        Exc  Limit  vi22, vi30
+    Successors: N14, N30
+    If Node N14 (013E2060):
+    Predecessors: N13
+    Primitives:
+        vi31  := ShlI_I  vi22, 2
+        va32  := Add_A  va24, vi31
+        va33  := AddI_A  va32, 8
+        vi34  := Ld_I  vm25, va33
+        vc35  := CmpI_I  vi34, 0
+        IfLe  vc35
+    Successors: N15, N23
+    Exc Node N15 (013E4600):
+    Predecessors: N14
+    Primitives:
+        Exc  ChkNull  va24
+    Successors: N16, N30
+    Exc Node N16 (013E4708):
+    Predecessors: N15
+    Primitives:
+        va36  := AddI_A  va24, 4
+        vi37  := LdC_I  va36
+        Exc  Limit  vi22, vi37
+    Successors: N17, N30
+    If Node N17 (013E4948):
+    Predecessors: N16
+    Primitives:
+        vi38  := ShlI_I  vi22, 2
+        va39  := Add_A  va24, vi38
+        va40  := AddI_A  va39, 8
+        vi41  := Ld_I  vm25, va40
+        vi42  := DivI_I  vi26, 2
+        vc43  := Cmp_I  vi41, vi42
+        IfGt  vc43
+    Successors: N18, N23
+    Exc Node N18 (013E4E40):
+    Predecessors: N17
+    Primitives:
+        Exc  ChkNull  va24
+    Successors: N19, N30
+    Exc Node N19 (013E4F48):
+    Predecessors: N18
+    Primitives:
+        va44  := AddI_A  va24, 4
+        vi45  := LdC_I  va44
+        Exc  Limit  vi22, vi45
+    Successors: N20, N30
+    Exc Node N20 (013E5188):
+    Predecessors: N19
+    Primitives:
+        vi46  := ShlI_I  vi22, 2
+        va47  := Add_A  va24, vi46
+        va48  := AddI_A  va47, 8
+        vi49  := Ld_I  vm25, va48
+        Exc  vi50  := ModE_I  vi26, vi49
+    Successors: N21, N30
+    If Node N21 (013E5518):
+    Predecessors: N20
+    Primitives:
+        vc51  := CmpI_I  vi50, 0
+        IfNe  vc51
+    Successors: N22, N23
+    Block Node N22 (013E56A0):
+    Predecessors: N21
+    Primitives:
+        vi52  := Const_I  0
+    Successors: N23
+    Block Node N23 (013E5738):
+    Predecessors: N14, N17, N21, N22
+    Phi nodes:
+        vi53  := Phi_I  vi23, vi23, vi23, vi52
+    Primitives:
+        vi54  := AddI_I  vi22, 1
+    Successors: N9
+    If Node N24 (013E59B0):
+    Predecessors: N10, N11
+    Primitives:
+        vc55  := CmpI_I  vi23, 0
+        IfEq  vc55
+    Successors: N25, N28
+    Exc Node N25 (013E5B38):
+    Predecessors: N24
+    Primitives:
+        vi56  := AddI_I  vi21, 1
+        Exc  ChkNull  va24
+    Successors: N26, N30
+    Exc Node N26 (013E5CD0):
+    Predecessors: N25
+    Primitives:
+        va57  := AddI_A  va24, 4
+        vi58  := LdC_I  va57
+        Exc  Limit  vi21, vi58
+    Successors: N27, N30
+    Block Node N27 (013E5F10):
+    Predecessors: N26
+    Primitives:
+        vi59  := ShlI_I  vi21, 2
+        va60  := Add_A  va24, vi59
+        va61  := AddI_A  va60, 8
+        wm62  := St_I  vm25, va61, vi26
+    Successors: N28
+    Block Node N28 (013E61F8):
+    Predecessors: N24, N27
+    Phi nodes:
+        vm63  := Phi_M  vm25, wm62
+        vi64  := Phi_I  vi21, vi56
+    Primitives:
+        vi65  := AddI_I  vi26, 1
+    Successors: N6
+    Return Node N29 (013E6490):
+    Predecessors: N7
+    Successors: N30
+    End Node N30 (013E04F8):
+    Predecessors: N1, N2, N3, N4, N6, N9, N12, N13, N15, N16, N18, N19, N20, N25, N26, N29
+    Phi nodes:
+        vm3  := Phi_M  wm1, wm1, wm7, wm7, vm17, vm25, vm25, vm25, vm25, vm25, vm25, vm25, vm25, vm25, vm25, vm17
+    Primitives:
+        resMEM  := Result_M  vm3
+    Successors:</PRE>
+
+<P></P>
+
+<P><A NAME="sieve_code"></A><B><FONT SIZE=+1>Code Generation</FONT></B></P>
+
+<P>After generating the primitive graph, native instructions are generated. </P>
+<UL>
+  <LI><A HREF="#x86">x86</A> 
+  <LI><A HREF="#HPPA">HPPA</A> 
+</UL>
+
+<P><A NAME="x86"></A>The following is an example of generating x86 instructions:</P>
+
+<BLOCKQUOTE>
+  <PRE>014269B0:	 push    ebp                 
+014269B1:	 mov     ebp,esp             
+014269B3:	 sub     esp,0000C           
+014269B6:	 push    edi                 
+014269B7:	 push    esi                 
+014269B8:	 push    ebx                 
+014269B9:	 cmp     dword ptr [ecx+   4],00000 
+014269BD:	 jle        6                
+014269C3:	 mov     dword ptr [ecx+   8],   1 
+014269CA:	 cmp     dword ptr [ecx+   4],00001 
+014269CE:	 jle        6                
+014269D4:	 mov     dword ptr [ecx+   C],   2 
+014269DB:	 mov     dword ptr [ebp-   4],   3 
+014269E2:	 mov     edi,   2            
+014269E7:	 jmp       8D                
+014269EC:	 mov     ebx,   1            
+014269F1:	 mov     esi,   1            
+014269F6:	 jmp       4E                
+014269FB:	 cmp     ebx,[ecx+   4]      
+014269FE:	 jge        6                
+01426A04:	 cmp     dword ptr [ecx+ebx*4+   8],00000 
+01426A09:	 jle       3A                
+01426A0F:	 cmp     ebx,[ecx+   4]      
+01426A12:	 jge        6                
+01426A18:	 mov     eax,[ebp-   4]      
+01426A1B:	 sar     eax,01              
+01426A1E:	 cmp     [ecx+ebx*4+   8],eax 
+01426A22:	 jg        21                
+01426A28:	 cmp     ebx,[ecx+   4]      
+01426A2B:	 jge        6                
+01426A31:	 mov     eax,[ebp-   4]      
+01426A34:	 cwd                         
+01426A35:	 idiv    dword ptr [ecx+ebx*4+   8] 
+01426A39:	 test    edx,edx             
+01426A3B:	 jnz        8                
+01426A41:	 xor     esi,esi             
+01426A43:	 inc     ebx                 
+01426A44:	 cmp     ebx,edi             
+01426A46:	 jge        E                
+01426A4C:	 test    esi,esi             
+01426A4E:	 jnz     FFFFFFAD            
+01426A54:	 test    esi,esi             
+01426A56:	 jz        1B                
+01426A5C:	 mov     ebx,edi             
+01426A5E:	 inc     ebx                 
+01426A5F:	 cmp     edi,[ecx+   4]      
+01426A62:	 jge        6                
+01426A68:	 mov     eax,[ebp-   4]      
+01426A6B:	 mov     [ecx+edi*4+   8],eax 
+01426A6F:	 mov     edi,ebx             
+01426A71:	 inc     dword ptr [ebp-   4] 
+01426A74:	 cmp     dword ptr [ebp-   4], 800 
+01426A7B:	 jl      FFFFFF71            
+01426A81:	 pop     ebx                 
+01426A82:	 pop     esi                 
+01426A83:	 pop     edi                 
+01426A84:	 mov     esp,ebp             
+01426A86:	 pop     ebp                 
+01426A87:	 ret        C </PRE>
+</BLOCKQUOTE>
+
+<P><A NAME="HPPA"></A>The following is an example of generating HPPA instructions:</P>
+
+<BLOCKQUOTE>
+  <PRE>sieve:
+        bl sieve_entry,%rp
+        nop
+        ldw -18(%sr0,%sp),%rp
+        ldsid (%sr0,%rp),%r1
+        mtsp %r1,%sr0
+        be,n 0(%sr0,%rp)
+
+sieve_entry:
+        copy %arg0,%r22
+        comibt,=,n 0,%r22,N30
+        nop
+        ldw 4(0,%r22),%r19
+        comibf,&lt;=,n 0,%r19,N30
+        nop
+        ldi 1,%r19
+        stw %r19,8(0,%r22)
+        comibt,=,n 0,%r22,N30
+        nop
+        ldw 4(0,%r22),%r19
+        comibf,&lt;=,n 1,%r19,N30
+        nop
+        ldi 2,%r19
+        stw %r19,12(0,%r22)
+        ldi 3,%arg0
+        ldi 2,%arg2
+        bl,n N6,0
+        nop
+N8:     ldi 1,%r21
+        ldi 1,%arg3
+        bl,n N9,0
+        nop
+N12:    comibt,=,n 0,%r22,N30
+        nop
+        ldw 4(0,%r22),%r19
+        combf,&lt;,n %r21,%r19,N30
+        nop
+        sh2addl %r21,%r22,%r19
+        ldw 8(0,%r19),%r19
+        comibf,&lt;=,n 0,%r19,N23
+        nop
+        comibt,=,n 0,%r22,N30
+        nop
+        ldw 4(0,%r22),%r19
+        combf,&lt;,n %r21,%r19,N30
+        nop
+        sh2addl %r21,%r22,%r19
+        ldw 8(0,%r19),%r20
+        extru %arg0,0,1,%r19
+        addl %arg0,%r19,%r19
+        extrs %r19,30,31,%r19
+        combf,&lt;=,n %r20,%r19,N23
+        nop
+        comibt,=,n 0,%r22,N30
+        nop
+        ldw 4(0,%r22),%r19
+        combf,&lt;,n %r21,%r19,N30
+        nop
+        sh2addl %r21,%r22,%r19
+        ldw 8(0,%r19),%arg1
+        bl,n HPPAremI,%r31
+        comibf,=,n 0,%ret1,N23
+        nop
+        copy 0,%arg3
+N23:    ldo 1(%r21),%r21
+N9:     combf,&lt;,n %r21,%arg2,N24
+        nop
+        comibf,=,n 0,%arg3,N12
+        nop
+N24:    comibt,=,n 0,%arg3,N28
+        nop
+        ldo 1(%arg2),%r20
+        comibt,=,n 0,%r22,N30
+        nop
+        ldw 4(0,%r22),%r19
+        combf,&lt;,n %arg2,%r19,N30
+        nop
+        sh2addl %arg2,%r22,%r19
+        stw %arg0,8(0,%r19)
+        copy %r20,%arg2
+N28:    ldo 1(%arg0),%arg0
+N6:     ldi 2048,%r19
+        combt,&lt;,n %arg0,%r19,N8
+        nop
+N30:    bv 0(%rp)
+
+HPPAremI:
+        addit,= 0,%arg1,%r0
+        add,&gt;= %r0,%arg0,%ret1
+        sub %r0,%ret1,%ret1
+        sub %r0,%arg1,%r1
+        ds %r0,%r1,%r0
+        copy %r0,%r1
+        add %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        ds %r1,%arg1,%r1
+        addc %ret1,%ret1,%ret1
+        movb,&gt;=,n %r1,%ret1,L5
+        add,&lt; %arg1,%r0,%r0
+        add,tr %r1,%arg1,%ret1
+        sub %r1,%arg1,%ret1
+L5:     add,&gt;= %arg0,%r0,%r0
+        sub %r0,%ret1,%ret1
+        bv %r0(%r31)
+        nop</PRE>
+</BLOCKQUOTE>
+
+<P></P>
+
+<P><A NAME="seive_performance"></A><B><FONT SIZE=+1>Performance</FONT></B></P>
+
+<P>Using Quantify, it is possible to compute the time it takes EF to translate
+bytecodes. Here are the following functions that were timed: Basic block
+division, Primitive Graph generation, Optimization, and Code generation.</P>
+
+<P>Given: A function with 1045 bytecodes to translate.</P>
+
+<P><TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
+<CAPTION ALIGN="TOP">Results</CAPTION>
+ <TR>
+  <TD>Basic Blocks</TD>
+  <TD>00.25 ms</TD>
+ </TR>
+ <TR>
+  <TD>Primitive Graph</TD>
+  <TD>02.86 ms</TD>
+ </TR>
+ <TR>
+  <TD>Optimization</TD>
+  <TD>00.13 ms</TD>
+ </TR>
+ <TR>
+  <TD>Code Generation</TD>
+  <TD>20.50 ms</TD>
+ </TR>
+ <TR>
+  <TD>Total</TD>
+  <TD>23.74 ms</TD>
+ </TR>
+</TABLE>
+ Translation Time: 22.7 &micro;s/bytecode<P></P>
+
+<P></P>
+
+<P><HR ALIGN=LEFT><P></P>
+
+</BODY>
+</HTML>

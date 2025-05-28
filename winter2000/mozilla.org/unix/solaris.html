@@ -1,0 +1,297 @@
+<HTML>
+<HEAD>
+<TITLE>Mozilla on Solaris FAQ</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+  
+  
+
+
+
+    <div align="center"><h1>Mozilla on Solaris FAQ</h1>
+	Questions or comments to <a 
+	  href="news://news.mozilla.org/netscape.public.mozilla.unix">
+	  news://news.mozilla.org/netscape.public.mozilla.unix</a>.
+
+      <p> 
+      Authors: Chris Mcafee &lt;mcafee@netscape.com&gt; and Dan
+	Mosedale &lt;dmose@mozilla.org&gt;
+
+    </div>
+
+    <hr>
+<ol>
+
+<li><a href="#patches">Patches needed for Solaris 2.6</a></li>
+<li><a href="#compiler">What compiler should I use?</a></li>
+<li><a href="#switch">How do I switch between two compilers?</a></li>
+<li><a href="#shmat">"Gdk-WARNING **:shmat failed!" error message</a></li>
+<li><a href="#issues">Cross-compiler plugin/module compatibility, vtables, and name-mangling</a></li>
+</ol>
+
+<hr>
+
+<ol>
+
+<li>
+<b><a NAME="patches"></a>Patches needed for Solaris 2.6</b>
+<ul>
+
+<li>
+Fix for <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=17221">undefined symbol _XlcCompileResourceList at runtime:"</a><br>
+([Thanks to <a href="mailto:mhw@mft.co.uk">mhw@mft.co.uk</a>]<br>
+This looks like SunSolve bug report #4239074, no patch, suggested workaround:<br>
+<pre>
+Edit the file : /usr/openwin/lib/locale/iso8859-1/XI18N_OBJS
+  Remove the line 
+  < XOM     xomEuro            _XomGenericOpenOM # XOM_open
+  Add the line 
+  > XOM     common/xomLTRTTB   _XomGenericOpenOM # XOM_open
+</pre>
+See <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=17221">17221</a> for more discussion.
+</li>
+<br>
+<br>
+
+<li>
+<b>Get a recent version of the <a
+	  href="http://sunsolve.Sun.COM/pub-cgi/show.pl?target=patches/patch-access">2.6 recommended patch cluster</a>.</b>
+
+Mozilla is unlikely to function well (if at all) without this patch
+cluster.  Among other things, this will fix the problem where Mozilla
+	fails at startup time with a "Wrong Architecture" error.
+</li>
+
+</ul>
+</li><br>
+
+<li><b><a NAME="compiler">What compiler should I use?</a></b><br>
+There are 4 compilers that are known to work: gcc-2.7.2.3, egcs, WS4.2, WS5.0.
+They all have trade-offs and there is no clear leader right now.  Tinderbox is currently running a gcc-2.7.2.3 build, some Solaris contributors are using the Workshop 4.2 compiler with some success.<br>
+<table border=1 offset=0>
+<tr>
+
+<td>Compiler</td>
+<td>Good</td>
+<td>Bad</td>
+<td>Notes</td>
+
+</tr>
+
+<tr>
+<td>gcc 2.7.2.3</td>
+<td>
+<li>Classic compiler, lots of support on many platforms.</li>
+<li>Purify support</li>
+</li>
+</td>
+<td>Weak C++ support, defines LCD for tinderbox right now.</td>
+<td>More-recent versions not rock solid yet.</td>
+</tr>
+
+<tr>
+<td>egcs</td>
+<td>
+<li>Benefits from linux coverage.</li>
+</td>
+<td>
+<li>No purify</li>
+<li>Can't step in debugger</li>
+</td>
+<td></td>
+</tr>
+
+<tr>
+<td>WS4.2</td>
+<td>
+<li>dbx has better threading support and is more reliable than gdb, as
+well as purify-like memory checking.</li>
+<li>Purify support</li>
+</td>
+<td>$$</td>
+<td>Picky compiler, some bugs, mostly worked-around with autoconf.</td>
+</tr>
+
+<tr>
+<td>WS5.0</td>
+<td>
+
+<li>dbx has better threading support and is more reliable than gdb, as
+well as purify-like memory checking.</li>
+<li>Purify support</li>
+<li>Built-in performance tools</li>
+
+</td>
+      <td>
+	<li>$$</li>
+	<li>Builds are painfully slow</li>
+      </td>
+<td>Some 4.2 bugs fixed, some new ones.</td>
+
+</tr>
+
+</table>
+</li>
+<br>
+When using the WorkShop 5.0 compilers, be sure to get a recent copy
+of the compiler patches from Sun.  At the time of this writing, for
+32-bit machines, this means at least the following patches:
+<pre>
+107289-03
+107295-01
+107311-07
+107357-05
+107740-01
+107742-01
+</pre>
+On (at least) Solaris 2.6 with WorkShop 5.0, the C++ runtime library
+patch (105591, rev -07 or later) is also required.  Anyone who wants
+to run the code you've compiled will need this patch as well.
+</p>
+<p>
+<li><b><a NAME="switch">How do I switch between two compilers?</a></b><br>
+<p>
+If both a gnu compiler and non-gnu compiler are in your path,
+the gnu compiler wins the config test.  To override this, or to pick from among
+several compilers you have in your path, set the environment variables
+<b>CC</b> and <b>CXX</b> to point to the compiler you want to use:
+<pre>
+  # Example to override gcc install with WS5.0 using the WS 4.x
+  # compatibility flag
+  setenv CC  /usr/local/workshop/SUNWspro/bin/cc
+  setenv CXX "/usr/local/workshop/SUNWspro/bin/CC -compat=4"
+  ./configure
+</pre>
+Additionally, if you are using one of the WorkShop compilers and have
+your LD_LIBRARY_PATH environment variable set, be sure that the
+location of the SUNWspro libraries is closer to the front of
+LD_LIBRARY_PATH than the location of any GNU g++ libraries.  Otherwise
+the build may fail trying to pull in the wrong libiostream.
+</p>
+</li>
+    <p>
+      <li>
+	<b>
+	  <a NAME="shmat">"Gdk-WARNING **:shmat failed!" error
+	    message</a>
+	</b>
+
+	<p>
+	  If you've built with the <tt>--enable-x11-shm</tt> option to
+	  configure in order to speed up performance, you may see the
+	  above-mentioned error message.  In some (all?) versions of
+	  Solaris, the default per-process limit of the number
+	  shared-memory segments can be allocated is 6.  When this
+	  error occurs, GDK gives up and decides not to use
+	  shared-memory at all (meaning that Mozilla will still
+	  function just fine, but it won't see any speedup).
+	  Work around this problem by adding the line:
+	  <pre> set shmsys:shminfo_shmseg = 10
+</pre>
+	to /etc/system and then rebooting your machine.  See <a
+	  href="http://bugzilla.mozilla.org/show_bug.cgi?id=10498">bug
+	  10498</a> for more details.
+	</p>
+      </li>
+    </p>
+
+    <p>
+      <li>
+	<b>
+	  <a NAME="issues">Cross-compiler plugin/module compatibility, vtables, and
+	    name-mangling issues</a>
+	</b>
+	<p>
+	  These issues are still being fleshed out.  See <a
+	    href="http://bugzilla.mozilla.org/show_bug.cgi?id=20297">bug
+	    20297</a> for some discussion.
+	</p>
+      </li>
+    </p>
+</p>
+</ol>
+
+  
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/solaris.html&amp;rev=&amp;root=/cvsroot/">Last modified February 16,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

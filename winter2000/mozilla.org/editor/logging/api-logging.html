@@ -1,0 +1,185 @@
+<HTML>
+<HEAD>
+<TITLE>Editor API Logging</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+<!-- This page was created by the Gecko output system. -->
+
+
+
+<style>
+body         { background-color: rgb(255,255,255)}
+</style>
+
+
+<div align="center">
+<h1>The Editor API Logging Mechanism</h1>
+<a href="mailto:kin@netscape.com">Kin Blas</a><br>Netscape Communications
+ Corporation<br>Follow-up and discussion on <a href="news://news.mozilla.org/netscape.public.mozilla.editor">netscape.public.mozilla.editor</a>
+<div align="left"><br>
+<hr align="left" height="2" width="100%"><br>The Editor
+ API Logging Mechanism allows a user to record and playback all the edits
+ made to a document.  This feature can be used by QA to create Editor test
+ scripts, and scripts that can be used by engineers to recreate bugs.</div>
+<div align="left">
+<h2>
+<hr align="left" height="2" width="100%">Recording
+ and Playback</h2>
+</div>
+<div align="left">To begin recording, select &quot;Start Log&quot; from the
+ Debug menu:<br><br><br>
+<div align="center"><img src="images/StartLog.gif" alt><br></div>
+<br><br>This will create a journal.js file in the same directory as the apprunner
+ executable which will contain a description of all the edits made to the
+ current document.<br><br> To stop recording, select &quot;Stop Log&quot; from the
+ Debug menu:<br><br><br>
+<div align="center"><img src="images/StopLog.gif" alt><br></div>
+<br><br>To playback the edits you just made, simply restore the document
+ back to the state it was when you started recording, via undo, or just reload
+ the entire document, then select &quot;Run Log&quot; from the Debug menu:<br><br><br>
+<div align="center"><img src="images/RunLog.gif" alt="[RunLog]"><br></div>
+<br><br>It's important to note that the log information contained in the
+ journal.js file is tied to the document used and the state it was in just
+ before you enabled recording. If you try to replay the edits on a different
+ file, or on the document while it is in any other state, unpredictable results
+ may happen.<br></div>
+<div align="left">
+<h2>
+<hr align="left" height="2" width="100%">Implementation
+ Details</h2>
+If you take a look at the contents of the journal.js file, you will see that
+ it is just JavaScript. Playback involves loading this file and calling eval()
+ so that the statements in the journal.js file get executed in the editor's
+ JavaScript context and have access to the editor's public methods.<br><br>The
+ actual logging mechanism involves two parts:<br>
+<ul>
+  <li>Calls to nsJSEditorLog from the various nsIEditor, nsITextEditor, and
+ nsIHTMLEditor methods that modify the document.</li>
+  <li>An nsITransactionListener that listens to the editor's transaction
+ manager.</li>
+</ul>
+The <a href="http://lxr.mozilla.org/mozilla/source/editor/base/nsJSEditorLog.h">nsJSEditorLog</a> class
+ implements the <a href="http://lxr.mozilla.org/mozilla/source/editor/public/nsIHTMLEditor.h">nsIHTMLEditor</a> interface
+ because it contained the union of all methods from nsIEditor, nsITextEditor,
+ and nsIHTMLEditor that could modify the document. Implementing nsJSEditorLog
+ with the nsIHTMLEditor interface also forces all developers who change these
+ editor interfaces, to update the nsJSEditorLog implementation whenever a
+ method is added, or it's signature changed.<br><br>As stated above, calls
+ to nsJSEditorLog methods were added to the implementations for nsIEditor,
+ nsITextEditor and nsIHTMLEditor. This involved adding code like the following
+ to each method that modifies the content tree:<br></div>
+<blockquote>
+<div align="left">
+<pre>NS_IMETHODIMP
+InsertText(const nsString&amp; aStringToInsert)
+{
+#ifdef ENABLE_JS_EDITOR_LOG
+  if (mJSEditorLog)
+    mJSEditorLog-&gt;InsertText(aStringToInsert);
+#endif // ENABLE_JS_EDITOR_LOG
+
+  ...
+
+}
+</pre>
+</div>
+</blockquote>
+<div align="left">If you look at the <a href="http://lxr.mozilla.org/mozilla/source/editor/base/nsJSEditorLog.cpp">implementation</a> for
+ nsJSEditorLog, you will see that each of it's methods write out the JavaScript
+ that recreates the call to the method.<br><br>The <a href="http://lxr.mozilla.org/mozilla/source/editor/base/nsJSTxnLog.h">nsJSTxnLog</a> class
+ implements the <a href="http://lxr.mozilla.org/mozilla/source/editor/txmgr/public/nsITransactionListener.h">nsITransactionListener</a>  interface.
+ When logging is started, we add nsJSTxnLog as a listener to the editor's
+ transaction manager so that it gets notified whenever a transaction is executed,
+ undone, or redone. nsJSTxnLog's main purpose is to write out JavaScript
+ comments that describe the transaction being executed. Since one editor
+ method call can result in several transactions being executed, these comments
+ can aid engineers in seeing what transactions are being executed, and identifying
+ which transaction is causing a specific problem.<br><br>Just for kicks,
+ here's a link to the <a href="journal.js">journal.js</a> file generated
+ during the creation of this document. To run it, Shift-Click on the link,
+ then save it in the directory containing the apprunner executable. Start
+ up the editor, then select Debug-&gt;Run Log from the menus.<br> <br> </div>
+</div>
+<h1>&nbsp;</h1>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/editor/logging/api-logging.html&amp;rev=&amp;root=/cvsroot/">Last modified June 23,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

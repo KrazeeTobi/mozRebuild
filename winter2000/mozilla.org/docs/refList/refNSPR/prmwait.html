@@ -1,0 +1,615 @@
+<HTML>
+<HEAD>
+<TITLE>NSPR 2.0: Multiwait Receive</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+<A HREF="contents.html">[Contents]</A> <A HREF="prdtoa.html">[Previous]</A>
+<A HREF="prwin16.html">[Next]</A><A HREF="last.html">[Last]</A>
+<BR>
+<HR WIDTH="100%">
+<CENTER>
+<H2>
+<A NAME="Appendix"></A>Appendix A<BR>
+Multiwait Receive</H2></CENTER>
+This section describes an <I>helper</I> API that clients might find useful
+in certain circumstances. The <I>multiwait</I> function allows its clients
+to service an arbitrary number of network file descriptors with a relatively
+small number of threads. This is trading off the simplicity of fully synchronous
+I/O for a limited amount of asynchronous behavior. Its premise is that
+the connections are <I>mostly</I> idle, that they in fact spend most of
+their time waiting for network input.
+
+<P>This premise is based on the anticipated behavior of the passive partner
+in a client/server relationship (<I>i.e.,</I> the server). In that environment,
+the server receives a request from the network, processes that request,
+sends back the response, and then waits for the next request to arrive.
+This scenario repeats itself for the lifetime of the connection. If the
+time of waiting for a request is an order of magnitude (or more) than the
+time spent in formulating and delivering the response, then this function
+should be applicable.
+
+<P>An incoming request is serviced by a thread from a pool of threads supplied
+by the client. All threads are assumed to be equivalent and the runtime
+selects the one most convenient from those available. Different <I>groups</I>
+may be defined by the client, allowing separate pools of threads to be
+associated with different collections of file descriptors.
+<H3>
+<A NAME="MultiWaitTypes"></A>Multiwait types</H3>
+The multiwait receive interface defines and uses the following types.
+<H4>
+<A NAME="PRWaitGroup"></A><TT>PRWaitGroup</TT></H4>
+The client may define several wait groups in order to semantically tie
+a collection of file descriptors for a single purpose. This allows easier
+dispatching of threads that returned with active file descriptors from
+the wait function.
+
+<PRE>
+typedef struct PRWaitGroup PRWaitGroup;
+</PRE>
+
+The <B><TT>PRWaitGroup</TT></B> structure is opaque. The runtime deals
+with its creation, destruction and internal structure. Most of the API's
+methods require a pointer to a wait group (also known as the <I>wait group's
+identity</I>) as an argument. There is a <I>default</I> wait group represented
+by a <TT>NULL</TT> identity.
+<H4>
+<A NAME="PRMWStatus"></A><TT>PRMWStatus</TT></H4>
+The <TT>PRMWStatus</TT> enumeration is used to indicate the completion
+status of a receive wait object. Generally stated, a positive value indicates
+that the operation is not yet complete. A zero value indicates success
+(similar to <TT>PR_SUCCESS</TT>) and any negative value is an indication
+of failure. The reason for the failure can be retrieved by calling <B><TT><A HREF="prerr.html#1035678">PR_GetError()</A></TT></B>.
+
+<PRE>typedef enum PRMWStatus
+{
+    PR_MW_PENDING = 1,
+    PR_MW_SUCCESS = 0,
+    PR_MW_FAILURE = -1,
+    PR_MW_TIMEOUT = -2,
+    PR_MW_INTERRUPT = -3
+} PRMWStatus;
+</PRE>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>PR_MW_PENDING</TT></B></TD>
+
+<TD>The operation is still pending. None of the other fields of the object
+are currently valid.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>PR_MW_SUCCESS</TT></B></TD>
+
+<TD>The operation is complete and it was successful.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>PR_MW_FAILURE</TT></B></TD>
+
+<TD>The operation failed. The reason for the failure can be retrieved by
+calling <B><TT><A HREF="prerr.html#1035678">PR_GetError()</A></TT></B>.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>PR_MW_TIMEOUT</TT></B></TD>
+
+<TD>The amount of time allowed for by the object's <TT>timeout</TT> field
+has expired w/o the operation otherwise coming to closure.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>PR_MW_INTERRUPT</TT></B></TD>
+
+<TD>The operation was canceled, either by the client calling <B><TT><A HREF="#PR_CancelWaitFileDesc">PR_CancelWaitFileDesc()</A></TT></B>
+or destroying the entire wait group (<B><TT><A HREF="#PR_DestroyWaitGroup">PR_DestroyWaitGroup()</A></TT></B>).</TD>
+</TR>
+</TABLE>
+&nbsp;
+<H4>
+<A NAME="PRMemoryDescriptor"></A><TT>PRMemoryDescriptor</TT></H4>
+This is a descriptor for an interval of memory. It contains a pointer to
+the first byte of that memory and the length (in bytes) of the interval.
+<PRE>
+typedef struct PRMemoryDescriptor
+{
+    void *start;
+    PRSize length;
+} PRMemoryDescriptor;
+</PRE>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD WIDTH="10%"><B><TT>start</TT></B></TD>
+
+<TD>This is the address of the first byte of memory that the descriptor
+defines.</TD>
+</TR>
+
+<TR>
+<TD><B><TT>length</TT></B></TD>
+
+<TD>The length of the memory in bytes.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<H4>
+<A NAME="PRRecvWait"></A><TT>PRRecvWait</TT></H4>
+A receive wait object contains the file descriptor that is subject to the
+wait and the amount of time (beginning epoch is established when the object
+is presented to the runtime) the channel should block before abandoning
+the process.
+
+<P>The success of the wait operation will be noted in the object's <TT>outcome</TT>
+field. The fields are not valid when the NSPR runtime is in possession
+of the object.
+
+<P>The memory descriptor describes an interval of writable memory&nbsp;
+in the caller's address space where data from an initial read can be placed.
+The description may indicate a null interval.
+
+<PRE>
+typedef struct PRRecvWait
+{
+    PRCList internal;
+    <A HREF="priotyp.html#420111">PRFileDesc</A> *fd;
+    <A HREF="#PRMWStatus">PRMWStatus</A> outcome;
+    <A HREF="prinrvl.html#1018377">PRIntervalTime</A> timeout;
+    <A HREF="prtyp.html#1027615">PRInt32</A> bytesRecv;
+    <A HREF="#PRMemoryDescriptor">PRMemoryDescriptor</A> buffer;
+} PRRecvWait;
+</PRE>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>internal</TT></B></TD>
+
+<TD>This field is for internal runtime linkages. Clients should not attempt
+to modify anything in this area.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>fd</TT></B></TD>
+
+<TD>A pointer to a valid file descriptor that is associated with this object.
+This is the network file descriptor that is expected to become ready for
+receive.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>outcome</TT></B></TD>
+
+<TD>The <TT>outcome</TT> field constrains the status of the object. It
+is set by the runtime to <I>pending</I> when the object is first accepted.
+As long as the value remains <I>pending</I>, none of the other fields are
+assumed valid.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>bytesRecv</TT></B></TD>
+
+<TD>When the operation is complete, this field will contain the number
+of bytes transferred from the network to the client's buffer,<TT> buffer</TT>.
+Any number of bytes from zero to the length of the buffer may be indicated.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>buffer</TT></B></TD>
+
+<TD>A description of the memory reserved by the client in which to store
+data arriving from the network. This descriptor may indicate an empty buffer,
+which implies that the file descriptor is <I>receive ready</I> only.</TD>
+</TR>
+</TABLE>
+
+<H3>
+<A NAME="MultiWaitFunctions"></A>Multiwait functions</H3>
+
+<H4>
+<A NAME="PR_CreateWaitGroup"></A><TT>PR_CreateWaitGroup</TT></H4>
+A wait group allows a client to partition the set of file descriptors according
+to some arbitrary rules. Each wait group is unique, including the default
+wait group (<TT>NULL</TT>). A wait request&nbsp; that was added under a
+wait group will only be serviced by a call to <B><TT><A HREF="#PR_WaitRecvReady">PR_WaitRecvReady()</A></TT></B>
+that specified the same wait group.
+
+<PRE>
+<A HREF="#PRWaitGroup">PRWaitGroup</A>* PR_CreateWaitGroup(<A HREF="prtyp.html#1027615">PRInt32</A> size_hint);</TT>
+</PRE>
+
+<H5>
+&nbsp;Parameters</H5>
+&nbsp;
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>size_hint</TT></B></TD>
+
+<TD>A hint as to the size of the hash table used to manage the set of descriptors.
+This number may be applied to the initial size of the table, but does not
+limit the number of entries that the wait group can handle.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+If successful, the function will return a reference to an object that was
+allocated by and owned by the runtime. The reference becomes the <A HREF="#PRWaitGroup">wait
+group <I>identifier</I></A>. The reference remains valid until it is explicitly
+destroyed by calling <B><TT><A HREF="#PR_DestroyWaitGroup">PR_DestroyWaitGroup()</A></TT></B>.
+
+<P>If the function fails it will return a <TT>NULL</TT>. The reason for
+the <TT>NULL</TT> return can be learned by calling <B><TT><A HREF="prerr.html#1035678">PR_GetError()</A></TT></B>.
+The only reason for failure is a heap allocation failure.
+<H4>
+<A NAME="PR_DestroyWaitGroup"></A><TT>PR_DestroyWaitGroup</TT></H4>
+To undo the effects of <B><TT><A HREF="#PR_CreateWaitGroup">PR_CreateWaitGroup()</A></TT></B>,
+a client must call <B><TT><A HREF="#PR_DestroyWaitGroup">PR_DestroyWaitGroup()</A></TT></B>.
+The wait group must be not contain any receive wait objects. Those must
+have all been cleared using the <B><TT><A HREF="#PR_CancelWaitFileDesc">PR_CancelWaitFileDesc()</A></TT></B>
+function.
+
+<PRE>
+<A HREF="prtyp.html#1027728">PRStatus</A> PR_DestroyWaitGroup(<A HREF="#PRWaitGroup">PRWaitGroup</A> *group);
+</PRE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>group</TT></B></TD>
+
+<TD>The identity of the wait group to cancel. This must refer to a valid
+wait group and the group must not have any waiting threads or wait descriptors.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+If the wait group can be successfully destroyed, the return value will
+be <TT>PR_SUCCESS</TT>. If not, the reason for the failure can be learned
+by calling <B><TT><A HREF="prerr.html#1035678">PR_GetError()</A></TT>.</B>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>PR_INVALID_ARGUMENT_ERROR</TT></B></TD>
+
+<TD>The wait group identity was not known to the runtime.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>PR_INVALID_STATE_ERROR</TT></B></TD>
+
+<TD>The specified wait group was not empty. That is it had either wait
+receive objects or threads waiting.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<H4>
+&nbsp;<A NAME="PR_AddWaitFileDesc"></A><TT>PR_AddWaitFileDesc</TT></H4>
+This function will effectively add a file descriptor to the set of those
+waiting for network receive.
+<PRE><A HREF="prtyp.html#1027728">PRStatus</A> PR_AddWaitFileDesc(<A HREF="#PRWaitGroup">PRWaitGroup</A> *group, <A HREF="#PRRecvWait">PRRecvWait</A> *desc);
+</PRE>
+
+<H5>
+Parameters</H5>
+&nbsp;
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>group</TT></B></TD>
+
+<TD>The object referenced by the <TT>desc</TT> will be associated with
+this group. The value of <TT>group</TT> must be either a valid group identifier
+that was acquired as a result of <B><TT><A HREF="#PR_CreateWaitGroup">PR_CreateWaitGroup()</A></TT></B>
+or <TT>NULL</TT> implying the <I>default</I> group association. Completions
+of the wait operation will only be reported to callers that specify the
+same wait group.</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><B><TT>desc</TT></B></TD>
+
+<TD>A pointer to a valid receive wait descriptor. Ownership of the storage
+is temporarily passed to the runtime; the caller may not alter any portion
+of the object as long as the runtime has ownership. Ownership will be relinquished
+by the runtime when the reference to the object is returned as a result
+of <B><TT><A HREF="#PR_WaitRecvReady">PR_WaitRecvReady()</A></TT></B>.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+If the operation is successful, a <TT>PR_SUCESS</TT> value will be returned.
+If a <TT>PR_FAILURE </TT>status is returned, one of the following errors
+has occurred. Which error may be determined by calling <B><TT><A HREF="prerr.html#1035678">PR_GetError()</A></TT></B>.
+<BR>&nbsp;
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>PR_INVALID_ARGUMENT_ERROR</TT></B></TD>
+
+<TD>The <TT>group</TT> argument does not contain the identify of a valid
+group identifier or the <TT>desc</TT> argument contains a reference to
+a receive descriptor that is already known my the runtime.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>PR_OUT_OF_MEMORY_ERROR</TT></B></TD>
+
+<TD>The runtime was not able to allocate the resources required to process
+the request.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B><TT>PR_INVALID_STATE_ERROR</TT></B></TD>
+
+<TD>The group specified is being destroyed.</TD>
+</TR>
+</TABLE>
+
+<H4>
+<A NAME="PR_WaitRecvReady"></A><TT>PR_WaitRecvReady</TT></H4>
+<B><TT>PR_WaitRecvReady()</TT></B> will block the calling thread until
+one of the file descriptors that have been added via <B><TT><A HREF="#PR_AddWaitFileDesc">PR_AddWaitFileDesc(</A>)</TT></B>
+has complete. The descriptor returned may have competed and have input
+data available or it may have encountered some error (timeout or interrupt).
+Only descriptors that were added with the same group identity will be returned.
+
+<PRE>
+<A HREF="#PRRecvWait">PRRecvWait</A>* PR_WaitRecvReady(<A HREF="#PRWaitGroup">PRWaitGroup</A> *group);
+</PRE>
+
+<H5>
+Parameters</H5>
+&nbsp;
+<TABLE COLS=2 WIDTH="100%" >
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD WIDTH="10%"><B><TT>group</TT></B></TD>
+
+<TD>The identity of the wait group where receive descriptors were added.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Result</H5>
+The result of <B><TT>PR_WaitRecvReady()</TT></B> is a reference to a wait
+descriptor. If the returned value is <TT>NULL</TT> and error was encountered.
+If the result is not <TT>NULL</TT> the caller must check the <TT>status</TT>
+field of the returned object and test it for success. If the result is
+<TT>NULL</TT> or the <TT>status</TT> field indicates other than success,
+the reason for the error is available by calling <B><TT><A HREF="prerr.html#1035678">PR_GetError()</A></TT></B>.
+<BR>&nbsp;
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>PR_INVALID_ARGUMENT_ERROR</TT></B></TD>
+
+<TD>The value of <TT>group </TT>does not represent a group identifier known
+to the runtime.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>PR_PENDING_INTERRUPT_ERROR</TT></B></TD>
+
+<TD>If the result is <TT>NULL</TT> the call to <B><TT>PR_WaitRecvReady()</TT></B>
+was interrupted by another thread. Otherwise, the descriptor was specifically
+canceled (see <B><TT><A HREF="#PR_CancelWaitFileDesc">PR_CancelWaitFileDesc()</A></TT></B>)
+or was a member of a wait group that was destroyed (see <B><TT><A HREF="#PR_CancelWaitGroup">PR_CancelWaitGroup()</A></TT></B>).</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>PR_INVALID_STATE_ERROR</TT></B></TD>
+
+<TD>The call specified a wait group that is being destroyed.</TD>
+</TR>
+</TABLE>
+
+<H4>
+<A NAME="PR_CancelWaitFileDesc"></A><TT>PR_CancelWaitFileDesc</TT></H4>
+<B><TT>PR_CancelWaitFileDesc()</TT></B> is provided as a means for canceling
+operations on objects previously submitted to the runtime by use of <B><TT><A HREF="#PR_AddWaitFileDesc">PR_AddWaitFileDesc()</A></TT></B>.
+If the runtime knows of the object, it will be marked as having failed
+because it was interrupted (similar to <B><TT><A HREF="prthrd.html#1015726">PR_Interrupt()</A></TT></B>).
+The first available thread waiting on the group will be made to return
+the <B><TT><A HREF="#PRRecvWait">PRRecvWait</A></TT></B> object with the
+reason noted in the object's <TT>outcome</TT> field.
+
+<PRE>
+<A HREF="prtyp.html#1027728">PRStatus</A> PR_CancelWaitFileDesc(<A HREF="#PRWaitGroup">PRWaitGroup</A> *group, <A HREF="#PRRecvWait">PRRecvWait</A> *desc);
+</PRE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>group</TT></B></TD>
+
+<TD>A valid wait group identifier or <TT>NULL</TT> that identifies the
+wait group in which the <TT>desc</TT> object is currently waiting.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>desc</TT></B></TD>
+
+<TD>A reference to the particular wait receive descriptor that is to be
+canceled.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<H5>
+Return</H5>
+If the function returns with a value of <TT>PR_SUCCESS</TT>, the target
+descriptor was located and marked for cancellation. The first available
+thread blocked in <B><TT><A HREF="#PR_WaitRecvReady">PR_WaitRecvReady()</A></TT></B>
+will be made to return with the reference to the object. The object's <TT>outcome</TT>
+field will indicate that the operation was canceled.
+
+<P>If the function returns a value of <TT>PR_FAILURE</TT>, the cause may
+be one of several reasons. The exact cause of the failure can be determined
+by calling <B><TT><A HREF="prerr.html#1035678">PR_GetError()</A></TT></B>.
+<BR>&nbsp;
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>PR_INVALID_ARGUMENT_ERROR</TT></B></TD>
+
+<TD>The <TT>group</TT> identity was not known to the runtime.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>PR_INVALID_STATE_ERROR</TT></B></TD>
+
+<TD>The <TT>group</TT> is being destroyed.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>????</TT></B></TD>
+
+<TD>The referenced object could not be located in the set of receive wait
+descriptors associated with the group.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<H4>
+<A NAME="PR_CancelWaitGroup"></A><TT>PR_CancelWaitGroup</TT></H4>
+<B><TT>PR_CancelWaitGroup()</TT></B> is provided as a means for canceling
+all the operations registered with a specific wait group. Each successive
+call will return a pointer to a <TT>PRRecvWait</TT> object that was previously
+registered via <B><TT><A HREF="#PR_AddWaitFileDesc">PR_AddWaitFileDesc()</A></TT></B>.
+If no wait objects are associated with the wait group, a <TT>NULL</TT>
+will be returned. This function should be called in a loop until a <TT>NULL</TT>
+is returned to reclaim all the wait objects prior to calling <B><TT><A HREF="#PR_DestroyWaitGroup">PR_DestroyWaitGroup()</A></TT></B>.
+<PRE>
+<A HREF="#PRRecvWait">PRRecvWait</A>* PR_CancelWaitGroup(<A HREF="#PRWaitGroup">PRWaitGroup</A> *group);
+</PRE>
+
+<H5>
+Parameters</H5>
+
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>group</TT></B></TD>
+
+<TD>The identity of the wait group that is to have all pending wait receive
+objects canceled.</TD>
+</TR>
+</TABLE>
+
+<H5>
+Return</H5>
+<B><TT>PR_CancelWaitGroup()</TT></B> returns a pointer to a wait receive
+object or a <TT>NULL</TT>. If not <TT>NULL</TT> the object's outcome field
+will contain the indication that the operation had been canceled. If it
+is <TT>NULL</TT>, the actual reason must be learned by calling <TT><B><A HREF="prerr.html#1035678">PR_GetError()</A></B>.</TT>
+<BR>&nbsp;
+<TABLE COLS=2 WIDTH="100%" >
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP WIDTH="10%"><B><TT>PR_INVALID_ARGUMENT_ERROR</TT></B></TD>
+
+<TD>The value of the <TT>group</TT> argument was not the identity of a
+valid wait group.</TD>
+</TR>
+
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP><B><TT>PR_GROUP_EMPTY_ERROR</TT></B></TD>
+
+<TD>The group's wait receive set is empty. This is the natural termination
+of the loop used to destroy a wait group.</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+<HR WIDTH="100%"><A HREF="contents.html">[Contents]</A> <A HREF="prdtoa.html">[Previous]</A>
+<A HREF="prwin16.html">[Next]</A><A HREF="last.html">[Last]</A>
+<DIV ALIGN=right><I><FONT SIZE=-1>Last Updated: Wed Jul 15 11:15:14 PDT 1998</FONT></I></DIV>
+
+<HR WIDTH="100%">
+<CENTER>Copyright &copy; 1998 <A HREF="http://home.netscape.com/misc/contact_info.html">Netscape
+Communications Corporation</A></CENTER>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/docs/refList/refNSPR/prmwait.html&amp;rev=&amp;root=/cvsroot/">Last modified July 17,  1998</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

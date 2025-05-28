@@ -1,0 +1,188 @@
+<HTML>
+<HEAD>
+<TITLE>Profile Migration</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<center><h2>Profile Migration</h2>
+	edited by <a href="mailto:phil@netscape.com">Phil Peterson</a>
+	<br>
+	<script>
+		document.write("<i>Last Updated: " + document.lastModified + "</i>")
+	</script>
+</center>
+
+<p>On 3/17, a bunch of folks met about profile migration. We talked about
+who owns which files in the profiles, and how we're going to build profiles
+in 5.0. Here's a summary of interesting points, with open issues in <font color="#CC0000">red</font>.
+<p><b>Profile Structure</b>
+<blockquote>On the Mac, we have a useability problem which is that we put
+profile data in the System Preferences folder. This hasn't worked well
+because users think that anything in the Preferences folder can be deleted
+with impunity, and profiles certainly don't fit that description. Profile
+data will be stored in the Documents folder.
+<p>On Windows, we're going to create a new Communicator directory and a
+new Users directory, so the directory structure of a machine with 5.0 and
+4.x would look like
+<br>this:
+<br><tt>- c:</tt>
+<br><tt>&nbsp; - Program Files</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; - Netscape</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + Communicator</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + Communicator5</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Users</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; phil</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Users5</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; phil</tt>
+<p><font color="#CC0000">We didn't decide anything about UNIX since we
+didn't have anyone in the room who had a clue about the right thing to
+do on UNIX.</font></blockquote>
+<b>Copy and Diverge</b>
+<blockquote>We agreed that the minimum requirement for migrating profiles
+from 4.x to 5.0 is that we'll copy the relevant files from 4.x and then
+changes in 5.0 don't affect 4.x and vice versa. This is the minimum because
+we don't want 5.0 bugs to break 4.x users, and we think that having each
+version have its own files will have fewer bugs than if the versions shared
+files.
+<p><font color="#CC0000">If we have time (hah) or lots of motivation, we
+could enable sharing mail folders between 4.x and 5.0.</font> This has
+the advantage of smaller disk footprint.
+<p>I'd like to know what others think about this. It's a little bit of
+a reversal for me, since I thought we'd want to share mail folders. The
+time constraints and quality risk are convincing me that this is extra,
+and perhaps optional, work.
+<p>Another option is just to document how to share the folders using the
+"mail.directory" preference <font color="#CC0000">(if that's available
+in 5.0??)</font>
+<p>We agreed that it would be helpful for the migration tool to offer to
+clean up some disk space in 4.x by deleting the old cache and summary files.</blockquote>
+<b>Address Books</b>
+<blockquote>We need to refine our plan for address book migration. Our
+tentative plan has always been to offer a migration tool (not built into
+5.0) which knows how to read 4.x address book files and generates MORK.
+This is certainly a big chunk of work, and it would make the import tool
+more complicated.
+<p>It was suggested that we create a new directory in the profile directory
+just for address books. Since there can be a bunch of them, this seemed
+ok to me.</blockquote>
+<b>Security</b>
+<blockquote>The Security group needs to own upgrading any/all necessary
+security files</blockquote>
+<b>Prefs file</b>
+<blockquote>We agreed that there will be one Javascript preferences file,
+and it will be called prefs.js on all platforms. Some items which are prefs
+in 4.x will move into a style sheet for 5.0. This mostly means window size
+and position, column widths, etc. Anything which is editable in the prefs
+UI, or which needs to be locked by Mission Control, can not be moved into
+a style sheet.</blockquote>
+
+<hr WIDTH="100%">Here are a few mail/news-specific things that we didn't
+discuss, but are still important.
+<p><b>Newsgroups</b>
+<blockquote>One of the most frequently reported problems I see with 4.x
+is that Communicator doesn't remember the newsgroups that users subscribe
+to, and they have to resubscribe every time they open the app. I think
+this is caused when users move their profile directory to a new location,
+but leave the FAT file pointing to the old location. <font color="#CC0000">I
+think we should consider breaking compatibility with 4.x (and 3.x) FAT
+files by storing relative paths instead of absolute paths.</font>
+<p>The UNIX version never needed a FAT file since filenames can be as long
+as you want, but Mac and Windows did. Perhaps we can drop the FAT file
+for Win32 now, too, since Win16 is no longer supported. I assume the Mac
+soldiers on with its old filesystem, and need for a FAT file.</blockquote>
+<b>Multiple identities</b>
+<blockquote>I assume we want to create more hierarchy in the mail folder
+for multiple POP accounts.</blockquote>
+<b>Filters</b>
+<blockquote>The UE folks have a proposed filter design where all of the
+filters are editable at one time, rather than the 4.x system where there's
+a filter file for each scope (mail server, newsgroup, etc.). <font color="#CC0000">We
+need to work out how the persistence model for filtering works.</font></blockquote>
+
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/mailnews/migration.html&amp;rev=&amp;root=/cvsroot/">Last modified March 18,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

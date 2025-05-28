@@ -1,0 +1,274 @@
+<HTML>
+<HEAD>
+<TITLE>Menu Button Requirements</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+<!--This file created 3/12/99 2:15 PM by Claris Home Page version 3.0 30 Day Trial-->
+
+   
+   <X-CLARIS-WINDOW TOP=48 BOTTOM=734 LEFT=406 RIGHT=936>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+
+
+<H1>Menu Button Requirements</H1>
+
+<P>Written by Eric Vaughan<BR>
+Last updated 3/12/99</P>
+
+<H2>Overview</H2>
+
+<P>This document covers two related UI elements: Image Buttons and
+Menu Buttons.</P>
+
+<P>An <I>Image Button</I> is a button capable of displaying both an
+image (gif, jpeg, etc) and descriptive text within the boundary of
+the button. Clicking anywhere within the boundary of the object
+triggers an action (normally a JavaScript onClick handler). The
+button can be enabled or disabled, and have a different appearance
+when the mouse is inside its border.</P>
+
+<P>A <I>Menu Button</I> extends an Image Button to allow for a menu
+or tree to popdown from the button when the mouse is down for a
+certain amount of time (referred to as "click and hold"). An example
+of a Menu Button in 4.X is the "Back" button which pops down a menu
+containing the window history on a click-and-hold. Mozilla extends
+this notion with the ability to pop down a live tree view.</P>
+
+<H2>Requirements</H2>
+
+<H3>For Image Buttons:</H3>
+
+<UL>
+   <LI>Manipulation of images and properties through the DOM and
+   CSS</LI>
+   
+   <LI>Must support the following JavaScript event handlers
+   
+   <UL>
+      <LI>onClick</LI>
+      
+      <LI>onMouseOver</LI>
+      
+      <LI>onBlur</LI>
+      
+      <LI>onChange</LI>
+      
+      <LI>onFocus</LI>
+   </UL>
+   </LI>
+   
+   <LI>Must support 4 images and
+   states<TABLE BORDER=0 CELLPADDING=0 WIDTH="90%">
+      <TR>
+         <TD>
+            <P><B>normal</B></P>
+         </TD>
+         <TD>
+            <P><IMG SRC="back-normal.gif" ALT="back-normal.gif (293 bytes)" WIDTH=53 HEIGHT=41 ALIGN=bottom></P>
+         </TD>
+         <TD>
+            <P><B>rollover</B></P>
+         </TD>
+         <TD>
+            <P><IMG SRC="back-over.gif" ALT="back-over.gif (402 bytes)" WIDTH=54 HEIGHT=42 ALIGN=bottom></P>
+         </TD>
+         <TD>
+            <P><B>depressed</B></P>
+         </TD>
+         <TD>
+            <P><IMG SRC="back-pressed.gif" ALT="back-pressed.gif (390 bytes)" WIDTH=54 HEIGHT=42 ALIGN=bottom></P>
+         </TD>
+         <TD>
+            <P><B>disabled</B></P>
+         </TD>
+         <TD>
+            <P><IMG SRC="stop-disabled.gif" ALT="stop-disabled.gif (315 bytes)" WIDTH=54 HEIGHT=42 ALIGN=bottom></P>
+         </TD>
+      </TR>
+   </TABLE>
+   </LI>
+   
+   <LI>Must support multiple alignment
+   
+   <P><IMG SRC="home.gif" ALT="home.gif (253 bytes)" WIDTH=34 HEIGHT=25 ALIGN=bottom>text
+   right image left</P>
+   
+   <P>text left image right<IMG SRC="home.gif" ALT="home.gif (253 bytes)" WIDTH=34 HEIGHT=25 ALIGN=bottom><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+      <TR>
+         <TD WIDTH="100%">
+            <CENTER><IMG SRC="home.gif" ALT="home.gif (253 bytes)" WIDTH=34 HEIGHT=25 ALIGN=bottom></CENTER>
+         </TD>
+      </TR>
+      <TR>
+         <TD WIDTH="100%">
+            <CENTER>Text bottom image top</CENTER>
+         </TD>
+      </TR>
+      <TR>
+         <TD WIDTH="100%">
+            <P><BR>
+            </P>
+         </TD>
+      </TR>
+      <TR>
+         <TD WIDTH="100%">
+            <CENTER>Text top image top</CENTER>
+         </TD>
+      </TR>
+      <TR>
+         <TD WIDTH="100%">
+            <CENTER><IMG SRC="home.gif" ALT="home.gif (253 bytes)" WIDTH=34 HEIGHT=25 ALIGN=bottom></CENTER>
+         </TD>
+      </TR>
+   </TABLE>
+   </P></LI>
+   
+   <LI>If the button is compressed smaller than it can accommodate,
+   it needs to be able to truncate its text.<TABLE BORDER=0>
+      <TR>
+         <TD WIDTH="50%">
+            <P><STRONG>Right truncation</STRONG></P>
+         </TD>
+         <TD WIDTH="50%">
+            <P><IMG SRC="home.gif" ALT="home.gif (253 bytes)" WIDTH=34 HEIGHT=25 ALIGN=bottom>text
+            right i...</P>
+         </TD>
+      </TR>
+      <TR>
+         <TD WIDTH="50%">
+            <P><STRONG>Left truncation</STRONG></P>
+         </TD>
+         <TD WIDTH="50%">
+            <P>....t image right<IMG SRC="home.gif" ALT="home.gif (253 bytes)" WIDTH=34 HEIGHT=25 ALIGN=bottom></P>
+         </TD>
+      </TR>
+      <TR>
+         <TD WIDTH="50%">
+            <P><STRONG>Center truncation</STRONG></P>
+         </TD>
+         <TD WIDTH="50%">
+            <P><IMG SRC="home.gif" ALT="home.gif (253 bytes)" WIDTH=34 HEIGHT=25 ALIGN=bottom>text
+            ... left</P>
+         </TD>
+      </TR>
+   </TABLE>
+   </LI>
+   
+   <LI>A context menu should appear with a context click if the
+   button doesn't have a menu attached to it already.</LI>
+   
+   <LI>Should be able to gray out its image automatically in a
+   disabled state (without forcing an additional image to be
+   specified).</LI>
+</UL>
+
+<H3>For Menu Buttons</H3>
+
+<P>Everything an Image Button could do, plus the following:</P>
+
+<UL>
+   <LI>show a popdown menu, either on a click or a click-and-hold
+   
+   <P><IMG SRC="popdownmenu.gif" ALT="popdownmenu.gif (1614 bytes)" WIDTH=163 HEIGHT=150 ALIGN=bottom></P></LI>
+   
+   <LI>show a popdown tree, either on a click or a click-and-hold
+   
+   <P><IMG SRC="popdowntree.gif" ALT="popdowntree.gif (1852 bytes)" WIDTH=123 HEIGHT=149 ALIGN=bottom></P></LI>
+   
+   <LI>For the tree, users need to be able to expand or collapse
+   folders within the tree without it going away. The tree goes away
+   only when the user clicks outside of the presented tree or on an
+   element that has no children (a "leaf").</LI>
+   
+   <LI>Children which populate the popdown menu or popdown tree are
+   specified as children of the Menu Button in the DOM.</LI>
+   
+   <LI>Child content can be generated from an RDF datasource. This
+   implies that the creation of this child object (be it a tree,
+   menu, etc) must be fully dynamic. The button should only attempt
+   to construct the child object when it knows it needs to display
+   it.</LI>
+</UL>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/menubutton/MenuButton.html&amp;rev=&amp;root=/cvsroot/">Last modified March 12,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

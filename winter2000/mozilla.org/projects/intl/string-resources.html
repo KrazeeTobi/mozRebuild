@@ -1,0 +1,347 @@
+<HTML>
+<HEAD>
+<TITLE>String Resources</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+
+
+
+<center><b><font size=+3>string resources</font></b>
+<br><b>by Erik van der Poel &lt;<a href="mailto:erik@netscape.com">erik@netscape.com</a>></b>
+<br><b><a href="#dochist">Last Modified</a>: Oct 22, 1999</b></center>
+
+<h3>
+Introduction</h3>
+Many modules use human-readable strings that are normally translated into
+other languages as part of the localization process. However, the practice
+of "hardcoding" these strings inside your program code
+<a href="http://www.mozilla.org/docs/refList/i18n/l12yGuidelines.html">makes
+localization quite difficult</a>, if not impossible. Therefore, you should
+store your localizable text resources in separate files. This document
+describes the APIs used to obtain such strings from resource files. It
+also describes the format of the resource files.
+<p>This document does not discuss UI resource files. (See
+<a href="http://www.mozilla.org/xpfe/dialogs.html">XUI
+Window Language</a>.)
+<h3>
+API</h3>
+First, you create an instance of the string bundle factory. See <tt>mozilla/intl/strres/tests</tt>
+for some sample code.
+<p>Next, you get a bundle of strings using the following method (rewrite
+in
+<a href="http://www.mozilla.org/scriptable/xpidl/">XPIDL</a>?):
+<pre>&nbsp;&nbsp;&nbsp; class nsIStringBundleService : public nsISupports
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp; public:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS_IMETHOD CreateBundle(nsIURL* aURL, nsILocale* aLocale,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nsIStringBundle** aResult) = 0;
+&nbsp;&nbsp;&nbsp; };</pre>
+The URL argument can be local or remote (e.g. <tt>resource:</tt> or
+<tt>http:</tt>).
+<p>See the
+<a href="http://www.mozilla.org/projects/intl/locale-model.html">locale
+spec</a> for details about nsILocale. We will probably obtain the Accept-Language
+property from the locale object, and use that to look up string resource
+files. The precise fallback mechanism (to deal with the list of languages)
+still needs to be designed.
+<p>This is how you get individual strings from the bundle:
+<pre>&nbsp;&nbsp;&nbsp; class nsIStringBundle : public nsISupports
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp; public:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS_IMETHOD GetStringFromID(PRInt32 aID, nsString&amp; aResult) = 0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS_IMETHOD GetStringFromName(const nsString&amp; aName,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nsString&amp; aResult) = 0;
+&nbsp;&nbsp;&nbsp; };</pre>
+
+<h3>
+String Resource File Format</h3>
+We will use the Java property file format. Here is an example using string
+IDs:
+<pre>&nbsp;&nbsp;&nbsp; # arbitrary comment
+&nbsp;&nbsp;&nbsp; ## @loc a comment for the localizer (translator)
+&nbsp;&nbsp;&nbsp; ## @doc a comment by the documentation group
+&nbsp;&nbsp;&nbsp; cannotFindFile = Netscape is unable to find the file or directory named %s.</pre>
+The ## stuff is similar to Java's /** (JavaDoc). All lines beginning with
+# are removed by a tool to produce the final, compact deliverable.
+<p>And here is the same example using integer IDs:
+<pre>&nbsp;&nbsp;&nbsp; # arbitrary comment
+&nbsp;&nbsp;&nbsp; ## @name NAV_CANNOT_FIND_FILE
+&nbsp;&nbsp;&nbsp; ## @loc a comment for the localizer (translator)
+&nbsp;&nbsp;&nbsp; ## @doc a comment by the documentation group
+&nbsp;&nbsp;&nbsp; 1234 = Netscape is unable to find the file or directory named %s.</pre>
+The @name attribute can be used to generate #define's for C/C++ programmers
+to use in their source code, for readability.
+<p>Note that the order of subject, verb and object in a sentence depends
+on the language, and that it is better to use numbered arguments if using
+<a href="message-format.html">printf-style
+formatting</a>.
+<p>The resource file must be in US-ASCII (all bytes less than 127). Non-ASCII
+characters are represented as \uXXXX, where XXXX is a 4-digit hexadecimal
+number in Unicode (UTF-16). Non-ASCII characters are only permitted on
+the right hand side of the equals (=) sign.
+<h3>
+File Naming Convention</h3>
+Java uses file names like awtLocalization_zh_TW.properties. The extension
+(.properties) is unchanged, since some may depend on this. So the language
+and country (or region) are inserted before the extension, after an underscore
+(_). Language and country are also separated by an underscore (_). Language
+is lower case, and country is upper case. For US English property files,
+please use names like foo_en_US.properties.
+<p>Let's use the same convention for HTTP. I.e. don't use the Accept-Language
+feature; just insert the language and country in the file name, as we do
+with files.
+<h3>
+Leveraging Old Translations</h3>
+We are considering writing a tool to migrate some of the strings from the
+old versions of the product. This tool would also generate some info that
+a leveraging tool could use to reuse the translations of the old versions.
+For example:
+<pre>&nbsp;&nbsp;&nbsp; ## @oldid 1234
+&nbsp;&nbsp;&nbsp; cannotFindFile = Netscape is unable to find the file or directory named %s.</pre>
+This would certainly work for all the strings in the old allxpstr.h. It
+may even be possible to do this for the WINFE-specific XP_GetString strings
+and the WINFE dialog strings. This needs to be investigated.
+<p>This would also allow some modules to continue to use the old <tt>XP_GetString</tt>
+in the short term, migrating to the new API in the long term.
+<h3>
+String vs Integer IDs</h3>
+The benefits of integers IDs:
+<ul>
+<li>
+speed: array indexing is faster than hash tables</li>
+
+<li>
+size: integers are smaller than readable strings</li>
+</ul>
+The benefits of string IDs:
+<ul>
+<li>
+groupability: e.g. connect.refused, connect.timeout</li>
+
+<li>
+insertability: can insert new string without changing IDs</li>
+</ul>
+
+<h3>
+Can We Get the Best of Both Worlds?</h3>
+It should be possible to write a tool that works with a file format that
+gives us groupability and insertability, while retaining speed and compactness
+in the code. For example:
+<pre>&nbsp;&nbsp;&nbsp; connect.refused = Connection was refused
+&nbsp;&nbsp;&nbsp; connect.refused.id = 1234
+&nbsp;&nbsp;&nbsp; connect.timeout = Connection timed out
+&nbsp;&nbsp;&nbsp; connect.timeout.id = 5678</pre>
+The human inserts new strings in the desired location, and a tool later
+finds the next available integer ID, and inserts it (*.id). Then, another
+tool generates the integer-ID based file for product delivery:
+<pre>&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; 1234=Connection was refused
+&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; 5678=Connection timed out</pre>
+The tool could also generate a header file for C/C++ programmers:
+<pre>&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; #define NET_CONNECT_REFUSED 1234L
+&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; #define NET_CONNECT_TIMEOUT 5678L</pre>
+Tools can be written in a ubiquitous language like Perl for local execution,
+or maybe Web-based tools could be provided for remote execution (e.g. CGI).
+<p>People that don't want to use or wait for such tools can do it manually.
+<p>There are also some logistical problems with such tools. What if several
+programmers are working on one file at the same time? Their tools might
+generate the same integer ID for different strings. I am sure we could
+come up with some system to manage such a process and avoid collisions,
+but do we want to go there?
+<p>Tools also add complexity. We may want to stick to simple text editors.
+<h3>
+Questions</h3>
+Do we really want to pass a URL as an argument? How does this mesh with
+DCOM?
+<p>Do we really want to return the bundle as an interface? If we ever decide
+to use DCOM, that means that we need to go across the Net for individual
+strings.
+<p>What is the philosophy behind <tt>resource:</tt> URLs? Are they always
+equivalent to <tt>file:</tt> URLs? Or are they sometimes remote resources?
+<p>Do we need the concept of a "path"? Like Java's CLASSPATH, X Windows'
+file search path, etc?
+<p>What are the XUI folks planning to do? Will they use <tt>resource:</tt>
+URLs, etc?
+<p>Use XPCOM for the GetBundle API, but non-XPCOM for GetString API since
+XPCOM is heavyweight?
+<br>&nbsp;
+<h3>
+<a NAME="minidlls"></a>Minimum set of DLLs required to use StringBundle
+(strres.dll)</h3>
+The following data are based on Oct-20-99 Windows (or <i><font color="#000000">Oct-22-99
+Linux</font></i>) build. DLLs owned by I18n group are in <font color="#FF0000">red.</font>
+<blockquote>
+<h4>
+When resource url is used (by sequence)</h4>
+
+<blockquote>bin/
+<blockquote>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+everyone&nbsp;&nbsp; 276160 Oct 20 10:54 xpcom.dll
+<br>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;&nbsp;
+29776 Oct 20 10:54 plc3.dll
+<br>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;
+146752 Oct 20 10:54 nspr3.dll
+<br>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;&nbsp;
+37984 Oct 20 10:54 mozreg.dll
+<br>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;&nbsp;
+29968 Oct 20 10:54 plds3.dll
+<p><i><font color="#000000">On Linux</font></i>
+<blockquote><i><font color="#000000">libmozjs.so</font></i>
+<br><i><font color="#000000">libxpcom.so</font></i>
+<br><i><font color="#000000">libplds3.so</font></i>
+<br><i><font color="#000000">libplc3.so</font></i>
+<br><i><font color="#000000">libnspr3.so</font></i></blockquote>
+</blockquote>
+bin/components:
+<br>&nbsp;
+<blockquote>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+everyone&nbsp;&nbsp;&nbsp; 21248 Oct 20 10:54 <font color="#FF0000">strres.dll</font>
+<br>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;&nbsp;
+46800 Oct 20 10:54 <font color="#FF0000">nslocale.dll</font>
+<p>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;&nbsp;
+71504 Oct 20 10:54 necko.dll
+<br>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;&nbsp;
+21184 Oct 20 10:54 nkresrc.dll
+<br>-rw-r--r--&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;&nbsp;
+25840 Oct 20 10:54 nkfile.dll
+<p>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;&nbsp;
+35648 Oct 20 10:54 <font color="#FF0000">uconv.dll</font>
+<br>-rw-r--r--&nbsp;&nbsp; 1 544&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; everyone&nbsp;&nbsp;&nbsp;
+85232 Oct 20 10:54 <font color="#FF0000">ucvlatin.dll</font>
+<p><i><font color="#000000">On Linux</font></i>
+<blockquote><i><font color="#FF0000">libstrres.so</font></i>
+<br><i><font color="#FF0000">libnslocale.so</font></i>
+<p><i><font color="#000000">libnecko.so</font></i>
+<br><i><font color="#000000">libnecko_resource.so</font></i>
+<br><i><font color="#000000">libnecko_file.so</font></i>
+<p><i><font color="#FF0000">libuconv.so</font></i>
+<br><i><font color="#FF0000">libucvlatin.so</font></i></blockquote>
+</blockquote>
+</blockquote>
+
+<h4>
+When chrome url is used (all the DLLs above + below: by sequence)</h4>
+
+<blockquote>bin/
+<blockquote>gkgfxwin.dll -3
+<br>img3250.dll -4
+<br>jsdom.dll -5
+<br>js3250.dll -6
+<br>oji.dll -13
+<br>jsj3250.dll -14</blockquote>
+components/
+<blockquote>chrome.dll&nbsp; -1
+<br>rdf.dll -2
+<br>gkhtml.dll -7
+<br>gkparser.dll -8
+<br>jsurl.dll -9
+<br>mimetype.dll -10
+<br><font color="#FF0000">ucharuti.dll</font> -11
+<br>caps.dll -12</blockquote>
+</blockquote>
+</blockquote>
+
+<h3>
+<a NAME="dochist"></a>Document History</h3>
+
+<ul>
+<li>
+10/22/99: Tao Cheng: Added "Document History" section and "<a href="#minidlls">Minimum
+set of DLLs required to use StringBundle (strres.dll)</a>" section.</li>
+
+<li>
+06/10/99: Erik van der Poel: Updated the file naming convention. I.e. added
+country example, and specified underscore delimiters, lower and upper case
+convention, and also HTTP rule.</li>
+</ul>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/projects/intl/string-resources.html&amp;rev=&amp;root=/cvsroot/">Last modified October 23,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

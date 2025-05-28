@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+<TITLE>The -installer command line option and migrating multiple profiles on UNIX</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+
+
+<center>The <a href=#installer>-installer command line option</a> and <a href=#multprof>migrating multiple profiles</a> on UNIX
+<br><a href="mailto:sspitzer@netscape.com">sspitzer@netscape.com</a></center>
+
+<p><a NAME="installer"></a><b>The -installer command line option on UNIX</b>
+<br>As of 9-15-99, the -installer option works on UNIX.
+<br>Currently, it migrates mail &amp; news, cookies and preferences from
+4.x
+<p>Here's how to use it:
+<p>$ ./mozilla -installer
+<p>It uses $USER for your "4.x profile name" and $HOME/.netscape for your
+"4.x profile root"
+<p>Select the $USER profile, and hit start.&nbsp; That's it.
+<p>When you are done, you'll see that ~/.netscape got migrated to ~/.mozilla/$USER
+<p>
+<hr WIDTH="100%">
+<br><a NAME="multprof"></a><b>Migrating Multiple Profiles on UNIX</b>
+<br>For you power users....
+<br>In 4.x, we didn't have multiple profiles on UNIX.&nbsp; You could get
+around this by changing the $HOME environment variable.
+<p>As of 9-15-99, you can to migrate several 4.x "profiles" into 5.0.&nbsp;
+If you used multiple $HOME directories to achieve multiple profiles on
+UNIX in 4.x, you can migrate all of them to 5.0, and use the new profile
+manager to switch between them.
+<p>Here's how to do that:
+<p>Set $PROFILE_NAME and $PROFILE_HOME before running installer, if you
+want to point to a "profile" other than $USER,$HOME/.netscape
+<p><font color="#FF0000">IMPORTANT:</font> make sure you set $PROFILE_NAME
+is something other than $USER, and different than any other $PROFILE_NAME
+values that you've used in the past.
+<br>If you don't do this, you'll stomp on your old profile directory: ~/.mozilla/&lt;profile>
+<p>Example of how to migrate /home/sspitzer/.netscape,&nbsp; /home/sspitzer/foo/.netscape,
+and and /home/sspitzer/bar/.netscape into ~/.mozilla/sspitzer, ~/.mozilla/foo,
+~/.mozilla/bar
+<br><I>(This example assumes $USER is sspitzer and $HOME is /home/sspitzer)</I>
+<br>
+<br><I>run it once, to migrate my default "profile"</I>
+<br>$ ./mozilla -installer
+<br><I>set the following environment variables: $PROFILE_NAME and $PROFILE_HOME</I>
+<br>$ setenv PROFILE_NAME foo
+<br>$ setenv PROFILE_HOME /home/sspitzer/foo
+<br><I>run it again</I>
+<br>$ ./mozilla -installer
+<br>$ setenv PROFILE_NAME bar
+<br>$ setenv PROFILE_HOME /home/sspitzer/bar
+<br><I>run it again</I>
+<br>$ ./mozilla -installer
+<br>&nbsp;
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/installer.html&amp;rev=&amp;root=/cvsroot/">Last modified December  6,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>JavaScript 2.0 Regular Expression Grammar</TITLE>
+<LINK rel=stylesheet href="../../styles.css">
+<LINK rel=Start href="../index.html">
+<LINK rel=Contents href="../index.html">
+<LINK rel=Prev href="lexer-semantics.html">
+<LINK rel=Next href="regexp-semantics.html">
+<SCRIPT type="text/javascript" language="JavaScript1.2" src="../../unicodeCompatibility.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+<TR>
+  <TD valign=TOP nowrap>
+    <DIV class=title2><SPAN class=top-title>JavaScript 2.0</SPAN></DIV>
+    <DIV class=title2>Formal Description</DIV>
+    <DIV class=title1>Regular Expression Grammar</DIV>
+  </TD>
+  <TD valign=TOP nowrap align=RIGHT><A href="lexer-semantics.html"><IMG src="../../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="../index.html"><IMG src="../../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="regexp-semantics.html"><IMG src="../../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+</TR>
+</TABLE>
+
+<P class=mod-date>Thursday, November 11, 1999</P>
+
+<P>This LR(1) grammar describes the regular expression syntax of the JavaScript 2.0 proposal.
+See also the description of the <A href="../introduction/notation.html#grammar">grammar notation</A>.</P>
+
+<P>This document is also available as a <A href="regexp-grammar.rtf">Word 98 rtf file</A>.</P>
+
+<!--SEMANTICS-->
+
+<H2>Unicode Character Classes</H2>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-UnicodeCharacter"></A><VAR class=nonterminal>UnicodeCharacter</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;Any
+Unicode character</DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-UnicodeAlphanumeric"></A><VAR class=nonterminal>UnicodeAlphanumeric</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;Any
+Unicode alphabetic or decimal digit character (includes ASCII <CODE>0</CODE>-<CODE>9</CODE>,
+<CODE>A</CODE>-<CODE>Z</CODE>, and <CODE>a</CODE>-<CODE>z</CODE>)</DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-LineTerminator"></A><VAR class=nonterminal>LineTerminator</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE><SPAN class=control>&#171;LF&#187;</SPAN></CODE>&nbsp;|&nbsp;<CODE><SPAN class=control>&#171;CR&#187;</SPAN></CODE>&nbsp;|&nbsp;<CODE><SPAN class=control>&#171;u2028&#187;</SPAN></CODE>&nbsp;|&nbsp;<CODE><SPAN class=control>&#171;u2029&#187;</SPAN></CODE></DIV>
+</DIV>
+
+<H2>Regular Expression Definitions</H2>
+
+<H2>Regular Expression Patterns</H2>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-RegularExpressionPattern"></A><VAR class=nonterminal>RegularExpressionPattern</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-Disjunction"><VAR class=nonterminal>Disjunction</VAR></A></DIV>
+</DIV>
+
+<H3>Disjunctions</H3>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Disjunction"></A><VAR class=nonterminal>Disjunction</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-Alternative"><VAR class=nonterminal>Alternative</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-Alternative"><VAR class=nonterminal>Alternative</VAR></A>&nbsp;<CODE>|</CODE>&nbsp;<A href="#N-Disjunction"><VAR class=nonterminal>Disjunction</VAR></A></DIV>
+</DIV>
+
+<H3>Alternatives</H3>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Alternative"></A><VAR class=nonterminal>Alternative</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-Alternative"><VAR class=nonterminal>Alternative</VAR></A>&nbsp;<A href="#N-Term"><VAR class=nonterminal>Term</VAR></A></DIV>
+</DIV>
+
+<H3>Terms</H3>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Term"></A><VAR class=nonterminal>Term</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-Assertion"><VAR class=nonterminal>Assertion</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-Atom"><VAR class=nonterminal>Atom</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-Atom"><VAR class=nonterminal>Atom</VAR></A>&nbsp;<A href="#N-Quantifier"><VAR class=nonterminal>Quantifier</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Quantifier"></A><VAR class=nonterminal>Quantifier</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-QuantifierPrefix"><VAR class=nonterminal>QuantifierPrefix</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-QuantifierPrefix"><VAR class=nonterminal>QuantifierPrefix</VAR></A>&nbsp;<CODE>?</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-QuantifierPrefix"></A><VAR class=nonterminal>QuantifierPrefix</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>*</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>+</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>?</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>{</CODE>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<CODE>}</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>{</CODE>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<CODE>,</CODE>&nbsp;<CODE>}</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>{</CODE>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<CODE>,</CODE>&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<CODE>}</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-DecimalDigits"></A><VAR class=nonterminal>DecimalDigits</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-DecimalDigits"><VAR class=nonterminal>DecimalDigits</VAR></A>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-DecimalDigit"></A><VAR class=nonterminal>DecimalDigit</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>0</CODE>&nbsp;|&nbsp;<CODE>1</CODE>&nbsp;|&nbsp;<CODE>2</CODE>&nbsp;|&nbsp;<CODE>3</CODE>&nbsp;|&nbsp;<CODE>4</CODE>&nbsp;|&nbsp;<CODE>5</CODE>&nbsp;|&nbsp;<CODE>6</CODE>&nbsp;|&nbsp;<CODE>7</CODE>&nbsp;|&nbsp;<CODE>8</CODE>&nbsp;|&nbsp;<CODE>9</CODE></DIV>
+</DIV>
+
+<H3>Assertions</H3>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Assertion"></A><VAR class=nonterminal>Assertion</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>^</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>$</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>\</CODE>&nbsp;<CODE>b</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>\</CODE>&nbsp;<CODE>B</CODE></DIV>
+</DIV>
+
+<H2>Atoms</H2>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-Atom"></A><VAR class=nonterminal>Atom</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-PatternCharacter"><VAR class=nonterminal>PatternCharacter</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>.</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>\</CODE>&nbsp;<A href="#N-AtomEscape"><VAR class=nonterminal>AtomEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-CharacterClass"><VAR class=nonterminal>CharacterClass</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>(</CODE>&nbsp;<A href="#N-Disjunction"><VAR class=nonterminal>Disjunction</VAR></A>&nbsp;<CODE>)</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>(</CODE>&nbsp;<CODE>?</CODE>&nbsp;<CODE>:</CODE>&nbsp;<A href="#N-Disjunction"><VAR class=nonterminal>Disjunction</VAR></A>&nbsp;<CODE>)</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>(</CODE>&nbsp;<CODE>?</CODE>&nbsp;<CODE>=</CODE>&nbsp;<A href="#N-Disjunction"><VAR class=nonterminal>Disjunction</VAR></A>&nbsp;<CODE>)</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>(</CODE>&nbsp;<CODE>?</CODE>&nbsp;<CODE>!</CODE>&nbsp;<A href="#N-Disjunction"><VAR class=nonterminal>Disjunction</VAR></A>&nbsp;<CODE>)</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-PatternCharacter"></A><VAR class=nonterminal>PatternCharacter</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-UnicodeCharacter"><VAR class=nonterminal>UnicodeCharacter</VAR></A>&nbsp;<B>except</B>&nbsp;<CODE>^</CODE>&nbsp;|&nbsp;<CODE>$</CODE>&nbsp;|&nbsp;<CODE>\</CODE>&nbsp;|&nbsp;<CODE>.</CODE>&nbsp;|&nbsp;<CODE>*</CODE>&nbsp;|&nbsp;<CODE>+</CODE>&nbsp;|&nbsp;<CODE>?</CODE>&nbsp;|&nbsp;<CODE>(</CODE>&nbsp;|&nbsp;<CODE>)</CODE>&nbsp;|&nbsp;<CODE>[</CODE>&nbsp;|&nbsp;<CODE>]</CODE>&nbsp;|&nbsp;<CODE>{</CODE>&nbsp;|&nbsp;<CODE>}</CODE>&nbsp;|&nbsp;<CODE>|</CODE></DIV>
+</DIV>
+
+<H2>Escapes</H2>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-AtomEscape"></A><VAR class=nonterminal>AtomEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-DecimalEscape"><VAR class=nonterminal>DecimalEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-CharacterEscape"><VAR class=nonterminal>CharacterEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-CharacterClassEscape"><VAR class=nonterminal>CharacterClassEscape</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-CharacterEscape"></A><VAR class=nonterminal>CharacterEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-ControlEscape"><VAR class=nonterminal>ControlEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>c</CODE>&nbsp;<A href="#N-ControlLetter"><VAR class=nonterminal>ControlLetter</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-HexEscape"><VAR class=nonterminal>HexEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-IdentityEscape"><VAR class=nonterminal>IdentityEscape</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-ControlLetter"></A><VAR class=nonterminal>ControlLetter</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>A</CODE>&nbsp;|&nbsp;<CODE>B</CODE>&nbsp;|&nbsp;<CODE>C</CODE>&nbsp;|&nbsp;<CODE>D</CODE>&nbsp;|&nbsp;<CODE>E</CODE>&nbsp;|&nbsp;<CODE>F</CODE>&nbsp;|&nbsp;<CODE>G</CODE>&nbsp;|&nbsp;<CODE>H</CODE>&nbsp;|&nbsp;<CODE>I</CODE>&nbsp;|&nbsp;<CODE>J</CODE>&nbsp;|&nbsp;<CODE>K</CODE>&nbsp;|&nbsp;<CODE>L</CODE>&nbsp;|&nbsp;<CODE>M</CODE>&nbsp;|&nbsp;<CODE>N</CODE>&nbsp;|&nbsp;<CODE>O</CODE>&nbsp;|&nbsp;<CODE>P</CODE>&nbsp;|&nbsp;<CODE>Q</CODE>&nbsp;|&nbsp;<CODE>R</CODE>&nbsp;|&nbsp;<CODE>S</CODE>&nbsp;|&nbsp;<CODE>T</CODE>&nbsp;|&nbsp;<CODE>U</CODE>&nbsp;|&nbsp;<CODE>V</CODE>&nbsp;|&nbsp;<CODE>W</CODE>&nbsp;|&nbsp;<CODE>X</CODE>&nbsp;|&nbsp;<CODE>Y</CODE>&nbsp;|&nbsp;<CODE>Z</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>a</CODE>&nbsp;|&nbsp;<CODE>b</CODE>&nbsp;|&nbsp;<CODE>c</CODE>&nbsp;|&nbsp;<CODE>d</CODE>&nbsp;|&nbsp;<CODE>e</CODE>&nbsp;|&nbsp;<CODE>f</CODE>&nbsp;|&nbsp;<CODE>g</CODE>&nbsp;|&nbsp;<CODE>h</CODE>&nbsp;|&nbsp;<CODE>i</CODE>&nbsp;|&nbsp;<CODE>j</CODE>&nbsp;|&nbsp;<CODE>k</CODE>&nbsp;|&nbsp;<CODE>l</CODE>&nbsp;|&nbsp;<CODE>m</CODE>&nbsp;|&nbsp;<CODE>n</CODE>&nbsp;|&nbsp;<CODE>o</CODE>&nbsp;|&nbsp;<CODE>p</CODE>&nbsp;|&nbsp;<CODE>q</CODE>&nbsp;|&nbsp;<CODE>r</CODE>&nbsp;|&nbsp;<CODE>s</CODE>&nbsp;|&nbsp;<CODE>t</CODE>&nbsp;|&nbsp;<CODE>u</CODE>&nbsp;|&nbsp;<CODE>v</CODE>&nbsp;|&nbsp;<CODE>w</CODE>&nbsp;|&nbsp;<CODE>x</CODE>&nbsp;|&nbsp;<CODE>y</CODE>&nbsp;|&nbsp;<CODE>z</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-IdentityEscape"></A><VAR class=nonterminal>IdentityEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-UnicodeCharacter"><VAR class=nonterminal>UnicodeCharacter</VAR></A>&nbsp;<B>except</B>&nbsp;<A href="#N-UnicodeAlphanumeric"><VAR class=nonterminal>UnicodeAlphanumeric</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-ControlEscape"></A><VAR class=nonterminal>ControlEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>f</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>n</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>r</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>t</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>v</CODE></DIV>
+</DIV>
+
+<H3>Decimal Escapes</H3>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-DecimalEscape"></A><VAR class=nonterminal>DecimalEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-DecimalIntegerLiteral"><VAR class=nonterminal>DecimalIntegerLiteral</VAR></A>&nbsp;[lookahead<SCRIPT type="text/javascript">document.write(U_notin)</SCRIPT>{<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A>}]</DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-DecimalIntegerLiteral"></A><VAR class=nonterminal>DecimalIntegerLiteral</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>0</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-NonZeroDecimalDigits"><VAR class=nonterminal>NonZeroDecimalDigits</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NonZeroDecimalDigits"></A><VAR class=nonterminal>NonZeroDecimalDigits</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-NonZeroDigit"><VAR class=nonterminal>NonZeroDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-NonZeroDecimalDigits"><VAR class=nonterminal>NonZeroDecimalDigits</VAR></A>&nbsp;<A href="#N-DecimalDigit"><VAR class=nonterminal>DecimalDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NonZeroDigit"></A><VAR class=nonterminal>NonZeroDigit</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>1</CODE>&nbsp;|&nbsp;<CODE>2</CODE>&nbsp;|&nbsp;<CODE>3</CODE>&nbsp;|&nbsp;<CODE>4</CODE>&nbsp;|&nbsp;<CODE>5</CODE>&nbsp;|&nbsp;<CODE>6</CODE>&nbsp;|&nbsp;<CODE>7</CODE>&nbsp;|&nbsp;<CODE>8</CODE>&nbsp;|&nbsp;<CODE>9</CODE></DIV>
+</DIV>
+
+<H3>Hexadecimal Escapes</H3>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-HexEscape"></A><VAR class=nonterminal>HexEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>x</CODE>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>u</CODE>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A>&nbsp;<A href="#N-HexDigit"><VAR class=nonterminal>HexDigit</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-HexDigit"></A><VAR class=nonterminal>HexDigit</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<CODE>0</CODE>&nbsp;|&nbsp;<CODE>1</CODE>&nbsp;|&nbsp;<CODE>2</CODE>&nbsp;|&nbsp;<CODE>3</CODE>&nbsp;|&nbsp;<CODE>4</CODE>&nbsp;|&nbsp;<CODE>5</CODE>&nbsp;|&nbsp;<CODE>6</CODE>&nbsp;|&nbsp;<CODE>7</CODE>&nbsp;|&nbsp;<CODE>8</CODE>&nbsp;|&nbsp;<CODE>9</CODE>&nbsp;|&nbsp;<CODE>A</CODE>&nbsp;|&nbsp;<CODE>B</CODE>&nbsp;|&nbsp;<CODE>C</CODE>&nbsp;|&nbsp;<CODE>D</CODE>&nbsp;|&nbsp;<CODE>E</CODE>&nbsp;|&nbsp;<CODE>F</CODE>&nbsp;|&nbsp;<CODE>a</CODE>&nbsp;|&nbsp;<CODE>b</CODE>&nbsp;|&nbsp;<CODE>c</CODE>&nbsp;|&nbsp;<CODE>d</CODE>&nbsp;|&nbsp;<CODE>e</CODE>&nbsp;|&nbsp;<CODE>f</CODE></DIV>
+</DIV>
+
+<H3>Character Class Escapes</H3>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-CharacterClassEscape"></A><VAR class=nonterminal>CharacterClassEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>s</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>S</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>d</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>D</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>w</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>W</CODE></DIV>
+</DIV>
+
+<H2>User-Specified Character Classes</H2>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-CharacterClass"></A><VAR class=nonterminal>CharacterClass</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<CODE>[</CODE>&nbsp;[lookahead<SCRIPT type="text/javascript">document.write(U_notin)</SCRIPT>{<CODE>^</CODE>}]&nbsp;<A href="#N-ClassRanges"><VAR class=nonterminal>ClassRanges</VAR></A>&nbsp;<CODE>]</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>[</CODE>&nbsp;<CODE>^</CODE>&nbsp;<A href="#N-ClassRanges"><VAR class=nonterminal>ClassRanges</VAR></A>&nbsp;<CODE>]</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-ClassRanges"></A><VAR class=nonterminal>ClassRanges</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;&#171;empty&#187;</DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-NonemptyClassRanges">NonemptyClassRanges</A><SUP><SPAN class=nonterminal-attribute>dash</SPAN></SUP></VAR></DIV>
+</DIV>
+<DIV class=grammar-argument><VAR class=nonterminal><SPAN class=nonterminal-argument><SPAN class=symbol>d</SPAN></SPAN></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_isin)</SCRIPT>&nbsp;{<VAR class=nonterminal><SPAN class=nonterminal-attribute>dash</SPAN></VAR>,&nbsp;<VAR class=nonterminal><SPAN class=nonterminal-attribute>noDash</SPAN></VAR>}</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-NonemptyClassRanges"></A><VAR class=nonterminal>NonemptyClassRanges<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>d</SPAN></SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-ClassAtom">ClassAtom</A><SUP><SPAN class=nonterminal-attribute>dash</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-ClassAtom">ClassAtom</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>d</SPAN></SPAN></SUP></VAR>&nbsp;<VAR class=nonterminal><A href="#N-NonemptyClassRanges">NonemptyClassRanges</A><SUP><SPAN class=nonterminal-attribute>noDash</SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-ClassAtom">ClassAtom</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>d</SPAN></SPAN></SUP></VAR>&nbsp;<CODE>-</CODE>&nbsp;<VAR class=nonterminal><A href="#N-ClassAtom">ClassAtom</A><SUP><SPAN class=nonterminal-attribute>dash</SPAN></SUP></VAR>&nbsp;<A href="#N-ClassRanges"><VAR class=nonterminal>ClassRanges</VAR></A></DIV>
+</DIV>
+
+<H3>Character Class Range Atoms</H3>
+
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-ClassAtom"></A><VAR class=nonterminal>ClassAtom<SUP><SPAN class=nonterminal-argument><SPAN class=symbol>d</SPAN></SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<VAR class=nonterminal><A href="#N-ClassCharacter">ClassCharacter</A><SUP><SPAN class=nonterminal-argument><SPAN class=symbol>d</SPAN></SPAN></SUP></VAR></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>\</CODE>&nbsp;<A href="#N-ClassEscape"><VAR class=nonterminal>ClassEscape</VAR></A></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-ClassCharacter"></A><VAR class=nonterminal>ClassCharacter<SUP><SPAN class=nonterminal-attribute>dash</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<A href="#N-UnicodeCharacter"><VAR class=nonterminal>UnicodeCharacter</VAR></A>&nbsp;<B>except</B>&nbsp;<CODE>\</CODE>&nbsp;|&nbsp;<CODE>]</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><VAR class=nonterminal>ClassCharacter<SUP><SPAN class=nonterminal-attribute>noDash</SPAN></SUP></VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT>&nbsp;<VAR class=nonterminal><A href="#N-ClassCharacter">ClassCharacter</A><SUP><SPAN class=nonterminal-attribute>dash</SPAN></SUP></VAR>&nbsp;<B>except</B>&nbsp;<CODE>-</CODE></DIV>
+</DIV>
+<DIV class=grammar-rule>
+  <DIV class=grammar-lhs><A name="N-ClassEscape"></A><VAR class=nonterminal>ClassEscape</VAR>&nbsp;<SCRIPT type="text/javascript">document.write(U_rArr)</SCRIPT></DIV>
+  <DIV class=grammar-rhs>&nbsp;&nbsp;&nbsp;<A href="#N-DecimalEscape"><VAR class=nonterminal>DecimalEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<CODE>b</CODE></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-CharacterEscape"><VAR class=nonterminal>CharacterEscape</VAR></A></DIV>
+  <DIV class=grammar-rhs>|&nbsp;&nbsp;<A href="#N-CharacterClassEscape"><VAR class=nonterminal>CharacterClassEscape</VAR></A></DIV>
+</DIV>
+<!--/SEMANTICS-->
+
+<HR>
+<TABLE width="100%" border=0 cellspacing=2 cellpadding=0>
+  <TR>
+    <TD valign=BOTTOM nowrap>
+      <ADDRESS><A href="mailto:waldemar@netscape.com">Waldemar Horwat</A><BR>
+      Last modified Thursday, November 11, 1999</ADDRESS>
+    </TD>
+    <TD valign=TOP nowrap align=RIGHT><A href="lexer-semantics.html"><IMG src="../../arrows/left.gif" align=BOTTOM width=37 height=37 alt="previous"></A><A href="../index.html"><IMG src="../../arrows/up.gif" align=BOTTOM width=37 height=37 alt="up"></A><A href="regexp-semantics.html"><IMG src="../../arrows/right.gif" align=BOTTOM width=37 height=37 alt="next"></A></TD>
+  </TR>
+</TABLE>
+</BODY>
+</HTML>

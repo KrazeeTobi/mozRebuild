@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+
+<HEAD>
+	<META NAME="GENERATOR" Content="Symantec Visual Page 1.0">
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
+	<TITLE>triple-click-text test case</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+
+<FORM METHOD="GET">
+<P><BR>
+#1: Triple-click within a table cell, and the entire cell should be selected.<BR>
+
+<TABLE BORDER="1" WIDTH="467">
+	<TR>
+		<TD WIDTH="33%" BGCOLOR="#FFFFFF">Click HERE</TD>
+		<TD WIDTH="33%" BGCOLOR="#DDDDDD">I shouldn't be selected</TD>
+		<TD WIDTH="34%" BGCOLOR="#DDDDDD">Not should I.</TD>
+	</TR>
+</TABLE>
+<BR>
+<BR>
+#2: Triple-click a line within a table cell, and only that line should be selected.<BR>
+
+<TABLE BORDER="1" WIDTH="467">
+	<TR>
+		<TD WIDTH="50%">Click HERE and only this line will be selected. Despite their being no line break
+			between this sentence and the previous sentence, this sentence should NOT be selected
+			when the previous line is triple-clicked.</TD>
+		<TD WIDTH="50%" BGCOLOR="#EEEEEE">I also shouldn't be selected</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="50%" BGCOLOR="#EEEEEE">Neither should I</TD>
+		<TD WIDTH="50%" BGCOLOR="#EEEEEE">Neither should I</TD>
+	</TR>
+</TABLE>
+<BR>
+<BR>
+#3: Lines terminated by a Line Break (BR)<BR>
+Triple-click HERE to select this line<BR>
+but not this line <BR>
+<BR>
+#4: Lines separated by a Horizontal Rule (HR)<BR>
+Triple-click HERE to select this line 
+<HR>
+but not this line <BR>
+<BR>
+#5: Lines separated by form elements --- triple click upon each form element's text
+label <BR>
+<BR>
+TEXT <INPUT TYPE="TEXT" NAME="Text" SIZE="25" VALUE="BAZ"> Checkbox <INPUT TYPE="CHECKBOX"
+NAME="Checkbox" VALUE="ON"> Radio button <INPUT TYPE="RADIO" NAME="radio" VALUE="ON">
+Hidden <INPUT TYPE="HIDDEN" NAME="hidden" SIZE="-1"> <BR>
+<BR>
+#6: Lines containing a variety of text styles <BR>
+<BR>
+Triple <FONT COLOR="#FF3300">click</FONT> <B>HERE</B> (<A HREF="http://www.mozilla.org">a
+random link</A>) <I>and</I> <TT>let's</TT> <FONT SIZE="5">see</FONT> <SUP>whether</SUP>
+<SUB>the</SUB> <STRIKE>entire</STRIKE> <STRONG>line</STRONG> <BLINK><FONT COLOR="#AA0000"><B>is</B></FONT></BLINK>
+selected.
+
+
+</BODY>
+
+</HTML>

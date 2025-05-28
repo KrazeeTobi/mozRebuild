@@ -1,0 +1,212 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; U) [Netscape]">
+   <meta name="Author" content="Ian Oeschger">
+   <title>&lt;thumb> element</title>
+</head>
+<body>
+<table BORDER=0 CELLSPACING=0 COLS=1 WIDTH="100%" >
+<tr><td><p align="right"><i>XUL Programmer's Reference Manual</i></p></td></tr>
+<tr>
+<td>
+<h1>
+<font color="#000099"><font size=+2>&lt;thumb/></font></font></h1>
+
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Attributes</font></b></td>
+
+<td><b><font color="#FFFFFF">Common Children</font></b></td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td>* * *</td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#class">class</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#curpos">curpos</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#maxpos">maxpos</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#increment">increment</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#pageIncrement">pageIncrement</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#flex">flex</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><i><a href="boxref.html#align">align</a></i></td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>The thumb is the moveable button in the scrollbar. Like scrollbar,
+thumb's attributes determine the position and rate of scrolling for the
+element. The following example shows a thumb defined within a scrollbar:
+<blockquote>&nbsp;
+<table BORDER=0 WIDTH="80%" BGCOLOR="#CCCCCC" >
+<tr>
+<td><tt>&lt;scrollbar align="vertical"&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; curpos="50"&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; pageIncrement="20"&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; increment="5"&nbsp;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; flex="100%"></tt>
+<br><tt>&nbsp; &lt;scrollbarbutton type="decrement"/></tt>
+<br><tt>&nbsp; &lt;slider flex="100%"></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>thumb</b> value="Thumb" flex="0%"/></tt>
+<br><tt>&nbsp; &lt;/slider></tt>
+<br><tt>&nbsp; &lt;scrollbarbutton type="increment"/></tt>
+<br><tt>&lt;/scrollbar></tt></td>
+
+<td>
+<center><img SRC="scrollbar_thumb.gif" height=194 width=91></center>
+</td>
+</tr>
+</table>
+</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="curpos"></a><b><font color="#FFFFFF"><font size=+1>curpos</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>curpos </b>is a required attribute for specifying the position
+of the thumb button when it loads. The number is a number from 0 to <b><a href="#maxpos">maxpos</a></b>.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><font face="Courier, New Courier">&lt;thumb <b>curpos</b>="<i>number
+of pixels down from 0 to maxpos</i>" /></font></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><font face="Courier, New Courier">&lt;thumb <b>curpos</b>="10"
+/></font></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>None.</blockquote>
+
+<p><br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="maxpos"></a><b><font color="#FFFFFF"><font size=+1>maxpos</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>maxpos</b> is an optional attribute for specifying the total
+scrollable length of the scrollbar.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><font face="Courier, New Courier">&lt;thumb <b>maxpos</b>="<i>number
+of pixels</i>" /></font></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><font face="Courier, New Courier">&lt;scrollbar id="<i>string</i>"
+<b>pageIncrement</b>="XXX"
+/></font></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote><b>maxpos</b> and <b><a href="#curpos">curpos</a></b> relate
+with one another to determine the scrollable length and the position of
+the thumb.</blockquote>
+
+<p><br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="increment"></a><b><font color="#FFFFFF"><font size=+1>increment</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>increment</b> is an optional attribute for specifying how
+much the position changes on each click of the <a href="scrollbarbutton.html">scrollbarbuttons</a>
+and <a href="slider.html">slider</a> area.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><font face="Courier, New Courier">&lt;thumb
+<b>increment</b>="<i>number
+of pixels to scroll</i>" /></font></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><font face="Courier, New Courier">&lt;thumb
+<b>increment</b>="5"
+/></font></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>The default value for <b>increment</b> is 1.</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="pageIncrement"></a><b><font color="#FFFFFF"><font size=+1>pageIncrement</font></font></b></td>
+</tr>
+
+<tr>
+<td><b>Description</b>
+<blockquote><b>pageIncrement</b> is an optional attribute for specifying
+the degree of position change when the user pages through the scrollbar.&nbsp;</blockquote>
+<b>Syntax</b>
+<blockquote><font face="Courier, New Courier">&lt;thumb
+<b>pageIncrement</b>="<i>number
+of pixels to scroll on page</i>" /></font></blockquote>
+
+<p><br><b>Example</b>
+<blockquote><font face="Courier, New Courier">&lt;thumb
+<b>pageIncrement</b>="25"
+/></font></blockquote>
+
+<p><br><b>Notes</b>
+<blockquote>Using "Page Up" and "Page Down" pages through larger parts
+of a scrollable area according to the value specified for <b>pageIncrement</b>.
+See also <b><a href="#increment">increment</a></b> for degrees of scrolling.
+The default <b>pageIncrement</b> value is 20.</blockquote>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+</table>
+<br>&nbsp;<br>
+<p align="right"><i>Last updated: 13:10 1/26/00 <a href="mailto:oeschger@netscape.com">Ian Oeschger</a></i></p>
+
+</body>
+</html>

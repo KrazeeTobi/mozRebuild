@@ -1,0 +1,1558 @@
+<HTML>
+<HEAD>
+<TITLE>Address Book Test Specification</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+
+   
+   
+   
+
+
+
+<h2>
+Feature Test Spec</h2>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><b> 5.0 Project</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mail and News Component</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Address Book</b>
+<p>Written by: <a href="mailto:esther@netscape.com">Esther Goes</a>
+<br>Date Created:&nbsp; 111698
+<p>Last Modified and Change Description:
+<br>111698- Used 4.5 Address Book Test Spec to update, add and remove featues
+for 5.0
+<br>120298- More updates, added links
+<br>122298- Removed Replication section
+<br>122398- Removed LDAP, referenced LDAP Test specLast Modified and Change
+Description:
+<br>030999- Made changes per Fenella's review.
+<br>061699- Made changes per Sea-Monkey Messenger Address Book UI spec
+update.
+<br>071999- Made changes per Sea-Monkey Messenger Address Book UI spec
+update.
+<br>&nbsp;
+<p><b>Reviewed by: </b><a href="mailto:fenella@netscape.com">Fenella 030199</a>
+<p><b>References:</b>
+<br>UI Specification:&nbsp; <a href="http://www.mozilla.org/mailnews/specs/addressbook/">Sea-Monkey
+Messenger Address Book</a>,&nbsp; Address Book UI-Nova (currently not available)
+<br>Other:&nbsp; Customizing LDAP Setting for Communicator 4.5 (currently
+not available),&nbsp; LDAP Test Spec
+<br>Other: <a href="http://www.mozilla.org/quality/mailnews/tests/howtocreate.html">How
+To Create Address Books, Cards, Lists, Directories, etc.</a>
+<p><b>Test Case Management Usage:</b><b></b>
+<p><b>Contents:</b>
+<br><a href="#Address Book">Address Book</a>
+<br><a href="#Finding Addresses (Searching)">Finding Addresses (Searching)</a>
+<br><a href="#Managing Address Books">Managing Address Books</a>
+<br><a href="#Address Selection Dialog (Compose Address button or menu item Select Addresses)">Address
+Selection Dialog</a>
+<br><a href="#Pop-up Selector Dialog">Pop-up Selector Dialog</a>
+<p>
+<hr WIDTH="100%">
+<br>&nbsp;
+<h4>
+<a NAME="Address Book"></a>Address Book</h4>
+
+<ol TYPE=A>
+<li>
+Visual - Verify the Address Book as the following:</li>
+
+<ol>
+<li>
+Window Title "Address Book"&nbsp; and a close "X" button</li>
+
+<li>
+Window is resizable and moveable</li>
+
+<li>
+Menubar (see Sea-Monkey Messenger Address Book for Menubar lists)</li>
+
+<li>
+Toolbar (see Sea-Monkey Messenger Address Book Toolbar buttons) Note: Search
+button disabled unless LDAP Directory selected.</li>
+
+<li>
+Directory Pane (down left side of Address Book window)</li>
+
+<ol TYPE=a>
+<li>
+Title banner for Personal Address books and displays a list containing
+the default Address Book (name TBD), other Personal Address books (with
+expand/collapse widgets if needed) and Lists (if an address books has any
+and the address book is expanded)</li>
+
+<li>
+A separator bar</li>
+
+<li>
+Title banner for Directories and a list of subscribed LDAP Directories.</li>
+
+<li>
+This pane should display a scroll bar if contents does not fit in pane.</li>
+</ol>
+
+<li>
+Results Pane (upper right side of Address Book window)</li>
+
+<ol TYPE=a>
+<li>
+Displays a list of cards and lists for the selected Address Book or Directory.</li>
+
+<li>
+<font color="#000000">Default columns include: "Name" "Email", "Work Phone",
+"Organization" and "TBD"</font><font color="#990000">. (may change)</font></li>
+
+<li>
+This pane should display a scroll bar if contents does not fit in pane.</li>
+</ol>
+
+<li>
+Card View Pane (lower right side of Address Book window)</li>
+
+<ol TYPE=a>
+<li>
+Displays the contents of the selected card.</li>
+
+<li>
+Title for the Card "Card for (name or person goes here)"&nbsp; in large
+bold font.&nbsp;&nbsp; Headings for each section of a card that contains
+data</li>
+
+<li>
+&nbsp;This pane should display a scroll bar if contents does not fit in
+the pane.</li>
+</ol>
+</ol>
+
+<li>
+Points of Entry</li>
+
+<ol>
+<li>
+"Address Book"&nbsp; icon in the Task bar within the "Quick Access" area
+included in each of the components (Navigator, Messenger)</li>
+
+<li>
+"Address Book" menu item listed under "Tasks" from each of the components
+(Navigator, Messenger, etc)</li>
+
+<li>
+"Address" button on Toolbar of Mail Composition window</li>
+</ol>
+
+<li>
+&nbsp;Functionality</li>
+
+<ol>
+<li>
+Verify the Directory pane can be collapsed and expanded using the "hot
+click" area located on the bar dividing the Directory and Results pane.</li>
+
+<li>
+Verify the Card View pane can be collapsed and expanded using the "hot
+click" area located on the bar dividing the Results and Card View pane</li>
+
+<li>
+Verify the lists in the left pane can be collapsed and expanded using the
+expand/collapse icons (+ &amp; -)&nbsp; located to the left of the Address
+Book/Directory name.</li>
+
+<li>
+Verify that &lt;Tab> will change the focus to the next logical control
+as follows:</li>
+
+<ol TYPE=a>
+<li>
+Text field for searching "Show names containing"</li>
+
+<li>
+Directory Pane-Address Book at top of the list</li>
+
+<li>
+Results Pane-Card at the top of the list</li>
+
+<li>
+Card View Pane (links in the pane in this order down left side, then down
+right side)</li>
+</ol>
+
+<li>
+Verify the Address Books, expanded Lists and subscribed LDAP Directories
+are displayed in the Directory&nbsp; pane</li>
+
+<li>
+Verify the drag and drop action for Card(s) and List(s)</li>
+
+<ol TYPE=a>
+<li>
+right pane-Card(s) to List=copy</li>
+
+<li>
+right pane-Card(s) to left pane-Address Book=copy</li>
+
+<li>
+right pane-Card(s) to left pane-List in the same address book=copy</li>
+
+<li>
+right pane-Card(s) to left pane-List in a different address book=copy</li>
+
+<li>
+either pane-List(s) to any List or Address book=copy</li>
+</ol>
+
+<li>
+Verify the Command/Control Key action for Card(s) and List(s)&nbsp;&nbsp;
+(This is known as the using the modifier key, Windows uses Shift+drag)</li>
+
+<ol TYPE=a>
+<li>
+right pane-Card(s) to List=move</li>
+
+<li>
+right pane-Card(s) to left pane-Address Book=move</li>
+
+<li>
+right pane-Card(s) to left pane-List in the same address book=move</li>
+
+<li>
+right pane-Card(s) to left pane-List in a different address book=move</li>
+</ol>
+
+<li>
+Verify the functionality in Directory Pane</li>
+
+<ol TYPE=a>
+<li>
+single click on Address Book=selects the address book and displays the
+contents of the Address Book in the Results list</li>
+
+<li>
+<font color="#000000">double click on Address Book=Brings up Address Book
+Information</font></li>
+
+<li>
+<font color="#000000">double click on a Directory=brings up the Directory
+Server Informatin dialog which can be edited</font></li>
+
+<li>
+single click on mailing list=selects the mailing list and displays the
+mailing lists in the Results pane</li>
+
+<li>
+<font color="#000000">double click on mailing list=brings up the mailing
+list Mailing List dialog which can be edited</font></li>
+
+<li>
+single click on Directory=selects the directory, and displays either nothing
+or the last set of search results in the results list</li>
+
+<li>
+<font color="#000000">Control+Click(Win/X)=select a discontinuous group
+of Address Books/Lists and Directories, highlights the selection leaves
+Results pane and Card View pane alone with the last view still visible.</font></li>
+
+<li>
+<font color="#000000">Shift+Click=selects a contiuous group of Address
+Books/Lists and Directories, highlights the selection leaves Results pane
+and Card View pane alone with the last view still visible.</font></li>
+
+<li>
+Option+Click or Extended Press and Hold (Mac),&nbsp; Right Mouse Click
+(PC &amp; Unix)= popup context menu for Address Book,&nbsp; List or Directory
+or list base on what was selected at the time of right mouse click (see
+Sea-Monkey Messenger Address Book spec listed above for menu list)</li>
+</ol>
+
+<li>
+Verify the functionality in Results Pane</li>
+
+<ol TYPE=a>
+<li>
+single click on a card= selects a single card and displays the detailed
+information in the Card View pane</li>
+
+<ul>
+<li>
+verify this view only shows headings that contains information that the
+user has previoulsy entered (each card may display different headings)</li>
+
+<li>
+verify this view only allows user to click a link to bring up a New Msg
+window,&nbsp; you cannot edit the information on the card in this view</li>
+</ul>
+
+<li>
+double click on a card=opens the "Card Dialog - Display" in a separate
+window for the card that was selected.</li>
+
+<li>
+<font color="#000000">single click on a mailing list=selects the mailing
+list</font></li>
+
+<li>
+<font color="#000000">double click on mailing list=brings up the mailing
+list Mailing List dialog which can be edited</font></li>
+
+<li>
+<font color="#000000">Control+Click(Win/X)=select a discontinuous group
+of cards/mailing lists and Card View pane displays nothing</font></li>
+
+<li>
+<font color="#000000">Shift+Click=selects a contiuous group of cards/mailing
+lists and Card View pane displays nothing</font></li>
+
+<li>
+Right Mouse Click = popup context menu for card or list base on what was
+selected at the time of right mouse click (see Sea-Monkey Messenger Address
+Book spec listed above for menu list)</li>
+</ol>
+
+<li>
+Verify the functionality in the Card View Pane</li>
+
+<ol TYPE=a>
+<li>
+<font color="#000000">double click anywhere in the Card View=opens the
+"Card Dialog - Edit" in a separate window for the card that was in the
+Card View pane</font><font color="#FF0000">.</font></li>
+
+<li>
+this dialog only shows headings that contains information that the user
+has previoulsy entered (each card may display different headings)</li>
+
+<li>
+this dialog only allows user to click a primary or secondary email link
+to bring up a New Msg window or a Web page link to launch a Web Page, but
+user cannot edit the information on the card in this Display Window</li>
+
+<li>
+of the Right Mouse Click while in the Card View pane = popup context menu
+based on what was selected at the time of right mouse click (see Sea-Monkey
+Messenger Address Book spec listed above for menu list)</li>
+</ol>
+
+<li>
+Verify functionality in Card Dialog - Display (visible in 3rd pane of 3-pane
+address book window - lower right side)</li>
+
+<ol TYPE=a>
+<li>
+this dialog only shows headings that contains information that the user
+has previoulsy entered (each card may display different headings) and no
+data entry fields are visible.</li>
+
+<li>
+this dialog only allows user to click a primary or secondary email link
+to bring up a New Msg window or a Web page link to launch a Web Page, but
+user cannot edit the information on the card in this Display Window</li>
+
+<li>
+this dialog has Forward and Back buttons and clicking on them takes the
+user through the next and previous cards in the users Address Book.&nbsp;
+Note: Only 1 Card Dialog Edit window can be opened at a time, using the
+Back and Forward buttons replaces previous data.</li>
+
+<li>
+click on the Edit button = brings up the Card Dialog - Edit Mode</li>
+
+<li>
+click on the Close button = closes the window</li>
+
+<li>
+<font color="#000000">of the Right Mouse Click =popup context menu based
+on what was selected at the time of right mouse click (see Sea-Monkey Messenger
+Address Book spec listed above for menu list)</font></li>
+</ol>
+
+<li>
+Verify layout and functionality in Card Dialog - Edit Mode</li>
+
+<ol TYPE=a>
+<li>
+&nbsp;this window can be launched from:</li>
+
+<ul>
+<li>
+Toolbar button (in Address Book) - New Card (fields are empty)</li>
+
+<li>
+Toolbar button (in Address Book) - Edit&nbsp; (fields have data from previous
+entry)</li>
+
+<li>
+Menu item (in Address Book) - New Card...&nbsp; (fields are empty)</li>
+
+<li>
+Menu Item (in Address Book, under Edit menu list) - Edit Card (fields have
+data from previous entry)</li>
+
+<li>
+Menu Item (from a stand alone Message Window imder Message menu list) -
+Add Sender to Address Books..."&nbsp; (this is treated as a New Card if
+there is no match, otherwise the user will be prompted that a card already
+exists should the card be updated with this information)</li>
+
+<li>
+Menu item (from a stand alone Message Window under Message menu list) -
+Add All to Address Book..." (this is treated as a New Card for each address
+if there is are no matches, otherwise user will be prompted that a card
+already exists should the card be updated with this information)</li>
+
+<li>
+Context menu - New Card/Edit</li>
+
+<ul TYPE=CIRCLE>
+<li>
+Directory pane, selection on an Address Book, Mailing list or Directory&nbsp;
+(click New Card)</li>
+
+<li>
+Results pane, card or mailing list is selected - Edit Card</li>
+
+<li>
+Card View pane, double-click anywhere on the pane</li>
+</ul>
+</ul>
+
+<li>
+&nbsp;layout for the Card Dialog - Edit mode is the same for both a New
+Card or Editing an existing Card (with exceptions noted below in first
+two bullet items)</li>
+
+<ul>
+<li>
+New Card dialog has a title bar with the title "Card for".&nbsp; The title
+is completed with the Display name after clicking OK on the card.&nbsp;&nbsp;
+Existing card title&nbsp; "Card for [Display Name]".&nbsp; Also has a close
+"X" button</li>
+
+<li>
+for a New Card only, there is an&nbsp; "Add Card to:" drop down menu.&nbsp;
+This menu is not available for a card in Edit mode, it is replaced with
+static text "Location: [Name of Address Book where card is located]".</li>
+
+<li>
+dialog has a set of tabs in which the user can add information about a
+contact.&nbsp; The tabs include: Name, Address &amp; Other.</li>
+
+<li>
+all fields for each Tab are active text entry fields.</li>
+
+<li>
+dialog OK, Cancel and Help buttons</li>
+
+<li>
+verify correct headings in Bold for each section on the tab (see Sea-Monkey
+Messenger Address Book, Card Dialog Edit for visual layout of Tab and contents)</li>
+
+<li>
+verify the Tab name is in Bold for the tab that has focus</li>
+</ul>
+
+<li>
+functionality of text entry fields located on each Tab (see Sea-Monkey
+Messenger Address Book, Card Dialog Edit for visual layout of Tab and contents)</li>
+
+<li>
+<font color="#000000">of the Right Mouse Click =popup context menu for
+card or list base on what was selected at the time of right mouse click
+(see Sea-Monkey Messenger Address Book spec listed above for menu list)</font></li>
+</ol>
+
+<li>
+Verify initial state when an address book or a LDAP directory&nbsp; is
+selected and the state after selection</li>
+
+<ol TYPE=a>
+<li>
+for an Address Book</li>
+
+<ul>
+<li>
+verify the first name is selected in the list when a personal address book
+is first selected</li>
+
+<li>
+verify that what was previously viewed in an address book, appears in the
+results pane when that address book is selected again in the same session</li>
+</ul>
+
+<li>
+fro a LDAPv2 Directory</li>
+
+<ul TYPE=SQUARE>
+<li>
+verify the first time search of a directory shows nothing in the list field</li>
+
+<li>
+verify any search after the first search of a directory shows the state
+of the previous search</li>
+</ul>
+
+<li>
+<font color="#000000">for a LDAPv3 Directory (virtual- Netscape Phone Book
+is currently a VLV directory)</font></li>
+
+<ul TYPE=SQUARE>
+<li>
+<font color="#000000">verify the list of names are displayed in the right
+pane</font></li>
+
+<li>
+<font color="#000000">verify that scrolling down the scroll bar, the names
+displayed continue alphabetically and do not restart from the beginning.</font></li>
+
+<li>
+<font color="#000000">verify that clicking on the down arrow of the scroll
+bar, the names displayed continue alphabetically and do not restart from
+the beginning.</font></li>
+</ul>
+</ol>
+</ol>
+</ol>
+
+<h4>
+<a NAME="Finding Addresses (Searching)"></a>Finding Addresses (Searching)</h4>
+
+<ol TYPE=A>
+<li>
+Browsing Address Books, <font color="#000000">VLV (Virtual)</font>&nbsp;
+Directories &amp; Offline Directories</li>
+
+<ol>
+<li>
+Verify searching using the text box, the type-down is dynamic.&nbsp; Note:
+in the text box the blur string "Type name to search for here" appears.&nbsp;
+As each character is typed the highlight moves to a match using the collection
+of characters that are typed.&nbsp; (Example: type "t", match&nbsp; is
+found with first entry beginning with "t".&nbsp; Next type "r", match is
+found with first entry beginning with "tr".)</li>
+
+<li>
+Verify searching while the focus in the results pane, the type-down is
+dynamic, but limited to single characters.&nbsp; Characters are not displayed
+in text box so each character is independently matched. (Example: type
+"t", match&nbsp; is found with first entry beginning with "t".&nbsp; Next
+type "r", match is found with first entry beginning with "r" not "tr" like
+the text box search.)</li>
+</ol>
+
+<li>
+Searching non-VLV Directories (this test covered in LDAP test spec <a href="http://slip/projects/seamonkey/mail/tests/sea_mn_addrB_ldap.html#Finding Addresses">LDAP</a>)&nbsp;
+(may change)</li>
+
+<ol>
+<li>
+Verify when a non-VLV Directory is selected a blur string "Type name to
+search for here" should appear (in a slightly grayed color)&nbsp; in the
+search text edit field to aid the user in starting a search.</li>
+</ol>
+
+<li>
+Building Queries (may change)</li>
+
+<ol>
+<li>
+<font color="#000000">Basic Search is done using the text entry box "Show
+names containing</font></li>
+
+<ol TYPE=a>
+<li>
+<font color="#000000">verify the title for the parent modal window is correct
+"Basic Search", this window is not resizable</font></li>
+
+<li>
+<font color="#000000">verify the parent modal window has text boxes for
+"Name", "Email", "Organization", "Department" (note: this is customizable
+using Mission Control, so this only applies if Mission Control has not
+changed the selection criteria)</font></li>
+
+<li>
+<font color="#000000">verify correct results for a one field only search</font></li>
+
+<li>
+<font color="#000000">verify correct results for a combination of fields
+search</font></li>
+
+<li>
+<font color="#000000">verify that switching from&nbsp; Basic and Advanced
+the criteria selected in Basic is reflected in Advanced</font></li>
+
+<li>
+<font color="#000000">verify that the search criteria holds after searching
+and closing</font></li>
+
+<li>
+<font color="#000000">verify that the search criteria holds after closing
+Address Book, reopening and searching on the same directory</font></li>
+
+<li>
+<font color="#000000">verify that all of&nbsp; the search criteria clears
+if you change directories</font></li>
+</ol>
+
+<li>
+Advanced Search (Clicking the Search toolbar button will bring up an Advanced
+Search dialog) (may change)</li>
+
+<ol TYPE=a>
+<li>
+verify the title for the parent modal window is correct "Advanced Search",
+this window is not resizable</li>
+
+<li>
+verify the initial state of this window has "Name" w/popup list, "contains"
+w/popup list, and a text entry field</li>
+
+<li>
+verify there are (2) radios buttons: "Match all items below (And)" , "Match
+one or moe of the items below (Or)", verify they work</li>
+
+<li>
+verify the More/Fewer buttons (popups with other criteria) work</li>
+
+<li>
+verify that invalid searches return nothing (invalid searches can happen
+when switching from Or to And after search criteria has been entered)</li>
+
+<li>
+verify that switching from Advanced to Basic, the criteria selected in
+Advanced is reflected in Basic (if represented)</li>
+
+<li>
+verify that the search criteria holds after searching and closing</li>
+
+<li>
+verify that the search criteria holds after closing Address Book, reopening
+and searching on the same directory</li>
+
+<li>
+verify that all of&nbsp; the search criteria clears if you change directories</li>
+
+<li>
+verify the tabbing order and correctness&nbsp; (see specification)</li>
+</ol>
+
+<li>
+<font color="#000000">Verify the Cancel button works</font></li>
+
+<li>
+<font color="#000000">Verify the Help button works</font></li>
+
+<li>
+<font color="#000000">Verify the Advanced and Basic buttons toggles between
+Advanced and Basic when clicked&nbsp; (may change)</font></li>
+</ol>
+
+<li>
+Search Feedback</li>
+
+<ol>
+<li>
+Verify the Animation is moving during search</li>
+
+<li>
+Verify the Stop button on Toolbar is active and works (Stop button on Toolbar
+TBD at this time, still in spec)</li>
+
+<li>
+Verify the cylon bar in footer is moving back and forth</li>
+
+<li>
+Verify the cursor is watch/hourglass</li>
+
+<li>
+Verify the you get a message asking you to refine search if query exceeds
+maximum server value</li>
+
+<li>
+Verify the blur string "No Matches Found" is displayed in the Results pane
+if no matches are found during an LDAP Search in the Address Book</li>
+</ol>
+</ol>
+
+<h4>
+<a NAME="Managing Address Books"></a>Managing Address Books</h4>
+
+<ol TYPE=A>
+<li>
+Placement of Added or Edited Cards</li>
+
+<ol TYPE=A>
+<li>
+A newly created Card should be listed in the Results pane, when the Address
+Book it was added to,&nbsp; is selected</li>
+
+<li>
+A newly created Card should be listed in the Results pane according to
+the Sort order of the Address Book at the time it is added. (Example, if
+sort order is by email|ascending and you add a card with the name AAA and
+an email address zzz@nowhere.com, this card should be placed at the bottom
+of the list in the Results pane.</li>
+
+<li>
+A newly created card that is added to the Address Book that is selected
+in the Directory pane, should display immedialtely in the Results pane.</li>
+
+<li>
+A newly created Card that is added to an Address Book that is not selected
+in the Directory pane, should display in the Results pane only when that
+address book is selected</li>
+
+<li>
+An edited Card should change location in Results pane immediately, if the
+change is in the field the list is sorted by.</li>
+</ol>
+
+<li>
+Adding and Editing Lists (for basic information on how to create a list
+see link above on How to Create...)</li>
+
+<ol>
+<li>
+Verify layout of a New List</li>
+
+<ol TYPE=a>
+<li>
+Verify the dialog title "Mailing List" and a close "X" button</li>
+
+<li>
+Verify this dialog is moveable and resizable</li>
+
+<li>
+Verify the dialog consists of the following:</li>
+
+<ul>
+<li>
+Verify the "Add to:" pop-up" list defaults to the Personal Address Book
+at the top for the list in the Directory pane.</li>
+
+<li>
+List Name</li>
+
+<li>
+List Nickname</li>
+
+<li>
+Description</li>
+
+<li>
+List Bucket titled "Type names or drag addresses into the mailing list
+below</li>
+
+<li>
+Stop button</li>
+
+<li>
+Remove button</li>
+
+<li>
+Up and Down arrow buttons for reordering names in List bucket</li>
+
+<li>
+Action buttons (OK,Cancel,Help)</li>
+
+<li>
+Status bar indicating Secure&nbsp; and Online/Offline</li>
+</ul>
+
+<li>
+Verify the placement of the List dialog when New List is selected or Edit|Properties
+is selected when a list is to be edited</li>
+
+<ol TYPE=a>
+<li>
+New List - placement is to the right of the Address Book window</li>
+
+<li>
+Editing a List - placement is to the right of the Address Book window</li>
+</ol>
+
+<li>
+Verify the placement of the List in Address Book Window</li>
+
+<ul>
+<li>
+Creating a List while a mailing list is selected in the Directory pane=the
+new list will appear in the Directory pane (in alphabetical order)&nbsp;
+under the Address Book where the currently selected list is located (even
+though it is a sub-list).&nbsp; It&nbsp; will also show in the Results
+pane as part of the content for the selected list .</li>
+
+<li>
+Creating a List when an address book is selected=the new&nbsp; list will
+appear under the address book that it was created in and in the Results
+pane</li>
+</ul>
+
+<li>
+Verify placement of names in a new list is in order of entry.</li>
+
+<li>
+Verify order of names on list can be changed using the Up and Down arrow.&nbsp;
+Verify&nbsp; this order is save after closing the application and reopening
+it.</li>
+
+<li>
+Verify a message addressed to a list, sends the message with the names
+in the addressing field in the order as they appear on the list.</li>
+</ol>
+
+<li>
+Adding data to a New List</li>
+
+<ol TYPE=a>
+<li>
+Verify you can change to another Address book using the pop-up list and
+the list is saved in the target Address book selected.</li>
+
+<li>
+Enter data for a List Name</li>
+
+<ol TYPE=a>
+<li>
+verify valid names (unique name for selected Address Book) are accepted.</li>
+
+<li>
+verify invalid names (non-unique for selected Address Book) are not accepted
+an gives proper error message</li>
+</ol>
+
+<li>
+Enter data for a List Nickname</li>
+
+<ol>
+<li>
+verify valid names work</li>
+
+<li>
+verify invalid names (non-unique for selected Address Book) gives proper
+error message</li>
+</ol>
+
+<li>
+Enter data for the Description</li>
+
+<ol>
+<li>
+valid description</li>
+
+<li>
+verify there is no invalid description</li>
+</ol>
+
+<li>
+Enter no data in any field, OK, verify you get an error message "You must
+enter a list name".&nbsp; Note:You can not save this list with no name.</li>
+
+<li>
+Enter long lines of data in various fields, OK card, open this card to
+verify data was saved, no truncation, no crash.</li>
+
+<li>
+Enter data in various fields, check the HTML box, OK, open this card to
+verfiy the HTML box is still checked.</li>
+
+<li>
+Enter data in various fields, Cancel, verify this card was not created</li>
+
+<ul>
+<li>
+Description</li>
+
+<ol>
+<li>
+valid description</li>
+
+<li>
+verify there is no invalid description</li>
+</ol>
+</ul>
+
+<li>
+Verify the placement of the List in Address Book Window</li>
+
+<ul>
+<li>
+Creating a List while a mailing list is selected in the Directory pane=the
+new list will appear in the Directory pane (in alphabetical order)&nbsp;
+under the Address Book where the currently selected list is located (even
+though it is a sub-list).&nbsp; It&nbsp; will also show in the Results
+pane as part of the content for the selected list .</li>
+
+<li>
+Creating a List when an address book is selected=the new&nbsp; list will
+appear under the address book that it was created in and in the Results
+pane</li>
+</ul>
+
+<li>
+Verify order of names on list can be changed using the Up and Down arrow.&nbsp;
+Verify&nbsp; this order is save after closing the application and reopening
+it.</li>
+
+<li>
+Verify a message addressed to a list, sends the message with the names
+in the addressing field in the order as they appear on the list.</li>
+</ol>
+
+<li>
+Editing a List</li>
+
+<ol TYPE=a>
+<li>
+Verify that from the Directory and Results pane you can select and edit
+a list by clicking the <font color="#CC0000">Edit button on the toolbar</font></li>
+
+<li>
+Verify Edit and OK works and it is saved.</li>
+
+<li>
+Verify Edit and Cancel works and it doesn't save the changes</li>
+</ol>
+</ol>
+
+<li>
+Moving Cards and Lists</li>
+
+<ol>
+<li>
+Verify that you can drag and drop from pane to pane (see Drag and Drop
+section above)</li>
+
+<li>
+Verify that you can drag and drop to/from Address Book (see Drag and Drop
+section above)</li>
+
+<li>
+Verify that you can drag and drop a person's name from a Directory to an
+Address Book (see Drag and Drop section above)</li>
+</ol>
+
+<li>
+Deleting Cards and Lists</li>
+
+<ol>
+<li>
+Verify you can delete <font color="#000000">a Card</font>in <font color="#000000">top
+level of</font>an Address Book using the following, verifying the card
+is removed from the Address Book. Cards are only listed in the Results
+pane.</li>
+
+<ol TYPE=a>
+<li>
+Menu item (Edit/Delete) single selection</li>
+
+<li>
+Menu item (Edit/Delete) multiple selections</li>
+
+<li>
+Toolbar Delete button</li>
+
+<li>
+Accelerator Key</li>
+
+<li>
+Mnemonic</li>
+</ol>
+
+<li>
+Delete a Card on a mailing list using the following: verify the card is
+removed only from the selected mailing list. (Note: if user upgraded or
+imported from 4.5x, cards will be in both the Address Book and lists as
+they were in 4.5x.&nbsp; However, unlike 4.5x when cards are deleted from
+lists using 5.0 they are not going to be deleted from the Address Book
+too.)&nbsp;&nbsp; Cards are only listed in the Results pane.</li>
+
+<ol TYPE=a>
+<li>
+Menu item (Edit/Delete) single selection</li>
+
+<li>
+Menu item (Edit/Delete) multiple selections</li>
+
+<li>
+Toolbar Delete button</li>
+
+<li>
+Accelerator Key</li>
+
+<li>
+Mnemonic</li>
+</ol>
+
+<li>
+Deleting a List from the Directory pane:</li>
+
+<ol TYPE=a>
+<li>
+Menu item (Edit/Delete) single selection</li>
+
+<li>
+Menu item (Edit/Delete) multiple selections</li>
+
+<li>
+Toolbar Delete button</li>
+
+<li>
+Accelerator Key</li>
+
+<li>
+Mnemonic</li>
+</ol>
+
+<li>
+Deleting a List from an Address Book that is displayed in the Results pane:</li>
+
+<ol TYPE=a>
+<li>
+Menu item (Edit/Delete) single selection</li>
+
+<li>
+Menu item (Edit/Delete) multiple selections</li>
+
+<li>
+Toolbar Delete button</li>
+
+<li>
+Accelerator Key</li>
+
+<li>
+Mnemonic</li>
+</ol>
+
+<li>
+Deleting a List from the Results pane when it is the child of a selected
+lists in the Directory pane using:</li>
+
+<ol TYPE=a>
+<li>
+Menu item (Edit/Delete) single selection</li>
+
+<li>
+Menu item (Edit/Delete) multiple selections</li>
+
+<li>
+Toolbar Delete button</li>
+
+<li>
+Accelerator Key</li>
+
+<li>
+Mnemonic</li>
+</ol>
+</ol>
+
+<li>
+Creating and Editing Address Books (for basic information on how to create
+an Address Book see link above on How to Create...)</li>
+
+<ol>
+<li>
+Create a New Address Book using File|New Address Book|</li>
+
+<ol TYPE=a>
+<li>
+Verify the dialog title "Address Book"</li>
+
+<li>
+Verify the dialog layout contains the following :</li>
+
+<ul>
+<li>
+"Name" text field</li>
+
+<li>
+Action buttons (OK, Cancel)</li>
+</ul>
+
+<li>
+Verify valid names (unique) are accepted</li>
+
+<li>
+Verify invalid names (not unique) gives a prompt "You already have an address
+book or directory with this name.&nbsp;&nbsp; Please enter a different
+name."</li>
+
+<li>
+Verify OK works, by typing in a unique name then clicking "OK" , new address
+book should be listed in left (Directory) pane.</li>
+
+<li>
+Verify the placement of the Address books are listed below the topmost
+address book or directory in left (Directory) pane.</li>
+
+<li>
+Verify Cancel works, by typing in a unique or non-unique name, then clicking
+Cancel. Valid name should not show up anyplace in Address book.&nbsp; Canceling
+an Invalid name should not remove the name that was unique to the invalid
+name.</li>
+
+<li>
+Verify Address books and Directories are reorderable.</li>
+</ol>
+
+<li>
+Editing an Address Book</li>
+
+<ol TYPE=a>
+<li>
+Verify you can select an address book for editing.</li>
+
+<li>
+Verify you can open the address book properties using: right mouse click|Properties,
+Edit toolbar button, Edit|Properties from menu bar and double clicking
+on selected address book.</li>
+
+<li>
+Verify valid names (same as above)</li>
+
+<li>
+Verify invalid names give a prompt (same as above)</li>
+
+<li>
+Verify OK works, by typing in a new unique name then clicking "OK" , newly
+named address book should be listed in left (Directory) pane in same place
+as before edit.</li>
+
+<li>
+Verify Cancel works, by typing in a unique or non-unique new name, then
+clicking Cancel. Address book name should not change.</li>
+</ol>
+</ol>
+
+<li>
+Deleting Address Books selected in the Directory pane using:</li>
+
+<ol>
+<li>
+Menu item</li>
+
+<li>
+Toolbar Delete button</li>
+
+<li>
+Accelerator Key</li>
+
+<li>
+Mnemonic</li>
+
+<li>
+<font color="#000000">For each of the above verify you get a prompt:</font></li>
+
+<ol TYPE=a>
+<li>
+Verify OK will delete the selected address book.</li>
+
+<li>
+Verify Cancel does not deleted the address book or any of it's cards or
+mailing lists.</li>
+
+<li>
+<font color="#000000">For the last address book, the Delete button is disabled,
+there must be at least one personal address book.</font></li>
+</ol>
+</ol>
+
+<li>
+Adding a New Directory using the menu item New Directory, includes: Visual
+layout of dialog, Offline settings and functionality of Action buttons.
+(this is covered in the LDAP test spec, <a href="http://slip/projects/seamonkey/mail/tests/sea_mn_addrB_repl.html">LDAP
+Test Spec</a>)</li>
+
+<li>
+Editing an existing Directory (this is covered in the LDAP test spec, <a href="http://slip/projects/seamonkey/mail/tests/sea_mn_addrB_repl.html">LDAP
+Test Spec</a>)</li>
+
+<li>
+Removing a Directory listing from Directory pane (this is covered in the
+LDAP test spec, <a href="http://slip/projects/seamonkey/mail/tests/sea_mn_addrB_repl.html">LDAP
+Test Spec</a>)</li>
+</ol>
+
+<h4>
+<a NAME="Address Selection Dialog (Compose Address button or menu item Select Addresses)"></a>Address
+Selection Dialog (Compose "Address" button or menu item "Select Addresses")</h4>
+
+<ol TYPE=A>
+<li>
+Select Addresses Layout</li>
+
+<ol>
+<li>
+Verify the Title is correct "Select Addresses" and a close "X" button</li>
+
+<li>
+Verify the layout according to the Sea-Monkey Messenger Address Book Specification:</li>
+
+<ol TYPE=a>
+<li>
+Text box titled "Show names containing:" with a "Stop" and "Search" button
+to the right.</li>
+</ol>
+
+<li>
+Left pane listing Address Books and Directories</li>
+
+<li>
+Separator bar for collapsing the left pane</li>
+
+<li>
+Top right pane with columns for Name, Email and organization expanded by
+default,&nbsp; with a widget for hiding/showing other columns. (may change)</li>
+
+<li>
+Action buttons New..., Edit..., View to the right of the top pane</li>
+
+<li>
+Separator bar for resizing the bottom right pane to the minimum of 3 lines.</li>
+
+<li>
+Action buttons To:, Cc: Bcc:&nbsp; with arrows pointing down to the Bucket
+(bottom pane)</li>
+
+<li>
+Bottom right pane (Bucket) listing names that are added using the Action
+buttons To:, Cc:, Bcc</li>
+
+<li>
+Action button Remove to the right of the bottom pane for removing names
+from the bucket</li>
+
+<li>
+Action buttons OK, Cancel &amp; Help</li>
+
+<li>
+Status bar with Security icon, Online icon and area for status of actions</li>
+</ol>
+
+<li>
+Default state</li>
+
+<ol>
+<li>
+Verify the window is movable modal and resizable</li>
+
+<li>
+Verify all panes are expanded by default</li>
+
+<li>
+Verify you cannot resize the window</li>
+</ol>
+
+<li>
+Button Functionality</li>
+
+<ol>
+<li>
+Stop&nbsp; becomes active during a Search, enables the user to stop a search
+in progress</li>
+
+<li>
+Search... functionality is same as Search from the Address Book (see above
+under Finding Addresses)</li>
+</ol>
+
+<ol>
+<li>
+New...Brings up the Card Dialog - Edit mode so user can add a new card
+to an Address Book.</li>
+
+<li>
+Edit...Brings up appropriate dialog for editing the selected Directory,
+Address Book, List or Card.</li>
+
+<li>
+View&nbsp; brings up a non-editable dialog for the selected Directory,
+Address Book, List or Card.</li>
+</ol>
+
+<li>
+Selection and Keyboard Navigation</li>
+
+<ol>
+<li>
+Verify Initial State</li>
+
+<ol TYPE=a>
+<li>
+the text box has focus and the blur string "Type name to search for here"
+appears in the text box</li>
+
+<li>
+the first item in the Directory pane is selected as is the first item in
+the Results pane</li>
+
+<li>
+the To: button is selected by default</li>
+
+<li>
+lastly, the bucket is empty as this is the initial state and there are
+no previous search results to display Note:focus cannot be in the bucket
+when it is empty</li>
+</ol>
+
+<li>
+Verify when typing characters, the text field reflects the characters typed
+and the selection in the list moves to the item that most closely matches
+the characters typed. Pressing the up and down arrows on the keyboard will
+move the highlight up and down within the list</li>
+
+<li>
+Verify when a non-VLV Directory is selected a blur string "Type name to
+search for here" should appear (in a slightly grayed color)&nbsp; in the
+search text edit field to aid the user in starting a search.</li>
+
+<li>
+Verify pressing Return, for the above scenario, the To: button becomes
+active. The selected name is added to the address bucket.&nbsp; The OK
+button now becomes the selected button. The text in the field is highlighted
+so that newly typed characters will overwrite the existing text. Lastly,
+the text field is still the active control.</li>
+
+<li>
+Verify typing more characters,&nbsp; replaces the selected text in the
+text field and the selection in the list moves to the item that most closely
+matches the characters typed. The last addressing button (To: Cc: or Bcc:)
+used will be the default.</li>
+
+<li>
+Verify choosing Cc (or Bcc) instead of To: (the users can select Cc or
+Bcc by clicking on the button), the selected item is displayed in the bucket
+under the previous item prefixed by Cc:.&nbsp; The OK button becomes the
+default button.</li>
+
+<li>
+Verify that &lt;Tab> will change the focus to the next logical control
+as follows:</li>
+</ol>
+
+<ol>
+<ol TYPE=a>
+<li>
+Text Field</li>
+
+<li>
+Directory pane&nbsp; (1st address book selected)</li>
+
+<li>
+Results pane (1st name selected)</li>
+
+<li>
+To:</li>
+
+<li>
+Cc:</li>
+
+<li>
+Bcc:</li>
+
+<li>
+New... , then OK</li>
+
+<li>
+Edit...&nbsp; , then OK</li>
+
+<li>
+View, then OK</li>
+
+<li>
+Address Bucket&nbsp; (only if there is a name in the Addressing bucket)
+Keyboard arrow keys move up and down the list at this point.</li>
+
+<li>
+Remove (only if a name in the Bucket is selected), then OK</li>
+
+<li>
+Cancel</li>
+
+<li>
+Help</li>
+
+<li>
+Search...(only if a Directroy is selected)</li>
+</ol>
+
+<li>
+Verify the blur string "No Matches Found" is displayed in the Results pane
+if no matches are found during an LDAP Search in this dialog</li>
+
+<li>
+Verify when you click OK, the window closes and the names in the bucket
+are displayed in the addressing field of a Compose window, each on a separate
+line.</li>
+
+<li>
+Verify when you click Cancel, the window closes and any names displayed
+in the Bucket are not displayed in the Addressing field of the Compose
+window</li>
+
+<li>
+Verify when you select a name in the Bucket and click Remove, the name
+is removed from the Bucket list and the previous name is&nbsp; selected.</li>
+</ol>
+</ol>
+<a NAME="Pop-up Selector Dialog"></a><b>Pop-up Selector Dialog</b>
+<ol TYPE=A>
+<li>
+Pop-up Selector Dialog layout</li>
+
+<ol>
+<li>
+Verify the Title is correct "Addresses Matching "[the name typed in the
+addressing field]"&nbsp; with a close "X" button</li>
+
+<li>
+Verify this dialog is moveable and resizable</li>
+
+<li>
+Verify there is a window which displays the matching names found</li>
+
+<li>
+Verify this window has columns matching those in the Address book with
+a show/hide widget for displaying any column that is available in the Address
+book; the default columns for this window are "Name, Email and Work Phone".
+(may change)</li>
+
+<li>
+Verify each name has an icon to the left of the name identifying the location
+of the name (i.e.&nbsp; Address Book or Directory)</li>
+
+<li>
+Action buttons OK &amp; Cancel</li>
+
+<li>
+Status bar w/Online icon and status "Found x matches", x=number of matches
+found.</li>
+</ol>
+
+<li>
+Pop-up Selector functionality</li>
+
+<ol>
+<li>
+Verify this Pop-up Selector does not pop up if Preference is set to "Accept
+what I have typed"</li>
+
+<li>
+Verifiy this window pops-up when user has "Show me a list" selected in
+the Preference and user types characters in the addressing field or a message
+that has multiple matches.</li>
+
+<ol TYPE=a>
+<li>
+This dialog will not come up if the user puts an @ at the end of the typed
+string.</li>
+
+<li>
+This dialog will come up after a pause in typing,&nbsp; if the string of
+characters matches mutiple names in the Address Book or Directory or both
+depending on Preference selection.</li>
+</ol>
+
+<li>
+Multiple selections of names in this window is not allowed.</li>
+
+<li>
+Selecting an Name and clicking OK will place the selected name in the appropriate
+addressing field in the Compose message window.</li>
+
+<li>
+Clicking Cancel will close the dialog and leave the string in the addressing
+field with insertion point exactly where it was waiting&nbsp; for more
+input from the user.</li>
+
+<li>
+Verifiy, after Cancel, if user continues to type,&nbsp; matching continues
+and another pop-up dialog will pop up when pausing.</li>
+</ol>
+</ol>
+
+<hr WIDTH="100%">
+<ol TYPE=A>
+<ol>&nbsp;</ol>
+</ol>
+
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/quality/mailnews/tests/sea-mn-addrb.html&amp;rev=&amp;root=/cvsroot/">Last modified July 19,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

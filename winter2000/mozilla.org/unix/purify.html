@@ -1,0 +1,158 @@
+<HTML>
+<HEAD>
+<TITLE>mozilla.org</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF=".././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+
+<title>
+Purifying Mozilla on Solaris
+</title>
+
+
+<center>
+<h1>Purifying Mozilla on Solaris</h1>
+<p>Seth Spitzer</p>
+<p>sspitzer@netscape.com</p>
+<p><a href="news://news.mozilla.org/netscape.public.mozilla.unix">post comments / questions to news://news.mozilla.org/netscape.public.mozilla.unix</a></p>
+</center>
+<pre>
+step 1: build mozilla on solaris
+if that is a problem, you got bigger fish to fry
+
+step 2: build the purify version of mozilla
+$ setenv PURIFYOPTIONS -best-effort
+$ cd mozilla/xpfe/bootstrap
+$ gmake CXX=g++ pure
+
+step 3: run the purify version
+# I needed to do this or I ran out of file descriptors when trying to run purify
+$ limit descriptors 1024
+
+$ cd mozilla/dist/bin
+$ ./mozilla -pure
+
+</pre>
+
+<b>Tips from Bruce Mitchner, Mr. Purify:</b>
+
+<pre>
+# you may want to add these to your ~/.purify file
+suppress bsw *
+suppress umr _write; write
+suppress umr memcmp; LocalConnection; XShmQueryVersion
+suppress umr gdk_rgb_try_colormap
+suppress umr gdk_color_hash
+suppress umr gtk_widget_set_sensitive
+suppress umr HandleComposeSequence; _XTranslateKeySym; XLookupString; _MbLookupString; XmbLookupString
+suppress abr miSubtractO; miRegionOp; XSubtractRegion; gdk_regions_subtract
+suppress umr XListFonts; GetFontNames(char*)
+suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age; _door_return
+suppress fmr XDestroyIC; gdk_ic_destroy; gtk_entry_unrealize
+suppress fum free; gdk_ic_destroy; gtk_entry_unrealize
+suppress bsw pthread_mutex_unlock
+
+# memory in use 
+Purify has a nice preference to have it record memory in use at the time
+of the exit of the application.
+
+# BSWs
+The BSWs only start showing up after you install some patches on Solaris
+2.6.  I think they started showing up for me when I'd had some patches
+installed for green threads for Java.
+
+# New leaks
+You can have it check for new leaks from the Purify menu.  This rocks.
+You can do something in the UI and immediately check for new leaks.
+Unfortunately, I don't think it'll show the difference in what is still in
+use, so you can't see how much bloat doing something might have (to the
+best of my knowledge).
+
+# Potential leaks.
+PLK (potential leaks) are real problems, not just 'potential'
+problems.  This is due to how QueryInterface stuff works with COM.  Read
+the manual to have this made clear.
+
+</pre>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/unix/purify.html&amp;rev=&amp;root=/cvsroot/">Last modified December 16,  1999</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

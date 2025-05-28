@@ -1,0 +1,151 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Ian Oeschger">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win98; U) [Netscape]">
+   <title>colorpicker</title>
+</head>
+<body>
+<table BORDER=0 COLS=1 WIDTH="100%" >
+<tr><td><p align="right"><i>XUL Programmer's Reference Manual</i></p></td></tr>
+<tr>
+<td><h1><font color="#000099"><font size=+2>&lt;colorpicker></font></font></h1></td>
+</tr>
+
+<tr>
+<td>
+<table BORDER=0 CELLSPACING=0 COLS=2 WIDTH="100%" BGCOLOR="#CCCCCC" >
+<tr BGCOLOR="#000099">
+<td><b><font color="#FFFFFF">Attributes</font></b></td>
+
+<td><b><font color="#FFFFFF">Common Children</font></b></td>
+</tr>
+
+<tr>
+<td><i><a href="common.html#id">id</a></i></td>
+
+<td>* * *&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#type">type</a></td>
+
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="#palettename">palettename</a></td>
+
+<td>&nbsp;</td>
+</tr>
+</table>
+
+<p>&lt;colorpicker> is a palette widget that can be used to select colors
+in a XUL application. The following sample shows the user of the colorpicker
+element and a function which returns the selected color:
+<blockquote>
+<table BORDER=0 WIDTH="80%" BGCOLOR="#CCCCCC" >
+<tr>
+<td><tt>&lt;html:script></tt>
+<br><tt>&nbsp; function doSomethingUseful(cp)</tt>
+<br><tt>&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; var color = cp.getAttribute('color');</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; document.getElementById("input").value = color;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; document.getElementById("mydiv").style.backgroundColor
+= color;</tt>
+<br><tt>&nbsp; }</tt>
+<br><tt>&lt;/html:script></tt><tt></tt>
+<p><tt>&lt;colorpicker id="cp" onclick="doSomethingUseful(this);"/></tt>
+<br><tt>&lt;html:p/></tt>
+<br><tt>&lt;html:input id="input"/></tt>
+<br><tt>&lt;html:p/></tt>
+<br><tt>&lt;html:div id="mydiv" style="width:100px; height:100px; background-color:white"/></tt>
+<br><tt></tt>&nbsp;<tt></tt>
+<p><tt>&lt;html:hr/></tt>
+<br><tt></tt>&nbsp;
+<br>&nbsp;</td>
+
+<td><img SRC="colorpicker.gif" height=329 width=204></td>
+</tr>
+</table>
+</blockquote>
+<p>The example above gets the color from the displayed palette, displays the value of the chosen color in the input field, and changes the background color of the html:div element "mydiv" to the chosen color.</p><br><br></td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="type"></a><b><font color="#FFFFFF"><font size=+1>type</font></font></b></td>
+</tr>
+
+<tr>
+<td>
+<h3>
+<font size=+0>Description</font></h3>
+
+<blockquote>The <b>type</b> attribute specifies what kind of colorpicker
+is to be used.</blockquote>
+
+<h3>
+<font size=+0>Syntax</font></h3>
+
+<blockquote><tt>&lt;colopicker <b>type</b>="swatch" /></tt></blockquote>
+
+<h3>
+<font size=+0>Example</font></h3>
+
+<blockquote><font face="Courier New,Courier">&lt;colorpicker <b>type</b>="swatch"
+/></font></blockquote>
+
+<h3>
+<font size=+0>Notes</font></h3>
+
+<blockquote>This attribute does not need to be specified. Swatch is the
+only colorpicker type supported currently, and it is the default when this
+attribute is not explicit.</blockquote>
+&nbsp;</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#000099"><a NAME="palettename"></a><b><font color="#FFFFFF"><font size=+1>palettename</font></font></b></td>
+</tr>
+
+<tr>
+<td>
+<h3>
+<font size=+0>Description</font></h3>
+
+<blockquote><b>palettename</b> is na optional attribute for specifying
+what kind of palette to load into the colorpicker.</blockquote>
+
+<h3>
+<font size=+0>Syntax</font></h3>
+
+<blockquote><tt>&lt;colorpicker <b>palettename</b>="gray | standard | web"
+/></tt></blockquote>
+
+<h3>
+<font size=+0>Example</font></h3>
+
+<blockquote><font face="Courier New,Courier">&lt;colorpicker <b>palettename</b>="standard"
+/></font></blockquote>
+
+<h3>
+<font size=+0>Notes</font></h3>
+
+<blockquote>The default value for the <b>container</b> attribute is "standard".
+"Web" is the 216 color palette, and "gray" is the grayscale palette.</blockquote>
+
+<p>&nbsp;</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+<p align="right"><i>Last updated: 13:10 1/26/00 <a href="mailto:oeschger@netscape.com">Ian Oeschger</a></i></p>
+
+</body>
+</html>

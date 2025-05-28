@@ -1,0 +1,1253 @@
+<HTML>
+<HEAD>
+<TITLE>XBL - The Extensible Bindings Language</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"
+LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000"
+MARGINHEIGHT="0" MARGINWIDTH="0">
+
+<MAP NAME="banner">
+<AREA SHAPE=RECT COORDS="300,11,558,44" ALT="" HREF="http://www.mozilla.org/">
+</MAP>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<TR><TD BGCOLOR="#000000" VALIGN=TOP><IMG
+SRC="../../images/mozilla-banner.gif"
+ALT="" BORDER=0 USEMAP="#banner"
+WIDTH="600" HEIGHT="58" VSPACE="0" HSPACE="0"></TD></TR></TABLE>
+
+<TABLE BORDER="0" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+
+
+<TR>
+
+
+<TD VALIGN="TOP" >
+<TABLE BORDER="0" ><TR><TD BGCOLOR="#000000" VALIGN="TOP">
+<TABLE BORDER="0" CELLSPACING="3"><TR><TD BGCOLOR="#DDDDDD" VALIGN="TOP">
+<TABLE CELLPADDING=0 CELLSPACING=3 BORDER=0>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../.././"><B> The Mozilla<BR>Organization</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../mozorg.html"> At A Glance</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../feedback.html"> Feedback</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../get-involved.html"> Get Involved</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../community.html"> Newsgroups</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../MPL/"> License Terms</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://www.mozilla.org/newsbot/"> Newsbot</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../docs/"><B> Developer Docs</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../roadmap.html"> Roadmap</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../projects/"> Projects</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../ports/"> Ports</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../owners.html"> Module Owners</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../hacking/"> Hacking</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../source.html"> Get the Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../build/"> Build It</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../quality/"><B> Testing</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../binaries.html"> Download</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../bugs/"> Bugzilla</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="../../quality/bug-writing-guidelines.html"> Bug Writing</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../tools.html"><B> Tools</B></A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://lxr.mozilla.org/seamonkey/"> View Source</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://tinderbox.mozilla.org/showbuilds.cgi?tree=SeaMonkey"> Tree Status</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://cvs-mirror.mozilla.org/webtools/bonsai/cvsquery.cgi?treeid=default&amp;module=SeaMonkeyAll&amp;branch=HEAD&amp;branchtype=match&amp;dir=&amp;file=&amp;filetype=match&amp;who=&amp;whotype=match&amp;sortby=Date&amp;hours=2&amp;date=day&amp;mindate=&amp;maxdate=&amp;cvsroot=%2Fcvsroot"> New Checkins</A></TD></TR>
+<TR><TD></TD><TD NOWRAP><A HREF="http://bugzilla.mozilla.org/"> Submit A Bug</A></TD></TR>
+<TR><TD NOWRAP VALIGN=TOP COLSPAN=3 - 1><B></B></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="../../faq.html"><B> FAQ</B></A></TD></TR>
+<TR><TD NOWRAP COLSPAN=2><A HREF="http://www.mozilla.org/search.html"><B> Search</B></A></TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</TD>
+
+
+<TD VALIGN="TOP">
+
+
+<!--This file created 1/31/00 3:25 PM by Claris Home Page version 3.0 30 Day Trial-->
+
+   
+   <X-CLARIS-WINDOW TOP=42 BOTTOM=693 LEFT=5 RIGHT=539>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+
+
+<H1><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="100%">
+   <TR>
+      <TD BGCOLOR="#6699FF">
+         <P><FONT SIZE="+1" COLOR="#FFFFFF">XBL - The Extensible
+         Bindings Language</FONT></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><B>Author:</B> <A HREF="mailto:hyatt@netscape.com">Dave
+         Hyatt</A><BR>
+         <B>Change History: </B></P>
+         
+         <UL>
+            <LI>Jan 12, 2000 - Second Draft</LI>
+            
+            <LI>Jan 4, 2000 - Initial Draft</LI>
+         </UL>
+         
+         <P><B>Contents:</B></P>
+         
+         <UL>
+            <LI><A HREF="#introduction">Introduction</A></LI>
+            
+            <LI><A HREF="#structure">The Structure of an XBL
+            Document</A></LI>
+            
+            <LI><A HREF="#css">CSS and XBL</A></LI>
+            
+            <LI><A HREF="#binding">The Binding Element</A></LI>
+            
+            <LI><A HREF="#content">The Content Element</A>
+            
+            <UL>
+               <LI><A HREF="#anonymous">Anonymous Content and the
+               DOM</A></LI>
+               
+               <LI><A HREF="#exclusionary">Exclusionary Construction
+               of Content</A></LI>
+               
+               <LI><A HREF="#inheritance">Inheritance of
+               Attributes</A></LI>
+               
+               <LI><A HREF="#children">The Children Element</A></LI>
+            </UL>
+            </LI>
+            
+            <LI><A HREF="#interface">The Interface Element</A>
+            
+            <UL>
+               <LI><A HREF="#methods">Methods</A></LI>
+               
+               <LI><A HREF="#parameters">Method Parameters</A></LI>
+               
+               <LI><A HREF="#implementations">Method
+               Implementations</A></LI>
+               
+               <LI><A HREF="#properties">Properties</A></LI>
+               
+               <LI><A HREF="#xpcom">Interfaces and XPCOM</A></LI>
+            </UL>
+            </LI>
+            
+            <LI><A HREF="#events">The Handlers Element</A>
+            
+            <UL>
+               <LI><A HREF="#event">Handler Elements</A></LI>
+               
+               <LI><A HREF="#redirection">Event Redirection</A></LI>
+            </UL>
+            </LI>
+            
+            <LI><A HREF="#inheritance">Binding Inheritance</A>
+            
+            <UL>
+               <LI><A HREF="#extends">The Extends Attribute</A></LI>
+               
+               <LI><A HREF="#content-inheritance">Inheritance of
+               Content</A></LI>
+               
+               <LI><A HREF="#methodinheritance">Inheritance of
+               Methods/Properties</A></LI>
+               
+               <LI><A HREF="#event-inheritance">Inheritance of
+               Handlers</A></LI>
+            </UL>
+            </LI>
+            
+            <LI><A HREF="#rules">Rule-Based Construction
+            (Examples)</A></LI>
+         </UL>
+         
+         <P><A NAME=introduction></A></P>
+         
+         <H2>Introduction</H2>
+         
+         <P>The current Mozilla infrastructure contains a number of
+         recent feature additions, specifically intended to
+         facilitate the design of user interface elements and the
+         processing of events and operations on those elements. To
+         date, this has been undertaken on a sort of "ad hoc" basis,
+         with features being invented, augmented and redesigned only
+         as needed.</P>
+         
+         <P>These features include <I>anonymous content</I>, the
+         <I>command dispatcher</I>, the <I>controller</I> system, and
+         the <I>configurable key binding</I> system.</P>
+         
+         <P>The above features have emerged as critical requirements
+         for the Mozilla application. Unfortunately the design of
+         these features has been haphazard at best. The design has
+         also been particularly difficult because it necessarily
+         involves non-standard extensions to CSS, the DOM, and
+         HTML.</P>
+         
+         <P>The purpose of this document is to provide a concrete
+         proposal for a redesign of the current system in order to
+         enable the full range of functionality we need for the
+         Mozilla application. In the following sections, I will tie
+         together these different features into a new language, XBL,
+         that can exist apart from XUL and that can be used with
+         either XUL or HTML.</P>
+         
+         <P><A NAME=structure></A></P>
+         
+         <H2>The Structure of an XBL Document</H2>
+         
+         <P>An XBL file is a well-formed XML file. The root element
+         of the file is a <TT>&lt;bindings&gt;</TT> tag. The
+         namespace of XBL is <TT>http://www.mozilla.org/xbl</TT>.</P>
+         
+         <P>An XBL file consists of zero or more bindings, each
+         declared as a child of the root element with a
+         <TT>&lt;binding&gt;</TT> tag.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <PRE>
+&lt;bindings xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    ...
+  &lt;/binding&gt;
+  &lt;binding&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME=css></A></P>
+         
+         <H2>CSS and XBL</H2>
+         
+         <P>An element in XML (in particular XUL and HTML elements)
+         can point to a specific binding in an XBL file. The location
+         of this file is specifiable using CSS. A new property,
+         <TT>behavior</TT>, can be used.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <PRE>
+textarea {
+  behavior: url("chrome://global/content/htmlBindings.xml#textarea");
+}
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>Bindings are identified using a
+         <FONT COLOR="#FF0000">name</FONT> attribute. In the CSS, the
+         # notation is used to reference a specific binding within
+         the XBL file. If a binding name is not specified, then the
+         first binding defined in the XBL file is used.</P>
+         
+         <P>The binding found in the XBL file will be applied to any
+         elements that match the style rule. In the above example, a
+         binding is referenced that will apply to all HTML
+         <TT>textarea</TT> elements.</P>
+         
+         <P><FONT COLOR="#FF0000">Note:</FONT> There is currently a
+         <A HREF="http://www.w3.org/TR/becss">working draft</A> afoot
+         for adding behavioral extensions to CSS. This proposal
+         complements that draft through its support of the
+         <FONT COLOR="#800080">behavior</FONT> property. XBL is one
+         particular behavioral implementation that CSS can reference.
+         Another proposed implementation of behaviors is HTC (HTML
+         Components). This implementation, however, is not
+         generalizable to other namespaces, is not well-formed XML,
+         and does not support the extra anonymous content
+         capabilities that XBL offers.</P>
+         
+         <P><A NAME=binding></A></P>
+         
+         <H2>The <TT>&lt;binding&gt;</TT> Element</H2>
+         
+         <P>The <TT>binding</TT> element is used to dynamically bind
+         new information to another XML element (e.g., a XUL or HTML
+         element). Each binding has three components.</P>
+         
+         <P>&nbsp;</P>
+         
+         <OL>
+            <LI><I>Content</I>. A binding can specify new content
+            that is placed underneath the bound element. This content
+            can either be anonymous (hidden from the bound element)
+            or explicit (visible to the bound element).
+            <FONT COLOR="#FF0000"> This doesn't have to be
+            implemented in the 5.0 timeframe.</FONT>
+            
+            <P>&nbsp;</P></LI>
+            
+            <LI><I>Methods &amp; Properties</I>. A binding can
+            specify additional methods that can be invoked on the
+            element. It can also specify additional properties that
+            can be retrieved or set on the element. In this way the
+            functionality of the bound element becomes extensible.
+            <FONT COLOR="#FF0000">This doesn't have to be implemented
+            in the 5.0 timeframe.</FONT>
+            
+            <P>&nbsp;</P></LI>
+            
+            <LI><I>Behavior</I>. A binding can specify event handlers
+            for specific actions like key and mouse events that can
+            make use of the new functionality applied in the
+            binding.</LI>
+         </OL>
+         
+         <P>The following sections cover each component of a binding
+         in more detail.</P>
+         
+         <P><A NAME=content></A></P>
+         
+         <H2>The <TT>&lt;content&gt;</TT> Element</H2>
+         
+         <P>The <TT>content</TT> element is used as a child of the
+         <TT>binding</TT> element to indicate additional content that
+         can potentially be built underneath the bound element. A
+         binding can have only one content element as a child.</P>
+         
+         <P>This content is <I>anonymous</I> and does not alter the
+         bound element's document object model. The content itself is
+         declared normally, just as it would appear if it were really
+         declared underneath the bound element.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B> Scrollbars frequently differ
+                  from platform to platform. On the Windows operating
+                  system a scrollbar can be implemented using an up
+                  button, a scrollbar thumb, and a down button. On
+                  the BeOS, however, a scrollbar consists of a pair
+                  of up/down buttons, a scrollbar thumb, and a second
+                  pair of up/down buttons.</P>
+                  
+                  <P>By making the scrollbar's content anonymous, and
+                  by moving the anonymous content itself into an XBL
+                  file, CSS can then be used to point to two
+                  different XBL files on the different operating
+                  systems.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    &lt;content&gt;
+      &lt;xul:titledbutton class="upButton" oncommand="parentNode.lineUp();"/&gt;
+      &lt;xul:thumb class="thumb" .../&gt;
+      &lt;xul:titledbutton class="downButton" oncommand="parentNode.lineDown();"/&gt;
+    &lt;/content&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME=anonymous></A></P>
+         
+         <H3>Anonymous Content and the DOM</H3>
+         
+         <P>Although anonymous content is not really contained in the
+         document, it can be styled by style sheets loaded by the
+         document. As far as style resolution is concerned, the
+         anonymous content can be referenced as if it is contained in
+         the document. Scripts on anonymous content can also
+         reference JavaScript variables and functions defined within
+         the global script object that corresponds to the
+         document.</P>
+         
+         <P>The formatting objects constructed from anonymous content
+         are placed on the end of the containing object's list of
+         children. In other words, if explicit content and anonymous
+         content are both specified for a bound element, then the
+         explicit content's formatting objects appear first in the
+         flow (with all the usual exceptions for absolutely
+         positioned, fixed positioned, floaters, etc.).</P>
+         
+         <P>Events that occur on anonymous content are not visible to
+         the bound element or to its document. Within the anonymous
+         content tree itself, events bubble normally and are also
+         capturable by other anonymous content.</P>
+         
+         <P>It is possible for anonymous content to be bound to
+         another XBL file that can itself contain anonymous content.
+         In this case, the nested anonymous content is invisible to
+         the outer anonymous content. This nesting can be taken to an
+         arbitrary level.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B> The scrollbar thumb itself can
+                  be implemented using two springs and a
+                  titledbutton. This content could be defined in an
+                  XBL file bound to the <TT>thumb</TT> element. It is
+                  invisible to the thumb that it is bound to, and in
+                  turn the thumb is invisible to the scrollbar that
+                  it is bound to.</P>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME=exclusionary></A></P>
+         
+         <H3>Exclusionary Construction of Content</H3>
+         
+         <P>By default, content is only built if the bound element
+         has no child content already. In certain situations,
+         however, it is desirable to build anonymous content even
+         when the element already has children. The
+         <FONT COLOR="#FF0000">excludes</FONT> attribute can be used
+         in this case. Its value is a comma-separated list of child
+         tags that should be ignored during the check regarding
+         whether or not anonymous content should be constructed.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B>: The menu element in XUL can
+                  contain <TT>template</TT> or <TT>observes</TT>
+                  elements as children. It can also contain a
+                  <TT>menupopup</TT> element as a child. If, however,
+                  no content is specified other than those three
+                  children, then the contents of the menu must still
+                  be constructed anonymously.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    &lt;content excludes="template,observes,menupopup"&gt;
+      &lt;xul:titledbutton class="menu-left"/&gt;
+      &lt;xul:titledbutton class="menu-text"/&gt;
+      &lt;xul:spring flex="1" class="menu-spring"/&gt;
+      &lt;xul:titledbutton class="menu-accel"/&gt;
+      &lt;xul:titledbutton class="menu-right"/&gt;
+    &lt;/content&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME=inheritance></A></P>
+         
+         <H3>Inheritance of Attributes</H3>
+         
+         <P>In some cases attributes that are set or changed on the
+         bound element should be reflected into the binding's
+         content. The <FONT COLOR="#FF0000">inherits</FONT> attribute
+         can be used on specific elements within the content binding.
+         This attribute is a global attribute, and therefore its
+         namespace must be explicitly qualified as XBL. The value of
+         the attribute is a comma-separated list of attributes that
+         should inherit from the bound element. These attributes
+         always remain in sync with the bound element; if the
+         attribute's value changes on the bound element, then the
+         anonymous content is also updated to reflect the new
+         value.</P>
+         
+         <P>In some cases the attribute on the bound element is not
+         the same as the attribute on the anonymous content that
+         should be set. In this case, a colon-separated pair can be
+         specified in the inherits attribute. The first attribute in
+         the pair is mapped to the second attribute in the pair.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B>: The menu element in XUL
+                  supports the <TT>value</TT> attribute as a means of
+                  specifying the menu item's text. It also supports
+                  the <TT>acceltext</TT> attribute as a means of
+                  specifying the accelerator text for a menu item.
+                  Because <TT>titledbutton</TT> elements are used for
+                  both, the <TT>value</TT> attribute must be
+                  specified on both. The menu text button can inherit
+                  the value from the bound element. The menu
+                  accelerator button must inherit from acceltext and
+                  map that attribute to its value attribute.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;xbl:bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+              xmlns:xbl="http://www.mozilla.org/xbl"&gt;
+  &lt;xbl:binding&gt;
+    &lt;xbl:content excludes="template,observes,menupopup"&gt;
+      &lt;xul:titledbutton class="menu-left"/&gt;
+      &lt;xul:titledbutton class="menu-text" xbl:inherits="value"/&gt;
+      &lt;xul:spring flex="1" class="menu-spring"/&gt;
+      &lt;xul:titledbutton class="menu-accel" 
+                        xbl:inherits="acceltext:value"/&gt;
+      &lt;xul:titledbutton class="menu-right"/&gt;
+    &lt;/xbl:content&gt;
+    ...
+  &lt;/xbl:binding&gt;
+  ...
+&lt;/xbl:bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME=children></A></P>
+         
+         <H2>The <TT>&lt;children&gt;</TT> Element</H2>
+         
+         <P>XBL can be used to interpose anonymous content in between
+         the bound element and its explicit children. This has no
+         effect on the bound element's document object model.
+         Instead, the formatting objects created from the anonymous
+         content are constructed as immediate children of the bound
+         element's formatting object. The formatting objects that are
+         built from the explicit child content of the bound element
+         are inserted underneath the anonymous formatting objects at
+         a location specified in the XBL.</P>
+         
+         <P>The <TT>children</TT> tag within anonymous content
+         specifies the place at which to insert the explicit children
+         of the parent within the formatting object tree. When
+         styling these children, the anonymous content nodes are
+         visible, just as if they existed in the document itself.</P>
+         
+         <P>Events that originate on explicit child content will
+         bubble through their parent anonymous content elements
+         before reaching the bound element. In effect, the event
+         begins in the bound element's DOM, bubbles through the
+         parent anonymous content, and then bubbles up to the bound
+         element. Capturing works in a similar fashion.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B>: In XUL a
+                  <TT>&lt;scrollgroup&gt;</TT> tag can be used to
+                  specify a scrollable window. Its explicit children
+                  are placed inside a <TT>scrollport</TT> object, and
+                  a <TT>scrollbar</TT> is built as a sibling of the
+                  <TT>scrollport</TT> in the formatting object tree.
+                  This extra <TT>scrollport</TT> frame need not be
+                  defined by the user, but its presence is required
+                  in order for the scrollable window to work
+                  properly.</P>
+                  
+                  <P>In this example, an XBL binding for the
+                  <TT>scrollgroup</TT> is made that ensures that any
+                  of the scrollgroup's explicit children are placed
+                  inside the scrollport so that they can be
+                  scrolled.</P>
+                  
+                  <PRE>
+&lt;xbl:bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+              xmlns:xbl="http://www.mozilla.org/xbl"&gt;
+  &lt;xbl:binding&gt;
+    &lt;xbl:content excludes="template,observes,menupopup"&gt;
+      &lt;xul:scrollport&gt;
+        &lt;xbl:children/&gt;
+      &lt;/xul:scrollport&gt; 
+      &lt;xul:scrollbar class="vertical"/&gt;
+    &lt;/xbl:content&gt;
+    ...
+  &lt;/xbl:binding&gt;
+  ...
+&lt;/xbl:bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME=interface></A></P>
+         
+         <H2>The <TT>&lt;interface&gt;</TT> Element</H2>
+         
+         <P>The <TT>interface</TT> element is used to specify
+         additional functions that can be invoked on the bound
+         element, as well as additional properties that can be set or
+         retrieved on the bound element. A <TT>binding</TT> element
+         can have only one <TT>interface</TT> element child.</P>
+         
+         <P><A NAME=methods></A></P>
+         
+         <H3>Methods</H3>
+         
+         <P>An <TT>interface</TT> element defines zero or more
+         methods and zero or more properties. Each method is
+         specified using the <TT>method</TT> tag, and each property
+         is specified using the <TT>property</TT> tag. The
+         <FONT COLOR="#FF0000">name</FONT> attribute can be used on
+         either of these two elements to indicate the name of the
+         method or property that will be added to the bound
+         element.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B> A scrollbar element in XUL can
+                  have methods defined on it using XBL that allow for
+                  scrolling up and down, either by a line or by a
+                  page. It can also have a property that represents
+                  the current index of the scrollbar.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    &lt;content&gt;
+      &lt;xul:titledbutton class="upButton" oncommand="parentNode.lineUp();"/&gt;
+      &lt;xul:thumb class="thumb" .../&gt;
+      &lt;xul:titledbutton class="downButton" oncommand="parentNode.lineDown();"/&gt;
+    &lt;/content&gt;
+    &lt;interface&gt;
+      &lt;method name="lineUp"&gt;
+        ...
+      &lt;/method&gt;
+      &lt;method name="lineDown"&gt;
+        ...
+      &lt;/method&gt;
+      &lt;property name="currentIndex"/&gt;
+    &lt;/interface&gt;
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>Method and property names are case-sensitive. The
+         convention to use in Mozilla: the first letter of method and
+         property names should always be lowercase (just as with
+         JavaScript methods and properties).</P>
+         
+         <P><A NAME=parameters></A></P>
+         
+         <H3>Parameters</H3>
+         
+         <P>Arguments to methods can be specified using the
+         <TT>&lt;argument&gt;</TT> tag. The argument tag can also
+         take a <FONT COLOR="#FF0000">name</FONT> attribute. In the
+         implementation of the function the value of this attribute
+         can be used to refer to a variable that is bound to the
+         value of the argument passed in to the method.</P>
+         
+         <P>The type of an argument can be specified using the
+         <FONT COLOR="#FF0000">type</FONT> attribute, although this
+         is not required. Method arguments in XBL can be of
+         polymorphic type, assuming the scripting language used by
+         the implementation supports it.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B> A scrollbar can define a
+                  <TT>scrollTo</TT> method that requires a single
+                  argument, a number indicating the line to scroll
+                  to.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    ...
+    &lt;interface&gt;
+      &lt;method name="scrollTo"&gt;
+        &lt;argument name="index"/&gt;
+        ...
+      &lt;/method&gt;
+      ...
+    &lt;/interface&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>The return type of a method can be specified on the
+         <TT>method</TT> tag using a
+         <FONT COLOR="#FF0000">returns</FONT> attribute. Just as with
+         argument types, this value need not be specified if the
+         underlying scripting language supports polymorphic return
+         types.</P>
+         
+         <P><A NAME=implementations></A></P>
+         
+         <H3>Method Implementations</H3>
+         
+         <P>The <TT>body</TT> tag is used to specify the
+         implementation of a particular function. It contains a
+         script that is executed when the method is invoked. The
+         <FONT COLOR="#FF0000">type</FONT> attribute can be used to
+         specify the language of the script.</P>
+         
+         <P><TABLE BORDER=2>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B> The scrollbar defines an
+                  implementation for the <TT>scrollTo</TT>
+                  method.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    ...
+    &lt;interface&gt;
+      &lt;method name="scrollTo"&gt;
+        &lt;argument name="index"/&gt;
+        &lt;body&gt;
+          &lt;!&#91;CDATA&#91;
+          if (index == currentIndex) return; ...
+          &#93;&#93;&gt;
+        &lt;/body&gt;
+      &lt;/method&gt;
+      ...
+    &lt;/interface&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>The method body is evaluated in the context of the bound
+         element. Thus properties of the element can be referred to
+         by name (as is done for the <TT>currentIndex</TT> property
+         in the example above).</P>
+         
+         <P><A NAME=properties></A></P>
+         
+         <H3>Properties</H3>
+         
+         <P>The <TT>property</TT> tag is used to specify a property
+         in XBL. By default the property can be set or retrieved on
+         the element. The <FONT COLOR="#FF0000">name</FONT> attribute
+         is used to specify the name of the property.</P>
+         
+         <P>The <FONT COLOR="#FF0000">readonly</FONT> attribute if
+         present and set to <FONT COLOR="#800080">true</FONT>
+         indicates that the property can be inspected on the bound
+         element but not changed.</P>
+         
+         <P>The <FONT COLOR="#FF0000">value</FONT> attribute on the
+         property element is a script that evaluates to an initial
+         value for the property.</P>
+         
+         <P><TABLE BORDER=2>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B> The scrollbar initializes its
+                  current index to 0.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    ...
+    &lt;interface&gt;
+      ...
+      &lt;property name="currentIndex" value="0"/&gt;
+      ...
+    &lt;/interface&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME=xpcom></A></P>
+         
+         <H3>Interfaces and XPCOM</H3>
+         
+         <P>An <TT>interface</TT> element can point to an XPCOM
+         interface and to a specific implementation of that
+         interface. When this is done, no methods or properties are
+         specified in the XBL. Instead they are picked up from the
+         XPIDL description that corresponds to the XPCOM
+         interface.</P>
+         
+         <P><FONT COLOR="#FF0000">&#91;Note: Only interfaces that
+         have had XPT files generated for their descriptions can be
+         used with XBL.&#93;</FONT></P>
+         
+         <P>The <FONT COLOR="#FF0000">name</FONT> attribute can be
+         used to point to a symbolic name for the interface. When
+         this is done, the interface is retrieved from the
+         <TT>interfaces</TT> object that is accessible from the
+         <TT>Components</TT> object. The
+         <FONT COLOR="#FF0000">iid</FONT> attribute can be used to
+         point directly to a specific interface ID.</P>
+         
+         <P>Implementations can be referred to using the
+         <FONT COLOR="#FF0000">progid</FONT> attribute, which refers
+         to a progid, or a specific implementation can be directly
+         referred to using the <FONT COLOR="#FF0000">classid</FONT>
+         attribute.</P>
+         
+         <P>It is permissible to specify an XPCOM interface and to
+         define the implementation inline using
+         <TT>&lt;method&gt;</TT> and <TT>&lt;property&gt;</TT> tags.
+         Note that it is not permissible to point to an XPCOM
+         implementation without also specifying either an interface
+         name or an IID.</P>
+         
+         <P><TABLE BORDER=2>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    ...
+    &lt;interface name="nsIController" progid="component://netscape/editor/controller"/&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME=events></A></P>
+         
+         <H2>The <TT>&lt;handlers&gt;</TT> Element</H2>
+         
+         <P>The final component of a binding is the
+         <TT>&lt;handlers&gt;</TT> element. This element is used to
+         define new event handlers that should be invoked when events
+         occur on the element. The <TT>handlers</TT> element contains
+         zero or more <TT>handler</TT> elements as children. Each
+         element corresponds to a single event handler that will be
+         invoked when the handler is <I>matched</I> to the event.</P>
+         
+         <P><A NAME=event></A></P>
+         
+         <H3>Handler Elements</H3>
+         
+         <P>The <FONT COLOR="#FF0000">type</FONT> attribute specifies
+         the type of event that the handler wishes to field. Its name
+         must corresponds to an event name, such as
+         <FONT COLOR="#800080">click</FONT> or
+         <FONT COLOR="#800080">keypress</FONT>. A comma-separated
+         list of event names can be given if, for example, the
+         handler should fire on more than one action, e.g., when the
+         <TT>return</TT> key is pressed or when the mouse is
+         clicked.</P>
+         
+         <P>The <FONT COLOR="#FF0000">button</FONT> attribute can be
+         used to restrict a mouse event to a specific button. It has
+         values of left, middle or right.</P>
+         
+         <P>There are several modifier keys supported. They each have
+         separate attributes. If set, then on a mouse or key event,
+         these modifier keys must be down for the event to fire. The
+         value of a modifier key attribute is true if the modifier
+         key must be down. The modifier key attributes include
+         <FONT COLOR="#FF0000">shift</FONT>,
+         <FONT COLOR="#FF0000">control</FONT>,
+         <FONT COLOR="#FF0000">alt</FONT>,
+         <FONT COLOR="#FF0000">command</FONT>, and
+         <FONT COLOR="#FF0000">meta</FONT>.</P>
+         
+         <P>The <FONT COLOR="#FF0000">key</FONT> attribute can be
+         used to stipulate that on a key event the key must be the
+         primary key used. The <FONT COLOR="#FF0000">keycode</FONT>
+         attribute works in a similar fashion, but it allows for the
+         selection of unusual keys like <TT>space</TT> or
+         <TT>home</TT>. The virtual key codes can be found in the
+         Mozilla source. <FONT COLOR="#FF0000">Note: Include link to
+         Mozilla source file.</FONT></P>
+         
+         <P>The <FONT COLOR="#FF0000">capturer</FONT> attribute, if
+         set to true, indicates that the event should only fire
+         during the capturing stage of DOM event flow.</P>
+         
+         <P>The <FONT COLOR="#FF0000">value</FONT> attribute contains
+         the event handler script that should be invoked when the
+         event element is matched.</P>
+         
+         <P><TABLE BORDER=2>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B> A list box in HTML moves the
+                  selection up and down when the appropriate arrow
+                  keys are pressed. XBL event elements can be used to
+                  install this behavior on a list box.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    ...
+    &lt;handlers&gt;
+      ...
+      &lt;handler type="keypress" keycode="vk_up" 
+                  value="moveDown()"/&gt;
+      &lt;handler type="keypress" keycode="vk_down"
+                  value="moveUp()"/&gt;
+      ...
+    &lt;/handlers&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME=redirection></A></P>
+         
+         <H3>Event Redirection</H3>
+         
+         <P>A handler element can be used to map one event to another
+         event. When this happens, a new event is synthesized from
+         the old event and fired into the DOM. The
+         <TT>&lt;mapto&gt;</TT> element is used to perform the
+         redirection. It is a child of the <TT>handler</TT> element,
+         and it can have all the attributes that an <TT>handler</TT>
+         element can. These attributes specify the values of the new
+         event and provide information regarding how the fields of
+         the <FONT COLOR="#800080">event</FONT> object should be
+         filled in.</P>
+         
+         <P>The new event fires on the bound element and moves
+         through the capturing and bubbling stages just as the old
+         event does. An event element that redirects can still have a
+         <FONT COLOR="#FF0000">value</FONT> attribute specified. This
+         code executes prior to the firing of the new event. This can
+         be useful in cases where it is desirable to prevent the
+         continued processing of the old event.</P>
+         
+         <P>&nbsp;</P>
+         
+         <H3>Extensibility of Events</H3>
+         
+         <P>Events are extensible, and code can be used to invoke
+         events with arbitrary names. Handlers can be defined to deal
+         with any new events. For example, a new event called
+         <FONT COLOR="#FF0000">close</FONT> could be fired when a
+         window in XUL wishes to close itself up.</P>
+         
+         <P><TABLE BORDER=2>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B> Dialog boxes attempt to close
+                  when the ESC key is pressed. An XBL file bound to
+                  all dialog windows can be used to ensure that the
+                  ESC key causes a close handler to fire.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding&gt;
+    ...
+    &lt;events&gt;
+      ...
+      &lt;event type="keypress" keycode="vk_escape"&gt;
+        &lt;mapto type="close"/&gt;
+      &lt;/event&gt;
+      ...
+    &lt;/events&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P>This mapping capability coupled with extensibility of
+         events is quite powerful. It can be used to perform key
+         remapping. For example a Dvorak keyboard layout could be
+         implemented within Mozilla by supplying a set of redirects
+         on the outermost XUL window.</P>
+         
+         <P>Other examples of event redirection include
+         platform-specific bindings. For example, CONTROL+click on
+         the Mac could be remapped to a right mouse button click.
+         Finally modifier keys can be mapped to other modifier keys,
+         thus allowing for platforms to choose modifier keys as
+         appropriate for specific bindings.</P>
+         
+         <P><A NAME=inheritance></A></P>
+         
+         <H2>Binding Inheritance</H2>
+         
+         <P>A binding can inherit from another binding. When this
+         inheritance is specified, the binding picks up all the
+         content and event handlers defined in the base binding, and
+         it picks up the additional methods and properties defined in
+         the base binding.</P>
+         
+         <P><A NAME=extends></A></P>
+         
+         <H3>The Extends Attribute</H3>
+         
+         <P>The <FONT COLOR="#FF0000">extends</FONT> attribute is
+         used to specify the URL of the base class binding. The URL
+         is just like the one specified in the
+         <FONT COLOR="#800080">behavior</FONT> CSS property; the #
+         notation can be used to point to a specific binding, either
+         in the same file or in another file all together.</P>
+         
+         <P>Inheritance can be taken to an arbitrary level, i.e.,
+         binding A can inherit from binding B, which in turn inherits
+         from binding C. Only single inheritance is allowed.</P>
+         
+         <P>This feature allows bindings to be reused by different
+         elements that also wish to define additional bindings of
+         their own. Most importantly, it can be used in conjunction
+         with <I>chrome URLs</I> to include platform-specific event
+         redirects and bindings unique to a given operating
+         system.</P>
+         
+         <P><TABLE BORDER=2>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B> By default, input text fields
+                  have a certain set of bindings defined for simple
+                  navigation. An autocompleting text field, e.g., the
+                  URL bar in a browser window, wishes to inherit all
+                  of the default behavior, but also to add support
+                  for auto-completion. It can do this by inheriting
+                  from the base binding.</P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns="http://www.mozilla.org/xbl"&gt;
+  &lt;binding name="autoCompleteBinding"
+           extends="resource:/chrome/htmlBindings#inputTextField"&gt;
+    ...
+  &lt;/binding&gt;
+  ...
+&lt;/bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         </P>
+         
+         <P><A NAME="content-inheritance"></A></P>
+         
+         <H3>Inheritance of Content</H3>
+         
+         <P>By default when one binding inherits from another, the
+         content specified by both bindings is built. The derived
+         binding has its content built first, and then the base
+         binding has its content built. Content is always appended to
+         the end of the bound element's formatting object list, so
+         the derived class content shows up first in the flow.</P>
+         
+         <P>Only one insertion point for explicit content can be
+         specified. If a base class attempts to redefine this
+         insertion point using the <TT>children</TT> tag, the tag
+         should be ignored.</P>
+         
+         <P>A derived binding can prevent a base binding's content
+         from being built by placing an
+         <FONT COLOR="#FF0000">inherits</FONT> attribute on the
+         <TT>content</TT> element with a value of false.</P>
+         
+         <P><A NAME="method-inheritance"></A></P>
+         
+         <H3>Inheritance of Methods and Properties</H3>
+         
+         <P>Methods and properties defined in bindings are invoked by
+         making those calls directly on the bound element itself. For
+         example, if a binding defines a <FONT COLOR="#008000">
+         doCommand</FONT> function for a XUL tree widget, then the
+         function can be invoked directly from the tree element.</P>
+         
+         <P>&nbsp;</P>
+         
+         <H4>Methods</H4>
+         
+         <P>For methods, the IDL for the DOM element is first
+         checked. If there is no match, then the bindings are
+         searched in order (from derived bindings up to the root
+         binding) for any methods that match the invoked method. Note
+         that it is possible for multiple bindings to have matching
+         methods. When this occurs, only the derived binding's method
+         is called. The base binding's method can be invoked in
+         script by the derived binding using the
+         <FONT COLOR="#800080">base</FONT> keyword followed by the
+         method name, e.g.,
+         <FONT COLOR="#800080">base.doCommand("delete")</FONT>.</P>
+         
+         <P>&nbsp;</P>
+         
+         <H4>Properties</H4>
+         
+         <P>When a property is inspected, the element itself is
+         checked first. If the property is not found, then the
+         bindings are searched in order, from derived binding up to
+         the root binding. The first binding that provides a match is
+         used to obtain the current value of the property.</P>
+         
+         <P>When a new property is set on the element, the element is
+         checked first. If the property does not currently exist on
+         the element, then the bindings are searched in order. The
+         first binding that has the property defined gets the
+         property set. If no bindings match, then the property is set
+         on the element and not on any of the bindings.</P>
+         
+         <P>There is no notion of "shadowing" of properties. Only one
+         binding is responsible for the value of a property at any
+         given time. It is not possible for the property to be
+         defined in more than one binding in the same inheritance
+         chain.</P>
+         
+         <P><A NAME="event-inheritance"></A></P>
+         
+         <H3>Inheritance of Handlers</H3>
+         
+         <P>If a derived binding and base binding both define
+         handlers for the same event, the derived binding's handler
+         is invoked first. This is true both in the bubbling or
+         capturing phases of event handling.</P>
+         
+         <P>If preventBubble is called on the event during the
+         bubbling phase, then the base binding's event handler will
+         not fire. Similarly, if preventCapture is called on the
+         event during the capturing phase, then a base binding's
+         capturing handler also will not fire. These methods can be
+         used to selectively prevent an event from being fielded by a
+         base class binding.</P>
+         
+         <P><A NAME=rules></A></P>
+         
+         <H2>Rule-Based Construction (Examples)</H2>
+         
+         <P>Sometimes different types of content should be
+         constructed based on the attributes found on the bound
+         element. XBL supports this capability through the usage of
+         inheritance and style rules. If the content varies in this
+         way, then multiple derived bindings can be defined that all
+         inherit from the same base binding.</P>
+         
+         <P><TABLE BORDER=1>
+            <TR>
+               <TD BGCOLOR="#C0C0C0">
+                  <P><B>Example:</B>: A treecell in XUL constructs
+                  different anonymous content if an
+                  <FONT COLOR="#FF0000">indent</FONT> attribute is
+                  set to true on the cell. In one case, a
+                  <TT>&lt;treeindentation&gt;</font> element needs to
+                  be inserted into the cell. Otherwise it
+                  doesn't.</TT></P>
+                  
+                  <P>&nbsp;</P>
+                  
+                  <PRE>
+&lt;xbl:bindings xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+              xmlns:xbl="http://www.mozilla.org/xbl"&gt;
+  &lt;xbl:binding name="normalcells"&gt;
+    &lt;xbl:content excludes="template,observes"&gt;
+      &lt;xul:titledbutton class="tree-icon" flex="1" xbl:inherits="value,src"&gt;
+    &lt;/xbl:content&gt;
+    ...
+  &lt;/xbl:binding&gt;
+  ...
+  &lt;xbl:binding name="indentedcells" extends="#normalcells"&gt;
+    &lt;content&gt;
+      &lt;xul:treeindentation&gt;
+    &lt;/content&gt;
+    ...
+  &lt;/xbl:binding&gt;
+  ...
+&lt;/xbl:bindings&gt;
+                  </PRE>
+               </TD>
+            </TR>
+         </TABLE>
+         
+         <HR SIZE=1 solid>
+         
+         Contact us at <A HREF="mailto:xptoolkitstaff@netscape.com">xptoolkitstaff@netscape.com</A>.
+         Want to complain about the new documentation? Email
+         <A HREF="mailto:hyatt@netscape.com">Dave Hyatt</A>.</P>
+      </TD>
+   </TR>
+</TABLE>
+</H1>
+
+
+
+
+</TD>
+
+</TR>
+<TR>
+
+<TD COLSPAN="2" ALIGN="RIGHT" VALIGN="TOP">
+<FONT SIZE="-1">
+Copyright &copy; 1998-2000 The Mozilla Organization.
+<BR>
+<A HREF="http://www.mozilla.org/webtools/bonsai/cvslog.cgi?file=mozilla-org/html/xpfe/xptoolkit/xbl.html&amp;rev=&amp;root=/cvsroot/">Last modified January 31,  2000</A>.
+</FONT>
+</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>
